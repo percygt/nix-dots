@@ -1,0 +1,89 @@
+{
+  "nodes": {
+    "gpt4all": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1690578056,
+        "narHash": "sha256-Rs2tC9bhwOcCEGwnTGpCCdnDvXaJWEzfGyX1Z4mFu8M=",
+        "ref": "refs/heads/main",
+        "rev": "91a32c0e84a091ce7e0a3c4d08a058c75c770306",
+        "revCount": 1316,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/nomic-ai/gpt4all"
+      },
+      "original": {
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/nomic-ai/gpt4all"
+      }
+    },
+    "gpt4all-nix": {
+      "inputs": {
+        "gpt4all": "gpt4all",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1690583208,
+        "narHash": "sha256-PHgx8pd4rNuf28K1UrXuT8T4bHjOXN0mXJdNiDF2D08=",
+        "owner": "polygon",
+        "repo": "gpt4all-nix",
+        "rev": "d80a923ea94c5ef46f507b6a4557093ad9086ef6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "polygon",
+        "repo": "gpt4all-nix",
+        "rev": "d80a923ea94c5ef46f507b6a4557093ad9086ef6",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1701071203,
+        "narHash": "sha256-lQywA7QU/vzTdZ1apI0PfgCWNyQobXUYghVrR5zuIeM=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "db1878f013b52ba5e4034db7c1b63e8d04173a86",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1700794826,
+        "narHash": "sha256-RyJTnTNKhO0yqRpDISk03I/4A67/dp96YRxc86YOPgU=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "5a09cb4b393d58f9ed0d9ca1555016a8543c2ac8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "gpt4all-nix": "gpt4all-nix",
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
