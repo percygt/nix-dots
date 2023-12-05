@@ -1,0 +1,32 @@
+[
+  {
+    "key": "ctrl+shift+q",
+    "command": "workbench.action.quit"
+  },
+  {
+    "key": "ctrl+q",
+    "command": ""
+  },
+  {
+    "key": "ctrl+w",
+    "command": "workbench.action.terminal.killActiveTab",
+    "when": "terminalHasBeenCreated && terminalTabsFocus || terminalIsOpen && terminalTabsFocus || terminalProcessSupported && terminalTabsFocus"
+  },
+  {
+    "key": "delete",
+    "command": "-workbench.action.terminal.killActiveTab",
+    "when": "terminalHasBeenCreated && terminalTabsFocus || terminalIsOpen && terminalTabsFocus || terminalProcessSupported && terminalTabsFocus"
+  },
+  {
+    "key": "ctrl+shift+right",
+    "command": "workbench.action.navigateRight"
+  },
+  {
+    "key": "ctrl+shift+left",
+    "command": "workbench.action.navigateLeft"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "extension.advancedNewFile"
+  }
+]
