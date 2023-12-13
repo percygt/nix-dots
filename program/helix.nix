@@ -1,6 +1,35 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: let
+  extraNodePackages = import ../nixpkgs/node {
+    inherit pkgs;
+    system = pkgs.system;
+    nodejs = pkgs.nodejs;
+  };
+in {
+  # home.packages = [
+  #   pkgs.deno
+  #   pkgs.emmet-ls
+  #   pkgs.vscode-langservers-extracted
+  #   pkgs.dprint
+  #   extraNodePackages.prettier
+  #   extraNodePackages.prettier-plugin-astro
+  #   extraNodePackages."@astrojs/language-server"
+  # ];
+
   programs.helix = {
     enable = true;
+    extraPackages = [
+      pkgs.deno
+      pkgs.emmet-ls
+      pkgs.vscode-langservers-extracted
+      pkgs.dprint
+      extraNodePackages.prettier
+      extraNodePackages.prettier-plugin-astro
+      extraNodePackages."@astrojs/language-server"
+    ];
     settings = {
       theme = "base16";
       editor = {
@@ -41,28 +70,28 @@
         esc = ["collapse_selection" "keep_primary_selection"];
       };
     };
-    languages = with pkgs; {
+    languages = {
       language-server = {
         astro-ls = {
-          command = "${nodePackages."@astrojs/language-server"}/bin/astro-ls";
+          command = "astro-ls";
           args = [
             "--stdio"
           ];
         };
         deno = {
-          command = "${deno}/bin/deno";
+          command = "deno";
           args = [
             "lsp"
           ];
         };
         emmet-ls = {
-          command = "${emmet-ls}/bin/emmet-ls";
+          command = "emmet-ls";
           args = [
             "--stdio"
           ];
         };
         eslint = {
-          command = "${nodePackages.vscode-langservers-extracted}/bin/vscode-eslint-language-server";
+          command = "vscode-eslint-language-server";
           args = [
             "--stdio"
           ];
@@ -134,11 +163,12 @@
           language-servers = [
             "astro-ls"
           ];
+
           formatter = {
-            command = "${nodePackages.prettier}/bin/prettier";
+            command = "prettier";
             args = [
               "--plugin"
-              "prettier-plugin-astro"
+              "${extraNodePackages.prettier-plugin-astro}/lib/node_modules/prettier-plugin-astro/dist/index.js"
             ];
           };
           auto-format = true;
@@ -151,7 +181,7 @@
             "emmet-ls"
           ];
           formatter = {
-            command = "${dprint}/bin/dprint";
+            command = "dprint";
             args = [
               "fmt"
               "--stdin"
@@ -168,7 +198,7 @@
             "emmet-ls"
           ];
           formatter = {
-            command = "${dprint}/bin/dprint";
+            command = "dprint";
             args = [
               "fmt"
               "--stdin"
@@ -185,7 +215,7 @@
             "emmet-ls"
           ];
           formatter = {
-            command = "${dprint}/bin/dprint";
+            command = "dprint";
             args = [
               "fmt"
               "--stdin"
@@ -202,7 +232,7 @@
             "emmet-ls"
           ];
           formatter = {
-            command = "${dprint}/bin/dprint";
+            command = "dprint";
             args = [
               "fmt"
               "--stdin"
@@ -214,7 +244,7 @@
         {
           name = "json";
           formatter = {
-            command = "${dprint}/bin/dprint";
+            command = "dprint";
             args = [
               "fmt"
               "--stdin"
@@ -230,7 +260,7 @@
             "emmet-ls"
           ];
           formatter = {
-            command = "${nodePackages.prettier}/bin/prettier";
+            command = "prettier";
             args = [
               "--parse"
               "html"
@@ -245,7 +275,7 @@
             "emmet-ls"
           ];
           formatter = {
-            command = "${nodePackages.prettier}/bin/prettier";
+            command = "prettier";
             args = [
               "--parser"
               "css"

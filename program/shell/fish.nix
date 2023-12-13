@@ -7,34 +7,34 @@
     loginShellInit = ''
       ${pkgs.fastfetch}/bin/fastfetch
     '';
-    plugins = [
+    plugins = with pkgs.fishPlugins; [
       {
         name = "z";
-        src = pkgs.fishPlugins.z.src;
+        src = z.src;
       }
       {
         name = "fzf";
-        src = pkgs.fishPlugins.fzf-fish.src;
+        src = fzf-fish.src;
       }
       {
         name = "bass";
-        src = pkgs.fishPlugins.bass.src;
+        src = bass.src;
       }
       {
         name = "grc";
-        src = pkgs.fishPlugins.grc.src;
+        src = grc.src;
       }
       {
         name = "sponge";
-        src = pkgs.fishPlugins.sponge.src;
+        src = sponge.src;
       }
       {
         name = "forgit";
-        src = pkgs.fishPlugins.forgit.src;
+        src = forgit.src;
       }
       {
         name = "autopair";
-        src = pkgs.fishPlugins.autopair.src;
+        src = autopair.src;
       }
       {
         name = "preview";
@@ -66,6 +66,32 @@
       function starship_transient_prompt_func
         starship module character
       end
+
+      function fish_user_key_bindings
+          # Execute this once per mode that emacs bindings should be used in
+          fish_default_key_bindings -M insert
+
+          # Then execute the vi-bindings so they take precedence when there's a conflict.
+          # Without --no-erase fish_vi_key_bindings will default to
+          # resetting all bindings.
+          # The argument specifies the initial mode (insert, "default" or visual).
+          fish_vi_key_bindings --no-erase insert
+
+
+      end
+      bind yy fish_clipboard_copy
+      bind Y fish_clipboard_copy
+      bind p fish_clipboard_paste
+      # Emulates vim's cursor shape behavior
+      # Set the normal and visual mode cursors to a block
+      set fish_cursor_default block
+      # Set the insert mode cursor to a line
+      set fish_cursor_insert line
+      # Set the replace mode cursor to an underscore
+      set fish_cursor_replace_one underscore
+      # The following variable can be used to configure cursor shape in
+      # visual mode, but due to fish_cursor_default, is redundant here
+      set fish_cursor_visual block
     '';
     functions = {
       _preview_mime_image = {

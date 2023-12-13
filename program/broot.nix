@@ -3,10 +3,11 @@
     enable = true;
     settings = {
       icon_theme = "vscode";
-      default_flags = "-gh";
+      default_flags = "-h";
       syntax_theme = "EightiesDark";
       quit_on_last_cancel = true;
       show_matching_characters_on_path_searches = false;
+      modal = true;
       verbs = [
         {
           invocation = "code";
