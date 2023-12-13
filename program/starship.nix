@@ -70,8 +70,6 @@ in {
       #   "Music" = " ";
       #   "Pictures" = " ";
       #   "Videos" = " ";
-      #   "Projects" = "󱌢 ";
-      #   "School" = "󰑴 ";
       #   "GitHub" = "";
       #   ".config" = " ";
       #   "Vault" = "󱉽 ";

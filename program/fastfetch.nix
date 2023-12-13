@@ -3,7 +3,7 @@
   xdg.configFile = {
     "fastfetch/config.conf" = {
       text = ''
-        --structure OS:Kernel:Packages:DE:Terminal:Uptime
+        --structure OS:Kernel:DE:Terminal:Uptime
         --logo none
         --logo-type none
         --color-keys yellow
