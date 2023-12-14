@@ -134,7 +134,7 @@
       {
         "scope": [
           "entity.other.attribute-name",
-          "keyword", 
+          "keyword",
           "constant",
           "storage.modifier",
           "storage.type",
