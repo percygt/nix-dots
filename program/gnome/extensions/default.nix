@@ -5,6 +5,7 @@
   #   date-menu-formatter
   #   ddterm
   # ];
+  xdg.configFile."pop-shell/config.json".text = builtins.toJSON ((import ./pop-shell.nix).config);
 
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/shell/extensions/Battery-Health-Charging" = {
@@ -385,28 +386,28 @@
     };
 
     "org/gnome/shell/extensions/space-bar/appearance" = {
-      active-workspace-background-color = "rgba(255,255,255,0)";
+      active-workspace-background-color = "rgb(255,255,255,0.25)";
       active-workspace-border-color = "rgb(36,31,49)";
-      active-workspace-border-radius = 3;
-      active-workspace-border-width = 1;
+      active-workspace-border-radius = 2;
+      active-workspace-border-width = 0;
       active-workspace-font-weight = "500";
-      active-workspace-padding-h = 5;
-      active-workspace-padding-v = 0;
+      active-workspace-padding-h = 6;
+      active-workspace-padding-v = 2;
       active-workspace-text-color = "rgb(249,240,107)";
-      empty-workspace-border-radius = 3;
-      empty-workspace-border-width = 1;
+      empty-workspace-border-radius = 2;
+      empty-workspace-border-width = 0;
       empty-workspace-font-weight = "100";
-      empty-workspace-padding-h = 5;
-      empty-workspace-padding-v = 0;
-      inactive-workspace-border-radius = 3;
-      inactive-workspace-border-width = 1;
+      empty-workspace-padding-h = 6;
+      empty-workspace-padding-v = 2;
+      inactive-workspace-border-radius = 0;
+      inactive-workspace-border-width = 0;
       inactive-workspace-font-weight = "100";
       inactive-workspace-font-weight-active = true;
-      inactive-workspace-padding-h = 5;
-      inactive-workspace-padding-v = 0;
-      inactive-workspace-text-color = "rgba(255,255,255,0.29)";
+      inactive-workspace-padding-h = 6;
+      inactive-workspace-padding-v = 2;
+      inactive-workspace-text-color = "rgba(255,255,255,0.25)";
       workspace-margin = 4;
-      workspaces-bar-padding = 4;
+      workspaces-bar-padding = 2;
     };
 
     "org/gnome/shell/extensions/space-bar/behavior" = {

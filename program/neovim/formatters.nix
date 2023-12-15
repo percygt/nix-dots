@@ -11,10 +11,19 @@ in {
       "--plugin"
       "${extraNodePackages.prettier-plugin-astro}/lib/node_modules/prettier-plugin-astro/dist/index.js"
     ];
-    stdin = true;
-    try_node_modules = true;
   };
   javascript = {
-    exe = "prettier";
+    exe = "denofmt";
+  };
+  typescript = {
+    exe = "denofmt";
+  };
+  jsx = {
+    exe = "denofmt";
+    args = ["fmt" "-"];
+  };
+  tsx = {
+    exe = "denofmt";
+    args = ["fmt" "-"];
   };
 }
