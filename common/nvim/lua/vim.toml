@@ -1,0 +1,6 @@
+[selene]
+base = "lua52"
+name = "vim"
+
+[vim]
+any = true
