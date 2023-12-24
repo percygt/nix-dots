@@ -69,6 +69,7 @@ function M.setup_null_ls(json_config)
 					group = augroup,
 					buffer = bufnr,
 				})
+
 				vim.api.nvim_create_autocmd("BufWritePre", {
 					group = augroup,
 					buffer = bufnr,

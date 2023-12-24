@@ -1,7 +1,4 @@
 return {
-	setKey = vim.keymap.set,
-	delKey = vim.keymap.del,
-	addCommand = vim.api.nvim_create_user_command,
 	isNormal = function()
 		return vim.tbl_contains({ "n", "niI", "niR", "niV", "nt", "ntT" }, vim.api.nvim_get_mode().mode)
 	end,

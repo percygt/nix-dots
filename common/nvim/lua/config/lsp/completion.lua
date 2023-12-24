@@ -1,11 +1,17 @@
-vim.o.completeopt = "menuone,noselect,preview"
-
--- nvim-cmp setup
 local luasnip = require("luasnip")
 local cmp = require("cmp")
 local lspkind = require("lspkind")
+luasnip.setup({
+	region_check_events = "CursorMoved",
+})
+-- Friendly snippets
+require("luasnip.loaders.from_vscode").lazy_load()
+
 cmp.setup({
 	preselect = cmp.PreselectMode.None,
+	completion = {
+		completeopt = "menu,menuone,preview,noselect",
+	},
 	snippet = {
 		expand = function(args)
 			luasnip.lsp_expand(args.body)
@@ -14,7 +20,9 @@ cmp.setup({
 	mapping = cmp.mapping.preset.insert({
 		["<C-u>"] = cmp.mapping.scroll_docs(-4),
 		["<C-d>"] = cmp.mapping.scroll_docs(4),
-		["<C-e>"] = cmp.mapping.close(),
+		["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+		["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+		["<C-e>"] = cmp.mapping.abort(),
 		["<CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = false,
@@ -24,20 +32,18 @@ cmp.setup({
 			select = true,
 		}),
 		["<Tab>"] = cmp.mapping(function(fallback)
-			-- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
 			if cmp.visible() then
-				local entry = cmp.get_selected_entry()
-				if not entry then
-					cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-				else
-					cmp.confirm()
-				end
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
 			else
 				fallback()
 			end
-		end, { "i", "s", "c" }),
+		end, { "i", "s" }),
 		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if luasnip.jumpable(-1) then
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
 				luasnip.jump(-1)
 			else
 				fallback()
