@@ -1,0 +1,397 @@
+{
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode",
+    "editor.formatOnSave": true
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true
+  },
+  "[lua]": {
+    "editor.defaultFormatter": "JohnnyMorganz.stylua",
+    "editor.formatOnSave": true
+  },
+  "[nix]": {
+    "editor.defaultFormatter": "kamadorueda.alejandra",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": false
+  },
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never"
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter",
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "alejandra.program": "alejandra",
+  "black-formatter.args": [
+    "--line-length=119"
+  ],
+  "cmake.configureOnOpen": true,
+  "console-ninja.featureSet": "Community",
+  "editor.accessibilitySupport": "off",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.sortImports": "explicit"
+  },
+  "editor.cursorBlinking": "expand",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorWidth": 5,
+  "editor.detectIndentation": true,
+  "editor.fontFamily": "VictorMono Nerd Font,JetBrainsMono Nerd Font, Hack Nerd Font, monospace",
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "400",
+  "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairsHorizontal": "active",
+  "editor.guides.highlightActiveIndentation": true,
+  "editor.insertSpaces": true,
+  "editor.letterSpacing": 1,
+  "editor.linkedEditing": true,
+  "editor.minimap.autohide": true,
+  "editor.minimap.enabled": false,
+  "editor.mouseWheelZoom": true,
+  "editor.scrollbar.vertical": "auto",
+  "editor.scrollbar.verticalScrollbarSize": 15,
+  "editor.smoothScrolling": true,
+  "editor.tabSize": 2,
+  "editor.tokenColorCustomizations": {
+    "[KastorCode Dark Purple Theme]": {
+      "textMateRules": [
+        {
+          "scope": [
+            "entity.other.attribute-name",
+            "entity.other.attribute-name.tsx",
+            "entity.other.attribute-name.class.css"
+          ],
+          "settings": {
+            "fontStyle": "italic",
+            "foreground": "#d4ff00"
+          }
+        },
+        {
+          "scope": [
+            "entity.name.tag",
+            "support.type.property-name"
+          ],
+          "settings": {
+            "foreground": "#757bba"
+          }
+        },
+        {
+          "scope": [
+            "string.quoted.astro",
+            "meta.jsx.children.tsx",
+            "string.quoted.double.tsx",
+            "string.template"
+          ],
+          "settings": {
+            "foreground": "#ffffff"
+          }
+        },
+        {
+          "scope": [
+            "support.class.component.tsx",
+            "support.class.component.astro",
+            "punctuation.definition.tag"
+          ],
+          "settings": {
+            "fontStyle": "italic",
+            "foreground": "#61deda"
+          }
+        }
+      ]
+    },
+    "textMateRules": [
+      {
+        "name": "String interpolation",
+        "scope": [
+          "punctuation.definition.template-expression.begin",
+          "punctuation.definition.template-expression.end",
+          "punctuation.section.embedded"
+        ],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": [
+          "variable",
+          "variable.other",
+          "variable.parameter"
+        ],
+        "settings": {
+          "fontStyle": "bold",
+          "foreground": "#ffffff"
+        }
+      },
+      {
+        "name": "@Decorator",
+        "scope": [
+          "meta.decorator punctuation.decorator"
+        ],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": [
+          "punctuation.definition.comment",
+          "comment"
+        ],
+        "settings": {
+          "fontStyle": "italic",
+          "foreground": "#c2530d"
+        }
+      },
+      {
+        "scope": [
+          "entity.name.tag",
+          "support.type.property-name"
+        ],
+        "settings": {
+          "foreground": "#fccdc5"
+        }
+      },
+      {
+        "scope": [
+          "entity.other.attribute-name",
+          "keyword",
+          "constant",
+          "storage.modifier",
+          "storage.type",
+          "storage.type.class.js"
+        ],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "entity.name.function",
+        "settings": {
+          "fontStyle": "bold",
+          "foreground": "#2ba3ff"
+        }
+      },
+      {
+        "scope": "entity.name.type.alias",
+        "settings": {
+          "fontStyle": "bold",
+          "foreground": "#ea3d3d"
+        }
+      },
+      {
+        "scope": [
+          "meta.function",
+          "meta.function-call",
+          "entity.name.type.class"
+        ],
+        "settings": {
+          "fontStyle": "italic",
+          "foreground": "#d0ff00"
+        }
+      },
+      {
+        "scope": [
+          "invalid",
+          "keyword.operator",
+          "constant.numeric.css",
+          "keyword.other.unit.px.css",
+          "constant.numeric.decimal.js",
+          "constant.numeric.json"
+        ],
+        "settings": {
+          "fontStyle": ""
+        }
+      }
+    ]
+  },
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "emmet.includeLanguages": {
+    "django-html": "html",
+    "javascript": "javascriptreact",
+    "jinja-html": "html",
+    "vue": "html",
+    "vue-html": "html"
+  },
+  "errorLens.excludeBySource": [
+    "ts(2345)"
+  ],
+  "explorer.compactFolders": false,
+  "explorer.confirmDelete": false,
+  "explorer.incrementalNaming": "smart",
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true,
+    "**/log/**": true,
+    "**/node_modules": true,
+    "**/node_modules/*/**": true,
+    "**/tmp/**": true
+  },
+  "files.trimTrailingWhitespace": true,
+  "files.watcherExclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true,
+    "**/log/**": true,
+    "**/logs/**": true,
+    "**/node_modules": true,
+    "**/node_modules/*/**": true,
+    "**/tmp/**": true
+  },
+  "flake8.args": [
+    "--line-length=119"
+  ],
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "isort.args": [
+    "--profile=black"
+  ],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "nix.enableLanguageServer": true,
+  "nix.formatterPath": [
+    "nix",
+    "fmt",
+    "--",
+    "-"
+  ],
+  "nix.serverPath": "nil",
+  "search.actionsPosition": "auto",
+  "search.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true,
+    "**/log/**": true,
+    "**/node_modules": true,
+    "**/node_modules/*/**": true,
+    "**/tmp/**": true
+  },
+  "search.smartCase": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "sions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.defaultProfile.linux": "fish",
+  "terminal.integrated.env.linux": {},
+  "terminal.integrated.fontFamily": "Hack Nerd Font",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.smoothScrolling": true,
+  "vim.easymotion": true,
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-f>": false
+  },
+  "vim.hlsearch": true,
+  "vim.incsearch": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "after": [
+        "<Esc>"
+      ],
+      "before": [
+        "j",
+        "j"
+      ]
+    }
+  ],
+  "vim.leader": "<space>",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "after": [
+        "d",
+        "d"
+      ],
+      "before": [
+        "<leader>",
+        "d"
+      ]
+    },
+    {
+      "before": [
+        "<C-n>"
+      ],
+      "commands": [
+        ":nohl"
+      ]
+    },
+    {
+      "before": [
+        "K"
+      ],
+      "commands": [
+        "lineBreakInsert"
+      ],
+      "silent": true
+    }
+  ],
+  "vim.useCtrlKeys": true,
+  "vim.useSystemClipboard": true,
+  "window.autoDetectColorScheme": true,
+  "window.commandCenter": true,
+  "window.dialogStyle": "custom",
+  "window.experimental.nativeContextMenuLocation": true,
+  "window.menuBarVisibility": "toggle",
+  "window.title": "${dirty}${activeEditorShort}${separator}${profileName}${folderName}${separator}VSCode",
+  "window.titleBarStyle": "native",
+  "window.titleSeparator": " • ",
+  "workbench.colorCustomizations": {
+    "editorBracketHighlight.unexpectedBracket.foreground": "#ff0000",
+    "editorBracketPairGuide.activeBackground1": "#FFB86C",
+    "editorBracketPairGuide.activeBackground2": "#FF75B5",
+    "editorBracketPairGuide.activeBackground3": "#45A9F9",
+    "editorBracketPairGuide.activeBackground4": "#B084EB",
+    "editorBracketPairGuide.activeBackground5": "#E6E6E6",
+    "editorBracketPairGuide.activeBackground6": "#19f9d8",
+    "tab.activeBackground": "#000C3A",
+    "tab.activeBorderTop": "#B69B0A",
+    "tab.activeForeground": "#B69B0A",
+    "tree.indentGuidesStroke": "#B69B0A"
+  },
+  "workbench.colorTheme": "KastorCode Dark Purple Theme",
+  "workbench.editor.enablePreview": true,
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.list.smoothScrolling": true,
+  "workbench.tree.indent": 16,
+  "workbench.tree.renderIndentGuides": "always"
+}
