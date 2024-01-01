@@ -11,7 +11,7 @@ in {
     anderseandersen.html-class-suggestions
     antfu.iconify
     astro-build.astro-vscode
-    vscodevim.vim
+    # vscodevim.vim
     # asvetliakov.vscode-neovim
     bbenoist.nix
     bernardogualberto.solidjs

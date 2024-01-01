@@ -7,10 +7,6 @@
     statix
     nurl
     nix-tree
+    nixgl
   ];
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
 }

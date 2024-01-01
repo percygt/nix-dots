@@ -1,39 +1,57 @@
-{lib, ...}:
-with lib.hm.gvariant; {
+let
+  colors = (import ../../colors.nix).syft;
+in {
   dconf.settings = {
     "com/github/amezin/ddterm" = {
+      background-opacity = colors.alpha;
+      foreground-color = "#${colors.default.foreground}";
+      background-color = "#${colors.default.background}";
+      cursor-foreground-color = "#${colors.cursor.foreground}";
+      cursor-background-color = "#${colors.cursor.background}";
+      bold-color = "#${colors.bold}";
+      highlight-foreground-color = "#${colors.highlight.foreground}";
+      highlight-background-color = "#${colors.highlight.background}";
+      palette = [
+        "#${colors.normal.black}"
+        "#${colors.normal.red}"
+        "#${colors.normal.green}"
+        "#${colors.normal.yellow}"
+        "#${colors.normal.blue}"
+        "#${colors.normal.magenta}"
+        "#${colors.normal.cyan}"
+        "#${colors.normal.white}"
+        "#${colors.bright.black}"
+        "#${colors.bright.red}"
+        "#${colors.bright.green}"
+        "#${colors.bright.yellow}"
+        "#${colors.bright.blue}"
+        "#${colors.bright.magenta}"
+        "#${colors.bright.cyan}"
+        "#${colors.bright.white}"
+      ];
       allow-hyperlink = true;
-      background-color = "rgb(9,1,14)";
-      background-opacity = 0.9;
-      bold-color = "rgb(0,255,39)";
       bold-color-same-as-fg = false;
       bold-is-bright = true;
       cjk-utf8-ambiguous-width = "narrow";
       command = "user-shell-login";
-      cursor-background-color = "rgb(85,85,255)";
       cursor-blink-mode = "on";
       cursor-colors-set = true;
-      cursor-foreground-color = "#ffffff";
       cursor-shape = "ibeam";
       custom-command = "fish -i";
       custom-font = "JetBrainsMono Nerd Font 11";
       ddterm-activate-hotkey = [];
-      ddterm-toggle-hotkey = ["<Alt><Super>d"];
+      ddterm-toggle-hotkey = ["<Super>d"];
       detect-urls = true;
       force-x11-gdk-backend = false;
-      foreground-color = "rgb(150,199,241)";
       hide-animation = "ease-in-quart";
       hide-animation-duration = 0.2;
       hide-when-focus-lost = false;
       hide-window-on-esc = false;
-      highlight-background-color = "rgb(85,85,255)";
       highlight-colors-set = true;
-      highlight-foreground-color = "#ffffff";
       new-tab-button = true;
       new-tab-front-button = false;
       notebook-border = false;
       override-window-animation = true;
-      palette = ["rgb(0,0,0)" "rgb(170,0,0)" "rgb(14,186,14)" "rgb(161,212,8)" "rgb(34,34,205)" "rgb(170,0,170)" "rgb(0,170,170)" "rgb(170,170,170)" "rgb(85,85,85)" "rgb(255,85,85)" "rgb(85,255,85)" "rgb(240,238,81)" "rgb(85,85,255)" "rgb(255,85,255)" "rgb(85,255,255)" "rgb(255,255,255)"];
       panel-icon-type = "none";
       pointer-autohide = true;
       preserve-working-directory = true;
@@ -88,8 +106,8 @@ with lib.hm.gvariant; {
       window-monitor = "current";
       window-monitor-connector = "eDP-1";
       window-position = "top";
-      window-resizable = false;
-      window-size = 1.0;
+      window-resizable = true;
+      window-size = 0.5;
       window-skip-taskbar = true;
       window-stick = true;
       window-type-hint = "normal";

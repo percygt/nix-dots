@@ -200,7 +200,7 @@
     "editor.defaultFormatter": "ms-python.black-formatter",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.organizeImports": false
+      "source.organizeImports": "never"
     }
   },
   "isort.args": [
@@ -287,8 +287,8 @@
   "editor.accessibilitySupport": "off",
   "editor.mouseWheelZoom": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.sortImports": true
+    "source.fixAll": "explicit",
+    "source.sortImports": "explicit"
   },
   "workbench.colorCustomizations": {
     "tree.indentGuidesStroke": "#B69B0A",

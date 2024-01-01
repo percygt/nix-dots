@@ -1,8 +1,6 @@
 {
   pkgs,
   lib,
-  config,
-  specialArgs,
   ...
 }: let
   nixGLMesaWrap = pkg:
@@ -47,20 +45,8 @@
        chmod +x $wrapped_bin
       done
     '';
-
-  linkAppConfig = appConfig: {
-    home.file = {
-      ".config/${appConfig}" = {
-        source =
-          config.lib.file.mkOutOfStoreSymlink
-          "${specialArgs.path_to_dotfiles}/.config/${appConfig}";
-        recursive = true;
-      };
-    };
-  };
 in {
-  nixGLMesaWrap = nixGLMesaWrap;
-  nixGLVulkanWrap = nixGLVulkanWrap;
-  nixGLVulkanMesaWrap = nixGLVulkanMesaWrap;
-  linkAppConfig = linkAppConfig;
+  inherit nixGLMesaWrap;
+  inherit nixGLVulkanWrap;
+  inherit nixGLVulkanMesaWrap;
 }

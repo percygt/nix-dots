@@ -1,5 +1,4 @@
 {
-  config,
   username,
   pkgs,
   ...
@@ -12,7 +11,7 @@ in {
     ./nixtools.nix
     ./cli.nix
   ];
-  news.display = "show";
+  news.display = "silent";
 
   targets.genericLinux.enable = true;
 
@@ -35,5 +34,5 @@ in {
     sessionVariables = commonConfig.variables;
   };
   programs.home-manager.enable = true;
-  home.stateVersion = "23.05";
+  home.stateVersion = "23.11";
 }

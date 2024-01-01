@@ -1,8 +1,4 @@
 {
-  lib,
-  pkgs,
-  ...
-}: {
   imports = [
     ./extensions.nix
     ./shell.nix

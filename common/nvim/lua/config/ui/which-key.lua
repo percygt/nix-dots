@@ -24,7 +24,6 @@ wk.setup({
 wk.register({
 	s = { name = "Search" },
 	g = { name = "Git" },
-	b = { name = "Buffer" },
 	m = { name = "Misc" },
 	d = { name = "Document" },
 	h = { name = "Hunk" },

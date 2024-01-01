@@ -1,4 +1,6 @@
-{
+let
+  colors = (import ../../colors.nix).syft;
+in {
   programs.foot = {
     enable = true;
     server.enable = true;
@@ -11,7 +13,7 @@
         letter-spacing = 0;
         vertical-letter-offset = 0.5;
         box-drawings-uses-font-glyphs = "yes";
-        pad = "10x10";
+        pad = "5x5";
       };
 
       cursor = {
@@ -27,29 +29,29 @@
       };
 
       colors = {
-        alpha = 0.9;
-        background = "09010E";
-        foreground = "96C7F1";
+        alpha = colors.alpha;
+        background = colors.default.background;
+        foreground = colors.default.foreground;
 
         ## Normal/regular colors (color palette 0-7)
-        regular0 = "000000"; # black
-        regular1 = "AA0000"; # red
-        regular2 = "0EBA0E"; # green
-        regular3 = "A1D408"; # yellow
-        regular4 = "2222CD"; # blue
-        regular5 = "AA00AA"; # magenta
-        regular6 = "00AAAA"; # cyan
-        regular7 = "AAAAAA"; # white
+        regular0 = colors.normal.black; # black
+        regular1 = colors.normal.red; # red
+        regular2 = colors.normal.green; # green
+        regular3 = colors.normal.yellow; # yellow
+        regular4 = colors.normal.blue; # blue
+        regular5 = colors.normal.magenta; # magenta
+        regular6 = colors.normal.cyan; # cyan
+        regular7 = colors.normal.white; # white
 
         ## Bright colors (color palette 8-15)
-        bright0 = "555555"; # bright black
-        bright1 = "FF5555"; # bright red
-        bright2 = "55FF55"; # bright green
-        bright3 = "F0EE51"; # bright yellow
-        bright4 = "5555FF"; # bright blue
-        bright5 = "FF55FF"; # bright magenta
-        bright6 = "55FFFF"; # bright cyan
-        bright7 = "FFFFFF"; # bright white
+        bright0 = colors.bright.black; # bright black
+        bright1 = colors.bright.red; # bright red
+        bright2 = colors.bright.green; # bright green
+        bright3 = colors.bright.yellow; # bright yellow
+        bright4 = colors.bright.blue; # bright blue
+        bright5 = colors.bright.magenta; # bright magenta
+        bright6 = colors.bright.cyan; # bright cyan
+        bright7 = colors.bright.white; # bright white
       };
     };
   };

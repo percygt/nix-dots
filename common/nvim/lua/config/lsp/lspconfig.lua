@@ -10,6 +10,7 @@ local on_attach = function(client, bufnr)
 	local nmap = function(keys, func, desc)
 		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 	end
+
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
 	nmap("gi", vim.lsp.buf.implementation, "Implementation")
@@ -19,11 +20,12 @@ local on_attach = function(client, bufnr)
 	nmap("gD", vim.lsp.buf.declaration, "Declaration")
 
 	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-	nmap("<c-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 	nmap("[d", vim.diagnostic.goto_prev, "Diagnostics: Go to Previous")
 	nmap("]d", vim.diagnostic.goto_next, "Diagnostics: Go to Next")
+
+	nmap("<leader>sx", vim.lsp.buf.signature_help, "Signature Documentation")
 	nmap("<leader>ss", builtin.lsp_document_symbols, "Document symbols")
-	nmap("<leader>re", vim.lsp.buf.rename, "Rename")
+	nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
 	nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")
 
 	if client.name == "ruff-lsp" then
