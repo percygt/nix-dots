@@ -1,16 +1,14 @@
 require("smartcolumn").setup()
-require("dressing").setup()
 require("trouble").setup()
 require("twilight").setup()
+require("colorizer").setup()
+require("dressing").setup()
 require("nvim-web-devicons").set_icon({
 	astro = { icon = "󱓞", color = "#FF4900", name = "Astro" },
 })
 require("notify").setup({
 	background_colour = "#000000",
 	enabled = false,
-})
-require("goto-preview").setup({
-	dismiss_on_move = true, -- Dismiss the floating window when moving the cursor.
 })
 require("fidget").setup({
 	-- Options related to LSP progress subsystem

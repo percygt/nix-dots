@@ -8,12 +8,12 @@ in {
       window.opacity = colors.alpha;
       colors = {
         primary = {
-          background = "#${colors.default.foreground}";
-          foreground = "#${colors.default.background}";
+          foreground = "#${colors.default.foreground}";
+          background = "#${colors.default.background}";
         };
         cursor = {
           text = "#${colors.cursor.foreground}";
-          cursor = "#${colors.cursor.foreground}";
+          cursor = "#${colors.cursor.background}";
         };
         normal = {
           black = "#${colors.normal.black}";

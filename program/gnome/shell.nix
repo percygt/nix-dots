@@ -109,7 +109,6 @@ with lib.hm.gvariant; {
         "no-overview@fthx"
         "gradienttopbar@pshow.org"
         "suppress-startup-animation@icedman.github.com"
-        "yakuake-extension@kde.org"
         "supergfxctl-gex@asus-linux.org"
         "appindicatorsupport@rgcjonas.gmail.com"
         "dash-to-panel@jderose9.github.com"

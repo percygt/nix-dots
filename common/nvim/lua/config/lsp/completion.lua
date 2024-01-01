@@ -20,16 +20,11 @@ cmp.setup({
 	mapping = cmp.mapping.preset.insert({
 		["<C-u>"] = cmp.mapping.scroll_docs(-4),
 		["<C-d>"] = cmp.mapping.scroll_docs(4),
-		["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
-		["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
 		["<C-e>"] = cmp.mapping.abort(),
+		["<C-Space>"] = cmp.mapping.complete(),
 		["<CR>"] = cmp.mapping.confirm({
 			behavior = cmp.ConfirmBehavior.Insert,
 			select = false,
-		}),
-		["<Right>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
 		}),
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
@@ -59,10 +54,10 @@ cmp.setup({
 	},
 	-- Pictograms
 	formatting = {
-		format = function(_, vim_item)
-			vim_item.kind = lspkind.presets.default[vim_item.kind] .. " " .. vim_item.kind
-			return vim_item
-		end,
+		format = lspkind.cmp_format({
+			maxwidth = 50,
+			ellipsis_char = "...",
+		}),
 	},
 })
 

@@ -51,8 +51,6 @@ in {
     };
   };
 
-  # Stow-like symlink
-  # for flatpak apps theming
   home = {
     activation = {
       linkGtkIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''

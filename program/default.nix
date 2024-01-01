@@ -1,21 +1,26 @@
 {
   imports = [
-    ./terminal
-    ./shell
     ./gnome
+    ./gtk
+    ./neovim
+    ./qt
+    ./shell
+    ./terminal
+    ./tmux
+    ./shell
+    ./vscodium
+    ./zellij
     ./starship.nix
+
+    ./broot.nix
     ./direnv.nix
-    # ./fish.nix
-    # ./bash.nix
     ./fastfetch.nix
     ./git.nix
-    # ./foot.nix
-    ./broot.nix
-    # ./wezterm.nix
+    ./zathura.nix
+
+    ./git.nix
     # ./qt.nix
     # ./gnome.nix
-    ./vscodium
-    ./neovim
     # ./helix.nix
   ];
 }

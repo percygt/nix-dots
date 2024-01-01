@@ -1,4 +1,7 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
+  lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+in {
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly.overrideAttrs (_: {CFLAGS = "-O3";});
@@ -17,179 +20,126 @@
     '';
 
     plugins = with pkgs.stable.vimPlugins; [
-      ##../../common/nvim/lua/lsp.lua
-      (
-        let
-          lspServers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
-        in {
-          plugin = nvim-lspconfig;
-          type = "lua";
-          config = ''
-            require("config.lsp").setup_servers("${lspServers}")
-            require("config.lsp_cmp")
-          '';
-        }
-      )
-      # lsp_signature-nvim
-      nvim-code-action-menu
-      {
-        plugin = nvim-lightbulb;
-        type = "lua";
-        config = ''
-          require("nvim-lightbulb").setup({
-            autocmd = { enabled = true }
-          })
-        '';
-      }
-      # {
-      #   plugin = yaml-companion;
-      #   type = "lua";
-      #   config = ''
-      #     require("telescope").load_extension("yaml_schema")
-      #     local cfg = require("yaml-companion").setup({})
-      #     require("lspconfig")["yamlls"].setup(cfg)
-      #   '';
-      # }
+      # Completion #-------------------------------------------------------------------------------------
       {
         plugin = nvim-cmp;
         type = "lua";
-        config = ''
-          require("config.lsp_cmp")
-        '';
+        config = ''require("config.lsp.completion")'';
       }
-      lspkind-nvim
       cmp-path
       cmp-buffer
       cmp-nvim-lsp
       cmp-nvim-lua
       cmp_luasnip
+      lspkind-nvim
       nvim-autopairs
-      {
-        plugin = luasnip;
-        type = "lua";
-        config = ''
-          require("config.snippets")
-        '';
-      }
+      luasnip
       friendly-snippets
-
+      # Language Server #-------------------------------------------------------------------------------------
+      {
+        plugin = nvim-lspconfig;
+        type = "lua";
+        config = ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
+      }
+      # Formatting/Diagnostic/Code Action #------------------------------------------------------------------------------------
+      {
+        plugin = none-ls-nvim;
+        type = "lua";
+        config = ''require("config.lsp.nonels").setup_servers("${lsp_tools}")'';
+      }
+      # Syntax Highlighting/LSP based motions #-------------------------------------------------------------------------------------
+      {
+        plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+        type = "lua";
+        config = ''require("config.lsp.treesitter")'';
+      }
+      nvim-treesitter-textobjects
+      nvim-cursorline
+      # Sessions #-------------------------------------------------------------------------------------
+      {
+        plugin = auto-session;
+        type = "lua";
+        config = ''require("config.tools.auto-session")'';
+      }
+      # Database #-------------------------------------------------------------------------------------
+      {
+        plugin = vim-dadbod;
+        type = "lua";
+        config = ''require("config.tools.database")'';
+      }
+      vim-dadbod-ui
+      vim-dadbod-completion
+      # Debug #-------------------------------------------------------------------------------------
       {
         plugin = nvim-dap;
         type = "lua";
-        config = ''
-          require("config.debug")
-        '';
+        config = ''require("config.tools.debug")'';
       }
       nvim-dap-ui
       nvim-dap-go
       nvim-dap-python
+      # Git #-------------------------------------------------------------------------------------
       {
-        plugin = refactoring-nvim;
+        plugin = gitsigns-nvim;
         type = "lua";
-        config = ''
-          require("config.refactoring")
-        '';
+        config = ''require("config.tools.git")'';
       }
-
-      #-------------------------------------------------------------------------------------
+      git-worktree-nvim
+      # thePrimeagen #-------------------------------------------------------------------------------------
       {
-        plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+        plugin = harpoon2;
         type = "lua";
-        config = ''
-          require("config.treesitter")
-        '';
+        config = ''require("config.tools.harpoon2")'';
       }
-      nvim-treesitter-textobjects
-      nvim-ts-rainbow
-      {
-        plugin = telescope-nvim;
-        type = "lua";
-        config = ''
-          require("config.telescope")
-        '';
-      }
-      telescope-file-browser-nvim
+      comment-nvim
+      vim-surround
+      vim-repeat
+      vim-maximizer
       plenary-nvim
+      # UI Enhancement #-------------------------------------------------------------------------------------
       {
-        plugin = nvim-tree-lua;
+        plugin = indent-blankline-nvim;
         type = "lua";
-        config = ''
-          require("config.tree")
-        '';
+        config = ''require("config.ui.indent")'';
+      }
+      {
+        plugin = lualine-nvim;
+        type = "lua";
+        config = ''require("config.ui.lualine")'';
+      }
+      {
+        plugin = onedark-nvim;
+        type = "lua";
+        config = ''require("config.ui.theme")'';
       }
       {
         plugin = which-key-nvim;
         type = "lua";
-        config = ''
-          vim.api.nvim_set_option("timeoutlen", 300)
-          require("which-key").setup({})
-        '';
+        config = ''require("which-key")'';
       }
-      {
-        plugin = comment-nvim;
-        type = "lua";
-        config = ''
-          require("config.comment")
-        '';
-      }
-      vim-surround
-      vim-repeat
-      {
-        plugin = gitsigns-nvim;
-        type = "lua";
-        config = ''
-          require("gitsigns").setup()
-        '';
-      }
-
-      {
-        plugin = onedark-nvim;
-        type = "lua";
-        config = ''
-          require("config.theme")
-        '';
-      }
-      pkgs.vimPlugins.harpoon
-      git-worktree-nvim
+      trouble-nvim
+      dressing-nvim
+      nvim-colorizer-lua
+      smartcolumn-nvim
+      twilight-nvim
+      nvim-web-devicons
       nvim-notify
+      fidget-nvim
       nui-nvim
       noice-nvim
-      pkgs.vimPlugins.indent-blankline-nvim
-      lualine-nvim
-      nvim-navic
-      nvim-web-devicons
-
+      # Fuzzy Finder/File Browser #-------------------------------------------------------------------------------------
       {
-        plugin = oil-nvim;
+        plugin = telescope-nvim;
         type = "lua";
-        config = ''
-          require("oil").setup()
-          vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
-        '';
+        config = ''require("config.telescope")'';
       }
-      # {
-      #   plugin = bufferline-nvim;
-      #   type = "lua";
-      #   config = ''
-      #     require("config.theme")
-      #   '';
-      # }
-
-      # {
-      #   PLUGIN = nvim-colorizer-lua;
-      #   type = "lua";
-      #   config = ''
-      #     require("colorizer").setup()
-      #   '';
-      # }
-      # {
-      #   plugin = dressing-nvim;
-      #   type = "lua";
-      #   config = ''
-      #     require("dressing").setup()
-      #   '';
-      # }
-      # popup-nvim
+      telescope-file-browser-nvim
+      # File Tree Browser #-------------------------------------------------------------------------------------
+      {
+        plugin = nvim-tree-lua;
+        type = "lua";
+        config = ''require("config.tree")'';
+      }
     ];
     extraPackages = with pkgs; [
       # Essentials
