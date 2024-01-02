@@ -1,6 +1,5 @@
 [
   "prettier-plugin-astro",
   "prettier",
-  "@astrojs/language-server",
-  "eslint-plugin-astro"
+  "@astrojs/language-server"
 ]

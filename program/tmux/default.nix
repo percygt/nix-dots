@@ -1,62 +1,106 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   home.packages = [
     pkgs.gitmux
   ];
   programs.tmux = {
     enable = true;
     baseIndex = 1;
+    shell = "${pkgs.fish}/bin/fish";
     keyMode = "vi";
+    sensibleOnTop = true;
     terminal = "tmux-256color";
     mouse = true;
+    customPaneNavigationAndResize = true;
+    disableConfirmationPrompt = true;
     prefix = "C-a";
     escapeTime = 0;
+    newSession = true;
     historyLimit = 1000000;
     plugins = with pkgs.tmuxPlugins; [
       {
+        plugin = mkTmuxPlugin {
+          pluginName = "tmux-sessionx";
+          version = "unstable-2024-01-01";
+          src = pkgs.fetchFromGitHub {
+            owner = "omerxx";
+            repo = "tmux-sessionx";
+            rev = "847cf28c836da1219e039cb7c4379a2c314a8a04";
+            hash = "sha256-cAh0S88pMlWBv5rEB11+jAxv/8fT/DGiO8eeFLFxQ/g=";
+          };
+          rtpFilePath = "sessionx.tmux";
+          postInstall = ''
+            sed -i -e 's|z_target=$(zoxide query "$target")|z_target=$("${pkgs.zoxide}/bin/zoxide" query "$target")|g' $target/scripts/sessionx.sh
+            sed -i -e 's|''${TMUX_PLUGIN_MANAGER_PATH%/}/tmux-sessionx/scripts/preview.sh|${placeholder "out"}/share/tmux-plugins/tmux-sessionx/scripts/preview.sh|g' $target/scripts/sessionx.sh
+          '';
+        };
+        extraConfig = ''
+          set -g @sessionx-bind "o"
+          set -g @sessionx-window-height "60%"
+          set -g @sessionx-window-width "90%"
+          set -g @sessionx-preview-location 'right'
+          set -g @sessionx-preview-ratio '55%'
+          set -g @sessionx-zoxide-mode "on"
+        '';
+      }
+      {
+        plugin = onedark-theme.overrideAttrs {
+          src = pkgs.fetchFromGitHub {
+            owner = "percygt";
+            repo = "tmux-onedark-theme";
+            rev = "189bc3ee34b9bf71b2ebd6d5fed7bc37afc2bc76";
+            hash = "sha256-l/AMWYMwkq4gHEzeHdNJ5g3S7BR0EywLXERFt+Bwe6c=";
+          };
+        };
+        extraConfig = "set -g status-position top";
+      }
+      {
         plugin = resurrect;
-        extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+        extraConfig = ''
+          set -g @resurrect-strategy-nvim 'session'
+          set -g @resurrect-strategy-vim 'session'
+          # Taken from: https://github.com/p3t33/nixos_flake/blob/5a989e5af403b4efe296be6f39ffe6d5d440d6d6/home/modules/tmux.nix
+          set -g @resurrect-capture-pane-contents 'on'
+          set -g @resurrect-dir ${config.home.homeDirectory}
+          set -g @resurrect-hook-post-save-all 'target=$(readlink -f ${config.home.homeDirectory}/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g" $target | sponge $target'
+        '';
       }
       {
         plugin = continuum;
-        extraConfig = "set -g @continuum-restore 'on'";
-      }
-      {
-        plugin = power-theme.overrideAttrs (_: {
-          src = pkgs.fetchFromGitHub {
-            owner = "percygt";
-            repo = "tmux-power";
-            rev = "2ebd36bd88a82c32b699dc972b59b4984b586094";
-            hash = "sha256-VBLTFbEAga2/gq2AEXF0kEo0pHHEynj1GrbEY6+CTXM=";
-          };
-        });
         extraConfig = ''
-          set -g @tmux_power_theme "default"
-          # set -g @tmux_power_right_arrow_icon ""
-          # set -g @tmux_power_left_arrow_icon ""
-          set -g status-position top
+          set -g @continuum-restore 'on'
+          set -g @continuum-boot 'on'
+          set -g @continuum-save-interval '10'
+          set -g @continuum-systemd-start-cmd 'start-server'
         '';
       }
       {
-        plugin = fzf-tmux-url;
+        plugin = tmux-thumbs;
         extraConfig = ''
-          set -g @fzf-url-fzf-options '-p 60%,30% --prompt="   " --border-label=" Open URL "'
-          set -g @fzf-url-history-limit '2000'
+          set -g @thumbs-command 'tmux set-buffer -- {} && tmux display-message "Copied {}" && printf %s {} | xclip -i -selection clipboard'
         '';
       }
-      sensible
+      better-mouse-mode
+      extrakto
+      vim-tmux-navigator
       yank
-      tmux-thumbs
       tmux-fzf
     ];
     extraConfig = ''
       # TERM override
-      set terminal-overrides "xterm*:RGB"
+      set terminal-overrides "xterm-256color:RGB"
       set -g set-clipboard on
 
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
+      # make Prefix p paste the buffer.
+      unbind p
+      bind p paste-buffer
+
+      set -g allow-passthrough on
+      set -ga update-environment TERM
+      set -ga update-environment TERM_PROGRAM
 
       # Copy mode using 'Esc'
       unbind [
@@ -64,7 +108,30 @@
 
       # Start selection with 'v' and copy using 'y'
       bind-key -T copy-mode-vi v send-keys -X begin-selection
+      set -g renumber-windows on       # renumber all windows when any window is closed
+      bind-key X kill-session
+      set-option -g detach-on-destroy off
 
+      # Split
+      unbind %
+      unbind '"'
+      bind s split-window -v -c "#{pane_current_path}"
+      bind v split-window -h -c "#{pane_current_path}"
+      bind-key g new-window 'lazygit; tmux kill-pane'
+
+      # Easier move of windows
+      bind-key -r Home swap-window -t - \; select-window -t -
+      bind-key -r End swap-window -t + \; select-window -t +
+
+      # switch to last session
+      bind-key L switch-client -l
+
+      # Pane to window
+      unbind !
+      bind-key w break-pane
+
+      # Easier reload of config
+      bind r source-file ~/.config/tmux/tmux.conf
     '';
   };
 }

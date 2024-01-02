@@ -107,6 +107,7 @@ in {
       vim-maximizer
       comment-nvim
       vim-surround
+      vim-repeat
       plenary-nvim
       # UI Enhancement #-------------------------------------------------------------------------------------
       {
@@ -168,13 +169,10 @@ in {
           pylama
           black
           isort
-          ruff
           debugpy
         ]))
       nodePackages.pyright
-      pyupgrade
-      yamllint
-
+      ruff
       # Lua
       lua-language-server
       selene
@@ -194,8 +192,9 @@ in {
       shellharden
 
       # JavaScript
+      prettierd
+      eslint_d
       nodePackages.prettier
-      nodePackages.eslint
       nodePackages.typescript-language-server
 
       # Go
@@ -205,6 +204,7 @@ in {
       delve
 
       # Additional
+      deno-ls
       nodePackages.bash-language-server
       nodePackages.yaml-language-server
       nodePackages.dockerfile-language-server-nodejs
