@@ -24,6 +24,7 @@ local on_attach = function(client, bufnr)
 	nmap("]d", vim.diagnostic.goto_next, "Diagnostics: Go to Next")
 
 	nmap("<leader>sx", vim.lsp.buf.signature_help, "Signature Documentation")
+	nmap("<leader>st", builtin.treesitter, "Treesitter")
 	nmap("<leader>ss", builtin.lsp_document_symbols, "Document symbols")
 	nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
 	nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")

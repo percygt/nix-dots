@@ -27,6 +27,7 @@
     tealdeer
     croc
     ollama
+    zoxide
 
     # tui's
     termscp
@@ -59,9 +60,9 @@
         "--border"
       ];
     };
-    thefuck.enable = true;
     btop.enable = true;
     eza.enable = true;
+    zoxide.enable = true;
     ssh.enable = true;
   };
 }

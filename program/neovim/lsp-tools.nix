@@ -1,10 +1,4 @@
-{pkgs, ...}: let
-  extraNodePackages = import ../../nixpkgs/node {
-    inherit pkgs;
-    system = pkgs.system;
-    nodejs = pkgs.nodejs;
-  };
-in {
+{pkgs, ...}: {
   null_ls = {
     ## Built-in sources
     ## https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
@@ -42,7 +36,7 @@ in {
         ];
         extra_args = [
           "--plugin"
-          "${extraNodePackages.prettier-plugin-astro}/lib/node_modules/prettier-plugin-astro/dist/index.js"
+          "${pkgs.nodePackages-extra.prettier-plugin-astro}/lib/node_modules/prettier-plugin-astro/dist/index.js"
         ];
       };
       deno_fmt = {
