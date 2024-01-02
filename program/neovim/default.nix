@@ -1,7 +1,7 @@
 {pkgs, ...}: let
   lsp-servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
   lsp-tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
-  vim-maximizer = pkgs.vimPlugins.buildVimPlugin {
+  vim-maximizer = pkgs.vimUtils.buildVimPlugin {
     pname = "vim-maximizer";
     version = "2024-01-01";
     src = pkgs.fetchFromGitHub {
