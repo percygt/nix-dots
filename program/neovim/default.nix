@@ -1,25 +1,37 @@
 {pkgs, ...}: let
-  lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
-  lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+  lsp-servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
+  lsp-tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+  vim-maximizer = pkgs.vimPlugins.buildVimPlugin {
+    pname = "vim-maximizer";
+    version = "2024-01-01";
+    src = pkgs.fetchFromGitHub {
+      owner = "szw";
+      repo = "vim-maximizer";
+      rev = "2e54952fe91e140a2e69f35f22131219fcd9c5f1";
+      hash = "sha256-+VPcMn4NuxLRpY1nXz7APaXlRQVZD3Y7SprB/hvNKww=";
+    };
+    meta.homepage = "https://github.com/szw/vim-maximizer";
+  };
 in {
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly.overrideAttrs (_: {CFLAGS = "-O3";});
+    defaultEditor = true;
     vimAlias = true;
     viAlias = true;
     withNodeJs = true;
     withPython3 = true;
     withRuby = false;
-    extraConfig = ''
-      let mapleader=" "
-
-      lua <<EOF
+    extraLuaConfig = ''
+      vim.g.mapleader = " "
       require("config.general")
-      require("config.keymaps")
-      EOF
+      require("config.remaps")
+      require("config.autocmds")
+      require("config.tools.misc")
+      require("config.ui.misc")
     '';
 
-    plugins = with pkgs.stable.vimPlugins; [
+    plugins = with pkgs.stable-23-11.vimPlugins; [
       # Completion #-------------------------------------------------------------------------------------
       {
         plugin = nvim-cmp;
@@ -39,13 +51,13 @@ in {
       {
         plugin = nvim-lspconfig;
         type = "lua";
-        config = ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
+        config = ''require("config.lsp.lspconfig").setup_servers("${lsp-servers}")'';
       }
       # Formatting/Diagnostic/Code Action #------------------------------------------------------------------------------------
       {
         plugin = none-ls-nvim;
         type = "lua";
-        config = ''require("config.lsp.nonels").setup_servers("${lsp_tools}")'';
+        config = ''require("config.lsp.nonels").setup_servers("${lsp-tools}")'';
       }
       # Syntax Highlighting/LSP based motions #-------------------------------------------------------------------------------------
       {
@@ -87,14 +99,14 @@ in {
       git-worktree-nvim
       # thePrimeagen #-------------------------------------------------------------------------------------
       {
-        plugin = harpoon2;
+        plugin = pkgs.vimPlugins.harpoon2;
         type = "lua";
         config = ''require("config.tools.harpoon2")'';
       }
+      # Misc tools #-------------------------------------------------------------------------------------
+      vim-maximizer
       comment-nvim
       vim-surround
-      vim-repeat
-      vim-maximizer
       plenary-nvim
       # UI Enhancement #-------------------------------------------------------------------------------------
       {

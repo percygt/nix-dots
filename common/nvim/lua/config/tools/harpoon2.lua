@@ -4,7 +4,7 @@ local setKey = vim.keymap.set
 harpoon:setup()
 -- REQUIRED
 
-setKey("n", "<leader>a", function()
+setKey("n", "<a-m>", function()
   harpoon:list():append()
 end)
 setKey("n", "<a-1>", function()
@@ -21,35 +21,12 @@ setKey("n", "<a-4>", function()
 end)
 
 -- Toggle previous & next buffers stored within Harpoon list
-setKey("n", "<a-h>", function()
+setKey("n", "<a-.>", function()
   harpoon:list():prev()
 end)
-setKey("n", "<a-l>", function()
+setKey("n", "<a-,>", function()
   harpoon:list():next()
 end)
-setKey("n", "<C-e>", function()
+setKey("n", "<leader>h", function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
 end)
--- basic telescope configuration
--- local conf = require("telescope.config").values
--- local function toggle_telescope(harpoon_files)
---   local file_paths = {}
---   for _, item in ipairs(harpoon_files.items) do
---     table.insert(file_paths, item.value)
---   end
---
---   require("telescope.pickers")
---       .new({}, {
---         prompt_title = "Harpoon",
---         finder = require("telescope.finders").new_table({
---           results = file_paths,
---         }),
---         previewer = conf.file_previewer({}),
---         sorter = conf.generic_sorter({}),
---       })
---       :find()
--- end
---
--- setKey("n", "<c-e>", function()
---   toggle_telescope(harpoon:list())
--- end, { desc = "Open harpoon window" })
