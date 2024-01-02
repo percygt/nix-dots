@@ -6,10 +6,13 @@
     nixpkgs-23-11.url = "github:nixos/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
     nixgl.url = "github:guibou/nixgl";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
+
     wezterm.url = "github:happenslol/wezterm/add-nix-flake?dir=nix";
     wezterm.inputs.nixpkgs.follows = "nixpkgs";
   };
