@@ -7,7 +7,6 @@
     statix
     nurl
     nix-tree
-    nixgl
     nix-your-shell
   ];
 }

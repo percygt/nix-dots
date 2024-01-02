@@ -1,6 +1,6 @@
 {
   imports = [
-    ./extensions.nix
+    ./extensions
     ./shell.nix
     ./keybindings.nix
   ];

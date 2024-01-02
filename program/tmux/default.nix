@@ -22,7 +22,7 @@
     historyLimit = 1000000;
     plugins = with pkgs.tmuxPlugins; [
       {
-        plugin = mkTmuxPlugin {
+        plugin = pkgs.tmuxPlugins.mkTmuxPlugin {
           pluginName = "tmux-sessionx";
           version = "unstable-2024-01-01";
           src = pkgs.fetchFromGitHub {
@@ -47,14 +47,14 @@
         '';
       }
       {
-        plugin = onedark-theme.overrideAttrs {
+        plugin = onedark-theme.overrideAttrs (_: {
           src = pkgs.fetchFromGitHub {
             owner = "percygt";
             repo = "tmux-onedark-theme";
             rev = "189bc3ee34b9bf71b2ebd6d5fed7bc37afc2bc76";
             hash = "sha256-l/AMWYMwkq4gHEzeHdNJ5g3S7BR0EywLXERFt+Bwe6c=";
           };
-        };
+        });
         extraConfig = "set -g status-position top";
       }
       {

@@ -6,7 +6,7 @@
     nixpkgs-23-11.url = "github:nixos/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
     nixgl.url = "github:guibou/nixgl";
-
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -24,10 +24,8 @@
   } @ inputs: let
     username = "percygt";
     forAllSystems = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems;
-    systems = inputs.flake-utils.lib.system;
   in rec {
     overlays = {
-      default = import ./overlay/default.nix;
       stable-23-11 = final: prev: {
         stable-23-11 = inputs.nixpkgs-23-11.legacyPackages.${prev.system};
       };
@@ -48,17 +46,17 @@
     formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".alejandra);
     legacyPackages = forAllSystems (
       system:
-        import inputs.nixpkgs {
+        import nixpkgs {
           inherit system;
           overlays = builtins.attrValues overlays;
           config.allowUnfree = true;
         }
     );
 
+    pkgs = legacyPackages.x86_64-linux;
     homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
-      pkgs = legacyPackages.x86_64-linux;
-      system = systems.x86_64-linux;
-      extraSpecialArgs = {inherit inputs username;};
+      inherit pkgs;
+      extraSpecialArgs = {inherit pkgs inputs username;};
       modules = [./home.nix];
     };
   };
