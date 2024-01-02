@@ -7,7 +7,7 @@
   commonConfig = builtins.fromTOML (builtins.readFile ./common/config.toml);
 in {
   imports = [
-    ./home
+    ./program
     ./nixtools.nix
     ./cli.nix
   ];
