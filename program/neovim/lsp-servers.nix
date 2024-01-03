@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   clangd = {};
   nil_ls = {};
+  ruff_lsp = {};
   pyright = {};
   dockerls = {};
   bashls = {};
@@ -8,6 +9,9 @@
   gopls = {};
   tsserver = {
     init_options.tsserver.path = "${pkgs.nodePackages.typescript}/bin/tsserver";
+  };
+  astro = {
+    init_options.typescript.tsdk = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib/";
   };
   taplo = {};
   cssls = {};

@@ -10,25 +10,25 @@ telescope.load_extension("git_worktree")
 telescope.load_extension("fzf")
 
 telescope.setup({
-	defaults = {
-		mappings = {
-			i = {
-				["<C-u>"] = false,
-				["<C-d>"] = false,
-				["<C-j>"] = actions.move_selection_next,
-				["<C-k>"] = actions.move_selection_previous,
-			},
-		},
-	},
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-u>"] = false,
+        ["<C-d>"] = false,
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+      },
+    },
+  },
 })
 
 -- See `:help telescope.builtin`
 nnoremap("<leader>?", builtin.oldfiles, { desc = "[?] Find recently opened files" })
 nnoremap("<leader>/", function()
-	builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-		winblend = 10,
-		previewer = false,
-	}))
+  builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+    winblend = 10,
+    previewer = false,
+  }))
 end, { desc = "Fuzzily search in current buffer" })
 
 nnoremap("<leader>sf", builtin.find_files, { desc = "Files" })

@@ -1,6 +1,6 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
 {lib, ...}: {
-  xdg.configFile."pop-shell/config.json".text = builtins.toJSON ((import ./pop-shell.nix).config);
+  xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
 
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/shell/extensions/quake-mode" = {
