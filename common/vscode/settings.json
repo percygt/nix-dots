@@ -1,38 +1,83 @@
 {
-  "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/node_modules/*/**": true,
-    "**/tmp/**": true,
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/node_modules": true,
-    "**/dist/**": true,
-    "**/log/**": true,
-    "**/logs/**": true
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode",
+    "editor.formatOnSave": true
   },
-  "files.exclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/node_modules/*/**": true,
-    "**/tmp/**": true,
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/node_modules": true,
-    "**/dist/**": true,
-    "**/log/**": true
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
   },
-  "search.exclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/node_modules/*/**": true,
-    "**/tmp/**": true,
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/node_modules": true,
-    "**/dist/**": true,
-    "**/log/**": true
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
   },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[nix]": {
+    "editor.defaultFormatter": "kamadorueda.alejandra",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": false
+  },
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "never"
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter",
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "alejandra.program": "alejandra",
+  "black-formatter.args": [
+    "--line-length=119"
+  ],
+  "cmake.configureOnOpen": true,
+  "console-ninja.featureSet": "Community",
+  "editor.accessibilitySupport": "off",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.sortImports": "explicit"
+  },
+  "editor.cursorBlinking": "expand",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorWidth": 5,
+  "editor.detectIndentation": true,
+  "editor.fontFamily": "VictorMono Nerd Font,JetBrainsMono Nerd Font, Hack Nerd Font, monospace",
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "400",
+  "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairsHorizontal": "active",
+  "editor.guides.highlightActiveIndentation": true,
+  "editor.insertSpaces": true,
+  "editor.letterSpacing": 1,
+  "editor.linkedEditing": true,
+  "editor.minimap.autohide": true,
+  "editor.minimap.enabled": false,
+  "editor.mouseWheelZoom": true,
+  "editor.scrollbar.vertical": "auto",
+  "editor.scrollbar.verticalScrollbarSize": 15,
+  "editor.smoothScrolling": true,
+  "editor.tabSize": 2,
   "editor.tokenColorCustomizations": {
     "[KastorCode Dark Purple Theme]": {
       "textMateRules": [
@@ -43,8 +88,8 @@
             "entity.other.attribute-name.class.css"
           ],
           "settings": {
-            "foreground": "#d4ff00",
-            "fontStyle": "italic"
+            "fontStyle": "italic",
+            "foreground": "#d4ff00"
           }
         },
         {
@@ -74,8 +119,8 @@
             "punctuation.definition.tag"
           ],
           "settings": {
-            "foreground": "#61deda",
-            "fontStyle": "italic"
+            "fontStyle": "italic",
+            "foreground": "#61deda"
           }
         }
       ]
@@ -118,8 +163,8 @@
           "comment"
         ],
         "settings": {
-          "foreground": "#c2530d",
-          "fontStyle": "italic"
+          "fontStyle": "italic",
+          "foreground": "#c2530d"
         }
       },
       {
@@ -147,15 +192,15 @@
       {
         "scope": "entity.name.function",
         "settings": {
-          "foreground": "#2ba3ff",
-          "fontStyle": "bold"
+          "fontStyle": "bold",
+          "foreground": "#2ba3ff"
         }
       },
       {
         "scope": "entity.name.type.alias",
         "settings": {
-          "foreground": "#ea3d3d",
-          "fontStyle": "bold"
+          "fontStyle": "bold",
+          "foreground": "#ea3d3d"
         }
       },
       {
@@ -184,145 +229,100 @@
       }
     ]
   },
+  "editor.unicodeHighlight.invisibleCharacters": false,
   "emmet.includeLanguages": {
+    "django-html": "html",
     "javascript": "javascriptreact",
-    "vue-html": "html",
-    "vue": "html",
     "jinja-html": "html",
-    "django-html": "html"
-  },
-  "liveServer.settings.donotVerifyTags": true,
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter",
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.organizeImports": "never"
-    }
-  },
-  "isort.args": [
-    "--profile=black"
-  ],
-  "flake8.args": [
-    "--line-length=119"
-  ],
-  "black-formatter.args": [
-    "--line-length=119"
-  ],
-  "liveServer.settings.donotShowInfoMsg": true,
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "git.autofetch": true,
-  "[jsonc]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "terminal.integrated.fontFamily": "Hack Nerd Font",
-  "terminal.integrated.fontSize": 14,
-  "git.enableSmartCommit": true,
-  "terminal.integrated.defaultProfile.linux": "fish",
-  "telemetry.telemetryLevel": "off",
-  "security.workspace.trust.untrustedFiles": "open",
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[vue]": {
-    "editor.defaultFormatter": "Vue.volar"
-  },
-  "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode",
-    "editor.formatOnSave": true
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+    "vue": "html",
+    "vue-html": "html"
   },
   "errorLens.excludeBySource": [
     "ts(2345)"
   ],
-  "[scss]": {
-    "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter",
-    "editor.formatOnSave": true
-  },
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features",
-    "editor.formatOnSave": true
-  },
-  "explorer.confirmDelete": false,
   "explorer.compactFolders": false,
+  "explorer.confirmDelete": false,
   "explorer.incrementalNaming": "smart",
-  "search.actionsPosition": "auto",
-  "search.smartCase": true,
-  "files.trimTrailingWhitespace": true,
-  "window.titleBarStyle": "native",
-  "window.commandCenter": true,
-  "window.autoDetectColorScheme": true,
-  "window.dialogStyle": "custom",
-  "window.menuBarVisibility": "toggle",
-  "window.experimental.nativeContextMenuLocation": true,
-  "window.title": "${dirty}${activeEditorShort}${separator}${profileName}${folderName}${separator}VSCode",
-  "editor.fontFamily": "VictorMono Nerd Font,JetBrainsMono Nerd Font, Hack Nerd Font, monospace",
-  "editor.fontLigatures": true,
-  "editor.letterSpacing": 1,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.detectIndentation": true,
-  "editor.fontWeight": "400",
-  "editor.cursorWidth": 5,
-  "editor.cursorBlinking": "expand",
-  "editor.linkedEditing": true,
-  "editor.guides.bracketPairs": true,
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.highlightActiveIndentation": true,
-  "editor.guides.bracketPairsHorizontal": "active",
-  "editor.unicodeHighlight.invisibleCharacters": false,
-  "editor.scrollbar.verticalScrollbarSize": 15,
-  "editor.scrollbar.vertical": "auto",
-  "editor.accessibilitySupport": "off",
-  "editor.mouseWheelZoom": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.sortImports": "explicit"
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true,
+    "**/log/**": true,
+    "**/node_modules": true,
+    "**/node_modules/*/**": true,
+    "**/tmp/**": true
   },
+  "files.trimTrailingWhitespace": true,
+  "files.watcherExclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true,
+    "**/log/**": true,
+    "**/logs/**": true,
+    "**/node_modules": true,
+    "**/node_modules/*/**": true,
+    "**/tmp/**": true
+  },
+  "flake8.args": [
+    "--line-length=119"
+  ],
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "isort.args": [
+    "--profile=black"
+  ],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "search.actionsPosition": "auto",
+  "search.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true,
+    "**/log/**": true,
+    "**/node_modules": true,
+    "**/node_modules/*/**": true,
+    "**/tmp/**": true
+  },
+  "search.smartCase": true,
+  "security.workspace.trust.untrustedFiles": "open",
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.defaultProfile.linux": "fish",
+  "terminal.integrated.env.linux": {},
+  "terminal.integrated.fontFamily": "Hack Nerd Font",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.smoothScrolling": true,
+  "window.autoDetectColorScheme": true,
+  "window.commandCenter": true,
+  "window.dialogStyle": "custom",
+  "window.experimental.nativeContextMenuLocation": true,
+  "window.menuBarVisibility": "toggle",
+  "window.title": "${dirty}${activeEditorShort}${separator}${profileName}${folderName}",
+  "window.titleBarStyle": "native",
+  "window.titleSeparator": " • ",
   "workbench.colorCustomizations": {
-    "tree.indentGuidesStroke": "#B69B0A",
-    "tab.activeBorderTop": "#B69B0A",
-    "tab.activeBackground": "#000C3A",
-    "tab.activeForeground": "#B69B0A",
+    "editorBracketHighlight.unexpectedBracket.foreground": "#ff0000",
     "editorBracketPairGuide.activeBackground1": "#FFB86C",
     "editorBracketPairGuide.activeBackground2": "#FF75B5",
     "editorBracketPairGuide.activeBackground3": "#45A9F9",
     "editorBracketPairGuide.activeBackground4": "#B084EB",
     "editorBracketPairGuide.activeBackground5": "#E6E6E6",
     "editorBracketPairGuide.activeBackground6": "#19f9d8",
-    "editorBracketHighlight.unexpectedBracket.foreground": "#ff0000"
+    "tab.activeBackground": "#000C3A",
+    "tab.activeBorderTop": "#B69B0A",
+    "tab.activeForeground": "#B69B0A",
+    "tree.indentGuidesStroke": "#B69B0A"
   },
+  "workbench.editor.enablePreview": true,
   "workbench.iconTheme": "vscode-icons",
+  "workbench.list.smoothScrolling": true,
   "workbench.tree.indent": 16,
   "workbench.tree.renderIndentGuides": "always",
-  "workbench.editor.enablePreview": true,
-  "editor.minimap.autohide": true,
-  "window.titleSeparator": " • ",
-  "editor.smoothScrolling": true,
-  "terminal.integrated.smoothScrolling": true,
-  "editor.cursorSmoothCaretAnimation": "on",
-  "workbench.list.smoothScrolling": true,
-  "cmake.configureOnOpen": true,
-  "editor.minimap.enabled": false,
-  "[nix]": {
-    "editor.defaultFormatter": "kamadorueda.alejandra",
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnType": false
-  },
-  "alejandra.program": "alejandra",
-  "terminal.integrated.env.linux": {},
-  "workbench.colorTheme": "KastorCode Dark Purple Theme",
-  "console-ninja.featureSet": "Community"
+  "workbench.colorTheme": "KastorCode Dark Purple Theme"
 }

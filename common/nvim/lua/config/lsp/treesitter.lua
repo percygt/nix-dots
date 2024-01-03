@@ -20,8 +20,8 @@ require("nvim-treesitter.configs").setup({
 
 			keymaps = {
 				-- You can use the capture groups defined in textobjects.scm
-				["aa"] = "@parameter.outer",
-				["ia"] = "@parameter.inner",
+				["ap"] = "@parameter.outer",
+				["ip"] = "@parameter.inner",
 				["af"] = "@function.outer",
 				["if"] = "@function.inner",
 				["ac"] = "@class.outer",
@@ -33,15 +33,15 @@ require("nvim-treesitter.configs").setup({
 				["at"] = "@comment.outer",
 			},
 		},
-		swap = {
-			enable = true,
-			swap_next = {
-				["<leader>a"] = "@parameter.inner",
-			},
-			swap_previous = {
-				["<leader>A"] = "@parameter.inner",
-			},
-		},
+		-- swap = {
+		-- 	enable = true,
+		-- 	swap_next = {
+		-- 		["<leader>a"] = "@parameter.inner",
+		-- 	},
+		-- 	swap_previous = {
+		-- 		["<leader>A"] = "@parameter.inner",
+		-- 	},
+		-- },
 		move = {
 			enable = true,
 			set_jumps = true, -- whether to set jumps in the jumplist

@@ -1,6 +1,5 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
-{lib, ...}:
-with lib.hm.gvariant; {
+{
   dconf.settings = {
     "com/github/stunkymonkey/nautilus-open-any-terminal" = {
       keybindings = "<Win>f";
@@ -12,7 +11,7 @@ with lib.hm.gvariant; {
       always-on-top = [];
       begin-move = [];
       begin-resize = [];
-      close = ["<Alt>x"];
+      close = ["<Shift><Control>q"];
       cycle-group = ["<Alt>F6"];
       cycle-group-backward = ["<Shift><Alt>F6"];
       cycle-panels = ["<Control><Alt>Escape"];
@@ -28,10 +27,10 @@ with lib.hm.gvariant; {
       move-to-corner-nw = [];
       move-to-corner-se = [];
       move-to-corner-sw = [];
-      move-to-monitor-down = ["<Shift><Control><Super>Down"];
-      move-to-monitor-left = ["<Shift><Control><Super>Left"];
-      move-to-monitor-right = ["<Shift><Control><Super>Right"];
-      move-to-monitor-up = ["<Shift><Control><Super>Up"];
+      move-to-monitor-down = ["<Shift><Control><Super>j"];
+      move-to-monitor-left = ["<Shift><Control><Super>h"];
+      move-to-monitor-right = ["<Shift><Control><Super>l"];
+      move-to-monitor-up = ["<Shift><Control><Super>k"];
       move-to-side-e = [];
       move-to-side-n = [];
       move-to-side-s = [];
@@ -39,8 +38,8 @@ with lib.hm.gvariant; {
       move-to-workspace-11 = [];
       move-to-workspace-12 = [];
       move-to-workspace-down = [];
-      move-to-workspace-left = ["<Control><Super>Left" "<Super><Shift>Page_Up"];
-      move-to-workspace-right = ["<Control><Super>Right" "<Super><Shift>Page_Down"];
+      move-to-workspace-left = ["<Control><Super>h" "<Super><Shift>Page_Up"];
+      move-to-workspace-right = ["<Control><Super>l" "<Super><Shift>Page_Down"];
       move-to-workspace-up = [];
       panel-main-menu = ["<Alt>F1"];
       panel-run-dialog = ["<Alt>F2"];
@@ -58,15 +57,15 @@ with lib.hm.gvariant; {
       switch-to-workspace-2 = ["<Super>2"];
       switch-to-workspace-3 = ["<Super>3"];
       switch-to-workspace-4 = ["<Super>4"];
-      switch-to-workspace-5 = [];
-      switch-to-workspace-6 = [];
-      switch-to-workspace-7 = [];
-      switch-to-workspace-8 = [];
-      switch-to-workspace-9 = [];
+      switch-to-workspace-5 = ["<Super>5"];
+      switch-to-workspace-6 = ["<Super>6"];
+      switch-to-workspace-7 = ["<Super>7"];
+      switch-to-workspace-8 = ["<Super>8"];
+      switch-to-workspace-9 = ["<Super>9"];
       switch-to-workspace-down = [];
       switch-to-workspace-last = ["<Super>End"];
-      switch-to-workspace-left = ["<Control><Alt>Left" "<Super>Page_Up"];
-      switch-to-workspace-right = ["<Control><Alt>Right" "<Super>Page_Down"];
+      switch-to-workspace-left = ["<Control><Alt>h" "<Super>Page_Up"];
+      switch-to-workspace-right = ["<Control><Alt>l" "<Super>Page_Down"];
       switch-to-workspace-up = [];
       toggle-above = [];
       toggle-fullscreen = ["<Shift><Super>m"];
@@ -91,7 +90,6 @@ with lib.hm.gvariant; {
       num-workspaces = 8;
       raise-on-click = true;
       resize-with-right-button = true;
-      theme = "Sweet";
       titlebar-font = "Rubik 10";
       titlebar-uses-system-font = false;
       visual-bell = false;
@@ -125,7 +123,16 @@ with lib.hm.gvariant; {
     };
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = ["/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/" "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/"];
+      custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
+      ];
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -182,12 +189,6 @@ with lib.hm.gvariant; {
       name = "Brave Home";
     };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8" = {
-      binding = "<Super>w";
-      command = "wezterm";
-      name = "Wezterm";
-    };
-
     "org/gnome/shell/keybindings" = {
       focus-active-notification = ["<Super>n"];
       open-application-menu = [];
@@ -203,7 +204,7 @@ with lib.hm.gvariant; {
       toggle-application-view = ["<Super>a"];
       toggle-message-tray = ["<Super>v"];
       toggle-overview = ["<Super>s"];
-      toggle-quick-settings = ["<Super>d"];
+      toggle-quick-settings = ["<Super>e"];
     };
   };
 }

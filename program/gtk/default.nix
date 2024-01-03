@@ -59,15 +59,15 @@ in {
         [ -e "${LOCAL_ICONS}" ] || mkdir "${LOCAL_ICONS}"
 
         [ -e "${LOCAL_THEMES}/Colloid-Dark-Nord" ] || ln -s "${HM_GTK}/themes/Colloid-Dark-Nord" "${LOCAL_THEMES}/Colloid-Dark-Nord"
-        [ -e "${HOME_THEMES}/Colloid-Dark-Nord" ] || ln -s "${HM_GTK}/themes/Colloid-Dark-Nord" "${HOME_THEMES}/Colloid-Dark-Nord"
+        [ -e "${HOME_THEMES}/Colloid-Dark-Nord" ] || cp -r "${HM_GTK}/themes/Colloid-Dark-Nord" "${HOME_THEMES}/Colloid-Dark-Nord"
 
         [ -e "${LOCAL_THEMES}/Marble-crispblue-dark" ] || ln -s "${HM_GTK}/themes/Marble-crispblue-dark" "${LOCAL_THEMES}/Marble-crispblue-dark"
-        [ -e "${HOME_THEMES}/Marble-crispblue-dark" ] || ln -s "${HM_GTK}/themes/Marble-crispblue-dark" "${HOME_THEMES}/Marble-crispblue-dark"
+        [ -e "${HOME_THEMES}/Marble-crispblue-dark" ] || cp -r "${HM_GTK}/themes/Marble-crispblue-dark" "${HOME_THEMES}/Marble-crispblue-dark"
 
-        [ -e "${LOCAL_ICONS}/hicolor" ] || ln -s "${HM_GTK}/icons/hicolor" "${LOCAL_ICONS}/hicolor"
-        [ -e "${LOCAL_ICONS}/Papirus" ] || ln -s "${HM_GTK}/icons/Papirus" "${LOCAL_ICONS}/Papirus"
-        [ -e "${LOCAL_ICONS}/Win11" ] || ln -s "${HM_GTK}/icons/Win11" "${LOCAL_ICONS}/Win11"
-        [ -e "${LOCAL_ICONS}/Colloid-dark-cursors" ] || ln -s "${HM_GTK}/icons/Colloid-dark-cursors" "${LOCAL_ICONS}/Colloid-dark-cursors"
+        [ -e "${LOCAL_ICONS}/hicolor" ] || cp -r "${HM_GTK}/icons/hicolor" "${LOCAL_ICONS}/hicolor"
+        [ -e "${LOCAL_ICONS}/Papirus" ] || cp -r "${HM_GTK}/icons/Papirus" "${LOCAL_ICONS}/Papirus"
+        [ -e "${LOCAL_ICONS}/Win11" ] || cp -r "${HM_GTK}/icons/Win11" "${LOCAL_ICONS}/Win11"
+        [ -e "${LOCAL_ICONS}/Colloid-dark-cursors" ] || cp -r "${HM_GTK}/icons/Colloid-dark-cursors" "${LOCAL_ICONS}/Colloid-dark-cursors"
       '';
       # removeSomething = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
       # '';

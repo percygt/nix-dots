@@ -1,4 +1,4 @@
-local keymap = require("config.keymap")
+local keymap = require "config.keymap"
 local nnoremap = keymap.nnoremap
 local inoremap = keymap.inoremap
 local xnoremap = keymap.xnoremap
@@ -7,15 +7,15 @@ local tnoremap = keymap.tnoremap
 local nmap = keymap.nmap
 
 local silent = { silent = true }
-local expr = { expr = true }
 
 nmap("Q", "<nop>")
-nmap("QQ", "<cmd>q!<cr>")
-nmap("WW", "<cmd>w!<cr>")
+nmap("QQ", ":q!<cr>", silent)
+nmap("WW", ":w!<cr>", silent)
 nmap("E", "$")
 nmap("B", "^")
 -- Exit insert mode
-nmap("jj", "<esc>")
+inoremap("jj", "<esc>")
+inoremap("WW", "<esc>:w!<cr>", silent)
 -- Move text up and down
 vnoremap("<a-j>", "<cmd>m '>+1<cr>gv=gv", silent)
 vnoremap("<a-k>", "<cmd>m '<-2<cr>gv=gv", silent)

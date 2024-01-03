@@ -1,18 +1,45 @@
 local function on_attach(bufnr)
-	local api = require("nvim-tree.api")
+  local api = require("nvim-tree.api")
 
-	local function opts(desc)
+  local function edit_or_open()
+    local node = api.tree.get_node_under_cursor()
+
+    if node.nodes ~= nil then
+      -- expand or collapse folder
+      api.node.open.edit()
+    else
+      -- open file
+      api.node.open.edit()
+      -- Close the tree if file was opened
+      api.tree.close()
+    end
+  end
+
+  -- open as vsplit on current node
+  local function vsplit_preview()
+    local node = api.tree.get_node_under_cursor()
+
+    if node.nodes ~= nil then
+      -- expand or collapse folder
+      api.node.open.edit()
+    else
+      -- open file as vsplit
+      api.node.open.vertical()
+    end
+
+    -- Finally refocus on tree if it was lost
+    api.tree.focus()
+  end
+  local function opts(desc)
 		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
 	end
 
 	api.config.mappings.default_on_attach(bufnr)
-
-	vim.keymap.set("n", "l", api.node.open.edit, opts("Open"))
-	vim.keymap.set("n", "h", api.node.navigate.parent_close, opts("Close Directory"))
-	vim.keymap.set("n", "v", api.node.open.vertical, opts("Open: Vertical Split"))
-	vim.keymap.del("n", "<c-k>", { buffer = bufnr })
-	vim.keymap.set("n", "K", api.node.open.preview, opts("Open Preview"))
-end
+    vim.keymap.set("n", "l", edit_or_open,          opts("Edit Or Open"))
+    vim.keymap.set("n", "L", vsplit_preview,        opts("Vsplit Preview"))
+    vim.keymap.set("n", "h", api.tree.close,        opts("Close"))
+    vim.keymap.set("n", "H", api.tree.collapse_all, opts("Collapse All"))
+	end
 
 -- recommended settings from nvim-tree documentation
 vim.g.loaded_netrw = 1
@@ -29,7 +56,7 @@ require("nvim-tree").setup({
 	sync_root_with_cwd = true,
 	view = {
 		width = 35,
-		relativenumber = true,
+		relativenumber = false,
 	},
 	-- change folder arrow icons
 	renderer = {
@@ -37,14 +64,14 @@ require("nvim-tree").setup({
 			enable = true,
 		},
 		icons = {
-			glyphs = {
-				folder = {
-					arrow_closed = "", -- arrow when folder is closed
-					arrow_open = "", -- arrow when folder is open
-				},
+      web_devicons = {
+        folder = {
+          enable=true,
+        },
 			},
 		},
 	},
+
 	-- disable window_picker for
 	-- explorer to work well with
 	-- window splits
@@ -56,7 +83,7 @@ require("nvim-tree").setup({
 		},
 	},
 	filters = {
-		custom = { ".DS_Store" },
+		custom = { ".DS_Store","^.git$"  },
 	},
 	git = {
 		ignore = false,
