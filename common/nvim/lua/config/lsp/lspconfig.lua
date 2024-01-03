@@ -4,14 +4,13 @@ local builtin = require("telescope.builtin")
 local fidget = require("fidget")
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local on_attach = function(client, bufnr)
 	local nmap = function(keys, func, desc)
 		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 	end
-
-	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+	vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
 	nmap("gi", vim.lsp.buf.implementation, "Implementation")
 	nmap("gd", vim.lsp.buf.definition, "Definition")
@@ -44,9 +43,13 @@ function M.setup_servers(json_config)
 	if lsp_servers == nil then
 		return
 	end
+	local runtime_path = vim.split(package.path, ";")
+	table.insert(runtime_path, "lua/?.lua")
+	table.insert(runtime_path, "lua/?/init.lua")
 	for server, config in pairs(lsp_servers) do
 		if server == "lua_ls" then
 			config.settings.Lua.workspace.library = vim.api.nvim_get_runtime_file("", true)
+			config.settings.Lua.runtime.path = runtime_path
 		end
 		if server == "denols" then
 			config.root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")

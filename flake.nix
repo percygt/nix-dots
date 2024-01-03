@@ -2,7 +2,7 @@
   description = "Home Manager configuration of percygt";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-23-11.url = "github:nixos/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
     nixgl.url = "github:guibou/nixgl";
@@ -41,6 +41,7 @@
       };
       neovimNightly = inputs.neovim-nightly-overlay.overlay;
       nixgl = inputs.nixgl.overlay;
+      vscode-marketplace = inputs.nix-vscode-extensions.overlays.default;
     };
 
     formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".alejandra);
@@ -50,13 +51,14 @@
           inherit system;
           overlays = builtins.attrValues overlays;
           config.allowUnfree = true;
+          allowUnfreePredicate = _: true;
         }
     );
 
     pkgs = legacyPackages.x86_64-linux;
     homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      extraSpecialArgs = {inherit pkgs inputs username;};
+      extraSpecialArgs = {inherit inputs pkgs username;};
       modules = [./home.nix];
     };
   };

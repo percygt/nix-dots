@@ -1,6 +1,6 @@
 {pkgs, ...}: let
-  lsp-servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
-  lsp-tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+  lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
+  lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
   vim-maximizer = pkgs.vimUtils.buildVimPlugin {
     pname = "vim-maximizer";
     version = "2024-01-01";
@@ -23,7 +23,6 @@ in {
     withPython3 = true;
     withRuby = false;
     extraLuaConfig = ''
-      vim.g.mapleader = " "
       require("config.general")
       require("config.remaps")
       require("config.autocmds")
@@ -51,17 +50,17 @@ in {
       {
         plugin = nvim-lspconfig;
         type = "lua";
-        config = ''require("config.lsp.lspconfig").setup_servers("${lsp-servers}")'';
+        config = ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
       }
       # Formatting/Diagnostic/Code Action #------------------------------------------------------------------------------------
       {
         plugin = none-ls-nvim;
         type = "lua";
-        config = ''require("config.lsp.nonels").setup_servers("${lsp-tools}")'';
+        config = ''require("config.lsp.nonels").setup_null_ls("${lsp_tools}")'';
       }
       # Syntax Highlighting/LSP based motions #-------------------------------------------------------------------------------------
       {
-        plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+        plugin = nvim-treesitter.withAllGrammars;
         type = "lua";
         config = ''require("config.lsp.treesitter")'';
       }
@@ -90,6 +89,7 @@ in {
       nvim-dap-ui
       nvim-dap-go
       nvim-dap-python
+      nvim-dap-virtual-text
       # Git #-------------------------------------------------------------------------------------
       {
         plugin = gitsigns-nvim;
@@ -111,6 +111,11 @@ in {
       plenary-nvim
       # UI Enhancement #-------------------------------------------------------------------------------------
       {
+        plugin = onedark-nvim;
+        type = "lua";
+        config = ''require("config.ui.theme")'';
+      }
+      {
         plugin = indent-blankline-nvim;
         type = "lua";
         config = ''require("config.ui.indent")'';
@@ -121,14 +126,9 @@ in {
         config = ''require("config.ui.lualine")'';
       }
       {
-        plugin = onedark-nvim;
-        type = "lua";
-        config = ''require("config.ui.theme")'';
-      }
-      {
         plugin = which-key-nvim;
         type = "lua";
-        config = ''require("which-key")'';
+        config = ''require("config.ui.which-key")'';
       }
       trouble-nvim
       dressing-nvim
@@ -147,12 +147,18 @@ in {
         config = ''require("config.telescope")'';
       }
       telescope-file-browser-nvim
-      # File Tree Browser #-------------------------------------------------------------------------------------
+      telescope-fzf-native-nvim
+      # File Browser #-------------------------------------------------------------------------------------
       {
-        plugin = nvim-tree-lua;
+        plugin = oil-nvim;
         type = "lua";
-        config = ''require("config.tree")'';
+        config = ''require("config.oil")'';
       }
+      # {
+      #   plugin = nvim-tree-lua;
+      #   type = "lua";
+      #   config = ''require("config.tree")'';
+      # }
     ];
     extraPackages = with pkgs; [
       # Essentials
@@ -175,6 +181,7 @@ in {
       ruff
       # Lua
       lua-language-server
+      stylua
       selene
 
       # Nix
@@ -204,7 +211,7 @@ in {
       delve
 
       # Additional
-      deno-ls
+      deno
       nodePackages.bash-language-server
       nodePackages.yaml-language-server
       nodePackages.dockerfile-language-server-nodejs
@@ -217,7 +224,14 @@ in {
       actionlint
     ];
   };
+  xdg.configFile."nvim/lua/config/colors.lua" = {
+    text = ''
+      return {
 
+      }
+
+    '';
+  };
   xdg.configFile.nvim = {
     recursive = true;
     source = ../../common/nvim;

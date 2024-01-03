@@ -4,7 +4,6 @@ local actions = require("telescope.actions")
 local extensions = require("telescope").extensions
 local keymap = require("config.keymap")
 local nnoremap = keymap.nnoremap
-local silent = { silent = true }
 
 telescope.load_extension("file_browser")
 telescope.load_extension("git_worktree")

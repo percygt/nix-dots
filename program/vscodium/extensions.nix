@@ -1,12 +1,6 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
-  vscode-marketplace = (inputs.nix-vscode-extensions.extensions.${pkgs.system}).vscode-marketplace;
-in {
+{pkgs, ...}: {
   extensions = with pkgs.vscode-extensions;
-  with vscode-marketplace; [
+  with pkgs.vscode-marketplace; [
     adpyke.codesnap
     anderseandersen.html-class-suggestions
     antfu.iconify

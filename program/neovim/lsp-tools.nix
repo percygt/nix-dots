@@ -59,7 +59,6 @@
       cppcheck = {};
       golangci_lint = {};
       golangci_lint = {};
-      selene = {}; # <-- lua
       statix = {}; # <-- nix
       actionlint = {};
       eslint_d = {

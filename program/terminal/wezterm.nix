@@ -3,44 +3,96 @@
   lib,
   ...
 }: let
+  colors = (import ../../colors.nix).syft;
   nixgl = import ../../nixgl.nix {
     inherit pkgs lib;
   };
+  wrapped_wezterm = nixgl.nixGLVulkanMesaWrap pkgs.wezterm_custom;
 in {
+  home.packages = [
+    (pkgs.makeDesktopItem {
+      name = "wezterm";
+      desktopName = "WezTerm";
+      comment = "Wez's Terminal Emulator";
+      keywords = ["shell" "prompt" "command" "commandline" "cmd"];
+      icon = "org.wezfurlong.wezterm";
+      startupWMClass = "org.wezfurlong.wezterm";
+      tryExec = "${wrapped_wezterm}/bin/wezterm";
+      exec = "${wrapped_wezterm}/bin/wezterm start --cwd .";
+      type = "Application";
+      categories = ["System" "TerminalEmulator" "Utility"];
+      terminal = false;
+    })
+  ];
+
   programs.wezterm = {
     enable = true;
-    package = nixgl.nixGLVulkanMesaWrap pkgs.wezterm_custom;
+    package = wrapped_wezterm;
     colorSchemes = {
-      myCoolTheme = {
+      Syft = {
         ansi = [
-          "#222222"
-          "#D14949"
-          "#48874F"
-          "#AFA75A"
-          "#599797"
-          "#8F6089"
-          "#5C9FA8"
-          "#8C8C8C"
+          "#${colors.normal.black}"
+          "#${colors.normal.red}"
+          "#${colors.normal.green}"
+          "#${colors.normal.yellow}"
+          "#${colors.normal.blue}"
+          "#${colors.normal.magenta}"
+          "#${colors.normal.cyan}"
+          "#${colors.normal.white}"
         ];
         brights = [
-          "#444444"
-          "#FF6D6D"
-          "#89FF95"
-          "#FFF484"
-          "#97DDFF"
-          "#FDAAF2"
-          "#85F5DA"
-          "#E9E9E9"
+          "#${colors.bright.black}"
+          "#${colors.bright.red}"
+          "#${colors.bright.green}"
+          "#${colors.bright.yellow}"
+          "#${colors.bright.blue}"
+          "#${colors.bright.magenta}"
+          "#${colors.bright.cyan}"
+          "#${colors.bright.white}"
         ];
-        background = "#1B1B1B";
-        cursor_bg = "#BEAF8A";
-        cursor_border = "#BEAF8A";
-        cursor_fg = "#1B1B1B";
-        foreground = "#BEAF8A";
-        selection_bg = "#444444";
-        selection_fg = "#E9E9E9";
+        foreground = "#${colors.default.foreground}";
+        background = "#${colors.default.background}";
+        cursor_fg = "#${colors.cursor.foreground}";
+        cursor_bg = "#${colors.cursor.background}";
+        cursor_border = "#${colors.cursor.background}";
+        selection_bg = "#${colors.highlight.background}";
       };
     };
+    extraConfig = ''
+      local wezterm = require("wezterm")
+      return {
+      	enable_wayland = false,
+        check_for_updates = false,
+      	color_scheme = "Syft",
+      	font = wezterm.font("VictorMono Nerd Font", { weight = "Medium" }),
+      	default_cursor_style = "BlinkingBar",
+      	enable_tab_bar = false,
+        enable_scroll_bar = false,
+      	disable_default_key_bindings = true,
+      	window_close_confirmation = "NeverPrompt",
+        window_padding = {
+          left = "8px",
+          right = "8px",
+          top = 0,
+          bottom = 0,
+        },
+
+      	font_size = 11,
+      	window_decorations = "NONE",
+      	window_background_opacity = 0.9,
+      	text_background_opacity = 1,
+      	keys = {
+      		{ key = ")",      mods = "CTRL",  action = wezterm.action.ResetFontSize },
+      		{ key = "-",      mods = "CTRL",  action = wezterm.action.DecreaseFontSize },
+      		{ key = "=",      mods = "CTRL",  action = wezterm.action.IncreaseFontSize },
+      		{ key = "V",      mods = "CTRL",  action = wezterm.action.PasteFrom("Clipboard") },
+      		{ key = "Copy",   mods = "NONE",  action = wezterm.action.CopyTo("Clipboard") },
+      		{ key = "Paste",  mods = "NONE",  action = wezterm.action.PasteFrom("Clipboard") },
+      		{ key = "Enter",mods = "ALT",   action = wezterm.action.ToggleFullScreen },
+      		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
+      	},
+      	-- default_prog = { '/bin/fish', '-c','tmux a' }
+      }
+    '';
   };
-  xdg.configFile.wezterm.source = ../../common/wezterm;
 }
