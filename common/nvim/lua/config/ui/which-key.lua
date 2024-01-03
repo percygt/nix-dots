@@ -1,7 +1,7 @@
-local wk = require "which-key"
+local wk = require("which-key")
 vim.o.timeout = true
 vim.o.timeoutlen = 300
-wk.setup {
+wk.setup({
   window = {
     border = "single",
     padding = { 2, 2, 2, 2 },
@@ -14,7 +14,7 @@ wk.setup {
     spacing = 2,
     align = "center",
   },
-}
+})
 
 wk.register({
   c = "Code",
@@ -30,6 +30,7 @@ wk.register({
   g = { name = "Git" },
   h = { name = "Harpoon" },
   m = { name = "Helper" },
+  n = "which_key_ignore",
   S = {
     name = "Database",
     t = { "<cmd>DBUIToggle<cr>", "Toggle UI" },

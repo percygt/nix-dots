@@ -18,6 +18,7 @@
     settings.Lua = {
       runtime.version = "LuaJIT";
       diagnostics = {
+        enable = false;
         globals = ["vim"];
       };
       workspace.library = {};
