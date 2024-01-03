@@ -28,6 +28,7 @@
     croc
     ollama
     zoxide
+    plocate
 
     # tui's
     termscp

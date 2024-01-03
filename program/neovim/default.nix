@@ -1,6 +1,17 @@
 {pkgs, ...}: let
   lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
   lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+  session-lens = pkgs.vimUtils.buildVimPlugin {
+    pname = "session-lens";
+    version = "2024-01-02";
+    src = pkgs.fetchFromGitHub {
+      owner = "rmagatti";
+      repo = "session-lens";
+      rev = "1b65d8e1bcd1836c5135cce118ba18d662a9dabd";
+      hash = "sha256-ZSzUp3i3JZMwzN2f9nG5zS+qWq0qE2J+djEv042IMI0=";
+    };
+    meta.homepage = "https://github.com/rmagatti/session-lens";
+  };
   vim-maximizer = pkgs.vimUtils.buildVimPlugin {
     pname = "vim-maximizer";
     version = "2024-01-01";
@@ -72,6 +83,7 @@ in {
         type = "lua";
         config = ''require("config.tools.auto-session")'';
       }
+      session-lens
       # Database #-------------------------------------------------------------------------------------
       {
         plugin = vim-dadbod;
@@ -104,6 +116,7 @@ in {
         config = ''require("config.tools.harpoon2")'';
       }
       # Misc tools #-------------------------------------------------------------------------------------
+      vim-tmux-navigator
       vim-maximizer
       comment-nvim
       vim-surround
@@ -158,7 +171,7 @@ in {
       #   plugin = nvim-tree-lua;
       #   type = "lua";
       #   config = ''require("config.tree")'';
-      # }
+      # }neovim
     ];
     extraPackages = with pkgs; [
       # Essentials
