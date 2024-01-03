@@ -12,8 +12,7 @@
     ## https://github.com/nvimtools/none-ls.nvim/blob/main/doc/CONFIG.md
 
     formatting = {
-      black = {}; # <-- python
-      isort = {}; # <-- python
+      ruff_format = {}; # <-- python
       shfmt = {}; # <-- shell
       shellharden = {}; # <-- shell
       alejandra = {}; # <-- nix
@@ -58,7 +57,6 @@
       markdownlint = {};
       cppcheck = {};
       selene = {};
-      golangci_lint = {};
       golangci_lint = {};
       statix = {}; # <-- nix
       actionlint = {};
