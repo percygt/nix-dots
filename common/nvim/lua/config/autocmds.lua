@@ -23,3 +23,8 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
     vim.cmd("tabdo wincmd =")
   end,
 })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  callback = function()
+    vim.notify("Buffer saved!")
+  end,
+})

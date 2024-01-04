@@ -4,11 +4,15 @@ local builtin = require("telescope.builtin")
 local fidget = require("fidget")
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-local capabilities = vim.tbl_deep_extend(
-  "force",
-  vim.lsp.protocol.make_client_capabilities(),
-  require("cmp_nvim_lsp").default_capabilities()
-)
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local completion = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+capabilities.textDocument.completion = completion.textDocument.completion
+capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
 
 local on_attach = function(client, bufnr)
   local nmap = function(keys, func, desc)
@@ -26,9 +30,9 @@ local on_attach = function(client, bufnr)
   nmap("[d", vim.diagnostic.goto_prev, "Diagnostics: Go to Previous")
   nmap("]d", vim.diagnostic.goto_next, "Diagnostics: Go to Next")
 
-  nmap("<leader>sx", vim.lsp.buf.signature_help, "Signature Documentation")
-  nmap("<leader>st", builtin.treesitter, "Treesitter")
-  nmap("<leader>ss", builtin.lsp_document_symbols, "Document symbols")
+  nmap("<leader>fx", vim.lsp.buf.signature_help, "Signature Documentation")
+  nmap("<leader>ft", builtin.treesitter, "Treesitter")
+  nmap("<leader>fs", builtin.lsp_document_symbols, "Document symbols")
   nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
   nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")
 
@@ -38,6 +42,8 @@ local on_attach = function(client, bufnr)
 end
 
 function M.setup_servers(json_config)
+  require("neodev").setup({})
+
   local f = io.open(json_config, "r")
   if not f then
     return
@@ -51,10 +57,6 @@ function M.setup_servers(json_config)
   table.insert(runtime_path, "lua/?.lua")
   table.insert(runtime_path, "lua/?/init.lua")
   for server, config in pairs(lsp_servers) do
-    if server == "lua_ls" then
-      config.settings.Lua.workspace.library = vim.api.nvim_get_runtime_file("", true)
-      config.settings.Lua.runtime.path = runtime_path
-    end
     if server == "denols" then
       config.root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc")
     end

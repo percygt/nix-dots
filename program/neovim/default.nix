@@ -1,6 +1,17 @@
 {pkgs, ...}: let
   lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
   lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+  neovim-session-manager = pkgs.vimUtils.buildVimPlugin {
+    pname = "neovim-session-manager";
+    version = "2024-01-03";
+    src = pkgs.fetchFromGitHub {
+      owner = "Shatur";
+      repo = "neovim-session-manager";
+      rev = "68dde355a4304d83b40cf073f53915604bdd8e70";
+      hash = "sha256-WOJQ6RIibOby+Pmzr6kQxcT2NCGrq1roWkh4QKJECks=";
+    };
+    meta.homepage = "https://github.com/Shatur/neovim-session-manager";
+  };
   vim-maximizer = pkgs.vimUtils.buildVimPlugin {
     pname = "vim-maximizer";
     version = "2024-01-01";
@@ -65,12 +76,18 @@ in {
         config = ''require("config.lsp.treesitter")'';
       }
       nvim-treesitter-textobjects
+      neodev-nvim
       nvim-cursorline
       # Sessions #-------------------------------------------------------------------------------------
+      # {
+      #   plugin = auto-session;
+      #   type = "lua";
+      #   config = ''require("config.tools.auto-session")'';
+      # }
       {
-        plugin = auto-session;
+        plugin = neovim-session-manager;
         type = "lua";
-        config = ''require("config.tools.auto-session")'';
+        config = ''require("config.session_manager")'';
       }
       # Database #-------------------------------------------------------------------------------------
       {
@@ -176,14 +193,15 @@ in {
       ripgrep
       fd
       fzf
+
       # python
       nodePackages.pyright
       ruff
       ruff-lsp
+
       # Lua
       lua-language-server
       stylua
-      selene
 
       # Nix
       statix
@@ -200,20 +218,24 @@ in {
       shellharden
 
       # JavaScript
+      deno
       prettierd
       eslint_d
       nodePackages.prettier
       nodePackages.typescript-language-server
       nodePackages."@astrojs/language-server"
       nodePackages-extra.prettier-plugin-astro
+
       # Go
       go
       gopls
       golangci-lint
       delve
 
+      #docker
+      hadolint
+
       # Additional
-      deno
       yamllint
       nodePackages.bash-language-server
       nodePackages.yaml-language-server

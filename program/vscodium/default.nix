@@ -16,7 +16,7 @@ in {
     enableUpdateCheck = true;
     mutableExtensionsDir = true;
     enableExtensionUpdateCheck = true;
-    extensions = extension-list.extensions;
+    inherit (extension-list) extensions;
     userSettings = builtins.fromJSON (builtins.readFile ../../common/vscode/settings.json);
     keybindings = builtins.fromJSON (builtins.readFile ../../common/vscode/keybindings.json);
   };
