@@ -8,7 +8,7 @@ wk.setup({
   },
   triggers_blacklist = {
     n = { "v", "Q", "W" },
-    i = { "j" },
+    i = { "W", "j" },
   },
   layout = {
     spacing = 2,
@@ -30,7 +30,7 @@ wk.register({
   g = { name = "Git" },
   h = { name = "Harpoon" },
   m = { name = "Helper" },
-  n = "which_key_ignore",
+  n = { name = "which_key_ignore", n = "which_key_ignore" },
   S = {
     name = "Database",
     t = { "<cmd>DBUIToggle<cr>", "Toggle UI" },
@@ -38,7 +38,7 @@ wk.register({
     r = { "<cmd>DBUIRenameBuffer<cr>", "Rename buffer" },
     q = { "<cmd>DBUILastQueryInfo<Cr>", "Last query info" },
   },
-  s = { name = "Search" },
+  f = { name = "Find" },
   t = { name = "Theme" },
   x = { name = "Trouble" },
   ["<tab>"] = { name = "Workspace Session" },

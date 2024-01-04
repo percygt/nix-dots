@@ -56,7 +56,6 @@
       yamllint = {};
       markdownlint = {};
       cppcheck = {};
-      selene = {};
       golangci_lint = {};
       statix = {}; # <-- nix
       actionlint = {};

@@ -2,7 +2,9 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  resurrectDirPath = "${config.xdg.dataHome}/tmux/resurrect";
+in {
   home.packages = [
     pkgs.gitmux
   ];
@@ -18,7 +20,6 @@
     disableConfirmationPrompt = true;
     prefix = "C-a";
     escapeTime = 0;
-    newSession = true;
     historyLimit = 1000000;
     plugins = with pkgs.tmuxPlugins; [
       {
@@ -33,7 +34,7 @@
           };
           rtpFilePath = "sessionx.tmux";
           postInstall = ''
-            sed -i -e 's|z_target=$(zoxide query "$target")|z_target=$("${pkgs.zoxide}/bin/zoxide" query "$target")|g' $target/scripts/sessionx.sh
+            sed -i -e 's|z_target=$(zoxide query "$target")|z_target=$(${pkgs.zoxide}/bin/zoxide query "$target")|g' $target/scripts/sessionx.sh
             sed -i -e 's|''${TMUX_PLUGIN_MANAGER_PATH%/}/tmux-sessionx/scripts/preview.sh|${placeholder "out"}/share/tmux-plugins/tmux-sessionx/scripts/preview.sh|g' $target/scripts/sessionx.sh
           '';
         };
@@ -44,6 +45,7 @@
           set -g @sessionx-preview-location 'right'
           set -g @sessionx-preview-ratio '55%'
           set -g @sessionx-zoxide-mode "on"
+          set -g @session_path "/data/git-repo/github.com"
         '';
       }
       {
@@ -64,8 +66,9 @@
           set -g @resurrect-strategy-vim 'session'
           # Taken from: https://github.com/p3t33/nixos_flake/blob/5a989e5af403b4efe296be6f39ffe6d5d440d6d6/home/modules/tmux.nix
           set -g @resurrect-capture-pane-contents 'on'
-          set -g @resurrect-dir ${config.home.homeDirectory}
-          set -g @resurrect-hook-post-save-all 'target=$(readlink -f ${config.home.homeDirectory}/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g" $target | sponge $target'
+
+          set -g @resurrect-dir ${resurrectDirPath}
+          set -g @resurrect-hook-post-save-all 'target=$(readlink -f ${resurrectDirPath}/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g" $target | sponge $target'
         '';
       }
       {
@@ -90,6 +93,7 @@
       tmux-fzf
     ];
     extraConfig = ''
+      run-shell "if [ ! -d ~/.config/tmux/resurrect ]; then tmux new-session -d -s init-resurrect; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
       # TERM override
       set terminal-overrides "xterm-256color:RGB"
       set -g set-clipboard on
