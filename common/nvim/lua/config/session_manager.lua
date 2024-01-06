@@ -12,7 +12,7 @@ require("session_manager").setup({
   },
 })
 
-local keymap = require("config.keymap")
+local keymap = require("config.helpers")
 local nnoremap = keymap.nnoremap
 
 nnoremap("<leader><tab>r", "<cmd>SessionManager load_current_dir_session<cr>", { desc = "Restore session" }) -- restore last workspace session for current directory

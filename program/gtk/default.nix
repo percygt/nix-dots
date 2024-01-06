@@ -36,7 +36,7 @@ in {
         VteTerminal,
         TerminalScreen,
         vte-terminal {
-          padding: 10px;
+          padding: 5px;
         }
       '';
     };

@@ -1,94 +1,57 @@
 local telescope = require("telescope.builtin")
+local lsp_format = require("lsp-format")
+lsp_format.setup()
+return function(client, bufnr)
+  lsp_format.on_attach(client, bufnr)
 
-return function(options)
-  return function(client, bufnr)
-    local autocmds = {}
-    local opts = { noremap = true, buffer = bufnr }
+  local nmap = function(keys, func, desc)
+    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
+  end
 
-    if client.supports_method("textDocument/definition") then
-      keymaps.normal["<c-]>"] = { telescope.lsp_definitions, opts }
-    end
+  vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    if client.supports_method("textDocument/references") then
-      keymaps.normal["gr"] = { telescope.lsp_references, opts }
-    end
+  nmap("K", vim.lsp.buf.hover, "Hover Documentation")
 
-    if client.supports_method("textDocument/implementation") then
-      keymaps.normal["gi"] = { telescope.lsp_implementations, opts }
-    end
+  nmap("[d", vim.diagnostic.goto_prev, "Diagnostics: Go to Previous")
+  nmap("]d", vim.diagnostic.goto_next, "Diagnostics: Go to Next")
 
-    if client.supports_method("workspace/symbol") then
-      keymaps.normal["<c-s>"] = { telescope.lsp_workspace_symbols, opts }
-    end
+  nmap("<leader>st", telescope.treesitter, "Treesitter")
 
-    if
-      client.supports_method("textDocument/publishDiagnostics")
-      or client.supports_method("textDocument/diagnostic")
-    then
-      autocmds.lsp_diagnostics_hover = {
-        desc = "Show diagnostics when you hold cursor",
-        {
-          event = "CursorHold",
-          callback = require("ckolkey.plugins.lsp.diagnostic").hover,
-          buffer = bufnr,
-        },
-      }
-    end
+  if client.supports_method("textDocument/documentSymbol") then
+    nmap("gs", telescope.lsp_document_symbols, "Document symbols")
+  end
+  if client.supports_method("textDocument/declaration") then
+    nmap("gD", vim.lsp.buf.declaration, "Declaration")
+  end
 
-    if client.supports_method("textDocument/diagnostic") then
-      autocmds.fetch_diagnostics = {
-        desc = "Request diagnostics",
-        {
-          event = { "BufEnter", "BufWritePost", "BufReadPost", "InsertLeave", "TextChanged" },
-          callback = require("ckolkey.plugins.lsp.diagnostic").request(client, bufnr),
-          buffer = bufnr,
-        },
-      }
-    end
+  if client.supports_method("textDocument/typeDefinition") then
+    nmap("gt", vim.lsp.buf.type_definition, "Type definition")
+  end
 
-    if client.supports_method("textDocument/signatureHelp") then
-      require("lsp_signature").on_attach({
-        handler_opts = { border = "rounded" },
-        hint_prefix = "",
-        fixpos = true,
-        padding = " ",
-      }, bufnr)
-    end
+  if client.supports_method("textDocument/definition") then
+    nmap("gd", vim.lsp.buf.definition, "Definition")
+  end
 
-    if client.supports_method("textDocument/codeAction") then
-      keymaps.normal["<leader>ca"] = { vim.lsp.buf.code_action, opts }
-    end
+  if client.supports_method("textDocument/references") then
+    nmap("gr", telescope.lsp_references, "References")
+  end
 
-    if client.supports_method("textDocument/rename") then
-      keymaps.normal["R"] = { vim.lsp.buf.rename, opts }
-    end
+  if client.supports_method("textDocument/implementation") then
+    nmap("gi", vim.lsp.buf.implementation, "Implementation")
+  end
 
-    if client.supports_method("textDocument/definition") then
-      require("ckolkey.plugins.lsp.definition").setup()
-    end
+  if client.supports_method("workspace/symbol") then
+    nmap("gw", telescope.lsp_workspace_symbols, "Workspace symbols")
+  end
 
-    if client.supports_method("textDocument/formatting") and not options.disable_formatting then
-      vim.api.nvim_buf_set_var(bufnr, "format_with_lsp", true)
+  if client.supports_method("textDocument/codeAction") then
+    nmap("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+  end
+  if client.supports_method("textDocument/rename") then
+    nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
+  end
 
-      keymaps.normal["<leader><leader>"] = {
-        function()
-          require("ckolkey.plugins.lsp.formatting").callback(client, bufnr)
-        end,
-        opts,
-      }
-
-      autocmds.lsp_format_on_save = {
-        desc = "Format buffer on save",
-        {
-          event = "BufWritePost",
-          callback = function()
-            require("ckolkey.plugins.lsp.formatting").callback(client, bufnr)
-          end,
-          buffer = bufnr,
-        },
-      }
-    end
-
-    require("config.utils.autocmds").load(autocmds)
+  if client.name == "ruff-lsp" then
+    client.server_capabilities.hoverProvider = false
   end
 end

@@ -1,25 +1,27 @@
-local keymap = require "config.keymap"
+local keymap = require("config.helpers")
 local nnoremap = keymap.nnoremap
 local inoremap = keymap.inoremap
 local xnoremap = keymap.xnoremap
 local vnoremap = keymap.xnoremap
-local tnoremap = keymap.tnoremap
 local nmap = keymap.nmap
-
+local vmap = keymap.vmap
 local silent = { silent = true }
 
-nmap("Q", "<nop>")
+nmap("<leader>", "<nop>", silent)
+vmap("<leader>", "<nop>", silent)
+vmap("Q", "<nop>")
 nmap("QQ", ":q!<cr>", silent)
 nmap("WW", ":w!<cr>", silent)
 nmap("E", "$")
 nmap("B", "^")
 -- Exit insert mode
 inoremap("jj", "<esc>")
+-- Save
 inoremap("WW", "<esc>:w!<cr>", silent)
 -- Move text up and down
 vnoremap("<a-j>", "<cmd>m '>+1<cr>gv=gv", silent)
 vnoremap("<a-k>", "<cmd>m '<-2<cr>gv=gv", silent)
--- Centers cursor
+-- Better vertical motions
 nnoremap("<c-d>", "<c-d>zz")
 nnoremap("<c-u>", "<c-u>zz")
 nnoremap("n", "nzzzv")
@@ -39,8 +41,6 @@ vnoremap("<", "<gv")
 vnoremap(">", ">gv")
 -- Clear search
 nnoremap("ss", "<cmd>noh<cr>")
--- Remove highlight in hlsearc
-nnoremap("<leader><leader>", "<cmd>set nohlsearch<cr>")
 -- Other ways to yank, delete and paste
 nnoremap("<leader>y", [["+y]])
 vnoremap("<leader>y", [["+y]])
@@ -56,3 +56,7 @@ nmap("D", "<cmd>bdelete<cr>")
 -- Misc
 nnoremap("<leader>mr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 nnoremap("<leader>mx", "<cmd>!chmod +x %<cr>", silent)
+nnoremap("<leader>tw", "<cmd>Twilight<cr>", silent)
+nnoremap("<leader>tw", "<cmd>Twilight<cr>", silent)
+-- Format
+nnoremap("<leader><leader>", "<cmd>lua vim.lsp.buf.format({async=true})<cr>", silent)

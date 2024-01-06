@@ -1,7 +1,14 @@
 require("smartcolumn").setup()
 require("trouble").setup()
 require("twilight").setup()
-require("colorizer").setup()
+require("colorizer").setup({
+  user_default_options = {
+    names = false,
+    css_fn = true,
+    mode = "virtualtext",
+    sass = { enable = true },
+  },
+})
 require("dressing").setup()
 require("nvim-web-devicons").set_icon({
   astro = { icon = "󱓞", color = "#FF4900", name = "Astro" },
