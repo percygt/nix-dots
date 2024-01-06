@@ -1,6 +1,7 @@
 {pkgs, ...}: let
   lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
   lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+  colors = (import ../../colors.nix).syft;
   neovim-session-manager = pkgs.vimUtils.buildVimPlugin {
     pname = "neovim-session-manager";
     version = "2024-01-03";
@@ -57,7 +58,7 @@ in {
       nvim-autopairs
       luasnip
       friendly-snippets
-      # Language Server #-------------------------------------------------------------------------------------
+      # Language Servers #-------------------------------------------------------------------------------------
       {
         plugin = nvim-lspconfig;
         type = "lua";
@@ -75,6 +76,8 @@ in {
         type = "lua";
         config = ''require("config.lsp.treesitter")'';
       }
+      lsp-format-nvim
+      lsp_signature-nvim
       nvim-treesitter-textobjects
       neodev-nvim
       nvim-cursorline
@@ -124,6 +127,7 @@ in {
       vim-visual-multi
       vim-tmux-navigator
       vim-maximizer
+      todo-comments-nvim
       comment-nvim
       vim-surround
       vim-repeat
@@ -167,6 +171,7 @@ in {
       }
       telescope-file-browser-nvim
       telescope-fzf-native-nvim
+      telescope-undo-nvim
       # File Browser #-------------------------------------------------------------------------------------
       {
         plugin = mini-nvim;
@@ -186,7 +191,7 @@ in {
     ];
     extraPackages = with pkgs; [
       # Essentials
-      nodePackages.npm
+      nodePackages.pnpm
       nodePackages.neovim
 
       # Telescope dependencies
@@ -249,16 +254,31 @@ in {
       actionlint
     ];
   };
-  xdg.configFile."nvim/lua/config/colors.lua" = {
-    text = ''
-      return {
-
-      }
-
-    '';
-  };
   xdg.configFile.nvim = {
     recursive = true;
     source = ../../common/nvim;
+  };
+  xdg.configFile."nvim/lua/config/colors.lua" = {
+    text = ''
+      return {
+        bg0 = "#${colors.normal.black}",
+        bg1 = "#${colors.bright.black}",
+        bg2 = "#${colors.extra.nocturne}",
+        bg3 = "#${colors.extra.azure}",
+        bg_d = "#${colors.extra.obsidian}",
+        fg = "#${colors.default.foreground}",
+        yellow = "#${colors.normal.yellow}",
+        cyan = "#${colors.normal.cyan}",
+        matchParen = "#${colors.bright.blue}",
+
+        --Catpuccin stuff
+        lavender = "#${colors.extra.lavender}",
+        rosewater = "#${colors.extra.rosewater}",
+        peach = "#${colors.extra.peach}",
+        sapphire = "#${colors.extra.sapphire}",
+        sky = "#${colors.extra.sky}",
+        mauve = "#${colors.extra.mauve}",
+      }
+    '';
   };
 }

@@ -4,10 +4,47 @@
   ...
 }: let
   resurrectDirPath = "${config.xdg.dataHome}/tmux/resurrect";
+  t-smart-manager = pkgs.tmuxPlugins.mkTmuxPlugin rec {
+    pluginName = "t-smart-tmux-session-manager";
+    version = "v2.8.0";
+    rtpFilePath = "t-smart-tmux-session-manager.tmux";
+    src = pkgs.fetchFromGitHub {
+      owner = "joshmedeski";
+      repo = "t-smart-tmux-session-manager";
+      rev = version;
+      sha256 = "sha256-EMDEEIWJ+XFOk0WsQPAwj9BFBVDNwFUCyd1ScceqKpc=";
+    };
+  };
+  sessionx = pkgs.tmuxPlugins.mkTmuxPlugin {
+    pluginName = "tmux-sessionx";
+    version = "unstable-2024-01-01";
+    rtpFilePath = "sessionx.tmux";
+    src = pkgs.fetchFromGitHub {
+      owner = "omerxx";
+      repo = "tmux-sessionx";
+      rev = "847cf28c836da1219e039cb7c4379a2c314a8a04";
+      hash = "sha256-cAh0S88pMlWBv5rEB11+jAxv/8fT/DGiO8eeFLFxQ/g=";
+    };
+    postInstall = ''
+      sed -i -e 's|z_target=$(zoxide query "$target")|z_target=$(${pkgs.zoxide}/bin/zoxide query "$target")|g' $target/scripts/sessionx.sh
+      sed -i -e 's|''${TMUX_PLUGIN_MANAGER_PATH%/}/tmux-sessionx/scripts/preview.sh|${placeholder "out"}/share/tmux-plugins/tmux-sessionx/scripts/preview.sh|g' $target/scripts/sessionx.sh
+    '';
+  };
 in {
-  home.packages = [
-    pkgs.gitmux
+  home.packages = with pkgs; [
+    lsof
+    gitmux
+    # for tmux super fingers
+    python311
   ];
+
+  home.file.".gitmux.conf".source = ../../common/.gitmux.conf;
+
+  programs.fish.shellInit = ''
+    fish_add_path ${t-smart-manager}/share/tmux-plugins/t-smart-tmux-session-manager/bin/
+    fish_add_path ${sessionx}/share/tmux-plugins/tmux-sessionx/bin/
+  '';
+
   programs.tmux = {
     enable = true;
     baseIndex = 1;
@@ -23,21 +60,14 @@ in {
     historyLimit = 1000000;
     plugins = with pkgs.tmuxPlugins; [
       {
-        plugin = pkgs.tmuxPlugins.mkTmuxPlugin {
-          pluginName = "tmux-sessionx";
-          version = "unstable-2024-01-01";
-          src = pkgs.fetchFromGitHub {
-            owner = "omerxx";
-            repo = "tmux-sessionx";
-            rev = "847cf28c836da1219e039cb7c4379a2c314a8a04";
-            hash = "sha256-cAh0S88pMlWBv5rEB11+jAxv/8fT/DGiO8eeFLFxQ/g=";
-          };
-          rtpFilePath = "sessionx.tmux";
-          postInstall = ''
-            sed -i -e 's|z_target=$(zoxide query "$target")|z_target=$(${pkgs.zoxide}/bin/zoxide query "$target")|g' $target/scripts/sessionx.sh
-            sed -i -e 's|''${TMUX_PLUGIN_MANAGER_PATH%/}/tmux-sessionx/scripts/preview.sh|${placeholder "out"}/share/tmux-plugins/tmux-sessionx/scripts/preview.sh|g' $target/scripts/sessionx.sh
-          '';
-        };
+        plugin = t-smart-manager;
+        extraConfig = ''
+          set -g @t-fzf-prompt '  '
+          set -g @t-bind "T"
+        '';
+      }
+      {
+        plugin = sessionx;
         extraConfig = ''
           set -g @sessionx-bind "o"
           set -g @sessionx-window-height "60%"
@@ -45,7 +75,7 @@ in {
           set -g @sessionx-preview-location 'right'
           set -g @sessionx-preview-ratio '55%'
           set -g @sessionx-zoxide-mode "on"
-          set -g @session_path "/data/git-repo/github.com"
+          set -g @session_path "/data/git-repo/github.com/"
         '';
       }
       {
@@ -94,6 +124,7 @@ in {
     ];
     extraConfig = ''
       run-shell "if [ ! -d ~/.config/tmux/resurrect ]; then tmux new-session -d -s init-resurrect; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
+      set-environment -g TMUX_PLUGIN_MANAGER_PATH '~/.local/share/tmux/plugins'
       # TERM override
       set terminal-overrides "xterm-256color:RGB"
       set -g set-clipboard on

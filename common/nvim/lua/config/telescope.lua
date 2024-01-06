@@ -2,12 +2,13 @@ local telescope = require("telescope")
 local builtin = require("telescope.builtin")
 local actions = require("telescope.actions")
 local extensions = require("telescope").extensions
-local keymap = require("config.keymap")
+local keymap = require("config.helpers")
 local nnoremap = keymap.nnoremap
 
 telescope.load_extension("file_browser")
 telescope.load_extension("git_worktree")
 telescope.load_extension("fzf")
+telescope.load_extension("undo")
 
 telescope.setup({
   defaults = {
@@ -40,17 +41,18 @@ nnoremap("<leader>/", function()
     winblend = 10,
     previewer = false,
   }))
-end, { desc = "Fuzzily search in current buffer" })
-
-nnoremap("<leader>ff", builtin.find_files, { desc = "Files" })
-nnoremap("<leader>fh", builtin.help_tags, { desc = "Help" })
-nnoremap("<leader>fw", builtin.grep_string, { desc = "Current word" })
-nnoremap("<leader>fg", builtin.live_grep, { desc = "Grep" })
-nnoremap("<leader>fd", builtin.diagnostics, { desc = "Diagnostics" })
-nnoremap("<leader>fb", builtin.buffers, { desc = "Buffers" })
-nnoremap("<leader>fc", builtin.commands, { desc = "Commands" })
-nnoremap("<leader>fn", extensions.notify.notify, { desc = "Notifications" })
-nnoremap("<leader>fe", extensions.file_browser.file_browser, { desc = "File Browser" })
+end)
+nnoremap("<leader>sf", builtin.find_files, { desc = "Files" })
+nnoremap("<leader>sh", builtin.help_tags, { desc = "Help" })
+nnoremap("<leader>sw", builtin.grep_string, { desc = "Current word" })
+nnoremap("<leader>sg", builtin.live_grep, { desc = "Grep" })
+nnoremap("<leader>sd", builtin.diagnostics, { desc = "Diagnostics" })
+nnoremap("<leader>sb", builtin.buffers, { desc = "Buffers" })
+nnoremap("<leader>sc", builtin.commands, { desc = "Commands" })
+nnoremap("<leader>sn", extensions.notify.notify, { desc = "Notifications" })
+nnoremap("<leader>se", extensions.file_browser.file_browser, { desc = "File Browser" })
+nnoremap("<leader>su", extensions.undo.undo, { desc = "Undo tree" })
+nnoremap("<leader>sl", "<cmd>TodoTelescope<cr>", { desc = "Todo" })
 nnoremap("<leader>gs", builtin.git_status, { desc = "Git status" })
 nnoremap("<leader>gwl", extensions.git_worktree.git_worktrees, { desc = "Worktree list" })
 nnoremap("<leader>gwc", extensions.git_worktree.create_git_worktree, { desc = "Create worktree" })

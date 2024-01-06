@@ -1,11 +1,26 @@
 local header_art = [[
-                                                         
-      ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ 
-      ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ 
-      ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ 
-      ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ 
-      ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ 
-      ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ 
+                                                                  
+                                                                  
+                                                                  
+                          ██    ██    ██                          
+                        ██      ██  ██                            
+                        ██    ██    ██                            
+                          ██  ██      ██                          
+                          ██    ██    ██                          
+                                                                  
+                      ████████████████████                        
+                      ██                ██████                    
+                      ██                ██  ▓▓                    
+                      ██                ██  ██                    
+                      ██                ██████                    
+                        ██            ██                          
+                    ████████████████████████                      
+                    ██                    ▓▓                      
+                      ████████████████████                        
+                                                                  
+                                                                  
+                                                                  
+                                                      
                                                          ]]
 -- using the mini plugins
 require("mini.sessions").setup({
@@ -14,24 +29,22 @@ require("mini.sessions").setup({
   -- Whether to write current session before quitting Neovim
   autowrite = false,
   -- Directory where global sessions are stored (use `''` to disable)
-  directory = vim.fn.stdpath("data") .. "/sessions/", --<"session" subdir of user data directory from |stdpath()|>,
+  directory = vim.fn.stdpath("data") .. "/sessions/", --<"sessions" subdir of user data directory from |stdpath()|>,
   -- File for local session (use `''` to disable)
   file = "", -- 'Session.vim',
 })
 
 local starter = require("mini.starter")
-starter.sections.formatted_sessions = function()
-  local items = {}
-  for _, session in ipairs(starter.sections.sessions(10, true)()) do
-    session.name = session.name:gsub("__", "/")
-    table.insert(items, session)
-  end
-  return items
+starter.sections.formatted_sessions = function(n, recent, sub_from, sub_to)
+  return vim.tbl_map(function(session)
+    session.name = session.name:gsub(sub_from, sub_to)
+    return session
+  end, starter.sections.sessions(n, recent)())
 end
 starter.setup({
   -- evaluate_single = true,
   items = {
-    starter.sections.formatted_sessions(),
+    starter.sections.formatted_sessions(50, true, "__", "/"),
     starter.sections.builtin_actions(),
   },
   content_hooks = {
@@ -73,7 +86,7 @@ require("mini.files").setup({
   },
 })
 
-local keymap = require("config.keymap")
+local keymap = require("config.helpers")
 local nnoremap = keymap.nnoremap
 
 nnoremap("-", "<cmd>lua MiniFiles.open()<cr>") -- open file browser

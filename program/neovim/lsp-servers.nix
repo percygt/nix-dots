@@ -36,7 +36,8 @@
         };
       };
       diagnostics = {
-        globals = ["vim"];
+        enable = true;
+        globals = ["vim" "hs"];
       };
       workspace.library = {
         checkThirdParty = false;

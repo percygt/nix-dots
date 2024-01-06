@@ -1,12 +1,12 @@
 local M = {}
-local null_ls = require "null-ls"
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local null_ls = require("null-ls")
+local on_attach = require("config.lsp.on_attach")
 function M.setup_null_ls(json_config)
   local f = io.open(json_config, "r")
   if not f then
     return
   end
-  local langToolsConfig = vim.json.decode(f:read "all*")
+  local langToolsConfig = vim.json.decode(f:read("all*"))
   f:close()
   if langToolsConfig.null_ls == nil then
     return
@@ -15,7 +15,7 @@ function M.setup_null_ls(json_config)
   local diagnostics = null_ls.builtins.diagnostics
   local code_actions = null_ls.builtins.code_actions
 
-  function config_check(config)
+  local function config_check(config)
     local config_tbl = {}
     if config.filetypes and next(config.filetypes) then
       config_tbl.filetypes = config.filetypes
@@ -61,30 +61,10 @@ function M.setup_null_ls(json_config)
       table.insert(source_tbl, code_actions[ca].with(config_check(config)))
     end
   end
-  null_ls.setup {
+  null_ls.setup({
     sources = source_tbl,
-    on_attach = function(client, bufnr)
-      if client.supports_method "textDocument/formatting" then
-        vim.api.nvim_clear_autocmds {
-          group = augroup,
-          buffer = bufnr,
-        }
-
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          group = augroup,
-          buffer = bufnr,
-          callback = function()
-            vim.lsp.buf.format {
-              filter = function()
-                return client.name == "null-ls"
-              end,
-              bufnr = bufnr,
-            }
-          end,
-        })
-      end
-    end,
-  }
+    on_attach = on_attach,
+  })
 end
 
 return M
