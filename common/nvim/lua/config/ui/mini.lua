@@ -20,17 +20,12 @@ local header_art = [[
                                                                   
                                                                   
                                                                   
-                                                      
-                                                         ]]
+                                                                  ]]
 -- using the mini plugins
 require("mini.sessions").setup({
-  -- Whether to read latest session if Neovim opened without file arguments
   autoread = false,
-  -- Whether to write current session before quitting Neovim
   autowrite = false,
-  -- Directory where global sessions are stored (use `''` to disable)
-  directory = vim.fn.stdpath("data") .. "/sessions/", --<"sessions" subdir of user data directory from |stdpath()|>,
-  -- File for local session (use `''` to disable)
+  directory = vim.fn.stdpath("data") .. "/sessions/",
   file = "", -- 'Session.vim',
 })
 
@@ -63,30 +58,47 @@ starter.setup({
   header = header_art,
   footer = "",
 })
-require("mini.files").setup({
+
+local mini_files = require("mini.files")
+local show_dotfiles = false
+local filter_show = function(fs_entry)
+  return true
+end
+local filter_hide = function(fs_entry)
+  return not vim.startswith(fs_entry.name, ".")
+end
+local toggle_dotfiles = function()
+  show_dotfiles = not show_dotfiles
+  local new_filter = show_dotfiles and filter_show or filter_hide
+  mini_files.refresh({ content = { filter = new_filter } })
+end
+vim.api.nvim_create_autocmd("User", {
+  pattern = "MiniFilesBufferCreate",
+  callback = function(args)
+    local buf_id = args.data.buf_id
+    vim.keymap.set("n", ".", toggle_dotfiles, { buffer = buf_id })
+  end,
+})
+mini_files.setup({
+  content = { filter = filter_hide },
   options = {
-    -- Whether to delete permanently or move into module-specific trash
     permanent_delete = false,
-    -- Whether to use for editing directories
     use_as_default_explorer = true,
   },
-
-  -- Customization of explorer windows
   windows = {
-    -- Maximum number of windows to show side by side
     max_number = math.huge,
-    -- Whether to show preview of file/directory under cursor
     preview = true,
-    -- Width of focused window
     width_focus = 50,
-    -- Width of non-focused window
     width_nofocus = 15,
-    -- Width of preview window
     width_preview = 100,
   },
 })
 
 local keymap = require("config.helpers")
 local nnoremap = keymap.nnoremap
-
-nnoremap("-", "<cmd>lua MiniFiles.open()<cr>") -- open file browser
+local minifiles_toggle = function(...)
+  if not mini_files.close() then
+    mini_files.open(...)
+  end
+end
+nnoremap("-", minifiles_toggle) -- open file browser

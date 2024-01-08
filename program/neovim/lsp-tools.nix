@@ -12,12 +12,12 @@
     ## https://github.com/nvimtools/none-ls.nvim/blob/main/doc/CONFIG.md
 
     formatting = {
-      ruff_format = {}; # <-- python
-      shfmt = {}; # <-- shell
-      shellharden = {}; # <-- shell
-      alejandra = {}; # <-- nix
-      stylua = {}; # <-- lua
-      taplo = {}; # <-- toml
+      ruff_format = {};
+      shfmt = {};
+      shellharden = {};
+      alejandra = {}; # [nix]
+      stylua = {};
+      taplo = {}; # [toml]
       prettierd = {
         filetypes = [
           "css"
@@ -57,23 +57,23 @@
       markdownlint = {};
       cppcheck = {};
       golangci_lint = {};
-      statix = {}; # <-- nix
+      statix = {}; # [nix]
       actionlint = {};
       eslint_d = {
-        utils.root_has_file = [".eslintrc.js" ".eslintrc.cjs"];
+        condition.root_has_file = [".eslintrc.js" ".eslintrc.cjs"];
       };
-      codespell = {
-        args = [
-          "--builtin"
-          "clear,rare,code"
-          "-"
-        ];
-      };
+      # codespell = {
+      #   args = [
+      #     "--builtin"
+      #     "clear,rare,code"
+      #     "-"
+      #   ];
+      # };
     };
 
     code_actions = {
-      shellcheck = {}; # <-- shell
-      statix = {}; # <-- nix
+      shellcheck = {};
+      statix = {};
       gitsigns = {};
     };
   };

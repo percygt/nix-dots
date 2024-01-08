@@ -36,3 +36,6 @@ opt.backup = false
 opt.undodir = vim.fn.stdpath("data") .. "/undodir"
 opt.undofile = true -- Enable persistent undo
 opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions" -- For better auto-session
+opt.spell = true
+opt.spelllang = "en_us"
+opt.spelloptions = "camel"

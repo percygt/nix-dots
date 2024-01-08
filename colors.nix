@@ -25,7 +25,7 @@
       white = "d1d5db"; # [#d1d5db]
     };
     bright = {
-      black = "0a0714"; # [#0a0714]
+      black = "0a0714"; # [#161925]
       red = "ff5555"; # [#ff5555]
       green = "b3a06d"; # [#b3a06d]
       yellow = "f0ee51"; # [#f0ee51]
@@ -36,12 +36,13 @@
     };
     extra = {
       obsidian = "030205"; # [#030205]
+      midnight = "00051A"; # [#00051A]
       nocturne = "120d22"; # [#120d22]
       azure = "0e1a60"; # [#0e1a60]
       lavender = "b4befe"; # [#b4befe]
       peach = "fab387"; # [#fab387]
       rosewater = "f5e0dc"; # [#f5e0dc]
-      sapphire = "74c7ec"; # [#74c7eca]
+      sapphire = "74c7ec"; # [#74c7ec]
       sky = "89dceb"; # [#89dceb]
       mauve = "cba6f7"; # [#cba6f7]
     };

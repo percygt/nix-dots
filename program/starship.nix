@@ -108,7 +108,8 @@ in {
       nix_shell = {
         disabled = false;
         format = "in [ $name](fg:white) ";
-        heuristic = true;
+        impure_msg = "";
+        # heuristic = true;
       };
       package = {
         format = "is [󰏗 $version](fg:bright-blue) ";

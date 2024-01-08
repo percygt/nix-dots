@@ -41,20 +41,13 @@
       # set fzf_fd_opts --hidden --exclude=.git
       # set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "alt-c:execute(code {} &> /dev/tty)"
       set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
-      if command -q nix-your-shell
-        nix-your-shell fish | source
-      end
 
-      #starship retain module character in transient prompt
-      function starship_transient_prompt_func
-        starship module character
-      end
       fish_vi_key_bindings
       set fish_cursor_default     block      blink
       set fish_cursor_insert      line       blink
       set fish_cursor_replace_one underscore blink
       set fish_cursor_visual      block
-      bind --mode insert --sets-mode default jk repaint    '';
+      bind --mode insert --sets-mode default jj repaint    '';
     # functions = {
     #   _preview_mime_image = {
     #     body = ''

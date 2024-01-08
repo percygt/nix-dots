@@ -60,38 +60,48 @@ in {
     };
     extraConfig = ''
       local wezterm = require("wezterm")
+      wezterm.on("toggle-opacity", function(window)
+        local overrides = window:get_config_overrides() or {}
+        if not overrides.window_background_opacity then
+          overrides.window_background_opacity = 1
+        else
+          overrides.window_background_opacity = nil
+        end
+        window:set_config_overrides(overrides)
+      end)
       return {
       	enable_wayland = false,
         check_for_updates = false,
       	color_scheme = "Syft",
       	font = wezterm.font("VictorMono Nerd Font", { weight = "Medium" }),
       	default_cursor_style = "BlinkingBar",
-      	enable_tab_bar = false,
         enable_scroll_bar = false,
+        enable_tab_bar = false,
       	disable_default_key_bindings = true,
       	window_close_confirmation = "NeverPrompt",
         window_padding = {
-          left = "8px",
-          right = "8px",
+          left = "5px",
+          right = "5px",
           top = 0,
           bottom = 0,
         },
 
       	font_size = 11,
       	window_decorations = "NONE",
-      	window_background_opacity = 0.9,
+      	window_background_opacity = 0.8,
       	text_background_opacity = 1,
       	keys = {
-      		{ key = ")",      mods = "CTRL",  action = wezterm.action.ResetFontSize },
+      		{ key = "0",      mods = "CTRL|SHIFT",  action = wezterm.action.ResetFontSize },
       		{ key = "-",      mods = "CTRL",  action = wezterm.action.DecreaseFontSize },
       		{ key = "=",      mods = "CTRL",  action = wezterm.action.IncreaseFontSize },
       		{ key = "V",      mods = "CTRL",  action = wezterm.action.PasteFrom("Clipboard") },
       		{ key = "Copy",   mods = "NONE",  action = wezterm.action.CopyTo("Clipboard") },
       		{ key = "Paste",  mods = "NONE",  action = wezterm.action.PasteFrom("Clipboard") },
-      		{ key = "Enter",mods = "ALT",   action = wezterm.action.ToggleFullScreen },
+      		{ key = "F10",    mods = "NONE",  action = wezterm.action.EmitEvent("toggle-opacity") },
+      		{ key = "F11",    mods = "NONE",  action = wezterm.action.ToggleFullScreen },
       		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
       	},
-      	-- default_prog = { '/bin/fish', '-c','tmux a' }
+      	default_prog = { 'tmux', 'new', '-As', 'main' }
       }
     '';
   };

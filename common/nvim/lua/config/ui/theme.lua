@@ -66,32 +66,36 @@ require("onedark").load()
 
 local colors = require("onedark.colors")
 
--- cursor color
-vim.api.nvim_set_hl(0, "nCursor", { bg = colors.blue, fg = colors.bg0 })
-vim.api.nvim_set_hl(0, "iCursor", { bg = colors.green, fg = colors.bg0 })
-vim.api.nvim_set_hl(0, "vCursor", { bg = colors.purple, fg = colors.bg0 })
-vim.api.nvim_set_hl(0, "cCursor", { bg = colors.yellow, fg = colors.bg0 })
-vim.api.nvim_set_hl(0, "rCursor", { bg = colors.red, fg = colors.bg0 })
-
 vim.o.guicursor = "n-o:block-nCursor,i:ver20-iCursor,v-ve:block-vCursor,c-ci-cr:ver25-cCursor,r:hor15-rCursor"
+
+-- cursor color
+vim.api.nvim_set_hl(0, "nCursor", { bg = colors.lavender, fg = colors.bg0 })
+vim.api.nvim_set_hl(0, "iCursor", { bg = colors.peace, fg = colors.bg0 })
+vim.api.nvim_set_hl(0, "vCursor", { bg = colors.rosewater, fg = colors.bg0 })
+vim.api.nvim_set_hl(0, "cCursor", { bg = colors.sky, fg = colors.bg0 })
+vim.api.nvim_set_hl(0, "rCursor", { bg = colors.sapphire, fg = colors.bg0 })
 
 -- color for split
 vim.api.nvim_set_hl(0, "WinSeparator", { fg = colors.blue })
+
+-- cursor line color
+vim.api.nvim_set_hl(0, "CursorLine", { bg = colors.midnight })
+
 -- line number color
-vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.blue })
+vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.lavender })
+
 vim.api.nvim_create_autocmd("ModeChanged", {
   pattern = "*",
   callback = function()
     if mode.isNormal() then
-      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.blue })
+      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.lavender })
     elseif mode.isInsert() then
-      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.green })
+      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.peach })
     elseif mode.isVisual() then
-      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.purple })
+      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.rosewater })
     elseif mode.isReplace() then
-      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.red })
+      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.sapphire })
     end
-
     -- command mode doesn't have line number
   end,
-}) -- format when savew
+})

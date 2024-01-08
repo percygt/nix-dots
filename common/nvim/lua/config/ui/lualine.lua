@@ -1,7 +1,5 @@
 local colors = require("onedark.colors")
-
 local mode = require("config.helpers")
-
 local customOneDark = {
   inactive = {
     a = { fg = colors.gray, bg = colors.bg0, gui = "bold" },
@@ -29,6 +27,7 @@ vim.api.nvim_set_hl(0, "progressHl5", { fg = colors.cyan })
 vim.api.nvim_set_hl(0, "progressHl6", { fg = colors.blue })
 vim.api.nvim_set_hl(0, "progressHl7", { fg = colors.purple })
 
+local ok, devicons = pcall(require, "nvim-web-devicons")
 require("lualine").setup({
   options = {
     component_separators = { left = "", right = "" },
@@ -37,14 +36,13 @@ require("lualine").setup({
     disabled_filetypes = { tabline = { "NvimTree" } },
     globalstatus = true,
   },
-  extensions = { "nvim-tree" },
   sections = {
     lualine_a = {
       {
         "mode",
         icon_enable = true,
         fmt = function()
-          return mode.isNormal() and ""
+          return mode.isNormal() and (ok and devicons.get_icon(vim.fn.expand("%:t")) or "")
             or mode.isInsert() and ""
             or mode.isVisual() and "󰈈"
             or mode.isCommand() and ""
@@ -54,12 +52,25 @@ require("lualine").setup({
         end,
       },
     },
-    lualine_b = { "buffers" },
+    lualine_b = {
+      {
+        "buffers",
+        max_length = vim.o.columns * 4 / 5, -- Maximum width of buffers component,
+        filetype_names = {
+          minifiles = "Files",
+        },
+      },
+    },
     lualine_c = {
       {
         require("noice").api.statusline.mode.get,
         cond = require("noice").api.statusline.mode.has,
         color = { fg = colors.peach },
+      },
+      {
+        require("noice").api.status.command.get,
+        cond = require("noice").api.status.command.has,
+        color = { fg = colors.lavender },
       },
     },
     lualine_x = {
