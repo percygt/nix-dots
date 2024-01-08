@@ -31,15 +31,15 @@ local function on_attach(bufnr)
     api.tree.focus()
   end
   local function opts(desc)
-		return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-	end
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
 
-	api.config.mappings.default_on_attach(bufnr)
-    vim.keymap.set("n", "l", edit_or_open,          opts("Edit Or Open"))
-    vim.keymap.set("n", "L", vsplit_preview,        opts("Vsplit Preview"))
-    vim.keymap.set("n", "h", api.tree.close,        opts("Close"))
-    vim.keymap.set("n", "H", api.tree.collapse_all, opts("Collapse All"))
-	end
+  api.config.mappings.default_on_attach(bufnr)
+  vim.keymap.set("n", "l", edit_or_open, opts("Edit Or Open"))
+  vim.keymap.set("n", "L", vsplit_preview, opts("Vsplit Preview"))
+  vim.keymap.set("n", "h", api.tree.close, opts("Close"))
+  vim.keymap.set("n", "H", api.tree.collapse_all, opts("Collapse All"))
+end
 
 -- recommended settings from nvim-tree documentation
 vim.g.loaded_netrw = 1
@@ -52,40 +52,40 @@ vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
 vim.keymap.set("n", "<leader>et", "<cmd>NvimTreeToggle<cr>")
 
 require("nvim-tree").setup({
-	on_attach = on_attach,
-	sync_root_with_cwd = true,
-	view = {
-		width = 35,
-		relativenumber = false,
-	},
-	-- change folder arrow icons
-	renderer = {
-		indent_markers = {
-			enable = true,
-		},
-		icons = {
+  on_attach = on_attach,
+  sync_root_with_cwd = true,
+  view = {
+    width = 35,
+    relativenumber = false,
+  },
+  -- change folder arrow icons
+  renderer = {
+    indent_markers = {
+      enable = true,
+    },
+    icons = {
       web_devicons = {
         folder = {
-          enable=true,
+          enable = true,
         },
-			},
-		},
-	},
+      },
+    },
+  },
 
-	-- disable window_picker for
-	-- explorer to work well with
-	-- window splits
-	actions = {
-		open_file = {
-			window_picker = {
-				enable = false,
-			},
-		},
-	},
-	filters = {
-		custom = { ".DS_Store","^.git$"  },
-	},
-	git = {
-		ignore = false,
-	},
+  -- disable window_picker for
+  -- explorer to work well with
+  -- window splits
+  actions = {
+    open_file = {
+      window_picker = {
+        enable = false,
+      },
+    },
+  },
+  filters = {
+    custom = { ".DS_Store", "^.git$" },
+  },
+  git = {
+    ignore = false,
+  },
 })

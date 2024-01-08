@@ -1,26 +1,27 @@
 local keymap = require("config.helpers")
+local silent = { silent = true }
 local nnoremap = keymap.nnoremap
-local inoremap = keymap.inoremap
 local xnoremap = keymap.xnoremap
 local vnoremap = keymap.xnoremap
 local nmap = keymap.nmap
 local vmap = keymap.vmap
-local silent = { silent = true }
+local imap = keymap.imap
 
 nmap("<leader>", "<nop>", silent)
 vmap("<leader>", "<nop>", silent)
 vmap("Q", "<nop>")
-nmap("QQ", ":q!<cr>", silent)
-nmap("WW", ":w!<cr>", silent)
 nmap("E", "$")
 nmap("B", "^")
+-- Quit
+nmap("QQ", ":q!<cr>", silent)
 -- Exit insert mode
-inoremap("jj", "<esc>")
+-- imap("jj", "<esc>")
 -- Save
-inoremap("WW", "<esc>:w!<cr>", silent)
+nmap("WW", ":w!<cr>", silent)
+imap("WW", "<esc>:w!<cr>", silent)
 -- Move text up and down
-vnoremap("<a-j>", "<cmd>m '>+1<cr>gv=gv", silent)
-vnoremap("<a-k>", "<cmd>m '<-2<cr>gv=gv", silent)
+nnoremap("<a-j>", "<cmd>m '>+1<cr>gv=gv", silent)
+nnoremap("<a-k>", "<cmd>m '<-2<cr>gv=gv", silent)
 -- Better vertical motions
 nnoremap("<c-d>", "<c-d>zz")
 nnoremap("<c-u>", "<c-u>zz")

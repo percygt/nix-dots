@@ -29,6 +29,7 @@
     ollama
     zoxide
     plocate
+    libsixel
 
     # tui's
     termscp

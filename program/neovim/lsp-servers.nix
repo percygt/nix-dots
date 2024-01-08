@@ -1,16 +1,21 @@
 {pkgs, ...}: {
-  clangd = {};
-  nil_ls = {};
   ruff_lsp = {};
   pyright = {};
+  clangd = {};
+  nil_ls = {};
   dockerls = {};
   bashls = {};
   terraformls = {};
   gopls = {};
+  denols = {
+    root_pattern = ["deno.json" "deno.jsonc"];
+  };
   tsserver = {
     init_options.tsserver.path = "${pkgs.nodePackages.typescript}/bin/tsserver";
     documentFormatting = false;
+    single_file_support = false;
     hostInfo = "neovim";
+    root_pattern = ["package.json"];
   };
   astro = {
     init_options.typescript.tsdk = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib/";

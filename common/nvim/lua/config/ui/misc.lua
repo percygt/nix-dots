@@ -10,9 +10,6 @@ require("colorizer").setup({
   },
 })
 require("dressing").setup()
-require("nvim-web-devicons").set_icon({
-  astro = { icon = "󱓞", color = "#FF4900", name = "Astro" },
-})
 require("notify").setup({
   background_colour = "#000000",
   enabled = false,

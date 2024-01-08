@@ -8,10 +8,8 @@ in {
       main = {
         term = "xterm-256color";
         login-shell = "yes";
-        font = "JetBrainsMono Nerd Font:size=10.5";
-        font-size-adjustment = 1;
+        font = "JetBrainsMono Nerd Font:size=11";
         letter-spacing = 0;
-        vertical-letter-offset = 0.5;
         box-drawings-uses-font-glyphs = "yes";
         pad = "5x5";
       };

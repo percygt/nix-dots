@@ -63,7 +63,7 @@ in {
         plugin = t-smart-manager;
         extraConfig = ''
           set -g @t-fzf-prompt '  '
-          set -g @t-bind "T"
+          set -g @t-bind "O"
         '';
       }
       {
@@ -75,7 +75,7 @@ in {
           set -g @sessionx-preview-location 'right'
           set -g @sessionx-preview-ratio '55%'
           set -g @sessionx-zoxide-mode "on"
-          set -g @session_path "/data/git-repo/github.com/"
+          set -g @session_path "/data/git-repo/github.com"
         '';
       }
       {
@@ -83,8 +83,8 @@ in {
           src = pkgs.fetchFromGitHub {
             owner = "percygt";
             repo = "tmux-onedark-theme";
-            rev = "189bc3ee34b9bf71b2ebd6d5fed7bc37afc2bc76";
-            hash = "sha256-l/AMWYMwkq4gHEzeHdNJ5g3S7BR0EywLXERFt+Bwe6c=";
+            rev = "00a33ca898ee6fb48411c0b234779609c7d44fda";
+            hash = "sha256-AjIDVDVSfHj3pwT0SZIpjvFFZQzKeNNavfwHDG3bZsI=";
           };
         });
         extraConfig = "set -g status-position top";
@@ -123,10 +123,12 @@ in {
       tmux-fzf
     ];
     extraConfig = ''
-      run-shell "if [ ! -d ~/.config/tmux/resurrect ]; then tmux new-session -d -s init-resurrect; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
+      run-shell "if [ ! -d ${resurrectDirPath} ]; then tmux new-session -d -s main; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
       set-environment -g TMUX_PLUGIN_MANAGER_PATH '~/.local/share/tmux/plugins'
       # TERM override
       set terminal-overrides "xterm-256color:RGB"
+      set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+      set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
       set -g set-clipboard on
 
       # make Prefix p paste the buffer.

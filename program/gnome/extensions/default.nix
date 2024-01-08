@@ -1,10 +1,13 @@
-# Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
 {lib, ...}: {
   xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
-
   dconf.settings = with lib.hm.gvariant; {
+    "org/gnome/shell/extensions/caffeine" = {
+      enable-fullscreen = false;
+      toggle-state = false;
+    };
+
     "org/gnome/shell/extensions/quake-mode" = {
-      quake-mode-always-on-top = true;
+      quake-mode-always-on-top = false;
       quake-mode-animation-time = 0.19999999999999996;
       quake-mode-gap = 0;
       quake-mode-height = 100;
@@ -13,9 +16,11 @@
       quake-mode-tray = false;
       quake-mode-width = 100;
     };
+
     "org/gnome/shell/extensions/quake-mode/apps" = {
       quake-mode-accelerator-1 = ["<Super>w"];
     };
+
     "org/gnome/shell/extensions/quake-mode/accelerators" = {
       app-1 = "wezterm.desktop";
     };

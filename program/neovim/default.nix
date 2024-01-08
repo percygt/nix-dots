@@ -1,4 +1,10 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  HM_NVIM = "${config.xdg.configHome}/home-manager/common/nvim";
   lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
   lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
   colors = (import ../../colors.nix).syft;
@@ -12,6 +18,28 @@
       hash = "sha256-WOJQ6RIibOby+Pmzr6kQxcT2NCGrq1roWkh4QKJECks=";
     };
     meta.homepage = "https://github.com/Shatur/neovim-session-manager";
+  };
+  devicons = pkgs.vimUtils.buildVimPlugin {
+    pname = "nvim-web-devicons";
+    version = "2024-01-07";
+    src = pkgs.fetchFromGitHub {
+      owner = "percygt";
+      repo = "nvim-web-devicons";
+      rev = "c9f1e6d6663a9d305886f5deb0606062e89cfa99";
+      hash = "sha256-BDUU6Lf/u1rs1sHobcgd/fJzJHgE5dHdiTzXi05Z54g=";
+    };
+    meta.homepage = "https://github.com/percygt/nvim-web-devicons";
+  };
+  better-escape = pkgs.vimUtils.buildVimPlugin {
+    pname = "better-escape";
+    version = "2024-01-08";
+    src = pkgs.fetchFromGitHub {
+      owner = "max397574";
+      repo = "better-escape.nvim";
+      rev = "d62cf3c04163a46f3895c70cc807f5ae68dd8ca1";
+      hash = "sha256-2Q8t2FTMlt9NkQ+n3jNFxAh9eJpn7LU/NwLaoFiz2Ts=";
+    };
+    meta.homepage = "https://github.com/max397574/better-escape.nvim";
   };
   vim-maximizer = pkgs.vimUtils.buildVimPlugin {
     pname = "vim-maximizer";
@@ -35,6 +63,9 @@ in {
     withPython3 = true;
     withRuby = false;
     extraLuaConfig = ''
+      if vim.loader then
+        vim.loader.enable()
+      end
       require("config.general")
       require("config.remaps")
       require("config.autocmds")
@@ -43,95 +74,6 @@ in {
     '';
 
     plugins = with pkgs.stable-23-11.vimPlugins; [
-      # Completion #-------------------------------------------------------------------------------------
-      {
-        plugin = nvim-cmp;
-        type = "lua";
-        config = ''require("config.lsp.completion")'';
-      }
-      cmp-path
-      cmp-buffer
-      cmp-nvim-lsp
-      cmp-nvim-lua
-      cmp_luasnip
-      lspkind-nvim
-      nvim-autopairs
-      luasnip
-      friendly-snippets
-      # Language Servers #-------------------------------------------------------------------------------------
-      {
-        plugin = nvim-lspconfig;
-        type = "lua";
-        config = ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
-      }
-      # Formatting/Diagnostic/Code Action #------------------------------------------------------------------------------------
-      {
-        plugin = none-ls-nvim;
-        type = "lua";
-        config = ''require("config.lsp.nonels").setup_null_ls("${lsp_tools}")'';
-      }
-      # Syntax Highlighting/LSP based motions #-------------------------------------------------------------------------------------
-      {
-        plugin = nvim-treesitter.withAllGrammars;
-        type = "lua";
-        config = ''require("config.lsp.treesitter")'';
-      }
-      lsp-format-nvim
-      lsp_signature-nvim
-      nvim-treesitter-textobjects
-      neodev-nvim
-      nvim-cursorline
-      # Sessions #-------------------------------------------------------------------------------------
-      # {
-      #   plugin = auto-session;
-      #   type = "lua";
-      #   config = ''require("config.tools.auto-session")'';
-      # }
-      {
-        plugin = neovim-session-manager;
-        type = "lua";
-        config = ''require("config.session_manager")'';
-      }
-      # Database #-------------------------------------------------------------------------------------
-      {
-        plugin = vim-dadbod;
-        type = "lua";
-        config = ''require("config.tools.database")'';
-      }
-      vim-dadbod-ui
-      vim-dadbod-completion
-      # Debug #-------------------------------------------------------------------------------------
-      {
-        plugin = nvim-dap;
-        type = "lua";
-        config = ''require("config.tools.debug")'';
-      }
-      nvim-dap-ui
-      nvim-dap-go
-      nvim-dap-python
-      nvim-dap-virtual-text
-      # Git #-------------------------------------------------------------------------------------
-      {
-        plugin = gitsigns-nvim;
-        type = "lua";
-        config = ''require("config.tools.git")'';
-      }
-      git-worktree-nvim
-      # thePrimeagen #-------------------------------------------------------------------------------------
-      {
-        plugin = pkgs.vimPlugins.harpoon2;
-        type = "lua";
-        config = ''require("config.tools.harpoon2")'';
-      }
-      # Misc tools #-------------------------------------------------------------------------------------
-      vim-visual-multi
-      vim-tmux-navigator
-      vim-maximizer
-      todo-comments-nvim
-      comment-nvim
-      vim-surround
-      vim-repeat
-      plenary-nvim
       # UI Enhancement #-------------------------------------------------------------------------------------
       {
         plugin = onedark-nvim;
@@ -153,41 +95,128 @@ in {
         type = "lua";
         config = ''require("config.ui.which-key")'';
       }
+      devicons
+      # nvim-web-devicons
       trouble-nvim
       dressing-nvim
       nvim-colorizer-lua
       smartcolumn-nvim
       twilight-nvim
-      nvim-web-devicons
       nvim-notify
       fidget-nvim
       nui-nvim
       noice-nvim
-      # Fuzzy Finder/File Browser #-------------------------------------------------------------------------------------
+      # Fuzzy Finder/File Browser #-------------------------------------------------------------------------
       {
         plugin = telescope-nvim;
         type = "lua";
-        config = ''require("config.telescope")'';
+        config = ''require("config.tools.telescope")'';
       }
       telescope-file-browser-nvim
       telescope-fzf-native-nvim
       telescope-undo-nvim
-      # File Browser #-------------------------------------------------------------------------------------
+      # File Browser #---------------------------------------------------------------------------------------
       {
         plugin = mini-nvim;
         type = "lua";
-        config = ''require("config.mini")'';
+        config = ''require("config.ui.mini")'';
       }
-      # {
-      #   plugin = oil-nvim;
-      #   type = "lua";
-      #   config = ''require("config.oil")'';
-      # }
-      # {
-      #   plugin = nvim-tree-lua;
-      #   type = "lua";
-      #   config = ''require("config.tree")'';
-      # }
+      # Completion #-------------------------------------------------------------------------------------
+      {
+        plugin = nvim-cmp;
+        type = "lua";
+        config = ''require("config.lsp.completion")'';
+      }
+      cmp-path
+      cmp-buffer
+      cmp-cmdline
+      cmp-nvim-lsp
+      cmp-nvim-lua
+      cmp_luasnip
+      lspkind-nvim
+      nvim-autopairs
+      luasnip
+      friendly-snippets
+      # AI #-------------------------------------------------------------------------------------
+      {
+        plugin = pkgs.vimPlugins.codeium-nvim;
+        type = "lua";
+        config = ''require("config.lsp.codeium")'';
+      }
+      # Language Server #---------------------------------------------------------------------------------
+      {
+        plugin = nvim-lspconfig;
+        type = "lua";
+        config = ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
+      }
+      # Formatting/Diagnostic/Code Action #---------------------------------------------------------------
+      {
+        plugin = none-ls-nvim;
+        type = "lua";
+        config = ''require("config.lsp.nonels").setup_null_ls("${lsp_tools}")'';
+      }
+      # Syntax Highlighting/LSP based motion #------------------------------------------------------------
+      {
+        plugin = nvim-treesitter.withAllGrammars;
+        type = "lua";
+        config = ''require("config.lsp.treesitter")'';
+      }
+      lsp-format-nvim
+      lsp_signature-nvim
+      nvim-treesitter-textobjects
+      neodev-nvim
+      nvim-cursorline
+      # Session #------------------------------------------------------------------------------------------
+      {
+        plugin = neovim-session-manager;
+        type = "lua";
+        config = ''require("config.tools.session_manager")'';
+      }
+      # Database #-----------------------------------------------------------------------------------------
+      {
+        plugin = vim-dadbod;
+        type = "lua";
+        config = ''require("config.tools.database")'';
+      }
+      vim-dadbod-ui
+      vim-dadbod-completion
+      # Debug #--------------------------------------------------------------------------------------------
+      {
+        plugin = nvim-dap;
+        type = "lua";
+        config = ''require("config.tools.debug")'';
+      }
+      nvim-dap-ui
+      nvim-dap-go
+      nvim-dap-python
+      nvim-dap-virtual-text
+      # Git #----------------------------------------------------------------------------------------------
+      {
+        plugin = gitsigns-nvim;
+        type = "lua";
+        config = ''require("config.tools.git")'';
+      }
+      git-worktree-nvim
+      # thePrimeagen #--------------------------------------------------------------------------------------
+      {
+        plugin = pkgs.vimPlugins.harpoon2;
+        type = "lua";
+        config = ''require("config.tools.harpoon2")'';
+      }
+      # Misc tools #----------------------------------------------------------------------------------------
+      {
+        plugin = better-escape;
+        type = "lua";
+        config = ''require("config.tools.better-esc")'';
+      }
+      vim-maximizer
+      vim-visual-multi
+      vim-tmux-navigator
+      todo-comments-nvim
+      comment-nvim
+      vim-surround
+      vim-repeat
+      plenary-nvim
     ];
     extraPackages = with pkgs; [
       # Essentials
@@ -241,6 +270,7 @@ in {
       hadolint
 
       # Additional
+      # codeium
       yamllint
       nodePackages.bash-language-server
       nodePackages.yaml-language-server
@@ -254,31 +284,45 @@ in {
       actionlint
     ];
   };
-  xdg.configFile.nvim = {
-    recursive = true;
-    source = ../../common/nvim;
+  home = {
+    activation = {
+      linkNvimSpell = lib.hm.dag.entryAfter ["linkGeneration"] ''
+        [ -d "${config.xdg.configHome}/nvim/spell" ] || ln -s "${HM_NVIM}/spell" "${config.xdg.configHome}/nvim/spell"
+      '';
+    };
   };
-  xdg.configFile."nvim/lua/config/colors.lua" = {
-    text = ''
-      return {
-        bg0 = "#${colors.normal.black}",
-        bg1 = "#${colors.bright.black}",
-        bg2 = "#${colors.extra.nocturne}",
-        bg3 = "#${colors.extra.azure}",
-        bg_d = "#${colors.extra.obsidian}",
-        fg = "#${colors.default.foreground}",
-        yellow = "#${colors.normal.yellow}",
-        cyan = "#${colors.normal.cyan}",
-        matchParen = "#${colors.bright.blue}",
+  xdg.configFile = {
+    "nvim/lua" = {
+      recursive = true;
+      source = ../../common/nvim/lua;
+    };
+    "nvim/ftdetect" = {
+      recursive = true;
+      source = ../../common/nvim/ftdetect;
+    };
+    "nvim/lua/config/colors.lua" = {
+      text = ''
+        return {
+          bg0 = "#${colors.normal.black}",
+          bg1 = "#${colors.bright.black}",
+          bg2 = "#${colors.extra.nocturne}",
+          bg3 = "#${colors.extra.azure}",
+          bg_d = "#${colors.extra.obsidian}",
+          fg = "#${colors.default.foreground}",
+          -- yellow = "#${colors.normal.yellow}",
+          cyan = "#${colors.normal.cyan}",
+          matchParen = "#${colors.extra.azure}",
+          midnight = "#${colors.extra.midnight}",
 
-        --Catpuccin stuff
-        lavender = "#${colors.extra.lavender}",
-        rosewater = "#${colors.extra.rosewater}",
-        peach = "#${colors.extra.peach}",
-        sapphire = "#${colors.extra.sapphire}",
-        sky = "#${colors.extra.sky}",
-        mauve = "#${colors.extra.mauve}",
-      }
-    '';
+          -- Catpuccin stuff
+          lavender = "#${colors.extra.lavender}",
+          rosewater = "#${colors.extra.rosewater}",
+          peach = "#${colors.extra.peach}",
+          sapphire = "#${colors.extra.sapphire}",
+          sky = "#${colors.extra.sky}",
+          mauve = "#${colors.extra.mauve}",
+        }
+      '';
+    };
   };
 }

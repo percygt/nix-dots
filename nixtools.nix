@@ -8,6 +8,6 @@
     nurl
     nix-tree
     node2nix
-    nix-your-shell
+    # nix-your-shell
   ];
 }

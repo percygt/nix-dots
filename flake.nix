@@ -1,12 +1,18 @@
 {
-  description = "Home Manager configuration of percygt";
+  description = "PercyGT's nix config";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-23-11.url = "github:nixos/nixpkgs/nixos-23.11";
+
     flake-utils.url = "github:numtide/flake-utils";
+
     nixgl.url = "github:guibou/nixgl";
+
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
+    codeium.url = "github:Exafunction/codeium.nvim";
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -39,23 +45,27 @@
       wezterm_custom = final: prev: {
         wezterm_custom = inputs.wezterm.packages."${prev.system}".default;
       };
+      codeium = final: prev: {
+        vimPlugins =
+          prev.vimPlugins
+          // {
+            inherit (inputs.codeium.packages."${prev.system}".vimPlugins) codeium-nvim;
+          };
+      };
       neovimNightly = inputs.neovim-nightly-overlay.overlay;
       nixgl = inputs.nixgl.overlay;
       vscode-marketplace = inputs.nix-vscode-extensions.overlays.default;
     };
-
-    formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".alejandra);
     legacyPackages = forAllSystems (
       system:
         import nixpkgs {
           inherit system;
           overlays = builtins.attrValues overlays;
           config.allowUnfree = true;
-          allowUnfreePredicate = _: true;
         }
     );
-
     pkgs = legacyPackages.x86_64-linux;
+    formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".alejandra);
     homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = {inherit inputs pkgs username;};
