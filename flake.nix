@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-23-11.url = "github:nixos/nixpkgs/nixos-23.11";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -11,7 +10,7 @@
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
-    codeium.url = "github:Exafunction/codeium.nvim";
+    my-nix-overlays.url = "github:percygt/nix-overlay";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -32,9 +31,6 @@
     forAllSystems = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems;
   in rec {
     overlays = {
-      stable-23-11 = final: prev: {
-        stable-23-11 = inputs.nixpkgs-23-11.legacyPackages.${prev.system};
-      };
       nodePackages-extra = final: prev: {
         nodePackages-extra = import ./nixpkgs/node {
           pkgs = prev;
@@ -45,13 +41,7 @@
       wezterm_custom = final: prev: {
         wezterm_custom = inputs.wezterm.packages."${prev.system}".default;
       };
-      codeium = final: prev: {
-        vimPlugins =
-          prev.vimPlugins
-          // {
-            inherit (inputs.codeium.packages."${prev.system}".vimPlugins) codeium-nvim;
-          };
-      };
+      my-nix-overlays = inputs.my-nix-overlays.overlays.default;
       neovimNightly = inputs.neovim-nightly-overlay.overlay;
       nixgl = inputs.nixgl.overlay;
       vscode-marketplace = inputs.nix-vscode-extensions.overlays.default;

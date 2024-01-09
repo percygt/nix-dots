@@ -82,7 +82,6 @@ vim.api.nvim_create_autocmd("User", {
 mini_files.setup({
   content = { filter = filter_hide },
   options = {
-    permanent_delete = false,
     use_as_default_explorer = true,
   },
   windows = {

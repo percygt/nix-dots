@@ -8,50 +8,6 @@
   lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
   lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
   colors = (import ../../colors.nix).syft;
-  neovim-session-manager = pkgs.vimUtils.buildVimPlugin {
-    pname = "neovim-session-manager";
-    version = "2024-01-03";
-    src = pkgs.fetchFromGitHub {
-      owner = "Shatur";
-      repo = "neovim-session-manager";
-      rev = "68dde355a4304d83b40cf073f53915604bdd8e70";
-      hash = "sha256-WOJQ6RIibOby+Pmzr6kQxcT2NCGrq1roWkh4QKJECks=";
-    };
-    meta.homepage = "https://github.com/Shatur/neovim-session-manager";
-  };
-  devicons = pkgs.vimUtils.buildVimPlugin {
-    pname = "nvim-web-devicons";
-    version = "2024-01-07";
-    src = pkgs.fetchFromGitHub {
-      owner = "percygt";
-      repo = "nvim-web-devicons";
-      rev = "c9f1e6d6663a9d305886f5deb0606062e89cfa99";
-      hash = "sha256-BDUU6Lf/u1rs1sHobcgd/fJzJHgE5dHdiTzXi05Z54g=";
-    };
-    meta.homepage = "https://github.com/percygt/nvim-web-devicons";
-  };
-  better-escape = pkgs.vimUtils.buildVimPlugin {
-    pname = "better-escape";
-    version = "2024-01-08";
-    src = pkgs.fetchFromGitHub {
-      owner = "max397574";
-      repo = "better-escape.nvim";
-      rev = "d62cf3c04163a46f3895c70cc807f5ae68dd8ca1";
-      hash = "sha256-2Q8t2FTMlt9NkQ+n3jNFxAh9eJpn7LU/NwLaoFiz2Ts=";
-    };
-    meta.homepage = "https://github.com/max397574/better-escape.nvim";
-  };
-  vim-maximizer = pkgs.vimUtils.buildVimPlugin {
-    pname = "vim-maximizer";
-    version = "2024-01-01";
-    src = pkgs.fetchFromGitHub {
-      owner = "szw";
-      repo = "vim-maximizer";
-      rev = "2e54952fe91e140a2e69f35f22131219fcd9c5f1";
-      hash = "sha256-+VPcMn4NuxLRpY1nXz7APaXlRQVZD3Y7SprB/hvNKww=";
-    };
-    meta.homepage = "https://github.com/szw/vim-maximizer";
-  };
 in {
   programs.neovim = {
     enable = true;
@@ -73,7 +29,7 @@ in {
       require("config.ui.misc")
     '';
 
-    plugins = with pkgs.stable-23-11.vimPlugins; [
+    plugins = with pkgs.percygt.vimPlugins; [
       # UI Enhancement #-------------------------------------------------------------------------------------
       {
         plugin = onedark-nvim;
@@ -95,8 +51,8 @@ in {
         type = "lua";
         config = ''require("config.ui.which-key")'';
       }
-      devicons
-      # nvim-web-devicons
+      # devicons
+      nvim-web-devicons
       trouble-nvim
       dressing-nvim
       nvim-colorizer-lua
@@ -139,7 +95,7 @@ in {
       friendly-snippets
       # AI #-------------------------------------------------------------------------------------
       {
-        plugin = pkgs.vimPlugins.codeium-nvim;
+        plugin = codeium-nvim;
         type = "lua";
         config = ''require("config.lsp.codeium")'';
       }
