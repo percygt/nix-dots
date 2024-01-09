@@ -58,7 +58,7 @@ in {
     prefix = "C-a";
     escapeTime = 0;
     historyLimit = 1000000;
-    plugins = with pkgs.tmuxPlugins; [
+    plugins = with pkgs.percygt.tmuxPlugins; [
       {
         plugin = t-smart-manager;
         extraConfig = ''
@@ -79,14 +79,15 @@ in {
         '';
       }
       {
-        plugin = onedark-theme.overrideAttrs (_: {
-          src = pkgs.fetchFromGitHub {
-            owner = "percygt";
-            repo = "tmux-onedark-theme";
-            rev = "00a33ca898ee6fb48411c0b234779609c7d44fda";
-            hash = "sha256-AjIDVDVSfHj3pwT0SZIpjvFFZQzKeNNavfwHDG3bZsI=";
-          };
-        });
+        # plugin = onedark-theme.overrideAttrs (_: {
+        #   src = pkgs.fetchFromGitHub {
+        #     owner = "percygt";
+        #     repo = "tmux-onedark-theme";
+        #     rev = "00a33ca898ee6fb48411c0b234779609c7d44fda";
+        #     hash = "sha256-AjIDVDVSfHj3pwT0SZIpjvFFZQzKeNNavfwHDG3bZsI=";
+        #   };
+        # });
+        plugin = tmux-onedark-theme;
         extraConfig = "set -g status-position top";
       }
       {
@@ -124,20 +125,19 @@ in {
     ];
     extraConfig = ''
       run-shell "if [ ! -d ${resurrectDirPath} ]; then tmux new-session -d -s main; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
-      set-environment -g TMUX_PLUGIN_MANAGER_PATH '~/.local/share/tmux/plugins'
+
       # TERM override
       set terminal-overrides "xterm-256color:RGB"
       set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
       set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colours - needs tmux-3.0
+      set -g allow-passthrough on
+      set -ga update-environment TERM
+      set -ga update-environment TERM_PROGRAM
       set -g set-clipboard on
 
       # make Prefix p paste the buffer.
       unbind p
       bind p paste-buffer
-
-      set -g allow-passthrough on
-      set -ga update-environment TERM
-      set -ga update-environment TERM_PROGRAM
 
       # Copy mode using 'Esc'
       unbind [
@@ -168,7 +168,9 @@ in {
       bind-key w break-pane
 
       # Easier reload of config
-      bind r source-file ~/.config/tmux/tmux.conf
+      bind R source-file ~/.config/tmux/tmux.conf
+
+      bind-key e send-keys "tmux capture-pane -p -S - | nvim -c 'set buftype=nofile' +" Enter
     '';
   };
 }
