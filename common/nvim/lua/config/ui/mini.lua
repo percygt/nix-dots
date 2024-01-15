@@ -91,6 +91,10 @@ mini_files.setup({
     width_nofocus = 15,
     width_preview = 100,
   },
+  mappings = {
+    go_in = "L",
+    go_in_plus = "l",
+  },
 })
 
 local keymap = require("config.helpers")

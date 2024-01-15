@@ -68,7 +68,7 @@
       switch-to-workspace-right = ["<Control><Alt>l" "<Super>Page_Down"];
       switch-to-workspace-up = [];
       toggle-above = [];
-      toggle-fullscreen = ["<Shift><Super>m"];
+      toggle-fullscreen = ["F11"];
       toggle-maximized = ["<Super>m"];
       toggle-on-all-workspaces = [];
       toggle-shaded = [];
@@ -137,7 +137,7 @@
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding = "<Super>f";
-      command = "foot";
+      command = "foot --maximized nvim";
       name = "Foot";
     };
 

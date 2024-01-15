@@ -18,16 +18,20 @@ in {
     withNodeJs = true;
     withPython3 = true;
     withRuby = false;
-    extraLuaConfig = ''
-      if vim.loader then
-        vim.loader.enable()
-      end
-      require("config.general")
-      require("config.remaps")
-      require("config.autocmds")
-      require("config.tools.misc")
-      require("config.ui.misc")
-    '';
+    extraLuaConfig =
+      /*
+      lua
+      */
+      ''
+        if vim.loader then
+          vim.loader.enable()
+        end
+        require("config.general")
+        require("config.remaps")
+        require("config.autocmds")
+        require("config.tools.misc")
+        require("config.ui.misc")
+      '';
 
     plugins = with pkgs.percygt.vimPlugins; [
       # UI Enhancement #-------------------------------------------------------------------------------------
@@ -165,11 +169,16 @@ in {
         type = "lua";
         config = ''require("config.tools.better-esc")'';
       }
+      # {
+      #   plugin = obsidian-nvim;
+      #   type = "lua";
+      #   config = ''require("config.tools.obsidian")'';
+      # }
+      markdown-preview-nvim
+      todo-comments-nvim
       vim-maximizer
       vim-visual-multi
       vim-tmux-navigator
-      todo-comments-nvim
-      comment-nvim
       vim-surround
       vim-repeat
       plenary-nvim
@@ -225,6 +234,9 @@ in {
       #docker
       hadolint
 
+      #markdown
+      marksman
+
       # Additional
       # codeium
       yamllint
@@ -242,9 +254,14 @@ in {
   };
   home = {
     activation = {
-      linkNvimSpell = lib.hm.dag.entryAfter ["linkGeneration"] ''
-        [ -d "${config.xdg.configHome}/nvim/spell" ] || ln -s "${HM_NVIM}/spell" "${config.xdg.configHome}/nvim/spell"
-      '';
+      linkNvimSpell =
+        lib.hm.dag.entryAfter ["linkGeneration"]
+        /*
+        bash
+        */
+        ''
+          [ -d "${config.xdg.configHome}/nvim/spell" ] || ln -s "${HM_NVIM}/spell" "${config.xdg.configHome}/nvim/spell"
+        '';
     };
   };
   xdg.configFile = {
@@ -257,28 +274,33 @@ in {
       source = ../../common/nvim/ftdetect;
     };
     "nvim/lua/config/colors.lua" = {
-      text = ''
-        return {
-          bg0 = "#${colors.normal.black}",
-          bg1 = "#${colors.bright.black}",
-          bg2 = "#${colors.extra.nocturne}",
-          bg3 = "#${colors.extra.azure}",
-          bg_d = "#${colors.extra.obsidian}",
-          fg = "#${colors.default.foreground}",
-          -- yellow = "#${colors.normal.yellow}",
-          cyan = "#${colors.normal.cyan}",
-          matchParen = "#${colors.extra.azure}",
-          midnight = "#${colors.extra.midnight}",
+      text =
+        /*
+        lua
+        */
+        ''
+          return {
+            bg0 = "#${colors.normal.black}",
+            bg1 = "#${colors.bright.black}",
+            bg2 = "#${colors.extra.nocturne}",
+            bg3 = "#${colors.extra.azure}",
+            bg_d = "#${colors.extra.obsidian}",
+            fg = "#${colors.default.foreground}",
+            -- yellow = "#${colors.normal.yellow}",
+            cyan = "#${colors.normal.cyan}",
+            matchParen = "#${colors.extra.azure}",
+            midnight = "#${colors.extra.midnight}",
+            cream = "#${colors.extra.cream}",
 
-          -- Catpuccin stuff
-          lavender = "#${colors.extra.lavender}",
-          rosewater = "#${colors.extra.rosewater}",
-          peach = "#${colors.extra.peach}",
-          sapphire = "#${colors.extra.sapphire}",
-          sky = "#${colors.extra.sky}",
-          mauve = "#${colors.extra.mauve}",
-        }
-      '';
+            -- Catpuccin stuff
+            lavender = "#${colors.extra.lavender}",
+            rosewater = "#${colors.extra.rosewater}",
+            peach = "#${colors.extra.peach}",
+            sapphire = "#${colors.extra.sapphire}",
+            sky = "#${colors.extra.sky}",
+            mauve = "#${colors.extra.mauve}",
+          }
+        '';
     };
   };
 }

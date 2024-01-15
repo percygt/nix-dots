@@ -54,7 +54,7 @@
     diagnostics = {
       ruff = {};
       yamllint = {};
-      markdownlint = {};
+      # markdownlint = {};
       cppcheck = {};
       golangci_lint = {};
       statix = {}; # [nix]
@@ -62,13 +62,6 @@
       eslint_d = {
         condition.root_has_file = [".eslintrc.js" ".eslintrc.cjs"];
       };
-      # codespell = {
-      #   args = [
-      #     "--builtin"
-      #     "clear,rare,code"
-      #     "-"
-      #   ];
-      # };
     };
 
     code_actions = {

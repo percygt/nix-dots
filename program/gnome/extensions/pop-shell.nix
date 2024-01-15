@@ -57,9 +57,11 @@
       }
       {class = "org.wezfurlong.wezterm";}
       {class = "quake-terminal";}
+      {class = "foot";}
     ];
 
     skiptaskbarhidden = [
+      {class = "foot";}
       {class = "org.wezfurlong.wezterm";}
       {class = "quake-terminal";}
       {class = "gnome-terminal-server";}
