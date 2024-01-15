@@ -3,12 +3,6 @@ local lspconfig = require("lspconfig")
 local on_attach = require("config.lsp.on_attach")
 local fidget = require("fidget")
 
-fidget.setup({
-  progress = {
-    suppress_on_insert = true, -- Suppress new messages while in insert mode
-  },
-})
-
 local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
@@ -46,6 +40,11 @@ function M.setup_servers(json_config)
     --   config.root_dir = lspconfig.util.root_pattern("package.json")
     --   config.single_file_support = false
     -- end
+    fidget.setup({
+      progress = {
+        suppress_on_insert = true, -- Suppress new messages while in insert mode
+      },
+    })
     config.capabilities = capabilities
     config.on_attach = on_attach
     lspconfig[server].setup(config)

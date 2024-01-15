@@ -79,54 +79,35 @@ with lib.hm.gvariant; {
 
     "org/gnome/shell" = {
       enabled-extensions = [
-        "background-logo@fedorahosted.org"
-        "extensions-sync@elhan.io"
+        "quick-settings-tweaks@qwreey"
+        "Battery-Health-Charging@maniacx.github.com"
         "bluetooth-quick-connect@bjarosze.gmail.com"
         "mprisLabel@moon-0xff.github.com"
         "quake-mode@repsac-by.github.com"
         "customreboot@nova1545"
         "ShutdownTimer@deminder"
         "improved-workspace-indicator@michaelaquilina.github.io"
-        "noannoyance@daase.net"
         "reboottouefi@ubaygd.com"
-        "workspace-switcher-manager@G-dH.github.com"
         "docker@stickman_0x00.com"
-        "pip-on-top@rafostar.github.com"
-        "quick-settings-tweaks@qwreey"
-        "custom-osd@neuromorph"
         "pano@elhan.io"
-        "gsconnect@andyholmes.github.io"
-        "HeadsetControl@lauinger-clan.de"
-        "Vitals@CoreCoding.com"
         "panel-date-format@atareao.es"
-        "runcat@kolesnikov.se"
-        "netspeedsimplified@prateekmedia.extension"
         "date-menu-formatter@marcinjakubowski.github.com"
         "update-extension@purejava.org"
         "space-bar@luchrioh"
-        "custom-window-controls@icedman.github.com"
-        "transparent-top-bar@ftpix.com"
-        "no-overview@fthx"
-        "gradienttopbar@pshow.org"
-        "suppress-startup-animation@icedman.github.com"
         "supergfxctl-gex@asus-linux.org"
         "appindicatorsupport@rgcjonas.gmail.com"
         "dash-to-panel@jderose9.github.com"
-        "extension-list@tu.berry"
         "user-theme@gnome-shell-extensions.gcampax.github.com"
         "vertical-workspaces@G-dH.github.com"
-        "focus-follows-workspace@christopher.luebbemeier.gmail.com"
-        "Battery-Health-Charging@maniacx.github.com"
-        "grand-theft-focus@zalckos.github.com"
         "ddterm@amezin.github.com"
         "caffeine@patapon.info"
-        "systemd-manager@hardpixel.eu"
         "pop-shell@system76.com"
-        "another-window-session-manager@gmail.com"
-        "window-state-manager@kishorv06.github.io"
-        "color-picker@tuberry"
-        "quake-terminal@diegodario88.github.io"
         "rounded-window-corners@yilozt"
+        "trimmer@hedgie.tech"
+        "blur-my-shell@aunetx"
+        "system-stats-plus@remulo.costa.gmail.com"
+        "just-perfection-desktop@just-perfection"
+        "unredirect@vaina.lt"
       ];
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
@@ -150,7 +131,7 @@ with lib.hm.gvariant; {
       center-new-windows = true;
       dynamic-workspaces = true;
       edge-tiling = false;
-      # experimental-features = ["scale-monitor-framebuffer"];
+      experimental-features = ["scale-monitor-framebuffer"];
       locate-pointer-key = "Control_L";
       overlay-key = "";
       workspaces-only-on-primary = true;

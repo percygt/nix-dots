@@ -20,8 +20,9 @@ nmap("QQ", ":q!<cr>", silent)
 nmap("WW", ":w!<cr>", silent)
 imap("WW", "<esc>:w!<cr>", silent)
 -- Move text up and down
-nnoremap("<a-j>", "<cmd>m '>+1<cr>gv=gv", silent)
-nnoremap("<a-k>", "<cmd>m '<-2<cr>gv=gv", silent)
+vmap("<a-j>", ":m '>+1<CR>gv=gv", silent)
+vmap("<a-k>", ":m '<-2<CR>gv=gv", silent)
+
 -- Better vertical motions
 nnoremap("<c-d>", "<c-d>zz")
 nnoremap("<c-u>", "<c-u>zz")

@@ -8,10 +8,9 @@ in {
       main = {
         term = "xterm-256color";
         login-shell = "yes";
-        font = "JetBrainsMono Nerd Font:size=11";
-        letter-spacing = 0;
+        font = "VictorMono Nerd Font:style=SemiBold:size=12";
+        letter-spacing = 0.25;
         box-drawings-uses-font-glyphs = "yes";
-        pad = "5x5";
       };
 
       cursor = {
@@ -23,7 +22,10 @@ in {
       };
 
       csd = {
-        preferred = "none";
+        preferred = "server";
+        color = "ff000000";
+        size = 1;
+        hide-when-maximized = "yes";
       };
 
       colors = {

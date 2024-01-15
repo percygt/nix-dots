@@ -7,6 +7,7 @@
   bashls = {};
   terraformls = {};
   gopls = {};
+  marksman = {};
   denols = {
     root_pattern = ["deno.json" "deno.jsonc"];
   };

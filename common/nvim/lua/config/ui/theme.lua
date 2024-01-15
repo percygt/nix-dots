@@ -27,7 +27,6 @@ require("onedark").setup({
     -- ["@entity.other.attribute-name"] = { fg = "$yellow", fmt = "italic" },
     -- ["@entity.other.attribute-name.tsx"] = { fg = "$yellow", fmt = "italic" },
     -- ["@entity.other.attribute-name.class.css"] = { fg = "$yellow", fmt = "italic" },
-    --
     -- ["@entity.name.type.class"] = { fg = "$yellow", fmt = "italic" },
     -- ["@meta.function"] = { fg = "$yellow", fmt = "italic" },
     -- ["@meta.function-call"] = { fg = "$yellow", fmt = "italic" },
@@ -42,8 +41,8 @@ require("onedark").setup({
     ["@meta.decorator "] = { fmt = "italic" },
     ["@punctuation.decorator"] = { fmt = "italic" },
 
-    ["@punctuation.definition.comment"] = { fg = "$dark_red", fmt = "italic" },
-    ["@comment"] = { fg = "$dark_red", fmt = "italic" },
+    -- ["@punctuation.definition.comment"] = { fg = "$dark_red", fmt = "italic" },
+    -- ["@comment"] = { fg = "$dark_red", fmt = "italic" },
 
     ["@entity.name.tag"] = { fg = "$grey", fmt = "italic" },
     ["@support.type.property-name"] = { fg = "$grey", fmt = "italic" },

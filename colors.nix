@@ -2,7 +2,7 @@
   syft = {
     default = {
       foreground = "96c7f1"; # [#96c7f1]
-      background = "0a0714"; # [#0a0714]
+      background = "00051A"; # [#00051A]
     };
     alpha = 0.9;
     bold = "a1d408"; # [#a1d408]
@@ -36,9 +36,10 @@
     };
     extra = {
       obsidian = "030205"; # [#030205]
-      midnight = "00051A"; # [#00051A]
+      midnight = "08103a"; # [#08103a]
       nocturne = "120d22"; # [#120d22]
       azure = "0e1a60"; # [#0e1a60]
+      cream = "fffae5"; # [#fffae5]
       lavender = "b4befe"; # [#b4befe]
       peach = "fab387"; # [#fab387]
       rosewater = "f5e0dc"; # [#f5e0dc]

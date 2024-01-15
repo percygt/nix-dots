@@ -1,9 +1,24 @@
 {lib, ...}: {
   xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
   dconf.settings = with lib.hm.gvariant; {
+    "org/gnome/shell/extensions/just-perfection" = {
+      animation = 4;
+    };
+
     "org/gnome/shell/extensions/caffeine" = {
       enable-fullscreen = false;
       toggle-state = false;
+    };
+
+    "org/gnome/shell/extensions/blur-my-shell/applications" = {
+      blur = false;
+      enable-all = true;
+    };
+    "org/gnome/shell/extensions/blur-my-shell/dash-to-dock" = {
+      blur = false;
+    };
+    "org/gnome/shell/extensions/blur-my-shell/panel" = {
+      blur = false;
     };
 
     "org/gnome/shell/extensions/quake-mode" = {
@@ -19,10 +34,12 @@
 
     "org/gnome/shell/extensions/quake-mode/apps" = {
       quake-mode-accelerator-1 = ["<Super>w"];
+      quake-mode-accelerator-2 = ["<Super><Shift>f"];
     };
 
     "org/gnome/shell/extensions/quake-mode/accelerators" = {
       app-1 = "wezterm.desktop";
+      app-2 = "org.codeberg.dnkl.foot.desktop";
     };
 
     "org/gnome/shell/extensions/Battery-Health-Charging" = {
@@ -448,6 +465,7 @@
       black-list = [
         "com.github.amezin.ddterm"
         "org.wezfurlong.wezterm"
+        "foot"
       ];
       border-color = mkTuple [
         (mkDouble 0.0039215651340782642)
@@ -569,7 +587,7 @@
       dash-position = 0;
       dash-position-adjust = 0;
       dash-show-recent-files-icon = 0;
-      dash-show-windows-before-activation = 1;
+      dash-show-windows-before-activation = 0;
       dash-show-windows-icon = 0;
       enable-page-shortcuts = true;
       favorites-notify = 1;
@@ -594,7 +612,7 @@
       panel-module = true;
       panel-position = 0;
       panel-visibility = 0;
-      profile-data-1 = with mkDictionaryEntry; [
+      profile-data-1 = [
         ["mkTupleworkspaceThumbnailsPosition" "5"]
         ["wsMaxSpacing" "350"]
         ["wsPreviewScale" "100"]
@@ -706,7 +724,7 @@
         ["swipeTrackerModule" "true"]
         ["searchControllerModule" "true"]
         ["searchModule" "true"]
-        ["panelModule" "true"]
+        ["panelModule" "false"]
         ["overlayKeyModule" "true"]
         ["osdWindowModule" "true"]
         ["messageTrayModule" "true"]
