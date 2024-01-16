@@ -174,6 +174,7 @@ in {
       #   type = "lua";
       #   config = ''require("config.tools.obsidian")'';
       # }
+      lazygit-nvim
       markdown-preview-nvim
       todo-comments-nvim
       vim-maximizer

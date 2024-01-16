@@ -14,7 +14,6 @@ require("notify").setup({
   background_colour = "#000000",
   enabled = false,
 })
-vim.notify = require("notify")
 require("noice").setup({
   -- add any options here
   routes = {
