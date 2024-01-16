@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  colors = (import ./colors.nix).syft;
+in {
   home.packages = with pkgs; [
     # archives
     zip
@@ -54,18 +56,28 @@
 
     fzf = {
       enable = true;
-      # Default command that is executed for fzf - $FZF_DEFAULT_COMMAND
+      colors = {
+        "bg+" = "#${colors.extra.azure}";
+        bg = "#${colors.normal.black}";
+        preview-bg = "#${colors.default.background}";
+      };
+      tmux = {
+        enableShellIntegration = true;
+        shellIntegrationOptions = [
+          "-p 90%,75%"
+          "--preview-window=right,60%,,"
+        ];
+      };
       defaultCommand = "fd --type file --hidden --exclude .git";
       defaultOptions = [
-        "--height 50%"
-        "--layout=reverse"
         "--border"
       ];
       # CTRL-T - $FZF_CTRL_T_COMMAND
-      fileWidgetCommand = "fd --type file --hidden --exclude .git";
-
+      fileWidgetCommand = "rg --files --hidden -g !.git";
+      fileWidgetOptions = ["--preview 'preview {}'"];
       # ALT-C - $FZF_ALT_C_COMMAND
       changeDirWidgetCommand = "fd --type directory --hidden --exclude .git";
+      changeDirWidgetOptions = ["--preview 'preview {}'"];
     };
     eza = {
       enable = true;

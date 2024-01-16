@@ -59,6 +59,5 @@ nmap("D", "<cmd>bdelete<cr>")
 nnoremap("<leader>mr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 nnoremap("<leader>mx", "<cmd>!chmod +x %<cr>", silent)
 nnoremap("<leader>tw", "<cmd>Twilight<cr>", silent)
-nnoremap("<leader>tw", "<cmd>Twilight<cr>", silent)
 -- Format
 nnoremap("<leader><leader>", "<cmd>lua vim.lsp.buf.format({async=true})<cr>", silent)

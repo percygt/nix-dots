@@ -42,8 +42,6 @@ in {
       {
         plugin = resurrect;
         extraConfig = ''
-          set -g @resurrect-strategy-nvim 'session'
-          set -g @resurrect-strategy-vim 'session'
           # Taken from: https://github.com/p3t33/nixos_flake/blob/5a989e5af403b4efe296be6f39ffe6d5d440d6d6/home/modules/tmux.nix
           set -g @resurrect-capture-pane-contents 'on'
 
@@ -87,7 +85,8 @@ in {
         set -ga update-environment TERM
         set -ga update-environment TERM_PROGRAM
         set -g set-clipboard on
-
+        set -g pane-active-border-style 'fg=magenta,bg=default'
+        set -g pane-border-style 'fg=brightblack,bg=default'
         # make Prefix p paste the buffer.
         unbind p
         bind p paste-buffer
