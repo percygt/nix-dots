@@ -1,61 +1,65 @@
+local builtin = require("telescope.builtin")
+local extensions = require("telescope").extensions
+
 require("gitsigns").setup({
-	signs = {
-		add = { text = "+" },
-		change = { text = "~" },
-		delete = { text = "_" },
-		topdelete = { text = "‾" },
-		changedelete = { text = "~" },
-	},
-	current_line_blame = false,
-	on_attach = function(bufnr)
-		local gs = package.loaded.gitsigns
+  signs = {
+    add = { text = "+" },
+    change = { text = "~" },
+    delete = { text = "󰍵" },
+    topdelete = { text = "‾" },
+    changedelete = { text = "~" },
+    untracked = { text = "│" },
+  },
+  current_line_blame = false,
+  on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
 
-		local function map(mode, l, r, opts)
-			opts = opts or {}
-			opts.buffer = bufnr
-			vim.keymap.set(mode, l, r, opts)
-		end
+    local function map(mode, l, r, opts)
+      opts = opts or {}
+      opts.buffer = bufnr
+      vim.keymap.set(mode, l, r, opts)
+    end
 
-		-- Navigation
-		map("n", "]c", function()
-			if vim.wo.diff then
-				return "]c"
-			end
-			vim.schedule(function()
-				gs.next_hunk()
-			end)
-			return "<Ignore>"
-		end, { expr = true })
+    -- Navigation
+    map("n", "]h", function()
+      if vim.wo.diff then
+        return "]h"
+      end
+      vim.schedule(function()
+        gs.next_hunk()
+      end)
+      return "<Ignore>"
+    end, { expr = true })
 
-		map("n", "[c", function()
-			if vim.wo.diff then
-				return "[c"
-			end
-			vim.schedule(function()
-				gs.prev_hunk()
-			end)
-			return "<Ignore>"
-		end, { expr = true })
+    map("n", "[h", function()
+      if vim.wo.diff then
+        return "[h"
+      end
+      vim.schedule(function()
+        gs.prev_hunk()
+      end)
+      return "<Ignore>"
+    end, { expr = true })
 
-		-- Actions
-		map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>")
-		map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>")
-		map("n", "<leader>ghS", gs.stage_buffer)
-		map("n", "<leader>gha", gs.stage_hunk)
-		map("n", "<leader>ghu", gs.undo_stage_hunk)
-		map("n", "<leader>ghR", gs.reset_buffer)
-		map("n", "<leader>ghp", gs.preview_hunk)
-		map("n", "<leader>gbl", function()
-			gs.blame_line({ full = true })
-		end)
-		map("n", "<leader>gbt", gs.toggle_current_line_blame)
-		map("n", "<leader>gdi", gs.diffthis)
-		map("n", "<leader>gdd", function()
-			gs.diffthis("~")
-		end)
-		map("n", "<leader>gdt", gs.toggle_deleted)
+    --Git Worktree
+    map("n", "<leader>gl", extensions.git_worktree.git_worktrees, { desc = "Worktree list" })
+    map("n", "<leader>gc", extensions.git_worktree.create_git_worktree, { desc = "Create worktree" })
 
-		-- Text object
-		map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
-	end,
+    -- Actions
+    map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })
+    map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", { desc = "Stage hunk" })
+    map("n", "<leader>ghS", gs.stage_buffer, { desc = "Stage buffer" })
+    map("n", "<leader>ghu", gs.undo_stage_hunk, { desc = "Undo stage hunk" })
+    map("n", "<leader>ghR", gs.reset_buffer, { desc = "Reset buffer" })
+    map("n", "<leader>ghp", gs.preview_hunk, { desc = "Preview hunk" })
+    map("n", "<leader>ghb", function()
+      gs.blame_line({ full = true })
+    end, { desc = "Blame line" })
+    map("n", "<leader>ghd", gs.diffthis, { desc = "Diff this" })
+    map("n", "<leader>ghD", function()
+      gs.diffthis("~")
+    end, { desc = "Diff this ~" })
+    -- Text object
+    map({ "o", "x" }, "gh", ":<C-U>Gitsigns select_hunk<CR>", { desc = "GitSigns select hunk" })
+  end,
 })
