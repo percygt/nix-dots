@@ -150,11 +150,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1701680307,
-        "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
+        "lastModified": 1705309234,
+        "narHash": "sha256-uNRRNRKmJyCRC/8y1RqBkqWBLM034y4qN7EprSdmgyA=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "4022d587cbbfd70fe950c1e2083a02621806a725",
+        "rev": "1ef2e671c3b0c19053962c07dbda38332dcebf26",
         "type": "github"
       },
       "original": {
@@ -355,11 +355,11 @@
         "vim-maximizer": "vim-maximizer"
       },
       "locked": {
-        "lastModified": 1705353793,
-        "narHash": "sha256-TmWXzIGterBFXe33t6zJkygweleDEkLqOJJZlC4fxto=",
+        "lastModified": 1705395497,
+        "narHash": "sha256-MV/BP9T9XjNPXq3eBpygTPM43VW758Vp2E3MOfgONwQ=",
         "owner": "percygt",
         "repo": "nix-overlay",
-        "rev": "2f5ac13e0387fd403d5165676a254499426eb547",
+        "rev": "56b5ecbc600929c822802ee23524d64616511327",
         "type": "github"
       },
       "original": {
@@ -429,6 +429,26 @@
       "original": {
         "owner": "Shatur",
         "repo": "neovim-session-manager",
+        "type": "github"
+      }
+    },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1705282324,
+        "narHash": "sha256-LnURMA7yCM5t7et9O2+2YfGQh0FKAfE5GyahNDDzJVM=",
+        "owner": "Mic92",
+        "repo": "nix-index-database",
+        "rev": "49aaeecf41ae0a0944e2c627cb515bcde428a1d1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "nix-index-database",
         "type": "github"
       }
     },
@@ -505,11 +525,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1704722960,
-        "narHash": "sha256-mKGJ3sPsT6//s+Knglai5YflJUF2DGj7Ai6Ynopz0kI=",
+        "lastModified": 1705133751,
+        "narHash": "sha256-rCIsyE80jgiOU78gCWN3A0wE0tR2GI5nH6MlS+HaaSQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "317484b1ead87b9c1b8ac5261a8d2dd748a0492d",
+        "rev": "9b19f5e77dd906cb52dade0b7bd280339d2a1f3d",
         "type": "github"
       },
       "original": {
@@ -588,6 +608,7 @@
         "home-manager": "home-manager",
         "my-nix-overlays": "my-nix-overlays",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
+        "nix-index-database": "nix-index-database",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs_6",
@@ -731,11 +752,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1705346993,
-        "narHash": "sha256-R1XgJFwG63+Ic6CMJIy0jcHGewk//+VVAQJgEsLDrco=",
+        "lastModified": 1705390418,
+        "narHash": "sha256-k0q9q0TKyracoe6a9w+tWVEoBgpTQ2PDYeg5qpOYi4E=",
         "owner": "percygt",
         "repo": "tmuxinoicer",
-        "rev": "f8cfc47b397d728fd7b0f92565e57fc65b55e272",
+        "rev": "9f151223dba0001349ef0b27a75ac07c64d6d127",
         "type": "github"
       },
       "original": {

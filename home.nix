@@ -11,6 +11,7 @@ in {
     ./nixtools.nix
     ./cli.nix
     ./fonts.nix
+    ./bin
   ];
   news.display = "silent";
 

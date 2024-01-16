@@ -40,10 +40,8 @@
   programs = {
     bat = {
       enable = true;
-      config = {
-        pager = "less -FR";
-        theme = "base16";
-      };
+      extraPackages = with pkgs.bat-extras; [batdiff batman batpipe prettybat batgrep batwatch];
+      config.theme = "Visual Studio Dark+";
     };
 
     micro = {
@@ -56,14 +54,25 @@
 
     fzf = {
       enable = true;
+      # Default command that is executed for fzf - $FZF_DEFAULT_COMMAND
+      defaultCommand = "fd --type file --hidden --exclude .git";
       defaultOptions = [
         "--height 50%"
         "--layout=reverse"
         "--border"
       ];
+      # CTRL-T - $FZF_CTRL_T_COMMAND
+      fileWidgetCommand = "fd --type file --hidden --exclude .git";
+
+      # ALT-C - $FZF_ALT_C_COMMAND
+      changeDirWidgetCommand = "fd --type directory --hidden --exclude .git";
+    };
+    eza = {
+      enable = true;
+      icons = true;
+      git = true;
     };
     btop.enable = true;
-    eza.enable = true;
     zoxide.enable = true;
     ssh.enable = true;
   };

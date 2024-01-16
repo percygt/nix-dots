@@ -45,16 +45,7 @@
         # set fzf_fd_opts --hidden --exclude=.git
         # set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "alt-c:execute(code {} &> /dev/tty)"
         set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
-            
-        function update_cwd_osc --on-variable PWD --description 'Notify terminals when $PWD changes'
-            if status --is-command-substitution || set -q INSIDE_EMACS
-                return
-            end
-            printf \e\]7\;file://%s%s\e\\ $hostname (string escape --style=url $PWD)
-        end
-
-        update_cwd_osc # Run once since we might have inherited PWD from a parent shell
-            
+          
         function starship_transient_rprompt_func
           starship module time
         end
