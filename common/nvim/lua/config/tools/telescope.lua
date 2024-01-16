@@ -54,5 +54,3 @@ nnoremap("<leader>se", extensions.file_browser.file_browser, { desc = "File Brow
 nnoremap("<leader>su", extensions.undo.undo, { desc = "Undo tree" })
 nnoremap("<leader>sl", "<cmd>TodoTelescope<cr>", { desc = "Todo" })
 nnoremap("<leader>gs", builtin.git_status, { desc = "Git status" })
-nnoremap("<leader>gwl", extensions.git_worktree.git_worktrees, { desc = "Worktree list" })
-nnoremap("<leader>gwc", extensions.git_worktree.create_git_worktree, { desc = "Create worktree" })
