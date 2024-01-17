@@ -1,0 +1,3 @@
+[submodule "nix-personal"]
+	path = nix-personal
+	url = git@gitlab.com:percygt/nix-personal.git
