@@ -13,6 +13,11 @@ with lib.hm.gvariant; {
     "org/gnome/shell/extensions/user-theme" = {
       name = "Marble-crispblue-dark";
     };
+
+    "org/gnome/desktop/input-sources" = {
+      # remap capslock to esc
+      xkb-options = ["caps:escape_shifted_capslock"];
+    };
     "org/gnome/desktop/wm/preferences" = {
       action-double-click-titlebar = "toggle-maximize";
       action-middle-click-titlebar = "minimize";

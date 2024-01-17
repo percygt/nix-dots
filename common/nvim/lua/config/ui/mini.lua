@@ -104,4 +104,4 @@ local minifiles_toggle = function(...)
     mini_files.open(...)
   end
 end
-nnoremap("-", minifiles_toggle) -- open file browser
+nnoremap("<leader>f", minifiles_toggle) -- open file browser

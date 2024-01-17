@@ -32,7 +32,8 @@ in {
     zoxide
     plocate
     libsixel
-
+    clipboard-jh
+    pinentry-gnome
     # tui's
     termscp
     lazydocker
@@ -82,10 +83,8 @@ in {
     eza = {
       enable = true;
       icons = true;
-      git = true;
     };
     btop.enable = true;
     zoxide.enable = true;
-    ssh.enable = true;
   };
 }
