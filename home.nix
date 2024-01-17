@@ -1,18 +1,21 @@
 {
   username,
   pkgs,
+  lib,
   ...
 }: let
   homeDirectory = "/home/${username}";
   commonConfig = builtins.fromTOML (builtins.readFile ./common/config.toml);
 in {
-  imports = [
-    ./program
-    ./nixtools.nix
-    ./cli.nix
-    ./fonts.nix
-    ./bin
-  ];
+  imports =
+    [
+      ./program
+      ./nixtools.nix
+      ./cli.nix
+      ./fonts.nix
+      ./bin
+    ]
+    ++ lib.optional (builtins.pathExists ./nix-personal) ./nix-personal;
   news.display = "silent";
 
   targets.genericLinux.enable = true;

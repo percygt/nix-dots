@@ -1,4 +1,3 @@
-local builtin = require("telescope.builtin")
 local extensions = require("telescope").extensions
 
 require("gitsigns").setup({

@@ -10,8 +10,8 @@ local imap = keymap.imap
 nmap("<leader>", "<nop>", silent)
 vmap("<leader>", "<nop>", silent)
 vmap("Q", "<nop>")
-nmap("E", "$")
-nmap("B", "^")
+-- nmap("E", "$")
+-- nmap("B", "^")
 -- Quit
 nmap("QQ", ":q!<cr>", silent)
 -- Exit insert mode
