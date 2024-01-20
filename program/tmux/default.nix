@@ -4,6 +4,17 @@
   ...
 }: let
   resurrectDirPath = "${config.xdg.dataHome}/tmux/resurrect";
+  tmux-pass = pkgs.tmuxPlugins.mkTmuxPlugin {
+    pluginName = "tmux-pass";
+    version = "unstable-2024-01-19";
+    rtpFilePath = "plugin.tmux";
+    src = pkgs.fetchFromGitHub {
+      owner = "rafi";
+      repo = "tmux-pass";
+      rev = "76b1c98911d56928063a41bc93a2d9e81818ef4c";
+      hash = "sha256-bamz4IZrozo5R7jt+z7YKyrogawPqsZ9cTJi9osjVoA=";
+    };
+  };
 in {
   home.packages = with pkgs; [
     lsof
@@ -28,6 +39,12 @@ in {
     escapeTime = 0;
     historyLimit = 1000000;
     plugins = with pkgs.percygt.tmuxPlugins; [
+      {
+        plugin = tmux-pass;
+        extraConfig = ''
+          set -g @pass-key b
+        '';
+      }
       {
         plugin = tmuxinoicer;
         extraConfig = ''

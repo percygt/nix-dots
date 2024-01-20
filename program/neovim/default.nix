@@ -179,7 +179,6 @@ in {
       markdown-preview-nvim
       todo-comments-nvim
       vim-maximizer
-      vim-visual-multi
       vim-tmux-navigator
       vim-surround
       vim-repeat
