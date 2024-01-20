@@ -20,7 +20,6 @@ in {
     lsof
     gitmux
     # for tmux super fingers
-    python311
   ];
 
   home.file.".gitmux.conf".source = ../../common/.gitmux.conf;

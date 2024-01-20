@@ -26,7 +26,7 @@ in {
       experimental-features = ["nix-command" "flakes"];
       auto-optimise-store = true;
       warn-dirty = false;
-      bash-prompt-prefix = "(nix:$name)\\040";
+      # bash-prompt-prefix = "(nix:$name)\\040";
       max-jobs = "auto";
       extra-nix-path = "nixpkgs=flake:nixpkgs";
     };

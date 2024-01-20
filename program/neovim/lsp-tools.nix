@@ -14,6 +14,7 @@
     formatting = {
       ruff_format = {};
       shfmt = {};
+      clang_format = {};
       shellharden = {};
       alejandra = {}; # [nix]
       stylua = {};

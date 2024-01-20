@@ -110,7 +110,7 @@ in {
         		{ key = "V",      mods = "CTRL",  action = wezterm.action.PasteFrom("Clipboard") },
         		{ key = "Copy",   mods = "NONE",  action = wezterm.action.CopyTo("Clipboard") },
         		{ key = "Paste",  mods = "NONE",  action = wezterm.action.PasteFrom("Clipboard") },
-        		{ key = "F10",    mods = "NONE",  action = wezterm.action.EmitEvent("toggle-opacity") },
+        		{ key = "F1",    mods = "NONE",  action = wezterm.action.EmitEvent("toggle-opacity") },
         		{ key = "F11",    mods = "NONE",  action = wezterm.action.ToggleFullScreen },
         		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
         	},

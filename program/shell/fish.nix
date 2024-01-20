@@ -44,17 +44,17 @@
         set fzf_configure_bindings --variables=\e\cv
         set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "alt-c:execute(code {} &> /dev/tty)"
         set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
-            
+        
         function starship_transient_rprompt_func
           starship module time
         end
-              
+          
         fish_vi_key_bindings
         set fish_cursor_default     block      blink
         set fish_cursor_insert      line       blink
         set fish_cursor_replace_one underscore blink
         set fish_cursor_visual      block
-        bind --mode insert --sets-mode default jk repaint    '';
+        # bind --mode insert --sets-mode default jk repaint    '';
   };
   xdg.configFile = {
     "fish/themes/base16.theme" = {
