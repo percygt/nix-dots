@@ -16,7 +16,7 @@ with lib.hm.gvariant; {
 
     "org/gnome/desktop/input-sources" = {
       # remap capslock to esc
-      xkb-options = ["caps:escape_shifted_capslock"];
+      xkb-options = ["caps:ctrl_modifier"];
     };
     "org/gnome/desktop/wm/preferences" = {
       action-double-click-titlebar = "toggle-maximize";
@@ -109,9 +109,9 @@ with lib.hm.gvariant; {
         "pop-shell@system76.com"
         "rounded-window-corners@yilozt"
         "trimmer@hedgie.tech"
-        "blur-my-shell@aunetx"
+        # "blur-my-shell@aunetx"
         "system-stats-plus@remulo.costa.gmail.com"
-        "just-perfection-desktop@just-perfection"
+        # "just-perfection-desktop@just-perfection"
         "unredirect@vaina.lt"
       ];
       favorite-apps = [

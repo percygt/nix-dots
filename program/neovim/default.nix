@@ -18,20 +18,16 @@ in {
     withNodeJs = true;
     withPython3 = true;
     withRuby = false;
-    extraLuaConfig =
-      /*
-      lua
-      */
-      ''
-        if vim.loader then
-          vim.loader.enable()
-        end
-        require("config.general")
-        require("config.remaps")
-        require("config.autocmds")
-        require("config.tools.misc")
-        require("config.ui.misc")
-      '';
+    extraLuaConfig = ''
+      if vim.loader then
+        vim.loader.enable()
+      end
+      require("config.general")
+      require("config.remaps")
+      require("config.autocmds")
+      require("config.tools.misc")
+      require("config.ui.misc")
+    '';
 
     plugins = with pkgs.percygt.vimPlugins; [
       # UI Enhancement #-------------------------------------------------------------------------------------
@@ -94,7 +90,7 @@ in {
       cmp-nvim-lua
       cmp_luasnip
       lspkind-nvim
-      nvim-autopairs
+      # nvim-autopairs
       luasnip
       friendly-snippets
       # AI #-------------------------------------------------------------------------------------
