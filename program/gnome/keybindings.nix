@@ -124,15 +124,22 @@
 
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/"
       ];
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8" = {
+      binding = "<Alt>p";
+      command = "pmenu";
+      name = "Pass Menu";
     };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -153,11 +160,11 @@
       name = "Brave DevCtl";
     };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom23" = {
-      binding = "<Primary><Alt>f";
-      command = "gnome-terminal --tab-with-profile=fedora-toolbox-37";
-      name = "Gnome Terminal - fedora-toolbox-37";
-    };
+    # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom23" = {
+    #   binding = "<Primary><Alt>f";
+    #   command = "gnome-terminal --tab-with-profile=fedora-toolbox-37";
+    #   name = "Gnome Terminal - fedora-toolbox-37";
+    # };
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
       binding = "<Alt><Super>KP_Next";

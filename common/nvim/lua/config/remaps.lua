@@ -22,7 +22,8 @@ imap("WW", "<esc>:w!<cr>", silent)
 -- Move text up and down
 vmap("<a-j>", ":m '>+1<CR>gv=gv", silent)
 vmap("<a-k>", ":m '<-2<CR>gv=gv", silent)
-
+-- replace word under cursor
+nnoremap("<leader>j", "*``cgn")
 -- Better vertical motions
 nnoremap("<c-d>", "<c-d>zz")
 nnoremap("<c-u>", "<c-u>zz")

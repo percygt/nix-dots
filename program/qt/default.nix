@@ -1,4 +1,8 @@
 {
+  qt = {
+    enable = true;
+    style.name = "kvantum";
+  };
   xdg.configFile = {
     "Kvantum" = {
       recursive = false;

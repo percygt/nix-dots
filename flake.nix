@@ -30,6 +30,7 @@
     home-manager,
     ...
   } @ inputs: let
+    colors = (import ./colors.nix).syft;
     username = "percygt";
     forAllSystems = nixpkgs.lib.genAttrs inputs.flake-utils.lib.defaultSystems;
   in rec {
@@ -61,7 +62,7 @@
     formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".alejandra);
     homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      extraSpecialArgs = {inherit inputs pkgs username;};
+      extraSpecialArgs = {inherit inputs pkgs username colors;};
       modules = [./home.nix];
     };
   };

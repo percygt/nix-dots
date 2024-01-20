@@ -71,7 +71,7 @@ in {
       };
       defaultCommand = "fd --type file --hidden --exclude .git";
       defaultOptions = [
-        "--border"
+        "--border rounded"
       ];
       # CTRL-T - $FZF_CTRL_T_COMMAND
       fileWidgetCommand = "rg --files --hidden -g !.git";
