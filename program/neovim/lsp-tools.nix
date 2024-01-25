@@ -12,7 +12,7 @@
     ## https://github.com/nvimtools/none-ls.nvim/blob/main/doc/CONFIG.md
 
     formatting = {
-      ruff_format = {};
+      # ruff_format = {};
       shfmt = {};
       clang_format = {};
       shellharden = {};
@@ -53,7 +53,7 @@
     };
 
     diagnostics = {
-      ruff = {};
+      # ruff = {};
       yamllint = {};
       # markdownlint = {};
       cppcheck = {};

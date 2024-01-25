@@ -1,4 +1,7 @@
-require("smartcolumn").setup()
+require("smartcolumn").setup({
+  colorcolumn = "100",
+  { python = "120" },
+})
 require("trouble").setup()
 require("twilight").setup()
 require("colorizer").setup({

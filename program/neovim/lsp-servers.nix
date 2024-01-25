@@ -1,6 +1,23 @@
 {pkgs, ...}: {
-  ruff_lsp = {};
-  pyright = {};
+  # ruff_lsp = {};
+  # pyright = {};
+  pylsp = {
+    plugins = {
+      ruff = {
+        enabled = true;
+        extendSelect = ["I"];
+      };
+      pylsp_mypy = {enabled = true;};
+      jedi_completion = {fuzzy = true;};
+      black = {enabled = false;};
+      pyls_isort = {enabled = false;};
+      autopep8 = {enabled = false;};
+      yapf = {enabled = false;};
+      pylint = {enabled = false;};
+      pyflakes = {enabled = false;};
+      pycodestyle = {enabled = false;};
+    };
+  };
   clangd = {};
   nil_ls = {};
   dockerls = {};

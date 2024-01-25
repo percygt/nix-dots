@@ -18,16 +18,20 @@ in {
     withNodeJs = true;
     withPython3 = true;
     withRuby = false;
-    extraLuaConfig = ''
-      if vim.loader then
-        vim.loader.enable()
-      end
-      require("config.general")
-      require("config.remaps")
-      require("config.autocmds")
-      require("config.tools.misc")
-      require("config.ui.misc")
-    '';
+    extraLuaConfig =
+      /*
+      lua
+      */
+      ''
+        if vim.loader then
+          vim.loader.enable()
+        end
+        require("config.general")
+        require("config.remaps")
+        require("config.autocmds")
+        require("config.tools.misc")
+        require("config.ui.misc")
+      '';
 
     plugins = with pkgs.percygt.vimPlugins; [
       # UI Enhancement #-------------------------------------------------------------------------------------
@@ -90,7 +94,7 @@ in {
       cmp-nvim-lua
       cmp_luasnip
       lspkind-nvim
-      # nvim-autopairs
+      nvim-autopairs
       luasnip
       friendly-snippets
       # AI #-------------------------------------------------------------------------------------
@@ -121,7 +125,6 @@ in {
       lsp_signature-nvim
       nvim-treesitter-textobjects
       neodev-nvim
-      nvim-cursorline
       # Session #------------------------------------------------------------------------------------------
       {
         plugin = neovim-session-manager;
@@ -170,7 +173,7 @@ in {
       #   type = "lua";
       #   config = ''require("config.tools.obsidian")'';
       # }
-      hardtime-nvim
+      # hardtime-nvim
       lazygit-nvim
       markdown-preview-nvim
       todo-comments-nvim
@@ -191,9 +194,13 @@ in {
       fzf
 
       # python
-      nodePackages.pyright
-      ruff
-      ruff-lsp
+      (python3.withPackages (ps:
+        with ps; [
+          python-lsp-server
+          pylsp-mypy
+          python-lsp-ruff
+        ]))
+      # nodePackages.pyright
 
       # Lua
       lua-language-server
