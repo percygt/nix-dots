@@ -16,7 +16,7 @@ with lib.hm.gvariant; {
 
     "org/gnome/desktop/input-sources" = {
       # remap capslock to esc
-      xkb-options = ["caps:ctrl_modifier"];
+      xkb-options = ["caps:escape"];
     };
     "org/gnome/desktop/wm/preferences" = {
       action-double-click-titlebar = "toggle-maximize";
