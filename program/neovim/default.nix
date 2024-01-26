@@ -174,9 +174,16 @@ in {
       #   config = ''require("config.tools.obsidian")'';
       # }
       # hardtime-nvim
+      # {
+      #   plugin = "hard-time";
+      #   type = "lua";
+      #   config = ''require("hardtime").setup()'';
+      # }
       lazygit-nvim
       markdown-preview-nvim
       todo-comments-nvim
+      hydra-nvim
+      multicursors-nvim
       vim-maximizer
       vim-tmux-navigator
       vim-surround

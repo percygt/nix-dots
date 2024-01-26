@@ -7,7 +7,7 @@ wk.setup({
     padding = { 2, 2, 2, 2 },
   },
   triggers_blacklist = {
-    n = { "v", "Q", "W" },
+    n = { "v", "Q", "W", "s", "f" },
     i = { "W", "j" },
   },
   layout = {
@@ -15,6 +15,18 @@ wk.setup({
     align = "center",
   },
 })
+
+wk.register({
+  n = {
+    name = "Multicursors",
+    n = { "<cmd>MCstart<cr>", "MCstart" },
+    v = { "<cmd>MCvisual<cr>", "MCvisual" },
+    c = { "<cmd>MCclear<cr>", "MCclear" },
+    p = { "<cmd>MCpattern<cr>", "MCpattern" },
+    V = { "<cmd>MCvisualPattern<cr>", "MCvisualPattern" },
+    u = { "<cmd>MCunderCursor<cr>", "MCunderCursor" },
+  },
+}, { prefix = "<leader>", mode = "v", silent = true })
 
 wk.register({
   c = "Code",
@@ -26,10 +38,23 @@ wk.register({
     r = { "<cmd>lua require('dapui').open({reset = true})<cr>", "Reset Dapui" },
   },
   d = "which_key_ignore",
+  f = { name = "Files" },
   g = { name = "Git" },
-  h = { name = "Harpoon" },
-  m = { name = "Helper" },
-  n = { name = "which_key_ignore", n = "which_key_ignore" },
+  m = { name = "Harpoon" },
+  h = {
+    name = "Helper",
+    r = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "Multi Replace" },
+    x = { "<cmd>!chmod +x %<cr>", "Make executable" },
+  },
+  n = {
+    name = "Multicursors",
+    n = { "<cmd>MCstart<cr>", "MCstart" },
+    v = { "<cmd>MCvisual<cr>", "MCvisual" },
+    c = { "<cmd>MCclear<cr>", "MCclear" },
+    p = { "<cmd>MCpattern<cr>", "MCpattern" },
+    V = { "<cmd>MCvisualPattern<cr>", "MCvisualPattern" },
+    u = { "<cmd>MCunderCursor<cr>", "MCunderCursor" },
+  },
   S = {
     name = "Database",
     t = { "<cmd>DBUIToggle<cr>", "Toggle UI" },
@@ -39,25 +64,32 @@ wk.register({
   },
   s = { name = "Search" },
   t = { name = "Theme" },
-  x = { name = "Trouble" },
-  ["<tab>"] = { name = "Session" },
-  q = {
-    name = "Quicklist",
-    k = { "<cmd>copen<cr>", "Open Quickfix List" },
-    j = { "<cmd>cclose<cr>", "Close Quickfix List" },
-    l = { "<cmd>cnext<cr>", "Next Quickfix List" },
-    h = { "<cmd>cprev<cr>", "Previous Quickfix List" },
+  x = {
+    name = "Trouble",
+    q = { "<cmd>TroubleToggle quickfix<cr>", "Toggle Quickfix List" },
+    l = { "<cmd>TroubleToggle loclist<cr>", "Toggle Loclist" },
+    w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Toggle Workspace Diagnostic" },
+    x = { "<cmd>TroubleToggle document_diagnostics<cr>", "Toggle Document Diagnostic" },
+    r = { "<cmd>TroubleRefresh<cr>", "Refresh" },
   },
-  w = {
-    name = "Loclist",
-    k = { "<cmd>lopen<cr>", "Open Location List" },
-    j = { "<cmd>lclose<cr>", "Close Location List" },
-    l = { "<cmd>lnext<cr>", "Next Location List" },
-    h = { "<cmd>lprev<cr>", "Previous Location List" },
-  },
+  -- q = {
+  --   name = "Quicklist",
+  --   k = { "<cmd>copen<cr>", "Open Quickfix List" },
+  --   j = { "<cmd>cclose<cr>", "Close Quickfix List" },
+  --   l = { "<cmd>cnext<cr>", "Next Quickfix List" },
+  --   h = { "<cmd>cprev<cr>", "Previous Quickfix List" },
+  -- },
+  -- w = {
+  --   name = "Loclist",
+  --   k = { "<cmd>lopen<cr>", "Open Location List" },
+  --   j = { "<cmd>lclose<cr>", "Close Location List" },
+  --   l = { "<cmd>lnext<cr>", "Next Location List" },
+  --   h = { "<cmd>lprev<cr>", "Previous Location List" },
+  -- },
   y = "which_key_ignore",
   Y = "which_key_ignore",
   ["/"] = "which_key_ignore",
   ["?"] = "which_key_ignore",
-  ["<space>"] = "which_key_ignore",
+  ["<tab>"] = { name = "Session" },
+  ["<space>"] = { "<cmd>NoiceDismiss<cr>", "Noice Dismiss" },
 }, { prefix = "<leader>", mode = "n", silent = true })

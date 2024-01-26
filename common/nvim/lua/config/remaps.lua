@@ -10,10 +10,17 @@ local imap = keymap.imap
 nmap("<leader>", "<nop>", silent)
 vmap("<leader>", "<nop>", silent)
 vmap("Q", "<nop>")
--- nmap("E", "$")
--- nmap("B", "^")
 -- Quit
 nmap("QQ", ":q!<cr>", silent)
+-- Format
+nnoremap("ff", "<cmd>lua vim.lsp.buf.format({async=true})<cr>", silent)
+-- Quickfix and Loclist navigation
+nnoremap("<a-k>", "<cmd>cnext<CR>zz")
+nnoremap("<a-j>", "<cmd>cprev<CR>zz")
+nnoremap("<a-l>", "<cmd>lnext<CR>zz")
+nnoremap("<a-h>", "<cmd>lprev<CR>zz")
+nnoremap("<a-.>", require("trouble").next({ skip_groups = true, jump = true }))
+nnoremap("<a-,>", require("trouble").previous({ skip_groups = true, jump = true }))
 -- Exit insert mode
 -- imap("jj", "<esc>")
 -- Save
@@ -23,7 +30,8 @@ imap("WW", "<esc>:w!<cr>", silent)
 vmap("<a-j>", ":m '>+1<CR>gv=gv", silent)
 vmap("<a-k>", ":m '<-2<CR>gv=gv", silent)
 -- replace word under cursor
-nnoremap("<leader>j", "*``cgn")
+-- nnoremap("<leader>j", "*``cgn")
+-- xnoremap("<leader>j", "y<cmd>substitute(escape(@\", '/'), '\n', '\\n', 'g')<cr>\"_cgn")
 -- Better vertical motions
 nnoremap("<c-d>", "<c-d>zz")
 nnoremap("<c-u>", "<c-u>zz")
@@ -57,8 +65,4 @@ nmap("H", "<cmd>bprev<cr>")
 nmap("L", "<cmd>bnext<cr>")
 nmap("D", "<cmd>bdelete<cr>")
 -- Misc
-nnoremap("<leader>mr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-nnoremap("<leader>mx", "<cmd>!chmod +x %<cr>", silent)
 nnoremap("<leader>tw", "<cmd>Twilight<cr>", silent)
--- Format
-nnoremap("<leader><leader>", "<cmd>lua vim.lsp.buf.format({async=true})<cr>", silent)

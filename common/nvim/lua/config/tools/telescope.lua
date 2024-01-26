@@ -3,6 +3,7 @@ local builtin = require("telescope.builtin")
 local actions = require("telescope.actions")
 local extensions = require("telescope").extensions
 local keymap = require("config.helpers")
+local trouble = require("trouble.providers.telescope")
 local nnoremap = keymap.nnoremap
 
 telescope.load_extension("file_browser")
