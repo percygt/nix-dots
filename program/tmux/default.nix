@@ -47,7 +47,7 @@ in {
       {
         plugin = tmuxinoicer;
         extraConfig = ''
-          set -g @tmuxinoicer-find-base "/data:1:4"
+          set -g @tmuxinoicer-find-base "/data:1:4,$HOME:1:3"
           set -g @tmuxinoicer-extras "find"
         '';
       }
@@ -58,7 +58,6 @@ in {
       {
         plugin = resurrect;
         extraConfig = ''
-          # Taken from: https://github.com/p3t33/nixos_flake/blob/5a989e5af403b4efe296be6f39ffe6d5d440d6d6/home/modules/tmux.nix
           set -g @resurrect-capture-pane-contents 'on'
 
           set -g @resurrect-dir ${resurrectDirPath}

@@ -14,13 +14,9 @@ vmap("Q", "<nop>")
 nmap("QQ", ":q!<cr>", silent)
 -- Format
 nnoremap("ff", "<cmd>lua vim.lsp.buf.format({async=true})<cr>", silent)
--- Quickfix and Loclist navigation
-nnoremap("<a-k>", "<cmd>cnext<CR>zz")
-nnoremap("<a-j>", "<cmd>cprev<CR>zz")
-nnoremap("<a-l>", "<cmd>lnext<CR>zz")
-nnoremap("<a-h>", "<cmd>lprev<CR>zz")
-nnoremap("<a-.>", require("trouble").next({ skip_groups = true, jump = true }))
-nnoremap("<a-,>", require("trouble").previous({ skip_groups = true, jump = true }))
+-- trouble navigation
+nmap("<a-k>", "<cmd>lua require('trouble').next({ skip_groups = true, jump = true })<cr>zz", silent)
+nmap("<a-j>", "<cmd>lua require('trouble').previous({ skip_groups = true, jump = true })<cr>zz", silent)
 -- Exit insert mode
 -- imap("jj", "<esc>")
 -- Save
