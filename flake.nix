@@ -58,6 +58,16 @@
           config.allowUnfree = true;
         }
     );
+    templates = {
+      javascript = {
+        path = ./templates/javascript;
+        description = "A javascript Nix flake with devenv integration.";
+      };
+      django = {
+        path = ./templates/django;
+        description = "A django Nix flake with devenv integration.";
+      };
+    };
     pkgs = legacyPackages.x86_64-linux;
     formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".alejandra);
     homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
