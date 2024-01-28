@@ -182,6 +182,7 @@ in {
       lazygit-nvim
       markdown-preview-nvim
       todo-comments-nvim
+      comment-nvim
       hydra-nvim
       multicursors-nvim
       vim-maximizer
