@@ -67,6 +67,10 @@
         path = ./templates/django;
         description = "A django Nix flake with devenv integration.";
       };
+      flakes_part = {
+        path = ./templates/flakes_part;
+        description = "A flakes.part templates with devenv integration.";
+      };
     };
     pkgs = legacyPackages.x86_64-linux;
     formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".alejandra);
