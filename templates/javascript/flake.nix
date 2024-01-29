@@ -1,39 +1,47 @@
 {
+  description = "Description for the project";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    systems.url = "github:nix-systems/default";
     devenv.url = "github:cachix/devenv";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    devenv,
-    systems,
-    ...
-  } @ inputs: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-  in {
-    packages = forEachSystem (system: {
-      devenv-up = self.devShells.${system}.default.config.procfileScript;
-    });
-    devShells =
-      forEachSystem
-      (system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        default = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            {
-              packages = with pkgs; [nodePackages.pnpm];
-              languages.javascript = {
-                enable = true;
-                corepack.enable = true;
-              };
-            }
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      imports = [
+        inputs.devenv.flakeModule
+      ];
+      systems = ["x86_64-linux" "i686-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin"];
+
+      perSystem = {
+        config,
+        self',
+        inputs',
+        pkgs,
+        system,
+        ...
+      }: {
+        devenv.shells.default = {
+          name = "my-project";
+
+          imports = [
+            ./.module/javascript-pnpm.nix
+            # ./client/devenv.nix
+            # ./server/devenv.nix
           ];
+          # languages.javascript-pnpm = {
+          #   enable = true;
+          #   package = pkgs.nodejs_20;
+          #   pnpm = {
+          #     install = {
+          #       enable = true;
+          #     };
+          #   };
+          # };
+          enterShell = ''
+            echo "hijK"
+          '';
         };
-      });
-  };
+      };
+    };
 }
