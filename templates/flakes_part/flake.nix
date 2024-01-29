@@ -22,24 +22,18 @@
         ...
       }: {
         devenv.shells.default = {
-          name = "my-project";
+          name = "stashee dev";
 
           imports = [
             ./.module/javascript-pnpm.nix
-            # ./client/devenv.nix
-            # ./server/devenv.nix
+            ./.module/python-with-relative-path.nix
+            ./client/devenv.nix
+            ./server/devenv.nix
           ];
-          # languages.javascript-pnpm = {
-          #   enable = true;
-          #   package = pkgs.nodejs_20;
-          #   pnpm = {
-          #     install = {
-          #       enable = true;
-          #     };
-          #   };
-          # };
+          process.implementation = "process-compose";
+          process-managers.process-compose.enable = true;
           enterShell = ''
-            echo "Starting shell"
+            echo "Starting server . . .";
           '';
         };
       };
