@@ -1,6 +1,10 @@
-{ pkgs, config, lib, inputs, ... }:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}: let
   cfg = config.languages.python-with-relative-path;
 
   requirements = pkgs.writeText "requirements.txt" (
@@ -9,13 +13,15 @@ let
     else cfg.venv.requirements
   );
 
-  nixpkgs-python = inputs.nixpkgs-python or (throw ''
-    To use languages.python-with-relative-path.version, you need to add the following to your devenv.yaml:
+  nixpkgs-python =
+    inputs.nixpkgs-python
+    or (throw ''
+      To use languages.python-with-relative-path.version, you need to add the following to your devenv.yaml:
 
-      inputs:
-        nixpkgs-python:
-          url: github:cachix/nixpkgs-python
-  '');
+        inputs:
+          nixpkgs-python:
+            url: github:cachix/nixpkgs-python
+    '');
 
   initVenvScript = pkgs.writeShellScript "init-venv.sh" ''
     # Make sure any tools are not attempting to use the python interpreter from any
@@ -33,8 +39,8 @@ let
         ${pkgs.coreutils}/bin/rm -rf "$VENV_PATH"
       fi
       ${lib.optionalString cfg.poetry.enable ''
-        [ -f "${config.env.DEVENV_STATE}/poetry.lock.checksum" ] && rm ${config.env.DEVENV_STATE}/poetry.lock.checksum
-      ''}
+      [ -f "${config.env.DEVENV_STATE}/poetry.lock.checksum" ] && rm ${config.env.DEVENV_STATE}/poetry.lock.checksum
+    ''}
       ${cfg.package.interpreter} -m venv "$VENV_PATH"
       ${pkgs.coreutils}/bin/ln -sf ${config.devenv.profile} "$VENV_PATH"/devenv-profile
     fi
@@ -54,7 +60,7 @@ let
       unset VIRTUAL_ENV
 
       # Make sure poetry's venv uses the configured python executable.
-      ${cfg.poetry.package}/bin/poetry env use --no-interaction --quiet ${cfg.package.interpreter}
+      ${cfg.poetry.package}/bin/poetry -C ${cfg.poetry.install.directory} env use --no-interaction --quiet ${cfg.package.interpreter}
     }
 
     function _devenv-poetry-install()
@@ -89,15 +95,14 @@ let
     else
       _devenv-init-poetry-venv
       ${lib.optionalString cfg.poetry.install.enable ''
-        _devenv-poetry-install
-      ''}
+      _devenv-poetry-install
+    ''}
       ${lib.optionalString cfg.poetry.activate.enable ''
-        source "$DEVENV_ROOT"/${cfg.poetry.install.directory}/.venv/bin/activate
-      ''}
+      source "$DEVENV_ROOT"/${cfg.poetry.install.directory}/.venv/bin/activate
+    ''}
     fi
   '';
-in
-{
+in {
   options.languages.python-with-relative-path = {
     enable = lib.mkEnableOption "tools for Python development";
 
@@ -146,7 +151,7 @@ in
         };
         arguments = lib.mkOption {
           type = lib.types.listOf lib.types.str;
-          default = [ ];
+          default = [];
           description = "Command line arguments pass to `poetry install` during devenv initialisation.";
           internal = true;
         };
@@ -162,12 +167,12 @@ in
         };
         groups = lib.mkOption {
           type = lib.types.listOf lib.types.str;
-          default = [ ];
+          default = [];
           description = "Which dependency-groups to install. See `--with`.";
         };
         extras = lib.mkOption {
           type = lib.types.listOf lib.types.str;
-          default = [ ];
+          default = [];
           description = "Which extras to install. See `--extras`.";
         };
         allExtras = lib.mkOption {
@@ -190,11 +195,11 @@ in
   config = lib.mkIf cfg.enable {
     languages.python-with-relative-path.poetry.install.enable = lib.mkIf cfg.poetry.enable (lib.mkDefault true);
     languages.python-with-relative-path.poetry.install.arguments =
-      lib.optional (!cfg.poetry.install.installRootPackage) "--no-root" ++
-      lib.optional cfg.poetry.install.quiet "--quiet" ++
-      lib.optionals (cfg.poetry.install.groups != [ ]) [ "--with" ''"${lib.concatStringsSep "," cfg.poetry.install.groups}"'' ] ++
-      lib.optionals (cfg.poetry.install.extras != [ ]) [ "--extras" ''"${lib.concatStringsSep " " cfg.poetry.install.extras}"'' ] ++
-      lib.optional cfg.poetry.install.allExtras "--all-extras";
+      lib.optional (!cfg.poetry.install.installRootPackage) "--no-root"
+      ++ lib.optional cfg.poetry.install.quiet "--quiet"
+      ++ lib.optionals (cfg.poetry.install.groups != []) ["--with" ''"${lib.concatStringsSep "," cfg.poetry.install.groups}"'']
+      ++ lib.optionals (cfg.poetry.install.extras != []) ["--extras" ''"${lib.concatStringsSep " " cfg.poetry.install.extras}"'']
+      ++ lib.optional cfg.poetry.install.allExtras "--all-extras";
 
     languages.python-with-relative-path.poetry.activate.enable = lib.mkIf cfg.poetry.enable (lib.mkDefault true);
 
@@ -202,9 +207,11 @@ in
       (lib.mkIf (cfg.version != null) (nixpkgs-python.packages.${pkgs.stdenv.system}.${cfg.version} or (throw "Unsupported Python version, see https://github.com/cachix/nixpkgs-python#supported-python-versions")))
     ];
 
-    packages = [
-      cfg.package
-    ] ++ (lib.optional cfg.poetry.enable cfg.poetry.package);
+    packages =
+      [
+        cfg.package
+      ]
+      ++ (lib.optional cfg.poetry.enable cfg.poetry.package);
 
     env = lib.optionalAttrs cfg.poetry.enable {
       # Make poetry use DEVENV_ROOT/.venv
@@ -215,16 +222,18 @@ in
       POETRY_VIRTUALENVS_PATH = "/var/empty";
     };
 
-    enterShell = lib.concatStringsSep "\n" ([
-      ''
-        export PYTHONPATH="$DEVENV_PROFILE/${cfg.package.sitePackages}''${PYTHONPATH:+:$PYTHONPATH}"
-      ''
-    ] ++
-    (lib.optional cfg.venv.enable ''
-      source ${initVenvScript}
-    '') ++ (lib.optional cfg.poetry.install.enable ''
-      source ${initPoetryScript}
-    '')
+    enterShell = lib.concatStringsSep "\n" (
+      [
+        ''
+          export PYTHONPATH="$DEVENV_PROFILE/${cfg.package.sitePackages}''${PYTHONPATH:+:$PYTHONPATH}"
+        ''
+      ]
+      ++ (lib.optional cfg.venv.enable ''
+        source ${initVenvScript}
+      '')
+      ++ (lib.optional cfg.poetry.install.enable ''
+        source ${initPoetryScript}
+      '')
     );
   };
 }
