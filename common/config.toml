@@ -1,8 +1,8 @@
 [aliases]
 ll = "ls -l"
 la = "ls -la"
-gtl = "lazygit"
-dcl = "lazydocker"
+lzg = "lazygit"
+lzd = "lazydocker"
 ls = "eza --sort type --icons -F -H --group-directories-first -1"
 neofetch = "fastfetch"
 cat = "bat -p"
@@ -13,14 +13,12 @@ sc = "systemctl"
 scu = "systemctl --user"
 jc = "journalctl -ex --unit"
 jcu = "journalctl --user -ex --unit"
-hmc = "nvim $HM_PATH/common/config.toml"
-hmd = "nvim $HM_PATH"
 hms = "home-manager switch"
 code = "codium"
-nv = "nvim ."
+v = "nvim"
+dc = "docker compose"
 n2ne = "nvim $HM_PATH/nixpkgs/node/packages.json"
 n2ni = "node2nix -i $HM_PATH/nixpkgs/node/packages.json -e $HM_PATH/nixpkgs/node/node-env.nix -o $HM_PATH/nixpkgs/node/packages.nix -c $HM_PATH/nixpkgs/node/default.nix"
-
 
 [variables]
 HM_PATH = "$HOME/.config/home-manager"

@@ -119,9 +119,11 @@ in {
         # Split
         unbind %
         unbind '"'
+        unbind d
         bind s split-window -v -c "#{pane_current_path}"
         bind v split-window -h -c "#{pane_current_path}"
         bind-key g new-window 'lazygit; tmux kill-pane'
+        bind-key d new-window 'lazydocker; tmux kill-pane'
 
         # Easier move of windows
         bind-key -r Home swap-window -t - \; select-window -t -

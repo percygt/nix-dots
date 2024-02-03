@@ -205,7 +205,7 @@ in {
       (python3.withPackages (ps:
         with ps; [
           python-lsp-server
-          pylsp-mypy
+          # pylsp-mypy
           python-lsp-ruff
         ]))
       # nodePackages.pyright
@@ -232,10 +232,10 @@ in {
       deno
       prettierd
       eslint_d
-      nodePackages.prettier
+      # nodePackages.prettier
       nodePackages.typescript-language-server
       nodePackages."@astrojs/language-server"
-      nodePackages-extra.prettier-plugin-astro
+      # nodePackages-extra.prettier-plugin-astro
 
       # Go
       go
