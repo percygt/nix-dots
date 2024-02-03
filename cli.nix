@@ -1,5 +1,6 @@
 {pkgs, ...}: let
   colors = (import ./colors.nix).syft;
+  lazysql  = pkgs.callPackage ./nixpkgs/go/lazysql.nix {};
 in {
   home.packages = with pkgs; [
     # archives
@@ -38,6 +39,10 @@ in {
     termscp
     lazydocker
     lazygit
+    visidata
+    podman-tui
+    wtf
+    lazysql
   ];
 
   programs = {

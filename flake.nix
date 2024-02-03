@@ -23,6 +23,12 @@
 
     wezterm.url = "github:wez/wezterm?dir=nix";
     wezterm.inputs.nixpkgs.follows = "nixpkgs";
+    
+    gomod2nix = {
+      url = "github:tweag/gomod2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = {
@@ -49,6 +55,7 @@
       neovimNightly = inputs.neovim-nightly-overlay.overlay;
       nixgl = inputs.nixgl.overlay;
       vscode-marketplace = inputs.nix-vscode-extensions.overlays.default;
+      gomod2nix = inputs.gomod2nix.overlays.default;
     };
     legacyPackages = forAllSystems (
       system:

@@ -7,11 +7,11 @@
         enabled = true;
         extendSelect = ["I"];
       };
-      pylsp_mypy = {
-        enabled = true;
-        report_progress = true;
-        live_mode = false;
-      };
+      # pylsp_mypy = {
+      #   enabled = true;
+      #   report_progress = true;
+      #   live_mode = false;
+      # };
       jedi_completion = {fuzzy = true;};
       black = {enabled = false;};
       pyls_isort = {enabled = false;};

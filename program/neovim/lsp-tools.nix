@@ -28,17 +28,19 @@
           "yaml"
           "graphql"
           "vue"
+          "markdown.mdx"
         ];
+        extra_filetypes = ["astro"];
       };
-      prettier = {
-        filetypes = [
-          "astro"
-        ];
-        extra_args = [
-          "--plugin"
-          "${pkgs.nodePackages-extra.prettier-plugin-astro}/lib/node_modules/prettier-plugin-astro/dist/index.js"
-        ];
-      };
+      # prettier = {
+      #   filetypes = [
+      #     "astro"
+      #   ];
+      #   extra_args = [
+      #     "--plugin"
+      #     "${pkgs.nodePackages-extra.prettier-plugin-astro}/lib/node_modules/prettier-plugin-astro/dist/index.js"
+      #   ];
+      # };
       deno_fmt = {
         filetypes = [
           "javascript"
@@ -61,11 +63,14 @@
       statix = {}; # [nix]
       actionlint = {};
       eslint_d = {
-        condition.root_has_file = [".eslintrc.js" ".eslintrc.cjs"];
+        # condition.root_has_file = [".eslintrc.js" ".eslintrc.cjs"];
       };
     };
 
     code_actions = {
+      eslint_d = {
+        # condition.root_has_file = [".eslintrc.js" ".eslintrc.cjs"];
+      };
       shellcheck = {};
       statix = {};
       gitsigns = {};
