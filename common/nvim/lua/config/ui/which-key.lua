@@ -1,4 +1,5 @@
 local wk = require("which-key")
+local harpoon = require("harpoon")
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 wk.setup({
@@ -40,7 +41,12 @@ wk.register({
   d = "which_key_ignore",
   f = { name = "Files" },
   g = { name = "Git" },
-  m = { name = "Harpoon" },
+  m = {
+    name = "Harpoon",
+    function()
+      harpoon.ui:toggle_quick_menu(harpoon:list())
+    end,
+  },
   h = {
     name = "Helper",
     r = { [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "Multi Replace" },
