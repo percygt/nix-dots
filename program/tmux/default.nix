@@ -19,11 +19,9 @@ in {
   home.packages = with pkgs; [
     lsof
     gitmux
-    # for tmux super fingers
   ];
 
-  home.file.".gitmux.conf".source = ../../common/.gitmux.conf;
-
+  xdg.configFile."gitmux/gitmux.conf".source = ../../common/.gitmux.conf;
   programs.tmux = {
     enable = true;
     baseIndex = 1;
@@ -37,7 +35,7 @@ in {
     prefix = "C-a";
     escapeTime = 0;
     historyLimit = 1000000;
-    plugins = with pkgs.percygt.tmuxPlugins; [
+    plugins = with pkgs.stash.tmuxPlugins; [
       {
         plugin = tmux-pass;
         extraConfig = ''
@@ -55,28 +53,34 @@ in {
         plugin = tmux-onedark-theme;
         extraConfig = "set -g status-position top";
       }
-      {
-        plugin = resurrect;
-        extraConfig = ''
-          set -g @resurrect-capture-pane-contents 'on'
-
-          set -g @resurrect-dir ${resurrectDirPath}
-          set -g @resurrect-hook-post-save-all 'target=$(readlink -f ${resurrectDirPath}/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | sponge $target'
-        '';
-      }
-      {
-        plugin = continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-boot 'on'
-          set -g @continuum-save-interval '10'
-          set -g @continuum-systemd-start-cmd 'start-server'
-        '';
-      }
+      # {
+      #   plugin = resurrect;
+      #   extraConfig = ''
+      #     set -g @resurrect-capture-pane-contents 'on'
+      #
+      #     set -g @resurrect-dir ${resurrectDirPath}
+      #     set -g @resurrect-hook-post-save-all 'target=$(readlink -f ${resurrectDirPath}/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | sponge $target'
+      #   '';
+      # }
+      # {
+      #   plugin = continuum;
+      #   extraConfig = ''
+      #     set -g @continuum-restore 'off'
+      #     set -g @continuum-boot 'on'
+      #     set -g @continuum-save-interval '10'
+      #     set -g @continuum-systemd-start-cmd 'start-server'
+      #   '';
+      # }
       {
         plugin = tmux-thumbs;
         extraConfig = ''
           set -g @thumbs-command 'tmux set-buffer -- {} && tmux display-message "Copied {}" && printf %s {} | xclip -i -selection clipboard'
+        '';
+      }
+      {
+        plugin = tmux-fzf-url;
+        extraConfig = ''
+          set -g @fzf-url-fzf-options '-w 50% -h 50% --multi -0 --no-preview --no-border'
         '';
       }
       better-mouse-mode
@@ -90,7 +94,7 @@ in {
       bash
       */
       ''
-        run-shell "if [ ! -d ${resurrectDirPath} ]; then tmux new-session -d -s main; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
+        # run-shell "if [ ! -d ${resurrectDirPath} ]; then tmux new-session -d -s main; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
 
         # TERM override
         set terminal-overrides "xterm-256color:RGB"

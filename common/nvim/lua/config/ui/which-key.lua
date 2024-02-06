@@ -42,10 +42,10 @@ wk.register({
   f = { name = "Files" },
   g = { name = "Git" },
   m = {
-    name = "Harpoon",
     function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end,
+    "Harpoon",
   },
   h = {
     name = "Helper",

@@ -8,6 +8,7 @@ in {
     unzip
     unrar
     p7zip
+    unar
 
     # utils
     file
@@ -35,6 +36,10 @@ in {
     libsixel
     clipboard-jh
     pinentry-gnome
+    cgdb
+    poppler
+    ffmpegthumbnailer
+    
     # tui's
     termscp
     lazydocker

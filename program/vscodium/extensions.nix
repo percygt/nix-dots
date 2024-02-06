@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   extensions = with pkgs.vscode-extensions;
-  with pkgs.vscode-marketplace; [
+  with pkgs.stash.vscode-marketplace; [
     adpyke.codesnap
     anderseandersen.html-class-suggestions
     antfu.iconify
@@ -55,8 +55,8 @@
     usernamehw.errorlens
     vscode-icons-team.vscode-icons
     vunguyentuan.vscode-css-variables
-    wallabyjs.console-ninja
-    codium.codium
+    # wallabyjs.console-ninja
+    tobias-z.vscode-harpoon
     johnnymorganz.stylua
   ];
 }

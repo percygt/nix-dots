@@ -9,21 +9,6 @@
   };
   wrapped_wezterm = nixgl.nixGLVulkanMesaWrap pkgs.wezterm_custom;
 in {
-  home.packages = [
-    (pkgs.makeDesktopItem {
-      name = "wezterm";
-      desktopName = "WezTerm";
-      comment = "Wez's Terminal Emulator";
-      keywords = ["shell" "prompt" "command" "commandline" "cmd"];
-      icon = "org.wezfurlong.wezterm";
-      startupWMClass = "org.wezfurlong.wezterm";
-      tryExec = "${wrapped_wezterm}/bin/wezterm";
-      exec = "${wrapped_wezterm}/bin/wezterm start --cwd .";
-      type = "Application";
-      categories = ["System" "TerminalEmulator" "Utility"];
-      terminal = false;
-    })
-  ];
 
   programs.wezterm = {
     enable = true;
@@ -73,6 +58,25 @@ in {
           end
           window:set_config_overrides(overrides)
         end)
+        wezterm.on('user-var-changed', function(window, pane, name, value)
+            local overrides = window:get_config_overrides() or {}
+            if name == "ZEN_MODE" then
+                local incremental = value:find("+")
+                local number_value = tonumber(value)
+                if incremental ~= nil then
+                    while (number_value > 0) do
+                        window:perform_action(wezterm.action.IncreaseFontSize, pane)
+                        number_value = number_value - 1
+                    end
+                elseif number_value < 0 then
+                    window:perform_action(wezterm.action.ResetFontSize, pane)
+                    overrides.font_size = nil
+                else
+                    overrides.font_size = number_value
+                end
+            end
+            window:set_config_overrides(overrides)
+        end)
         return {
         	enable_wayland = false,
           check_for_updates = false,
@@ -85,6 +89,7 @@ in {
           warn_about_missing_glyphs = false,
           enable_scroll_bar = false,
           enable_tab_bar = false,
+          front_end="OpenGL",
         	disable_default_key_bindings = true,
         	window_close_confirmation = "NeverPrompt",
           window_padding = {

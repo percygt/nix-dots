@@ -11,7 +11,7 @@
     ./vscodium
     ./zellij
     ./starship.nix
-    ./xplr.nix
+    ./yazi.nix
     ./broot.nix
     ./direnv.nix
     ./fastfetch.nix
