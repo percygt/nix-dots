@@ -38,7 +38,7 @@
     };
 
     "org/gnome/shell/extensions/quake-mode/accelerators" = {
-      app-1 = "wezterm.desktop";
+      app-1 = "org.wezfurlong.wezterm.desktop";
       app-2 = "org.codeberg.dnkl.foot.desktop";
     };
 

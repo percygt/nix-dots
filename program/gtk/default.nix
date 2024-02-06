@@ -2,6 +2,7 @@
   username,
   config,
   lib,
+  pkgs,
   ...
 }: let
   HM_GTK = "${config.xdg.configHome}/home-manager/common/gtk";
@@ -9,28 +10,26 @@
   LOCAL_THEMES = "${config.xdg.dataHome}/themes";
   LOCAL_ICONS = "${config.xdg.dataHome}/icons";
   GTK_THEME = "Colloid-Dark-Nord";
+  BOOKMARKS = pkgs.writeText "bookmarks" ''
+    file:///home/${username}/.config/home-manager
+    file:///home/${username}/.local
+    file:///home/${username}/.config
+    file:///windows
+    file:///backup
+    file:///data/playground
+    file:///data/git-repo
+    file:///data/logs
+    file:///data/codebox
+    file:///data/distrobox
+    file:///data
+    file:///home/${username}/Documents
+    file:///home/${username}/Music
+    file:///home/${username}/Pictures
+    file:///home/${username}/Videos
+    file:///home/${username}/Downloads
+  '';
 in {
   xdg.configFile = {
-    "gtk-3.0/bookmarks" = {
-      text = ''
-        file:///home/${username}/.config/home-manager
-        file:///home/${username}/.local
-        file:///home/${username}/.config
-        file:///windows
-        file:///backup
-        file:///data/playground
-        file:///data/git-repo
-        file:///data/logs
-        file:///data/codebox
-        file:///data/distrobox
-        file:///data
-        file:///home/${username}/Documents
-        file:///home/${username}/Music
-        file:///home/${username}/Pictures
-        file:///home/${username}/Videos
-        file:///home/${username}/Downloads
-      '';
-    };
     "gtk-3.0/gtk.css" = {
       text = ''
         VteTerminal,
@@ -57,7 +56,9 @@ in {
         [ -e "${HOME_THEMES}" ] || mkdir "${HOME_THEMES}"
         [ -e "${LOCAL_THEMES}" ] || mkdir "${LOCAL_THEMES}"
         [ -e "${LOCAL_ICONS}" ] || mkdir "${LOCAL_ICONS}"
+        [ -e "${config.xdg.configHome}/gtk-3.0/" ] || mkdir "${config.xdg.configHome}/gtk-3.0/"
 
+        [ -f "${config.xdg.configHome}/gtk-3.0/bookmarks" ] || cp "${BOOKMARKS}" "${config.xdg.configHome}/gtk-3.0/bookmarks"
         [ -e "${LOCAL_THEMES}/Colloid-Dark-Nord" ] || ln -s "${HM_GTK}/themes/Colloid-Dark-Nord" "${LOCAL_THEMES}/Colloid-Dark-Nord"
         [ -e "${HOME_THEMES}/Colloid-Dark-Nord" ] || cp -r "${HM_GTK}/themes/Colloid-Dark-Nord" "${HOME_THEMES}/Colloid-Dark-Nord"
 

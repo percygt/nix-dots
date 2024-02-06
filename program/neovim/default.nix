@@ -33,7 +33,7 @@ in {
         require("config.ui.misc")
       '';
 
-    plugins = with pkgs.percygt.vimPlugins; [
+    plugins = with pkgs.stash.vimPlugins; [
       # UI Enhancement #-------------------------------------------------------------------------------------
       {
         plugin = onedark-nvim;
@@ -54,6 +54,11 @@ in {
         plugin = which-key-nvim;
         type = "lua";
         config = ''require("config.ui.which-key")'';
+      }
+      {
+        plugin = zen-mode-nvim;
+        type = "lua";
+        config = ''require("config.ui.zen-mode")'';
       }
       # devicons
       nvim-web-devicons
@@ -193,7 +198,7 @@ in {
     ];
     extraPackages = with pkgs; [
       # Essentials
-      nodePackages.pnpm
+      nodePackages.npm
       nodePackages.neovim
 
       # Telescope dependencies
