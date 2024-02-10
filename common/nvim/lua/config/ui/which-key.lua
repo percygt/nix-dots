@@ -8,8 +8,8 @@ wk.setup({
     padding = { 2, 2, 2, 2 },
   },
   triggers_blacklist = {
-    n = { "v", "Q", "W", "s", "f" },
-    i = { "W", "j" },
+    n = { "<C-w>", "v", "Q", "W", "s", "f" },
+    i = { "<C-w>", "W", "j" },
   },
   layout = {
     spacing = 2,

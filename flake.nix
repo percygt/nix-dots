@@ -1,17 +1,23 @@
 {
-  description = "PercyGT's nix config";
+  description = "PercyGT's nix";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nixgl.url = "github:guibou/nixgl";
-    my-nix-overlays.url = "github:percygt/nix-overlay";
+    nix-stash.url = "github:percygt/nix-stash";
     nix-index-database.url = "github:Mic92/nix-index-database";
     home-manager.url = "github:nix-community/home-manager";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    wezterm.url = "github:wez/wezterm?dir=nix";
   };
-
+  nixConfig = {
+    extra-trusted-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
   outputs = {
     nixpkgs,
     home-manager,
@@ -28,10 +34,7 @@
           nodejs = prev.nodejs_20;
         };
       };
-      wezterm_custom = final: prev: {
-        wezterm_custom = inputs.wezterm.packages."${prev.system}".default;
-      };
-      my-nix-overlays = inputs.my-nix-overlays.overlays.default;
+      nix-stash = inputs.nix-stash.overlays.default;
       neovimNightly = inputs.neovim-nightly-overlay.overlay;
       nixgl = inputs.nixgl.overlay;
     };

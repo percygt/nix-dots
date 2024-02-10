@@ -9,5 +9,6 @@
     nix-tree
     node2nix
     nix-your-shell
+    cachix
   ];
 }

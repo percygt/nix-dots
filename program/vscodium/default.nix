@@ -2,11 +2,9 @@
   pkgs,
   config,
   lib,
+  inputs,
   ...
 }: let
-  extension-list = import ./extensions.nix {
-    inherit pkgs;
-  };
   hmVsCode = "${config.xdg.configHome}/home-manager/common/vscode/settings.json";
   userVsCode = "${config.xdg.configHome}/VSCodium/User/settings.json";
 in {
@@ -16,7 +14,7 @@ in {
     enableUpdateCheck = true;
     mutableExtensionsDir = true;
     enableExtensionUpdateCheck = true;
-    inherit (extension-list) extensions;
+    extensions = inputs.nix-stash.lib.vscodeExtensions {inherit (pkgs) system;};
     userSettings = builtins.fromJSON (builtins.readFile ../../common/vscode/settings.json);
     keybindings = builtins.fromJSON (builtins.readFile ../../common/vscode/keybindings.json);
   };
