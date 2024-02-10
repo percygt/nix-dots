@@ -39,6 +39,8 @@ in {
     cgdb
     poppler
     ffmpegthumbnailer
+    mpv
+    yt-dlp
     
     # tui's
     termscp
@@ -47,6 +49,10 @@ in {
     visidata
     podman-tui
     wtf
+    jqp
+    youtube-tui
+    gh-dash
+    gpg-tui
     lazysql
   ];
 
@@ -82,6 +88,7 @@ in {
       defaultCommand = "fd --type file --hidden --exclude .git";
       defaultOptions = [
         "--border rounded"
+        "--info=inline"
       ];
       # CTRL-T - $FZF_CTRL_T_COMMAND
       fileWidgetCommand = "rg --files --hidden -g !.git";

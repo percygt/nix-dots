@@ -7,7 +7,7 @@
   nixgl = import ../../nixgl.nix {
     inherit pkgs lib;
   };
-  wrapped_wezterm = nixgl.nixGLVulkanMesaWrap pkgs.wezterm_custom;
+  wrapped_wezterm = nixgl.nixGLVulkanMesaWrap pkgs.stash.wezterm;
 in {
 
   programs.wezterm = {

@@ -53,24 +53,6 @@ in {
         plugin = tmux-onedark-theme;
         extraConfig = "set -g status-position top";
       }
-      # {
-      #   plugin = resurrect;
-      #   extraConfig = ''
-      #     set -g @resurrect-capture-pane-contents 'on'
-      #
-      #     set -g @resurrect-dir ${resurrectDirPath}
-      #     set -g @resurrect-hook-post-save-all 'target=$(readlink -f ${resurrectDirPath}/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | sponge $target'
-      #   '';
-      # }
-      # {
-      #   plugin = continuum;
-      #   extraConfig = ''
-      #     set -g @continuum-restore 'off'
-      #     set -g @continuum-boot 'on'
-      #     set -g @continuum-save-interval '10'
-      #     set -g @continuum-systemd-start-cmd 'start-server'
-      #   '';
-      # }
       {
         plugin = tmux-thumbs;
         extraConfig = ''
@@ -78,9 +60,9 @@ in {
         '';
       }
       {
-        plugin = tmux-fzf-url;
+        plugin = fzf-url;
         extraConfig = ''
-          set -g @fzf-url-fzf-options '-w 50% -h 50% --multi -0 --no-preview --no-border'
+          set -g @fzf-url-fzf-options '-h 50% --multi -0 --no-preview'
         '';
       }
       better-mouse-mode
@@ -88,13 +70,31 @@ in {
       vim-tmux-navigator
       yank
       tmux-fzf
+      {
+        plugin = resurrect;
+        extraConfig = ''
+          set -g @resurrect-capture-pane-contents 'on'
+
+          set -g @resurrect-dir ${resurrectDirPath}
+          set -g @resurrect-hook-post-save-all 'target=$(readlink -f ${resurrectDirPath}/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | sponge $target'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-boot 'on'
+          set -g @continuum-save-interval '10'
+          set -g @continuum-systemd-start-cmd 'start-server'
+        '';
+      }
     ];
     extraConfig =
       /*
       bash
       */
       ''
-        # run-shell "if [ ! -d ${resurrectDirPath} ]; then tmux new-session -d -s main; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
+        run-shell "if [ ! -d ${resurrectDirPath} ]; then tmux new-session -d -s main; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
 
         # TERM override
         set terminal-overrides "xterm-256color:RGB"
@@ -123,11 +123,21 @@ in {
         # Split
         unbind %
         unbind '"'
-        unbind d
         bind s split-window -v -c "#{pane_current_path}"
         bind v split-window -h -c "#{pane_current_path}"
+        
+        # window navigation
+        unbind [
+        bind ] next
+        bind [ prev
+        
+        # tui's
+        unbind d
+        unbind n
+        unbind f
         bind-key g new-window 'lazygit; tmux kill-pane'
         bind-key d new-window 'lazydocker; tmux kill-pane'
+        bind-key f new-window 'yazi; tmux kill-pane'
 
         # Easier move of windows
         bind-key -r Home swap-window -t - \; select-window -t -

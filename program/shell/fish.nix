@@ -41,20 +41,12 @@
       */
       ''
         set fzf_preview_file_cmd preview
-        set fzf_configure_bindings --variables=\e\cv
         set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "alt-c:execute(code {} &> /dev/tty)"
         set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
-        # function fzf --wraps=fzf --description="Use fzf-tmux if in tmux session"
-        #   if set --query TMUX
-        #     fzf-tmux -p 90%,75% $argv
-        #   else
-        #     command fzf $argv
-        #   end
-        # end
         function starship_transient_rprompt_func
           starship module time
         end
-          
+        
         fish_vi_key_bindings
         set fish_cursor_default     block      blink
         set fish_cursor_insert      line       blink
