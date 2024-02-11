@@ -26,7 +26,7 @@
         };
       };
       nix-stash = inputs.nix-stash.overlays.default;
-      neovimNightly = inputs.neovim-nightly-overlay.overlay;
+      neovim-nightly = inputs.neovim-nightly-overlay.overlay;
     };
     legacyPackages = forAllSystems (
       system:
@@ -48,8 +48,8 @@
         description = "A django Nix flake with devenv integration.";
       };
       flakes_part = {
-        path = ./templates/flakes_part;
-        description = "A flakes.part templates with devenv integration.";
+        path = ./templates/flake_parts;
+        description = "A flake_parts templates with devenv integration.";
       };
     };
     inherit overlays;
