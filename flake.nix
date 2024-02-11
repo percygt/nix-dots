@@ -1,22 +1,13 @@
 {
-  description = "PercyGT's nix";
+  description = "PercyGT's nix home-manager";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    nixgl.url = "github:guibou/nixgl";
     nix-stash.url = "github:percygt/nix-stash";
-    nix-index-database.url = "github:Mic92/nix-index-database";
     home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-  };
-  nixConfig = {
-    extra-trusted-substituters = [
-      "https://nix-community.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
   };
   outputs = {
     nixpkgs,
@@ -36,7 +27,6 @@
       };
       nix-stash = inputs.nix-stash.overlays.default;
       neovimNightly = inputs.neovim-nightly-overlay.overlay;
-      nixgl = inputs.nixgl.overlay;
     };
     legacyPackages = forAllSystems (
       system:
