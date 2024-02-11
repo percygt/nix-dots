@@ -1,18 +1,13 @@
 {
   pkgs,
-  lib,
   ...
 }: let
   colors = (import ../../colors.nix).syft;
-  nixgl = import ../../nixgl.nix {
-    inherit pkgs lib;
-  };
-  wrapped_wezterm = nixgl.nixGLVulkanMesaWrap pkgs.stash.wezterm;
 in {
 
   programs.wezterm = {
     enable = true;
-    package = wrapped_wezterm;
+    package = pkgs.stash.wezterm_wrapped;
     colorSchemes = {
       Syft = {
         ansi = [
