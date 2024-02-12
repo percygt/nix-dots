@@ -1,24 +1,29 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   home.packages = [pkgs.fastfetch];
   xdg.configFile = {
     "fastfetch/config.conf" = {
       text = ''
         --structure OS:Kernel:DE:Terminal:Uptime
-        --logo none
-        --logo-type none
+        --logo ${config.xdg.configHome}/fastfetch/freiren.jpg
+        --logo-type sixel
+        --logo-width 25
         --color-keys yellow
         --separator "  "
 
         # Key options:
         # Sets the displayed key of a module
         # Can be any string. Some of theme take an argument like a format string. See "fastfetch --help format" for help.
-        --os-key 
-        --kernel-key 
-        --uptime-key 󰅶
-        --packages-key 󰏔
-        --de-key 󰧨
-        --wm-key 
-        --terminal-key 󰞷
+        --os-key   
+        --kernel-key   
+        --uptime-key   󰅶
+        --packages-key   󰏔
+        --de-key   󰧨
+        --wm-key   
+        --terminal-key   󰞷
 
         # Format options:
         # Sets the format string for module values.
@@ -29,5 +34,7 @@
         --terminal-format "{5}"
       '';
     };
+
+    "fastfetch/freiren.jpg".source = ../common/assets/freiren.jpg;
   };
 }
