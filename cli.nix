@@ -1,6 +1,6 @@
 {pkgs, ...}: let
   colors = (import ./colors.nix).syft;
-  lazysql  = pkgs.callPackage ./nixpkgs/go/lazysql.nix {};
+  lazysql = pkgs.callPackage ./nixpkgs/go/lazysql.nix {};
 in {
   home.packages = with pkgs; [
     # archives
@@ -36,16 +36,17 @@ in {
     libsixel
     clipboard-jh
     pinentry-gnome
+    chafa
     cgdb
     poppler
     ffmpegthumbnailer
     mpv
+    onefetch
     yt-dlp
-    
+
     # tui's
     termscp
     lazydocker
-    lazygit
     visidata
     podman-tui
     wtf
@@ -57,6 +58,19 @@ in {
   ];
 
   programs = {
+    lazygit = {
+      enable = true;
+      settings = {
+        git = {
+          paging = {
+            colorArg = "always";
+            pager = "delta --color-only --dark --paging=never";
+            useConfig = false;
+          };
+        };
+      };
+    };
+    
     bat = {
       enable = true;
       extraPackages = with pkgs.bat-extras; [batdiff batman batpipe prettybat batgrep batwatch];

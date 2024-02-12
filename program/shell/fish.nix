@@ -1,12 +1,6 @@
 {pkgs, ...}: {
   programs.fish = {
     enable = true;
-    interactiveShellInit = ''
-      set fish_greeting # Disable greeting
-    '';
-    loginShellInit = ''
-      ${pkgs.fastfetch}/bin/fastfetch
-    '';
     plugins = with pkgs.fishPlugins; [
       {
         name = "fzf";
@@ -35,6 +29,36 @@
         };
       }
     ];
+    interactiveShellInit =
+      /*
+      fish
+      */
+      ''
+        set fish_greeting # Disable greeting
+        check_directory_for_new_repository
+      '';
+    functions = {
+      cd = {
+        body = ''
+          builtin cd $argv || return
+          check_directory_for_new_repository
+        '';
+        wraps = "cd";
+      };
+      check_directory_for_new_repository = {
+        body = ''
+          set current_repository (git rev-parse --show-toplevel 2> /dev/null)
+          if [ "$current_repository" ] && \
+            [ "$current_repository" != "$last_repository" ]
+            ${pkgs.onefetch}/bin/onefetch
+          end
+          set -gx last_repository $current_repository
+        '';
+      };
+    };
+    loginShellInit = ''
+      check_directory_for_new_repository
+    '';
     shellInit =
       /*
       fish
@@ -43,10 +67,11 @@
         set fzf_preview_file_cmd preview
         set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "alt-c:execute(code {} &> /dev/tty)"
         set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
+
         function starship_transient_rprompt_func
           starship module time
         end
-        
+            
         fish_vi_key_bindings
         set fish_cursor_default     block      blink
         set fish_cursor_insert      line       blink

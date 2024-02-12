@@ -24,6 +24,7 @@ in {
     package = pkgs.nix;
     settings = {
       experimental-features = ["nix-command" "flakes" "repl-flake"];
+      builders-use-substitutes = true;
       auto-optimise-store = true;
       warn-dirty = false;
       bash-prompt-prefix = "(nix:$name)\\040";

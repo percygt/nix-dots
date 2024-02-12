@@ -237,10 +237,10 @@ in {
       deno
       prettierd
       eslint_d
-      # nodePackages.prettier
+      nodePackages.prettier
       nodePackages.typescript-language-server
       nodePackages."@astrojs/language-server"
-      # nodePackages-extra.prettier-plugin-astro
+      nodePackages-extra.prettier-plugin-astro
 
       # Go
       go
@@ -255,7 +255,6 @@ in {
       marksman
 
       # Additional
-      # codeium
       yamllint
       nodePackages.bash-language-server
       nodePackages.yaml-language-server

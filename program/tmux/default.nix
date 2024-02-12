@@ -4,17 +4,6 @@
   ...
 }: let
   resurrectDirPath = "${config.xdg.dataHome}/tmux/resurrect";
-  tmux-pass = pkgs.tmuxPlugins.mkTmuxPlugin {
-    pluginName = "tmux-pass";
-    version = "unstable-2024-01-19";
-    rtpFilePath = "plugin.tmux";
-    src = pkgs.fetchFromGitHub {
-      owner = "rafi";
-      repo = "tmux-pass";
-      rev = "76b1c98911d56928063a41bc93a2d9e81818ef4c";
-      hash = "sha256-bamz4IZrozo5R7jt+z7YKyrogawPqsZ9cTJi9osjVoA=";
-    };
-  };
 in {
   home.packages = with pkgs; [
     lsof
@@ -37,15 +26,9 @@ in {
     historyLimit = 1000000;
     plugins = with pkgs.stash.tmuxPlugins; [
       {
-        plugin = tmux-pass;
-        extraConfig = ''
-          set -g @pass-key b
-        '';
-      }
-      {
         plugin = tmuxinoicer;
         extraConfig = ''
-          set -g @tmuxinoicer-find-base "/data:1:4,$HOME:1:3"
+          set -g @tmuxinoicer-find-base "/data:1:4,${config.xdg.configHome}/home-manager,${config.home.homeDirectory}/nix-dots"
           set -g @tmuxinoicer-extras "find"
         '';
       }
@@ -106,6 +89,7 @@ in {
         set -g set-clipboard on
         set -g pane-active-border-style 'fg=magenta,bg=default'
         set -g pane-border-style 'fg=brightblack,bg=default'
+
         # make Prefix p paste the buffer.
         unbind p
         bind p paste-buffer
@@ -116,7 +100,10 @@ in {
 
         # Start selection with 'v' and copy using 'y'
         bind-key -T copy-mode-vi v send-keys -X begin-selection
-        set -g renumber-windows on       # renumber all windows when any window is closed
+
+        # renumber all windows when any window is closed
+        set -g renumber-windows on
+
         bind-key X kill-session
         set-option -g detach-on-destroy off
 
@@ -125,16 +112,17 @@ in {
         unbind '"'
         bind s split-window -v -c "#{pane_current_path}"
         bind v split-window -h -c "#{pane_current_path}"
-        
+
         # window navigation
+        unbind n
         unbind [
         bind ] next
         bind [ prev
-        
+
         # tui's
         unbind d
-        unbind n
         unbind f
+        unbind g
         bind-key g new-window 'lazygit; tmux kill-pane'
         bind-key d new-window 'lazydocker; tmux kill-pane'
         bind-key f new-window 'yazi; tmux kill-pane'

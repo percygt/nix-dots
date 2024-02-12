@@ -30,17 +30,17 @@
           "vue"
           "markdown.mdx"
         ];
-        extra_filetypes = ["astro"];
+        # extra_filetypes = ["astro"];
       };
-      # prettier = {
-      #   filetypes = [
-      #     "astro"
-      #   ];
-      #   extra_args = [
-      #     "--plugin"
-      #     "${pkgs.nodePackages-extra.prettier-plugin-astro}/lib/node_modules/prettier-plugin-astro/dist/index.js"
-      #   ];
-      # };
+      prettier = {
+        filetypes = [
+          "astro"
+        ];
+        extra_args = [
+          "--plugin"
+          "${pkgs.nodePackages-extra.prettier-plugin-astro}/lib/node_modules/prettier-plugin-astro/dist/index.js"
+        ];
+      };
       deno_fmt = {
         filetypes = [
           "javascript"
