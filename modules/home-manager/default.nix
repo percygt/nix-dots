@@ -20,6 +20,7 @@
       ./fonts.nix
       ./nixtools.nix
       ./zathura.nix
+      ../../bin
     ]
     ++ lib.optional (builtins.pathExists ./personal) ./personal;
 }

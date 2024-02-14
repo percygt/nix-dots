@@ -13,9 +13,8 @@ in {
     p7zip
     unar
     git
-    # util
     
-    git
+    # util
     file
     du-dust
     duf
