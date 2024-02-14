@@ -77,13 +77,10 @@
           stateVersion
           ;
       };
-      modules =
-        [
-          ./modules/home-manager
-          ./hosts/fedora-gnome/home.nix
-          ./nix-personal
-        ]
-        ++ nixpkgs.lib.optional (builtins.pathExists ./nix-personal) ./nix-personal;
+      modules = [
+        ./hosts/fedora-gnome/home.nix
+        ./modules/home-manager
+      ];
     };
   };
 }
