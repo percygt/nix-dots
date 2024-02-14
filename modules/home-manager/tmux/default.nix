@@ -10,7 +10,7 @@ in {
     gitmux
   ];
 
-  xdg.configFile."gitmux/gitmux.conf".source = ../../common/.gitmux.conf;
+  xdg.configFile."gitmux/gitmux.conf".source = ../../../config/.gitmux.conf;
   programs.tmux = {
     enable = true;
     baseIndex = 1;

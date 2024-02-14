@@ -1,6 +1,4 @@
-let
-  colors = (import ../../colors.nix).syft;
-in {
+{colors, ...}: {
   dconf.settings = {
     "com/github/amezin/ddterm" = {
       background-opacity = colors.alpha;

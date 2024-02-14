@@ -1,10 +1,8 @@
 {
   pkgs,
+  colors,
   ...
-}: let
-  colors = (import ../../colors.nix).syft;
-in {
-
+}:{
   programs.wezterm = {
     enable = true;
     package = pkgs.stash.wezterm_wrapped;

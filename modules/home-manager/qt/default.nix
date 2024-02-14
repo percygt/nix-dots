@@ -6,8 +6,8 @@
   xdg.configFile = {
     "Kvantum" = {
       recursive = false;
-      source = ../../common/qt/Kvantum;
+      source = ../../../config/qt/Kvantum;
     };
-    kdeglobals.source = ../../common/qt/kdeglobals;
+    kdeglobals.source = ../../../config/qt/kdeglobals;
   };
 }

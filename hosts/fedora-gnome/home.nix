@@ -1,21 +1,18 @@
 {
   username,
   pkgs,
-  lib,
+  homeDirectory,
+  stateVersion,
   ...
 }: let
-  homeDirectory = "/home/${username}";
-  commonConfig = builtins.fromTOML (builtins.readFile ./common/config.toml);
+  shellAliases = import ../../lib/aliases.nix;
+  sessionVariables = import ../../lib/variables.nix;
 in {
-  imports =
-    [
-      ./program
-      ./nixtools.nix
-      ./cli.nix
-      ./fonts.nix
-      ./bin
-    ]
-    ++ lib.optional (builtins.pathExists ./nix-personal) ./nix-personal;
+  # imports = [
+  #   ../../modules/home-manager
+  #   # ../../bin
+  # ];
+  # # ++ lib.optional (builtins.pathExists ../../nix-personal) ../../nix-personal;
   news.display = "silent";
 
   targets.genericLinux.enable = true;
@@ -50,11 +47,14 @@ in {
   };
 
   home = {
-    inherit username homeDirectory;
-    shellAliases = commonConfig.aliases;
-    sessionVariables = commonConfig.variables;
+    inherit
+      username
+      homeDirectory
+      shellAliases
+      sessionVariables
+      stateVersion
+      ;
   };
 
   programs.home-manager.enable = true;
-  home.stateVersion = "24.05";
 }

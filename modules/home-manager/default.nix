@@ -15,11 +15,9 @@
     ./broot.nix
     ./direnv.nix
     ./fastfetch.nix
-    # ./git.nix
+    ./cli.nix
+    ./fonts.nix
+    ./nixtools.nix
     ./zathura.nix
-    # ./gpg.nix
-    # ./qt.nix
-    # ./gnome.nix
-    # ./helix.nix
   ];
 }

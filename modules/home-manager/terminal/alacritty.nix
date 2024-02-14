@@ -1,6 +1,4 @@
-let
-  colors = (import ../../colors.nix).syft;
-in {
+{colors, ...}: {
   programs.alacritty = {
     enable = true;
     settings = {

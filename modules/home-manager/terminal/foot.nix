@@ -1,6 +1,4 @@
-let
-  colors = (import ../../colors.nix).syft;
-in {
+{colors, ...}: {
   programs.foot = {
     enable = true;
     server.enable = true;
@@ -29,9 +27,8 @@ in {
       };
 
       colors = {
-        alpha = colors.alpha;
-        background = colors.default.background;
-        foreground = colors.default.foreground;
+        inherit (colors) alpha;
+        inherit (colors.default) background foreground;
 
         ## Normal/regular colors (color palette 0-7)
         regular0 = colors.normal.black; # black

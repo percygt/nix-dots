@@ -1,6 +1,9 @@
-{pkgs, ...}: let
-  colors = (import ./colors.nix).syft;
-  lazysql = pkgs.callPackage ./nixpkgs/go/lazysql.nix {};
+{
+  pkgs,
+  colors,
+  ...
+}: let
+  lazysql = pkgs.callPackage ../../nixpkgs/go/lazysql.nix {};
 in {
   home.packages = with pkgs; [
     # archives
@@ -9,8 +12,10 @@ in {
     unrar
     p7zip
     unar
-
-    # utils
+    git
+    # util
+    
+    git
     file
     du-dust
     duf
@@ -70,7 +75,7 @@ in {
         };
       };
     };
-    
+
     bat = {
       enable = true;
       extraPackages = with pkgs.bat-extras; [batdiff batman batpipe prettybat batgrep batwatch];
