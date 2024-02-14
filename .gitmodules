@@ -1,8 +1,4 @@
-[submodule "nix-personal"]
-	path = nix-personal
-	url = git@gitlab.com:percygt/nix-personal
-  branch = main
 [submodule "modules/home-manager/personal"]
 	path = modules/home-manager/personal
 	url = git@gitlab.com:percygt/nix-personal.git
-  branch = nix-dots
+  branch = main
