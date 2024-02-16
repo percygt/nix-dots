@@ -6,7 +6,7 @@
   flakeDirectory,
   ...
 }: let
-  hmVsCode = "${flakeDirectory}/config/vscode/settings.json";
+  hmVsCode = "${flakeDirectory}/_config/vscode/settings.json";
   userVsCode = "${config.xdg.configHome}/VSCodium/User/settings.json";
 in {
   programs.vscode = {
@@ -16,8 +16,8 @@ in {
     mutableExtensionsDir = true;
     enableExtensionUpdateCheck = true;
     extensions = inputs.nix-stash.lib.vscodeExtensions {inherit (pkgs) system;};
-    userSettings = builtins.fromJSON (builtins.readFile ../../../config/vscode/settings.json);
-    keybindings = builtins.fromJSON (builtins.readFile ../../../config/vscode/keybindings.json);
+    userSettings = builtins.fromJSON (builtins.readFile ./_config/vscode/settings.json);
+    keybindings = builtins.fromJSON (builtins.readFile ./_config/vscode/keybindings.json);
   };
   home = {
     activation = {

@@ -1,16 +1,20 @@
 {lib, ...}: {
+  programs.home-manager.enable = true;
+  news.display = "silent";
+  manual = {
+    html.enable = false;
+    json.enable = false;
+    manpages.enable = false;
+  };
   imports =
     [
-      ./gnome
-      ./gtk
       ./neovim
-      ./qt
       ./shell
       ./terminal
-      ./tmux
-      ./shell
-      ./vscodium
-      ./zellij
+      ./scripts
+      ./tmux.nix
+      ./vscodium.nix
+      ./zellij.nix
       ./starship.nix
       ./yazi.nix
       ./broot.nix
@@ -20,7 +24,6 @@
       ./fonts.nix
       ./nixtools.nix
       ./zathura.nix
-      ../../bin
     ]
     ++ lib.optional (builtins.pathExists ./personal) ./personal;
 }

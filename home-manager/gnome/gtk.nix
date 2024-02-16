@@ -6,7 +6,7 @@
   flakeDirectory,
   ...
 }: let
-  HM_GTK = "${flakeDirectory}/common/gtk";
+  HM_GTK = "${flakeDirectory}/home-manager/_config/gtk";
   HOME_THEMES = "${config.home.homeDirectory}/.themes";
   LOCAL_THEMES = "${config.xdg.dataHome}/themes";
   LOCAL_ICONS = "${config.xdg.dataHome}/icons";
@@ -41,13 +41,13 @@ in {
       '';
     };
     "gtk-4.0/assets" = {
-      source = ../../../config/gtk/themes/${GTK_THEME}/gtk-4.0/assets;
+      source = ../_config/gtk/themes/${GTK_THEME}/gtk-4.0/assets;
     };
     "gtk-4.0/gtk.css " = {
-      source = ../../../config/gtk/themes/${GTK_THEME}/gtk-4.0/gtk.css;
+      source = ../_config/gtk/themes/${GTK_THEME}/gtk-4.0/gtk.css;
     };
     "gtk-4.0/gtk-dark.css " = {
-      source = ../../../config/gtk/themes/${GTK_THEME}/gtk-4.0/gtk-dark.css;
+      source = ../_config/gtk/themes/${GTK_THEME}/gtk-4.0/gtk-dark.css;
     };
   };
 

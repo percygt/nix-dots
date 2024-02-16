@@ -6,7 +6,7 @@
   colors,
   ...
 }: let
-  HM_NVIM = "${flakeDirectory}/config/nvim";
+  HM_NVIM = "${flakeDirectory}/_config/nvim";
   lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
   lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
 in {
@@ -284,11 +284,11 @@ in {
   xdg.configFile = {
     "nvim/lua" = {
       recursive = true;
-      source = ../../../config/nvim/lua;
+      source = ../_config/nvim/lua;
     };
     "nvim/ftdetect" = {
       recursive = true;
-      source = ../../../config/nvim/ftdetect;
+      source = ../_config/nvim/ftdetect;
     };
     "nvim/lua/config/colors.lua" = {
       text =

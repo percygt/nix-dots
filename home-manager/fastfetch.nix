@@ -35,6 +35,6 @@
       '';
     };
 
-    # "fastfetch/freiren.jpg".source = ../../config/assets/freiren.jpg;
+    # "fastfetch/freiren.jpg".source = ../../_assets/freiren.jpg;
   };
 }

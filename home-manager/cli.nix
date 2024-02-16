@@ -2,9 +2,7 @@
   pkgs,
   colors,
   ...
-}: let
-  lazysql = pkgs.callPackage ../../nixpkgs/go/lazysql.nix {};
-in {
+}:{
   home.packages = with pkgs; [
     # archives
     zip

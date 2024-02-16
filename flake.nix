@@ -8,19 +8,13 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
-  outputs = {
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    colors = (import ./lib/colors.nix).syft;
-    username = "percygt";
-    homeDirectory = "/home/${username}";
-    flakeDirectory = "${homeDirectory}/nix-dots";
-    stateVersion = "23.11";
+  outputs = {nixpkgs, ...} @ inputs: let
     overlays = {
+      extra = final: prev:
+        import ./packages {pkgs = final;};
+
       nodePackages-extra = final: prev: {
-        nodePackages-extra = import ./nixpkgs/node {
+        nodePackages-extra = import ./packages/node {
           pkgs = prev;
           inherit (prev) system;
           nodejs = prev.nodejs_20;
@@ -30,14 +24,11 @@
       neovim-nightly = inputs.neovim-nightly-overlay.overlay;
     };
 
-    forAllSystems = nixpkgs.lib.genAttrs [
+    forEachSystem = nixpkgs.lib.genAttrs [
       "x86_64-linux"
       "aarch64-linux"
-      "i686-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
     ];
-    legacyPackages = forAllSystems (
+    legacyPackages = forEachSystem (
       system:
         import nixpkgs {
           inherit system;
@@ -45,10 +36,14 @@
           config.allowUnfree = true;
         }
     );
-
-    formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".alejandra);
-    pkgs = legacyPackages.x86_64-linux;
+    lib = import ./lib {inherit inputs;};
   in {
+    inherit overlays legacyPackages;
+
+    formatter = forEachSystem (system: legacyPackages.${system}.alejandra);
+
+    packages = forEachSystem (system: (import ./packages {pkgs = legacyPackages.${system};}));
+
     templates = {
       javascript = {
         path = ./templates/javascript;
@@ -63,24 +58,13 @@
         description = "A flake_parts templates with devenv integration.";
       };
     };
-    inherit overlays legacyPackages formatter;
-    homeConfigurations."${username}" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {
-        inherit
-          inputs
-          pkgs
-          username
-          colors
-          homeDirectory
-          flakeDirectory
-          stateVersion
-          ;
+
+    homeConfigurations = {
+      "home@asus-fegn" = lib.mkHomeManager {
+        hostname = "asus-fegn";
+        pkgs = legacyPackages.x86_64-linux;
+        stateVersion = "23.11";
       };
-      modules = [
-        ./hosts/fedora-gnome/home.nix
-        ./modules/home-manager
-      ];
     };
   };
 }
