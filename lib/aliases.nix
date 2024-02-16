@@ -13,7 +13,6 @@
   scu = "systemctl --user";
   jc = "journalctl -ex --unit";
   jcu = "journalctl --user -ex --unit";
-  hms = "home-manager switch --flake $FLAKE_PATH'?submodules=1#'$USER";
   code = "codium";
   v = "nvim";
   y = "yazi";
