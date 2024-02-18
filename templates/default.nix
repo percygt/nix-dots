@@ -1,42 +1,14 @@
 {
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    systems.url = "github:nix-systems/default";
-    devenv.url = "github:cachix/devenv";
+  javascript = {
+    path = ./javascript;
+    description = "A javascript Nix flake with devenv integration.";
   };
-
-  outputs = {
-    self,
-    nixpkgs,
-    devenv,
-    systems,
-    ...
-  } @ inputs: let
-    forEachSystem = nixpkgs.lib.genAttrs (import systems);
-  in {
-    packages = forEachSystem (system: {
-      devenv-up = self.devShells.${system}.default.config.procfileScript;
-    });
-    devShells =
-      forEachSystem
-      (system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
-        default = devenv.lib.mkShell {
-          inherit inputs pkgs;
-          modules = [
-            {
-              # https://devenv.sh/reference/options/
-              packages = [pkgs.hello];
-
-              enterShell = ''
-                hello
-              '';
-
-              processes.run.exec = "hello";
-            }
-          ];
-        };
-      });
+  django = {
+    path = ./django;
+    description = "A django Nix flake with devenv integration.";
+  };
+  flakes_part = {
+    path = ./flake_parts;
+    description = "A flake_parts templates with devenv integration.";
   };
 }

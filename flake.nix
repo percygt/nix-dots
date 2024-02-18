@@ -6,6 +6,14 @@
     nix-stash.url = "github:percygt/nix-stash";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-contrib.url = "github:hyprwm/contrib";
+    hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
+    hyprland-plugins.inputs.hyprland.follows = "hyprland";
+    hyprpaper.url = "github:hyprwm/hyprpaper";
+
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
   outputs = {nixpkgs, ...} @ inputs: let
@@ -26,16 +34,20 @@
 
     forEachSystem = nixpkgs.lib.genAttrs [
       "x86_64-linux"
-      "aarch64-linux"
     ];
+
     legacyPackages = forEachSystem (
       system:
         import nixpkgs {
           inherit system;
           overlays = builtins.attrValues overlays;
-          config.allowUnfree = true;
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+          };
         }
     );
+
     lib = import ./lib {inherit inputs;};
   in {
     inherit overlays legacyPackages;
@@ -44,26 +56,39 @@
 
     packages = forEachSystem (system: (import ./packages {pkgs = legacyPackages.${system};}));
 
-    templates = {
-      javascript = {
-        path = ./templates/javascript;
-        description = "A javascript Nix flake with devenv integration.";
+    templates = import ./templates;
+
+    #NOTE: hyprland nixos under-consruction
+    nixosConfigurations = {
+      asus-nihy = lib.mkNixOS rec {
+        system = "x86_64-linux";
+        hostName = "ASUS-NIHY";
+        pkgs = legacyPackages.${system};
       };
-      django = {
-        path = ./templates/django;
-        description = "A django Nix flake with devenv integration.";
+      opc = lib.mkNixOS rec {
+        system = "x86_64-linux";
+        hostName = "OPC";
+        pkgs = legacyPackages.${system};
       };
-      flakes_part = {
-        path = ./templates/flake_parts;
-        description = "A flake_parts templates with devenv integration.";
+      iso = lib.mkNixOS rec {
+        system = "x86_64-linux";
+        hostName = "ISO";
+        pkgs = legacyPackages.${system};
       };
     };
 
     homeConfigurations = {
-      "home@asus-fegn" = lib.mkHomeManager {
-        hostname = "asus-fegn";
+      asus-nihy = lib.mkHomeManager {
+        hostName = "ASUS-NIHY";
         pkgs = legacyPackages.x86_64-linux;
-        stateVersion = "23.11";
+      };
+      opc = lib.mkHomeManager {
+        hostName = "OPC";
+        pkgs = legacyPackages.x86_64-linux;
+      };
+      "home@asus-fegn" = lib.mkHomeManager {
+        hostName = "ASUS-FEGN";
+        pkgs = legacyPackages.x86_64-linux;
       };
     };
   };
