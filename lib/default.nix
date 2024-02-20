@@ -1,87 +1,94 @@
-{
-  inputs,
-  lib ? inputs.nixpkgs.lib,
-  ...
-}: let
+{inputs, ...}: let
   default = rec {
     username = "percygt";
     colors = (import ./colors.nix).syft;
+    shellAliases = import ./aliases.nix;
+    sessionVariables = import ./variables.nix;
     homeDirectory = "/home/${username}";
     flakeDirectory = "${homeDirectory}/nix-dots";
     stateVersion = "23.11";
+    configuration = {
+      users.users.${username} = {
+        isNormalUser = true;
+        extraGroups = [
+          "input"
+          "networkmanager"
+          "video"
+          "wheel"
+          "audio"
+        ];
+      };
+    };
+    home = {
+      programs.home-manager.enable = true;
+      news.display = "silent";
+      manual = {
+        html.enable = false;
+        json.enable = false;
+        manpages.enable = false;
+      };
+      home = {
+        inherit
+          username
+          homeDirectory
+          stateVersion
+          shellAliases
+          sessionVariables
+          ;
+      };
+    };
+    args = {
+      inherit inputs username colors homeDirectory flakeDirectory stateVersion;
+    };
   };
 in {
   mkNixOS = {
-    hostName,
+    profile,
     pkgs,
     system,
-    stateVersion ? default.stateVersion,
-    username ? default.username,
-    colors ? default.colors,
-    homeDirectory ? default.homeDirectory,
-    flakeDirectory ? default.flakeDirectory,
+    nixosModules ? [],
+    homeManagerModules ? [],
   }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit inputs hostName flakeDirectory username stateVersion;};
-      modules = [
-        ../system/_${hostName}
-        inputs.home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.${username} = {
-              imports =
-                [
-                  ../home/_${hostName}_home.nix
-                ]
-                ++ lib.optional (builtins.pathExists ../personal) ../personal;
+      specialArgs = default.args;
+      modules =
+        nixosModules
+        ++ [
+          default.configuration
+          ../profiles/${profile}/configuration.nix
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.${default.username} = {
+                imports =
+                  homeManagerModules
+                  ++ [
+                    default.home
+                    ../profiles/${profile}/home.nix
+                  ];
+              };
+              extraSpecialArgs = {inherit pkgs profile;} // default.args;
             };
-            extraSpecialArgs = {
-              inherit
-                pkgs
-                inputs
-                username
-                colors
-                hostName
-                homeDirectory
-                flakeDirectory
-                stateVersion
-                ;
-            };
-          };
-        }
-      ];
+          }
+        ];
     };
 
   mkHomeManager = {
-    hostName,
+    profile,
     pkgs,
-    stateVersion ? default.stateVersion,
-    username ? default.username,
-    colors ? default.colors,
-    homeDirectory ? default.homeDirectory,
-    flakeDirectory ? default.flakeDirectory,
+    homeManagerModules ? [],
   }:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules =
-        [
-          ../home/_${hostName}_home.nix
-        ]
-        ++ lib.optional (builtins.pathExists ../personal) ../personal;
-      extraSpecialArgs = {
-        inherit
-          pkgs
-          inputs
-          username
-          colors
-          hostName
-          homeDirectory
-          flakeDirectory
-          stateVersion
-          ;
-      };
+        homeManagerModules
+        ++ [
+          default.hm
+          {targets.genericLinux.enable = true;}
+          ../profiles/${profile}/home.nix
+        ];
+      extraSpecialArgs = {inherit pkgs profile;} // default.args;
     };
 }

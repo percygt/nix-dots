@@ -67,33 +67,32 @@
 
     nixosConfigurations = {
       asus-nihy = lib.mkNixOS rec {
+        profile = "ASUS-NIHY";
         system = "x86_64-linux";
-        hostName = "ASUS-NIHY";
         pkgs = legacyPackages.${system};
       };
       opc = lib.mkNixOS rec {
+        profile = "OPC";
         system = "x86_64-linux";
-        hostName = "OPC";
         pkgs = legacyPackages.${system};
       };
       iso = lib.mkNixOS rec {
+        profile = "ISO";
         system = "x86_64-linux";
-        hostName = "ISO";
         pkgs = legacyPackages.${system};
+        nixosModules = [
+          inputs.home-manager.nixosModules.default
+          inputs.hyprland.nixosModules.default
+        ];
+        homeManagerModules = [
+          inputs.hyprland.homeManagerModules.default
+        ];
       };
     };
 
     homeConfigurations = {
-      asus-nihy = lib.mkHomeManager {
-        hostName = "ASUS-NIHY";
-        pkgs = legacyPackages.x86_64-linux;
-      };
-      opc = lib.mkHomeManager {
-        hostName = "OPC";
-        pkgs = legacyPackages.x86_64-linux;
-      };
       "home@asus-fegn" = lib.mkHomeManager {
-        hostName = "ASUS-FEGN";
+        profile = "ASUS-FEGN";
         pkgs = legacyPackages.x86_64-linux;
       };
     };
