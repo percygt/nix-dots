@@ -2,27 +2,32 @@
   pkgs,
   lib,
   flakeDirectory,
+  username,
   ...
 }: {
-  imports = [
-    ../../nixos
-  ];
-
-  nixpkgs = {
-    hostPlatform = lib.mkDefault "x86_64-linux";
-    config.allowUnfree = true;
-  };
-
-  nix = {
-    settings.experimental-features = ["nix-command" "flakes"];
-    extraOptions = "experimental-features = nix-command flakes";
-  };
-
   services = {
     qemuGuest.enable = true;
     openssh.settings.PermitRootLogin = lib.mkForce "yes";
   };
 
+  users.users.${username} = {
+    isNormalUser = true;
+    shell = pkgs.fish;
+    extraGroups = [
+      "input"
+      "networkmanager"
+      "video"
+      "wheel"
+      "audio"
+    ];
+  };
+  programs.fish.enable = true;
+  # network
+  hardware.opengl = {
+    extraPackages = with pkgs; [
+      mesa
+    ];
+  };
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = lib.mkForce ["btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs"];
@@ -43,7 +48,6 @@
     };
   };
 
-  home-manager.users.nixos = import ./home.nix;
   users.extraUsers.root.password = "nixos";
 
   environment.systemPackages = with pkgs; [
@@ -84,7 +88,7 @@
         fi
 
         if [ ! -d "${flakeDirectory}/.git" ]; then
-        	git clone https://gitlab.com/hmajid2301/dotfiles.git "${flakeDirectory}"
+        	git clone https://github.com/percygt/nix-dots.git "${flakeDirectory}"
         fi
 
         TARGET_HOST=$(ls -1 ${flakeDirectory}/hosts/*/configuration.nix | cut -d'/' -f6 | grep -v iso | gum choose)

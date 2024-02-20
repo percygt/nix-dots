@@ -3,13 +3,9 @@
   username,
   hostName,
   stateVersion,
+  lib,
   ...
 }: {
-  imports = [
-    ./hardware-configuration.nix
-    ./locale.nix
-    ./audio.nix
-  ];
 
   system.stateVersion = stateVersion;
   # user
@@ -28,7 +24,10 @@
   networking = {
     inherit hostName;
   };
-
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    supportedFilesystems = lib.mkForce ["btrfs"];
+  };
   hardware.opengl = {
     extraPackages = with pkgs; [
       mesa

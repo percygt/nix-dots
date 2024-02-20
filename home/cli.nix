@@ -55,7 +55,6 @@
     wtf
     jqp
     youtube-tui
-    gh-dash
     gpg-tui
     lazysql
   ];

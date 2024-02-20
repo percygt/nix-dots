@@ -13,7 +13,10 @@
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
     hyprpaper.url = "github:hyprwm/hyprpaper";
-
+    disko.url = "github:nix-community/disko";
+    sops-nix.url = "github:mic92/sops-nix";
+    impermanence.url = "github:nix-community/impermanence";
+    # lanzaboote.url = "github:nix-community/lanzaboote";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
   outputs = {nixpkgs, ...} @ inputs: let
@@ -56,9 +59,12 @@
 
     packages = forEachSystem (system: (import ./packages {pkgs = legacyPackages.${system};}));
 
+    devShells = forEachSystem (system: (import ./shell.nix {
+      pkgs = legacyPackages.${system};
+    }));
+
     templates = import ./templates;
 
-    #NOTE: hyprland nixos under-consruction
     nixosConfigurations = {
       asus-nihy = lib.mkNixOS rec {
         system = "x86_64-linux";
