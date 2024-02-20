@@ -1,7 +1,8 @@
 {
-    # profile-sync-daemon
+  services = {
     psd = {
       enable = true;
       resyncTimer = "10m";
     };
+  };
 }

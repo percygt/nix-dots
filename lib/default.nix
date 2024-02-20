@@ -1,4 +1,8 @@
-{inputs, ...}: let
+{
+  inputs,
+  lib ? inputs.nixpkgs.lib,
+  ...
+}: let
   default = rec {
     username = "percygt";
     colors = (import ./colors.nix).syft;
@@ -19,15 +23,21 @@ in {
   }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit inputs hostName username stateVersion;};
+      specialArgs = {inherit inputs hostName flakeDirectory username stateVersion;};
       modules = [
-        ../system/_profiles/${hostName}
+        ../system/_${hostName}
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.${username} = import ../home/_${hostName}_home.nix;
+            users.${username} = {
+              imports =
+                [
+                  ../home/_${hostName}_home.nix
+                ]
+                ++ lib.optional (builtins.pathExists ../personal) ../personal;
+            };
             extraSpecialArgs = {
               inherit
                 pkgs
@@ -56,9 +66,11 @@ in {
   }:
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      modules = [
-        ../home/_${hostName}_home.nix
-      ];
+      modules =
+        [
+          ../home/_${hostName}_home.nix
+        ]
+        ++ lib.optional (builtins.pathExists ../personal) ../personal;
       extraSpecialArgs = {
         inherit
           pkgs

@@ -10,8 +10,6 @@
     };
 
     # use latest kernel
-    kernelPackages = pkgs.linuxPackages_latest;
-    supportedFilesystems = lib.mkForce ["btrfs"];
     consoleLogLevel = 3;
     kernelParams = [
       "quiet"
