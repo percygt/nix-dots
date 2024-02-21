@@ -20,6 +20,7 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
   outputs = {nixpkgs, ...} @ inputs: let
+    nix-personal = nixpkgs.lib.optional (builtins.pathExists ./personal) ./personal;
     overlays = {
       extra = final: prev:
         import ./packages {pkgs = final;};
@@ -84,9 +85,11 @@
           inputs.home-manager.nixosModules.default
           inputs.hyprland.nixosModules.default
         ];
-        homeManagerModules = [
-          inputs.hyprland.homeManagerModules.default
-        ];
+        homeManagerModules =
+          [
+            inputs.hyprland.homeManagerModules.default
+          ]
+          ++ nix-personal;
       };
     };
 
@@ -94,6 +97,7 @@
       "home@asus-fegn" = lib.mkHomeManager {
         profile = "ASUS-FEGN";
         pkgs = legacyPackages.x86_64-linux;
+        homeManagerModules = nix-personal;
       };
     };
   };

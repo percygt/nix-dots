@@ -1,12 +1,20 @@
 {inputs, ...}: let
+  inherit (inputs.nixpkgs) lib;
+  listImports = path: modules:
+    lib.forEach modules (
+      mod:
+        path + "/${mod}"
+    );
   default = rec {
     username = "percygt";
     colors = (import ./colors.nix).syft;
-    shellAliases = import ./aliases.nix;
-    sessionVariables = import ./variables.nix;
     homeDirectory = "/home/${username}";
     flakeDirectory = "${homeDirectory}/nix-dots";
     stateVersion = "23.11";
+    shellAliases = import ./aliases.nix;
+    sessionVariables =
+      (import ./variables.nix)
+      // {FLAKE_PATH = flakeDirectory;};
     configuration = {
       users.users.${username} = {
         isNormalUser = true;
@@ -21,11 +29,15 @@
     };
     home = {
       programs.home-manager.enable = true;
-      news.display = "silent";
       manual = {
         html.enable = false;
         json.enable = false;
         manpages.enable = false;
+      };
+      news = {
+        display = "silent";
+        json = lib.mkForce {};
+        entries = lib.mkForce [];
       };
       home = {
         inherit
@@ -38,7 +50,7 @@
       };
     };
     args = {
-      inherit inputs username colors homeDirectory flakeDirectory stateVersion;
+      inherit inputs username colors listImports homeDirectory flakeDirectory stateVersion;
     };
   };
 in {
@@ -85,8 +97,7 @@ in {
       modules =
         homeManagerModules
         ++ [
-          default.hm
-          {targets.genericLinux.enable = true;}
+          default.home
           ../profiles/${profile}/home.nix
         ];
       extraSpecialArgs = {inherit pkgs profile;} // default.args;

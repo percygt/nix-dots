@@ -1,19 +1,4 @@
 {
-  lib,
-  ...
-}: {
-  programs.home-manager.enable = true;
-  home.sessionVariables.EDITOR = "nvim";
-  news = {
-    display = "silent";
-    json = lib.mkForce {};
-    entries = lib.mkForce [];
-  };
-  manual = {
-    html.enable = false;
-    json.enable = false;
-    manpages.enable = false;
-  };
   imports = [
     ./neovim
     ./shell
