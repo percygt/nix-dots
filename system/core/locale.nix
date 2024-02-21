@@ -1,6 +1,7 @@
-{
+{lib, ...}: {
+  i18n.defaultLocale = lib.mkDefault "en_PH.UTF-8";
   time.timeZone = "Asia/Manila";
-  i18n.defaultLocale = "en_PH.UTF-8";
+  
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "fil_PH";
     LC_IDENTIFICATION = "fil_PH";
@@ -13,9 +14,9 @@
     LC_TIME = "fil_PH";
   };
 
-  console.useXkbConfig = true;
+  console.keyMap = "ph";
   services.xserver = {
-    layout = "ph";
-    xkbVariant = "";
+    xkb.layout = "ph";
+    xkb.variant = "";
   };
 }

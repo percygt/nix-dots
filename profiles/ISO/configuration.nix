@@ -2,33 +2,49 @@
   pkgs,
   lib,
   flakeDirectory,
+  sec,
   ...
 }: {
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
     config.allowUnfree = true;
   };
-  
-  programs.fish.enable = true;
   # network
   hardware.opengl = {
     extraPackages = with pkgs; [
       mesa
     ];
   };
+  nix = {
+    settings.experimental-features = ["nix-command" "flakes"];
+    extraOptions = "experimental-features = nix-command flakes";
+  };
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = lib.mkForce ["btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs"];
   };
-
+  services = {
+    qemuGuest.enable = true;
+    openssh.settings.PermitRootLogin = lib.mkForce "yes";
+  };
   networking = {
     hostName = "iso";
   };
+  programs.fish.enable = true;
 
+  programs.git = {
+    enable = true;
+    # extraConfig = {
+    #   url = {
+    #     "https://oauth2:${sec.gitlab.oauth_token}@gitlab.com" = {
+    #       insteadOf = "https://gitlab.com";
+    #     };
+    #   };
+    # };
+  };
   users.extraUsers.root.password = "nixos";
 
   environment.systemPackages = with pkgs; [
-    git
     gum
     (
       writeShellScriptBin "rescue" ''
@@ -65,7 +81,7 @@
         fi
 
         if [ ! -d "${flakeDirectory}/.git" ]; then
-        	git clone --recurse-submodules git@gitlab.com:percygt/nix-dots.git "${flakeDirectory}"
+        	git clone --recurse-submodules https://gitlab.com/percygt/nix-dots.git "${flakeDirectory}"
         fi
 
         TARGET_HOST=$(ls -1 ${flakeDirectory}/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v iso | gum choose)

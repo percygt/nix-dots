@@ -1,78 +1,120 @@
+# home.nix
 {
-  username,
-  config,
-  lib,
   pkgs,
+  config,
+  username,
+  lib,
   flakeDirectory,
+  colors,
   ...
 }: let
-  HM_GTK = "${flakeDirectory}/home/_config/gtk";
+  THEME = "Colloid-Dark-Nord";
+  CURSOR = "Colloid-dark-cursors";
+  ICON = "Papirus-Dark";
+  FONT = "Rubik";
   HOME_THEMES = "${config.home.homeDirectory}/.themes";
-  LOCAL_THEMES = "${config.xdg.dataHome}/themes";
-  LOCAL_ICONS = "${config.xdg.dataHome}/icons";
-  GTK_THEME = "Colloid-Dark-Nord";
-  BOOKMARKS = pkgs.writeText "bookmarks" ''
-    file:///home/${username}/.config/home-manager
-    file:///home/${username}/.local
-    file:///home/${username}/.config
-    file:///windows
-    file:///backup
-    file:///data/playground
-    file:///data/git-repo
-    file:///data/logs
-    file:///data/codebox
-    file:///data/distrobox
-    file:///data
-    file:///home/${username}/Documents
-    file:///home/${username}/Music
-    file:///home/${username}/Pictures
-    file:///home/${username}/Videos
-    file:///home/${username}/Downloads
-  '';
+
+  pkg-colloid-gtk-theme = pkgs.colloid-gtk-theme.overrideAttrs (oldAttrs: {
+    installPhase = ''
+      runHook preInstall
+      # custom colors
+      sed -i "s\#0d0e11\#${colors.default.background}\g" ./src/sass/_color-palette-nord.scss
+      sed -i "s\#bf616a\#${colors.bright.red}\g" ./src/sass/_color-palette-nord.scss
+      sed -i "s\#a3be8c\#${colors.normal.magenta}\g" ./src/sass/_color-palette-nord.scss
+      sed -i "s\#ebcb8b\#${colors.bright.yellow}\g" ./src/sass/_color-palette-nord.scss
+      sed -i "s\#3a4150\#${colors.extra.azure}\g" ./src/sass/_color-palette-nord.scss
+      sed -i "s\#333a47\#${colors.extra.nocturne}\g" ./src/sass/_color-palette-nord.scss
+      sed -i "s\#242932\#${colors.extra.nocturne}\g" ./src/sass/_color-palette-nord.scss
+      sed -i "s\#1e222a\#${colors.extra.obsidian}\g" ./src/sass/_color-palette-nord.scss
+
+      name= HOME="$TMPDIR" ./install.sh \
+        --color dark \
+        --tweaks rimless nord \
+        --dest $out/share/themes
+
+      jdupes --quiet --link-soft --recurse $out/share
+
+      runHook postInstall
+    '';
+  });
 in {
-  xdg.configFile = {
-    "gtk-3.0/gtk.css" = {
-      text = ''
+  gtk = {
+    enable = true;
+    theme = {
+      name = THEME;
+      package = pkg-colloid-gtk-theme;
+    };
+    cursorTheme = {
+      name = CURSOR;
+      package = pkgs.colloid-icon-theme;
+    };
+    iconTheme = {
+      name = ICON;
+      package = pkgs.papirus-icon-theme;
+    };
+    font = {
+      name = FONT;
+      package = pkgs.rubik;
+      size = 10;
+    };
+    gtk3 = {
+      extraCss = ''
         VteTerminal,
         TerminalScreen,
         vte-terminal {
           padding: 5px;
-        }
+        };
       '';
-    };
-    "gtk-4.0/assets" = {
-      source = ../_config/gtk/themes/${GTK_THEME}/gtk-4.0/assets;
-    };
-    "gtk-4.0/gtk.css " = {
-      source = ../_config/gtk/themes/${GTK_THEME}/gtk-4.0/gtk.css;
-    };
-    "gtk-4.0/gtk-dark.css " = {
-      source = ../_config/gtk/themes/${GTK_THEME}/gtk-4.0/gtk-dark.css;
+      bookmarks = [
+        "file:///${flakeDirectory}"
+        "file:///home/${username}/.local"
+        "file:///home/${username}/.config"
+        "file:///windows"
+        "file:///backup"
+        "file:///data/playground"
+        "file:///data/git-repo"
+        "file:///data/logs"
+        "file:///data/codebox"
+        "file:///data/distrobox"
+        "file:///data"
+        "file:///home/${username}/Documents"
+        "file:///home/${username}/Music"
+        "file:///home/${username}/Pictures"
+        "file:///home/${username}/Videos"
+        "file:///home/${username}/Downloads"
+      ];
     };
   };
 
   home = {
     activation = {
-      linkGtkIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
+      cpGtkThemeIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
         [ -e "${HOME_THEMES}" ] || mkdir "${HOME_THEMES}"
-        [ -e "${LOCAL_THEMES}" ] || mkdir "${LOCAL_THEMES}"
-        [ -e "${LOCAL_ICONS}" ] || mkdir "${LOCAL_ICONS}"
-        [ -e "${config.xdg.configHome}/gtk-3.0/" ] || mkdir "${config.xdg.configHome}/gtk-3.0/"
-
-        [ -f "${config.xdg.configHome}/gtk-3.0/bookmarks" ] || cp "${BOOKMARKS}" "${config.xdg.configHome}/gtk-3.0/bookmarks"
-        [ -e "${LOCAL_THEMES}/Colloid-Dark-Nord" ] || ln -s "${HM_GTK}/themes/Colloid-Dark-Nord" "${LOCAL_THEMES}/Colloid-Dark-Nord"
-        [ -e "${HOME_THEMES}/Colloid-Dark-Nord" ] || cp -r "${HM_GTK}/themes/Colloid-Dark-Nord" "${HOME_THEMES}/Colloid-Dark-Nord"
-
-        [ -e "${LOCAL_THEMES}/Marble-crispblue-dark" ] || ln -s "${HM_GTK}/themes/Marble-crispblue-dark" "${LOCAL_THEMES}/Marble-crispblue-dark"
-        [ -e "${HOME_THEMES}/Marble-crispblue-dark" ] || cp -r "${HM_GTK}/themes/Marble-crispblue-dark" "${HOME_THEMES}/Marble-crispblue-dark"
-
-        [ -e "${LOCAL_ICONS}/hicolor" ] || cp -r "${HM_GTK}/icons/hicolor" "${LOCAL_ICONS}/hicolor"
-        [ -e "${LOCAL_ICONS}/Papirus" ] || cp -r "${HM_GTK}/icons/Papirus" "${LOCAL_ICONS}/Papirus"
-        [ -e "${LOCAL_ICONS}/Win11" ] || cp -r "${HM_GTK}/icons/Win11" "${LOCAL_ICONS}/Win11"
-        [ -e "${LOCAL_ICONS}/Colloid-dark-cursors" ] || cp -r "${HM_GTK}/icons/Colloid-dark-cursors" "${LOCAL_ICONS}/Colloid-dark-cursors"
+        [ -e "${HOME_THEMES}/${THEME}" ] || cp -r "${pkg-colloid-gtk-theme}/share/themes/${THEME}" "${HOME_THEMES}/${THEME}"
       '';
-      # removeSomething = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
-      # '';
+    };
+    pointerCursor = {
+      package = pkgs.colloid-icon-theme;
+      name = CURSOR;
+      size = 24;
+      gtk.enable = true;
+      x11.enable = true;
+    };
+    sessionVariables = {
+      GTK_THEME = THEME;
+      GTK_CURSOR = CURSOR;
+      XCURSOR_THEME = CURSOR;
+      GTK_ICON = ICON;
+    };
+  };
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      cursor-theme = CURSOR;
+      gtk-theme = THEME;
+      icon-theme = ICON;
+      # font-name = FONT;
     };
   };
 }

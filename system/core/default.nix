@@ -1,6 +1,6 @@
 {
   imports = [
-    ./auto-upgrade.nix
+    # ./auto-upgrade.nix
     ./fonts.nix
     ./nix.nix
     ./zram.nix

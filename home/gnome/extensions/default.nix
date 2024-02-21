@@ -545,9 +545,6 @@
       ];
     };
 
-    "org/gnome/shell/extensions/user-theme" = {
-      name = "Marble-crispblue-dark";
-    };
 
     "org/gnome/shell/extensions/vertical-workspaces" = {
       aaa-loading-profile = true;

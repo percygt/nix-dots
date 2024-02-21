@@ -19,7 +19,11 @@
     # lanzaboote.url = "github:nix-community/lanzaboote";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
-  outputs = {nixpkgs, ...} @ inputs: let
+  outputs = {
+    nixpkgs,
+    self,
+    ...
+  } @ inputs: let
     nix-personal = nixpkgs.lib.optional (builtins.pathExists ./personal) ./personal;
     overlays = {
       extra = final: prev:
@@ -52,7 +56,7 @@
         }
     );
 
-    lib = import ./lib {inherit inputs;};
+    lib = import ./lib {inherit inputs self;};
   in {
     inherit overlays legacyPackages;
 
@@ -76,11 +80,6 @@
         profile = "OPC";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
-      };
-      iso = lib.mkNixOS rec {
-        profile = "ISO";
-        system = "x86_64-linux";
-        pkgs = legacyPackages.${system};
         nixosModules = [
           inputs.home-manager.nixosModules.default
           inputs.hyprland.nixosModules.default
@@ -90,6 +89,18 @@
             inputs.hyprland.homeManagerModules.default
           ]
           ++ nix-personal;
+      };
+      iso = lib.mkNixOS rec {
+        profile = "ISO";
+        system = "x86_64-linux";
+        pkgs = legacyPackages.${system};
+        nixosModules = [
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
+          inputs.home-manager.nixosModules.default
+          inputs.disko.nixosModules.disko
+        ];
+        homeManagerModules = nix-personal;
       };
     };
 
