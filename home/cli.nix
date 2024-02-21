@@ -2,7 +2,7 @@
   pkgs,
   colors,
   ...
-}:{
+}: {
   home.packages = with pkgs; [
     # archives
     zip
@@ -11,7 +11,8 @@
     p7zip
     unar
     git
-    
+    git-crypt
+
     # util
     file
     du-dust
