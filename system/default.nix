@@ -7,9 +7,4 @@
     ./services
     ./security
   ];
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
 }

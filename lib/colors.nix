@@ -20,7 +20,7 @@
       green = "0eba0e"; # [#0eba0e]
       yellow = "a1d408"; # [#a1d408]
       blue = "2222cd"; # [#2222cd]
-      magenta = "9f00f4"; # [#9f00f4]
+      magenta = "ad26f6"; # [#9f00f4]
       cyan = "00aaaa"; # [#00aaaa]
       white = "d1d5db"; # [#d1d5db]
     };
@@ -36,8 +36,8 @@
     };
     extra = {
       obsidian = "030205"; # [#030205]
-      midnight = "08103a"; # [#08103a]
       nocturne = "120d22"; # [#120d22]
+      midnight = "08103a"; # [#08103a]
       azure = "0e1a60"; # [#0e1a60]
       cream = "fffae5"; # [#fffae5]
       lavender = "b4befe"; # [#b4befe]

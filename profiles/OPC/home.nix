@@ -7,25 +7,19 @@
     "gnome"
     "neovim"
     "shell"
-    "terminal"
+    "browser"
+    "terminal/foot.nix"
     "scripts"
-    "nix.nix"
     "fonts.nix"
     "tmux.nix"
-    "vscodium.nix"
-    "zellij.nix"
     "starship.nix"
     "yazi.nix"
-    "broot.nix"
     "direnv.nix"
-    "fastfetch.nix"
     "cli.nix"
     "nixtools.nix"
-    "zathura.nix"
   ];
 in {
   imports = listImports ../../home modules;
-  targets.genericLinux.enable = true;
   home.shellAliases = {
     hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'home@$hostname";
   };

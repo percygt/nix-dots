@@ -19,4 +19,5 @@
   dc = "docker compose";
   n2ne = "nvim $FLAKE_PATH/nixpkgs/node/packages.json";
   n2ni = "node2nix -i $FLAKE_PATH/nixpkgs/node/packages.json -e $FLAKE_PATH/nixpkgs/node/node-env.nix -o $FLAKE_PATH/nixpkgs/node/packages.nix -c $FLAKE_PATH/nixpkgs/node/default.nix";
+  nixbld = "nix build .'?submodules=1#'nixosConfigurations.iso.config.system.build.isoImage";
 }

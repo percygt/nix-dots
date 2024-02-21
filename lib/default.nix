@@ -1,10 +1,11 @@
-{inputs, ...}: let
+{inputs, self,...}: let
   inherit (inputs.nixpkgs) lib;
   listImports = path: modules:
     lib.forEach modules (
       mod:
         path + "/${mod}"
     );
+  sec = builtins.fromJSON (builtins.readFile "${self}/lib/base/config.json");
   default = rec {
     username = "percygt";
     colors = (import ./colors.nix).syft;
@@ -50,7 +51,7 @@
       };
     };
     args = {
-      inherit inputs username colors listImports homeDirectory flakeDirectory stateVersion;
+      inherit inputs username colors listImports homeDirectory flakeDirectory sec stateVersion;
     };
   };
 in {
