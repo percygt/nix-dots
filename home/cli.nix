@@ -2,8 +2,11 @@
   pkgs,
   colors,
   ...
-}: {
+}: let
+  lazysql = pkgs.callPackage ../packages/go/lazysql.nix {};
+in {
   home.packages = with pkgs; [
+    lazysql
     # archives
     zip
     unzip
@@ -29,7 +32,7 @@
     curl
     wget
     trash-cli
-    distrobox
+    # distrobox
     socat
     tealdeer
     croc
@@ -47,6 +50,7 @@
     onefetch
     yt-dlp
     bfg-repo-cleaner
+    age
 
     # tui's
     termscp
@@ -61,6 +65,7 @@
   ];
 
   programs = {
+    aria2.enable = true;
     lazygit = {
       enable = true;
       settings = {

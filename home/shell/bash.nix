@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{
   programs.bash = {
     enable = true;
 
@@ -8,9 +8,6 @@
           shopt -q login_shell && LOGIN_OPTION="--login" || LOGIN_OPTION=""
           exec fish $LOGIN_OPTION
       fi
-    '';
-    bashrcExtra = ''
-      ${pkgs.fastfetch}/bin/fastfetch
     '';
   };
 }
