@@ -1,9 +1,9 @@
 {
   disko.devices = {
     disk = {
-      sda = {
+      sdb = {
         type = "disk";
-        device = "/dev/sda1";
+        device = "/dev/sdb";
         content = {
           type = "gpt";
           partitions = {
@@ -46,7 +46,6 @@
                       mountpoint = "/home";
                       mountOptions = ["subvol=home" "compress=zstd" "noatime"];
                     };
-                    "/home/games" = {};
                     "/nix" = {
                       mountpoint = "/nix";
                       mountOptions = ["subvol=nix" "compress=zstd" "noatime"];

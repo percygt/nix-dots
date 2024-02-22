@@ -76,8 +76,19 @@
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
       };
-      opc = lib.mkNixOS rec {
-        profile = "OPC";
+      
+      opc-nign = lib.mkNixOS rec {
+        profile = "OPC-NIGN";
+        system = "x86_64-linux";
+        pkgs = legacyPackages.${system};
+        nixosModules = [
+          inputs.home-manager.nixosModules.default
+        ];
+        homeManagerModules = nix-personal;
+      };
+      
+      opc-nihy = lib.mkNixOS rec {
+        profile = "OPC-NIHY";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
         nixosModules = [
@@ -90,6 +101,7 @@
           ]
           ++ nix-personal;
       };
+      
       iso = lib.mkNixOS rec {
         profile = "ISO";
         system = "x86_64-linux";
@@ -105,6 +117,21 @@
     };
 
     homeConfigurations = {
+      asus-nihy = lib.mkHomeManager {
+        profile = "ASUS-FEGN";
+        pkgs = legacyPackages.x86_64-linux;
+        homeManagerModules = nix-personal;
+      };
+      opc-nign = lib.mkhomemanager {
+        profile = "OPC-NIGN";
+        pkgs = legacyPackages.x86_64-linux;
+        homemanagermodules = nix-personal;
+      };
+      opc-nihy = lib.mkhomemanager {
+        profile = "OPC-NIHY";
+        pkgs = legacyPackages.x86_64-linux;
+        homemanagermodules = nix-personal;
+      };
       "home@asus-fegn" = lib.mkHomeManager {
         profile = "ASUS-FEGN";
         pkgs = legacyPackages.x86_64-linux;
