@@ -20,4 +20,5 @@
   n2ne = "nvim $FLAKE_PATH/nixpkgs/node/packages.json";
   n2ni = "node2nix -i $FLAKE_PATH/nixpkgs/node/packages.json -e $FLAKE_PATH/nixpkgs/node/node-env.nix -o $FLAKE_PATH/nixpkgs/node/packages.nix -c $FLAKE_PATH/nixpkgs/node/default.nix";
   isobld = "nix build .'?submodules=1#'nixosConfigurations.iso.config.system.build.isoImage";
+  suisobld = "sudo nix build .'?submodules=1#'nixosConfigurations.iso.config.system.build.isoImage";
 }

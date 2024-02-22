@@ -2,6 +2,8 @@
   pkgs,
   lib,
   flakeDirectory,
+  profile,
+  username,
   ...
 }: {
   nixpkgs = {
@@ -14,37 +16,47 @@
       mesa
     ];
   };
+
   nix = {
     settings.experimental-features = ["nix-command" "flakes"];
     extraOptions = "experimental-features = nix-command flakes";
   };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = lib.mkForce ["btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs"];
   };
+
   services = {
     qemuGuest.enable = true;
     openssh.settings.PermitRootLogin = lib.mkForce "yes";
   };
-  networking = {
-    hostName = "iso";
+
+  systemd = {
+    services.sshd.wantedBy = pkgs.lib.mkForce ["multi-user.target"];
+    targets = {
+      sleep.enable = false;
+      suspend.enable = false;
+      hibernate.enable = false;
+      hybrid-sleep.enable = false;
+    };
   };
+
+  networking = {
+    hostName = profile;
+  };
+
   programs.fish.enable = true;
 
-  programs.git = {
-    enable = true;
-    # extraConfig = {
-    #   url = {
-    #     "https://oauth2:${sec.gitlab.oauth_token}@gitlab.com" = {
-    #       insteadOf = "https://gitlab.com";
-    #     };
-    #   };
-    # };
+  programs.git.enable = true;
+
+  users.users.${username} = {
+    password = "nixos";
   };
-  users.extraUsers.root.password = "nixos";
 
   environment.systemPackages = with pkgs; [
     gum
+    gnome.gnome-terminal
     (
       writeShellScriptBin "rescue" ''
         #!/usr/bin/env bash

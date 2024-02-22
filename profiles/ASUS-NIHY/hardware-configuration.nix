@@ -17,79 +17,79 @@
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=root"];
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=home"];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=nix"];
   };
 
   fileSystems."/opt" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=opt"];
   };
 
   fileSystems."/var/www" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=var/www"];
   };
 
   fileSystems."/var/spool" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=var/spool"];
   };
 
   fileSystems."/var/tmp" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=var/tmp"];
   };
 
   fileSystems."/var/log" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=var/log"];
   };
 
   fileSystems."/var/crash" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=var/crash"];
   };
 
   fileSystems."/var/cache" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=var/cache"];
   };
 
   fileSystems."/var/lib/gdm" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=var/lib/gdm"];
   };
 
   fileSystems."/var/lib/AccountsService" = {
-    device = "/dev/disk/by-uuid/972c07d3-5181-4de0-bb2d-aaa7d0c6741d";
+    device = "/dev/disk/by-label/NIXOS";
     fsType = "btrfs";
     options = ["subvol=var/lib/AccountsService"];
   };
 
   fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-uuid/BDBF-3C87";
+    device = "/dev/disk/by-label/UEFI";
     fsType = "vfat";
   };
 

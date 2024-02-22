@@ -17,7 +17,8 @@
   pkg-colloid-gtk-theme = pkgs.colloid-gtk-theme.overrideAttrs (oldAttrs: {
     installPhase = ''
       runHook preInstall
-      # custom colors
+
+      # override colors
       sed -i "s\#0d0e11\#${colors.default.background}\g" ./src/sass/_color-palette-nord.scss
       sed -i "s\#bf616a\#${colors.bright.red}\g" ./src/sass/_color-palette-nord.scss
       sed -i "s\#a3be8c\#${colors.normal.magenta}\g" ./src/sass/_color-palette-nord.scss
@@ -58,13 +59,6 @@ in {
       size = 10;
     };
     gtk3 = {
-      extraCss = ''
-        VteTerminal,
-        TerminalScreen,
-        vte-terminal {
-          padding: 5px;
-        };
-      '';
       bookmarks = [
         "file:///${flakeDirectory}"
         "file:///home/${username}/.local"
@@ -93,13 +87,21 @@ in {
         [ -e "${HOME_THEMES}/${THEME}" ] || cp -r "${pkg-colloid-gtk-theme}/share/themes/${THEME}" "${HOME_THEMES}/${THEME}"
       '';
     };
-    pointerCursor = {
-      package = pkgs.colloid-icon-theme;
-      name = CURSOR;
-      size = 24;
-      gtk.enable = true;
-      x11.enable = true;
-    };
+    packages = with pkgs; [
+      rubik
+      papirus-icon-theme
+      colloid-gtk-theme
+      colloid-icon-theme
+      kora-icon-theme
+      sweet
+    ];
+    # pointerCursor = {
+    #   package = pkgs.colloid-icon-theme;
+    #   name = CURSOR;
+    #   size = 24;
+    #   gtk.enable = true;
+    #   x11.enable = true;
+    # };
     sessionVariables = {
       GTK_THEME = THEME;
       GTK_CURSOR = CURSOR;

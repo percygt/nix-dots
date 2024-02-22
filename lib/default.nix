@@ -1,27 +1,49 @@
-{
-  inputs,
-  self,
-  ...
-}: let
+{inputs, ...}: let
   inherit (inputs.nixpkgs) lib;
   listImports = path: modules:
     lib.forEach modules (
       mod:
         path + "/${mod}"
     );
-  sec = builtins.fromJSON (builtins.readFile "${self}/lib/base/config.json");
-  default = rec {
-    username = "percygt";
-    colors = (import ./colors.nix).syft;
+  defaultUsername = "percygt";
+  mkDefault = {
+    username,
+    pkgs,
+    profile,
+  }: rec {
     homeDirectory = "/home/${username}";
     flakeDirectory = "${homeDirectory}/nix-dots";
     stateVersion = "23.11";
-    shellAliases = import ./aliases.nix;
-    sessionVariables =
-      (import ./variables.nix)
-      // {FLAKE_PATH = flakeDirectory;};
+    colors = (import ./colors.nix).syft;
+
+    home-manager = {
+      programs.home-manager.enable = true;
+      manual = {
+        html.enable = false;
+        json.enable = false;
+        manpages.enable = false;
+      };
+      news = {
+        display = "silent";
+        json = lib.mkForce {};
+        entries = lib.mkForce [];
+      };
+      home = {
+        inherit
+          username
+          stateVersion
+          homeDirectory
+          ;
+        shellAliases = import ./aliases.nix;
+        sessionVariables =
+          (import ./variables.nix)
+          // {FLAKE_PATH = flakeDirectory;};
+      };
+    };
+
     configuration = {
       users.users.${username} = {
+        shell = "${pkgs.fish}/bin/fish";
         isNormalUser = true;
         extraGroups = [
           "input"
@@ -44,32 +66,28 @@
         LC_TELEPHONE = "en_PH.UTF-8";
         LC_TIME = "en_PH.UTF-8";
       };
-    };
-    
-    home = {
-      programs.home-manager.enable = true;
-      manual = {
-        html.enable = false;
-        json.enable = false;
-        manpages.enable = false;
+      console.keyMap = "us";
+      services.xserver = {
+        xkb.layout = "us";
+        xkb.variant = "";
       };
-      news = {
-        display = "silent";
-        json = lib.mkForce {};
-        entries = lib.mkForce [];
-      };
-      home = {
-        inherit
-          username
-          homeDirectory
-          stateVersion
-          shellAliases
-          sessionVariables
-          ;
+      system.stateVersion = stateVersion;
+      networking = {
+        hostName = profile;
       };
     };
+
     args = {
-      inherit inputs username colors listImports homeDirectory flakeDirectory sec stateVersion;
+      inherit
+        inputs
+        username
+        profile
+        pkgs
+        colors
+        listImports
+        flakeDirectory
+        homeDirectory
+        ;
     };
   };
 in {
@@ -77,9 +95,12 @@ in {
     profile,
     pkgs,
     system,
+    username ? defaultUsername,
     nixosModules ? [],
     homeManagerModules ? [],
-  }:
+  }: let
+    default = mkDefault {inherit username pkgs profile;};
+  in
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = default.args;
@@ -92,15 +113,15 @@ in {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.${default.username} = {
+              users.${username} = {
                 imports =
                   homeManagerModules
                   ++ [
-                    default.home
+                    default.home-manager
                     ../profiles/${profile}/home.nix
                   ];
               };
-              extraSpecialArgs = {inherit pkgs profile;} // default.args;
+              extraSpecialArgs = default.args;
             };
           }
         ];
@@ -109,16 +130,19 @@ in {
   mkHomeManager = {
     profile,
     pkgs,
+    username ? defaultUsername,
     homeManagerModules ? [],
-  }:
+  }: let
+    default = mkDefault {inherit username pkgs profile;};
+  in
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules =
         homeManagerModules
         ++ [
-          default.home
+          default.home-manager
           ../profiles/${profile}/home.nix
         ];
-      extraSpecialArgs = {inherit pkgs profile;} // default.args;
+      extraSpecialArgs = default.args;
     };
 }

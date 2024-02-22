@@ -232,10 +232,6 @@
       right-index = 0;
     };
 
-    "org/gnome/shell/extensions/fedora-update" = {
-      update-cmd = "foot -- /bin/sh -c \"sudo dnf upgrade; echo Done - Press enter to exit; read _\" ";
-      use-buildin-icons = false;
-    };
 
     "org/gnome/shell/extensions/focus-follows-workspace" = {
       move-cursor = false;
