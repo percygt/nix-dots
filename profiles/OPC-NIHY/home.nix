@@ -4,12 +4,12 @@
   ...
 }: let
   modules = [
+    "_bin"
     "gnome"
     "neovim"
     "shell"
     "browser"
     "terminal/foot.nix"
-    "scripts"
     "fonts.nix"
     "tmux.nix"
     "starship.nix"

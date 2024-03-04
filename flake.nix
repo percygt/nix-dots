@@ -136,8 +136,13 @@
         pkgs = legacyPackages.x86_64-linux;
         homemanagermodules = nix-personal;
       };
-      "home@asus-fegn" = lib.mkHomeManager {
+      asus-fedora = lib.mkHomeManager {
         profile = "ASUS-FEGN";
+        pkgs = legacyPackages.x86_64-linux;
+        homeManagerModules = nix-personal;
+      };
+      generic-linux = lib.mkHomeManager {
+        profile = "GENERIC";
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;
       };
