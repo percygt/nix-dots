@@ -5,14 +5,16 @@
   config,
   ...
 }: let
-  wallpaper = "file:///${flakeDirectory}/assets/gradient.jpg";
+  WALLPAPER_PATH = builtins.toString ../../assets/gradient1.png;
+  SHELL_THEME_PATH = builtins.toString ../_config/gtk/themes;
+  wallpaper = "file://${WALLPAPER_PATH}";
   LOCAL_THEMES = "${config.xdg.dataHome}/themes";
   SHELL_THEME = "Marble-crispblue-dark";
 in {
   home = {
     activation = {
       lnShellThemeIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
-        [ -e "${LOCAL_THEMES}/${SHELL_THEME}" ] || ln -s "${flakeDirectory}/home/_config/gtk/themes/${SHELL_THEME}" "${LOCAL_THEMES}/${SHELL_THEME}"
+        [ -e "${LOCAL_THEMES}/${SHELL_THEME}" ] || ln -s "${SHELL_THEME_PATH}/${SHELL_THEME}" "${LOCAL_THEMES}/${SHELL_THEME}"
       '';
     };
   };

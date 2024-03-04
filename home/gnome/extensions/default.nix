@@ -1,5 +1,42 @@
-{lib, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: let
+  quake-mode = pkgs.callPackage ../../../packages/gnome/extensions/quake-mode.nix {};
+  date-menu-formatter = pkgs.callPackage ../../../packages/gnome/extensions/date-menu-formatter.nix {};
+in {
   xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
+  home.packages = with pkgs;
+    [
+      gnome.gnome-tweaks
+      gnome.dconf-editor
+      gnome-extension-manager
+      gnomeExtensions.supergfxctl-gex
+      gnomeExtensions.space-bar
+      gnomeExtensions.user-themes
+      gnomeExtensions.appindicator
+      gnomeExtensions.dash-to-panel
+      gnomeExtensions.appindicator
+      gnomeExtensions.pop-shell
+      gnomeExtensions.caffeine
+      gnomeExtensions.vertical-workspaces
+      gnomeExtensions.dash-to-panel
+      gnomeExtensions.battery-health-charging
+      gnomeExtensions.ddterm
+      gnomeExtensions.bluetooth-quick-connect
+      gnomeExtensions.docker
+      gnomeExtensions.mpris-label
+      gnomeExtensions.reboottouefi
+      gnomeExtensions.shutdowntimer
+      gnomeExtensions.trimmer
+      gnomeExtensions.disable-unredirect-fullscreen-windows
+      gnomeExtensions.quick-settings-tweaker
+    ]
+    ++ [
+      quake-mode
+      date-menu-formatter
+    ];
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/shell/extensions/just-perfection" = {
       animation = 4;
@@ -231,7 +268,6 @@
       right-commands-json = "{\"commands\":[{\"isActive\":true,\"command\":\"bluetoothctl devices Connected | cut -f2 -d' ' | while read uuid; do bluetoothctl info $uuid; done | tr -d '()' | awk '/Icon:/{if ($2 == \\\"phone\\\"){print \\\" <span font_desc=\\\\\\\"JetBrains Mono Nerd Font 10\\\\\\\" foreground=\\\\\\\"#eaeaea\\\\\\\"> \61707\988171</span>\\\"} else if ($2 == \\\"audio-headphones\\\"){print \\\" <span foreground=\\\\\\\"#eaeaea\\\\\\\" font_desc=\\\\\\\"JetBrains Mono Nerd Font 9\\\\\\\">\989263</span>\\\"}} /Battery Percentage:/{print \\\"<span foreground=\\\\\\\"#eaeaea\\\\\\\" font_desc=\\\\\\\"Rubik 10\\\\\\\"> \\\"$4\\\"% \\\"\\\"</span><executor.markup.true>\\\"}'\",\"interval\":1,\"uuid\":\"68fabe0e-cf2c-4d5d-b233-4f4ece78fd1a\"},{\"isActive\":false,\"command\":\"free | awk '/Mem/{printf(\\\"%.0f\\\"), $3/($2+.000000001)*100}' | awk '{printf(\\\" <span font_desc=\\\\\\\"JetBrains Mono Nerd Font 10\\\\\\\" foreground=\\\\\\\"#eaeaea\\\\\\\">\983899</span><span foreground=\\\\\\\"#eaeaea\\\\\\\" font_desc=\\\\\\\"Rubik 10\\\\\\\"> \\\"$1\\\"%\\\"   \\\"</span><executor.markup.true>\\\")}'\",\"interval\":1,\"uuid\":\"16a6fb1e-89bc-42c9-ab59-c64ec9b1fb1b\"},{\"isActive\":false,\"command\":\"nmcli con | awk -F\\\"[ \\\\t-]*\\\" '/ProtonVPN/{if ($9 == \\\"vpn\\\") {print \\\" <span font_desc=\\\\\\\"JetBrains Mono Nerd Font 10\\\\\\\" foreground=\\\\\\\"#eaeaea\\\\\\\"> \984196</span> <span font_desc=\\\\\\\"JetBrains Mono Nerd Font 10\\\\\\\" foreground=\\\\\\\"#eaeaea\\\\\\\">\\\" $2  \\\" </span><executor.markup.true>\\\"} else {print \\\" <span foreground=\\\\\\\"#eaeaea\\\\\\\" font_desc=\\\\\\\"JetBrains Mono Nerd Font 9\\\\\\\">\986267  </span><executor.markup.true>\\\"}}'\",\"interval\":1,\"uuid\":\"5158eda1-b86c-4e2b-89af-e66436b69c09\"}]}";
       right-index = 0;
     };
-
 
     "org/gnome/shell/extensions/focus-follows-workspace" = {
       move-cursor = false;
@@ -540,7 +576,6 @@
         ''
       ];
     };
-
 
     "org/gnome/shell/extensions/vertical-workspaces" = {
       aaa-loading-profile = true;

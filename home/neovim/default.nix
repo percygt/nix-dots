@@ -83,7 +83,7 @@ in {
       telescope-undo-nvim
       # File Browser #---------------------------------------------------------------------------------------
       {
-        plugin = mini-nvim;
+        plugin = pkgs.vimPlugins.mini-nvim;
         type = "lua";
         config = ''require("config.ui.mini")'';
       }
@@ -174,6 +174,11 @@ in {
         type = "lua";
         config = ''require("config.tools.better-esc")'';
       }
+      {
+        plugin = nvim-spectre;
+        type = "lua";
+        config = ''require("spectre").setup()'';
+      }
       # {
       #   plugin = obsidian-nvim;
       #   type = "lua";
@@ -185,6 +190,7 @@ in {
       #   type = "lua";
       #   config = ''require("hardtime").setup()'';
       # }
+      
       lazygit-nvim
       markdown-preview-nvim
       todo-comments-nvim
