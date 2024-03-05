@@ -1,15 +1,13 @@
 {
   pkgs,
   colors,
-  profile,
+  standalone_home,
   ...
-}: let
-  pHomeOnly = ["ASUS-FEGN"];
-in {
+}: {
   programs.wezterm = {
     enable = true;
     package =
-      if builtins.elem profile pHomeOnly
+      if standalone_home
       then pkgs.stash.wezterm_wrapped
       else pkgs.stash.wezterm_nightly;
     colorSchemes = {

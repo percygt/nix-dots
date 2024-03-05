@@ -1,23 +1,42 @@
 {
   listImports,
   flakeDirectory,
+  config,
   pkgs,
   ...
 }: let
   modules = [
+    "_bin"
+    "gnome"
+    "neovim"
     "shell"
+    "terminal"
     "nix.nix"
     "fonts.nix"
+    "tmux.nix"
+    "vscodium.nix"
     "starship.nix"
     "yazi.nix"
     "direnv.nix"
+    "cli.nix"
+    "nixtools.nix"
+    "zathura.nix"
   ];
 in {
   imports = listImports ../../home modules;
   targets.genericLinux.enable = true;
   home.shellAliases = {
-    hms = "home-manager switch --flake '${flakeDirectory}?submodules=1#generic-linux'";
+    hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'asus_fedora";
   };
+  xdg = {
+    mime.enable = true;
+    systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
+    configFile.wireplumber = {
+      source = ../../home/_config/wireplumber;
+      recursive = true;
+    };
+  };
+
   dconf.settings = {
     "org/gnome/shell/extensions/fedora-update" = {
       update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- ${pkgs.fish}/bin/fish -c \"sudo dnf upgrade; echo Done - Press enter to exit; read _\" ";

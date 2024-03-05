@@ -1,7 +1,6 @@
 {
   listImports,
   config,
-  username,
   ...
 }: let
   modules = [
@@ -12,7 +11,7 @@
     "yazi.nix"
     "direnv.nix"
     "nix.nix"
-    "cli.nix"
+    "nixtools.nix"
   ];
 in {
   imports = listImports ../../home modules;
@@ -22,14 +21,5 @@ in {
     systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
   };
 
-  programs.ssh = {
-    extraConfig = ''
-      Host gitlab.com
-        PreferredAuthentications publickey
-        IdentityFile /run/media/${username}/v/.k/.ssh/id_ed25519_glab
-    '';
-    hashKnownHosts = true;
-    enable = true;
-  };
   services.ssh-agent.enable = true;
 }

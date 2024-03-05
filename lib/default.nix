@@ -132,6 +132,7 @@ in {
     pkgs,
     username ? defaultUsername,
     homeManagerModules ? [],
+    standalone_home ? false,
   }: let
     default = mkDefault {inherit username pkgs profile;};
   in
@@ -143,6 +144,6 @@ in {
           default.home-manager
           ../profiles/${profile}/home.nix
         ];
-      extraSpecialArgs = default.args;
+      extraSpecialArgs = default.args // {inherit standalone_home;};
     };
 }
