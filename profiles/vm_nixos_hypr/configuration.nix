@@ -7,19 +7,16 @@
 }: let
   modules = [
     "core"
+    "core/grub.nix"
     "network"
     "hardware"
+    "hardware/intel.nix"
     "programs"
     "services"
     "security"
   ];
 in {
-  imports = [./hardware-configuration.nix] ++ listImports ../../system modules;
-  hardware.opengl = {
-    extraPackages = with pkgs; [
-      mesa
-    ];
-  };
+  imports = listImports ../../system modules;
   networking = {
     inherit profile;
   };

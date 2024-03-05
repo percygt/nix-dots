@@ -72,14 +72,13 @@
     templates = import ./templates;
 
     nixosConfigurations = {
-      asus-nihy = lib.mkNixOS rec {
-        profile = "ASUS-NIHY";
+      asus_nixos_hypr = lib.mkNixOS rec {
+        profile = "asus_nixos_hypr";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
       };
-
-      opc-nign = lib.mkNixOS rec {
-        profile = "OPC-NIGN";
+      vm_nixos_hypr = lib.mkNixOS rec {
+        profile = "vm_nixos_hypr";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
         nixosModules = [
@@ -87,62 +86,42 @@
         ];
         homeManagerModules = nix-personal;
       };
-
-      opc-nihy = lib.mkNixOS rec {
-        profile = "OPC-NIHY";
-        system = "x86_64-linux";
-        pkgs = legacyPackages.${system};
-        nixosModules = [
-          inputs.home-manager.nixosModules.home-manager
-          inputs.hyprland.nixosModules.default
-        ];
-        homeManagerModules =
-          [
-            inputs.hyprland.homeManagerModules.default
-          ]
-          ++ nix-personal;
-      };
       iso = lib.mkNixOS rec {
         username = "nixos";
-        profile = "ISO";
+        profile = "iso";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
         nixosModules = [
+          {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
           "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-          {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
           inputs.home-manager.nixosModules.home-manager
           inputs.disko.nixosModules.disko
         ];
-        # homeManagerModules = nix-personal;
       };
     };
 
     homeConfigurations = {
-      asus-nihy = lib.mkHomeManager {
-        profile = "ASUS-NIHY";
+      asus_nixos_hypr = lib.mkHomeManager {
+        profile = "asus_nixos_hypr";
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules =
           nix-personal
           ++ [inputs.sops-nix.homeManagerModules.sops];
       };
-      opc-nign = lib.mkhomemanager {
-        profile = "OPC-NIGN";
-        pkgs = legacyPackages.x86_64-linux;
-        homemanagermodules = nix-personal;
-      };
-      opc-nihy = lib.mkhomemanager {
-        profile = "OPC-NIHY";
-        pkgs = legacyPackages.x86_64-linux;
-        homemanagermodules = nix-personal;
-      };
-      asus-fedora = lib.mkHomeManager {
-        profile = "ASUS-FEGN";
+      vm_nixos_hypr = lib.mkHomeManager {
+        profile = "vm_nixos_hypr";
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;
       };
-      generic-linux = lib.mkHomeManager {
-        profile = "GENERIC";
+      generic_linux = lib.mkHomeManager {
+        profile = "linux_machine";
+        pkgs = legacyPackages.x86_64-linux;
+        homeManagerModules = nix-personal;
+      };
+      asus_fedora = lib.mkHomeManager {
+        profile = "asus_fedora";
+        standalone_home = true;
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;
       };

@@ -9,8 +9,6 @@ in {
   xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
   home.packages = with pkgs;
     [
-      gnome.gnome-tweaks
-      gnome.dconf-editor
       gnome-extension-manager
       gnomeExtensions.supergfxctl-gex
       gnomeExtensions.space-bar
@@ -29,6 +27,7 @@ in {
       gnomeExtensions.mpris-label
       gnomeExtensions.reboottouefi
       gnomeExtensions.shutdowntimer
+      gnomeExtensions.systemstatsplus
       gnomeExtensions.trimmer
       gnomeExtensions.disable-unredirect-fullscreen-windows
       gnomeExtensions.quick-settings-tweaker

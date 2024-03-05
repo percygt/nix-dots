@@ -3,7 +3,6 @@
   lib,
   flakeDirectory,
   profile,
-  username,
   ...
 }: {
   nixpkgs = {
@@ -41,45 +40,36 @@
       hybrid-sleep.enable = false;
     };
   };
-
   networking = {
     hostName = profile;
   };
-
-  programs.fish.enable = true;
-
   programs.git.enable = true;
-
-  users.users.${username} = {
-    password = "nixos";
+  programs.ssh = {
+    extraConfig = ''
+      Host gitlab.com
+        PreferredAuthentications publickey
+        IdentityFile /iso/key
+    '';
+    knownHosts."gitlab.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
   };
-
+  isoImage = {
+    makeEfiBootable = true;
+    makeUsbBootable = true;
+    appendToMenuLabel = " live";
+    contents = [
+      {
+        source = ~/.ssh/id_ed25519_glab;
+        target = "/key";
+      }
+    ];
+  };
   environment.systemPackages = with pkgs; [
+    eza
+    bat
     gum
     gnome.gnome-terminal
     (
-      writeShellScriptBin "rescue" ''
-        #!/usr/bin/env bash
-        set -euo pipefail
-
-        gum "device name"
-
-        sudo mkdir -p /mnt/{dev,proc,sys,boot}
-        sudo mount -o bind /dev /mnt/dev
-        sudo mount -o bind /proc /mnt/proc
-        sudo mount -o bind /sys /mnt/sys
-        sudo chroot /mnt /nix/var/nix/profiles/system/activate
-        sudo chroot /mnt /run/current-system/sw/bin/bash
-
-        sudo mount /dev/vda1 /mnt/boot
-        sudo cryptsetup open /dev/vda3 cryptroot
-        sudo mount /dev/mapper/cryptroot /mnt/
-
-        sudo nixos-enter
-      ''
-    )
-    (
-      writeShellScriptBin "nix_installer"
+      writeShellScriptBin "nix_install"
       ''
         #!/usr/bin/env bash
         set -euo pipefail
@@ -91,14 +81,15 @@
         	exit 1
         fi
 
+        sleep 1
         if [ ! -d "${flakeDirectory}/.git" ]; then
-        	git clone --recurse-submodules https://gitlab.com/percygt/nix-dots.git "${flakeDirectory}"
+          git clone --recurse-submodule git@gitlab.com:percygt/nix-dots.git "${flakeDirectory}"
         fi
 
         TARGET_HOST=$(ls -1 ${flakeDirectory}/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v iso | gum choose)
 
-        if [ ! -e "${flakeDirectory}/profiles/$TARGET_HOST/disks.nix" ]; then
-        	echo "ERROR! $(basename "$0") could not find the required ${flakeDirectory}/hosts/$TARGET_HOST/disks.nix"
+        if [ ! -e "${flakeDirectory}/profiles/$TARGET_HOST/disk.nix" ]; then
+        	echo "ERROR! $(basename "$0") could not find the required ${flakeDirectory}/profiles/$TARGET_HOST/disk.nix"
         	exit 1
         fi
 
@@ -111,10 +102,7 @@
         --no-write-lock-file \
         -- \
         --mode zap_create_mount \
-        "${flakeDirectory}/profiles/$TARGET_HOST/disks.nix"
-
-        #echo "Creating blank volume"
-        #sudo btrfs subvolume snapshot -r /mnt/ /mnt/root-blank
+        "${flakeDirectory}/profiles/$TARGET_HOST/disk.nix"
 
         sudo nixos-install --flake "${flakeDirectory}#$TARGET_HOST"
       ''
