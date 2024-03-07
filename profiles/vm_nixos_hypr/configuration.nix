@@ -18,7 +18,7 @@
 in {
   imports = listImports ../../system modules;
   networking = {
-    inherit profile;
+    hostName = profile;
   };
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
