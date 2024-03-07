@@ -76,6 +76,11 @@
         profile = "asus_nixos_hypr";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
+        nixosModules = [
+          inputs.home-manager.nixosModules.default
+          inputs.disko.nixosModules.disko
+        ];
+        homeManagerModules = [inputs.hyprland.homeManagerModules.default];
       };
       vm_nixos_hypr = lib.mkNixOS rec {
         profile = "vm_nixos_hypr";
@@ -83,8 +88,9 @@
         pkgs = legacyPackages.${system};
         nixosModules = [
           inputs.home-manager.nixosModules.default
+          inputs.disko.nixosModules.disko
         ];
-        homeManagerModules = nix-personal;
+        homeManagerModules = [inputs.hyprland.homeManagerModules.default];
       };
       iso = lib.mkNixOS rec {
         username = "nixos";
@@ -93,10 +99,10 @@
         pkgs = legacyPackages.${system};
         nixosModules = [
           {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          # "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
           "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
           inputs.home-manager.nixosModules.home-manager
-          inputs.disko.nixosModules.disko
         ];
       };
     };
@@ -107,12 +113,14 @@
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules =
           nix-personal
-          ++ [inputs.sops-nix.homeManagerModules.sops];
+          ++ [
+            inputs.sops-nix.homeManagerModules.sops
+          ];
       };
       vm_nixos_hypr = lib.mkHomeManager {
         profile = "vm_nixos_hypr";
         pkgs = legacyPackages.x86_64-linux;
-        homeManagerModules = nix-personal;
+        homeManagerModules = [inputs.hyprland.homeManagerModules.default] ++ nix-personal;
       };
       generic_linux = lib.mkHomeManager {
         profile = "linux_machine";

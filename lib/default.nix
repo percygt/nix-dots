@@ -51,6 +51,7 @@
           "video"
           "wheel"
           "audio"
+          "git"
         ];
       };
       time.timeZone = "Asia/Manila";
@@ -71,10 +72,15 @@
         xkb.layout = "us";
         xkb.variant = "";
       };
-      system.stateVersion = stateVersion;
       networking = {
         hostName = profile;
       };
+      nixpkgs = {
+        config = {
+          allowUnfree = true;
+        };
+      };
+      system.stateVersion = stateVersion;
     };
 
     args = {

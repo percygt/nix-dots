@@ -4,12 +4,12 @@
   ...
 }: let
   modules = [
-    "gnome"
-    "neovim"
+    "gnome/gtk.nix"
+    "gnome/qt.nix"
+    # "neovim"
     "shell"
-    "terminal/foot.nix"
     "fonts.nix"
-    "tmux.nix"
+    # "tmux.nix"
     "starship.nix"
     "yazi.nix"
     "direnv.nix"
