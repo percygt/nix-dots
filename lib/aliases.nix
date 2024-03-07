@@ -19,7 +19,7 @@
   dc = "docker compose";
   n2ne = "nvim $FLAKE_PATH/nixpkgs/node/packages.json";
   n2ni = "node2nix -i $FLAKE_PATH/nixpkgs/node/packages.json -e $FLAKE_PATH/nixpkgs/node/node-env.nix -o $FLAKE_PATH/nixpkgs/node/packages.nix -c $FLAKE_PATH/nixpkgs/node/default.nix";
-  isobld = "nix build .'?submodules=1#'nixosConfigurations.iso.config.system.build.isoImage";
+  isobld = "nix build .'?submodules=1#'nixosConfigurations.iso.config.system.build.isoImage --impure";
   suisobld = "sudo nix build .'?submodules=1#'nixosConfigurations.iso.config.system.build.isoImage";
   mkVM = "qemu-system-x86_64 -enable-kvm -m 2G -boot menu=on -drive file=vm.img -cpu=host -vga virtio -display sdl,gl=on -cdrom";
 }
