@@ -104,7 +104,7 @@
         --mode zap_create_mount \
         "${flakeDirectory}/profiles/$TARGET_HOST/disk.nix"
 
-        sudo nixos-install --flake "${flakeDirectory}#$TARGET_HOST"
+        sudo nixos-install --flake "${flakeDirectory}'?submodules=1#'$TARGET_HOST"
       ''
     )
   ];
