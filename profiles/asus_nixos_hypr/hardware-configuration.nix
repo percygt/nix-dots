@@ -6,91 +6,92 @@
   lib,
   modulesPath,
   ...
-}: {
+}: let
+  nixosDisc = "/dev/disk/by-label/NIXOS";
+  uefiDisc = "/dev/disk/by-label/UEFI";
+in {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "vmd" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" "rtsx_usb_sdmmc" "thunderbolt"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
-  boot.extraModulePackages = [];
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=root"];
+  boot = {
+    initrd.availableKernelModules = ["xhci_pci" "vmd" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" "rtsx_usb_sdmmc" "thunderbolt"];
+    initrd.kernelModules = [];
+    kernelModules = ["kvm-intel"];
+    extraModulePackages = [];
   };
+  fileSystems = {
+    "/" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=root"];
+    };
+    "/home" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=home"];
+    };
+    "/nix" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=nix"];
+    };
+    "/opt" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=opt"];
+    };
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=home"];
-  };
+    "/var/www" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=var/www"];
+    };
 
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=nix"];
-  };
+    "/var/spool" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=var/spool"];
+    };
 
-  fileSystems."/opt" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=opt"];
-  };
+    "/var/tmp" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=var/tmp"];
+    };
 
-  fileSystems."/var/www" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=var/www"];
-  };
+    "/var/log" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=var/log"];
+    };
 
-  fileSystems."/var/spool" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=var/spool"];
-  };
+    "/var/crash" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=var/crash"];
+    };
 
-  fileSystems."/var/tmp" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=var/tmp"];
-  };
-
-  fileSystems."/var/log" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=var/log"];
-  };
-
-  fileSystems."/var/crash" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=var/crash"];
-  };
-
-  fileSystems."/var/cache" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=var/cache"];
-  };
-
-  fileSystems."/var/lib/gdm" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=var/lib/gdm"];
-  };
-
-  fileSystems."/var/lib/AccountsService" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = ["subvol=var/lib/AccountsService"];
-  };
-
-  fileSystems."/boot/efi" = {
-    device = "/dev/disk/by-label/UEFI";
-    fsType = "vfat";
+    "/var/cache" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=var/cache"];
+    };
+    "/var/lib/gdm" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=var/lib/gdm"];
+    };
+    "/var/lib/AccountsService" = {
+      device = nixosDisc;
+      fsType = "btrfs";
+      options = ["subvol=var/lib/AccountsService"];
+    };
+    "/boot/efi" = {
+      device = uefiDisc;
+      fsType = "vfat";
+      options = ["umask=0077" "shortname=winnt"];
+    };
   };
 
   swapDevices = [];

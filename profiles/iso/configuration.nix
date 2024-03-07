@@ -7,7 +7,6 @@
 }: {
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
-    config.allowUnfree = true;
   };
   # network
   hardware.opengl = {
@@ -45,6 +44,7 @@
   };
   programs.git.enable = true;
   programs.ssh = {
+    startAgent = true;
     extraConfig = ''
       Host gitlab.com
         PreferredAuthentications publickey
@@ -67,14 +67,14 @@
     eza
     bat
     gum
-    gnome.gnome-terminal
+    # gnome.gnome-terminal
     (
       writeShellScriptBin "nix_install"
       ''
         #!/usr/bin/env bash
         set -euo pipefail
-        gsettings set org.gnome.desktop.session idle-delay 0
-        gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
+        # gsettings set org.gnome.desktop.session idle-delay 0
+        # gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
 
         if [ "$(id -u)" -eq 0 ]; then
         	echo "ERROR! $(basename "$0") should be run as a regular user"
@@ -89,22 +89,27 @@
         TARGET_HOST=$(ls -1 ${flakeDirectory}/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v iso | gum choose)
 
         if [ ! -e "${flakeDirectory}/profiles/$TARGET_HOST/disk.nix" ]; then
-        	echo "ERROR! $(basename "$0") could not find the required ${flakeDirectory}/profiles/$TARGET_HOST/disk.nix"
-        	exit 1
+          echo "Mounting NIXOS"
+          mkdir -p /mnt
+          mount -t btrfs /dev/disk/by-label/NIXOS /mnt
+          btrfs subvolume create /mnt/root
+          btrfs subvolume create /mnt/home
+          btrfs subvolume create /mnt/nix
+        else
+          gum confirm  --default=false \
+          "🔥 🔥 🔥 WARNING!!!! This will ERASE ALL DATA on the disk $TARGET_HOST. Are you sure you want to continue?"
+
+          echo "Partitioning Disks"
+          sudo nix run github:nix-community/disko \
+          --extra-experimental-features "nix-command flakes" \
+          --no-write-lock-file \
+          -- \
+          --mode zap_create_mount \
+          "$HOME/nix-dots/profiles/$TARGET_HOST/disk.nix"
         fi
 
-        gum confirm  --default=false \
-        "🔥 🔥 🔥 WARNING!!!! This will ERASE ALL DATA on the disk $TARGET_HOST. Are you sure you want to continue?"
 
-        echo "Partitioning Disks"
-        sudo nix run github:nix-community/disko \
-        --extra-experimental-features "nix-command flakes" \
-        --no-write-lock-file \
-        -- \
-        --mode zap_create_mount \
-        "${flakeDirectory}/profiles/$TARGET_HOST/disk.nix"
-
-        sudo nixos-install --flake "${flakeDirectory}'?submodules=1#'$TARGET_HOST"
+        sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
       ''
     )
   ];

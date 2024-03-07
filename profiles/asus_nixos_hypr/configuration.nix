@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  profile,
   listImports,
   ...
 }: let
@@ -18,11 +17,11 @@
   ];
 in {
   imports = [./hardware-configuration.nix] ++ listImports ../../system modules;
-  networking = {
-    inherit profile;
-  };
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = lib.mkForce ["btrfs"];
+    blacklistedKernelModules = ["hid-sensor-hub"];
+    resumeDevice = "/dev/disk/by-label/NIXOS";
+    efi.canTouchEfiVariables = true;
   };
 }

@@ -1,14 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{config, ...}: {
   # Bootloader.
   boot = {
     # use latest kernel
-    kernelPackages = pkgs.linuxPackages_latest;
-    supportedFilesystems = lib.mkForce ["btrfs"];
     consoleLogLevel = 3;
     kernelParams = [
       "quiet"
@@ -18,19 +11,13 @@
     loader = {
       grub = {
         enable = true;
-        device = "nodev";
         efiSupport = true;
         useOSProber = true;
+        device = "nodev";
       };
       efi = {
-        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
       };
-    };
-
-    plymouth = {
-      enable = true;
-      themePackages = [(pkgs.catppuccin-plymouth.override {variant = "mocha";})];
-      theme = "catppuccin-mocha";
     };
   };
 

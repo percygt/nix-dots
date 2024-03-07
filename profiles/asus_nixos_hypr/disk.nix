@@ -1,12 +1,10 @@
 {
-  lib,
-  ...
-}: {
   disko.devices = {
     disk = {
+      
       sda = {
         type = "disk";
-        device = lib.mkDefault "/dev/sda";
+        device = "/dev/disk/by-label/NIXOS";
         content = {
           type = "gpt";
           partitions = {
