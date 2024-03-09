@@ -69,6 +69,24 @@
     gum
     # gnome.gnome-terminal
     (
+      writeShellScriptBin "rescue" ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        gum "device name"
+        sudo mkdir -p /mnt/{dev,proc,sys,boot/efi}
+        sudo mount -o bind /dev /mnt/dev
+        sudo mount -o bind /proc /mnt/proc
+        sudo mount -o bind /sys /mnt/sys
+        sudo chroot /mnt /nix/var/nix/profiles/system/activate
+        sudo chroot /mnt /run/current-system/sw/bin/bash
+
+        sudo mount /dev/disk/by-label/UEFI /mnt/boot/efi
+        sudo mount /dev/disk/by-label/NIXOS /mnt/
+        sudo nixos-enter
+      ''
+    )
+    (
       writeShellScriptBin "nix_install"
       ''
         #!/usr/bin/env bash
