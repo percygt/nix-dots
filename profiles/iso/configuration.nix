@@ -90,11 +90,25 @@
 
         if [ ! -e "${flakeDirectory}/profiles/$TARGET_HOST/disk.nix" ]; then
           echo "Mounting NIXOS"
+          sudo su
           mkdir -p /mnt
           mount -t btrfs /dev/disk/by-label/NIXOS /mnt
           btrfs subvolume create /mnt/root
           btrfs subvolume create /mnt/home
           btrfs subvolume create /mnt/nix
+          btrfs subvolume create /mnt/opt
+          btrfs subvolume create /mnt/var/www
+          btrfs subvolume create /mnt/var/spool
+          btrfs subvolume create /mnt/var/tmp
+          btrfs subvolume create /mnt/var/log
+          btrfs subvolume create /mnt/var/crash
+          btrfs subvolume create /mnt/var/cache
+          btrfs subvolume create /mnt/var/lib/gdm
+          btrfs subvolume create /mnt/var/lib/AccountsService
+          btrfs subvolume create /mnt/home/percygt/.var/app/com.brave.Browser
+          umount /mnt
+          mount -o compress=lzo,subvol=root /dev/disk/by-label/NIXOS /mnt
+          mkdir -p /mnt/{home,root,nix,opt,var/www,var/spool,var/tmp,var/log,var/crash,var/cache,var/lib/gdm,var/lib/AccountsService,home/percygt/.var/app/com.brave.Browser}
         else
           gum confirm  --default=false \
           "🔥 🔥 🔥 WARNING!!!! This will ERASE ALL DATA on the disk $TARGET_HOST. Are you sure you want to continue?"
@@ -107,7 +121,6 @@
           --mode zap_create_mount \
           "$HOME/nix-dots/profiles/$TARGET_HOST/disk.nix"
         fi
-
 
         sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
       ''
