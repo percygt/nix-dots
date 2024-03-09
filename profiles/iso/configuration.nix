@@ -73,7 +73,6 @@
         #!/usr/bin/env bash
         set -euo pipefail
 
-        gum "device name"
         sudo mkdir -p /mnt/{dev,proc,sys,boot/efi}
         sudo mount -o bind /dev /mnt/dev
         sudo mount -o bind /proc /mnt/proc
