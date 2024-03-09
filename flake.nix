@@ -72,8 +72,8 @@
     templates = import ./templates;
 
     nixosConfigurations = {
-      asus_nixos_hypr = lib.mkNixOS rec {
-        profile = "asus_nixos_hypr";
+      fates = lib.mkNixOS rec {
+        profile = "fates";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
         nixosModules = [
@@ -100,7 +100,6 @@
         nixosModules = [
           {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-          # "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
           "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
           inputs.home-manager.nixosModules.home-manager
         ];
@@ -108,8 +107,8 @@
     };
 
     homeConfigurations = {
-      asus_nixos_hypr = lib.mkHomeManager {
-        profile = "asus_nixos_hypr";
+      fates = lib.mkHomeManager {
+        profile = "fates";
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules =
           nix-personal
@@ -127,8 +126,8 @@
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;
       };
-      asus_fedora = lib.mkHomeManager {
-        profile = "asus_fedora";
+      furies = lib.mkHomeManager {
+        profile = "furies";
         standalone_home = true;
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;

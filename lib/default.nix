@@ -44,6 +44,7 @@
     configuration = {
       users.users.${username} = {
         shell = "${pkgs.fish}/bin/fish";
+        home = homeDirectory;
         isNormalUser = true;
         extraGroups = [
           "input"
