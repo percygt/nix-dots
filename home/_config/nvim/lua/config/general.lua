@@ -30,6 +30,7 @@ opt.signcolumn = "yes" -- Enable status symbols before numberline
 opt.virtualedit = "block" -- Allow going past end of line in visual block mode
 opt.splitbelow = true -- Splitting a new window below the current one
 opt.splitright = true -- Splitting a new window at the right of the current one
+opt.conceallevel = 2
 
 opt.swapfile = false -- Disable swapfiles
 opt.backup = false

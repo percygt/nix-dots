@@ -10,7 +10,8 @@
     "network"
     "hardware"
     "hardware/intel.nix"
-    "programs"
+    "programs/hyprland.nix"
+    "programs/xdg.nix"
     "services"
     "security"
   ];

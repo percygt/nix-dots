@@ -5,4 +5,5 @@
     HandleLidSwitch=suspend
     HandleLidSwitchExternalPower=ignore
   '';
+  
 }

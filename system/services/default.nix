@@ -11,7 +11,7 @@
     ./pipewire.nix
     # ./power.nix
     ./psd.nix
-    ./supergfxctl.nix
+    # ./supergfxctl.nix
     # ./syncthing.nix
     # ./tlp.nix
   ];

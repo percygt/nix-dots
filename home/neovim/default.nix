@@ -19,20 +19,16 @@ in {
     withNodeJs = true;
     withPython3 = true;
     withRuby = false;
-    extraLuaConfig =
-      /*
-      lua
-      */
-      ''
-        if vim.loader then
-          vim.loader.enable()
-        end
-        require("config.general")
-        require("config.remaps")
-        require("config.autocmds")
-        require("config.tools.misc")
-        require("config.ui.misc")
-      '';
+    extraLuaConfig = ''
+      if vim.loader then
+        vim.loader.enable()
+      end
+      require("config.general")
+      require("config.remaps")
+      require("config.autocmds")
+      require("config.tools.misc")
+      require("config.ui.misc")
+    '';
 
     plugins = with pkgs.stash.vimPlugins; [
       # UI Enhancement #-------------------------------------------------------------------------------------
@@ -179,18 +175,18 @@ in {
         type = "lua";
         config = ''require("spectre").setup()'';
       }
-      # {
-      #   plugin = obsidian-nvim;
-      #   type = "lua";
-      #   config = ''require("config.tools.obsidian")'';
-      # }
+      {
+        plugin = pkgs.vimPlugins.obsidian-nvim;
+        type = "lua";
+        config = ''require("config.tools.obsidian")'';
+      }
       # hardtime-nvim
       # {
       #   plugin = "hard-time";
       #   type = "lua";
       #   config = ''require("hardtime").setup()'';
       # }
-      
+
       lazygit-nvim
       markdown-preview-nvim
       todo-comments-nvim
