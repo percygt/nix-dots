@@ -11,6 +11,7 @@
     "hardware"
     "hardware/intel.nix"
     "programs/hyprland.nix"
+    "programs/cli.nix"
     "programs/xdg.nix"
     "services"
     "security"

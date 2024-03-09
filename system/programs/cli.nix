@@ -3,6 +3,5 @@
     wget
     curl
     git
-    foot
   ];
 }

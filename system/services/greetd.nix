@@ -1,8 +1,6 @@
-{
-  username,
-  ...
-}: {
+{username, ...}: {
   # greetd display manager
+  services.xserver.enable = true;
   services.greetd = let
     session = {
       command = "Hyprland";
@@ -16,7 +14,7 @@
       initial_session = session;
     };
   };
-
+  security.pam.services.greetd.enableGnomeKeyring = true;
   environment.etc."greetd/environments".text = ''
     Hyprland
   '';

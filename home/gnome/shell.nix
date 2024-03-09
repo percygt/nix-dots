@@ -90,43 +90,11 @@ in {
       toolbar-style = "both-horiz";
       toolkit-accessibility = false;
     };
-
     "org/gnome/shell" = {
-      enabled-extensions = [
-        "quick-settings-tweaks@qwreey"
-        "Battery-Health-Charging@maniacx.github.com"
-        "bluetooth-quick-connect@bjarosze.gmail.com"
-        "mprisLabel@moon-0xff.github.com"
-        "quake-mode@repsac-by.github.com"
-        "customreboot@nova1545"
-        "ShutdownTimer@deminder"
-        "improved-workspace-indicator@michaelaquilina.github.io"
-        "reboottouefi@ubaygd.com"
-        "docker@stickman_0x00.com"
-        "pano@elhan.io"
-        "panel-date-format@atareao.es"
-        "date-menu-formatter@marcinjakubowski.github.com"
-        "update-extension@purejava.org"
-        "space-bar@luchrioh"
-        "supergfxctl-gex@asus-linux.org"
-        "appindicatorsupport@rgcjonas.gmail.com"
-        "dash-to-panel@jderose9.github.com"
-        "user-theme@gnome-shell-extensions.gcampax.github.com"
-        "vertical-workspaces@G-dH.github.com"
-        "ddterm@amezin.github.com"
-        "caffeine@patapon.info"
-        "pop-shell@system76.com"
-        "rounded-window-corners@yilozt"
-        "trimmer@hedgie.tech"
-        # "blur-my-shell@aunetx"
-        "system-stats-plus@remulo.costa.gmail.com"
-        # "just-perfection-desktop@just-perfection"
-        "unredirect@vaina.lt"
-      ];
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
         "codium.desktop"
-        "brave-browser.desktop"
+        "com.brave.Browser.desktop"
         "firefox.desktop"
         "com.github.tchx84.Flatseal.desktop"
         "org.keepassxc.KeePassXC.desktop"

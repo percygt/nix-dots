@@ -6,6 +6,7 @@
       packages = with pkgs; [
         gcr
         gnome.gnome-settings-daemon
+        dconf
       ];
       implementation = "broker";
     };

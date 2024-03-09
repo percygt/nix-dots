@@ -26,7 +26,7 @@ in {
   imports = listImports ../../home modules;
   targets.genericLinux.enable = true;
   home.shellAliases = {
-    hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'asus_fedora";
+    hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'$hostname";
   };
   xdg = {
     mime.enable = true;

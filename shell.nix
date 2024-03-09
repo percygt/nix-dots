@@ -30,20 +30,4 @@
         age
       ];
     };
-  fedora = let
-    post-install = import ./fedora {inherit pkgs;};
-  in
-    pkgs.mkShell {
-      packages = with post-install; [
-        initial
-        btrfs
-        snapper
-        grubbtrfs
-        firmwareandcodecs
-        grubtheme
-        homesetup
-        appinstall
-        kvminstall
-      ];
-    };
 }
