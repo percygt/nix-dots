@@ -1,9 +1,15 @@
-{
+{pkgs, ...}: {
   # bluetooth
   hardware.bluetooth = {
+    package = pkgs.bluez;
     enable = true;
-    powerOnBoot = false;
-    settings.General.Experimental = true; # for gnome-bluetooth percentage
+    settings = {
+      General = {
+        Experimental = true;
+        KernelExperimental = true;
+      };
+    };
   };
   services.blueman.enable = true;
+  # environment.systemPackages = with pkgs; [ blueberry ];
 }

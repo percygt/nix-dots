@@ -6,7 +6,7 @@
 }: let
   modules = [
     "core"
-    "core/grub.nix"
+    "core/systemd-boot.nix"
     "network"
     "hardware"
     "hardware/nvidia.nix"

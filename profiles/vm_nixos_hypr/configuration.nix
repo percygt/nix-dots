@@ -19,7 +19,7 @@
 in {
   imports =
     [
-      ./disk.nix
+      ./disks.nix
       ./hardware-configuration.nix
     ]
     ++ listImports ../../system modules;

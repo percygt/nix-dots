@@ -1,17 +1,16 @@
 {
   disko.devices = {
     disk = {
-      
-      sda = {
+      nvme = {
         type = "disk";
-        device = "/dev/disk/by-label/NIXOS";
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
             ESP = {
-              label = "UEFI";
+              label = "ESP";
               name = "ESP";
-              size = "512M";
+              size = "1024M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -23,8 +22,18 @@
                 ];
               };
             };
+            data = {
+              start = "200000M";
+              end = "100%";
+              content = {
+                type = "btrfs";
+                extraArgs = ["-L" "DATA" "-f"];
+                mountpoint = "/DATA";
+              };
+            };
             root = {
-              size = "100%";
+              start = "1024M";
+              end = "200000M";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
@@ -33,10 +42,6 @@
                   "home" = {
                     mountOptions = ["compress=lzo"];
                     mountpoint = "/home";
-                  };
-                  "home/percygt/.var/app/com.brave.Browser" = {
-                    mountOptions = ["compress=lzo"];
-                    mountpoint = "/home/percygt/.var/app/com.brave.Browser";
                   };
                   "nix" = {
                     mountOptions = ["compress=lzo" "noatime"];
