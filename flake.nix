@@ -7,7 +7,8 @@
     nix-stash.url = "github:percygt/nix-stash";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland-contrib.url = "github:hyprwm/contrib";
     hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
@@ -107,7 +108,7 @@
     };
 
     homeConfigurations = {
-      fates = lib.mkHomeManager {
+      ivlivs = lib.mkHomeManager {
         profile = "fates";
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules =
@@ -128,6 +129,13 @@
       };
       furies = lib.mkHomeManager {
         profile = "furies";
+        standalone_home = true;
+        is_laptop = true;
+        pkgs = legacyPackages.x86_64-linux;
+        homeManagerModules = nix-personal;
+      };
+      fates = lib.mkHomeManager {
+        profile = "fates";
         standalone_home = true;
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;

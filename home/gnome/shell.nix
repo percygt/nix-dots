@@ -1,26 +1,23 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
 {
   lib,
-  flakeDirectory,
   config,
   ...
 }: let
-  WALLPAPER_PATH = builtins.toString ../../assets/gradient1.png;
-  SHELL_THEME_PATH = builtins.toString ../_config/gtk/themes;
-  wallpaper = "file://${WALLPAPER_PATH}";
-  LOCAL_THEMES = "${config.xdg.dataHome}/themes";
-  SHELL_THEME = "Marble-crispblue-dark";
+  wallpaper = "file://${config.xdg.dataHome}/backgrounds/nasa-earth.jpg";
+  shell_theme = "Marble-crispblue-dark";
 in {
-  home = {
-    activation = {
-      lnShellThemeIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
-        [ -e "${LOCAL_THEMES}/${SHELL_THEME}" ] || ln -s "${SHELL_THEME_PATH}/${SHELL_THEME}" "${LOCAL_THEMES}/${SHELL_THEME}"
-      '';
+  xdg.dataFile = {
+    backgrounds = {
+      source = ../../assets/backgrounds;
+    };
+    "themes/Marble-crispblue-dark" = {
+      source = ../../assets/themes/Marble-crispblue-dark;
     };
   };
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/shell/extensions/user-theme" = {
-      name = SHELL_THEME;
+      name = shell_theme;
     };
     "org/gnome/desktop/screensaver" = {
       picture-uri = wallpaper;

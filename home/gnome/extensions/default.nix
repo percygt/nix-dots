@@ -1,26 +1,33 @@
 {
   lib,
   pkgs,
+  is_laptop,
   ...
 }: let
   quake-mode = pkgs.callPackage ../../../packages/gnome/extensions/quake-mode.nix {};
   date-menu-formatter = pkgs.callPackage ../../../packages/gnome/extensions/date-menu-formatter.nix {};
+  blur-my-shell = pkgs.gnomeExtensions.blur-my-shell.overrideAttrs (oldAttrs: rec {
+    version = "56";
+    src = pkgs.fetchzip {
+      url = "https://github.com/aunetx/blur-my-shell/releases/download/v${version}/blur-my-shell@aunetx.shell-extension.zip";
+      sha256 = "sha256-wRNcwlJGTMxN3LXkRdnRFj35E6Ez/loeIU90JpYTdgY=";
+      stripRoot = false;
+    };
+  });
 in {
   xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
   home.packages = with pkgs;
     [
       gnome-extension-manager
-      gnomeExtensions.supergfxctl-gex
-      gnomeExtensions.space-bar
+      # gnomeExtensions.space-bar
       gnomeExtensions.user-themes
       gnomeExtensions.appindicator
       gnomeExtensions.dash-to-panel
       gnomeExtensions.appindicator
       gnomeExtensions.pop-shell
       gnomeExtensions.caffeine
-      gnomeExtensions.vertical-workspaces
+      # gnomeExtensions.vertical-workspaces
       gnomeExtensions.dash-to-panel
-      gnomeExtensions.battery-health-charging
       gnomeExtensions.ddterm
       gnomeExtensions.bluetooth-quick-connect
       gnomeExtensions.docker
@@ -29,50 +36,91 @@ in {
       gnomeExtensions.shutdowntimer
       gnomeExtensions.systemstatsplus
       gnomeExtensions.trimmer
-      gnomeExtensions.disable-unredirect-fullscreen-windows
+      # gnomeExtensions.disable-unredirect-fullscreen-windows
       gnomeExtensions.quick-settings-tweaker
       gnomeExtensions.pip-on-top
-      gnomeExtensions.blur-my-shell
       gnomeExtensions.just-perfection
+      gnomeExtensions.workspace-switcher-manager
+    ]
+    ++ lib.optionals is_laptop [
+      gnomeExtensions.supergfxctl-gex
+      gnomeExtensions.battery-health-charging
     ]
     ++ [
+      blur-my-shell
       quake-mode
       date-menu-formatter
     ];
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/shell" = {
-      enabled-extensions = [
-        "quick-settings-tweaks@qwreey"
-        "Battery-Health-Charging@maniacx.github.com"
-        "bluetooth-quick-connect@bjarosze.gmail.com"
-        "mprisLabel@moon-0xff.github.com"
-        "quake-mode@repsac-by.github.com"
-        "customreboot@nova1545"
-        "ShutdownTimer@deminder"
-        "improved-workspace-indicator@michaelaquilina.github.io"
-        "reboottouefi@ubaygd.com"
-        "docker@stickman_0x00.com"
-        "pano@elhan.io"
-        "panel-date-format@atareao.es"
-        "date-menu-formatter@marcinjakubowski.github.com"
-        "update-extension@purejava.org"
-        "space-bar@luchrioh"
-        "supergfxctl-gex@asus-linux.org"
-        "appindicatorsupport@rgcjonas.gmail.com"
-        "dash-to-panel@jderose9.github.com"
-        "user-theme@gnome-shell-extensions.gcampax.github.com"
-        # "vertical-workspaces@G-dH.github.com"
-        "ddterm@amezin.github.com"
-        "caffeine@patapon.info"
-        "pop-shell@system76.com"
-        "rounded-window-corners@yilozt"
-        "trimmer@hedgie.tech"
-        "pip-on-top@rafostar.github.com"
-        "blur-my-shell@aunetx"
-        "system-stats-plus@remulo.costa.gmail.com"
-        "just-perfection-desktop@just-perfection"
-        "unredirect@vaina.lt"
-      ];
+      enabled-extensions =
+        [
+          "quick-settings-tweaks@qwreey"
+          "bluetooth-quick-connect@bjarosze.gmail.com"
+          "mprisLabel@moon-0xff.github.com"
+          "quake-mode@repsac-by.github.com"
+          "customreboot@nova1545"
+          "ShutdownTimer@deminder"
+          "improved-workspace-indicator@michaelaquilina.github.io"
+          "reboottouefi@ubaygd.com"
+          "docker@stickman_0x00.com"
+          "pano@elhan.io"
+          "panel-date-format@atareao.es"
+          "date-menu-formatter@marcinjakubowski.github.com"
+          "update-extension@purejava.org"
+          # "space-bar@luchrioh"
+          "appindicatorsupport@rgcjonas.gmail.com"
+          "dash-to-panel@jderose9.github.com"
+          "user-theme@gnome-shell-extensions.gcampax.github.com"
+          # "vertical-workspaces@G-dH.github.com"
+          "ddterm@amezin.github.com"
+          "caffeine@patapon.info"
+          "pop-shell@system76.com"
+          "rounded-window-corners@yilozt"
+          "trimmer@hedgie.tech"
+          "pip-on-top@rafostar.github.com"
+          "blur-my-shell@aunetx"
+          "system-stats-plus@remulo.costa.gmail.com"
+          "just-perfection-desktop@just-perfection"
+          "workspace-switcher-manager@G-dH.github.com"
+          # "unredirect@vaina.lt"
+        ]
+        ++ lib.optionals is_laptop [
+          "supergfxctl-gex@asus-linux.org"
+          "Battery-Health-Charging@maniacx.github.com"
+        ];
+    };
+    "org/gnome/shell/extensions/workspace-switcher-manager" = {
+      active-show-app-name = true;
+      active-show-win-title = false;
+      active-show-ws-index = true;
+      active-show-ws-name = false;
+      allow-custom-colors = true;
+      fade-out-time = 20;
+      font-scale = 100;
+      inactive-show-app-name = false;
+      inactive-show-win-title = false;
+      inactive-show-ws-index = true;
+      inactive-show-ws-name = false;
+      index-scale = 234;
+      popup-active-bg-color = "rgba(17,19,120,0.5)";
+      popup-active-fg-color = "rgb(255,255,255)";
+      popup-bg-color = "rgba(22,25,37,0.5)";
+      popup-border-color = "rgba(0,0,0,0)";
+      popup-inactive-bg-color = "rgba(0,0,0,0.5)";
+      popup-inactive-fg-color = "rgb(255,255,255)";
+      popup-mode = 0;
+      popup-opacity = 25;
+      popup-padding-scale = 50;
+      popup-radius-scale = 15;
+      popup-scale = 55;
+      popup-spacing-scale = 73;
+      popup-width-scale = 100;
+      text-bold = true;
+      text-shadow = false;
+      vertical = 97;
+      wrap-app-names = true;
+      ws-ignore-last = false;
     };
     "org/gnome/shell/extensions/just-perfection" = {
       animation = 4;
@@ -100,7 +148,7 @@ in {
       quake-mode-gap = 0;
       quake-mode-height = 100;
       quake-mode-hide-from-overview = true;
-      quake-mode-monitor = 1;
+      # quake-mode-monitor = 0;
       quake-mode-tray = false;
       quake-mode-width = 100;
     };
@@ -232,7 +280,7 @@ in {
         {"0":"MIDDLE","1":"MIDDLE"}
       '';
       panel-element-positions = ''
-        {"0":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"centered"},{"element":"dateMenu","visible":true,"position":"centerMonitor"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}],"1":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"centered"},{"element":"dateMenu","visible":true,"position":"centerMonitor"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}
+        {"0":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":true,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"centered"},{"element":"dateMenu","visible":true,"position":"centerMonitor"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}],"1":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"centered"},{"element":"dateMenu","visible":true,"position":"centerMonitor"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}
       '';
       panel-lengths = ''
         {"0":100,"1":100}
@@ -243,7 +291,7 @@ in {
       panel-sizes = ''
         {"0":28,"1":28}
       '';
-      primary-monitor = 1;
+      # primary-monitor = 1;
       progress-show-count = false;
       secondarymenu-contains-showdetails = true;
       shortcut = ["<Super>q"];

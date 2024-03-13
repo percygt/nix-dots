@@ -26,9 +26,10 @@ in {
   imports = listImports ../../home modules;
   targets.genericLinux.enable = true;
   home.shellAliases = {
-    hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'$hostname";
+    hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'furies";
   };
   xdg = {
+    enable = true;
     mime.enable = true;
     systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
     configFile.wireplumber = {
@@ -39,7 +40,7 @@ in {
 
   dconf.settings = {
     "org/gnome/shell/extensions/fedora-update" = {
-      update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- ${pkgs.fish}/bin/fish -c \"sudo dnf upgrade; echo Done - Press enter to exit; read _\" ";
+      update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- fish -c \"sudo dnf check-update --refresh & sudo dnf upgrade -y; echo Done - Press enter to exit; read _\" ";
       use-buildin-icons = false;
     };
   };

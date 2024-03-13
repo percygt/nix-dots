@@ -88,7 +88,7 @@
 
         TARGET_HOST=$(ls -1 ${flakeDirectory}/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v iso | gum choose)
 
-        if [ ! -e "${flakeDirectory}/profiles/$TARGET_HOST/disk.nix" ]; then
+        if [ ! -e "${flakeDirectory}/profiles/$TARGET_HOST/disks.nix" ]; then
           echo "Mounting NIXOS"
           sudo su
           mkdir -p /mnt
