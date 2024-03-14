@@ -13,7 +13,7 @@
   ICON = "Papirus-Dark";
   FONT = "Rubik";
   HOME_THEMES = "${config.home.homeDirectory}/.themes";
-  LOCAL_THEMES = "${config.xdg.dataHome}/themes";
+  HOME_ICONS = "${config.home.homeDirectory}/.icons";
 
   pkg-colloid-gtk-theme = pkgs.colloid-gtk-theme.overrideAttrs (oldAttrs: {
     installPhase = ''
@@ -46,10 +46,10 @@ in {
       name = THEME;
       package = pkg-colloid-gtk-theme;
     };
-    cursorTheme = {
-      name = CURSOR;
-      package = pkgs.colloid-icon-theme;
-    };
+    # cursorTheme = {
+    #   name = CURSOR;
+    #   package = pkgs.colloid-icon-theme;
+    # };
     iconTheme = {
       name = ICON;
       package = pkgs.papirus-icon-theme;
@@ -84,15 +84,13 @@ in {
   home = {
     activation = {
       cpGtkThemeIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
-        [ -e "${HOME_THEMES}" ] || mkdir "${HOME_THEMES}"
-        [ -e "${HOME_THEMES}/${THEME}" ] || cp -r "${pkg-colloid-gtk-theme}/share/themes/${THEME}" "${HOME_THEMES}/${THEME}"
-        [ -e "${LOCAL_THEMES}/${THEME}" ] || cp -r "${pkg-colloid-gtk-theme}/share/themes/${THEME}" "${LOCAL_THEMES}/${THEME}"
+        [ -e "${HOME_THEMES}/${THEME}" ] || cp -r "${pkg-colloid-gtk-theme}/share/themes/." "${HOME_THEMES}/"
       '';
     };
     packages = with pkgs; [
       rubik
       papirus-icon-theme
-      colloid-gtk-theme
+      pkg-colloid-gtk-theme
       colloid-icon-theme
       kora-icon-theme
       sweet
@@ -109,7 +107,7 @@ in {
       package = pkgs.colloid-icon-theme;
       name = CURSOR;
     };
-    
+
     sessionVariables = {
       GTK_THEME = THEME;
       GTK_CURSOR = CURSOR;
