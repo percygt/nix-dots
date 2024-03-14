@@ -13,6 +13,7 @@
   ICON = "Papirus-Dark";
   FONT = "Rubik";
   HOME_THEMES = "${config.home.homeDirectory}/.themes";
+  LOCAL_THEMES = "${config.xdg.dataHome}/themes";
 
   pkg-colloid-gtk-theme = pkgs.colloid-gtk-theme.overrideAttrs (oldAttrs: {
     installPhase = ''
@@ -85,6 +86,7 @@ in {
       cpGtkThemeIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
         [ -e "${HOME_THEMES}" ] || mkdir "${HOME_THEMES}"
         [ -e "${HOME_THEMES}/${THEME}" ] || cp -r "${pkg-colloid-gtk-theme}/share/themes/${THEME}" "${HOME_THEMES}/${THEME}"
+        [ -e "${LOCAL_THEMES}/${THEME}" ] || cp -r "${pkg-colloid-gtk-theme}/share/themes/${THEME}" "${LOCAL_THEMES}/${THEME}"
       '';
     };
     packages = with pkgs; [
