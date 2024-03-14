@@ -5,14 +5,15 @@
   ...
 }: let
   date-menu-formatter = pkgs.callPackage ../../../packages/gnome/extensions/date-menu-formatter.nix {};
-  quake-mode = pkgs.gnomeExtensions.quake-mode.overrideAttrs (oldAttrs: rec {
-    version = "10";
-    src = pkgs.fetchzip {
-      url = "https://github.com/piousdeer/gnome-shell-extension-quake-mode/releases/download/v${version}/quake-mode@repsac-by.github.com.shell-extension.zip";
-      sha256 = "sha256-u/XP0we2nmvYQsaNbfdgzOTsVTDdLEzT9M2aY1GrvEs=";
-      stripRoot = false;
-    };
-  });
+  quake-mode = pkgs.callPackage ../../../packages/gnome/extensions/quake-mode.nix {};
+  # quake-mode = pkgs.gnomeExtensions.quake-mode.overrideAttrs (oldAttrs: rec {
+  #   version = "10";
+  #   src = pkgs.fetchzip {
+  #     url = "https://github.com/piousdeer/gnome-shell-extension-quake-mode/releases/download/v${version}/quake-mode@repsac-by.github.com.shell-extension.zip";
+  #     sha256 = "sha256-u/XP0we2nmvYQsaNbfdgzOTsVTDdLEzT9M2aY1GrvEs=";
+  #     stripRoot = false;
+  #   };
+  # });
 
   blur-my-shell = pkgs.gnomeExtensions.blur-my-shell.overrideAttrs (oldAttrs: rec {
     version = "56";
