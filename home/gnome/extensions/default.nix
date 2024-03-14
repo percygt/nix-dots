@@ -30,8 +30,6 @@ in {
       # gnomeExtensions.space-bar
       gnomeExtensions.user-themes
       gnomeExtensions.appindicator
-      gnomeExtensions.dash-to-panel
-      gnomeExtensions.appindicator
       gnomeExtensions.pop-shell
       gnomeExtensions.caffeine
       # gnomeExtensions.vertical-workspaces
