@@ -50,8 +50,11 @@ in {
       package = pkgs.phinger-cursors;
     };
     iconTheme = {
+      package = pkgs.catppuccin-papirus-folders.override {
+        flavor = "mocha";
+        accent = "lavender";
+      };
       name = ICON;
-      package = pkgs.papirus-icon-theme;
     };
     font = {
       name = FONT;
@@ -86,14 +89,6 @@ in {
         [ -e "${HOME_THEMES}/${THEME}" ] || cp -r "${pkg-colloid-gtk-theme}/share/themes/." "${HOME_THEMES}/"
       '';
     };
-    packages = with pkgs; [
-      rubik
-      papirus-icon-theme
-      pkg-colloid-gtk-theme
-      phinger-cursors
-      kora-icon-theme
-      sweet
-    ];
     pointerCursor = {
       package = pkgs.phinger-cursors;
       name = CURSOR;
