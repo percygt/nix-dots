@@ -48,6 +48,7 @@ in {
     cursorTheme = {
       name = CURSOR;
       package = pkgs.phinger-cursors;
+      size = 32;
     };
     iconTheme = {
       package = pkgs.catppuccin-papirus-folders.override {
@@ -92,7 +93,7 @@ in {
     pointerCursor = {
       package = pkgs.phinger-cursors;
       name = CURSOR;
-      size = 42;
+      size = 32;
       gtk.enable = true;
       x11.enable = true;
     };

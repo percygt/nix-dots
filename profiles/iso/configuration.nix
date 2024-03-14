@@ -73,8 +73,6 @@
       ''
         #!/usr/bin/env bash
         set -euo pipefail
-        # gsettings set org.gnome.desktop.session idle-delay 0
-        # gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
 
         if [ "$(id -u)" -eq 0 ]; then
         	echo "ERROR! $(basename "$0") should be run as a regular user"
@@ -82,45 +80,40 @@
         fi
 
         sleep 1
+
         if [ ! -d "${flakeDirectory}/.git" ]; then
-          git clone --recurse-submodule git@gitlab.com:percygt/nix-dots.git "${flakeDirectory}"
+          # Define source and destination directories
+          source_dir="/run/media/$USER/v/.k/.ssh"
+          destination_dir="/home/$USER/"
+          if [ -e "$source_dir" ]; then
+            # Copy .ssh directory to the destination directory
+            cp -rf "$source_dir" "$destination_dir"
+            sleep 3
+            git clone --recurse-submodule git@gitlab.com:percygt/nix-dots.git
+            sleep 2
+            cd nix-dots
+          else
+            echo "Source directory $source_dir does not exist"
+            exit 1
+          fi
         fi
 
         TARGET_HOST=$(ls -1 ${flakeDirectory}/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v iso | gum choose)
 
-        if [ ! -e "${flakeDirectory}/profiles/$TARGET_HOST/disks.nix" ]; then
-          echo "Mounting NIXOS"
-          sudo su
-          mkdir -p /mnt
-          mount -t btrfs /dev/disk/by-label/NIXOS /mnt
-          btrfs subvolume create /mnt/root
-          btrfs subvolume create /mnt/home
-          btrfs subvolume create /mnt/nix
-          btrfs subvolume create /mnt/opt
-          btrfs subvolume create /mnt/var/www
-          btrfs subvolume create /mnt/var/spool
-          btrfs subvolume create /mnt/var/tmp
-          btrfs subvolume create /mnt/var/log
-          btrfs subvolume create /mnt/var/crash
-          btrfs subvolume create /mnt/var/cache
-          btrfs subvolume create /mnt/var/lib/gdm
-          btrfs subvolume create /mnt/var/lib/AccountsService
-          btrfs subvolume create /mnt/home/percygt/.var/app/com.brave.Browser
-          umount /mnt
-          mount -o compress=lzo,subvol=root /dev/disk/by-label/NIXOS /mnt
-          mkdir -p /mnt/{home,root,nix,opt,var/www,var/spool,var/tmp,var/log,var/crash,var/cache,var/lib/gdm,var/lib/AccountsService,home/percygt/.var/app/com.brave.Browser}
-        else
-          gum confirm  --default=false \
+        if [  -e "${flakeDirectory}/profiles/$TARGET_HOST/disks.nix" ]; then
+          echo "ERROR! $(basename "$0") could not find the required $HOME/dotfiles/hosts/$TARGET_HOST/disks.nix"
+          exit 1
+        fi
+        gum confirm  --default=false \
           "🔥 🔥 🔥 WARNING!!!! This will ERASE ALL DATA on the disk $TARGET_HOST. Are you sure you want to continue?"
 
-          echo "Partitioning Disks"
-          sudo nix run github:nix-community/disko \
+        echo "Partitioning Disks"
+        sudo nix run github:nix-community/disko \
           --extra-experimental-features "nix-command flakes" \
           --no-write-lock-file \
           -- \
           --mode zap_create_mount \
           "$HOME/nix-dots/profiles/$TARGET_HOST/disk.nix"
-        fi
 
         sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
       ''
