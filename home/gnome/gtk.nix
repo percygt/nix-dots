@@ -45,10 +45,10 @@ in {
       name = THEME;
       package = pkg-colloid-gtk-theme;
     };
-    # cursorTheme = {
-    #   name = CURSOR;
-    #   package = pkgs.colloid-icon-theme;
-    # };
+    cursorTheme = {
+      name = CURSOR;
+      package = pkgs.colloid-icon-theme;
+    };
     iconTheme = {
       name = ICON;
       package = pkgs.papirus-icon-theme;

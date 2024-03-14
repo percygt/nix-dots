@@ -30,12 +30,8 @@ in {
   };
   xdg = {
     enable = true;
-    configHome = config.home.homeDirectory + "/.config";
-    cacheHome = config.home.homeDirectory + "/.local/cache";
-    dataHome = config.home.homeDirectory + "/.local/share";
-    stateHome = config.home.homeDirectory + "/.local/state";
     mime.enable = true;
-    systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
+    systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications" "${config.home.homeDirectory}/.nix-profile/share/icons"];
     configFile.wireplumber = {
       source = ../../home/_config/wireplumber;
       recursive = true;
