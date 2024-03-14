@@ -92,7 +92,7 @@ in {
     pointerCursor = {
       package = pkgs.phinger-cursors;
       name = CURSOR;
-      size = 36;
+      size = 42;
       gtk.enable = true;
       x11.enable = true;
     };
