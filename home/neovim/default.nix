@@ -6,7 +6,6 @@
   colors,
   ...
 }: let
-  HM_NVIM = "${flakeDirectory}/_config/nvim";
   lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
   lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
 in {
@@ -272,14 +271,13 @@ in {
     ];
   };
   home = {
-    activation = {
+    activation = let
+      HM_NVIM = "${flakeDirectory}/home/_config/nvim";
+    in {
       linkNvimSpell =
         lib.hm.dag.entryAfter ["linkGeneration"]
-        /*
-        bash
-        */
         ''
-          [ -d "${config.xdg.configHome}/nvim/spell" ] || ln -s "${HM_NVIM}/spell" "${config.xdg.configHome}/nvim/spell"
+          [ -e "${config.xdg.configHome}/nvim/spell" ] || ln -s "${HM_NVIM}/spell" "${config.xdg.configHome}/nvim/spell"
         '';
     };
   };
