@@ -9,7 +9,8 @@
   ...
 }: let
   THEME = "Colloid-Dark-Nord";
-  CURSOR = "Colloid-dark-cursors";
+  # CURSOR = "Colloid-dark-cursors";
+  CURSOR = "Catppuccin-Macchiato-Light-Cursors";
   ICON = "Papirus-Dark";
   FONT = "Rubik";
   HOME_THEMES = "${config.home.homeDirectory}/.themes";
@@ -48,7 +49,7 @@ in {
     };
     # cursorTheme = {
     #   name = CURSOR;
-    #   package = pkgs.colloid-icon-theme;
+    #   package = pkgs.catppuccin-cursors.macchiatoLight;
     # };
     iconTheme = {
       name = ICON;
@@ -91,21 +92,16 @@ in {
       rubik
       papirus-icon-theme
       pkg-colloid-gtk-theme
-      colloid-icon-theme
+      catppuccin-cursors.macchiatoLight
       kora-icon-theme
       sweet
     ];
-    # pointerCursor = {
-    #   package = pkgs.colloid-icon-theme;
-    #   name = CURSOR;
-    #    size = 24;
-    #   gtk.enable = true;
-    #   x11.enable = true;
-    # };
     pointerCursor = {
-      gtk.enable = true;
-      package = pkgs.colloid-icon-theme;
+      package = pkgs.catppuccin-cursors.macchiatoLight;
       name = CURSOR;
+      size = 24;
+      gtk.enable = true;
+      x11.enable = true;
     };
 
     sessionVariables = {
