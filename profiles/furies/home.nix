@@ -31,7 +31,7 @@ in {
   xdg = {
     enable = true;
     mime.enable = true;
-    systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications" "${config.home.homeDirectory}/.nix-profile/share/icons"];
+    systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
     configFile.wireplumber = {
       source = ../../home/_config/wireplumber;
       recursive = true;
