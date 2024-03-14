@@ -150,7 +150,7 @@ in {
 
     "org/gnome/shell/extensions/quake-mode" = {
       quake-mode-always-on-top = false;
-      quake-mode-animation-time = 0.19999999999999996;
+      quake-mode-animation-time = 0.2;
       quake-mode-gap = 0;
       quake-mode-height = 100;
       quake-mode-hide-from-overview = true;
