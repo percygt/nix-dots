@@ -9,12 +9,10 @@
   ...
 }: let
   THEME = "Colloid-Dark-Nord";
-  # CURSOR = "Colloid-dark-cursors";
-  CURSOR = "Catppuccin-Macchiato-Light-Cursors";
+  CURSOR = "phinger-cursors-light";
   ICON = "Papirus-Dark";
   FONT = "Rubik";
   HOME_THEMES = "${config.home.homeDirectory}/.themes";
-  HOME_ICONS = "${config.home.homeDirectory}/.icons";
 
   pkg-colloid-gtk-theme = pkgs.colloid-gtk-theme.overrideAttrs (oldAttrs: {
     installPhase = ''
@@ -47,10 +45,10 @@ in {
       name = THEME;
       package = pkg-colloid-gtk-theme;
     };
-    # cursorTheme = {
-    #   name = CURSOR;
-    #   package = pkgs.catppuccin-cursors.macchiatoLight;
-    # };
+    cursorTheme = {
+      name = CURSOR;
+      package = pkgs.phinger-cursors;
+    };
     iconTheme = {
       name = ICON;
       package = pkgs.papirus-icon-theme;
@@ -92,18 +90,17 @@ in {
       rubik
       papirus-icon-theme
       pkg-colloid-gtk-theme
-      catppuccin-cursors.macchiatoLight
+      phinger-cursors
       kora-icon-theme
       sweet
     ];
     pointerCursor = {
-      package = pkgs.catppuccin-cursors.macchiatoLight;
+      package = pkgs.phinger-cursors;
       name = CURSOR;
-      size = 24;
+      size = 36;
       gtk.enable = true;
       x11.enable = true;
     };
-
     sessionVariables = {
       GTK_THEME = THEME;
       GTK_CURSOR = CURSOR;

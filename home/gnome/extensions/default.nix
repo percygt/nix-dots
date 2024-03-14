@@ -297,7 +297,7 @@ in {
       panel-sizes = ''
         {"0":28,"1":28}
       '';
-      # primary-monitor = 1;
+      primary-monitor = 1;
       progress-show-count = false;
       secondarymenu-contains-showdetails = true;
       shortcut = ["<Super>q"];
