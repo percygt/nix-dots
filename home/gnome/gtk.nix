@@ -95,13 +95,13 @@ in {
       kora-icon-theme
       sweet
     ];
-    # pointerCursor = {
-    #   package = pkgs.colloid-icon-theme;
-    #   name = CURSOR;
-    #   size = 24;
-    #   gtk.enable = true;
-    #   x11.enable = true;
-    # };
+    pointerCursor = {
+      package = pkgs.colloid-icon-theme;
+      name = CURSOR;
+      size = 24;
+      gtk.enable = true;
+      x11.enable = true;
+    };
     sessionVariables = {
       GTK_THEME = THEME;
       GTK_CURSOR = CURSOR;
