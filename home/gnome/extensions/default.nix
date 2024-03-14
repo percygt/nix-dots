@@ -27,7 +27,6 @@ in {
   xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
   home.packages = with pkgs;
     [
-      gnome-extension-manager
       # gnomeExtensions.space-bar
       gnomeExtensions.user-themes
       gnomeExtensions.appindicator
