@@ -46,5 +46,8 @@ in {
   };
   home.packages = with pkgs; [
     gnomeExtensions.fedora-linux-update-indicator
+    nautilus-open-any-terminal
+    gnome.gnome-tweaks
+    gnome.dconf-editor
   ];
 }
