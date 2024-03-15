@@ -22,12 +22,9 @@
               size = "100%";
               content = {
                 type = "btrfs";
+                mountpoint = "/";
                 extraArgs = ["-L" "NIXOS" "-f"];
                 subvolumes = {
-                  "root" = {
-                    mountOptions = ["compress=lzo"];
-                    mountpoint = "/";
-                  };
                   "home" = {
                     mountOptions = ["compress=lzo"];
                     mountpoint = "/home";
