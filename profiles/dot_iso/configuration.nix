@@ -103,7 +103,7 @@ in {
           fi
         fi
 
-        TARGET_HOST=$(ls -1 profiles/*/configuration.nix | cut -d'/' -f2 | grep -v dot_iso | gum choose)
+        TARGET_HOST=$(ls -1 ~/nix-dots/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${profile} | gum choose)
 
         if [  -e "profiles/$TARGET_HOST/disks.nix" ]; then
           echo "ERROR! $(basename "$0") could not find the required profiles/$TARGET_HOST/disks.nix"
