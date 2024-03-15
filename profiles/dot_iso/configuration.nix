@@ -118,9 +118,9 @@ in {
           --no-write-lock-file \
           -- \
           --mode zap_create_mount \
-          $HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
+          "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
 
-        sudo nixos-install --flake ".#$TARGET_HOST"
+        sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
         DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
 
         # Rsync my nix-config to the target install
