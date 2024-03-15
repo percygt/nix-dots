@@ -4,8 +4,14 @@
   flakeDirectory,
   profile,
   target_user,
+  listImports,
   ...
-}: {
+}: let
+  modules = [
+    "core/console.nix"
+  ];
+in {
+  imports = listImports ../../system modules;
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
   };
@@ -65,8 +71,8 @@
     ];
   };
   environment.systemPackages = with pkgs; [
-    gum
     rsync
+    gum
     (
       writeShellScriptBin "nix_install"
       ''
@@ -97,14 +103,14 @@
           fi
         fi
 
-        TARGET_HOST=$(ls -1 profiles/*/configuration.nix | cut -d'/' -f6 | grep -v iso | gum choose)
+        TARGET_HOST=$(ls -1 profiles/*/configuration.nix | cut -d'/' -f2 | grep -v dot_iso | gum choose)
 
         if [  -e "profiles/$TARGET_HOST/disks.nix" ]; then
           echo "ERROR! $(basename "$0") could not find the required profiles/$TARGET_HOST/disks.nix"
           exit 1
         fi
         gum confirm  --default=false \
-          "🔥 🔥 🔥 WARNING!!!! This will ERASE ALL DATA on the disk $TARGET_HOST. Are you sure you want to continue?"
+          "🔥 🔥 🔥 WARNING!!!! This will ERASE ALL DATA on the disks $TARGET_HOST. Are you sure you want to continue?"
 
         echo "Partitioning Disks"
         sudo nix run github:nix-community/disko \
@@ -112,7 +118,7 @@
           --no-write-lock-file \
           -- \
           --mode zap_create_mount \
-          "profiles/$TARGET_HOST/disk.nix"
+          "./profiles/$TARGET_HOST/disks.nix"
 
         sudo nixos-install --flake ".#$TARGET_HOST"
         DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
@@ -121,7 +127,7 @@
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
 
-        # If there is a keyfile for a data disk, put copy it to the root partition and
+        # If there is a keyfile for a data disks, put copy it to the root partition and
         # ensure the permissions are set appropriately.
         if [[ -f "/tmp/data.keyfile" ]]; then
           sudo cp /tmp/data.keyfile /mnt/etc/data.keyfile
