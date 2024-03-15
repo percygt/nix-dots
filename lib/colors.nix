@@ -33,6 +33,7 @@
     cyan = "55ffff"; # [#55ffff]
     white = "ffffff"; # [#ffffff]
   };
+
   extra = {
     obsidian = "030205"; # [#030205]
     nocturne = "120d22"; # [#120d22]
@@ -45,5 +46,8 @@
     sapphire = "74c7ec"; # [#74c7ec]
     sky = "89dceb"; # [#89dceb]
     mauve = "cba6f7"; # [#cba6f7]
+    overlay0 = "#6e738d";
+    overlay1 = "#8087a2";
+    overlay2 = "#939ab7";
   };
 }

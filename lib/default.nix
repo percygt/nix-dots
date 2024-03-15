@@ -1,4 +1,8 @@
-{inputs, ...}: let
+{
+  inputs,
+  self,
+  ...
+}: let
   inherit (inputs.nixpkgs) lib;
   listImports = path: modules:
     lib.forEach modules (
@@ -14,7 +18,7 @@
     homeDirectory = "/home/${username}";
     flakeDirectory = "${homeDirectory}/nix-dots";
     stateVersion = "23.11";
-    colors = (import ./colors.nix).syft;
+    colors = import ./colors.nix;
     home-manager = {
       programs.home-manager.enable = true;
       manual = {
@@ -85,6 +89,7 @@
 
     args = {
       inherit
+        self
         inputs
         username
         profile

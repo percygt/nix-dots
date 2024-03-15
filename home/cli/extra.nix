@@ -27,6 +27,7 @@
     ollama
 
     # utils
+    gum
     glow # Render markdown on the CLI
     timg # terminal image viewer
     grc # Generic Colouriser
