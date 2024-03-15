@@ -10,12 +10,13 @@
     username,
     pkgs,
     profile,
+    is_iso,
   }: rec {
     homeDirectory = "/home/${username}";
     flakeDirectory = "${homeDirectory}/nix-dots";
     stateVersion = "23.11";
     colors = (import ./colors.nix).syft;
-
+    targer_user = "percygt"; # for iso
     home-manager = {
       programs.home-manager.enable = true;
       manual = {
@@ -84,18 +85,20 @@
       system.stateVersion = stateVersion;
     };
 
-    args = {
-      inherit
-        inputs
-        username
-        profile
-        pkgs
-        colors
-        listImports
-        flakeDirectory
-        homeDirectory
-        ;
-    };
+    args =
+      {
+        inherit
+          inputs
+          username
+          profile
+          pkgs
+          colors
+          listImports
+          flakeDirectory
+          homeDirectory
+          ;
+      }
+      // lib.optionalAttrs is_iso {inherit targer_user;};
   };
 in {
   mkNixOS = {
@@ -105,12 +108,14 @@ in {
     username ? defaultUsername,
     nixosModules ? [],
     homeManagerModules ? [],
+    is_laptop ? false,
+    is_iso ? false,
   }: let
-    default = mkDefault {inherit username pkgs profile;};
+    default = mkDefault {inherit is_iso username pkgs profile;};
   in
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = default.args;
+      specialArgs = default.args // {inherit is_laptop;};
       modules =
         nixosModules
         ++ [
@@ -128,7 +133,7 @@ in {
                     ../profiles/${profile}/home.nix
                   ];
               };
-              extraSpecialArgs = default.args;
+              extraSpecialArgs = default.args // {inherit is_laptop;};
             };
           }
         ];
@@ -141,8 +146,9 @@ in {
     homeManagerModules ? [],
     standalone_home ? false,
     is_laptop ? false,
+    is_iso ? false,
   }: let
-    default = mkDefault {inherit username pkgs profile;};
+    default = mkDefault {inherit username pkgs profile is_iso;};
   in
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;

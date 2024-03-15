@@ -3,6 +3,7 @@
   lib,
   flakeDirectory,
   profile,
+  target_user,
   ...
 }: {
   nixpkgs = {
@@ -48,7 +49,7 @@
     extraConfig = ''
       Host gitlab.com
         PreferredAuthentications publickey
-        IdentityFile /iso/key
+        IdentityFile ~/.ssh/id_ed25519_glab
     '';
     knownHosts."gitlab.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
   };
@@ -58,8 +59,8 @@
     appendToMenuLabel = " live";
     contents = [
       {
-        source = ~/.ssh/id_ed25519_glab;
-        target = "/key";
+        source = ~/.ssh;
+        target = "/.ssh";
       }
     ];
   };
@@ -67,7 +68,7 @@
     eza
     bat
     gum
-
+    rsync
     (
       writeShellScriptBin "nix_install"
       ''
@@ -83,7 +84,7 @@
 
         if [ ! -d "${flakeDirectory}/.git" ]; then
           # Define source and destination directories
-          source_dir="/run/media/$USER/v/.k/.ssh"
+          source_dir="/iso/.ssh"
           destination_dir="/home/$USER/"
           if [ -e "$source_dir" ]; then
             # Copy .ssh directory to the destination directory
@@ -98,10 +99,10 @@
           fi
         fi
 
-        TARGET_HOST=$(ls -1 ${flakeDirectory}/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v iso | gum choose)
+        TARGET_HOST=$(ls -1 profiles/*/configuration.nix | cut -d'/' -f6 | grep -v iso | gum choose)
 
-        if [  -e "${flakeDirectory}/profiles/$TARGET_HOST/disks.nix" ]; then
-          echo "ERROR! $(basename "$0") could not find the required $HOME/dotfiles/hosts/$TARGET_HOST/disks.nix"
+        if [  -e "profiles/$TARGET_HOST/disks.nix" ]; then
+          echo "ERROR! $(basename "$0") could not find the required profiles/$TARGET_HOST/disks.nix"
           exit 1
         fi
         gum confirm  --default=false \
@@ -113,9 +114,21 @@
           --no-write-lock-file \
           -- \
           --mode zap_create_mount \
-          "$HOME/nix-dots/profiles/$TARGET_HOST/disk.nix"
+          "profiles/$TARGET_HOST/disk.nix"
 
-        sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
+        sudo nixos-install --flake ".#$TARGET_HOST"
+        DIR=$( cd "$( dirname "'${BASH_SOURCE [0]}" )" && pwd )
+
+        # Rsync my nix-config to the target install
+        mkdir -p "/mnt/home/${target_user}/nix-dots"
+        rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
+
+        # If there is a keyfile for a data disk, put copy it to the root partition and
+        # ensure the permissions are set appropriately.
+        if [[ -f "/tmp/data.keyfile" ]]; then
+          sudo cp /tmp/data.keyfile /mnt/etc/data.keyfile
+          sudo chmod 0400 /mnt/etc/data.keyfile
+        fi
       ''
     )
   ];

@@ -93,9 +93,10 @@
         ];
         homeManagerModules = [inputs.hyprland.homeManagerModules.default];
       };
-      iso = lib.mkNixOS rec {
+      dot_iso = lib.mkNixOS rec {
         username = "nixos";
-        profile = "iso";
+        is_iso = true;
+        profile = "dot_iso";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
         nixosModules = [
