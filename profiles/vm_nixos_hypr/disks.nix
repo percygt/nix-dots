@@ -9,7 +9,8 @@
           partitions = {
             ESP = {
               label = "ESP";
-              size = "1024M";
+              start = "0%";
+              end = "512MiB";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -18,12 +19,10 @@
               };
             };
             root = {
-              start = "1024M";
-              end = "100%";
+              size = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
-                mountpoint = "/";
                 subvolumes = {
                   "root" = {
                     mountOptions = ["compress=lzo"];
