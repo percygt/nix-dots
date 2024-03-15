@@ -8,5 +8,4 @@
     ./qt.nix
     ./shell.nix
   ];
-
 }
