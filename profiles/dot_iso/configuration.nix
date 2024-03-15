@@ -105,8 +105,8 @@ in {
 
         TARGET_HOST=$(ls -1 ~/nix-dots/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${profile} | gum choose)
 
-        if [  -e "profiles/$TARGET_HOST/disks.nix" ]; then
-          echo "ERROR! $(basename "$0") could not find the required profiles/$TARGET_HOST/disks.nix"
+        if [  -e "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix" ]; then
+          echo "ERROR! $(basename "$0") could not find the required $HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
           exit 1
         fi
         gum confirm  --default=false \
@@ -118,9 +118,9 @@ in {
           --no-write-lock-file \
           -- \
           --mode zap_create_mount \
-          "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
+          "profiles/$TARGET_HOST/disks.nix"
 
-        sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
+        sudo nixos-install --flake ".#$TARGET_HOST"
         DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
 
         # Rsync my nix-config to the target install
