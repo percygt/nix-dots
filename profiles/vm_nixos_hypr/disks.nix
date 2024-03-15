@@ -19,7 +19,7 @@
             };
             root = {
               start = "1024M";
-              end = "20M";
+              end = "20G";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
@@ -70,6 +70,15 @@
                     mountpoint = "/var/lib/AccountsService";
                   };
                 };
+              };
+            };
+            data = {
+              start = "20G";
+              end = "100%";
+              content = {
+                type = "btrfs";
+                extraArgs = ["-L" "DATA" "-f"];
+                mountpoint = "/data";
               };
             };
           };
