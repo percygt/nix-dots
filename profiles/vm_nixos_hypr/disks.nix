@@ -19,7 +19,7 @@
             };
             root = {
               start = "1024M";
-              end = "20G";
+              end = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
@@ -72,15 +72,15 @@
                 };
               };
             };
-            data = {
-              start = "20G";
-              end = "100%";
-              content = {
-                type = "btrfs";
-                extraArgs = ["-L" "DATA" "-f"];
-                mountpoint = "/data";
-              };
-            };
+            # data = {
+            #   start = "20G";
+            #   end = "100%";
+            #   content = {
+            #     type = "btrfs";
+            #     extraArgs = ["-L" "DATA" "-f"];
+            #     mountpoint = "/data";
+            #   };
+            # };
           };
         };
       };
