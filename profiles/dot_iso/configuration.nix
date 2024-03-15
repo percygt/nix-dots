@@ -65,8 +65,6 @@
     ];
   };
   environment.systemPackages = with pkgs; [
-    eza
-    bat
     gum
     rsync
     (

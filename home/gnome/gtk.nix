@@ -1,4 +1,3 @@
-# home.nix
 {
   pkgs,
   config,
@@ -17,7 +16,6 @@
   pkg-colloid-gtk-theme = pkgs.colloid-gtk-theme.overrideAttrs (oldAttrs: {
     installPhase = ''
       runHook preInstall
-
       # override colors
       sed -i "s\#0d0e11\#${colors.default.background}\g" ./src/sass/_color-palette-nord.scss
       sed -i "s\#bf616a\#${colors.bright.red}\g" ./src/sass/_color-palette-nord.scss
@@ -27,14 +25,11 @@
       sed -i "s\#333a47\#${colors.extra.nocturne}\g" ./src/sass/_color-palette-nord.scss
       sed -i "s\#242932\#${colors.extra.nocturne}\g" ./src/sass/_color-palette-nord.scss
       sed -i "s\#1e222a\#${colors.extra.obsidian}\g" ./src/sass/_color-palette-nord.scss
-
       name= HOME="$TMPDIR" ./install.sh \
         --color dark \
         --tweaks rimless nord \
         --dest $out/share/themes
-
       jdupes --quiet --link-soft --recurse $out/share
-
       runHook postInstall
     '';
   });
@@ -85,6 +80,9 @@ in {
   };
 
   home = {
+    packages = with pkgs; [
+      ffmpegthumbnailer
+    ];
     activation = {
       cpGtkThemeIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
         [ -e "${HOME_THEMES}/${THEME}" ] || cp -r "${pkg-colloid-gtk-theme}/share/themes/." "${HOME_THEMES}/"

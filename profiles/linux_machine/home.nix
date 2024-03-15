@@ -8,9 +8,9 @@
     "shell"
     "nix.nix"
     "fonts.nix"
-    "starship.nix"
-    "yazi.nix"
-    "direnv.nix"
+    "cli/starship.nix"
+    "cli/yazi.nix"
+    "cli/direnv.nix"
   ];
 in {
   imports = listImports ../../home modules;

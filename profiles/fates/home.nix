@@ -13,18 +13,29 @@
     "terminal"
     "nix.nix"
     "fonts.nix"
-    "tmux.nix"
     "vscodium.nix"
-    "starship.nix"
-    "yazi.nix"
-    "direnv.nix"
-    "cli.nix"
-    "nixtools.nix"
-    "zathura.nix"
+    "cli"
+    "cli/tmux.nix"
+    "cli/starship.nix"
+    "cli/yazi.nix"
+    "cli/bat.nix"
+    "cli/direnv.nix"
+    "cli/eza.nix"
+    "cli/fzf.nix"
+    "cli/extra.nix"
+    "cli/tui.nix"
+    "cli/nixtools.nix"
   ];
 in {
   imports = listImports ../../home modules;
   targets.genericLinux.enable = true;
+  home.packages = with pkgs; [
+    gnomeExtensions.fedora-linux-update-indicator
+    nautilus-open-any-terminal
+    gnome-extension-manager
+    gnome.gnome-tweaks
+    gnome.dconf-editor
+  ];
   home.shellAliases = {
     hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'$hostname";
   };
@@ -44,11 +55,4 @@ in {
       use-buildin-icons = false;
     };
   };
-  home.packages = with pkgs; [
-    gnomeExtensions.fedora-linux-update-indicator
-    nautilus-open-any-terminal
-    gnome-extension-manager
-    gnome.gnome-tweaks
-    gnome.dconf-editor
-  ];
 }
