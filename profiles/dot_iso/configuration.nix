@@ -118,7 +118,7 @@ in {
           --no-write-lock-file \
           -- \
           --mode zap_create_mount \
-          "./profiles/$TARGET_HOST/disks.nix"
+          $HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
 
         sudo nixos-install --flake ".#$TARGET_HOST"
         DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
