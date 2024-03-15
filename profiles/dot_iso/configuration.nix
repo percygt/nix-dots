@@ -118,21 +118,22 @@ in {
           --no-write-lock-file \
           -- \
           --mode zap_create_mount \
-          "profiles/$TARGET_HOST/disks.nix"
+          "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
 
-        sudo nixos-install --flake ".#$TARGET_HOST"
-        DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
-
-        # Rsync my nix-config to the target install
-        mkdir -p "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
-
-        # If there is a keyfile for a data disks, put copy it to the root partition and
-        # ensure the permissions are set appropriately.
-        if [[ -f "/tmp/data.keyfile" ]]; then
-          sudo cp /tmp/data.keyfile /mnt/etc/data.keyfile
-          sudo chmod 0400 /mnt/etc/data.keyfile
-        fi
+        sudo nixos-install --flake "$HOME/nix-dots.#$TARGET_HOST"
+        
+        # DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
+        #
+        # # Rsync my nix-config to the target install
+        # mkdir -p "/mnt/home/${target_user}/nix-dots"
+        # rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
+        #
+        # # If there is a keyfile for a data disks, put copy it to the root partition and
+        # # ensure the permissions are set appropriately.
+        # if [[ -f "/tmp/data.keyfile" ]]; then
+        #   sudo cp /tmp/data.keyfile /mnt/etc/data.keyfile
+        #   sudo chmod 0400 /mnt/etc/data.keyfile
+        # fi
       ''
     )
   ];
