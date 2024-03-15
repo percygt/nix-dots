@@ -1,9 +1,10 @@
-{
-  syft = {
-    default = {
-      foreground = "96c7f1"; # [#96c7f1]
-      background = "00051A"; # [#00051A]
-    };
+{lib, ...}: let
+  inherit (import ./lib.nix {inherit lib;}) x hexToRgb;
+  colors = import ./colors.nix;
+in {
+  hex = colors;
+  rgb = {
+    default = builtins.mapAttrs (name: value: (hexToRgb (x value))) colors.default;
     alpha = 0.9;
     bold = "a1d408"; # [#a1d408]
     cursor = {

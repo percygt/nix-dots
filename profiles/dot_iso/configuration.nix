@@ -49,7 +49,7 @@
     extraConfig = ''
       Host gitlab.com
         PreferredAuthentications publickey
-        IdentityFile ~/.ssh/id_ed25519_glab
+        IdentityFile /etc/ssh/id_ed25519_glab
     '';
     knownHosts."gitlab.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
   };
@@ -59,8 +59,8 @@
     appendToMenuLabel = " live";
     contents = [
       {
-        source = ~/.ssh;
-        target = "/.ssh";
+        source = ~/.ssh/id_ed25519_glab;
+        target = "/id_ed25519_glab";
       }
     ];
   };
@@ -82,11 +82,11 @@
 
         if [ ! -d "${flakeDirectory}/.git" ]; then
           # Define source and destination directories
-          source_dir="/iso/.ssh"
-          destination_dir="/home/$USER/"
+          source_dir="/iso/id_ed25519_glab"
+          destination_dir="/etc/ssh/"
           if [ -e "$source_dir" ]; then
             # Copy .ssh directory to the destination directory
-            cp -rf "$source_dir" "$destination_dir"
+            sudo cp "$source_dir" "$destination_dir"
             sleep 3
             git clone --recurse-submodule git@gitlab.com:percygt/nix-dots.git
             sleep 2
@@ -115,7 +115,7 @@
           "profiles/$TARGET_HOST/disk.nix"
 
         sudo nixos-install --flake ".#$TARGET_HOST"
-        DIR=$( cd "$( dirname "'${BASH_SOURCE [0]}" )" && pwd )
+        DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
 
         # Rsync my nix-config to the target install
         mkdir -p "/mnt/home/${target_user}/nix-dots"

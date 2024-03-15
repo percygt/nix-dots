@@ -10,13 +10,11 @@
     username,
     pkgs,
     profile,
-    is_iso,
   }: rec {
     homeDirectory = "/home/${username}";
     flakeDirectory = "${homeDirectory}/nix-dots";
     stateVersion = "23.11";
     colors = (import ./colors.nix).syft;
-    targer_user = "percygt"; # for iso
     home-manager = {
       programs.home-manager.enable = true;
       manual = {
@@ -42,7 +40,7 @@
       };
     };
 
-    configuration = {
+    nixos-configuration = {
       users.users.${username} = {
         shell = "${pkgs.fish}/bin/fish";
         home = homeDirectory;
@@ -85,20 +83,18 @@
       system.stateVersion = stateVersion;
     };
 
-    args =
-      {
-        inherit
-          inputs
-          username
-          profile
-          pkgs
-          colors
-          listImports
-          flakeDirectory
-          homeDirectory
-          ;
-      }
-      // lib.optionalAttrs is_iso {inherit targer_user;};
+    args = {
+      inherit
+        inputs
+        username
+        profile
+        pkgs
+        colors
+        listImports
+        flakeDirectory
+        homeDirectory
+        ;
+    };
   };
 in {
   mkNixOS = {
@@ -110,16 +106,17 @@ in {
     homeManagerModules ? [],
     is_laptop ? false,
     is_iso ? false,
+    target_user ? defaultUsername, # for iso
   }: let
-    default = mkDefault {inherit is_iso username pkgs profile;};
+    default = mkDefault {inherit username pkgs profile;};
   in
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = default.args // {inherit is_laptop;};
+      specialArgs = default.args // {inherit is_laptop;} // lib.optionalAttrs is_iso {inherit target_user;};
       modules =
         nixosModules
         ++ [
-          default.configuration
+          default.nixos-configuration
           ../profiles/${profile}/configuration.nix
           {
             home-manager = {
@@ -146,9 +143,8 @@ in {
     homeManagerModules ? [],
     standalone_home ? false,
     is_laptop ? false,
-    is_iso ? false,
   }: let
-    default = mkDefault {inherit username pkgs profile is_iso;};
+    default = mkDefault {inherit username pkgs profile;};
   in
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
