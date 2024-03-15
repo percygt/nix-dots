@@ -25,7 +25,7 @@
         "#${colors.bright.white}"
       ];
       audible-bell = true;
-      background-transparency-percent = 10;
+      background-transparency-percent = (1 - colors.alpha) * 100;
       bold-color-same-as-fg = false;
       bold-is-bright = true;
       cursor-colors-set = true;

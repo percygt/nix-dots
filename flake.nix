@@ -1,5 +1,5 @@
 {
-  description = "PercyGT's nix home-manager";
+  description = "PercyGT's nix config";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -8,7 +8,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    
+
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland-contrib.url = "github:hyprwm/contrib";
     hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,10 +27,10 @@
     ...
   } @ inputs: let
     nix-personal = nixpkgs.lib.optional (builtins.pathExists ./personal) ./personal;
+
     overlays = {
       extra = final: prev:
         import ./packages {pkgs = final;};
-
       nodePackages-extra = final: prev: {
         nodePackages-extra = import ./packages/node {
           pkgs = prev;
@@ -58,7 +58,7 @@
         }
     );
 
-    lib = import ./lib {inherit inputs;};
+    libx = import ./lib {inherit inputs;};
   in {
     inherit overlays legacyPackages;
 
@@ -73,7 +73,7 @@
     templates = import ./templates;
 
     nixosConfigurations = {
-      fates = lib.mkNixOS rec {
+      fates = libx.mkNixOS rec {
         profile = "fates";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
@@ -83,7 +83,7 @@
         ];
         homeManagerModules = [inputs.hyprland.homeManagerModules.default];
       };
-      vm_nixos_hypr = lib.mkNixOS rec {
+      vm_nixos_hypr = libx.mkNixOS rec {
         profile = "vm_nixos_hypr";
         system = "x86_64-linux";
         pkgs = legacyPackages.${system};
@@ -93,7 +93,7 @@
         ];
         homeManagerModules = [inputs.hyprland.homeManagerModules.default];
       };
-      dot_iso = lib.mkNixOS rec {
+      dot_iso = libx.mkNixOS rec {
         username = "nixos";
         is_iso = true;
         profile = "dot_iso";
@@ -109,7 +109,7 @@
     };
 
     homeConfigurations = {
-      ivlivs = lib.mkHomeManager {
+      ivlivs = libx.mkHomeManager {
         profile = "fates";
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules =
@@ -118,24 +118,23 @@
             inputs.sops-nix.homeManagerModules.sops
           ];
       };
-      vm_nixos_hypr = lib.mkHomeManager {
+      vm_nixos_hypr = libx.mkHomeManager {
         profile = "vm_nixos_hypr";
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = [inputs.hyprland.homeManagerModules.default] ++ nix-personal;
       };
-      generic_linux = lib.mkHomeManager {
+      generic_linux = libx.mkHomeManager {
         profile = "linux_machine";
         pkgs = legacyPackages.x86_64-linux;
-        homeManagerModules = nix-personal;
       };
-      furies = lib.mkHomeManager {
+      furies = libx.mkHomeManager {
         profile = "furies";
         standalone_home = true;
         is_laptop = true;
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;
       };
-      fates = lib.mkHomeManager {
+      fates = libx.mkHomeManager {
         profile = "fates";
         standalone_home = true;
         pkgs = legacyPackages.x86_64-linux;

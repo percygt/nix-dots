@@ -262,7 +262,7 @@ in {
       app-shift-hotkey-kp-9 = ["<Shift><Alt><Super>KP_9"];
       appicon-margin = 0;
       appicon-padding = 6;
-      available-monitors = [1 0];
+      # available-monitors = [1 0];
       desktop-line-use-custom-color = false;
       dot-position = "TOP";
       dot-style-focused = "SQUARES";
@@ -297,7 +297,7 @@ in {
       panel-sizes = ''
         {"0":28,"1":28}
       '';
-      primary-monitor = 1;
+      # primary-monitor = 1;
       progress-show-count = false;
       secondarymenu-contains-showdetails = true;
       shortcut = ["<Super>q"];

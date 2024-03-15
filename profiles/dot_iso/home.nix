@@ -10,7 +10,6 @@
     "cli/eza.nix"
     "cli/fzf.nix"
     "cli/bat.nix"
-    "cli/starship.nix"
     "cli/yazi.nix"
     "cli/nixtools.nix"
   ];
