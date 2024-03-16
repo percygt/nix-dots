@@ -9,8 +9,8 @@
           partitions = {
             ESP = {
               label = "ESP";
-              start = "0%";
-              end = "512MiB";
+              start = "1MiB";
+              end = "1GiB";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -19,11 +19,12 @@
               };
             };
             root = {
-              size = "100%";
+              start = "1GiB";
+              end = "20GiB";
               content = {
                 type = "btrfs";
-                mountpoint = "/";
                 extraArgs = ["-L" "NIXOS" "-f"];
+                mountpoint = "/";
                 subvolumes = {
                   "home" = {
                     mountOptions = ["compress=lzo"];
@@ -72,15 +73,15 @@
                 };
               };
             };
-            # data = {
-            #   start = "20G";
-            #   end = "100%";
-            #   content = {
-            #     type = "btrfs";
-            #     extraArgs = ["-L" "DATA" "-f"];
-            #     mountpoint = "/data";
-            #   };
-            # };
+            data = {
+              start = "20GiB";
+              end = "100%";
+              content = {
+                type = "btrfs";
+                extraArgs = ["-L" "DATA" "-f"];
+                mountpoint = "/data";
+              };
+            };
           };
         };
       };
