@@ -18,7 +18,7 @@
               };
             };
             primary = {
-              size = "100%";
+              size = "20000M";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
