@@ -19,7 +19,8 @@
               };
             };
             root = {
-              size = "100%";
+              start = "512MiB";
+              end = "20GiB";
               content = {
                 type = "btrfs";
                 mountpoint = "/";
@@ -72,15 +73,15 @@
                 };
               };
             };
-            # data = {
-            #   start = "20G";
-            #   end = "100%";
-            #   content = {
-            #     type = "btrfs";
-            #     extraArgs = ["-L" "DATA" "-f"];
-            #     mountpoint = "/data";
-            #   };
-            # };
+            data = {
+              start = "20G";
+              end = "100%";
+              content = {
+                type = "btrfs";
+                extraArgs = ["-L" "DATA" "-f"];
+                mountpoint = "/data";
+              };
+            };
           };
         };
       };
