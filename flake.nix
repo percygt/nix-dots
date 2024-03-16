@@ -58,7 +58,7 @@
         }
     );
 
-    libx = import ./lib {inherit self inputs;};
+    libx = import ./lib {inherit inputs;};
   in {
     inherit overlays legacyPackages;
 
