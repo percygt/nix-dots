@@ -72,15 +72,15 @@
                 };
               };
             };
-            # data = {
-            #   size = "100%";
-            #   content = {
-            #     type = "btrfs";
-            #     extraArgs = ["-L" "DATA" "-f"];
-            #     mountpoint = "/data";
-            #     mountOptions = ["compress=lzo"];
-            #   };
-            # };
+            secondary = {
+              size = "100%";
+              content = {
+                type = "btrfs";
+                extraArgs = ["-L" "DATA" "-f"];
+                mountpoint = "/data";
+                mountOptions = ["compress=lzo"];
+              };
+            };
           };
         };
       };
