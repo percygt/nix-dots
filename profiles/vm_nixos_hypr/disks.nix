@@ -9,8 +9,7 @@
           partitions = {
             ESP = {
               label = "ESP";
-              start = "1MiB";
-              end = "1GiB";
+              size = "1GiB";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -19,8 +18,7 @@
               };
             };
             root = {
-              start = "1GiB";
-              end = "60%";
+              size = "20GiB";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
@@ -75,8 +73,7 @@
               };
             };
             data = {
-              start = "60%";
-              end = "100%";
+              size = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "DATA" "-f"];
