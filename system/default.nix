@@ -1,33 +1,57 @@
 {
   stateVersion,
   hostName,
+  pkgs,
+  lib,
+  outputs,
+  username,
   ...
 }: {
-  time.timeZone = "Asia/Manila";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_PH.UTF-8";
-    LC_IDENTIFICATION = "en_PH.UTF-8";
-    LC_MEASUREMENT = "en_PH.UTF-8";
-    LC_MONETARY = "en_PH.UTF-8";
-    LC_NAME = "en_PH.UTF-8";
-    LC_NUMERIC = "en_PH.UTF-8";
-    LC_PAPER = "en_PH.UTF-8";
-    LC_TELEPHONE = "en_PH.UTF-8";
-    LC_TIME = "en_PH.UTF-8";
-  };
-  console.keyMap = "us";
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.variant = "";
-  };
+  imports = [
+    ./common
+    ./services
+  ];
   networking = {
     inherit hostName;
+    useDHCP = lib.mkDefault true;
   };
+
+  programs = {
+    fish.enable = true;
+  };
+
+  services = {
+    chrony.enable = true;
+    journald.extraConfig = "SystemMaxUse=250M";
+  };
+
+  security = {
+    polkit.enable = true;
+    rtkit.enable = true;
+  };
+
   nixpkgs = {
+    overlays = builtins.attrValues outputs.overlays;
     config = {
       allowUnfree = true;
+      config.permittedInsecurePackages = [
+        "electron-25.9.0"
+      ];
     };
   };
-  system.stateVersion = stateVersion;
+
+  # Create dirs for home-manager
+  systemd.tmpfiles.rules = [
+    "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"
+  ];
+
+  system = {
+    inherit stateVersion;
+    activationScripts.diff = {
+      supportsDryActivation = true;
+      text = ''
+        ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff /run/current-system "$systemConfig"
+      '';
+    };
+  };
 }

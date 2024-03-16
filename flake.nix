@@ -26,81 +26,44 @@
     self,
     ...
   } @ inputs: let
-    nix-personal = nixpkgs.lib.optional (builtins.pathExists ./personal) ./personal;
-
-    overlays = {
-      extra = final: prev:
-        import ./packages {pkgs = final;};
-      nodePackages-extra = final: prev: {
-        nodePackages-extra = import ./packages/node {
-          pkgs = prev;
-          inherit (prev) system;
-          nodejs = prev.nodejs_20;
-        };
-      };
-      nix-stash = inputs.nix-stash.overlays.default;
-      neovim-nightly = inputs.neovim-nightly-overlay.overlay;
-    };
-
-    forEachSystem = nixpkgs.lib.genAttrs [
-      "x86_64-linux"
-    ];
-
-    legacyPackages = forEachSystem (
-      system:
-        import nixpkgs {
-          inherit system;
-          overlays = builtins.attrValues overlays;
-          config = {
-            allowUnfree = true;
-            allowUnfreePredicate = _: true;
-          };
-        }
-    );
-
+    inherit (self) outputs;
     defaultUser = "percygt";
     stateVersion = "23.11";
-
-    libx = import ./lib {inherit self inputs defaultUser stateVersion;};
+    nix-personal = nixpkgs.lib.optional (builtins.pathExists ./personal) ./personal;
+    libx = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
   in {
-    inherit overlays legacyPackages;
+    overlays = import ./overlays.nix {inherit inputs;};
+    
+    formatter = libx.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-    formatter = forEachSystem (system: legacyPackages.${system}.alejandra);
+    packages = libx.forEachSystem (system: (import ./packages {pkgs = nixpkgs.legacyPackages.${system};}));
 
-    packages = forEachSystem (system: (import ./packages {pkgs = legacyPackages.${system};}));
-
-    devShells = forEachSystem (system: (import ./shell.nix {
-      pkgs = legacyPackages.${system};
+    devShells = libx.forEachSystem (system: (import ./shell.nix {
+      pkgs = nixpkgs.legacyPackages.${system};
     }));
 
     templates = import ./templates;
 
     nixosConfigurations = {
-      fates = libx.mkNixOS rec {
+      fates = libx.mkNixOS {
         profile = "fates";
-        system = "x86_64-linux";
-        pkgs = legacyPackages.${system};
         nixosModules = [
           inputs.home-manager.nixosModules.default
           inputs.disko.nixosModules.disko
         ];
         homeManagerModules = [inputs.hyprland.homeManagerModules.default];
       };
-      vm_nixos_hypr = libx.mkNixOS rec {
+      vm_nixos_hypr = libx.mkNixOS {
         profile = "vm_nixos_hypr";
-        system = "x86_64-linux";
-        pkgs = legacyPackages.${system};
         nixosModules = [
           inputs.home-manager.nixosModules.default
           inputs.disko.nixosModules.disko
         ];
         homeManagerModules = [inputs.hyprland.homeManagerModules.default];
       };
-      dot_iso = libx.mkNixOS rec {
+      dot_iso = libx.mkNixOS {
         is_iso = true;
         profile = "dot_iso";
-        system = "x86_64-linux";
-        pkgs = legacyPackages.${system};
         nixosModules = [
           {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
@@ -113,7 +76,6 @@
     homeConfigurations = {
       ivlivs = libx.mkHomeManager {
         profile = "fates";
-        pkgs = legacyPackages.x86_64-linux;
         homeManagerModules =
           nix-personal
           ++ [
@@ -122,7 +84,6 @@
       };
       vm_nixos_hypr = libx.mkHomeManager {
         profile = "vm_nixos_hypr";
-        pkgs = legacyPackages.x86_64-linux;
         homeManagerModules =
           nix-personal
           ++ [
@@ -133,13 +94,11 @@
         profile = "furies";
         is_generic_linux = true;
         is_laptop = true;
-        pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;
       };
       fates = libx.mkHomeManager {
         profile = "fates";
         is_generic_linux = true;
-        pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;
       };
     };

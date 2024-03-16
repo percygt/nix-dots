@@ -1,11 +1,12 @@
 {
-  services = {
-    openssh = {
-      enable = true;
-      settings.UseDns = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
     };
-
-    # DNS resolver
-    resolved.enable = true;
   };
+
+  programs.ssh.startAgent = true;
+  networking.firewall.allowedTCPPorts = [22];
 }

@@ -5,8 +5,7 @@
   ...
 }: let
   modules = [
-    "core"
-    "core/grub.nix"
+    "common"
     "network"
     "hardware"
     "hardware/intel.nix"

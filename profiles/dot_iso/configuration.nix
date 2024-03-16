@@ -2,29 +2,12 @@
   pkgs,
   lib,
   flakeDirectory,
-  profile,
+  hostName,
   target_user,
-  listImports,
   ...
-}: let
-  modules = [
-    "core/console.nix"
-  ];
-in {
-  imports = listImports ../../system modules;
+}: {
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
-  };
-  # network
-  hardware.opengl = {
-    extraPackages = with pkgs; [
-      mesa
-    ];
-  };
-
-  nix = {
-    settings.experimental-features = ["nix-command" "flakes"];
-    extraOptions = "experimental-features = nix-command flakes";
   };
 
   boot = {
@@ -45,9 +28,6 @@ in {
       hibernate.enable = false;
       hybrid-sleep.enable = false;
     };
-  };
-  networking = {
-    hostName = profile;
   };
   programs.git.enable = true;
   programs.ssh = {
@@ -71,7 +51,6 @@ in {
     ];
   };
   environment.systemPackages = with pkgs; [
-    rsync
     gum
     (
       writeShellScriptBin "nix_install"
@@ -103,17 +82,17 @@ in {
           fi
         fi
 
-        TARGET_HOST=$(ls -1 ~/nix-dots/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${profile} | gum choose)
+        TARGET_HOST=$(ls -1 ~/nix-dots/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
 
         if [ ! -e "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix" ]; then
           echo "ERROR! $(basename "$0") could not find the required $HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
           exit 1
         fi
-        
+
         if grep -q "data.keyfile" "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"; then
           echo -n "$(head -c32 /dev/random | base64)" > /tmp/data.keyfile
         fi
-        
+
         gum confirm  --default=false \
           "WARNING!!!! This will ERASE ALL DATA on the disks $TARGET_HOST. Are you sure you want to continue?"
 
