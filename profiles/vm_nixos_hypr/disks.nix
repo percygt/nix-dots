@@ -20,11 +20,14 @@
             };
             root = {
               start = "1GiB";
-              end = "20GiB";
+              end = "60%";
+              type = "partition";
+              part-type = "primary";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
                 mountpoint = "/";
+                mountOptions = ["discard" "noatime"];
                 subvolumes = {
                   "home" = {
                     mountOptions = ["compress=lzo"];
@@ -73,15 +76,15 @@
                 };
               };
             };
-            # data = {
-            #   start = "20GiB";
-            #   end = "100%";
-            #   content = {
-            #     type = "btrfs";
-            #     extraArgs = ["-L" "DATA" "-f"];
-            #     mountpoint = "/data";
-            #   };
-            # };
+            data = {
+              start = "60%";
+              end = "100%";
+              content = {
+                type = "btrfs";
+                extraArgs = ["-L" "DATA" "-f"];
+                mountpoint = "/data";
+              };
+            };
           };
         };
       };
