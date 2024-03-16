@@ -1,76 +1,57 @@
 {
   inputs,
+  self,
+  defaultUser,
+  stateVersion,
   ...
 }: let
   inherit (inputs.nixpkgs) lib;
-  listImports = path: modules:
-    lib.forEach modules (
-      mod:
-        path + "/${mod}"
-    );
-  defaultUsername = "percygt";
   mkDefault = {
-    username,
     pkgs,
     profile,
+    is_iso,
+    homeManagerModules,
   }: rec {
+    username =
+      if is_iso
+      then "nixos"
+      else defaultUser;
     homeDirectory = "/home/${username}";
     flakeDirectory = "${homeDirectory}/nix-dots";
-    stateVersion = "23.11";
     colors = import ./colors.nix;
-    nixos-configuration = {
-      users.users.${username} = {
-        shell = "${pkgs.fish}/bin/fish";
-        isNormalUser = true;
-        extraGroups = [
-          "input"
-          "networkmanager"
-          "video"
-          "wheel"
-          "audio"
-          "git"
-        ];
-      };
-      time.timeZone = "Asia/Manila";
-      i18n.defaultLocale = "en_US.UTF-8";
-      i18n.extraLocaleSettings = {
-        LC_ADDRESS = "en_PH.UTF-8";
-        LC_IDENTIFICATION = "en_PH.UTF-8";
-        LC_MEASUREMENT = "en_PH.UTF-8";
-        LC_MONETARY = "en_PH.UTF-8";
-        LC_NAME = "en_PH.UTF-8";
-        LC_NUMERIC = "en_PH.UTF-8";
-        LC_PAPER = "en_PH.UTF-8";
-        LC_TELEPHONE = "en_PH.UTF-8";
-        LC_TIME = "en_PH.UTF-8";
-      };
-      console.keyMap = "us";
-      services.xserver = {
-        xkb.layout = "us";
-        xkb.variant = "";
-      };
-      networking = {
-        hostName = profile;
-      };
-      nixpkgs = {
-        config = {
-          allowUnfree = true;
-        };
-      };
-      system.stateVersion = stateVersion;
-    };
+    listImports = path: modules:
+      lib.forEach modules (
+        mod:
+          path + "/${mod}"
+      );
+    
+    hostname = profile;
 
-    args = {
-      inherit
-        inputs
-        username
-        profile
-        pkgs
-        colors
-        listImports
-        flakeDirectory
-        homeDirectory
-        ;
+    args =
+      {
+        inherit
+          self
+          inputs
+          username
+          hostname
+          # pkgs
+          colors
+          listImports
+          flakeDirectory
+          homeDirectory
+          stateVersion
+          ;
+      }
+      // lib.optionalAttrs is_iso {target_user = defaultUser;};
+    homeConfigs =
+      homeManagerModules
+      ++ [
+        ../home
+        ../profiles/${profile}/home.nix
+      ];
+
+    users.${username} = {
+      imports = homeConfigs;
     };
   };
 in {
@@ -78,35 +59,26 @@ in {
     profile,
     pkgs,
     system,
-    username ? defaultUsername,
     nixosModules ? [],
     homeManagerModules ? [],
     is_laptop ? false,
     is_iso ? false,
-    target_user ? defaultUsername, # for iso
   }: let
-    default = mkDefault {inherit username pkgs profile;};
+    default = mkDefault {inherit pkgs profile homeManagerModules is_iso;};
   in
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = default.args // {inherit is_laptop;} // lib.optionalAttrs is_iso {inherit target_user;};
+      specialArgs = default.args // {inherit is_laptop;};
       modules =
         nixosModules
         ++ [
-          default.nixos-configuration
+          ../system
           ../profiles/${profile}/configuration.nix
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.${username} = {
-                imports =
-                  homeManagerModules
-                  ++ [
-                    ../home
-                    ../profiles/${profile}/home.nix
-                  ];
-              };
+              inherit (default) users;
               extraSpecialArgs = default.args // {inherit is_laptop;};
             };
           }
@@ -116,21 +88,16 @@ in {
   mkHomeManager = {
     profile,
     pkgs,
-    username ? defaultUsername,
     homeManagerModules ? [],
-    standalone_home ? false,
+    is_generic_linux ? false,
     is_laptop ? false,
+    is_iso ? false,
   }: let
-    default = mkDefault {inherit username pkgs profile;};
+    default = mkDefault {inherit pkgs profile homeManagerModules is_iso;};
   in
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      modules =
-        homeManagerModules
-        ++ [
-          ../home
-          ../profiles/${profile}/home.nix
-        ];
-      extraSpecialArgs = default.args // {inherit standalone_home is_laptop;};
+      modules = default.homeConfigs;
+      extraSpecialArgs = default.args // {inherit is_generic_linux is_laptop;};
     };
 }

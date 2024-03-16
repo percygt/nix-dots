@@ -1,13 +1,13 @@
 {
   pkgs,
   colors,
-  standalone_home,
+  is_generic_linux,
   ...
 }: {
   programs.wezterm = {
     enable = true;
     package =
-      if standalone_home
+      if is_generic_linux
       then pkgs.stash.wezterm_wrapped
       else pkgs.stash.wezterm_nightly;
     colorSchemes = {

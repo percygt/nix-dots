@@ -58,7 +58,10 @@
         }
     );
 
-    libx = import ./lib {inherit inputs;};
+    defaultUser = "percygt";
+    stateVersion = "23.11";
+
+    libx = import ./lib {inherit self inputs defaultUser stateVersion;};
   in {
     inherit overlays legacyPackages;
 
@@ -94,7 +97,6 @@
         homeManagerModules = [inputs.hyprland.homeManagerModules.default];
       };
       dot_iso = libx.mkNixOS rec {
-        username = "nixos";
         is_iso = true;
         profile = "dot_iso";
         system = "x86_64-linux";
@@ -121,22 +123,22 @@
       vm_nixos_hypr = libx.mkHomeManager {
         profile = "vm_nixos_hypr";
         pkgs = legacyPackages.x86_64-linux;
-        homeManagerModules = [inputs.hyprland.homeManagerModules.default] ++ nix-personal;
-      };
-      generic_linux = libx.mkHomeManager {
-        profile = "linux_machine";
-        pkgs = legacyPackages.x86_64-linux;
+        homeManagerModules =
+          nix-personal
+          ++ [
+            inputs.sops-nix.homeManagerModules.sops
+          ];
       };
       furies = libx.mkHomeManager {
         profile = "furies";
-        standalone_home = true;
+        is_generic_linux = true;
         is_laptop = true;
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;
       };
       fates = libx.mkHomeManager {
         profile = "fates";
-        standalone_home = true;
+        is_generic_linux = true;
         pkgs = legacyPackages.x86_64-linux;
         homeManagerModules = nix-personal;
       };

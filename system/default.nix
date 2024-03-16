@@ -1,6 +1,6 @@
 {
   stateVersion,
-  profile,
+  hostName,
   ...
 }: {
   time.timeZone = "Asia/Manila";
@@ -22,7 +22,7 @@
     xkb.variant = "";
   };
   networking = {
-    hostName = profile;
+    inherit hostName;
   };
   nixpkgs = {
     config = {
