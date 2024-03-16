@@ -77,11 +77,13 @@
               label = "luks";
               content = {
                 type = "luks";
-                name = "cryptroot";
                 settings = {
                   allowDiscards = true;
-                  keyFile = "/tmp/secret.key";
+                  keyFile = "/tmp/data.keyfile";
                 };
+                # Don't try to unlock this drive early in the boot.
+                initrdUnlock = false;
+                name = "data";
                 label = "DATA";
                 content = {
                   type = "filesystem";

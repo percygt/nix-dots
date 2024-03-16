@@ -109,8 +109,13 @@ in {
           echo "ERROR! $(basename "$0") could not find the required $HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
           exit 1
         fi
+        
+        if grep -q "data.keyfile" "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"; then
+          echo -n "$(head -c32 /dev/random | base64)" > /tmp/data.keyfile
+        fi
+        
         gum confirm  --default=false \
-          "🔥 🔥 🔥 WARNING!!!! This will ERASE ALL DATA on the disks $TARGET_HOST. Are you sure you want to continue?"
+          "WARNING!!!! This will ERASE ALL DATA on the disks $TARGET_HOST. Are you sure you want to continue?"
 
         echo "Partitioning Disks"
         sudo nix run github:nix-community/disko \
@@ -121,7 +126,7 @@ in {
           "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
 
         sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
-        
+
         DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
         echo $DIR
 
