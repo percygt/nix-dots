@@ -18,11 +18,12 @@
               };
             };
             primary = {
-              size = "20000M";
+              size = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
                 mountpoint = "/";
+                mountOptions = ["defaults"];
                 subvolumes = {
                   "home" = {
                     mountOptions = ["compress=lzo"];
@@ -71,15 +72,15 @@
                 };
               };
             };
-            data = {
-              size = "100%";
-              content = {
-                type = "btrfs";
-                extraArgs = ["-L" "DATA" "-f"];
-                mountpoint = "/data";
-                mountOptions = ["compress=lzo"];
-              };
-            };
+            # data = {
+            #   size = "100%";
+            #   content = {
+            #     type = "btrfs";
+            #     extraArgs = ["-L" "DATA" "-f"];
+            #     mountpoint = "/data";
+            #     mountOptions = ["compress=lzo"];
+            #   };
+            # };
           };
         };
       };
