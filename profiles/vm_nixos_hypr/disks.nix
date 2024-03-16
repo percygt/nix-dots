@@ -74,12 +74,21 @@
             };
             data = {
               size = "100%";
-              label = "DATA";
+              label = "luks";
               content = {
-                type = "filesystem";
-                format = "btrfs";
-                mountpoint = "/data";
-                mountOptions = ["compress=lzo"];
+                type = "luks";
+                name = "cryptroot";
+                settings = {
+                  allowDiscards = true;
+                  keyFile = "/tmp/secret.key";
+                };
+                label = "DATA";
+                content = {
+                  type = "filesystem";
+                  format = "btrfs";
+                  mountpoint = "/data";
+                  mountOptions = ["compress=lzo" "x-gvfs-show"];
+                };
               };
             };
           };
