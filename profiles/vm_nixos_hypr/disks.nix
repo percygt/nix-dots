@@ -87,6 +87,7 @@
                 content = {
                   type = "filesystem";
                   format = "btrfs";
+                  extraArgs = ["-L" "DATA" "-f"];
                   mountpoint = "/data";
                   mountOptions = ["compress=lzo" "x-gvfs-show"];
                 };
