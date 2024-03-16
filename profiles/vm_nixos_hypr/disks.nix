@@ -84,7 +84,6 @@
                 # Don't try to unlock this drive early in the boot.
                 initrdUnlock = false;
                 name = "data";
-                label = "DATA";
                 content = {
                   type = "filesystem";
                   format = "btrfs";
