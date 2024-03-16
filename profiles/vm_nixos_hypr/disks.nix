@@ -18,7 +18,7 @@
               };
             };
             primary = {
-              size = "20000M";
+              size = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
@@ -73,7 +73,7 @@
               };
             };
             secondary = {
-              size = "5000M";
+              end = "-1G";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "DATA" "-f"];
