@@ -1,5 +1,6 @@
 {
   inputs,
+  outputs,
   self,
   defaultUser,
   stateVersion,
@@ -7,7 +8,6 @@
 }: let
   inherit (inputs.nixpkgs) lib;
   mkDefault = {
-    pkgs,
     profile,
     is_iso,
     homeManagerModules,
@@ -24,17 +24,17 @@
         mod:
           path + "/${mod}"
       );
-    
-    hostname = profile;
+
+    hostName = profile;
 
     args =
       {
         inherit
           self
           inputs
+          outputs
           username
-          hostname
-          # pkgs
+          hostName
           colors
           listImports
           flakeDirectory
@@ -43,6 +43,7 @@
           ;
       }
       // lib.optionalAttrs is_iso {target_user = defaultUser;};
+
     homeConfigs =
       homeManagerModules
       ++ [
@@ -55,19 +56,24 @@
     };
   };
 in {
+  forEachSystem = inputs.nixpkgs.lib.genAttrs [
+    "aarch64-linux"
+    "i686-linux"
+    "x86_64-linux"
+    "aarch64-darwin"
+    "x86_64-darwin"
+  ];
+
   mkNixOS = {
     profile,
-    pkgs,
-    system,
     nixosModules ? [],
     homeManagerModules ? [],
     is_laptop ? false,
     is_iso ? false,
   }: let
-    default = mkDefault {inherit pkgs profile homeManagerModules is_iso;};
+    default = mkDefault {inherit profile homeManagerModules is_iso;};
   in
     inputs.nixpkgs.lib.nixosSystem {
-      inherit system;
       specialArgs = default.args // {inherit is_laptop;};
       modules =
         nixosModules
@@ -87,17 +93,34 @@ in {
 
   mkHomeManager = {
     profile,
-    pkgs,
+    system ? "x86_64-linux",
     homeManagerModules ? [],
     is_generic_linux ? false,
     is_laptop ? false,
     is_iso ? false,
   }: let
-    default = mkDefault {inherit pkgs profile homeManagerModules is_iso;};
+    default = mkDefault {inherit profile homeManagerModules is_iso;};
   in
     inputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = default.homeConfigs;
+      pkgs = inputs.nixpkgs.legacyPackages.${system};
+      modules =
+        default.homeConfigs
+        ++ [
+          {
+            nixpkgs = {
+              overlays = builtins.attrValues outputs.overlays;
+              config = {
+                # Disable if you don't want unfree packages
+                allowUnfree = true;
+                # Workaround for https://github.com/nix-community/home-manager/issues/2942
+                allowUnfreePredicate = _: true;
+                permittedInsecurePackages = [
+                  "electron-25.9.0"
+                ];
+              };
+            };
+          }
+        ];
       extraSpecialArgs = default.args // {inherit is_generic_linux is_laptop;};
     };
 }

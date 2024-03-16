@@ -5,15 +5,23 @@
   lib,
   flakeDirectory,
   config,
+  outputs,
   pkgs,
   ...
 }: {
+  imports = [
+    ./common
+    ./cli
+    ./shell
+  ];
   programs.home-manager.enable = true;
+
   manual = {
     html.enable = false;
     json.enable = false;
     manpages.enable = false;
   };
+
   news = {
     display = "silent";
     json = lib.mkForce {};
@@ -49,8 +57,10 @@
       hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'$hostname";
     };
     sessionVariables = {
-      LIBVIRT_DEFAULT_URI = "qemu:///system";
       FLAKE_PATH = flakeDirectory;
+      LANG = "en_US.UTF-8";
+      LC_ALL = "en_US.UTF-8";
+      LC_CTYPE = "en_US.UTF-8";
     };
   };
 }

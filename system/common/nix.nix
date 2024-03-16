@@ -1,23 +1,22 @@
 {
   lib,
   inputs,
+  config,
   ...
 }: {
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes" "repl-flake"];
       builders-use-substitutes = true;
-      flake-registry = "/etc/nix/registry.json";
       auto-optimise-store = true;
       warn-dirty = false;
       max-jobs = "auto";
       trusted-users = ["@wheel" "root"];
-      system-features = ["kvm" "big-parallel" "nixos-test"];
       # for direnv GC roots
       keep-derivations = true;
       keep-outputs = true;
       substituters = [
-        "https://cache.nixos.org"
+        "https://cache.nixos.org?priority=10"
         "https://percygtdev.cachix.org"
         "https://nix-community.cachix.org"
       ];
@@ -34,12 +33,14 @@
       options = "--delete-older-than 2d";
     };
 
-    # Add each flake input as a registry
-    # To make nix3 commands consistent with the flake
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+    # This will add each flake input as a registry
+    # To make nix3 commands consistent with your flake
+    registry = lib.mkForce (lib.mapAttrs (_: value: {flake = value;}) inputs);
 
-    # Add nixpkgs input to NIX_PATH
-    # This lets nix2 commands still use <nixpkgs>
-    nixPath = ["nixpkgs=${inputs.nixpkgs.outPath}"];
+    # This will additionally add your inputs to the system's legacy channels
+    # Making legacy nix commands consistent as well, awesome!
+    nixPath = lib.mkForce (lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry);
+
+    optimise.automatic = true;
   };
 }
