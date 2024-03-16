@@ -1,6 +1,5 @@
 {
   inputs,
-  self,
   ...
 }: let
   inherit (inputs.nixpkgs) lib;
@@ -19,35 +18,9 @@
     flakeDirectory = "${homeDirectory}/nix-dots";
     stateVersion = "23.11";
     colors = import ./colors.nix;
-    home-manager = {
-      programs.home-manager.enable = true;
-      manual = {
-        html.enable = false;
-        json.enable = false;
-        manpages.enable = false;
-      };
-      news = {
-        display = "silent";
-        json = lib.mkForce {};
-        entries = lib.mkForce [];
-      };
-      home = {
-        inherit
-          username
-          stateVersion
-          homeDirectory
-          ;
-        shellAliases = import ./aliases.nix;
-        sessionVariables =
-          (import ./variables.nix)
-          // {FLAKE_PATH = flakeDirectory;};
-      };
-    };
-
     nixos-configuration = {
       users.users.${username} = {
         shell = "${pkgs.fish}/bin/fish";
-        home = homeDirectory;
         isNormalUser = true;
         extraGroups = [
           "input"
@@ -89,7 +62,6 @@
 
     args = {
       inherit
-        self
         inputs
         username
         profile
@@ -131,7 +103,7 @@ in {
                 imports =
                   homeManagerModules
                   ++ [
-                    default.home-manager
+                    ../home
                     ../profiles/${profile}/home.nix
                   ];
               };
@@ -156,7 +128,7 @@ in {
       modules =
         homeManagerModules
         ++ [
-          default.home-manager
+          ../home
           ../profiles/${profile}/home.nix
         ];
       extraSpecialArgs = default.args // {inherit standalone_home is_laptop;};

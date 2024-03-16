@@ -1,4 +1,9 @@
 {lib, ...}: {
+  environment.etc = {
+    "crypttab".text = ''
+      data  /dev/disk/by-partlabel/data  /etc/data.keyfile
+    '';
+  };
   disko.devices = {
     disk = {
       sda = {
@@ -61,13 +66,13 @@
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/var/www";
                   };
-                  "var/lib/gdm" = {
-                    mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/lib/gdm";
-                  };
                   "var/lib/AccountsService" = {
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/var/lib/AccountsService";
+                  };
+                  ".snapshots" = {
+                    mountpoint = "/.snapshots";
+                    mountOptions = ["compress=lzo" "noatime"];
                   };
                 };
               };
