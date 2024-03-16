@@ -17,7 +17,7 @@
                 mountpoint = "/boot/efi";
               };
             };
-            primary = {
+            root = {
               size = "20G";
               content = {
                 type = "btrfs";
@@ -72,8 +72,9 @@
                 };
               };
             };
-            secondary = {
+            data = {
               size = "100%";
+              label = "DATA";
               content = {
                 type = "filesystem";
                 format = "btrfs";
