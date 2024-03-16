@@ -18,7 +18,7 @@
               };
             };
             secondary = {
-              end = "-10M";
+              end = "-5M";
               content = {
                 type = "filesystem";
                 format = "ext4";
