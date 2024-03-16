@@ -73,15 +73,15 @@
                 };
               };
             };
-            data = {
-              start = "20GiB";
-              end = "100%";
-              content = {
-                type = "btrfs";
-                extraArgs = ["-L" "DATA" "-f"];
-                mountpoint = "/data";
-              };
-            };
+            # data = {
+            #   start = "20GiB";
+            #   end = "100%";
+            #   content = {
+            #     type = "btrfs";
+            #     extraArgs = ["-L" "DATA" "-f"];
+            #     mountpoint = "/data";
+            #   };
+            # };
           };
         };
       };
