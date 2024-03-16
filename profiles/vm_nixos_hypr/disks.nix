@@ -17,6 +17,14 @@
                 mountpoint = "/boot/efi";
               };
             };
+            secondary = {
+              end = "-10M";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/data";
+              };
+            };
             primary = {
               size = "100%";
               content = {
@@ -70,15 +78,6 @@
                     mountpoint = "/var/lib/AccountsService";
                   };
                 };
-              };
-            };
-            secondary = {
-              end = "-1G";
-              content = {
-                type = "btrfs";
-                extraArgs = ["-L" "DATA" "-f"];
-                mountpoint = "/data";
-                mountOptions = ["compress=lzo"];
               };
             };
           };
