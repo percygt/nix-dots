@@ -17,8 +17,8 @@
                 mountpoint = "/boot/efi";
               };
             };
-            root = {
-              size = "20G";
+            primary = {
+              size = "20000M";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
@@ -73,11 +73,11 @@
             };
             data = {
               size = "100%";
-              label = "DATA";
               content = {
                 type = "btrfs";
-                extraArgs = ["-f"];
+                extraArgs = ["-L" "DATA" "-f"];
                 mountpoint = "/data";
+                mountOptions = ["compress=lzo"];
               };
             };
           };
