@@ -21,7 +21,6 @@
             root = {
               start = "1GiB";
               end = "60%";
-              type = "partition";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
