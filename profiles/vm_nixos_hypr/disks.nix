@@ -73,7 +73,7 @@
               };
             };
             secondary = {
-              size = "100%";
+              size = "5000M";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "DATA" "-f"];
