@@ -22,7 +22,6 @@
               start = "1GiB";
               end = "60%";
               type = "partition";
-              part-type = "primary";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
