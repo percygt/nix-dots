@@ -17,13 +17,10 @@
     then "nixos"
     else defaultUser;
     
-  homeDirectory = "/home/${username}";
   
-  flakeDirectory = "${homeDirectory}/nix-dots";
+  flakeDirectory = "/home/${username}/nix-dots";
   
   colors = import ./colors.nix;
-  # themes = import ./themes.nix {inherit pkgs colors;};
-  # fonts = import ./fonts.nix {inherit pkgs;};
   
   listImports = path: modules:
     lib.forEach modules (
@@ -45,7 +42,6 @@
         colors
         listImports
         flakeDirectory
-        homeDirectory
         stateVersion
         is_generic_linux
         is_laptop
