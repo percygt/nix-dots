@@ -18,7 +18,7 @@
       ./shell
       inputs.sops-nix.homeManagerModules.sops
     ]
-    ++ lib.optionals (builtins.pathExists ../personal)
+    ++ lib.optionals (builtins.pathExists ../personal/default.nix)
     [
       ../personal
     ]
