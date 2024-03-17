@@ -25,6 +25,7 @@ in {
   home = {
     packages = with pkgs; [
       gnomeExtensions.fedora-linux-update-indicator
+      hwinfo
     ];
     shellAliases = {
       n2ne = "nvim $FLAKE_PATH/nixpkgs/node/packages.json";

@@ -11,11 +11,23 @@
   outputs,
   ...
 }: {
-  imports = [
-    ./common
-    ./cli
-    ./shell
-  ];
+  imports =
+    [
+      ./common
+      ./cli
+      ./shell
+      inputs.sops-nix.homeManagerModules.sops
+    ]
+    ++ lib.optionals (builtins.pathExists ../personal)
+    [
+      ../personal
+    ]
+    ++ lib.optionals (desktop == "hyprland")
+    [
+      inputs.hypridle.homeManagerModules.default
+      inputs.hyprlock.homeManagerModules.default
+    ];
+    
   programs.home-manager.enable = true;
 
   nixpkgs.overlays =

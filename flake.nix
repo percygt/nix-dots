@@ -10,7 +10,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "unstable";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
     hyprland-contrib.url = "github:hyprwm/contrib";
     hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
     hypridle.url = "github:hyprwm/hypridle";
@@ -34,7 +34,6 @@
     inherit (self) outputs;
     defaultUser = "percygt";
     stateVersion = "23.11";
-    nix-personal = nixpkgs.lib.optional (builtins.pathExists ./personal) ./personal;
     libx = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
   in {
     overlays = import ./overlays.nix {inherit inputs;};
@@ -53,76 +52,32 @@
       ivlivs = libx.mkNixOS {
         profile = "ivlivs";
         desktop = "hyprland";
-        nixosModules = [
-          inputs.home-manager.nixosModules.default
-          inputs.sops-nix.nixosModules.sops
-          inputs.disko.nixosModules.disko
-        ];
-        homeManagerModules = [
-          # inputs.hyprland.homeManagerModules.default
-          inputs.hypridle.homeManagerModules.default
-          inputs.hyprlock.homeManagerModules.default
-        ];
       };
       vm_nixos_hypr = libx.mkNixOS {
         profile = "vm_nixos_hypr";
         desktop = "hyprland";
-        nixosModules = [
-          inputs.home-manager.nixosModules.default
-          inputs.sops-nix.nixosModules.sops
-          inputs.disko.nixosModules.disko
-        ];
-        homeManagerModules = [
-          # inputs.hyprland.homeManagerModules.default
-          inputs.hypridle.homeManagerModules.default
-          inputs.hyprlock.homeManagerModules.default
-        ];
       };
       dot_iso = libx.mkNixOS {
         profile = "dot_iso";
         is_iso = true;
-        nixosModules = [
-          {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-          inputs.home-manager.nixosModules.home-manager
-        ];
       };
     };
 
     homeConfigurations = {
       ivlivs = libx.mkHomeManager {
         profile = "fates";
-        homeManagerModules =
-          nix-personal
-          ++ [
-            # inputs.hyprland.homeManagerModules.default
-            inputs.hypridle.homeManagerModules.default
-            inputs.hyprlock.homeManagerModules.default
-            inputs.sops-nix.homeManagerModules.sops
-          ];
       };
       vm_nixos_hypr = libx.mkHomeManager {
         profile = "vm_nixos_hypr";
-        homeManagerModules =
-          nix-personal
-          ++ [
-            # inputs.hyprland.homeManagerModules.default
-            inputs.hypridle.homeManagerModules.default
-            inputs.hyprlock.homeManagerModules.default
-            inputs.sops-nix.homeManagerModules.sops
-          ];
       };
       furies = libx.mkHomeManager {
         profile = "furies";
         is_generic_linux = true;
         is_laptop = true;
-        homeManagerModules = nix-personal;
       };
       fates = libx.mkHomeManager {
         profile = "fates";
         is_generic_linux = true;
-        homeManagerModules = nix-personal;
       };
     };
   };
