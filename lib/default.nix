@@ -21,7 +21,7 @@
     desktop ? null,
     system ? "x86_64-linux",
   }: let
-    default = import ./mkDefault.nix {
+    mkModules = import ./mkModules.nix {
       inherit
         inputs
         outputs
@@ -37,8 +37,8 @@
   in
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      modules = default.nixosModules;
-      specialArgs = default.args;
+      modules = mkModules.nixosModules;
+      specialArgs = mkModules.args;
     };
 
   mkHomeManager = {
@@ -47,7 +47,7 @@
     is_generic_linux ? false,
     is_laptop ? false,
   }: let
-    default = import ./mkDefault.nix {
+    mkModules = import ./mkModules.nix {
       inherit
         inputs
         outputs
@@ -62,7 +62,7 @@
   in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      modules = default.homeModules;
-      extraSpecialArgs = default.args;
+      modules = mkModules.homeModules;
+      extraSpecialArgs = mkModules.args;
     };
 }
