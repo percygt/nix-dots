@@ -1,30 +1,30 @@
 {
   lib,
-  homeDirectory,
+  config,
   ...
 }: {
   xdg = {
     enable = true;
-    configHome = homeDirectory + "/.config";
-    cacheHome = homeDirectory + "/.local/cache";
-    dataHome = homeDirectory + "/.local/share";
-    stateHome = homeDirectory + "/.local/state";
+    configHome = config.home.homeDirectory + "/.config";
+    cacheHome = config.home.homeDirectory + "/.local/cache";
+    dataHome = config.home.homeDirectory + "/.local/share";
+    stateHome = config.home.homeDirectory + "/.local/state";
     userDirs = {
       enable = true;
       createDirectories = lib.mkDefault true;
 
-      download = homeDirectory + "/downloads";
-      pictures = homeDirectory + "/pictures";
+      download = config.home.homeDirectory + "/downloads";
+      pictures = config.home.homeDirectory + "/pictures";
 
-      desktop = homeDirectory;
-      documents = homeDirectory;
-      music = homeDirectory;
-      publicShare = homeDirectory;
-      templates = homeDirectory;
-      videos = homeDirectory;
+      desktop = config.home.homeDirectory;
+      documents = config.home.homeDirectory;
+      music = config.home.homeDirectory;
+      publicShare = config.home.homeDirectory;
+      templates = config.home.homeDirectory;
+      videos = config.home.homeDirectory;
 
       extraConfig = {
-        XDG_SCREENSHOTS_DIR = "${homeDirectory}/pictures/screenshots";
+        XDG_SCREENSHOTS_DIR = "${config.home.homeDirectory}/pictures/screenshots";
       };
     };
   };

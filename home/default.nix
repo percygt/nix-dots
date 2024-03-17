@@ -1,7 +1,6 @@
 {
   username,
   stateVersion,
-  homeDirectory,
   lib,
   flakeDirectory,
   config,
@@ -27,7 +26,7 @@
       inputs.hypridle.homeManagerModules.default
       inputs.hyprlock.homeManagerModules.default
     ];
-    
+
   programs.home-manager.enable = true;
 
   nixpkgs.overlays =
@@ -52,10 +51,10 @@
   };
 
   home = {
+    homeDirectory = "/home/${username}";
     inherit
       username
       stateVersion
-      homeDirectory
       ;
     activation.report-changes = config.lib.dag.entryAnywhere ''
       if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
