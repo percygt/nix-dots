@@ -137,7 +137,7 @@ in {
           --mode zap_create_mount \
           "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
 
-        sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
+        sudo nixos-install --flake "$HOME/nix-dots?submodules=1#$TARGET_HOST"
 
         DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
         echo $DIR
