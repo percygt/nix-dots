@@ -5,11 +5,10 @@
 }: let
   modules = [
     "common"
-    "network"
-    "hardware"
-    "programs/xdg.nix"
-    "services"
-    "security"
+    # "hardware"
+    # "programs/xdg.nix"
+    # "services"
+    # "security"
   ];
 in {
   imports =
