@@ -4,7 +4,8 @@
   ...
 }: let
   modules = [
-    "common"
+    "."
+    "desktop"
     # "hardware"
     # "programs/xdg.nix"
     # "services"
