@@ -5,8 +5,10 @@
   lib,
   flakeDirectory,
   config,
-  outputs,
   pkgs,
+  desktop,
+  inputs,
+  outputs,
   ...
 }: {
   imports = [
@@ -15,6 +17,15 @@
     ./shell
   ];
   programs.home-manager.enable = true;
+
+  nixpkgs.overlays =
+    builtins.attrValues outputs.overlays
+    ++ lib.optionals (desktop == "hyprland") [
+      inputs.hypridle.overlays.default
+      inputs.hyprland.overlays.default
+      inputs.hyprland-contrib.overlays.default
+      inputs.hyprlock.overlays.default
+    ];
 
   manual = {
     html.enable = false;
@@ -27,6 +38,7 @@
     json = lib.mkForce {};
     entries = lib.mkForce [];
   };
+
   home = {
     inherit
       username

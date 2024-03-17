@@ -5,6 +5,7 @@
   ...
 }: let
   modules = [
+    "."
     "_bin"
     "gnome"
     "neovim"

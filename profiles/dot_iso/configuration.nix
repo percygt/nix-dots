@@ -4,10 +4,30 @@
   flakeDirectory,
   hostName,
   target_user,
+  listImports,
+  outputs,
   ...
-}: {
+}: let
+  modules = [
+    "common/console.nix"
+    "common/packages.nix"
+    "common/locale.nix"
+  ];
+in {
+  imports = listImports ../../system modules;
+  networking = {
+    inherit hostName;
+  };
+
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
+    config.allowUnfree = true;
+    overlays = builtins.attrValues outputs.overlays;
+  };
+
+  nix = {
+    settings.experimental-features = ["nix-command" "flakes"];
+    extraOptions = "experimental-features = nix-command flakes";
   };
 
   boot = {
@@ -29,7 +49,9 @@
       hybrid-sleep.enable = false;
     };
   };
+
   programs.git.enable = true;
+
   programs.ssh = {
     startAgent = true;
     extraConfig = ''
@@ -39,6 +61,7 @@
     '';
     knownHosts."gitlab.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
   };
+
   isoImage = {
     makeEfiBootable = true;
     makeUsbBootable = true;
@@ -50,6 +73,7 @@
       }
     ];
   };
+
   environment.systemPackages = with pkgs; [
     gum
     (
