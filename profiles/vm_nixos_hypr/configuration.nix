@@ -1,4 +1,8 @@
-{listImports, ...}: let
+{
+  listImports,
+  inputs,
+  ...
+}: let
   modules = [
     "common"
     "network"
@@ -9,10 +13,11 @@
   ];
 in {
   imports =
-    [
-      ./disks.nix
+    listImports ../../system modules
+    ++ [
+      inputs.home-manager.nixosModules.default
       ./hardware.nix
+      ./disks.nix
       ./boot.nix
-    ]
-    ++ listImports ../../system modules;
+    ];
 }

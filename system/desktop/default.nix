@@ -1,4 +1,8 @@
-{desktop, ...}: {
+{
+  desktop,
+  pkgs,
+  ...
+}: {
   imports = [
     (./. + "/${desktop}.nix")
     ../services/pipewire.nix
@@ -6,7 +10,12 @@
   ];
 
   # Enable Plymouth and surpress some logs by default.
-  boot.plymouth.enable = true;
+  boot.plymouth = {
+    enable = true;
+    themePackages = [(pkgs.catppuccin-plymouth.override {variant = "mocha";})];
+    theme = "catppuccin-mocha";
+  };
+  
   boot.kernelParams = [
     # The 'splash' arg is included by the plymouth option
     "quiet"

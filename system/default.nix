@@ -10,11 +10,13 @@
   inputs,
   ...
 }: {
-  imports = [
-    ./common
-    ./services
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports =
+    [
+      ./common
+      ./services
+      (modulesPath + "/installer/scan/not-detected.nix")
+      inputs.sops-nix.nixosModules.sops
+    ];
 
   nixpkgs.overlays =
     builtins.attrValues outputs.overlays

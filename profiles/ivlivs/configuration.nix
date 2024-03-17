@@ -2,6 +2,7 @@
   pkgs,
   lib,
   listImports,
+  inputs,
   ...
 }: let
   modules = [
@@ -16,7 +17,12 @@
     "security"
   ];
 in {
-  imports = [./hardware-configuration.nix] ++ listImports ../../system modules;
+  imports =
+    listImports ../../system modules
+    ++ [
+      inputs.home-manager.nixosModules.default
+      ./hardware.nix
+    ];
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = lib.mkForce ["btrfs"];
