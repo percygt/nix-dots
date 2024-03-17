@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: let
-  keybinds = builtins.readFile ./config/keybinds.conf;
+  inherit (import "${self}/lib/mkUI.nix" {inherit pkgs;}) themes;
 in {
   imports = [
     ../rofi
@@ -16,7 +16,6 @@ in {
     ../wl-common.nix
 
     ./hyprlock.nix
-    ./packages.nix
   ];
   nix.settings = {
     trusted-substituters = ["https://hyprland.cachix.org"];
@@ -91,7 +90,100 @@ in {
     };
 
     extraConfig = ''
-      ${keybinds}
+      # terminal, screen locking, launcher
+      bind = $mod, RETURN, exec, wezterm
+      bind = $mod, L, exec, hyprlock
+      bind = $mod, SPACE, exec, rofi -show drun
+      bind = ALT, Q, killactive,
+
+      # screenshots
+      $screenshotarea = hyprctl keyword animation "fadeOut,0,0,default"; grimblast save area - | swappy -f -; hyprctl keyword animation "fadeOut,1,4,default"
+      bind = , Print, exec, grimblast save output - | swappy -f -
+      bind = SHIFT, Print, exec, grimblast save active - | swappy -f -
+      bind = ALT, Print, exec, $screenshotarea
+
+      # media controls
+      bindl = , XF86AudioPlay, exec, playerctl play-pause
+      bindl = , XF86AudioPrev, exec, playerctl previous
+      bindl = , XF86AudioNext, exec, playerctl next
+
+      # volume
+      bindle = , XF86AudioRaiseVolume, exec, volumectl -u up
+      bindle = , XF86AudioLowerVolume, exec, volumectl -u down
+      bindl = , XF86AudioMute, exec, volumectl -u toggle-mute
+      bindl = , XF86AudioMicMute, exec, volumectl -m toggle-mute
+      bind = , Pause, exec, volumectl -m toggle-mute
+
+      # backlight
+      bindle = , XF86MonBrightnessUp, exec, lightctl up
+      bindle = , XF86MonBrightnessDown, exec, lightctl down
+
+      # apps
+      bind = $mod, grave, exec, 1password --quick-access
+      bind = $mod, C, exec, clipman pick -t rofi -T='-p Clipboard'
+
+      # window controls
+      bind = $mod, F, fullscreen,
+      bind = $mod SHIFT, Space, togglefloating,
+      bind = $mod, A, togglesplit,
+
+      # override the split direction for the next window to be opened
+      bind = $mod, V, layoutmsg, preselect d
+      bind = $mod, H, layoutmsg, preselect r
+
+      # group management
+      bind = $mod, G, togglegroup,
+      bind = $mod SHIFT, G, moveoutofgroup,
+      bind = ALT, left, changegroupactive, b
+      bind = ALT, right, changegroupactive, f
+
+      # move focus
+      bind = $mod, left, movefocus, l
+      bind = $mod, right, movefocus, r
+      bind = $mod, up, movefocus, u
+      bind = $mod, down, movefocus, d
+
+      # move window
+      bind = $mod SHIFT, left, movewindoworgroup, l
+      bind = $mod SHIFT, right, movewindoworgroup, r
+      bind = $mod SHIFT, up, movewindoworgroup, u
+      bind = $mod SHIFT, down, movewindoworgroup, d
+
+      # window resize
+      bind = $mod, R, submap, resize
+      submap = resize
+      binde = , right, resizeactive, 10 0
+      binde = , left, resizeactive, -10 0
+      binde = , up, resizeactive, 0 -10
+      binde = , down, resizeactive, 0 10
+      bind = , escape, submap, reset
+      submap = reset
+
+      # mouse bindings
+      bindm = SUPER, mouse:272, movewindow
+      bindm = SUPER, mouse:273, resizewindow
+
+      # navigate workspaces
+      bind = $mod, 1, workspace, 1
+      bind = $mod, 2, workspace, 2
+      bind = $mod, 3, workspace, 3
+      bind = $mod, 4, workspace, 4
+      bind = $mod, 5, workspace, 5
+      bind = $mod, 6, workspace, 6
+      bind = $mod, 7, workspace, 7
+      bind = $mod, 8, workspace, 8
+      bind = $mod, 9, workspace, 9
+
+      # move window to workspace
+      bind = $mod SHIFT, 1, movetoworkspace, 1
+      bind = $mod SHIFT, 2, movetoworkspace, 2
+      bind = $mod SHIFT, 3, movetoworkspace, 3
+      bind = $mod SHIFT, 4, movetoworkspace, 4
+      bind = $mod SHIFT, 5, movetoworkspace, 5
+      bind = $mod SHIFT, 6, movetoworkspace, 6
+      bind = $mod SHIFT, 7, movetoworkspace, 7
+      bind = $mod SHIFT, 8, movetoworkspace, 8
+      bind = $mod SHIFT, 9, movetoworkspace, 9
     '';
   };
 
@@ -111,7 +203,7 @@ in {
     Install.WantedBy = ["hyprland-session.target"];
     Service = {
       Type = "simple";
-      ExecStart = "${lib.getExe pkgs.swaybg} -m fill -i ";
+      ExecStart = "${lib.getExe pkgs.swaybg} -m fill -i ${themes.wallpaper}";
       Restart = "on-failure";
     };
   };

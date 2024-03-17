@@ -1,18 +1,17 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
 {
   lib,
+  self,
   config,
   ...
 }: let
-  wallpaper = "file://${config.xdg.dataHome}/backgrounds/nasa-earth.jpg";
+  ui = import "${self}/lib/mkUI.nix" {inherit config;};
+  wallpaper = "file://${ui.themes.wallpaper}";
   shell_theme = "Marble-crispblue-dark";
 in {
   xdg.dataFile = {
-    backgrounds = {
-      source = ../../assets/backgrounds;
-    };
     "themes/Marble-crispblue-dark" = {
-      source = ../../assets/themes/Marble-crispblue-dark;
+      source = "${self}/lib/assets/themes/Marble-crispblue-dark";
     };
   };
   dconf.settings = with lib.hm.gvariant; {
