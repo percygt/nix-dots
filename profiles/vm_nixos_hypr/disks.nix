@@ -1,14 +1,15 @@
-{lib, ...}: {
+{
   environment.etc = {
     "crypttab".text = ''
       data  /dev/disk/by-partlabel/data  /etc/data.keyfile
     '';
   };
+
   disko.devices = {
     disk = {
       sda = {
         type = "disk";
-        device = lib.mkDefault "/dev/sda";
+        device = "/dev/sda";
         content = {
           type = "gpt";
           partitions = {

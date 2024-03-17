@@ -9,8 +9,12 @@
   inherit (inputs.nixpkgs) lib;
   mkDefault = {
     profile,
-    is_iso,
+    nixosModules,
     homeManagerModules,
+    desktop ? null,
+    is_iso ? false,
+    is_generic_linux ? false,
+    is_laptop,
   }: rec {
     username =
       if is_iso
@@ -35,6 +39,7 @@
           outputs
           username
           hostName
+          desktop
           colors
           listImports
           flakeDirectory
@@ -47,13 +52,24 @@
     homeConfigs =
       homeManagerModules
       ++ [
-        ../home
         ../profiles/${profile}/home.nix
       ];
 
-    users.${username} = {
-      imports = homeConfigs;
-    };
+    nixosConfigs =
+      nixosModules
+      ++ [
+        ../profiles/${profile}/configuration.nix
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.${username} = {
+              imports = homeConfigs;
+            };
+            extraSpecialArgs = args // {inherit is_generic_linux is_laptop;};
+          };
+        }
+      ];
   };
 in {
   forEachSystem = inputs.nixpkgs.lib.genAttrs [
@@ -70,25 +86,13 @@ in {
     homeManagerModules ? [],
     is_laptop ? false,
     is_iso ? false,
+    desktop ? null,
   }: let
-    default = mkDefault {inherit profile homeManagerModules is_iso;};
+    default = mkDefault {inherit profile homeManagerModules desktop is_laptop is_iso;};
   in
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = default.args // {inherit is_laptop;};
-      modules =
-        nixosModules
-        ++ [
-          ../system
-          ../profiles/${profile}/configuration.nix
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              inherit (default) users;
-              extraSpecialArgs = default.args // {inherit is_laptop;};
-            };
-          }
-        ];
+      modules = default.nixosConfigs;
     };
 
   mkHomeManager = {
@@ -97,30 +101,12 @@ in {
     homeManagerModules ? [],
     is_generic_linux ? false,
     is_laptop ? false,
-    is_iso ? false,
   }: let
-    default = mkDefault {inherit profile homeManagerModules is_iso;};
+    default = mkDefault {inherit profile homeManagerModules is_generic_linux is_laptop;};
   in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      modules =
-        default.homeConfigs
-        ++ [
-          {
-            nixpkgs = {
-              overlays = builtins.attrValues outputs.overlays;
-              config = {
-                # Disable if you don't want unfree packages
-                allowUnfree = true;
-                # Workaround for https://github.com/nix-community/home-manager/issues/2942
-                allowUnfreePredicate = _: true;
-                permittedInsecurePackages = [
-                  "electron-25.9.0"
-                ];
-              };
-            };
-          }
-        ];
-      extraSpecialArgs = default.args // {inherit is_generic_linux is_laptop;};
+      modules = default.homeConfigs;
+      extraSpecialArgs = default.args;
     };
 }

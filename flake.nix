@@ -10,11 +10,16 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "unstable";
     hyprland-contrib.url = "github:hyprwm/contrib";
     hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
+    hypridle.url = "github:hyprwm/hypridle";
+    hypridle.inputs.nixpkgs.follows = "nixpkgs";
+    hyprlock.url = "github:hyprwm/hyprlock";
+    hyprlock.inputs.nixpkgs.follows = "nixpkgs";
     hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
-    hyprpaper.url = "github:hyprwm/hyprpaper";
+
     disko.url = "github:nix-community/disko";
     sops-nix.url = "github:mic92/sops-nix";
     impermanence.url = "github:nix-community/impermanence";
@@ -33,7 +38,7 @@
     libx = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
   in {
     overlays = import ./overlays.nix {inherit inputs;};
-    
+
     formatter = libx.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     packages = libx.forEachSystem (system: (import ./packages {pkgs = nixpkgs.legacyPackages.${system};}));
@@ -45,25 +50,37 @@
     templates = import ./templates;
 
     nixosConfigurations = {
-      fates = libx.mkNixOS {
-        profile = "fates";
+      ivlivs = libx.mkNixOS {
+        profile = "ivlivs";
+        desktop = "hyprland";
         nixosModules = [
           inputs.home-manager.nixosModules.default
+          inputs.sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
         ];
-        homeManagerModules = [inputs.hyprland.homeManagerModules.default];
+        homeManagerModules = [
+          # inputs.hyprland.homeManagerModules.default
+          inputs.hypridle.homeManagerModules.default
+          inputs.hyprlock.homeManagerModules.default
+        ];
       };
       vm_nixos_hypr = libx.mkNixOS {
         profile = "vm_nixos_hypr";
+        desktop = "hyprland";
         nixosModules = [
           inputs.home-manager.nixosModules.default
+          inputs.sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
         ];
-        homeManagerModules = [inputs.hyprland.homeManagerModules.default];
+        homeManagerModules = [
+          # inputs.hyprland.homeManagerModules.default
+          inputs.hypridle.homeManagerModules.default
+          inputs.hyprlock.homeManagerModules.default
+        ];
       };
       dot_iso = libx.mkNixOS {
-        is_iso = true;
         profile = "dot_iso";
+        is_iso = true;
         nixosModules = [
           {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
@@ -79,6 +96,9 @@
         homeManagerModules =
           nix-personal
           ++ [
+            # inputs.hyprland.homeManagerModules.default
+            inputs.hypridle.homeManagerModules.default
+            inputs.hyprlock.homeManagerModules.default
             inputs.sops-nix.homeManagerModules.sops
           ];
       };
@@ -87,6 +107,9 @@
         homeManagerModules =
           nix-personal
           ++ [
+            # inputs.hyprland.homeManagerModules.default
+            inputs.hypridle.homeManagerModules.default
+            inputs.hyprlock.homeManagerModules.default
             inputs.sops-nix.homeManagerModules.sops
           ];
       };

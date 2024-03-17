@@ -5,12 +5,33 @@
   lib,
   outputs,
   username,
+  modulesPath,
+  desktop,
+  inputs,
   ...
 }: {
   imports = [
     ./common
     ./services
+    (modulesPath + "/installer/scan/not-detected.nix")
   ];
+
+  nixpkgs.overlays =
+    builtins.attrValues outputs.overlays
+    ++ lib.optionals (desktop == "hyprland") [
+      inputs.hypridle.overlays.default
+      inputs.hyprland.overlays.default
+      inputs.hyprland-contrib.overlays.default
+      inputs.hyprlock.overlays.default
+    ];
+
+  nixpkgs.config = {
+    allowUnfree = true;
+    config.permittedInsecurePackages = [
+      "electron-25.9.0"
+    ];
+  };
+
   networking = {
     inherit hostName;
     useDHCP = lib.mkDefault true;
@@ -28,16 +49,6 @@
   security = {
     polkit.enable = true;
     rtkit.enable = true;
-  };
-
-  nixpkgs = {
-    overlays = builtins.attrValues outputs.overlays;
-    config = {
-      allowUnfree = true;
-      config.permittedInsecurePackages = [
-        "electron-25.9.0"
-      ];
-    };
   };
 
   # Create dirs for home-manager
