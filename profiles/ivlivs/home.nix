@@ -4,30 +4,27 @@
   ...
 }: let
   modules = [
+    "."
     "_bin"
-    "gnome/gtk.nix"
-    "gnome/qt.nix"
     "neovim"
-    "terminal/foot.nix"
     "shell"
-    "fonts.nix"
-    "nix.nix"
-    "fonts.nix"
-    "vscodium.nix"
-    "cli"
-    "cli/tmux.nix"
+    "terminal"
+    "extra/vscodium.nix"
+    "extra/fonts.nix"
     "cli/starship.nix"
     "cli/yazi.nix"
-    "cli/bat.nix"
     "cli/direnv.nix"
-    "cli/eza.nix"
     "cli/fzf.nix"
     "cli/extra.nix"
     "cli/tui.nix"
-    "cli/nixtools.nix"
+    "desktop/hyprland"
   ];
 in {
-  imports = listImports ../../home modules;
+  imports =
+    listImports ../../home modules
+    ++ [
+      ./hyprland.nix
+    ];
   home.shellAliases = {
     hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'$hostname";
     ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}'?submodules=1#'$hostname";

@@ -1,4 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  self,
+  config,
+  ...
+}: let
+  inherit (import "${self}/lib/mkUI.nix" {inherit config pkgs;}) fonts;
+in {
   console = {
     earlySetup = true;
     packages = with pkgs; [terminus_font powerline-fonts];
@@ -10,12 +17,11 @@
     hwRender = true;
     fonts = [
       {
-        name = "MesloLGSDZ Nerd Font Mono";
-        package = pkgs.nerdfonts.override {fonts = ["Meslo"];};
+        inherit (fonts.console) name package;
       }
     ];
     extraConfig = ''
-      font-size=14
+      font-size=${builtins.toString fonts.console.size}
       xkb-layout=us
     '';
   };

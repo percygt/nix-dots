@@ -1,39 +1,20 @@
-{pkgs, ...}: {
+{pkgs, self, config,...}: let
+  inherit (import "${self}/lib/mkUI.nix" {inherit pkgs config;}) fonts;
+in {
   nixpkgs.config.joypixels.acceptLicense = true;
   fonts = {
     enableDefaultPackages = false;
     fontDir.enable = true;
-    packages = with pkgs; [
-    
-    (nerdfonts.override {
-      fonts = [
-        "VictorMono"
-        "JetBrainsMono"
-        "Hack"
-      ];
-    })
-      rubik
-      corefonts
-      vistafonts
-      source-serif
-      work-sans
-      joypixels
-      noto-fonts-emoji
-      ubuntu_font_family
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-    ];
-
+    inherit (fonts) packages;
     fontconfig = {
+      enable = true;
       antialias = true;
       defaultFonts = {
-        serif = ["Source Serif"];
-        sansSerif = ["Rubik" "Work Sans"];
-        monospace = ["VictorMono Nerd Font" "JetBrainsMono Nerd Font" "Hack Nerd Font Mono"];
-        emoji = ["Joypixels" "Noto Color Emoji"];
+        serif = fonts.serif.names;
+        sansSerif = fonts.sansSerif.names;
+        monospace = fonts.monospace.names;
+        emoji = fonts.emoji.names;
       };
-      enable = true;
       hinting = {
         autohint = false;
         enable = true;
