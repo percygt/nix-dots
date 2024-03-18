@@ -17,16 +17,19 @@
     then "nixos"
     else defaultUser;
 
-  flakeDirectory = "/home/${username}/nix-dots";
-
   homeDirectory = "/home/${username}";
+
+  flakeDirectory = "${homeDirectory}/nix-dots";
+
   colors = import ./colors.nix;
+  
+  ui = pkgs: import ./mkUI.nix {inherit pkgs;};
 
   listImports = path: modules:
-    lib.forEach modules (
-      mod:
-        path + "/${mod}"
-    );
+    lib.forEach modules (mod: path + "/${mod}");
+
+  listHomeImports = modules:
+    lib.forEach modules (mod: "${self}/home" + "/${mod}");
 
   hostName = profile;
 
@@ -41,6 +44,7 @@
         hostName
         desktop
         colors
+        ui
         listImports
         flakeDirectory
         stateVersion
@@ -51,7 +55,6 @@
     // lib.optionalAttrs is_iso {target_user = defaultUser;};
 
   homeModules = [
-  
     ../profiles/${profile}/home.nix
   ];
 
