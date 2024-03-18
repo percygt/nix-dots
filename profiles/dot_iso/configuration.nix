@@ -7,6 +7,7 @@
   listSystemImports,
   outputs,
   inputs,
+  config,
   ...
 }: let
   modules = [
@@ -27,6 +28,8 @@ in {
   networking = {
     inherit hostName;
   };
+
+  home-manager.users.nixos = import ./home.nix {inherit outputs config lib;};
 
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";

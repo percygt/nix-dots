@@ -58,6 +58,7 @@
         stateVersion
         is_generic_linux
         is_laptop
+        is_iso
         ;
     }
     // lib.optionalAttrs is_iso {target_user = defaultUser;};
