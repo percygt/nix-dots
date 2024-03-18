@@ -3,7 +3,7 @@
   colors,
   ...
 }: {
-  wallpaper = "/home/percygt/.local/share/backgrounds/nasa-earth.jpg";
+  wallpaper = "~/.local/share/backgrounds/nasa-earth.jpg";
   gtkTheme = {
     name = "Colloid-Dark-Nord";
     package = pkgs.colloid-gtk-theme.overrideAttrs (oldAttrs: {

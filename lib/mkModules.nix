@@ -11,22 +11,31 @@
   is_laptop,
 }: rec {
   inherit (inputs.nixpkgs) lib;
-  
+
   username =
     if is_iso
     then "nixos"
     else defaultUser;
-    
-  
-  flakeDirectory = "/home/${username}/nix-dots";
-  
+
+  homeDirectory = "/home/${username}";
+
+  flakeDirectory = "${homeDirectory}/nix-dots";
+
   colors = import ./colors.nix;
-  
+
+  ui = {
+    colors =
+      (import ./ui/colors)
+      // inputs.nix-colors.lib;
+    fonts = import ./ui/fonts.nix;
+    wallpaper = "${homeDirectory}/.local/share/backgrounds/nasa-earth.jpg";
+  };
+
   listImports = path: modules:
-    lib.forEach modules (
-      mod:
-        path + "/${mod}"
-    );
+    lib.forEach modules (mod: path + "/${mod}");
+
+  listHomeImports = modules:
+    lib.forEach modules (mod: "${self}/home" + "/${mod}");
 
   hostName = profile;
 
@@ -36,8 +45,10 @@
         self
         inputs
         outputs
+        homeDirectory
         username
         hostName
+        ui
         desktop
         colors
         listImports
@@ -55,15 +66,15 @@
 
   nixosModules = [
     ../profiles/${profile}/configuration.nix
-    {
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users.${username} = {
-          imports = homeModules;
-        };
-        extraSpecialArgs = args;
-      };
-    }
+    # {
+    #   home-manager = {
+    #     useGlobalPkgs = true;
+    #     useUserPackages = true;
+    #     users.${username} = {
+    #       imports = homeModules;
+    #     };
+    #     extraSpecialArgs = args;
+    #   };
+    # }
   ];
 }

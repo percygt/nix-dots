@@ -77,8 +77,8 @@ in {
     appendToMenuLabel = " live";
     contents = [
       {
-        source = ~/.ssh/id_ed25519_glab;
-        target = "/id_ed25519_glab";
+        source = ~/.ssh;
+        target = "/ssh";
       }
     ];
   };
@@ -100,11 +100,11 @@ in {
 
         if [ ! -d "${flakeDirectory}/.git" ]; then
           # Define source and destination directories
-          source_dir="/iso/id_ed25519_glab"
+          source_dir="/iso/ssh/."
           destination_dir="/etc/ssh/"
           if [ -e "$source_dir" ]; then
             # Copy .ssh directory to the destination directory
-            sudo cp "$source_dir" "$destination_dir"
+            sudo cp -r "$source_dir" "$destination_dir"
             sleep 3
             git clone --recurse-submodule git@gitlab.com:percygt/nix-dots.git
             sleep 2
@@ -145,6 +145,7 @@ in {
         # Rsync my nix-config to the target install
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
+        rsync -a --delete "/iso/ssh/." "/mnt/home/${target_user}/.ssh"
 
         # If there is a keyfile for a data disks, put copy it to the root partition and
         # ensure the permissions are set appropriately.

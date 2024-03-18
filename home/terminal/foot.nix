@@ -1,4 +1,6 @@
-{colors, ...}: {
+{ui, ...}: let
+  inherit (ui) colors;
+in {
   programs.foot = {
     enable = true;
     server.enable = true;
