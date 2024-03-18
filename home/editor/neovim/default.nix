@@ -8,7 +8,7 @@
 }: let
   inherit (ui) colors;
   lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
-  lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+  # lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
 in {
   programs.neovim = {
     enable = true;
@@ -112,11 +112,11 @@ in {
         config = ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
       }
       # Formatting/Diagnostic/Code Action #---------------------------------------------------------------
-      {
-        plugin = none-ls-nvim;
-        type = "lua";
-        config = ''require("config.lsp.nonels").setup_null_ls("${lsp_tools}")'';
-      }
+      # {
+      #   plugin = pkgs.vimPlugins.none-ls-nvim;
+      #   type = "lua";
+      #   config = ''require("config.lsp.nonels").setup_null_ls("${lsp_tools}")'';
+      # }
       # Syntax Highlighting/LSP based motion #------------------------------------------------------------
       {
         plugin = nvim-treesitter.withAllGrammars;
@@ -127,12 +127,12 @@ in {
       lsp_signature-nvim
       nvim-treesitter-textobjects
       neodev-nvim
-      # Session #------------------------------------------------------------------------------------------
-      {
-        plugin = neovim-session-manager;
-        type = "lua";
-        config = ''require("config.tools.session_manager")'';
-      }
+      # # Session #------------------------------------------------------------------------------------------
+      # {
+      #   plugin = neovim-session-manager;
+      #   type = "lua";
+      #   config = ''require("config.tools.session_manager")'';
+      # }
       # Database #-----------------------------------------------------------------------------------------
       {
         plugin = vim-dadbod;
@@ -168,7 +168,8 @@ in {
       {
         plugin = better-escape;
         type = "lua";
-        config = ''require("config.tools.better-esc")'';
+        # config = ''require("config.tools.better-esc")'';
+        config = ''require("better_escape").setup()'';
       }
       {
         plugin = nvim-spectre;
@@ -273,7 +274,7 @@ in {
   };
   home = {
     activation = let
-      HM_NVIM = "${flakeDirectory}/home/_config/nvim";
+      HM_NVIM = "${flakeDirectory}/home/editor/neovim/config";
     in {
       linkNvimSpell =
         lib.hm.dag.entryAfter ["linkGeneration"]
@@ -285,17 +286,14 @@ in {
   xdg.configFile = {
     "nvim/lua" = {
       recursive = true;
-      source = ../_config/nvim/lua;
+      source = ./config/lua;
     };
     "nvim/ftdetect" = {
       recursive = true;
-      source = ../_config/nvim/ftdetect;
+      source = ./config/ftdetect;
     };
     "nvim/lua/config/colors.lua" = {
       text =
-        /*
-        lua
-        */
         ''
           return {
             bg0 = "#${colors.normal.black}",

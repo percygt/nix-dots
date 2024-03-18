@@ -13,7 +13,6 @@
     yq-go # portable command-line YAML, JSON and XML processor
     fd
     ripgrep
-    pinentry-curses
     unrar
     p7zip
     jq

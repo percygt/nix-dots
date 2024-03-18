@@ -7,6 +7,7 @@
   listSystemImports,
   outputs,
   inputs,
+  config,
   ...
 }: let
   modules = [
@@ -27,6 +28,8 @@ in {
   networking = {
     inherit hostName;
   };
+
+  home-manager.users.nixos = import ./home.nix {inherit outputs config lib;};
 
   nixpkgs = {
     hostPlatform = lib.mkDefault "x86_64-linux";
@@ -145,7 +148,7 @@ in {
         # Rsync my nix-config to the target install
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "/iso/ssh/." "/mnt/home/${target_user}/.ssh"
+        rsync -a --delete "/iso/ssh/.." "/mnt/home/${target_user}/.ssh"
 
         # If there is a keyfile for a data disks, put copy it to the root partition and
         # ensure the permissions are set appropriately.
