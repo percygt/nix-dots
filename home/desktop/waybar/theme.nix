@@ -10,7 +10,7 @@
     "*" = {
       border = mkLiteral "none";
       padding = mkLiteral "0px";
-      font-family = "${fonts.ui.name}";
+      font-family = "${fonts.interface.name}";
       font-size = mkLiteral "15px";
     };
 
@@ -20,7 +20,7 @@
 
     "window>box" = {
       margin = mkLiteral "8px 8px 0px 8px";
-      background = mkLiteral "${colors.default.background}";
+      background = mkLiteral "#${colors.default.background}";
       opacity = mkLiteral "0.8";
       border-radius = mkLiteral "8px";
     };
@@ -44,16 +44,16 @@
       padding = mkLiteral "0px 10px";
       background-color = mkLiteral "transparent";
       font-weight = mkLiteral "lighter";
-      color = mkLiteral "${colors.default.foreground}";
+      color = mkLiteral "#${colors.default.foreground}";
     };
 
     "#workspaces button:hover" = {
-      color = mkLiteral "${colors.bold}";
+      color = mkLiteral "#${colors.bold}";
       background-color = mkLiteral "transparent";
     };
 
     "#workspaces button.focused, #workspaces button.active" = {
-      color = mkLiteral "${colors.bold}";
+      color = mkLiteral "#${colors.bold}";
       font-weight = mkLiteral "normal";
       background-color = mkLiteral "transparent";
     };
@@ -73,16 +73,16 @@
       #pulseaudio,
       #wireplumber" = {
       padding = mkLiteral "0px 10px";
-      color = mkLiteral "${colors.default.foreground}";
+      color = mkLiteral "#${colors.default.foreground}";
     };
 
     "#custom-power" = {
-      color = mkLiteral "${colors.bold}";
+      color = mkLiteral "#${colors.bold}";
       background-color = mkLiteral "transparent";
     };
 
     "#custom-quit, #custom-lock, #custom-reboot" = {
-      color = mkLiteral "${colors.normal.red}";
+      color = mkLiteral "#${colors.normal.red}";
       background-color = mkLiteral "transparent";
     };
 
@@ -90,35 +90,35 @@
     -----Indicators----
     */
     "#idle_inhibitor.activated" = {
-      color = mkLiteral "${colors.bold}";
+      color = mkLiteral "#${colors.bold}";
     };
 
     "#battery.charging" = {
-      color = mkLiteral "${colors.normal.green}";
+      color = mkLiteral "#${colors.normal.green}";
     };
 
     "#battery.warning:not(.charging)" = {
-      color = mkLiteral "${colors.normal.orange}";
+      color = mkLiteral "#${colors.normal.orange}";
     };
 
     "#battery.critical:not(.charging)" = {
-      color = mkLiteral "${colors.normal.red}";
+      color = mkLiteral "#${colors.normal.red}";
     };
 
     "#temperature.critical" = {
-      color = mkLiteral "${colors.normal.red}";
+      color = mkLiteral "#${colors.normal.red}";
     };
 
     "#bluetooth.off" = {
-      color = mkLiteral "${colors.normal.orange}";
+      color = mkLiteral "#${colors.normal.orange}";
     };
 
     "#wireplumber.muted" = {
-      color = mkLiteral "${colors.normal.orange}";
+      color = mkLiteral "#${colors.normal.orange}";
     };
 
     "#pulseaudio.source-muted" = {
-      color = mkLiteral "${colors.normal.orange}";
+      color = mkLiteral "#${colors.normal.orange}";
     };
   };
 }

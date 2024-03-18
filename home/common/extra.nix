@@ -13,6 +13,7 @@ lib.mkIf is_generic_linux {
     allowUnfree = true;
     # Workaround for https://github.com/nix-community/home-manager/issues/2942
     allowUnfreePredicate = _: true;
+    joypixels.acceptLicense = true;
     permittedInsecurePackages = [
       "electron-25.9.0"
     ];

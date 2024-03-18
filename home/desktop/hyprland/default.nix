@@ -1,11 +1,11 @@
 {
-  self,
   config,
   lib,
   pkgs,
+  ui,
   ...
 }: let
-  inherit (import "${self}/lib/mkUI.nix" {inherit pkgs;}) themes;
+  inherit (ui) wallpaper;
 in {
   imports = [
     ../rofi
@@ -203,7 +203,7 @@ in {
     Install.WantedBy = ["hyprland-session.target"];
     Service = {
       Type = "simple";
-      ExecStart = "${lib.getExe pkgs.swaybg} -m fill -i ${themes.wallpaper}";
+      ExecStart = "${lib.getExe pkgs.swaybg} -m fill -i ${wallpaper}";
       Restart = "on-failure";
     };
   };

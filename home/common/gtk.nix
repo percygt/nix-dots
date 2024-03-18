@@ -8,11 +8,13 @@
   ...
 }: let
   inherit (ui) fonts colors;
+  inherit (fonts) interface;
 in {
   gtk = {
     enable = true;
     font = {
-      
+      inherit (interface) name size; 
+      package = interface.package pkgs;
     };
     theme = {
       name = "Colloid-Dark-Nord";

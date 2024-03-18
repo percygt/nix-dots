@@ -5,7 +5,7 @@
   defaultUser,
   stateVersion,
   ...
-}:{
+}: {
   forEachSystem = inputs.nixpkgs.lib.genAttrs [
     "aarch64-linux"
     "i686-linux"
@@ -21,7 +21,7 @@
     desktop ? null,
     system ? "x86_64-linux",
   }: let
-    mkModules = import ./mkModules.nix {
+    mkArgs = import ./mkArgs.nix {
       inherit
         inputs
         outputs
@@ -37,8 +37,20 @@
   in
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      modules = mkModules.nixosModules;
-      specialArgs = mkModules.args;
+      modules = [
+        ../profiles/${profile}/configuration.nix
+        # {
+        #   home-manager = {
+        #     useGlobalPkgs = true;
+        #     useUserPackages = true;
+        #     users.${username} = {
+        #       imports = homeModules;
+        #     };
+        #     extraSpecialArgs = args;
+        #   };
+        # }
+      ];
+      specialArgs = mkArgs.args;
     };
 
   mkHomeManager = {
@@ -47,7 +59,7 @@
     is_generic_linux ? false,
     is_laptop ? false,
   }: let
-    mkModules = import ./mkModules.nix {
+    mkArgs = import ./mkArgs.nix {
       inherit
         inputs
         outputs
@@ -62,7 +74,9 @@
   in
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      modules = mkModules.homeModules;
-      extraSpecialArgs = mkModules.args;
+      modules = [
+        ../profiles/${profile}/home.nix
+      ];
+      extraSpecialArgs = mkArgs.args;
     };
 }

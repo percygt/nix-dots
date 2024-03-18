@@ -1,12 +1,11 @@
 {
-  self,
   lib,
   pkgs,
-  colors,
+  ui,
   ...
 }: let
-  inherit (import "${self}/lib/mkUI.nix" {inherit pkgs;}) cc fonts themes;
-  inherit (cc) hexToRgb;
+  inherit (ui) colors wallpaper fonts;
+  inherit (colors.conversion) hexToRGBString;
 in {
   programs.hyprlock = {
     enable = true;
@@ -18,7 +17,7 @@ in {
 
     backgrounds = [
       {
-        path = "${themes.wallpaper}";
+        path = "${wallpaper}";
         blur_passes = 2;
         blur_size = 6;
       }
@@ -27,9 +26,9 @@ in {
     input-fields = [
       {
         size.width = 250;
-        outer_color = "rgb(${hexToRgb "#${colors.normal.black}"})";
-        inner_color = "rgb(${hexToRgb "#${colors.default.background}"})";
-        font_color = "rgb(${hexToRgb "#${colors.default.foreground}"})";
+        outer_color = "rgb(${hexToRGBString ", " "${colors.normal.black}"})";
+        inner_color = "rgb(${hexToRGBString ", " "${colors.default.background}"})";
+        font_color = "rgb(${hexToRGBString ", " "${colors.default.foreground}"})";
         placeholder_text = "";
       }
     ];
@@ -37,14 +36,14 @@ in {
     labels = [
       {
         text = "Hello";
-        color = "rgba(${hexToRgb "#${colors.bold}"}, 1.0)";
-        font_family = fonts.ui.name;
+        color = "rgba(${hexToRGBString ", " "${colors.bold}"}, 1.0)";
+        font_family = fonts.interface.name;
         font_size = 64;
       }
       {
         text = "$TIME";
-        color = "rgba(${hexToRgb "#${colors.normal.magenta}"}, 1.0)";
-        font_family = fonts.ui.name;
+        color = "rgba(${hexToRGBString ", " "${colors.normal.magenta}"}, 1.0)";
+        font_family = fonts.interface.name;
         font_size = 32;
         position.y = 160;
       }

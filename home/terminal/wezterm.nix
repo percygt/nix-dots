@@ -1,9 +1,11 @@
 {
   pkgs,
-  colors,
+  ui,
   is_generic_linux,
   ...
-}: {
+}: let
+  inherit (ui) colors;
+in {
   programs.wezterm = {
     enable = true;
     package =

@@ -1,5 +1,5 @@
 {
-  listImports,
+  listHomeImports,
   config,
   pkgs,
   ...
@@ -20,7 +20,7 @@
     "cli/tui.nix"
   ];
 in {
-  imports = listImports ../../home modules;
+  imports = listHomeImports modules;
   targets.genericLinux.enable = true;
   home = {
     packages = with pkgs; [

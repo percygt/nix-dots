@@ -2,11 +2,10 @@
 {
   lib,
   self,
-  config,
+  ui,
   ...
 }: let
-  ui = import "${self}/lib/mkUI.nix" {inherit config;};
-  wallpaper = "file://${ui.themes.wallpaper}";
+  wallpaper = "file://${ui.wallpaper}";
   shell_theme = "Marble-crispblue-dark";
 in {
   xdg.dataFile = {

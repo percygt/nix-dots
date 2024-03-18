@@ -1,10 +1,9 @@
 {
-  self,
   config,
   pkgs,
   lib,
   desktop,
-  colors,
+  ui,
   ...
 }: let
   modules = [
@@ -29,7 +28,7 @@
     '';
   };
 
-  inherit (import "${self}/lib/mkUI.nix" {inherit pkgs;}) fonts;
+  inherit (ui) fonts colors;
   inherit ((import ../rofi/lib.nix {inherit lib;})) toRasi;
 in {
   programs.waybar = {
