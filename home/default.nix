@@ -1,6 +1,7 @@
 {
   username,
   stateVersion,
+  homeDirectory,
   lib,
   flakeDirectory,
   config,
@@ -26,7 +27,7 @@
       inputs.hypridle.homeManagerModules.default
       inputs.hyprlock.homeManagerModules.default
     ];
-
+    
   programs.home-manager.enable = true;
 
   nixpkgs.overlays =
@@ -51,7 +52,7 @@
   };
 
   home = {
-    homeDirectory = "/home/${username}";
+    homeDirectory = lib.mkForce homeDirectory;
     inherit
       username
       stateVersion

@@ -19,6 +19,7 @@
 
   flakeDirectory = "/home/${username}/nix-dots";
 
+  homeDirectory = "/home/${username}";
   colors = import ./colors.nix;
 
   listImports = path: modules:
@@ -35,6 +36,7 @@
         self
         inputs
         outputs
+        homeDirectory
         username
         hostName
         desktop
@@ -49,21 +51,21 @@
     // lib.optionalAttrs is_iso {target_user = defaultUser;};
 
   homeModules = [
+  
     ../profiles/${profile}/home.nix
   ];
 
   nixosModules = [
     ../profiles/${profile}/configuration.nix
-    {
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users.${username} = {
-          homeDirectory = "/home/${username}";
-          imports = homeModules;
-        };
-        extraSpecialArgs = args;
-      };
-    }
+    # {
+    #   home-manager = {
+    #     useGlobalPkgs = true;
+    #     useUserPackages = true;
+    #     users.${username} = {
+    #       imports = homeModules;
+    #     };
+    #     extraSpecialArgs = args;
+    #   };
+    # }
   ];
 }

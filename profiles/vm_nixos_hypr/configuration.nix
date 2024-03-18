@@ -15,7 +15,7 @@ in {
   imports =
     listImports ../../system modules
     ++ [
-      inputs.home-manager.nixosModules.default
+      # inputs.home-manager.nixosModules.default
       ./hardware.nix
       ./disks.nix
       ./boot.nix
