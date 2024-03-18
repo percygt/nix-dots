@@ -5,16 +5,16 @@
     in
     {
       "*" = {
-        bg-col = mkLiteral "${colors.default.background}";
-        bg-col-light = mkLiteral "${colors.default.background}";
-        border-col = mkLiteral "${colors.accent}";
+        bg-col = mkLiteral "#${colors.default.background}";
+        bg-col-light = mkLiteral "#${colors.default.background}";
+        border-col = mkLiteral "#${colors.accent}";
         selected-col = mkLiteral "${colors.default.background}";
         accent = mkLiteral "${colors.extra.lavender}";
         fg-col = mkLiteral "${colors.default.foreground}";
         grey = mkLiteral "${colors.extra.overlay0}";
 
         width = 600;
-        font = "${fonts.ui.name} 14";
+        font = "${fonts.interface.name} 14";
       };
 
       "element-text,element-icon,mode-switcher" = {

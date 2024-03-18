@@ -1,19 +1,14 @@
 {
-  listImports,
-  inputs,
+  listSystemImports,
   ...
 }: let
   modules = [
     "."
     "desktop"
-    # "hardware"
-    # "programs/xdg.nix"
-    # "services"
-    # "security"
   ];
 in {
   imports =
-    listImports ../../system modules
+    listSystemImports modules
     ++ [
       # inputs.home-manager.nixosModules.default
       ./hardware.nix

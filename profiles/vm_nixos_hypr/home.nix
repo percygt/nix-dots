@@ -1,6 +1,6 @@
 {
-  listImports,
   flakeDirectory,
+  listHomeImports,
   ...
 }: let
   modules = [
@@ -20,7 +20,7 @@
   ];
 in {
   imports =
-    listImports ../../home modules
+    listHomeImports modules
     ++ [
       ./hyprland.nix
     ];

@@ -1,4 +1,6 @@
-{colors, ...}: {
+{ui, ...}: let
+  inherit (ui) colors;
+in {
   dconf.settings = {
     "com/github/amezin/ddterm" = {
       background-opacity = colors.alpha;

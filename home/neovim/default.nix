@@ -3,9 +3,10 @@
   lib,
   config,
   flakeDirectory,
-  colors,
+  ui,
   ...
 }: let
+  inherit (ui) colors;
   lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
   lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
 in {

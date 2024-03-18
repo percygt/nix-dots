@@ -4,7 +4,7 @@
   flakeDirectory,
   hostName,
   target_user,
-  listImports,
+  listSystemImports,
   outputs,
   inputs,
   ...
@@ -16,14 +16,14 @@
   ];
 in {
   imports =
-    listImports ../../system modules
+    listSystemImports modules
     ++ [
       inputs.home-manager.nixosModules.default
       {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
     ];
-    
+
   networking = {
     inherit hostName;
   };

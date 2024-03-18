@@ -21,11 +21,9 @@
 
   flakeDirectory = "${homeDirectory}/nix-dots";
 
-  colors = import ./colors.nix;
-
   ui = {
     colors =
-      (import ./ui/colors)
+      (import ./ui/colors.nix)
       // inputs.nix-colors.lib;
     fonts = import ./ui/fonts.nix;
     wallpaper = "${homeDirectory}/.local/share/backgrounds/nasa-earth.jpg";
@@ -34,8 +32,11 @@
   listImports = path: modules:
     lib.forEach modules (mod: path + "/${mod}");
 
+  listSystemImports = modules:
+    lib.forEach modules (mod: "${self}/system/${mod}");
+    
   listHomeImports = modules:
-    lib.forEach modules (mod: "${self}/home" + "/${mod}");
+    lib.forEach modules (mod: "${self}/home/${mod}");
 
   hostName = profile;
 
@@ -50,8 +51,9 @@
         hostName
         ui
         desktop
-        colors
         listImports
+        listHomeImports
+        listSystemImports
         flakeDirectory
         stateVersion
         is_generic_linux
@@ -59,22 +61,4 @@
         ;
     }
     // lib.optionalAttrs is_iso {target_user = defaultUser;};
-
-  homeModules = [
-    ../profiles/${profile}/home.nix
-  ];
-
-  nixosModules = [
-    ../profiles/${profile}/configuration.nix
-    # {
-    #   home-manager = {
-    #     useGlobalPkgs = true;
-    #     useUserPackages = true;
-    #     users.${username} = {
-    #       imports = homeModules;
-    #     };
-    #     extraSpecialArgs = args;
-    #   };
-    # }
-  ];
 }

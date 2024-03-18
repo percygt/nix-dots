@@ -1,4 +1,6 @@
-{colors, ...}: {
+{ui, ...}: let
+  inherit (ui) colors;
+in {
   programs = {
     fzf = {
       enable = true;

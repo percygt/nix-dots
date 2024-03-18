@@ -1,15 +1,19 @@
-{ config, pkgs, colors, self,... }:
-let
-  inherit (import "${self}/lib/mkUI.nix" {inherit pkgs;}) fonts;
-  rofiTheme = (import ./theme.nix { inherit colors fonts pkgs config; }).theme;
-in
 {
+  config,
+  pkgs,
+  colors,
+  ui,
+  ...
+}: let
+  inherit (ui) fonts;
+  rofiTheme = (import ./theme.nix {inherit colors fonts config;}).theme;
+in {
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
 
     theme = rofiTheme;
-    terminal = "${pkgs.alacritty}/bin/alacritty";
+    terminal = "${pkgs.alacritty}/bin/wezterm";
     plugins = with pkgs; [
       rofi-calc
       rofi-emoji

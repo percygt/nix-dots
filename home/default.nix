@@ -9,6 +9,7 @@
   desktop,
   inputs,
   outputs,
+  ui,
   ...
 }: {
   imports =
@@ -27,7 +28,7 @@
       inputs.hypridle.homeManagerModules.default
       inputs.hyprlock.homeManagerModules.default
     ];
-    
+
   programs.home-manager.enable = true;
 
   nixpkgs.overlays =
@@ -52,10 +53,10 @@
   };
 
   home = {
-    homeDirectory = lib.mkForce homeDirectory;
     inherit
       username
       stateVersion
+      homeDirectory
       ;
     activation.report-changes = config.lib.dag.entryAnywhere ''
       if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
