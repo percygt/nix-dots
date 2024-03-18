@@ -12,7 +12,6 @@
     "shell"
     "terminal"
     "extra/vscodium.nix"
-    "extra/fonts.nix"
     "cli/starship.nix"
     "cli/yazi.nix"
     "cli/direnv.nix"

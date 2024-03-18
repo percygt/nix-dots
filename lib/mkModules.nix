@@ -23,12 +23,12 @@
 
   colors = import ./colors.nix;
 
-  ui = rec {
+  ui = {
     colors =
       (import ./ui/colors)
       // inputs.nix-colors.lib;
-    themes = pkgs: import ./ui/themes.nix {inherit pkgs colors;};
-    fonts = pkgs: import ./ui/fonts.nix {inherit pkgs;};
+    fonts = import ./ui/fonts.nix;
+    wallpaper = "${homeDirectory}/.local/share/backgrounds/nasa-earth.jpg";
   };
 
   listImports = path: modules:
