@@ -1,4 +1,4 @@
-pkgs: rec {
+{pkgs, ...}: rec {
   ui = {
     name = builtins.elemAt sansSerif.names 0; # Rubik
     package = builtins.elemAt sansSerif.packages 0;

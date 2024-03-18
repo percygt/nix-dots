@@ -22,8 +22,14 @@
   flakeDirectory = "${homeDirectory}/nix-dots";
 
   colors = import ./colors.nix;
-  
-  ui = pkgs: import ./mkUI.nix {inherit pkgs;};
+
+  ui = rec {
+    colors =
+      (import ./ui/colors)
+      // inputs.nix-colors.lib;
+    themes = pkgs: import ./ui/themes.nix {inherit pkgs colors;};
+    fonts = pkgs: import ./ui/fonts.nix {inherit pkgs;};
+  };
 
   listImports = path: modules:
     lib.forEach modules (mod: path + "/${mod}");
@@ -42,9 +48,9 @@
         homeDirectory
         username
         hostName
+        ui
         desktop
         colors
-        ui
         listImports
         flakeDirectory
         stateVersion

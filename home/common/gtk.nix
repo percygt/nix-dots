@@ -41,14 +41,22 @@ in {
       ];
     };
   };
-
+  # Now symlink the `~/.config/gtk-4.0/` folder declaratively:
+  xdg.configFile = {
+    "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+    "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+    "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+  };
+  home.file = {
+    ".themes/${config.gtk.theme.name}".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
+  };
   home = {
     packages = with pkgs; [
       ffmpegthumbnailer
     ];
     activation = {
       cpGtkThemeIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
-        [ -e "${HOME_THEMES}/${themes.gtkTheme.name}" ] || ln -s "${themes.gtkTheme.package}/share/themes/." "${HOME_THEMES}/"
+        [ ! -e "${HOME_THEMES}" ] || mkdir -p "${HOME_THEMES}"
       '';
     };
     pointerCursor =
