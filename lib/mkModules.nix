@@ -11,17 +11,16 @@
   is_laptop,
 }: rec {
   inherit (inputs.nixpkgs) lib;
-  
+
   username =
     if is_iso
     then "nixos"
     else defaultUser;
-    
-  
+
   flakeDirectory = "/home/${username}/nix-dots";
-  
+
   colors = import ./colors.nix;
-  
+
   listImports = path: modules:
     lib.forEach modules (
       mod:
@@ -60,6 +59,7 @@
         useGlobalPkgs = true;
         useUserPackages = true;
         users.${username} = {
+          homeDirectory = "/home/${username}";
           imports = homeModules;
         };
         extraSpecialArgs = args;
