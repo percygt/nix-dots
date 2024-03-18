@@ -48,17 +48,35 @@ in {
     "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
   };
   home.file = {
-    ".themes/${config.gtk.theme.name}".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
+    gtk-theme-dataHome = {
+      recursive = true;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
+      target = "${config.xdg.dataHome}/themes/${config.gtk.theme.name}";
+    };
+    gtk-theme-home = {
+      recursive = true;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
+      target = "${config.home.homeDirectory}/.themes/${config.gtk.theme.name}";
+    };
+    # wayland-cursor-fix = {
+    #   recursive = false;
+    #   text = ''
+    #     [Icon Theme]
+    #     Inherits=${config.gtk.cursorTheme.name}
+    #   '';
+    #   target = "${config.xdg.dataHome}/icons/default/index.theme";
+    # };
   };
+
   home = {
     packages = with pkgs; [
       ffmpegthumbnailer
     ];
-    activation = {
-      cpGtkThemeIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
-        [ ! -e "${HOME_THEMES}" ] || mkdir -p "${HOME_THEMES}"
-      '';
-    };
+    # activation = {
+    #   cpGtkThemeIfDoesNotExist = lib.hm.dag.entryAfter ["linkGeneration"] ''
+    #     [ ! -e "${HOME_THEMES}" ] || mkdir -p "${HOME_THEMES}"
+    #   '';
+    # };
     pointerCursor =
       themes.cursorTheme
       // {
@@ -69,6 +87,7 @@ in {
       GTK_THEME = themes.gtkTheme.name;
       GTK_CURSOR = themes.cursorTheme.name;
       XCURSOR_THEME = themes.cursorTheme.name;
+      XCURSOR_SIZE = builtins.toString themes.cursorTheme.size;
       GTK_ICON = themes.iconTheme.name;
     };
   };
