@@ -148,7 +148,7 @@ in {
         # Rsync my nix-config to the target install
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "/iso/ssh/." "/mnt/home/${target_user}/.ssh"
+        rsync -a --delete "/iso/ssh/.." "/mnt/home/${target_user}/.ssh"
 
         # If there is a keyfile for a data disks, put copy it to the root partition and
         # ensure the permissions are set appropriately.
