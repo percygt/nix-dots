@@ -127,12 +127,12 @@ in {
       lsp_signature-nvim
       nvim-treesitter-textobjects
       neodev-nvim
-      # Session #------------------------------------------------------------------------------------------
-      {
-        plugin = neovim-session-manager;
-        type = "lua";
-        config = ''require("config.tools.session_manager")'';
-      }
+      # # Session #------------------------------------------------------------------------------------------
+      # {
+      #   plugin = neovim-session-manager;
+      #   type = "lua";
+      #   config = ''require("config.tools.session_manager")'';
+      # }
       # Database #-----------------------------------------------------------------------------------------
       {
         plugin = vim-dadbod;
@@ -168,7 +168,8 @@ in {
       {
         plugin = better-escape;
         type = "lua";
-        config = ''require("config.tools.better-esc")'';
+        # config = ''require("config.tools.better-esc")'';
+        config = ''require("better_escape").setup()'';
       }
       {
         plugin = nvim-spectre;

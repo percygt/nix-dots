@@ -3,7 +3,7 @@
   hostName,
   pkgs,
   lib,
-  outputs,
+  self,
   username,
   modulesPath,
   desktop,
@@ -20,7 +20,7 @@
     ];
 
   nixpkgs.overlays =
-    builtins.attrValues outputs.overlays
+    builtins.attrValues (import "${self}/overlays.nix" {inherit inputs;})
     ++ lib.optionals (desktop == "hyprland") [
     #   inputs.hypridle.overlays.default
       inputs.hyprland.overlays.default
