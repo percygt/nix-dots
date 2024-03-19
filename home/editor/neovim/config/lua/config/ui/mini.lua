@@ -21,14 +21,14 @@ local header_art = [[
                                                                   
                                                                   
                                                                   ]]
--- using the mini plugins
+-- NOTE: MINI SESSIONS
 require("mini.sessions").setup({
-  autoread = false,
-  autowrite = false,
+  autoread = true,
+  autowrite = true,
   directory = vim.fn.stdpath("data") .. "/sessions/",
   file = "", -- 'Session.vim',
 })
-
+-- NOTE: MINI STARTER
 local starter = require("mini.starter")
 starter.sections.formatted_sessions = function(n, recent, sub_from, sub_to)
   return vim.tbl_map(function(session)
@@ -59,9 +59,10 @@ starter.setup({
   footer = "",
 })
 
+-- NOTE: MINI FILES
 local mini_files = require("mini.files")
 local show_dotfiles = false
-local filter_show = function(fs_entry)
+local filter_show = function()
   return true
 end
 local filter_hide = function(fs_entry)

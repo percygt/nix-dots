@@ -6,8 +6,8 @@
   flakeDirectory,
   ...
 }: let
-  hmVsCode = "${flakeDirectory}/_config/vscode/settings.json";
-  userVsCode = "${config.xdg.configHome}/VSCodium/User/settings.json";
+  HM_VSCODE = "${flakeDirectory}/home/editor/vscode/config";
+  USER_VSCODE = "${config.xdg.configHome}/VSCodium/User/settings.json";
 in {
   programs.vscode = {
     enable = true;
@@ -16,18 +16,18 @@ in {
     mutableExtensionsDir = true;
     enableExtensionUpdateCheck = true;
     extensions = inputs.nix-stash.lib.vscodeExtensions {inherit (pkgs) system;};
-    userSettings = builtins.fromJSON (builtins.readFile ../_config/vscode/settings.json);
-    keybindings = builtins.fromJSON (builtins.readFile ../_config/vscode/keybindings.json);
+    userSettings = builtins.fromJSON (builtins.readFile ./config/settings.json);
+    keybindings = builtins.fromJSON (builtins.readFile ./config/keybindings.json);
   };
   home = {
     activation = {
       removeExistingVSCodeSettings = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
-        [ -e ${userVsCode} ] && rm "${userVsCode}"
+        [ -e ${USER_VSCODE} ] && rm "${USER_VSCODE}"
       '';
 
       overwriteVSCodeSymlink = lib.hm.dag.entryAfter ["linkGeneration"] ''
-        rm "${userVsCode}"
-        ln -s "${hmVsCode}" "${userVsCode}"
+        rm "${USER_VSCODE}"
+        ln -s "${HM_VSCODE}" "${USER_VSCODE}"
       '';
     };
   };
