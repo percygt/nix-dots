@@ -17,6 +17,8 @@
     then "nixos"
     else defaultUser;
 
+  scrt = builtins.fromJSON (builtins.readFile "${self}/lib/secrets/token.json");
+
   homeDirectory = "/home/${username}";
 
   flakeDirectory = "${homeDirectory}/nix-dots";
@@ -34,7 +36,7 @@
 
   listSystemImports = modules:
     lib.forEach modules (mod: "${self}/system/${mod}");
-    
+
   listHomeImports = modules:
     lib.forEach modules (mod: "${self}/home/${mod}");
 
@@ -49,6 +51,7 @@
         homeDirectory
         username
         hostName
+        scrt
         ui
         desktop
         listImports

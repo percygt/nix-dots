@@ -11,7 +11,7 @@ function M.setup_null_ls(json_config)
   if langToolsConfig.null_ls == nil then
     return
   end
-  local formatting = null_ls.builtins.formatting
+  -- local formatting = null_ls.builtins.formatting
   local diagnostics = null_ls.builtins.diagnostics
   local code_actions = null_ls.builtins.code_actions
 

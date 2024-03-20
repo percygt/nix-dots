@@ -8,7 +8,7 @@
   pkgs,
   desktop,
   inputs,
-  self,
+  outputs,
   ...
 }: {
   imports =
@@ -21,6 +21,7 @@
     ++ lib.optionals (builtins.pathExists ../personal/default.nix)
     [
       ../personal
+      ./users/${username}/git.nix
     ]
     ++ lib.optionals (desktop == "hyprland")
     [
@@ -31,7 +32,7 @@
   programs.home-manager.enable = true;
 
   nixpkgs.overlays =
-    builtins.attrValues (import "${self}/overlays.nix" {inherit inputs;})
+    builtins.attrValues outputs.overlays
     ++ lib.optionals (desktop == "hyprland") [
       inputs.hypridle.overlays.default
       inputs.hyprland.overlays.default

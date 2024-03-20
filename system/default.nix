@@ -3,29 +3,28 @@
   hostName,
   pkgs,
   lib,
-  self,
   username,
   modulesPath,
   desktop,
   inputs,
+  outputs,
   ...
 }: {
-  imports =
-    [
-      ./common
-      ./services
-      ./users/${username}
-      (modulesPath + "/installer/scan/not-detected.nix")
-      # inputs.sops-nix.nixosModules.sops
-    ];
+  imports = [
+    ./common
+    ./services
+    ./users/${username}
+    (modulesPath + "/installer/scan/not-detected.nix")
+    # inputs.sops-nix.nixosModules.sops
+  ];
 
   nixpkgs.overlays =
-    builtins.attrValues (import "${self}/overlays.nix" {inherit inputs;})
+    builtins.attrValues outputs.overlays
     ++ lib.optionals (desktop == "hyprland") [
-    #   inputs.hypridle.overlays.default
+      #   inputs.hypridle.overlays.default
       inputs.hyprland.overlays.default
       inputs.hyprland-contrib.overlays.default
-    #   inputs.hyprlock.overlays.default
+      #   inputs.hyprlock.overlays.default
     ];
 
   nixpkgs.config = {
