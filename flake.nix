@@ -66,7 +66,7 @@
 
     homeConfigurations = {
       ivlivs = libx.mkHomeManager {
-        profile = "fates";
+        profile = "ivlivs";
       };
       vm_nixos_hypr = libx.mkHomeManager {
         profile = "vm_nixos_hypr";
