@@ -40,13 +40,13 @@ function M.setup_null_ls(json_config)
     return config_tbl
   end
   local source_tbl = {}
-  for fmt, config in pairs(langToolsConfig.null_ls.formatting) do
-    if not next(config) then
-      table.insert(source_tbl, formatting[fmt])
-    else
-      table.insert(source_tbl, formatting[fmt].with(config_check(config)))
-    end
-  end
+  -- for fmt, config in pairs(langToolsConfig.null_ls.formatting) do
+  --   if not next(config) then
+  --     table.insert(source_tbl, formatting[fmt])
+  --   else
+  --     table.insert(source_tbl, formatting[fmt].with(config_check(config)))
+  --   end
+  -- end
   for diag, config in pairs(langToolsConfig.null_ls.diagnostics) do
     if not next(config) then
       table.insert(source_tbl, diagnostics[diag])

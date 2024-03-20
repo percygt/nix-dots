@@ -23,8 +23,8 @@ local header_art = [[
                                                                   ]]
 -- NOTE: MINI SESSIONS
 require("mini.sessions").setup({
-  autoread = true,
-  autowrite = true,
+  autoread = false,
+  autowrite = false,
   directory = vim.fn.stdpath("data") .. "/sessions/",
   file = "", -- 'Session.vim',
 })

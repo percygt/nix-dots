@@ -6,17 +6,19 @@ local vnoremap = keymap.xnoremap
 local nmap = keymap.nmap
 local vmap = keymap.vmap
 local imap = keymap.imap
-
 nmap("<leader>", "<nop>", silent)
 vmap("<leader>", "<nop>", silent)
 vmap("Q", "<nop>")
 -- Quit
 nmap("QQ", ":q!<cr>", silent)
 -- Format
-nnoremap("ff", "<cmd>lua vim.lsp.buf.format({async=true})<cr>", silent)
+nnoremap("ff", "<cmd>lua require('conform').format()<cr>", silent)
 -- trouble navigation
 nmap("<a-k>", "<cmd>lua require('trouble').next({ skip_groups = true, jump = true })<cr>zz", silent)
 nmap("<a-j>", "<cmd>lua require('trouble').previous({ skip_groups = true, jump = true })<cr>zz", silent)
+
+nmap("gf", "<cmd>lua require('actions-preview').code_actions()<cr>", silent)
+vmap("gf", "<cmd>lua require('actions-preview').code_actions()<cr>", silent)
 -- Exit insert mode
 -- imap("jj", "<esc>")
 -- Save

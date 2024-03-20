@@ -19,15 +19,15 @@
           sha256 = "13x3bfif906nszf4mgsqxfshnjcn6qm4qw1gv7nw89wi4cdp9i8q";
         };
       }
-      {
-        name = "fish-ghq";
-        src = pkgs.fetchFromGitHub {
-          owner = "percygt";
-          repo = "fish-ghq";
-          rev = "cafaaabe63c124bf0714f89ec715cfe9ece87fa2";
-          hash = "sha256-6b1zmjtemNLNPx4qsXtm27AbtjwIZWkzJAo21/aVZzM=";
-        };
-      }
+      # {
+      #   name = "fish-ghq";
+      #   src = pkgs.fetchFromGitHub {
+      #     owner = "percygt";
+      #     repo = "fish-ghq";
+      #     rev = "cafaaabe63c124bf0714f89ec715cfe9ece87fa2";
+      #     hash = "sha256-6b1zmjtemNLNPx4qsXtm27AbtjwIZWkzJAo21/aVZzM=";
+      #   };
+      # }
     ];
     interactiveShellInit =
       /*
