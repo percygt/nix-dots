@@ -12,14 +12,14 @@ in {
       tmux = {
         enableShellIntegration = true;
         shellIntegrationOptions = [
-          "-p 90%,75%"
-          "--preview-window=right,60%,,"
+          "-p90%,75%"
         ];
       };
       defaultCommand = "fd --type file --hidden --exclude .git";
       defaultOptions = [
         "--border rounded"
         "--info=inline"
+        "--preview-window=right,60%,,"
       ];
       # CTRL-T - $FZF_CTRL_T_COMMAND
       fileWidgetCommand = "rg --files --hidden -g !.git";

@@ -78,12 +78,12 @@ in {
           set -g @thumbs-command 'tmux set-buffer -- {} && tmux display-message "Copied {}" && printf %s {} | xclip -i -selection clipboard'
         '';
       }
-      {
-        plugin = fzf-url;
-        extraConfig = ''
-          set -g @fzf-url-fzf-options '-h 50% --multi -0 --no-preview'
-        '';
-      }
+      # {
+      #   plugin = fzf-url;
+      #   extraConfig = ''
+      #     set -g @fzf-url-fzf-options '-h 50% --multi -0 --no-preview'
+      #   '';
+      # }
       better-mouse-mode
       extrakto
       vim-tmux-navigator
@@ -162,6 +162,7 @@ in {
         bind-key g new-window 'lazygit; tmux kill-pane'
         bind-key d new-window 'lazydocker; tmux kill-pane'
         bind-key f new-window 'yazi; tmux kill-pane'
+        bind-key k new-window 'kpass; tmux kill-pane'
 
         # Easier move of windows
         bind-key -r Home swap-window -t - \; select-window -t -

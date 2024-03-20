@@ -8,6 +8,7 @@
 }: let
   inherit (ui) colors;
 in {
+  home.shellAliases.v = "nvim";
   programs.neovim = {
     enable = true;
     package = pkgs.neovim-nightly.overrideAttrs (_: {CFLAGS = "-O3";});

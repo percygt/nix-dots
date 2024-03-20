@@ -21,6 +21,7 @@
     desktop ? null,
     system ? "x86_64-linux",
   }: let
+    inherit (inputs.nixpkgs) lib;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs
@@ -35,7 +36,7 @@
         ;
     };
   in
-    inputs.nixpkgs.lib.nixosSystem {
+    lib.nixosSystem {
       inherit system;
       modules = [
         ../profiles/${profile}/configuration.nix
@@ -59,6 +60,7 @@
     is_generic_linux ? false,
     is_laptop ? false,
   }: let
+    inherit (inputs.home-manager) lib;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs
@@ -72,7 +74,7 @@
         ;
     };
   in
-    inputs.home-manager.lib.homeManagerConfiguration {
+    lib.homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       modules = [
         ../profiles/${profile}/home.nix

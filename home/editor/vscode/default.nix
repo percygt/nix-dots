@@ -9,6 +9,7 @@
   HM_VSCODE = "${flakeDirectory}/home/editor/vscode/config";
   USER_VSCODE = "${config.xdg.configHome}/VSCodium/User/settings.json";
 in {
+  home.shellAliases.code = "codium";
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;

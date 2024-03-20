@@ -1,4 +1,5 @@
 {
+  home.shellAliases.y = "yazi";
   programs.yazi = {
     enable = true;
     enableFishIntegration = true;

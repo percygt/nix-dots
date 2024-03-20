@@ -7,7 +7,6 @@
     # Telescope dependencies
     ripgrep
     fd
-    fzf
 
     # python
     (python3.withPackages (ps:
@@ -44,6 +43,7 @@
     nodePackages.prettier
     nodePackages.typescript-language-server
     nodePackages."@astrojs/language-server"
+    # nodePackages.prettier-plugin-astro
     nodePackages-extra.prettier-plugin-astro
 
     # Go

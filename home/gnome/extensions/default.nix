@@ -6,14 +6,14 @@
 }: let
   date-menu-formatter = pkgs.callPackage ../../../packages/gnome/extensions/date-menu-formatter.nix {};
   quake-mode = pkgs.callPackage ../../../packages/gnome/extensions/quake-mode.nix {};
-  # quake-mode = pkgs.gnomeExtensions.quake-mode.overrideAttrs (oldAttrs: rec {
-  #   version = "10";
-  #   src = pkgs.fetchzip {
-  #     url = "https://github.com/piousdeer/gnome-shell-extension-quake-mode/releases/download/v${version}/quake-mode@repsac-by.github.com.shell-extension.zip";
-  #     sha256 = "sha256-u/XP0we2nmvYQsaNbfdgzOTsVTDdLEzT9M2aY1GrvEs=";
-  #     stripRoot = false;
-  #   };
-  # });
+  ddterm = pkgs.gnomeExtensions.ddterm.overrideAttrs (oldAttrs: rec {
+    version = "54";
+    src = pkgs.fetchzip {
+      url = "https://github.com/ddterm/gnome-shell-extension-ddterm/releases/download/v${version}/ddterm@amezin.github.com.shell-extension.zip";
+      sha256 = "sha256-+aWBirvRc5M6bXM0E1cwpHVEiCBVxTn9z4fI/hEWauU=";
+      stripRoot = false;
+    };
+  });
 
   blur-my-shell = pkgs.gnomeExtensions.blur-my-shell.overrideAttrs (oldAttrs: rec {
     version = "56";
@@ -27,6 +27,7 @@ in {
   xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
   home.packages = with pkgs;
     [
+      libhandy
       # gnomeExtensions.space-bar
       gnomeExtensions.user-themes
       gnomeExtensions.appindicator
@@ -34,7 +35,7 @@ in {
       gnomeExtensions.caffeine
       # gnomeExtensions.vertical-workspaces
       gnomeExtensions.dash-to-panel
-      gnomeExtensions.ddterm
+      # gnomeExtensions.ddterm
       gnomeExtensions.bluetooth-quick-connect
       gnomeExtensions.docker
       gnomeExtensions.mpris-label
@@ -53,6 +54,7 @@ in {
       gnomeExtensions.battery-health-charging
     ]
     ++ [
+      ddterm
       blur-my-shell
       quake-mode
       date-menu-formatter
