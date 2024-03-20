@@ -1,6 +1,7 @@
 *.img
 *.iso
 *.dconf
+*.gpg
 result
 nixos
 atuin

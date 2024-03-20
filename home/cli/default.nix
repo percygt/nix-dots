@@ -17,5 +17,8 @@
     p7zip
     jq
     aria2
+
+    age
+    git-remote-gcrypt
   ];
 }
