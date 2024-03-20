@@ -28,7 +28,8 @@
           "yaml"
           "graphql"
           "vue"
-          "markdown.mdx"
+          "markdown"
+          "mdx"
         ];
         # extra_filetypes = ["astro"];
       };

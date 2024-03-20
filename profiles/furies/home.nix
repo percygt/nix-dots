@@ -12,6 +12,7 @@
     "terminal"
     "editor"
     "cli/starship.nix"
+    "cli/atuin.nix"
     "cli/yazi.nix"
     "cli/direnv.nix"
     "cli/fzf.nix"
