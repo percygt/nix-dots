@@ -2,10 +2,10 @@
   programs.fish = {
     enable = true;
     plugins = with pkgs.fishPlugins; [
-      {
-        name = "fzf";
-        inherit (fzf-fish) src;
-      }
+      # {
+      #   name = "fzf";
+      #   inherit (fzf-fish) src;
+      # }
       {
         name = "bass";
         inherit (bass) src;
@@ -64,14 +64,13 @@
       fish
       */
       ''
-        set fzf_preview_file_cmd preview
-        set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "alt-c:execute(code {} &> /dev/tty)"
+        # set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "alt-c:execute(code {} &> /dev/tty)"
         set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
 
         function starship_transient_rprompt_func
           starship module time
         end
-            
+        
         fish_vi_key_bindings
         set fish_cursor_default     block      blink
         set fish_cursor_insert      line       blink

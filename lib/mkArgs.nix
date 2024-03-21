@@ -30,6 +30,11 @@
     fonts = import ./ui/fonts.nix;
     wallpaper = "${homeDirectory}/.local/share/backgrounds/nasa-earth.jpg";
   };
+  ifPathExists = path:
+    lib.optionals (builtins.pathExists path) [path];
+
+  ifPathExist = path:
+    lib.optional (builtins.pathExists path) path;
 
   listImports = path: modules:
     lib.forEach modules (mod: path + "/${mod}");
@@ -53,6 +58,8 @@
         hostName
         scrt
         ui
+        ifPathExists
+        ifPathExist
         desktop
         listImports
         listHomeImports

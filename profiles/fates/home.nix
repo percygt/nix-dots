@@ -12,6 +12,7 @@
     "terminal"
     "editor"
     "cli/starship.nix"
+    "cli/atuin.nix"
     "cli/yazi.nix"
     "cli/direnv.nix"
     "cli/fzf.nix"
@@ -27,8 +28,6 @@ in {
       hwinfo
     ];
     shellAliases = {
-      n2ne = "nvim $FLAKE_PATH/nixpkgs/node/packages.json";
-      n2ni = "node2nix -i $FLAKE_PATH/nixpkgs/node/packages.json -e $FLAKE_PATH/nixpkgs/node/node-env.nix -o $FLAKE_PATH/nixpkgs/node/packages.nix -c $FLAKE_PATH/nixpkgs/node/default.nix";
       isobld = "nix build .'?submodules=1#'nixosConfigurations.iso.config.system.build.isoImage --impure";
       suisobld = "sudo nix build .'?submodules=1#'nixosConfigurations.dot_iso.config.system.build.isoImage";
       mkVM = "qemu-system-x86_64 -enable-kvm -m 2G -boot menu=on -drive file=vm.img -cpu=host -vga virtio -display sdl,gl=on -cdrom";
@@ -39,14 +38,47 @@ in {
       EDITOR = "nvim";
     };
   };
+  services.syncthing = {
+    enable = true;
+    extraOptions = [
+      "-gui-address=fates.atlas-qilin.ts.net:8384"
+    ];
+  };
   xdg = {
     enable = true;
     mime.enable = true;
     systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
-    configFile.wireplumber = {
-      source = ../../home/_config/wireplumber;
-      recursive = true;
-    };
+    configFile."wireplumber/50-bluez-config.lua".text = ''
+      bluez_monitor.enabled = true
+      bluez_monitor.properties = {
+      	["with-logind"] = true,
+      }
+      bluez_monitor.rules = {
+      	{
+      		matches = {
+      			{
+      				{ "device.name", "matches", "bluez_card.*" },
+      			},
+      		},
+      		apply_properties = {},
+      	},
+      	{
+      		matches = {
+      			{
+      				-- Matches all sources.
+      				{ "node.name", "matches", "bluez_input.*" },
+      			},
+      			{
+      				-- Matches all sinks.
+      				{ "node.name", "matches", "bluez_output.*" },
+      			},
+      		},
+      		apply_properties = {
+      			["session.suspend-timeout-seconds"] = 0, -- 0 disables suspend
+      		},
+      	},
+      }
+    '';
   };
 
   dconf.settings = {

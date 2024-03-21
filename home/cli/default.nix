@@ -14,11 +14,16 @@
     fd
     ripgrep
     unrar
+    curlie
     p7zip
     jq
     aria2
+    gping
+    xcp
+    dogdns
 
     age
-    git-remote-gcrypt
+    sops
+    git-crypt
   ];
 }

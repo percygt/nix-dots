@@ -2,6 +2,11 @@
 *.iso
 *.dconf
 *.gpg
+*.pub
+*.asc
+*.pem
 result
 nixos
 atuin
+key
+*key

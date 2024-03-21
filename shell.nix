@@ -19,6 +19,8 @@
       packages = with pkgs; [
         yaml2nix
         json2nix
+        node2nix
+        sops
         statix
         deadnix
         alejandra

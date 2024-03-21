@@ -1,7 +1,6 @@
-{pkgs, ...}:{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # dev
-    ghq # for managing local git repo
     bfg-repo-cleaner # Git history cleaner
     cgdb # GNU Debugger
     onefetch # displays project information and code statistics for a local Git repository
@@ -11,8 +10,6 @@
     croc # encrypted file transfers between two computers
 
     # encryption
-    age
-    git-crypt
 
     # LLM
     ollama
@@ -29,6 +26,6 @@
     clipboard-jh # the clipboard manager
     chafa # cli graphics
     poppler # pdf rendering tool
-    yt-dlp # download youtube videos    
+    yt-dlp # download youtube videos
   ];
 }
