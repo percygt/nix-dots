@@ -3,10 +3,14 @@
   is_generic_linux,
   config,
   self,
+  inputs,
   ...
 }:
-lib.mkIf is_generic_linux
+lib.optionalAttrs is_generic_linux
 {
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
   sops = {
     defaultSopsFile = "${self}/lib/secrets/secrets.enc.yaml";
     gnupg = {

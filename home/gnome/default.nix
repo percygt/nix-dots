@@ -8,7 +8,7 @@
   ];
   home.packages = with pkgs; [
     nautilus-open-any-terminal
-    gnome-extension-manager
+    # gnome-extension-manager
     gnome.gnome-tweaks
     gnome.dconf-editor
   ];

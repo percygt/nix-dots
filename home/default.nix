@@ -11,7 +11,6 @@
   outputs,
   ifPathExists,
   self,
-  is_generic_linux,
   ...
 }: {
   imports =
@@ -27,10 +26,6 @@
     [
       inputs.hypridle.homeManagerModules.default
       inputs.hyprlock.homeManagerModules.default
-    ]
-    ++ lib.optionals is_generic_linux
-    [
-      inputs.sops-nix.homeManagerModules.sops
     ];
 
   programs.home-manager.enable = true;
