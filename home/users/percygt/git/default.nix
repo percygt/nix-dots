@@ -11,13 +11,13 @@
       init.defaultBranch = "main";
       pull.rebase = false;
       color.ui = true;
+      column.ui = "auto";
       diff.colorMoved = "zebra";
       fetch.prune = true;
       merge.conflictstyle = "diff3";
       push.autoSetupRemote = true;
       rebase.autoStash = true;
       rerere.enabled = true;
-      # column.ui = "auto";
       branch.sort = "-committerdate";
       maintenance.auto = false;
       maintenance.strategy = "incremental";

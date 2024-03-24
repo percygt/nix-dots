@@ -26,8 +26,6 @@ in {
     ];
     pinentryPackage = pkgs.pinentry-curses;
     extraConfig = ''
-      debug-pinentry
-      debug-level 1024
       disable-scdaemon
     '';
   };
