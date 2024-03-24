@@ -81,11 +81,11 @@
       jcu = "journalctl --user -ex --unit";
       curl = "curlie";
       dc = "docker compose";
-      hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'$hostname --impure";
+      hms = "home-manager switch --flake ${flakeDirectory}#$HOSTNAME";
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
       n2ne = "nvim $FLAKE_PATH/packages/node/packages.json";
       n2ni = "node2nix -i $FLAKE_PATH/packages/node/packages.json -e $FLAKE_PATH/packages/node/node-env.nix -o $FLAKE_PATH/packages/node/packages.nix -c $FLAKE_PATH/packages/node/default.nix";
-      niso = "nix build .'?submodules=1#'nixosConfigurations.dot_iso.config.system.build.isoImage --impure";
+      niso = "nix build .#nixosConfigurations.dot_iso.config.system.build.isoImage --impure";
       nd = "nix develop";
       nfu = "nix flake update";
       tldr = "tldr --list | fzf --preview=\"tldr {1} --color=always\" --preview-window=right,70% | xargs tldr";
