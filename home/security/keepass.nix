@@ -1,8 +1,9 @@
-{pkgs, ...}: let
-  kmk0 =
-    if (builtins.pathExists "/data/keeps/m0.kdbx")
-    then "/data/keeps/m0.kdbx"
-    else "";
+{
+  pkgs,
+  config,
+  ...
+}: let
+  kmk0 = "${config.home.homeDirectory}/data/keeps/m0.kdbx";
 in {
   home.packages = with pkgs; [
     keepassxc

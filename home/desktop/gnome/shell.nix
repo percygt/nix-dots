@@ -24,10 +24,10 @@ in {
       picture-uri = wallpaper;
       picture-uri-dark = wallpaper;
     };
-    "org/gnome/desktop/input-sources" = {
-      # remap capslock to esc
-      xkb-options = ["caps:escape"];
-    };
+    # "org/gnome/desktop/input-sources" = {
+    #   # remap capslock to esc
+    #   xkb-options = ["caps:escape"];
+    # };
     "org/gnome/desktop/wm/preferences" = {
       action-double-click-titlebar = "toggle-maximize";
       action-middle-click-titlebar = "minimize";
@@ -88,9 +88,8 @@ in {
     "org/gnome/shell" = {
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
-        "codium.desktop"
         "com.brave.Browser.desktop"
-        "firefox.desktop"
+        "one.ablaze.floorp"
         "com.github.tchx84.Flatseal.desktop"
         "org.keepassxc.KeePassXC.desktop"
         "btrfs-assistant.desktop"
@@ -99,6 +98,7 @@ in {
         "org.cockpit_project.CockpitClient.desktop"
         "md.obsidian.Obsidian.desktop"
         "virt-manager.desktop"
+        "codium.desktop"
       ];
       last-selected-power-profile = "performance";
     };

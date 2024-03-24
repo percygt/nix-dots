@@ -17,8 +17,6 @@
     then "nixos"
     else defaultUser;
 
-  scrt = builtins.fromJSON (builtins.readFile "${self}/lib/secrets/token.json");
-
   homeDirectory = "/home/${username}";
 
   flakeDirectory = "${homeDirectory}/nix-dots";
@@ -56,7 +54,6 @@
         homeDirectory
         username
         hostName
-        scrt
         ui
         ifPathExists
         ifPathExist

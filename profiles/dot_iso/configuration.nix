@@ -14,6 +14,7 @@
     "common/console.nix"
     "common/packages.nix"
     "common/locale.nix"
+    "extra/fonts.nix"
   ];
 in {
   imports =
@@ -64,30 +65,15 @@ in {
 
   programs.git.enable = true;
 
-  programs.ssh = {
-    startAgent = true;
-    extraConfig = ''
-      Host gitlab.com
-        PreferredAuthentications publickey
-        IdentityFile /etc/ssh/id_ed25519_glab
-    '';
-    knownHosts."gitlab.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
-  };
-
   isoImage = {
     makeEfiBootable = true;
     makeUsbBootable = true;
     appendToMenuLabel = " live";
-    contents = [
-      {
-        source = ~/.ssh;
-        target = "/ssh";
-      }
-    ];
   };
 
   environment.systemPackages = with pkgs; [
     gum
+    rsync
     (
       writeShellScriptBin "nix_install"
       ''
@@ -102,21 +88,10 @@ in {
         sleep 1
 
         if [ ! -d "${flakeDirectory}/.git" ]; then
-          # Define source and destination directories
-          source_dir="/iso/ssh/."
-          destination_dir="/etc/ssh/"
-          if [ -e "$source_dir" ]; then
-            # Copy .ssh directory to the destination directory
-            sudo cp -r "$source_dir" "$destination_dir"
-            sleep 3
-            git clone --recurse-submodule git@gitlab.com:percygt/nix-dots.git
-            sleep 2
-            cd nix-dots
-          else
-            echo "Source directory $source_dir does not exist"
-            exit 1
-          fi
+          git clone https://github.com/percygt/nix-dots.git
         fi
+
+        cd nix-dots
 
         TARGET_HOST=$(ls -1 ~/nix-dots/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
 
@@ -140,7 +115,7 @@ in {
           --mode zap_create_mount \
           "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
 
-        sudo nixos-install --flake "$HOME/nix-dots?submodules=1#$TARGET_HOST"
+        sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
 
         DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
         echo $DIR
@@ -148,7 +123,6 @@ in {
         # Rsync my nix-config to the target install
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "/iso/ssh/.." "/mnt/home/${target_user}/.ssh"
 
         # If there is a keyfile for a data disks, put copy it to the root partition and
         # ensure the permissions are set appropriately.

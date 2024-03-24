@@ -13,7 +13,7 @@ in {
   gtk = {
     enable = true;
     font = {
-      inherit (interface) name size; 
+      inherit (interface) name size;
       package = interface.package pkgs;
     };
     theme = {
@@ -50,26 +50,6 @@ in {
         flavor = "mocha";
         accent = "lavender";
       };
-    };
-    gtk3 = {
-      bookmarks = [
-        "file:///${flakeDirectory}"
-        "file:///home/${username}/.local"
-        "file:///home/${username}/.config"
-        "file:///windows"
-        "file:///backup"
-        "file:///data/playground"
-        "file:///data/git-repo"
-        "file:///data/logs"
-        "file:///data/codebox"
-        "file:///data/distrobox"
-        "file:///data"
-        "file:///home/${username}/Documents"
-        "file:///home/${username}/Music"
-        "file:///home/${username}/Pictures"
-        "file:///home/${username}/Videos"
-        "file:///home/${username}/Downloads"
-      ];
     };
   };
   xdg = {

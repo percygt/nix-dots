@@ -7,10 +7,10 @@
   modules = [
     "."
     "_bin"
-    "gnome"
     "shell"
     "terminal"
     "editor"
+    "desktop/gnome"
     "cli/starship.nix"
     "cli/atuin.nix"
     "cli/yazi.nix"
@@ -34,7 +34,6 @@ in {
     ];
     shellAliases = {
       mkVM = "qemu-system-x86_64 -enable-kvm -m 2G -boot menu=on -drive file=vm.img -cpu=host -vga virtio -display sdl,gl=on -cdrom";
-      stow_home = "stow -d /data/ -t $HOME stow_home/";
     };
     sessionVariables = {
       LIBVIRT_DEFAULT_URI = "qemu:///system";
@@ -45,7 +44,7 @@ in {
     enable = true;
     extraOptions = [
       "-gui-address=furies.atlas-qilin.ts.net:8384"
-      "-home=/data/syncthing"
+      "-home=${config.home.homeDirectory}/data/syncthing"
     ];
   };
   xdg = {
@@ -54,33 +53,34 @@ in {
     systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
     configFile."wireplumber/50-bluez-config.lua".text = ''
       bluez_monitor.enabled = true
+
       bluez_monitor.properties = {
-      	["with-logind"] = true,
+        ["with-logind"] = true,
       }
+
       bluez_monitor.rules = {
-      	{
-      		matches = {
-      			{
-      				{ "device.name", "matches", "bluez_card.*" },
-      			},
-      		},
-      		apply_properties = {},
-      	},
-      	{
-      		matches = {
-      			{
-      				-- Matches all sources.
-      				{ "node.name", "matches", "bluez_input.*" },
-      			},
-      			{
-      				-- Matches all sinks.
-      				{ "node.name", "matches", "bluez_output.*" },
-      			},
-      		},
-      		apply_properties = {
-      			["session.suspend-timeout-seconds"] = 0, -- 0 disables suspend
-      		},
-      	},
+        {
+          matches = {
+            {
+              { "device.name", "matches", "bluez_card.*" },
+            },
+          },
+          apply_properties = {
+          },
+        },
+        {
+          matches = {
+            {
+              { "node.name", "matches", "bluez_input.*" },
+            },
+            {
+              { "node.name", "matches", "bluez_output.*" },
+            },
+          },
+          apply_properties = {
+            ["session.suspend-timeout-seconds"] = 0,  -- 0 disables suspend
+          },
+        },
       }
     '';
   };

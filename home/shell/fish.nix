@@ -2,10 +2,10 @@
   programs.fish = {
     enable = true;
     plugins = with pkgs.fishPlugins; [
-      # {
-      #   name = "fzf";
-      #   inherit (fzf-fish) src;
-      # }
+      {
+        name = "fzf";
+        inherit (fzf-fish) src;
+      }
       {
         name = "bass";
         inherit (bass) src;
@@ -19,23 +19,26 @@
           sha256 = "13x3bfif906nszf4mgsqxfshnjcn6qm4qw1gv7nw89wi4cdp9i8q";
         };
       }
-      # {
-      #   name = "fish-ghq";
-      #   src = pkgs.fetchFromGitHub {
-      #     owner = "percygt";
-      #     repo = "fish-ghq";
-      #     rev = "cafaaabe63c124bf0714f89ec715cfe9ece87fa2";
-      #     hash = "sha256-6b1zmjtemNLNPx4qsXtm27AbtjwIZWkzJAo21/aVZzM=";
-      #   };
-      # }
     ];
     interactiveShellInit =
       /*
       fish
       */
       ''
+        export FZF_DEFAULT_OPTS="--border rounded --info=inline --preview-window=right,60%,, --color bg:#000000,bg+:#0e1a60,preview-bg:#00051A"
+        export FZF_TMUX=1
+        export FZF_TMUX_OPTS="-p90%,75%"
+
         set fish_greeting # Disable greeting
         check_directory_for_new_repository
+
+        bind \ee edit_command_buffer
+        nix-your-shell fish | source
+
+        bind \cr _fzf_search_history
+        bind -M insert \cr _fzf_search_history
+
+        fzf_configure_bindings --directory=\cf --variables=\e\cv --git_status=\cs --git_log=\cg
       '';
     functions = {
       cd = {
@@ -45,6 +48,7 @@
         '';
         wraps = "cd";
       };
+
       check_directory_for_new_repository = {
         body = ''
           set current_repository (git rev-parse --show-toplevel 2> /dev/null)
@@ -70,7 +74,7 @@
         function starship_transient_rprompt_func
           starship module time
         end
-        
+              
         fish_vi_key_bindings
         set fish_cursor_default     block      blink
         set fish_cursor_insert      line       blink

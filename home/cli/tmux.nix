@@ -64,7 +64,7 @@ in {
       {
         plugin = tmuxinoicer;
         extraConfig = ''
-          set -g @tmuxinoicer-find-base "/data:1:4,${config.xdg.configHome}/home-manager,${config.home.homeDirectory}/nix-dots"
+          set -g @tmuxinoicer-find-base "${config.home.homeDirectory}/data:1:4,${config.xdg.configHome}/home-manager,${config.home.homeDirectory}/nix-dots"
           set -g @tmuxinoicer-extras "find"
         '';
       }
@@ -78,12 +78,12 @@ in {
           set -g @thumbs-command 'tmux set-buffer -- {} && tmux display-message "Copied {}" && printf %s {} | xclip -i -selection clipboard'
         '';
       }
-      # {
-      #   plugin = fzf-url;
-      #   extraConfig = ''
-      #     set -g @fzf-url-fzf-options '-h 50% --multi -0 --no-preview'
-      #   '';
-      # }
+      {
+        plugin = fzf-url;
+        extraConfig = ''
+          set -g @fzf-url-fzf-options '-h 50% --multi -0 --no-preview'
+        '';
+      }
       better-mouse-mode
       extrakto
       vim-tmux-navigator
@@ -92,8 +92,9 @@ in {
       {
         plugin = resurrect;
         extraConfig = ''
+          set -g @resurrect-strategy-vim 'session'
+          set -g @resurrect-strategy-nvim 'session'
           set -g @resurrect-capture-pane-contents 'on'
-
           set -g @resurrect-dir ${resurrectDirPath}
           set -g @resurrect-hook-post-save-all 'target=$(readlink -f ${resurrectDirPath}/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | sponge $target'
         '';
@@ -159,10 +160,13 @@ in {
         unbind d
         unbind f
         unbind g
+        unbind K
+        unbind k
         bind-key g new-window 'lazygit; tmux kill-pane'
         bind-key d new-window 'lazydocker; tmux kill-pane'
         bind-key f new-window 'yazi; tmux kill-pane'
-        bind-key k new-window 'kpass; tmux kill-pane'
+        bind-key K new-window 'kpass; tmux kill-pane'
+        bind k send-keys -t.- 'pmenu' Enter
 
         # Easier move of windows
         bind-key -r Home swap-window -t - \; select-window -t -
@@ -178,6 +182,7 @@ in {
         # Easier reload of config
         bind R source-file ~/.config/tmux/tmux.conf
 
+        # shell display to nvim
         bind-key e send-keys "tmux capture-pane -p -S - | nvim -c 'set buftype=nofile' +" Enter
       '';
   };

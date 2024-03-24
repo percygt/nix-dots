@@ -27,7 +27,6 @@
     usbutils
     vim
     wget
-    pinentry-curses
     yq-go
   ];
 }

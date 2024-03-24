@@ -3,10 +3,7 @@
   config,
   ...
 }: let
-  PASSWORD_STORE_DIR =
-    if (builtins.pathExists "/data/pass")
-    then "/data/pass"
-    else "${config.xdg.dataHome}/password-store";
+  PASSWORD_STORE_DIR = "${config.home.homeDirectory}/data/pass";
 in {
   programs = {
     password-store = {

@@ -7,8 +7,8 @@
   modules = [
     "."
     "_bin"
-    "gnome"
     "shell"
+    "desktop/gnome"
     "terminal/wezterm.nix"
     "editor/neovim"
     "cli/starship.nix"
@@ -28,10 +28,7 @@ in {
       hwinfo
     ];
     shellAliases = {
-      isobld = "nix build .'?submodules=1#'nixosConfigurations.iso.config.system.build.isoImage --impure";
-      suisobld = "sudo nix build .'?submodules=1#'nixosConfigurations.dot_iso.config.system.build.isoImage";
       mkVM = "qemu-system-x86_64 -enable-kvm -m 2G -boot menu=on -drive file=vm.img -cpu=host -vga virtio -display sdl,gl=on -cdrom";
-      stow_home = "stow -d /data/ -t $HOME stow_home/";
     };
     sessionVariables = {
       LIBVIRT_DEFAULT_URI = "qemu:///system";
@@ -50,33 +47,34 @@ in {
     systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
     configFile."wireplumber/50-bluez-config.lua".text = ''
       bluez_monitor.enabled = true
+
       bluez_monitor.properties = {
-      	["with-logind"] = true,
+        ["with-logind"] = true,
       }
+
       bluez_monitor.rules = {
-      	{
-      		matches = {
-      			{
-      				{ "device.name", "matches", "bluez_card.*" },
-      			},
-      		},
-      		apply_properties = {},
-      	},
-      	{
-      		matches = {
-      			{
-      				-- Matches all sources.
-      				{ "node.name", "matches", "bluez_input.*" },
-      			},
-      			{
-      				-- Matches all sinks.
-      				{ "node.name", "matches", "bluez_output.*" },
-      			},
-      		},
-      		apply_properties = {
-      			["session.suspend-timeout-seconds"] = 0, -- 0 disables suspend
-      		},
-      	},
+        {
+          matches = {
+            {
+              { "device.name", "matches", "bluez_card.*" },
+            },
+          },
+          apply_properties = {
+          },
+        },
+        {
+          matches = {
+            {
+              { "node.name", "matches", "bluez_input.*" },
+            },
+            {
+              { "node.name", "matches", "bluez_output.*" },
+            },
+          },
+          apply_properties = {
+            ["session.suspend-timeout-seconds"] = 0,  -- 0 disables suspend
+          },
+        },
       }
     '';
   };

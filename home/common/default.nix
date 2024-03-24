@@ -4,5 +4,6 @@
     ./gtk.nix
     ./nix.nix
     ./extra.nix
+    ./xdg.nix
   ];
 }

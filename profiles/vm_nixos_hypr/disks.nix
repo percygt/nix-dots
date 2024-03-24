@@ -93,7 +93,7 @@
                   type = "filesystem";
                   format = "btrfs";
                   extraArgs = ["-L" "DATA" "-f"];
-                  mountpoint = "/data";
+                  mountpoint = "/home/percygt/data";
                   mountOptions = ["compress=lzo" "x-gvfs-show"];
                 };
               };

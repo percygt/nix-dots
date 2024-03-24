@@ -3,9 +3,31 @@
   is_generic_linux,
   pkgs,
   ui,
+  inputs,
+  config,
   ...
 }:
-lib.mkIf is_generic_linux {
+lib.optionalAttrs is_generic_linux {
+  imports = [
+    inputs.xremap.homeManagerModules.default
+  ];
+  # This configures the service to only run for a specific user
+  services.xremap = {
+    withGnome = true;
+  };
+  # Modmap for single key rebinds
+  services.xremap.config.modmap = [
+    {
+      name = "Global";
+      remap = {"CapsLock" = "Esc";}; # globally remap CapsLock to Esc
+    }
+  ];
+  home = {
+    activation.setupXremap = config.lib.dag.entryAfter ["writeBoundary"] ''
+      /usr/bin/systemctl start --user xremap
+    '';
+  };
+
   fonts.fontconfig.enable = true;
   home.packages = ui.fonts.packages pkgs;
   nixpkgs.config = {

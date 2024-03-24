@@ -21,6 +21,7 @@
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
 
     nix-colors.url = "github:misterio77/nix-colors";
+    xremap.url = "github:xremap/nix-flake";
     disko.url = "github:nix-community/disko";
     sops-nix.url = "github:mic92/sops-nix";
     impermanence.url = "github:nix-community/impermanence";
