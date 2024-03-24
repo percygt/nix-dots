@@ -21,6 +21,7 @@
     hyprland-plugins.inputs.hyprland.follows = "hyprland";
 
     nix-colors.url = "github:misterio77/nix-colors";
+    xremap.url = "github:xremap/nix-flake";
     disko.url = "github:nix-community/disko";
     sops-nix.url = "github:mic92/sops-nix";
     impermanence.url = "github:nix-community/impermanence";
@@ -49,9 +50,13 @@
 
     templates = import ./templates;
 
+    homeManagerModules.default = ./home;
+
+    nixosModules.default = ./system;
+
     nixosConfigurations = {
-      ivlivs = libx.mkNixOS {
-        profile = "ivlivs";
+      czth = libx.mkNixOS {
+        profile = "czth";
         desktop = "hyprland";
       };
       vm_nixos_hypr = libx.mkNixOS {
@@ -65,8 +70,8 @@
     };
 
     homeConfigurations = {
-      ivlivs = libx.mkHomeManager {
-        profile = "ivlivs";
+      czth = libx.mkHomeManager {
+        profile = "czth";
       };
       vm_nixos_hypr = libx.mkHomeManager {
         profile = "vm_nixos_hypr";

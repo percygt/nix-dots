@@ -1,31 +1,47 @@
 {
-  flakeDirectory,
-  listHomeImports,
-  ...
-}: let
-  modules = [
-    "."
-    "_bin"
-    "neovim"
-    "shell"
-    "terminal"
-    # "extra/vscodium.nix"
-    "cli/starship.nix"
-    "cli/yazi.nix"
-    "cli/direnv.nix"
-    "cli/fzf.nix"
-    "cli/extra.nix"
-    "cli/tui.nix"
-    "desktop/hyprland"
+  imports = [
+    ./hyprland.nix
   ];
-in {
-  imports =
-    listHomeImports modules
-    ++ [
-      ./hyprland.nix
-    ];
-  home.shellAliases = {
-    hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'$hostname";
-    ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}'?submodules=1#'$hostname";
+  # xdg.configFile = {
+  #   "hypr/hyprland.conf".source = ./hyprland.conf;
+  # };
+  desktop = {
+    xdg = {
+      enable = true;
+      linkDirsToData.enable = true;
+    };
+    gtk.enable = true;
+    qt.enable = true;
   };
+
+  editor = {
+    # neovim.enable = true;
+    # vscode.enable = true;
+  };
+
+  terminal = {
+    # wezterm.enable = true;
+    foot.enable = true;
+  };
+
+  # bin = {
+  #   kpass.enable = true;
+  #   pmenu.enable = true;
+  # };
+  #
+  # security = {
+  #   pass.enable = true;
+  #   keepass.enable = true;
+  #   backup.enable = true;
+  # };
+
+  # cli = {
+  #   atuin.enable = true;
+  #   direnv.enable = true;
+  #   extra.enable = true;
+  #   fzf.enable = true;
+  #   starship.enable = true;
+  #   tui.enable = true;
+  #   yazi.enable = true;
+  # };
 }

@@ -1,29 +1,29 @@
-{pkgs, ...}: {
+{lib, ...}: {
   imports = [
-    ./tmux.nix
+    # can be enable/disable in profiles/${host}/home.nix
+    # cli.${module_name}.enable = true
+
+    # optional
+    ./atuin.nix
+    ./direnv.nix
+    ./extra.nix
+    ./fzf.nix
+    ./starship.nix
+    ./tui.nix
+    ./yazi.nix
+
+    # enable true by default
+    ./common.nix
+    ./bat.nix
     ./eza.nix
     ./nixtools.nix
-    ./bat.nix
+    ./tmux
   ];
-  home.packages = with pkgs; [
-    git
-    du-dust
-    dua
-    duf
-    yq-go # portable command-line YAML, JSON and XML processor
-    fd
-    ripgrep
-    unrar
-    curlie
-    p7zip
-    jq
-    aria2
-    gping
-    xcp
-    dogdns
-
-    age
-    sops
-    git-crypt
-  ];
+  cli = {
+    common.enable = lib.mkDefault true; #./common.nix
+    bat.enable = lib.mkDefault true; #./bat.nix
+    eza.enable = lib.mkDefault true; #./eza.nix
+    nixtools.enable = lib.mkDefault true; #./nixtools.nix
+    tmux.enable = lib.mkDefault true; #./tmux
+  };
 }

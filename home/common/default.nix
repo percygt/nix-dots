@@ -1,8 +1,8 @@
 {
   imports = [
-    ./qt.nix
-    ./gtk.nix
     ./nix.nix
-    ./extra.nix
+    ./home.nix
+    ./shellAliases.nix
+    ./sessionVariables.nix
   ];
 }

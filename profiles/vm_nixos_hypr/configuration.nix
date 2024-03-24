@@ -1,26 +1,23 @@
-{
-  listSystemImports,
-  pkgs,
-  ...
-}: let
-  modules = [
-    "."
-    # "desktop"
+{pkgs, ...}: {
+  imports = [
+    ./hardware.nix
+    ./disks.nix
+    ./boot.nix
   ];
-in {
-  imports =
-    listSystemImports modules
-    ++ [
-      # inputs.home-manager.nixosModules.default
-      ./hardware.nix
-      ./disks.nix
-      ./boot.nix
-    ];
 
   # XDG portal
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
   services.xserver = {displayManager.startx.enable = true;};
+
+  # home-manager.useGlobalPkgs = true;
+  # home-manager.useUserPackages = true;
+
+  core = {
+    system.enable = true;
+    systemd-boot.enable = true;
+    zram.enable = true;
+  };
 
   # Enabling hyprlnd on NixOS
   programs.hyprland = {

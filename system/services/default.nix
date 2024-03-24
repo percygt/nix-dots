@@ -1,8 +1,8 @@
 {
   imports = [
-    ./avahi.nix
-    ./firewall.nix
+    # ./avahi.nix
+    # ./firewall.nix
     ./openssh.nix
-    ./tailscale.nix
+    # ./tailscale.nix
   ];
 }

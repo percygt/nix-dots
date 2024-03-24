@@ -2,7 +2,7 @@ require("obsidian").setup({
   workspaces = {
     {
       name = "playbook",
-      path = "/data/playbook",
+      path = "/home/percygt/data/playbook",
     },
   },
   notes_subdir = "Brain",

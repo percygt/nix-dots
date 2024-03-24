@@ -12,6 +12,7 @@
     file
     git
     jq
+    fzf
     killall
     nfs-utils
     ntfs3g
@@ -27,7 +28,6 @@
     usbutils
     vim
     wget
-    pinentry-curses
     yq-go
   ];
 }

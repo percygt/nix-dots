@@ -2,13 +2,13 @@
   interface = {
     name = "Rubik";
     package = pkgs: pkgs.rubik;
-    size = 10;
+    size = 12;
   };
 
   shell = {
     name = "VictorMono Nerd Font";
     package = pkgs: pkgs.nerdfonts.override {fonts = ["VictorMono"];};
-    size = 10;
+    size = 14;
   };
 
   console = {

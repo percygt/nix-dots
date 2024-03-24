@@ -18,15 +18,21 @@
     profile,
     is_laptop ? false,
     is_iso ? false,
+    user_name ? defaultUser,
     desktop ? null,
     system ? "x86_64-linux",
   }: let
     inherit (inputs.nixpkgs) lib;
+    username =
+      if is_iso
+      then "nixos"
+      else user_name;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs
         outputs
         self
+        username
         defaultUser
         stateVersion
         profile
@@ -40,14 +46,15 @@
       inherit system;
       modules = [
         ../profiles/${profile}/configuration.nix
+        inputs.self.outputs.nixosModules.default
+        # inputs.home-manager.nixosModules.home-manager
         # {
-        #   home-manager = {
-        #     useGlobalPkgs = true;
-        #     useUserPackages = true;
-        #     users.${username} = {
-        #       imports = homeModules;
-        #     };
-        #     extraSpecialArgs = args;
+        #   home-manager.extraSpecialArgs = mkArgs.args;
+        #   home-manager.users.${username} = {
+        #     imports = [
+        #       ../profiles/${profile}/home.nix
+        #       inputs.self.outputs.homeManagerModules.default
+        #     ];
         #   };
         # }
       ];
@@ -57,15 +64,18 @@
   mkHomeManager = {
     profile,
     system ? "x86_64-linux",
+    user_name ? defaultUser,
     is_generic_linux ? false,
     is_laptop ? false,
   }: let
     inherit (inputs.home-manager) lib;
+    username = user_name;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs
         outputs
         self
+        username
         defaultUser
         stateVersion
         profile
@@ -78,6 +88,7 @@
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       modules = [
         ../profiles/${profile}/home.nix
+        inputs.self.outputs.homeManagerModules.default
       ];
       extraSpecialArgs = mkArgs.args;
     };

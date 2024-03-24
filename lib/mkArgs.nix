@@ -2,23 +2,17 @@
   self,
   inputs,
   outputs,
+  username,
   defaultUser,
   stateVersion,
   profile,
   desktop ? null,
   is_iso ? false,
   is_generic_linux ? false,
-  is_laptop,
+  is_laptop ? false,
 }: rec {
   inherit (inputs.nixpkgs) lib;
-
-  username =
-    if is_iso
-    then "nixos"
-    else defaultUser;
-
-  scrt = builtins.fromJSON (builtins.readFile "${self}/lib/secrets/token.json");
-
+  inherit username;
   homeDirectory = "/home/${username}";
 
   flakeDirectory = "${homeDirectory}/nix-dots";
@@ -28,16 +22,13 @@
       (import ./ui/colors.nix)
       // inputs.nix-colors.lib;
     fonts = import ./ui/fonts.nix;
-    wallpaper = "${homeDirectory}/.local/share/backgrounds/nasa-earth.jpg";
+    wallpaper = "${homeDirectory}/.local/share/backgrounds/building-top.jpg";
   };
   ifPathExists = path:
     lib.optionals (builtins.pathExists path) [path];
 
   ifPathExist = path:
     lib.optional (builtins.pathExists path) path;
-
-  listImports = path: modules:
-    lib.forEach modules (mod: path + "/${mod}");
 
   listSystemImports = modules:
     lib.forEach modules (mod: "${self}/system/${mod}");
@@ -56,12 +47,10 @@
         homeDirectory
         username
         hostName
-        scrt
         ui
         ifPathExists
         ifPathExist
         desktop
-        listImports
         listHomeImports
         listSystemImports
         flakeDirectory

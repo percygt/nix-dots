@@ -27,7 +27,15 @@
   dockerls = {};
   bashls = {};
   terraformls = {};
-  gopls = {};
+  gopls = {
+    settings.gopls = {
+      completeUnimported = true;
+      usePlaceholders = true;
+      analyses = {
+        unusedparams = true;
+      };
+    };
+  };
   marksman = {};
   denols = {
     root_pattern = ["deno.json" "deno.jsonc"];

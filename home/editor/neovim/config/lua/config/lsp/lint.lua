@@ -6,7 +6,7 @@ local opts = {
     sh = { "shellcheck" },
     yaml = { "yamllint" },
     cpp = { "cppcheck" },
-    go = { "golangci_lint" },
+    go = { "golangcilint" },
   },
   linters = {
     "actionlint",

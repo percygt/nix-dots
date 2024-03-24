@@ -1,11 +1,20 @@
-{pkgs, ...}: let
-  kmk0 =
-    if (builtins.pathExists "/data/keeps/m0.kdbx")
-    then "/data/keeps/m0.kdbx"
-    else "";
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
+  kmk0 = "${config.home.homeDirectory}/data/keeps/m0.kdbx";
 in {
-  home.packages = with pkgs; [
-    keepassxc
-  ];
-  home.sessionVariables.KPDB = kmk0;
+  options = {
+    security.keepass.enable =
+      lib.mkEnableOption "Enable keepass";
+  };
+
+  config = lib.mkIf config.security.keepass.enable {
+    home.packages = with pkgs; [
+      keepassxc
+    ];
+    home.sessionVariables.KPDB = kmk0;
+  };
 }

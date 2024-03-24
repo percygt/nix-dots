@@ -51,6 +51,8 @@
     gopls
     golangci-lint
     delve
+    go-tools
+    gofumpt
 
     #docker
     hadolint

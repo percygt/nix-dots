@@ -1,46 +1,28 @@
 {
   pkgs,
   lib,
-  flakeDirectory,
   hostName,
   target_user,
   listSystemImports,
-  outputs,
   inputs,
-  config,
   ...
 }: let
   modules = [
     "common/console.nix"
     "common/packages.nix"
     "common/locale.nix"
+    "extra/fonts.nix"
   ];
 in {
   imports =
     listSystemImports modules
     ++ [
-      inputs.home-manager.nixosModules.default
       {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
       "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
     ];
 
-  networking = {
-    inherit hostName;
-  };
-
-  home-manager.users.nixos = import ./home.nix {inherit outputs config lib;};
-
-  nixpkgs = {
-    hostPlatform = lib.mkDefault "x86_64-linux";
-    config.allowUnfree = true;
-    overlays = builtins.attrValues outputs.overlays;
-  };
-
-  nix = {
-    settings.experimental-features = ["nix-command" "flakes"];
-    extraOptions = "experimental-features = nix-command flakes";
-  };
+  home-manager.useUserPackages = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -64,32 +46,22 @@ in {
 
   programs.git.enable = true;
 
-  programs.ssh = {
-    startAgent = true;
-    extraConfig = ''
-      Host gitlab.com
-        PreferredAuthentications publickey
-        IdentityFile /etc/ssh/id_ed25519_glab
-    '';
-    knownHosts."gitlab.com".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfuCHKVTjquxvt6CM6tdG4SLp1Btn/nOeHHE5UOzRdf";
-  };
-
   isoImage = {
-    makeEfiBootable = true;
-    makeUsbBootable = true;
     appendToMenuLabel = " live";
-    contents = [
-      {
-        source = ~/.ssh;
-        target = "/ssh";
-      }
-    ];
+    # copy self(flake directory) to /iso path of the dot installer
+    # contents = [
+    #   {
+    #     source = self;
+    #     target = "/nix-dots";
+    #   }
+    # ];
   };
 
   environment.systemPackages = with pkgs; [
     gum
+    rsync
     (
-      writeShellScriptBin "nix_install"
+      writeShellScriptBin "inst"
       ''
         #!/usr/bin/env bash
         set -euo pipefail
@@ -99,37 +71,29 @@ in {
         	exit 1
         fi
 
-        sleep 1
+        dots_dir="$HOME/nix-dots";
 
-        if [ ! -d "${flakeDirectory}/.git" ]; then
-          # Define source and destination directories
-          source_dir="/iso/ssh/."
-          destination_dir="/etc/ssh/"
-          if [ -e "$source_dir" ]; then
-            # Copy .ssh directory to the destination directory
-            sudo cp -r "$source_dir" "$destination_dir"
-            sleep 3
-            git clone --recurse-submodule git@gitlab.com:percygt/nix-dots.git
-            sleep 2
-            cd nix-dots
-          else
-            echo "Source directory $source_dir does not exist"
-            exit 1
-          fi
+        if [ ! -d "$dots_dir/.git" ]; then
+          git config --global core.compression 0
+        	git clone --depth 1 https://github.com/percygt/nix-dots.git "$dots_dir"
+          pushd $dots_dir &> /dev/null;
+          git fetch --depth=2147483647
+          git pull --all
+          popd &> /dev/null;
         fi
 
-        TARGET_HOST=$(ls -1 ~/nix-dots/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
+        TARGET_HOST=$(ls -1 "$dots_dir"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
 
-        if [ ! -e "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix" ]; then
-          echo "ERROR! $(basename "$0") could not find the required $HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
+        if [ ! -e "$dots_dir/profiles/$TARGET_HOST/disks.nix" ]; then
+          echo "ERROR! $(basename "$0") could not find the required $dots_dir/profiles/$TARGET_HOST/disks.nix"
           exit 1
         fi
 
-        if grep -q "data.keyfile" "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"; then
+        if grep -q "data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
           echo -n "$(head -c32 /dev/random | base64)" > /tmp/data.keyfile
         fi
 
-        gum confirm  --default=false \
+        gum confirm  --default=true \
           "WARNING!!!! This will ERASE ALL DATA on the disks $TARGET_HOST. Are you sure you want to continue?"
 
         echo "Partitioning Disks"
@@ -138,24 +102,21 @@ in {
           --no-write-lock-file \
           -- \
           --mode zap_create_mount \
-          "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
+          "$dots_dir/profiles/$TARGET_HOST/disks.nix"
 
-        sudo nixos-install --flake "$HOME/nix-dots?submodules=1#$TARGET_HOST"
+        mkdir -p mnt/etc/nixos
 
-        DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
-        echo $DIR
+        sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 
-        # Rsync my nix-config to the target install
         mkdir -p "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "/iso/ssh/.." "/mnt/home/${target_user}/.ssh"
+        rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/nix-dots"
 
-        # If there is a keyfile for a data disks, put copy it to the root partition and
-        # ensure the permissions are set appropriately.
         if [[ -f "/tmp/data.keyfile" ]]; then
-          sudo cp /tmp/data.keyfile /mnt/etc/data.keyfile
-          sudo chmod 0400 /mnt/etc/data.keyfile
+          sudo cp /tmp/data.keyfile /mnt/etc/nixos/data.keyfile
+          sudo chmod 0400 /mnt/etc/nixos/data.keyfile
         fi
+
+        echo "Reboot now"
       ''
     )
   ];

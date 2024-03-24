@@ -1,9 +1,16 @@
 {lib, ...}: {
-  environment.etc = {
-    "crypttab".text = ''
-      data  /dev/disk/by-partlabel/data  /etc/data.keyfile
-    '';
-  };
+  # environment.etc = {
+  #   "crypttab".text = ''
+  #     data  /dev/disk/by-partlabel/data  /etc/data.keyfile
+  #   '';
+  #};
+
+  # boot.initrd.luks.devices.data = {
+  #   device = lib.mkForce "/dev/disk/by-partlabel/data";
+  #   allowDiscards = true;
+  #   preLVM = true;
+  # };
+
   disko.devices = {
     disk = {
       sda = {
@@ -13,12 +20,12 @@
           type = "gpt";
           partitions = {
             ESP = {
-              label = "ESP";
               size = "1024M";
               type = "EF00";
               content = {
                 type = "filesystem";
                 format = "vfat";
+                mountOptions = ["umask=0077" "shortname=winnt"];
                 mountpoint = "/boot/efi";
               };
             };
@@ -26,7 +33,7 @@
               size = "20G";
               content = {
                 type = "btrfs";
-                extraArgs = ["-L" "NIXOS" "-f"];
+                extraArgs = ["-L" "nixos" "-f"];
                 mountpoint = "/";
                 mountOptions = ["defaults"];
                 subvolumes = {
@@ -79,30 +86,31 @@
             };
             data = {
               size = "100%";
-              label = "luks";
+              # label = "luks";
+              # content = {
+              #   type = "luks";
+              # extraFormatArgs = [
+              #     "--iter-time 1" # insecure but fast for tests
+              #   ];k
+              #   settings = {
+              #     allowDiscards = true;
+              #     keyFile = "/tmp/data.keyfile";
+              #   };
+              #   initrdUnlock = false;
+              # name = "data";
               content = {
-                type = "luks";
-                settings = {
-                  allowDiscards = true;
-                  keyFile = "/tmp/data.keyfile";
-                };
-                # Don't try to unlock this drive early in the boot.
-                initrdUnlock = false;
-                name = "data";
-                content = {
-                  type = "filesystem";
-                  format = "btrfs";
-                  extraArgs = ["-L" "DATA" "-f"];
-                  mountpoint = "/data";
-                  mountOptions = ["compress=lzo" "x-gvfs-show"];
-                };
+                type = "filesystem";
+                format = "btrfs";
+                extraArgs = ["-f"];
+                mountpoint = "/home/percygt/data";
+                mountOptions = ["compress=lzo"];
               };
             };
+            # };
           };
         };
       };
     };
   };
-
   fileSystems."/var/log".neededForBoot = true;
 }
