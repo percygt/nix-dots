@@ -2,7 +2,6 @@
   listHomeImports,
   config,
   pkgs,
-  inputs,
   ...
 }: let
   modules = [
@@ -28,6 +27,8 @@ in {
       /usr/bin/systemctl start --user sops-nix
     '';
     packages = with pkgs; [
+      # gnomeExtensions.supergfxctl-gex
+      gnomeExtensions.battery-health-charging
       gnomeExtensions.fedora-linux-update-indicator
       hwinfo
     ];
@@ -85,7 +86,7 @@ in {
   };
   dconf.settings = {
     "org/gnome/shell/extensions/fedora-update" = {
-      update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- ${pkgs.fish}/bin/fish -c \"sudo dnf check-update --refresh & sudo dnf upgrade -y; echo Done - Press enter to exit; read _\" ";
+      # update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- ${pkgs.fish}/bin/fish -c \"sudo dnf check-update --refresh & sudo dnf upgrade -y; echo Done - Press enter to exit; read _\" ";
       use-buildin-icons = false;
     };
   };

@@ -9,14 +9,14 @@
     "_bin"
     "gnome"
     "shell"
-    "terminal"
-    "editor"
+    "terminal/wezterm.nix"
+    "editor/neovim"
     "cli/starship.nix"
     "cli/atuin.nix"
     "cli/yazi.nix"
     "cli/direnv.nix"
     "cli/fzf.nix"
-    "cli/extra.nix"
+    # "cli/extra.nix"
     "cli/tui.nix"
   ];
 in {

@@ -49,10 +49,6 @@ in {
       gnomeExtensions.just-perfection
       gnomeExtensions.workspace-switcher-manager
     ]
-    ++ lib.optionals is_laptop [
-      # gnomeExtensions.supergfxctl-gex
-      gnomeExtensions.battery-health-charging
-    ]
     ++ [
       ddterm
       blur-my-shell
