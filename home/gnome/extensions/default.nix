@@ -29,7 +29,7 @@ in {
     [
       libhandy
       # gnomeExtensions.space-bar
-      gnomeExtensions.user-themes
+      # gnomeExtensions.user-themes
       gnomeExtensions.appindicator
       gnomeExtensions.pop-shell
       gnomeExtensions.caffeine
@@ -50,7 +50,7 @@ in {
       gnomeExtensions.workspace-switcher-manager
     ]
     ++ lib.optionals is_laptop [
-      gnomeExtensions.supergfxctl-gex
+      # gnomeExtensions.supergfxctl-gex
       gnomeExtensions.battery-health-charging
     ]
     ++ [

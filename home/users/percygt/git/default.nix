@@ -35,7 +35,7 @@
 
     signing = {
       signByDefault = true;
-      key = null;
+      key = "1F3DB564F0E44F81!";
     };
   };
 }
