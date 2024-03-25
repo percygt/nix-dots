@@ -19,7 +19,13 @@ lib.optionalAttrs is_generic_linux {
   services.xremap.config.modmap = [
     {
       name = "Global";
-      remap = {"CapsLock" = "Esc";}; # globally remap CapsLock to Esc
+      remap = {
+        "CapsLock" = {
+          held = "leftctrl";
+          alone = "esc";
+          alone_timeout_millis = "150";
+        };
+      }; # globally remap CapsLock to Esc
     }
   ];
   home = {
