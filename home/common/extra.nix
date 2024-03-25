@@ -20,12 +20,12 @@ lib.optionalAttrs is_generic_linux {
     {
       name = "Global";
       remap = {
-        "CapsLock" = {
-          held = "leftctrl";
-          alone = "esc";
-          alone_timeout_millis = "150";
+        "CAPSLOCK" = {
+          held = ["CONTROL_L"];
+          alone = ["ESC"];
+          alone_timeout_millis = 150;
         };
-      }; # globally remap CapsLock to Esc
+      };
     }
   ];
   home = {

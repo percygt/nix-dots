@@ -75,6 +75,26 @@ in {
     gum
     rsync
     (
+      writeShellScriptBin "nix_install_sub"
+      ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+        DIR=$( cd "$( dirname \"''${BASH_SOURCE [0]}\" )" && pwd )
+        echo $DIR
+
+        # Rsync my nix-config to the target install
+        mkdir -p "/mnt/home/${target_user}/nix-dots"
+        rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
+
+        # If there is a keyfile for a data disks, put copy it to the root partition and
+        # ensure the permissions are set appropriately.
+        if [[ -f "/tmp/data.keyfile" ]]; then
+          sudo cp /tmp/data.keyfile /mnt/etc/data.keyfile
+          sudo chmod 0400 /mnt/etc/data.keyfile
+        fi
+      ''
+    )
+    (
       writeShellScriptBin "nix_install"
       ''
         #!/usr/bin/env bash
@@ -117,7 +137,7 @@ in {
 
         sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
 
-        DIR=$( cd "$( dirname "''${BASH_SOURCE [0]}" )" && pwd )
+        DIR=$( cd "$( dirname \"''${BASH_SOURCE [0]}\" )" && pwd )
         echo $DIR
 
         # Rsync my nix-config to the target install
