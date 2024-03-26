@@ -1,9 +1,9 @@
 {lib, ...}: {
-  environment.etc = {
-    "crypttab".text = ''
-      data  /dev/disk/by-partlabel/data  /etc/data.keyfile
-    '';
-  };
+  # environment.etc = {
+  #   "crypttab".text = ''
+  #     data  /dev/disk/by-partlabel/data  /etc/data.keyfile
+  #   '';
+  # };
   disko.devices = {
     disk = {
       sda = {
@@ -19,11 +19,13 @@
               content = {
                 type = "filesystem";
                 format = "vfat";
+                mountOptions = ["umask=0077" "shortname=winnt"];
                 mountpoint = "/boot/efi";
               };
             };
             root = {
-              size = "20G";
+              # size = "20G";
+              size = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
@@ -77,27 +79,27 @@
                 };
               };
             };
-            data = {
-              size = "100%";
-              label = "luks";
-              content = {
-                type = "luks";
-                settings = {
-                  allowDiscards = true;
-                  keyFile = "/tmp/data.keyfile";
-                };
-                # Don't try to unlock this drive early in the boot.
-                initrdUnlock = false;
-                name = "data";
-                content = {
-                  type = "filesystem";
-                  format = "btrfs";
-                  extraArgs = ["-L" "DATA" "-f"];
-                  mountpoint = "/home/percygt/data";
-                  mountOptions = ["compress=lzo" "x-gvfs-show"];
-                };
-              };
-            };
+            # data = {
+            #   size = "100%";
+            #   label = "luks";
+            #   content = {
+            #     type = "luks";
+            #     settings = {
+            #       allowDiscards = true;
+            #       keyFile = "/tmp/data.keyfile";
+            #     };
+            #     # Don't try to unlock this drive early in the boot.
+            #     initrdUnlock = false;
+            #     name = "data";
+            #     content = {
+            #       type = "filesystem";
+            #       format = "btrfs";
+            #       extraArgs = ["-L" "DATA" "-f"];
+            #       mountpoint = "/home/percygt/data";
+            #       mountOptions = ["compress=lzo" "x-gvfs-show"];
+            #     };
+            #   };
+            # };
           };
         };
       };

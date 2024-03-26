@@ -1,7 +1,7 @@
 {
   pkgs,
   lib,
-  flakeDirectory,
+  self,
   hostName,
   target_user,
   listSystemImports,
@@ -69,9 +69,10 @@ in {
     makeEfiBootable = true;
     makeUsbBootable = true;
     appendToMenuLabel = " live";
+    # copy self(flake directory) to /iso path of the dot installer
     contents = [
       {
-        source = ~/nix-dots;
+        source = self;
         target = "/nix-dots";
       }
     ];
@@ -117,8 +118,6 @@ in {
 
         rsync -a "/iso/nix-dots" "/mnt/home/${target_user}/"
 
-        # If there is a keyfile for a data disks, put copy it to the root partition and
-        # ensure the permissions are set appropriately.
         if [[ -f "/tmp/data.keyfile" ]]; then
           sudo cp /tmp/data.keyfile /mnt/etc/data.keyfile
           sudo chmod 0400 /mnt/etc/data.keyfile
