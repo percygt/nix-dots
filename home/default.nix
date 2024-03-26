@@ -4,8 +4,6 @@
   homeDirectory,
   lib,
   flakeDirectory,
-  config,
-  pkgs,
   desktop,
   inputs,
   outputs,

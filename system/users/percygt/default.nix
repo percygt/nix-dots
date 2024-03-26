@@ -7,6 +7,8 @@
 in {
   users.users.percygt = {
     isNormalUser = true;
+    mutableUsers = true;
+    initialPassword = "noice";
     shell = pkgs.fish;
     extraGroups =
       [
