@@ -65,37 +65,28 @@ in {
 
   programs.git.enable = true;
 
+  # isoImage = {
+  #   makeEfiBootable = true;
+  #   makeUsbBootable = true;
+  #   appendToMenuLabel = " live";
+  # };
   isoImage = {
     makeEfiBootable = true;
     makeUsbBootable = true;
     appendToMenuLabel = " live";
+    contents = [
+      {
+        source = ~/nix-dots;
+        target = "/nix-dots";
+      }
+    ];
   };
 
   environment.systemPackages = with pkgs; [
     gum
     rsync
     (
-      writeShellScriptBin "nix_install_sub"
-      ''
-        #!/usr/bin/env bash
-        set -euo pipefail
-        DIR=$( cd "$( dirname \"''${BASH_SOURCE [0]}\" )" && pwd )
-        echo $DIR
-
-        # Rsync my nix-config to the target install
-        mkdir -p "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
-
-        # If there is a keyfile for a data disks, put copy it to the root partition and
-        # ensure the permissions are set appropriately.
-        if [[ -f "/tmp/data.keyfile" ]]; then
-          sudo cp /tmp/data.keyfile /mnt/etc/data.keyfile
-          sudo chmod 0400 /mnt/etc/data.keyfile
-        fi
-      ''
-    )
-    (
-      writeShellScriptBin "nix_install"
+      writeShellScriptBin "inst"
       ''
         #!/usr/bin/env bash
         set -euo pipefail
@@ -105,15 +96,7 @@ in {
         	exit 1
         fi
 
-        sleep 1
-
-        if [ ! -d "${flakeDirectory}/.git" ]; then
-          git clone https://github.com/percygt/nix-dots.git
-        fi
-
-        cd nix-dots
-
-        TARGET_HOST=$(ls -1 ~/nix-dots/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
+        TARGET_HOST=$(ls -1 /iso/nix-dots/profiles/*/configuration.nix | cut -d'/' -f5 | grep -v ${hostName} | gum choose)
 
         if [ ! -e "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix" ]; then
           echo "ERROR! $(basename "$0") could not find the required $HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
@@ -137,12 +120,8 @@ in {
 
         sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
 
-        DIR=$( cd "$( dirname \"''${BASH_SOURCE [0]}\" )" && pwd )
-        echo $DIR
-
-        # Rsync my nix-config to the target install
         mkdir -p "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "$DIR/.." "/mnt/home/${target_user}/nix-dots"
+        rsync -a --delete "/iso/nix-dots" "/mnt/home/${target_user}/nix-dots"
 
         # If there is a keyfile for a data disks, put copy it to the root partition and
         # ensure the permissions are set appropriately.

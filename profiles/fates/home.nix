@@ -27,6 +27,14 @@ in {
       gnomeExtensions.fedora-linux-update-indicator
       hwinfo
     ];
+    activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] ''
+      /usr/bin/systemctl start --user sops-nix
+    '';
+    activation.report-changes = config.lib.dag.entryAnywhere ''
+      if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
+        ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath
+      fi
+    '';
     shellAliases = {
       mkVM = "qemu-system-x86_64 -enable-kvm -m 2G -boot menu=on -drive file=vm.img -cpu=host -vga virtio -display sdl,gl=on -cdrom";
     };

@@ -34,9 +34,6 @@
   ifPathExist = path:
     lib.optional (builtins.pathExists path) path;
 
-  listImports = path: modules:
-    lib.forEach modules (mod: path + "/${mod}");
-
   listSystemImports = modules:
     lib.forEach modules (mod: "${self}/system/${mod}");
 
@@ -58,7 +55,6 @@
         ifPathExists
         ifPathExist
         desktop
-        listImports
         listHomeImports
         listSystemImports
         flakeDirectory

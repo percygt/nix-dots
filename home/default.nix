@@ -57,11 +57,6 @@
       stateVersion
       homeDirectory
       ;
-    activation.report-changes = config.lib.dag.entryAnywhere ''
-      if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
-        ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath
-      fi
-    '';
     shellAliases = {
       ll = "eza --group --header --group-directories-first --long --git --all --binary --icons";
       la = "ll -a";

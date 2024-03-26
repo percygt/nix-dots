@@ -6,7 +6,7 @@
   modules = [
     "."
     "_bin"
-    "neovim"
+    # "neovim"
     "shell"
     "terminal"
     # "extra/vscodium.nix"
@@ -25,7 +25,7 @@ in {
       ./hyprland.nix
     ];
   home.shellAliases = {
-    hms = "home-manager switch --flake ${flakeDirectory}'?submodules=1#'$hostname";
-    ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}'?submodules=1#'$hostname";
+    hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
+    ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
   };
 }
