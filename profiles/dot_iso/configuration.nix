@@ -65,11 +65,6 @@ in {
 
   programs.git.enable = true;
 
-  # isoImage = {
-  #   makeEfiBootable = true;
-  #   makeUsbBootable = true;
-  #   appendToMenuLabel = " live";
-  # };
   isoImage = {
     makeEfiBootable = true;
     makeUsbBootable = true;
@@ -98,12 +93,12 @@ in {
 
         TARGET_HOST=$(ls -1 /iso/nix-dots/profiles/*/configuration.nix | cut -d'/' -f5 | grep -v ${hostName} | gum choose)
 
-        if [ ! -e "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix" ]; then
-          echo "ERROR! $(basename "$0") could not find the required $HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
+        if [ ! -e "/iso/nix-dots/profiles/$TARGET_HOST/disks.nix" ]; then
+          echo "ERROR! $(basename "$0") could not find the required /iso/nix-dots/profiles/$TARGET_HOST/disks.nix"
           exit 1
         fi
 
-        if grep -q "data.keyfile" "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"; then
+        if grep -q "data.keyfile" "/iso/nix-dots/profiles/$TARGET_HOST/disks.nix"; then
           echo -n "$(head -c32 /dev/random | base64)" > /tmp/data.keyfile
         fi
 
@@ -116,12 +111,11 @@ in {
           --no-write-lock-file \
           -- \
           --mode zap_create_mount \
-          "$HOME/nix-dots/profiles/$TARGET_HOST/disks.nix"
+          "/iso/nix-dots/profiles/$TARGET_HOST/disks.nix"
 
-        sudo nixos-install --flake "$HOME/nix-dots#$TARGET_HOST"
+        sudo nixos-install --flake "/iso/nix-dots#$TARGET_HOST"
 
-        mkdir -p "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "/iso/nix-dots" "/mnt/home/${target_user}/nix-dots"
+        rsync -a "/iso/nix-dots" "/mnt/home/${target_user}/"
 
         # If there is a keyfile for a data disks, put copy it to the root partition and
         # ensure the permissions are set appropriately.
