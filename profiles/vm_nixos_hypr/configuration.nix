@@ -1,6 +1,7 @@
 {
   listSystemImports,
   pkgs,
+  inputs,
   ...
 }: let
   modules = [
@@ -11,7 +12,7 @@ in {
   imports =
     listSystemImports modules
     ++ [
-      # inputs.home-manager.nixosModules.default
+      # inputs.home-manager.nixosModules.home-manager
       ./hardware.nix
       ./disks.nix
       ./boot.nix

@@ -27,7 +27,7 @@ in {
         "#${colors.bright.white}"
       ];
       audible-bell = true;
-      background-transparency-percent = (1 - colors.alpha) * 100;
+      background-transparency-percent = "${builtins.toString colors.alpha}";
       bold-color-same-as-fg = false;
       bold-is-bright = true;
       cursor-colors-set = true;

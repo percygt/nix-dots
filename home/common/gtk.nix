@@ -1,8 +1,6 @@
 {
   pkgs,
   config,
-  username,
-  flakeDirectory,
   self,
   ui,
   ...
@@ -12,6 +10,7 @@
 in {
   gtk = {
     enable = true;
+    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
     font = {
       inherit (interface) name size;
       package = interface.package pkgs;

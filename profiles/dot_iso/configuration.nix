@@ -103,7 +103,7 @@ in {
           echo -n "$(head -c32 /dev/random | base64)" > /tmp/data.keyfile
         fi
 
-        gum confirm  --default=false \
+        gum confirm  --default=true \
           "WARNING!!!! This will ERASE ALL DATA on the disks $TARGET_HOST. Are you sure you want to continue?"
 
         echo "Partitioning Disks"
@@ -114,13 +114,13 @@ in {
           --mode zap_create_mount \
           "/iso/nix-dots/profiles/$TARGET_HOST/disks.nix"
 
-        sudo nixos-install --flake "/iso/nix-dots#$TARGET_HOST"
+        sudo nixos-install --flake "/iso/nix-dots#$TARGET_HOST" --no-root-passwd
 
         rsync -a "/iso/nix-dots" "/mnt/home/${target_user}/"
 
         if [[ -f "/tmp/data.keyfile" ]]; then
           sudo cp /tmp/data.keyfile /mnt/etc/data.keyfile
-          sudo chmod 0400 /mnt/etc/data.keyfile
+          sudo chmod 0400 /mnt/etc/nixos/data.keyfile
         fi
       ''
     )

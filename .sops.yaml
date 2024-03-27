@@ -1,9 +1,13 @@
 ---
 keys:
-  # - &host age1xkw93yth563ec85syewjr39t63q4z9z68826q3xax53dkxln2snq7lpctf
-  - &host "12DE37B3B4B43E3EFB0E52B22EDB840CCC5FB5E0"
+  - &host "age1yfk90ks9fel80w5jx0qc27d52nrthrdfuax9yxjwvkycp9tthemsrmalgd"
+  - &user "12DE37B3B4B43E3EFB0E52B22EDB840CCC5FB5E0"
 creation_rules:
-  - path_regex: lib/secrets/secrets(\.enc)?\.ya?ml$
+  - path_regex: lib/secrets/system-secrets(\.enc)?\.ya?ml$
+    key_groups:
+      - age:
+          - *host
+  - path_regex: lib/secrets/home-secrets(\.enc)?\.ya?ml$
     key_groups:
       - pgp:
-          - *host
+          - *user

@@ -18,16 +18,21 @@
     profile,
     is_laptop ? false,
     is_iso ? false,
+    userName ? defaultUser,
     desktop ? null,
     system ? "x86_64-linux",
   }: let
     inherit (inputs.nixpkgs) lib;
+    username =
+      if is_iso
+      then "nixos"
+      else userName;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs
         outputs
         self
-        defaultUser
+        username
         stateVersion
         profile
         desktop
@@ -40,16 +45,6 @@
       inherit system;
       modules = [
         ../profiles/${profile}/configuration.nix
-        # {
-        #   home-manager = {
-        #     useGlobalPkgs = true;
-        #     useUserPackages = true;
-        #     users.${username} = {
-        #       imports = homeModules;
-        #     };
-        #     extraSpecialArgs = args;
-        #   };
-        # }
       ];
       specialArgs = mkArgs.args;
     };
@@ -57,16 +52,18 @@
   mkHomeManager = {
     profile,
     system ? "x86_64-linux",
+    userName ? defaultUser,
     is_generic_linux ? false,
     is_laptop ? false,
   }: let
     inherit (inputs.home-manager) lib;
+    username = userName;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs
         outputs
         self
-        defaultUser
+        username
         stateVersion
         profile
         is_generic_linux

@@ -261,7 +261,7 @@ in {
       app-shift-hotkey-kp-9 = ["<Shift><Alt><Super>KP_9"];
       appicon-margin = 0;
       appicon-padding = 6;
-      # available-monitors = [1 0];
+      available-monitors = [1 0];
       desktop-line-use-custom-color = false;
       dot-position = "TOP";
       dot-style-focused = "SQUARES";
@@ -285,7 +285,30 @@ in {
         {"0":"MIDDLE","1":"MIDDLE"}
       '';
       panel-element-positions = ''
-        {"0":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":true,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"centered"},{"element":"dateMenu","visible":true,"position":"centerMonitor"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}],"1":[{"element":"showAppsButton","visible":false,"position":"stackedTL"},{"element":"activitiesButton","visible":false,"position":"stackedTL"},{"element":"leftBox","visible":true,"position":"stackedTL"},{"element":"taskbar","visible":true,"position":"stackedTL"},{"element":"centerBox","visible":true,"position":"centered"},{"element":"dateMenu","visible":true,"position":"centerMonitor"},{"element":"rightBox","visible":true,"position":"stackedBR"},{"element":"systemMenu","visible":true,"position":"stackedBR"},{"element":"desktopButton","visible":false,"position":"stackedBR"}]}
+        {
+          "0":[
+              {"element":"showAppsButton","visible":false,"position":"stackedTL"},
+              {"element":"activitiesButton","visible":true,"position":"stackedTL"},
+              {"element":"leftBox","visible":true,"position":"stackedTL"},
+              {"element":"taskbar","visible":true,"position":"stackedTL"},
+              {"element":"centerBox","visible":true,"position":"centered"},
+              {"element":"dateMenu","visible":true,"position":"centerMonitor"},
+              {"element":"rightBox","visible":true,"position":"stackedBR"},
+              {"element":"systemMenu","visible":true,"position":"stackedBR"},
+              {"element":"desktopButton","visible":false,"position":"stackedBR"}
+            ],
+          "1":[
+              {"element":"showAppsButton","visible":false,"position":"stackedTL"},
+              {"element":"activitiesButton","visible":true,"position":"stackedTL"},
+              {"element":"leftBox","visible":true,"position":"stackedTL"},
+              {"element":"taskbar","visible":true,"position":"stackedTL"},
+              {"element":"centerBox","visible":true,"position":"centered"},
+              {"element":"dateMenu","visible":true,"position":"centerMonitor"},
+              {"element":"rightBox","visible":true,"position":"stackedBR"},
+              {"element":"systemMenu","visible":true,"position":"stackedBR"},
+              {"element":"desktopButton","visible":false,"position":"stackedBR"}
+            ]
+        }
       '';
       panel-lengths = ''
         {"0":100,"1":100}

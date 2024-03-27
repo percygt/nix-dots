@@ -1,29 +1,38 @@
 {
-  lib,
   is_generic_linux,
   config,
   self,
   inputs,
+  pkgs,
   ...
-}:
-lib.optionalAttrs is_generic_linux
-{
+}: {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
   ];
   sops = {
-    defaultSopsFile = "${self}/lib/secrets/secrets.enc.yaml";
+    defaultSopsFile = "${self}/lib/secrets/home-secrets.enc.yaml";
     gnupg = {
-      home = "~/.gnupg";
+      home = "${config.xdg.dataHome}/gnupg";
       sshKeyPaths = [];
     };
-    defaultSymlinkPath = "/run/user/1000/secrets";
-    defaultSecretsMountPoint = "/run/user/1000/secrets.d";
+    # age.keyFile = "/etc/home.keyfile";
+    defaultSymlinkPath = "%r/secrets";
+    defaultSecretsMountPoint = "%r/secrets.d";
   };
   systemd.user.services.mbsync.Unit.After = ["sops-nix.service"];
   home = {
-    activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] ''
-      /usr/bin/systemctl start --user sops-nix
-    '';
+    activation.setupEtc =
+      if is_generic_linux
+      then
+        (config.lib.dag.entryAfter ["writeBoundary"] ''
+          /usr/bin/systemctl start --user sops-nix
+        '')
+      else
+        (config.lib.dag.entryAfter ["writeBoundary"] ''
+          /run/current-system/sw/bin/systemctl start --user sops-nix
+        '');
   };
+  home.packages = with pkgs; [
+    sops
+  ];
 }

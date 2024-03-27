@@ -2,7 +2,7 @@
   self,
   inputs,
   outputs,
-  defaultUser,
+  username,
   stateVersion,
   profile,
   desktop ? null,
@@ -11,12 +11,7 @@
   is_laptop,
 }: rec {
   inherit (inputs.nixpkgs) lib;
-
-  username =
-    if is_iso
-    then "nixos"
-    else defaultUser;
-
+  inherit username;
   homeDirectory = "/home/${username}";
 
   flakeDirectory = "${homeDirectory}/nix-dots";
@@ -26,7 +21,7 @@
       (import ./ui/colors.nix)
       // inputs.nix-colors.lib;
     fonts = import ./ui/fonts.nix;
-    wallpaper = "${homeDirectory}/.local/share/backgrounds/nasa-earth.jpg";
+    wallpaper = "${homeDirectory}/.local/share/backgrounds/building-top.jpg";
   };
   ifPathExists = path:
     lib.optionals (builtins.pathExists path) [path];
@@ -64,5 +59,5 @@
         is_iso
         ;
     }
-    // lib.optionalAttrs is_iso {target_user = defaultUser;};
+    // lib.optionalAttrs is_iso {target_user = username;};
 }

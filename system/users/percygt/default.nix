@@ -5,30 +5,37 @@
 }: let
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
-  users.users.percygt = {
-    isNormalUser = true;
-    mutableUsers = true;
-    initialPassword = "noice";
-    shell = pkgs.fish;
-    extraGroups =
-      [
-        "audio"
-        "networkmanager"
-        "users"
-        "video"
-        "wheel"
-        "input"
-      ]
-      ++ ifExists [
-        "docker"
-        "kvm"
-        "libvirt"
-      ];
-
-    packages = [pkgs.home-manager];
+  programs.fish.enable = true;
+  environment = {
+    shells = with pkgs; [fish];
+    sessionVariables = {
+      EDITOR = "vim";
+    };
   };
-  # This is a workaround for not seemingly being able to set $EDITOR in home-manager
-  environment.sessionVariables = {
-    EDITOR = "vim";
+  users = {
+    mutableUsers = true;
+    defaultUserShell = pkgs.fish;
+    groups.percygt.members = ["percygt"];
+    users.percygt = {
+      isNormalUser = true;
+      initialPassword = "noice";
+      shell = pkgs.fish;
+      extraGroups =
+        [
+          "audio"
+          "networkmanager"
+          "users"
+          "video"
+          "wheel"
+          "input"
+        ]
+        ++ ifExists [
+          "docker"
+          "kvm"
+          "libvirt"
+        ];
+
+      packages = [pkgs.home-manager];
+    };
   };
 }

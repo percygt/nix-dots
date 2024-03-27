@@ -1,9 +1,16 @@
 {lib, ...}: {
-  # environment.etc = {
-  #   "crypttab".text = ''
-  #     data  /dev/disk/by-partlabel/data  /etc/data.keyfile
-  #   '';
-  # };
+  environment.etc = {
+    "crypttab".text = ''
+      data  /dev/disk/by-partlabel/data  /etc/nixos/data.keyfile
+    '';
+  };
+
+  boot.initrd.luks.devices.cryptroot = {
+    device = lib.mkForce "/dev/disk/by-partlabel/data";
+    allowDiscards = true;
+    preLVM = true;
+  };
+
   disko.devices = {
     disk = {
       sda = {
@@ -13,7 +20,6 @@
           type = "gpt";
           partitions = {
             ESP = {
-              label = "ESP";
               size = "1024M";
               type = "EF00";
               content = {
@@ -24,8 +30,7 @@
               };
             };
             root = {
-              # size = "20G";
-              size = "100%";
+              size = "20G";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "NIXOS" "-f"];
@@ -79,32 +84,33 @@
                 };
               };
             };
-            # data = {
-            #   size = "100%";
-            #   label = "luks";
-            #   content = {
-            #     type = "luks";
-            #     settings = {
-            #       allowDiscards = true;
-            #       keyFile = "/tmp/data.keyfile";
-            #     };
-            #     # Don't try to unlock this drive early in the boot.
-            #     initrdUnlock = false;
-            #     name = "data";
-            #     content = {
-            #       type = "filesystem";
-            #       format = "btrfs";
-            #       extraArgs = ["-L" "DATA" "-f"];
-            #       mountpoint = "/home/percygt/data";
-            #       mountOptions = ["compress=lzo" "x-gvfs-show"];
-            #     };
-            #   };
-            # };
+            data = {
+              size = "100%";
+              label = "luks";
+              content = {
+                type = "luks";
+                settings = {
+                  allowDiscards = true;
+                  keyFile = "/tmp/data.keyfile";
+                };
+                # Don't try to unlock this drive early in the boot.
+                initrdUnlock = false;
+                name = "data";
+                content = {
+                  type = "filesystem";
+                  format = "btrfs";
+                  extraArgs = ["-L" "DATA" "-f"];
+                  mountpoint = "/home/percygt/data";
+                  mountOptions = ["compress=lzo" "x-gvfs-show"];
+                };
+              };
+            };
           };
         };
       };
     };
   };
 
+  fileSystems."/boot/efi".device = lib.mkForce "/dev/disk/by-partlabel/ESP";
   fileSystems."/var/log".neededForBoot = true;
 }

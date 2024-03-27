@@ -6,7 +6,10 @@
   timeout = 432000;
 in {
   programs = {
-    gpg.enable = true;
+    gpg = {
+      enable = true;
+      homedir = "${config.xdg.dataHome}/gnupg";
+    };
     fish.shellInit = ''
       gpg-connect-agent /bye
       export SSH_AUTH_SOCK=$(${config.programs.gpg.package}/bin/gpgconf --list-dirs agent-ssh-socket)

@@ -39,10 +39,6 @@
     useDHCP = lib.mkDefault true;
   };
 
-  programs = {
-    fish.enable = true;
-  };
-
   services = {
     chrony.enable = true;
     journald.extraConfig = "SystemMaxUse=250M";
@@ -54,9 +50,9 @@
   };
 
   # Create dirs for home-manager
-  # systemd.tmpfiles.rules = [
-  #   "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"
-  # ];
+  systemd.tmpfiles.rules = [
+    "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"
+  ];
 
   system = {
     inherit stateVersion;
