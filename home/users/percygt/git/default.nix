@@ -10,10 +10,10 @@
     ./credentials.nix
   ];
   options = {
-    percygt.git.enable =
+    userModules.git.enable =
       lib.mkEnableOption "Enable git";
   };
-  config = lib.mkIf config.percygt.git.enable {
+  config = lib.mkIf config.userModules.git.enable {
     programs.git = {
       enable = true;
       extraConfig = {

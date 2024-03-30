@@ -3,7 +3,7 @@
     disk = {
       nvme = {
         type = "disk";
-        device = "/dev/nvme0n1";
+        device = "/dev/sda";
         content = {
           type = "gpt";
           partitions = {
@@ -22,7 +22,8 @@
               };
             };
             root = {
-              size = "205000M";
+              # size = "205000M";
+              size = "20500M";
               content = {
                 type = "btrfs";
                 mountpoint = "/";
@@ -53,7 +54,8 @@
               };
             };
             windows = {
-              size = "85000M";
+              # size = "85000M";
+              size = "8500M";
               content = {
                 type = "filesystem";
                 format = "btrfs";

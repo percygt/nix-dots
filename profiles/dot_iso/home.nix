@@ -5,4 +5,5 @@
     starship.enable = true;
     yazi.enable = true;
   };
+  userModules.git.enable = true;
 }

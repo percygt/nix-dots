@@ -41,23 +41,32 @@
         is_iso
         ;
     };
+    nixosHomeModule = {
+      home-manager = {
+        extraSpecialArgs = mkArgs.args;
+        useUserPackages = true;
+        users.${username} = {
+          imports = [
+            ../profiles/${profile}/home.nix
+            inputs.self.outputs.homeManagerModules.default
+          ];
+        };
+      };
+    };
   in
     lib.nixosSystem {
       inherit system;
-      modules = [
-        ../profiles/${profile}/configuration.nix
-        inputs.self.outputs.nixosModules.default
-        # inputs.home-manager.nixosModules.home-manager
-        # {
-        #   home-manager.extraSpecialArgs = mkArgs.args;
-        #   home-manager.users.${username} = {
-        #     imports = [
-        #       ../profiles/${profile}/home.nix
-        #       inputs.self.outputs.homeManagerModules.default
-        #     ];
-        #   };
-        # }
-      ];
+      modules =
+        [
+          ../profiles/${profile}/configuration.nix
+          inputs.self.outputs.nixosModules.default
+          (lib.optionalAttrs
+            is_iso
+            nixosHomeModule)
+        ]
+        ++ lib.optionals is_iso [
+          inputs.home-manager.nixosModules.home-manager
+        ];
       specialArgs = mkArgs.args;
     };
 

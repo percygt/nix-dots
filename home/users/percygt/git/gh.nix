@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  config = lib.mkIf config.percygt.git.enable {
+  config = lib.mkIf config.userModules.git.enable {
     programs.gh = {
       enable = true;
       extensions = with pkgs; [

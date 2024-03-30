@@ -7,12 +7,10 @@
 }: {
   imports = [
     ./disks.nix
-    inputs.disko.nixosmodules.disko
-    inputs.nixos-hardware.nixosmodules.common-cpu-intel
-    inputs.nixos-hardware.nixosmodules.common-gpu-nvidia-prime
-    inputs.nixos-hardware.nixosmodules.common-pc
-    inputs.nixos-hardware.nixosmodules.common-pc-ssd
-    inputs.nixos-hardware.nixosmodules.common-hidpi
+    inputs.disko.nixosModules.disko
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
   boot = {

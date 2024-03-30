@@ -5,7 +5,7 @@
   ...
 }: {
   targets.genericLinux.enable = true;
-  percygt = {
+  userModules = {
     git.enable = true;
     gpg.enable = true;
     ssh.enable = true;

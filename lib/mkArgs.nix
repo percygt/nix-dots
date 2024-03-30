@@ -22,7 +22,7 @@
       (import ./ui/colors.nix)
       // inputs.nix-colors.lib;
     fonts = import ./ui/fonts.nix;
-    wallpaper = "${homeDirectory}/.local/share/backgrounds/building-top.jpg";
+    wallpaper = "${homeDirectory}/.local/share/backgrounds/nice-mountain.jpg";
   };
   ifPathExists = path:
     lib.optionals (builtins.pathExists path) [path];

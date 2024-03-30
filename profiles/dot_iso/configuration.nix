@@ -3,26 +3,14 @@
   lib,
   hostName,
   target_user,
-  listSystemImports,
   inputs,
   ...
-}: let
-  modules = [
-    "common/console.nix"
-    "common/packages.nix"
-    "common/locale.nix"
-    "extra/fonts.nix"
+}: {
+  imports = [
+    {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
+    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
   ];
-in {
-  imports =
-    listSystemImports modules
-    ++ [
-      {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
-      "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-      "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-    ];
-
-  home-manager.useUserPackages = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -43,8 +31,6 @@ in {
       hybrid-sleep.enable = false;
     };
   };
-
-  programs.git.enable = true;
 
   isoImage = {
     appendToMenuLabel = " live";
@@ -74,12 +60,7 @@ in {
         dots_dir="$HOME/nix-dots";
 
         if [ ! -d "$dots_dir/.git" ]; then
-          git config --global core.compression 0
-        	git clone --depth 1 https://github.com/percygt/nix-dots.git "$dots_dir"
-          pushd $dots_dir &> /dev/null;
-          git fetch --depth=2147483647
-          git pull --all
-          popd &> /dev/null;
+        	git clone --depth 1 https://gitlab.com/percygt/nix-dots.git "$dots_dir"
         fi
 
         TARGET_HOST=$(ls -1 "$dots_dir"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)

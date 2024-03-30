@@ -6,7 +6,7 @@
 *.asc
 *.pem
 result
-nixos
 atuin
 key
 *key
+*bfg*
