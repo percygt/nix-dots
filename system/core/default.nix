@@ -1,7 +1,12 @@
 {
   imports = [
     ./zram.nix
-    ./system.nix
-    ./systemd-boot.nix
+    ./bootmanagement.nix
+    ./ntp.nix
+    ./storage.nix
+    ./audioengine.nix
+    ./systemd.nix
+    ./graphics.nix
+    ./packages.nix
   ];
 }

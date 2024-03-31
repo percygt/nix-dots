@@ -9,7 +9,7 @@
   wallpaper = "file://${ui.wallpaper}";
   shell_theme = "Marble-crispblue-dark";
 in {
-  config = lib.mkIf config.desktop.nonNixosGnome.enable {
+  config = lib.mkIf config.desktop.gnome.enable {
     xdg.dataFile = {
       "themes/Marble-crispblue-dark" = {
         source = "${self}/lib/assets/themes/Marble-crispblue-dark";

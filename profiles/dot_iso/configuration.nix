@@ -85,16 +85,14 @@
           --mode zap_create_mount \
           "$dots_dir/profiles/$TARGET_HOST/disks.nix"
 
-        mkdir -p mnt/etc/nixos
-
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 
         mkdir -p "/mnt/home/${target_user}/nix-dots"
-        rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/nix-dots"
+        rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"
 
         if [[ -f "/tmp/data.keyfile" ]]; then
-          sudo cp /tmp/data.keyfile /mnt/etc/nixos/data.keyfile
-          sudo chmod 0400 /mnt/etc/nixos/data.keyfile
+          sudo cp /tmp/data.keyfile /mnt/etc/
+          sudo chmod 0400 /mnt/etc/data.keyfile
         fi
 
         echo "Reboot now"

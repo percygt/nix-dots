@@ -117,7 +117,7 @@
 
     extraConfig = ''
       # terminal, screen locking, launcher
-      bind = $mod, W, exec, wezterm
+      bind = $mod, W, exec, foot
       bind = $mod, L, exec, hyprlock
       bind = $mod, SPACE, exec, rofi -show drun
       bind = ALT, Q, killactive,

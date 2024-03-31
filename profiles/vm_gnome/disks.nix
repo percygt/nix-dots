@@ -1,15 +1,9 @@
-{lib, ...}: {
-  environment.etc = {
-    "crypttab".text = ''
-      data  /dev/disk/by-partlabel/disk-sda-data  /etc/data.keyfile
-    '';
-  };
-
+{
   disko.devices = {
     disk = {
-      sda = {
+      nvme = {
         type = "disk";
-        device = lib.mkDefault "/dev/sda";
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
@@ -19,17 +13,20 @@
               content = {
                 type = "filesystem";
                 format = "vfat";
-                mountOptions = ["umask=0077" "shortname=winnt"];
-                mountpoint = "/boot/efi";
+                mountpoint = "/boot";
+                mountOptions = [
+                  "umask=0077"
+                  "shortname=winnt"
+                ];
               };
             };
             root = {
-              size = "20G";
+              size = "20500M";
               content = {
                 type = "btrfs";
-                extraArgs = ["-L" "NIXOS" "-f"];
                 mountpoint = "/";
                 mountOptions = ["defaults"];
+                extraArgs = ["-L" "NIXOS" "-f"];
                 subvolumes = {
                   "home" = {
                     mountOptions = ["compress=lzo"];
@@ -39,38 +36,39 @@
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/nix";
                   };
-                  "var/log" = {
+                  "var/cache" = {
                     mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/log";
+                    mountpoint = "/var/cache";
                   };
                   "var/tmp" = {
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/var/tmp";
                   };
-                  "var/cache" = {
+                  "var/log" = {
                     mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/cache";
+                    mountpoint = "/var/log";
                   };
                 };
+              };
+            };
+            windows = {
+              size = "8500M";
+              content = {
+                type = "filesystem";
+                format = "xfs";
+                mountpoint = "/home/percygt/windows";
+                mountOptions = ["defaults"];
+                extraArgs = ["-L" "WINDOWS" "-f"];
               };
             };
             data = {
               size = "100%";
               content = {
-                type = "luks";
-                name = "data";
-                settings = {
-                  allowDiscards = true;
-                  keyFile = "/tmp/data.keyfile";
-                };
-                initrdUnlock = lib.mkForce false;
-                content = {
-                  type = "filesystem";
-                  format = "btrfs";
-                  mountpoint = "/home/percygt/data";
-                  mountOptions = ["compress=lzo" "x-gvfs-show"];
-                  extraArgs = ["-L" "DATA" "-f"];
-                };
+                type = "filesystem";
+                format = "btrfs";
+                mountpoint = "/home/percygt/data";
+                mountOptions = ["compress=lzo" "x-gvfs-show"];
+                extraArgs = ["-L" "DATA" "-f"];
               };
             };
           };
@@ -78,4 +76,6 @@
       };
     };
   };
+
+  fileSystems."/var/log".neededForBoot = true;
 }

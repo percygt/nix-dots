@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: let
   hypr-run = pkgs.writeShellScriptBin "hypr-run" ''
@@ -14,10 +15,13 @@
     ${pkgs.hyprland}/bin/hyperctl dispatch exit
   '';
 in {
+  imports = [
+    inputs.hyprland.nixosModules.default
+  ];
   programs = {
+    hyprland.enable = true;
     dconf.enable = true;
     file-roller.enable = true;
-    hyprland.enable = true;
   };
 
   environment = {
@@ -59,6 +63,7 @@ in {
       };
     };
 
+    polkit.enable = true;
     gvfs.enable = true;
   };
 

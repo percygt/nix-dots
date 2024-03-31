@@ -10,14 +10,19 @@
   xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
   services.xserver = {displayManager.startx.enable = true;};
 
+  core = {
+    zram.enable = true;
+    bootmanagement.enable = true;
+    ntp.enable = true;
+    storage.enable = true;
+    audioengine.enable = true;
+    systemd.enable = true;
+    graphics.enable = true;
+    packages.enable = true;
+  };
+
   # home-manager.useGlobalPkgs = true;
   # home-manager.useUserPackages = true;
-
-  core = {
-    system.enable = true;
-    systemd-boot.enable = true;
-    zram.enable = true;
-  };
 
   # Enabling hyprlnd on NixOS
   programs.hyprland = {

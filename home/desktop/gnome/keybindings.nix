@@ -4,7 +4,7 @@
   config,
   ...
 }: {
-  config = lib.mkIf config.desktop.nonNixosGnome.enable {
+  config = lib.mkIf config.desktop.gnome.enable {
     dconf.settings = {
       "com/github/stunkymonkey/nautilus-open-any-terminal" = {
         keybindings = "<Win>f";

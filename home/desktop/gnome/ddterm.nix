@@ -6,7 +6,7 @@
 }: let
   inherit (ui) colors;
 in {
-  config = lib.mkIf config.desktop.nonNixosGnome.enable {
+  config = lib.mkIf config.desktop.gnome.enable {
     dconf.settings = {
       "com/github/amezin/ddterm" = {
         background-opacity = colors.alpha;

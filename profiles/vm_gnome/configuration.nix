@@ -8,13 +8,31 @@
   imports = [
     ./disks.nix
     inputs.disko.nixosModules.disko
-    inputs.nixos-hardware.nixosModules.common-cpu-intel
-    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
-    inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
   ];
 
+  core = {
+    zram.enable = true;
+    bootmanagement.enable = true;
+    ntp.enable = true;
+    storage.enable = true;
+    audioengine.enable = true;
+    systemd.enable = true;
+    graphics.enable = true;
+    packages.enable = true;
+  };
+
+  # drivers = {
+  #   bluetooth.enable = true;
+  #   intel.enable = true;
+  #   nvidia-prime.enable = true;
+  # };
+
+  network = {
+    networkmanager.enable = true;
+  };
+
   boot = {
-    initrd.availableKernelModules = ["xhci_pci" "vmd" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" "rtsx_usb_sdmmc" "thunderbolt"];
+    initrd.availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk"];
     initrd.kernelModules = [];
     kernelModules = ["kvm-intel"];
     extraModulePackages = [];

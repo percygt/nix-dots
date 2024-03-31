@@ -5,8 +5,8 @@
   ...
 }: {
   options = {
-    desktop.nonNixosGnome.enable =
-      lib.mkEnableOption "Enable nonNixosGnome";
+    desktop.gnome.enable =
+      lib.mkEnableOption "Enable Gnome DE";
   };
 
   imports = [
@@ -17,12 +17,12 @@
     ./shell.nix
   ];
 
-  config = lib.mkIf config.desktop.nonNixosGnome.enable {
+  config = lib.mkIf config.desktop.gnome.enable {
+    # programs.gnome-terminal.enable = true;
     home.packages = with pkgs; [
       nautilus-open-any-terminal
-      # gnome-extension-manager
-      gnome.gnome-tweaks
       gnome.dconf-editor
+      gnome.gnome-terminal
     ];
   };
 }

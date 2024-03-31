@@ -17,7 +17,7 @@
     };
     gtk.enable = true;
     qt.enable = true;
-    nonNixosGnome.enable = true;
+    gnome.enable = true;
   };
 
   editor = {

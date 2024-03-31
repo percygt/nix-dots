@@ -26,7 +26,7 @@
     };
   });
 in {
-  config = lib.mkIf config.desktop.nonNixosGnome.enable {
+  config = lib.mkIf config.desktop.gnome.enable {
     xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
     home.packages = with pkgs;
       [

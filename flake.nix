@@ -55,8 +55,11 @@
     nixosModules.default = ./system;
 
     nixosConfigurations = {
-      czth = libx.mkNixOS {
-        profile = "czth";
+      cryo = libx.mknixos {
+        profile = "cryo";
+      };
+      aizeft = libx.mkNixOS {
+        profile = "aizeft";
         desktop = "hyprland";
       };
       vm_nixos_hypr = libx.mkNixOS {
@@ -70,8 +73,11 @@
     };
 
     homeConfigurations = {
-      czth = libx.mkHomeManager {
-        profile = "czth";
+      cryo = libx.mkHomeManager {
+        profile = "cryo";
+      };
+      aizeft = libx.mkHomeManager {
+        profile = "aizeft";
       };
       vm_nixos_hypr = libx.mkHomeManager {
         profile = "vm_nixos_hypr";

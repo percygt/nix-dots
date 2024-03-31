@@ -1,16 +1,9 @@
 {
-  listHomeImports,
+  flakeDirectory,
   config,
   pkgs,
   ...
-}: let
-  modules = [
-    "shell"
-    "terminal/wezterm.nix"
-    "editor/neovim"
-  ];
-in {
-  imports = listHomeImports modules;
+}: {
   targets.genericLinux.enable = true;
 
   userModules = {
@@ -25,7 +18,7 @@ in {
     };
     gtk.enable = true;
     qt.enable = true;
-    nonNixosGnome.enable = true;
+    gnome.enable = true;
   };
 
   editor = {
@@ -79,6 +72,8 @@ in {
     '';
     shellAliases = {
       mkVM = "qemu-system-x86_64 -enable-kvm -m 2G -boot menu=on -drive file=vm.img -cpu=host -vga virtio -display sdl,gl=on -cdrom";
+      hms = "home-manager switch --flake ${flakeDirectory}#$HOSTNAME";
+      hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
     };
     sessionVariables = {
       LIBVIRT_DEFAULT_URI = "qemu:///system";

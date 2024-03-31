@@ -1,7 +1,8 @@
-
 {
   imports = [
+    ./networkmanager.nix
     ./avahi.nix
-    ./manager.nix
+    ./syncthing.nix
+    ./tailscale.nix
   ];
 }
