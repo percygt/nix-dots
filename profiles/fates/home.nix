@@ -28,7 +28,10 @@
 
   generic = {
     fonts.enable = true;
-    xremap.enable = true;
+    xremap = {
+      enable = true;
+      withGnome = true;
+    };
     sops.enable = true;
   };
 

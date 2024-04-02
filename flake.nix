@@ -38,58 +38,65 @@
     stateVersion = "23.11";
     libx = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
   in {
-    overlays = import ./overlays.nix {inherit inputs;};
-
-    formatter = libx.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
-
-    packages = libx.forEachSystem (system: (import ./packages {pkgs = nixpkgs.legacyPackages.${system};}));
+    packages = libx.forEachSystem (system: (import ./packages {
+      pkgs = nixpkgs.legacyPackages.${system};
+    }));
 
     devShells = libx.forEachSystem (system: (import ./shell.nix {
       pkgs = nixpkgs.legacyPackages.${system};
     }));
 
-    templates = import ./templates;
+    formatter = libx.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-    homeManagerModules.default = ./home;
+    overlays = import ./overlays.nix {inherit inputs;};
+
+    templates = import ./templates;
 
     nixosModules.default = ./system;
 
     nixosConfigurations = {
-      cryo = libx.mknixos {
+      cryo = libx.mkSystem {
         profile = "cryo";
       };
-      aizeft = libx.mkNixOS {
+      aizeft = libx.mkSystem {
         profile = "aizeft";
         desktop = "hyprland";
       };
-      vm_nixos_hypr = libx.mkNixOS {
-        profile = "vm_nixos_hypr";
+      vm-hypr = libx.mkSystem {
+        profile = "vm-hypr";
         desktop = "hyprland";
       };
-      dot_iso = libx.mkNixOS {
-        profile = "dot_iso";
-        is_iso = true;
+      vm-gnome = libx.mkSystem {
+        profile = "vm-gnome";
+      };
+      dot-iso = libx.mkSystem {
+        profile = "dot-iso";
+        useIso = true;
       };
     };
 
+    homeManagerModules.default = ./home;
+
     homeConfigurations = {
-      cryo = libx.mkHomeManager {
+      cryo = libx.mkHome {
         profile = "cryo";
       };
-      aizeft = libx.mkHomeManager {
+      aizeft = libx.mkHome {
         profile = "aizeft";
       };
-      vm_nixos_hypr = libx.mkHomeManager {
-        profile = "vm_nixos_hypr";
+      vm-hypr = libx.mkHome {
+        profile = "vm-hypr";
       };
-      furies = libx.mkHomeManager {
+      vm-gnome = libx.mkHome {
+        profile = "vm-gnome";
+      };
+      furies = libx.mkHome {
         profile = "furies";
-        is_generic_linux = true;
-        is_laptop = true;
+        useGenericLinux = true;
       };
-      fates = libx.mkHomeManager {
+      fates = libx.mkHome {
         profile = "fates";
-        is_generic_linux = true;
+        useGenericLinux = true;
       };
     };
   };

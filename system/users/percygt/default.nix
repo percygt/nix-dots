@@ -1,6 +1,6 @@
 {
   imports = [
-    # ./sops.nix
+    ./sops.nix
     ./user.nix
   ];
 }

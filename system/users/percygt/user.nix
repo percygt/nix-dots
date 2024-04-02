@@ -24,7 +24,7 @@ in {
     groups.percygt.members = ["percygt"];
     users.percygt = {
       isNormalUser = true;
-      initialPassword = "noice";
+      hashedPasswordFile = config.sops.secrets.user-hashedPassword.path;
       shell = pkgs.fish;
       extraGroups =
         [

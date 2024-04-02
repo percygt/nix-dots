@@ -7,9 +7,8 @@
   stateVersion,
   profile,
   desktop ? null,
-  is_iso ? false,
-  is_generic_linux ? false,
-  is_laptop ? false,
+  useIso ? false,
+  useGenericLinux ? false,
 }: rec {
   inherit (inputs.nixpkgs) lib;
   inherit username;
@@ -55,10 +54,9 @@
         listSystemImports
         flakeDirectory
         stateVersion
-        is_generic_linux
-        is_laptop
-        is_iso
+        useGenericLinux
+        useIso
         ;
     }
-    // lib.optionalAttrs is_iso {target_user = defaultUser;};
+    // lib.optionalAttrs useIso {target_user = defaultUser;};
 }

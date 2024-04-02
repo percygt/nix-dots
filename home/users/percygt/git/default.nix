@@ -10,8 +10,12 @@
     ./credentials.nix
   ];
   options = {
-    userModules.git.enable =
-      lib.mkEnableOption "Enable git";
+    userModules.git = {
+      enable =
+        lib.mkEnableOption "Enable git";
+      credentials.enable = lib.mkEnableOption "Enable git credentials";
+      glab.enable = lib.mkEnableOption "Enable git credentials";
+    };
   };
   config = lib.mkIf config.userModules.git.enable {
     programs.git = {
@@ -30,7 +34,7 @@
         branch.sort = "-committerdate";
         maintenance.auto = false;
         maintenance.strategy = "incremental";
-        include = {
+        include = lib.mkIf config.userModules.git.credentials.enable {
           path = "${config.home.homeDirectory}/.config/git/credentials";
         };
       };

@@ -3,7 +3,7 @@
   ui,
   lib,
   config,
-  is_generic_linux,
+  useGenericLinux,
   ...
 }: let
   inherit (ui) colors;
@@ -17,7 +17,7 @@ in {
     programs.wezterm = {
       enable = true;
       package =
-        if is_generic_linux
+        if useGenericLinux
         then pkgs.stash.wezterm_wrapped
         else pkgs.stash.wezterm_nightly;
       colorSchemes = {

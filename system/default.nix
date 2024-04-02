@@ -11,8 +11,8 @@
     ./core
     ./services
     ./users
+    ./bin
     (modulesPath + "/installer/scan/not-detected.nix")
-    inputs.sops-nix.nixosModules.sops
   ];
 
   nixpkgs.overlays =

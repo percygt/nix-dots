@@ -3,7 +3,7 @@
   desktop,
   inputs,
   outputs,
-  is_generic_linux,
+  useGenericLinux,
   ...
 }: {
   imports =
@@ -22,7 +22,7 @@
       inputs.hypridle.homeManagerModules.default
       inputs.hyprlock.homeManagerModules.default
     ]
-    ++ lib.optionals is_generic_linux [
+    ++ lib.optionals useGenericLinux [
       ./generic
       inputs.xremap.homeManagerModules.default
       inputs.sops-nix.homeManagerModules.sops

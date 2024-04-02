@@ -8,12 +8,12 @@
   shell = {
     name = "VictorMono Nerd Font";
     package = pkgs: pkgs.nerdfonts.override {fonts = ["VictorMono"];};
-    size = 14;
+    size = 10;
   };
 
   console = {
-    name = "Martian Mono";
-    package = pkgs: pkgs.martian-mono;
+    name = "JetBrainsMono Nerd Font";
+    package = pkgs: pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
     size = 14;
   };
 

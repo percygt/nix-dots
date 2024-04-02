@@ -14,7 +14,7 @@
 
   config = lib.mkIf config.generic.sops.enable {
     sops = {
-      defaultSopsFile = "${self}/lib/secrets/generic.enc.yaml";
+      defaultSopsFile = "${self}/home/users/percygt/user.enc.yaml";
       gnupg = {
         home = "${config.xdg.dataHome}/gnupg";
         sshKeyPaths = [];

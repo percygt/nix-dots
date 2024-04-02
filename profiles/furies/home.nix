@@ -6,7 +6,11 @@
 }: {
   targets.genericLinux.enable = true;
   userModules = {
-    git.enable = true;
+    git = {
+      enable = true;
+      glab.enable = true;
+      credentials.enable = true;
+    };
     gpg.enable = true;
     ssh.enable = true;
   };
@@ -27,7 +31,10 @@
 
   generic = {
     fonts.enable = true;
-    xremap.enable = true;
+    xremap = {
+      enable = true;
+      withGnome = true;
+    };
     sops.enable = true;
   };
 
@@ -125,6 +132,12 @@
     "org/gnome/shell/extensions/fedora-update" = {
       # update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- ${pkgs.fish}/bin/fish -c \"sudo dnf check-update --refresh & sudo dnf upgrade -y; echo Done - Press enter to exit; read _\" ";
       use-buildin-icons = false;
+    };
+    "org/gnome/shell" = {
+      enabled-extensions = [
+        "supergfxctl-gex@asus-linux.org"
+        "Battery-Health-Charging@maniacx.github.com"
+      ];
     };
   };
 }

@@ -2,7 +2,9 @@
   lib,
   config,
   ...
-}: {
+}: let
+  cfg = config.generic.xremap;
+in {
   options = {
     generic.xremap = {
       enable =
@@ -12,9 +14,9 @@
     };
   };
 
-  config = lib.mkIf config.generic.xremap.enable {
+  config = lib.mkIf cfg.enable {
     services.xremap = {
-      withGnome = true;
+      withGnome = lib.mkIf cfg.withGnome true;
       config.modmap = [
         {
           name = "Global";

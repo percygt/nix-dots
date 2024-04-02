@@ -14,17 +14,16 @@
     "x86_64-darwin"
   ];
 
-  mkNixOS = {
+  mkSystem = {
     profile,
-    is_laptop ? false,
-    is_iso ? false,
+    useIso ? false,
     user_name ? defaultUser,
     desktop ? null,
     system ? "x86_64-linux",
   }: let
     inherit (inputs.nixpkgs) lib;
     username =
-      if is_iso
+      if useIso
       then "nixos"
       else user_name;
     mkArgs = import ./mkArgs.nix {
@@ -37,22 +36,24 @@
         stateVersion
         profile
         desktop
-        is_laptop
-        is_iso
+        useIso
         ;
     };
-    nixosHomeModule = {
-      home-manager = {
-        extraSpecialArgs = mkArgs.args;
-        useUserPackages = true;
-        users.${username} = {
-          imports = [
-            ../profiles/${profile}/home.nix
-            inputs.self.outputs.homeManagerModules.default
-          ];
+    nixosHomeModules = [
+      inputs.home-manager.nixosModules.home-manager
+      {
+        home-manager = {
+          extraSpecialArgs = mkArgs.args;
+          useUserPackages = true;
+          users.${username} = {
+            imports = [
+              ../profiles/${profile}/home.nix
+              inputs.self.outputs.homeManagerModules.default
+            ];
+          };
         };
-      };
-    };
+      }
+    ];
   in
     lib.nixosSystem {
       inherit system;
@@ -60,22 +61,16 @@
         [
           ../profiles/${profile}/configuration.nix
           inputs.self.outputs.nixosModules.default
-          (lib.optionalAttrs
-            is_iso
-            nixosHomeModule)
         ]
-        ++ lib.optionals is_iso [
-          inputs.home-manager.nixosModules.home-manager
-        ];
+        ++ lib.optionals useIso nixosHomeModules;
       specialArgs = mkArgs.args;
     };
 
-  mkHomeManager = {
+  mkHome = {
     profile,
     system ? "x86_64-linux",
     user_name ? defaultUser,
-    is_generic_linux ? false,
-    is_laptop ? false,
+    useGenericLinux ? false,
   }: let
     inherit (inputs.home-manager) lib;
     username = user_name;
@@ -88,8 +83,7 @@
         defaultUser
         stateVersion
         profile
-        is_generic_linux
-        is_laptop
+        useGenericLinux
         ;
     };
   in
