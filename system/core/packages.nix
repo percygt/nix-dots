@@ -15,6 +15,7 @@
     environment.systemPackages = with pkgs; [
       (neovim-nightly.overrideAttrs
         (_: {CFLAGS = "-O3";}))
+      foot
       bat
       curl
       aria2
