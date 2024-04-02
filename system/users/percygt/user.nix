@@ -6,6 +6,7 @@
 }: let
   ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
+  programs.foot.enable = true;
   programs.fish.enable = true;
   environment = {
     shells = with pkgs; [fish];
