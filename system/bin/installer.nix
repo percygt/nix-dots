@@ -49,11 +49,11 @@
             echo -n "$(head -c32 /dev/random | base64)" > "/tmp/luks.keyfile"
           fi
 
-          [ -e "/tmp/sops.keyfile" ] || age-keygen -o "/tmp/sops.keyfile"
+          [ -e "/tmp/$TARGET_HOST.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST.keyfile"
 
-          [ -e "/tmp/host.enc.yaml" ] || printf "user-hashedPassword: \"$( mkpasswd -m sha-512)\"" > "/tmp/host.enc.yaml"
+          [ -e "/tmp/host.enc.yaml" ] || printf "user-hashedPassword:$( mkpasswd -m sha-512)" > "/tmp/host.enc.yaml"
 
-          SOPS_AGE_KEY_FILE="/tmp/sops.keyfile"
+          SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile"
           AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")
 
           pushd $dots_dir &> /dev/null;
@@ -86,15 +86,15 @@
 
           [ -e "/mnt/etc/secrets" ] || sudo mkdir -p "/mnt/etc/secrets"
 
-          sudo cp /tmp/sops.keyfile /mnt/etc/secrets
-          sudo chmod 0400 /mnt/etc/secrets/sops.keyfile
+          sudo cp /tmp/$TARGET_HOST.keyfile /mnt/etc/secrets
+          sudo chmod 0400 /mnt/etc/secrets/$TARGET_HOST.keyfile
 
           if [[ -f "/tmp/luks.keyfile" ]]; then
             sudo cp /tmp/luks.keyfile /mnt/etc/secrets
             sudo chmod 0400 /mnt/etc/secrets/luks.keyfile
           fi
 
-          sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
+          nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 
           mkdir -p "/mnt/home/${target_user}/nix-dots"
           rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"

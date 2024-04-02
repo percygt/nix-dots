@@ -21,9 +21,6 @@
     packages.enable = true;
   };
 
-  # home-manager.useGlobalPkgs = true;
-  # home-manager.useUserPackages = true;
-
   # Enabling hyprlnd on NixOS
   programs.hyprland = {
     enable = true;

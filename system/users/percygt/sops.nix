@@ -9,9 +9,7 @@
   ];
   sops = {
     defaultSopsFile = "${self}/profiles/${hostName}/host.enc.yaml";
+    validateSopsFiles = false;
     age.keyFile = "/etc/secrets/${hostName}.keyfile";
-    secrets = {
-      user-hashedPassword.neededForUsers = true;
-    };
   };
 }

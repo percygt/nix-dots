@@ -1,7 +1,7 @@
 {lib, ...}: {
   environment.etc = {
     "crypttab".text = ''
-      data  /dev/disk/by-partlabel/disk-sda-data  /etc/luks.keyfile
+      data  /dev/disk/by-partlabel/disk-sda-data  /etc/secrets/luks.keyfile
     '';
   };
 

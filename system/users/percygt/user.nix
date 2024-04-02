@@ -18,10 +18,13 @@ in {
       ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
     };
   };
+
+  sops.secrets.user-hashedPassword.neededForUsers = true;
+
   users = {
-    mutableUsers = true;
     defaultUserShell = pkgs.fish;
     groups.percygt.members = ["percygt"];
+    mutableUsers = false;
     users.percygt = {
       isNormalUser = true;
       hashedPasswordFile = config.sops.secrets.user-hashedPassword.path;

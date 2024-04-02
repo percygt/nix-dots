@@ -8,7 +8,7 @@
   shell = {
     name = "VictorMono Nerd Font";
     package = pkgs: pkgs.nerdfonts.override {fonts = ["VictorMono"];};
-    size = 10;
+    size = 11;
   };
 
   console = {
