@@ -116,7 +116,7 @@
           #   --in-place "/tmp/host.enc.yaml"
           # cp -f "/tmp/host.enc.yaml" "$dots_dir/profiles/$TARGET_HOST/"
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$sec_dir/.sops.yaml"
-          sops updatekeys secrets.enc.yaml
+          SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile" sops updatekeys secrets.enc.yaml
           git add .
           git commit -m "Install/reinstall $TARGET_HOST"
           git push origin main
