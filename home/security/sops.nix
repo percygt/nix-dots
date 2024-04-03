@@ -1,19 +1,25 @@
 {
   config,
-  self,
   lib,
+  inputs,
   ...
-}: {
+}: let
+  sikreto = builtins.toString inputs.sikreto;
+in {
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+  ];
+
   options = {
-    generic.sops = {
+    security.sops = {
       enable =
         lib.mkEnableOption "Enable sops";
     };
   };
 
-  config = lib.mkIf config.generic.sops.enable {
+  config = lib.mkIf config.security.sops.enable {
     sops = {
-      defaultSopsFile = "${self}/home/users/percygt/user.enc.yaml";
+      defaultSopsFile = "${sikreto}/secrets.enc.yaml";
       validateSopsFiles = false;
       gnupg = {
         home = "${config.xdg.dataHome}/gnupg";

@@ -1,24 +1,11 @@
 {
   config,
-  self,
   pkgs,
   lib,
   ...
 }: {
-  options = {
-    generic.sops = {
-      enable =
-        lib.mkEnableOption "Enable sops";
-    };
-  };
-
-  config = lib.mkIf config.generic.sops.enable {
+  config = lib.mkIf config.security.sops.enable {
     sops = {
-      defaultSopsFile = "${self}/home/users/percygt/user.enc.yaml";
-      gnupg = {
-        home = "${config.xdg.dataHome}/gnupg";
-        sshKeyPaths = [];
-      };
       defaultSymlinkPath = "%r/secrets";
       defaultSecretsMountPoint = "%r/secrets.d";
     };

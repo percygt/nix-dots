@@ -53,12 +53,12 @@
       writeShellScriptBin "setup_gpg"
       ''
         #!/usr/bin/env bash
-        set -euo pipefail
-
-        sudo cryptsetup luksOpen /dev/disk/by-label/v enc_vol
-        mkdir ~/usb
-        sudo mount /dev/mapper/env_vol ~/usb
-        gpg --import ~/usb/.k/pgp/percygtdev.subkeys.gpg
+        sudo cryptsetup luksOpen /dev/disk/by-uuid/74e50d1c-ff8b-43e9-b1d4-ad037f9b746f luksvol
+        sudo systemctl daemon-reload
+        sleep 1
+        mkdir "$HOME/usb"
+        sudo mount /dev/mapper/luksvol "$HOME/usb"
+        gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
       ''
     )
     (
@@ -75,7 +75,7 @@
         dots_dir="$HOME/nix-dots";
 
         if [ ! -d "$dots_dir/.git" ]; then
-        	git clone git@gitlab.com/percygt/nix-dots.git "$dots_dir"
+        	git clone git@gitlab.com:percygt/nix-dots.git "$dots_dir"
         fi
 
         TARGET_HOST=$(ls -1 "$dots_dir"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
@@ -92,24 +92,20 @@
 
         [ -e "/tmp/$TARGET_HOST.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST.keyfile"
 
-        [ -e "/tmp/host.enc.yaml" ] || printf "user-hashedPassword: $(mkpasswd -s)" > "/tmp/host.enc.yaml"
+        # [ -e "/tmp/host.enc.yaml" ] || printf "user-hashedPassword: $(mkpasswd -s)" > "/tmp/host.enc.yaml"
 
         SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile"
         AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")
 
         pushd $dots_dir &> /dev/null;
         if [ $(git status --porcelain | wc -l) -eq "0" ]; then
-          popd &> /dev/null;
-          sops \
-            --encrypt \
-            --age $AGE_PUBLIC_KEY \
-            --in-place "/tmp/host.enc.yaml"
-
-          cp -f "/tmp/host.enc.yaml" "$dots_dir/profiles/$TARGET_HOST/"
-
+          # sops \
+          #   --encrypt \
+          #   --age $AGE_PUBLIC_KEY \
+          # --in-place "/tmp/host.enc.yaml"
+          # cp -f "/tmp/host.enc.yaml" "$dots_dir/profiles/$TARGET_HOST/"
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$dots_dir/.sops.yaml"
-
-          pushd $dots_dir &> /dev/null;
+          sops updatekeys secrets.enc.yaml
           git add .
           popd &> /dev/null;
         fi
@@ -135,12 +131,15 @@
           sudo chmod 0400 /mnt/etc/secrets/luks.keyfile
         fi
 
+        [ -e $HOME/usb/.k/sops ] && sudo cp -f /tmp/$TARGET_HOST.keyfile "$HOME/usb/.k/sops/"
+
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"
 
         echo "Installation complete! Don't forget to backup your secrets in \"/etc/secrets\""
+        sudo umount --all
       ''
     )
   ];

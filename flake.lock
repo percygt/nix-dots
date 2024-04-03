@@ -1354,6 +1354,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_5",
         "nixpkgs-stable": "nixpkgs-stable_2",
+        "sikreto": "sikreto",
         "sops-nix": "sops-nix",
         "xremap": "xremap"
       }
@@ -1383,6 +1384,24 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "type": "github"
+      }
+    },
+    "sikreto": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1712135899,
+        "narHash": "sha256-VvgzZ2992Jkkt2/v8hrVQBVqI6/cy6Kxqrl+KsAcqjA=",
+        "ref": "main",
+        "rev": "bf6a3ea895140df2aa9f8f3b9519918fd6fa2cda",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
       }
     },
     "sops-nix": {

@@ -37,7 +37,6 @@
       enable = true;
       withGnome = true;
     };
-    sops.enable = true;
   };
 
   terminal = {
@@ -54,6 +53,7 @@
     pass.enable = true;
     keepass.enable = true;
     backup.enable = true;
+    sops.enable = true;
   };
 
   cli = {

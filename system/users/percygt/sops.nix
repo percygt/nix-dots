@@ -1,14 +1,15 @@
 {
-  self,
   hostName,
   inputs,
   ...
-}: {
+}: let
+  sikreto = builtins.toString inputs.sikreto;
+in {
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
   sops = {
-    defaultSopsFile = "${self}/profiles/${hostName}/host.enc.yaml";
+    defaultSopsFile = "${sikreto}/secrets.enc.yaml";
     validateSopsFiles = false;
     age.keyFile = "/etc/secrets/${hostName}.keyfile";
   };

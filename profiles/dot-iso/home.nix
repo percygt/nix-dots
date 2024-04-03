@@ -10,6 +10,10 @@
     ssh.enable = true;
   };
 
+  security = {
+    sops.enable = true;
+  };
+
   cli = {
     direnv.enable = true;
     fzf.enable = true;

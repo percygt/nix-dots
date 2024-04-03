@@ -1,10 +1,15 @@
 {
   lib,
   config,
+  inputs,
   ...
 }: let
   cfg = config.generic.xremap;
 in {
+  imports = [
+    inputs.xremap.homeManagerModules.default
+  ];
+
   options = {
     generic.xremap = {
       enable =

@@ -27,6 +27,11 @@
     impermanence.url = "github:nix-community/impermanence";
     # lanzaboote.url = "github:nix-community/lanzaboote";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
+    sikreto = {
+      url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
+      flake = false;
+    };
   };
   outputs = {
     nixpkgs,

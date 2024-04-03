@@ -24,8 +24,6 @@
     ]
     ++ lib.optionals useGenericLinux [
       ./generic
-      inputs.xremap.homeManagerModules.default
-      inputs.sops-nix.homeManagerModules.sops
     ];
   nixpkgs.overlays =
     builtins.attrValues outputs.overlays
