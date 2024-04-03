@@ -50,7 +50,19 @@
     sops
     yq-go
     (
-      writeShellScriptBin "inst"
+      writeShellScriptBin "setup_gpg"
+      ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        sudo cryptsetup luksOpen /dev/disk/by-label/v enc_vol
+        mkdir ~/usb
+        sudo mount /dev/mapper/env_vol ~/usb
+        gpg --import ~/usb/.k/pgp/percygtdev.subkeys.gpg
+      ''
+    )
+    (
+      writeShellScriptBin "install_nixos"
       ''
         #!/usr/bin/env bash
         set -euo pipefail

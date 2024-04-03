@@ -12,6 +12,7 @@
   imports = [./gitmux.nix];
 
   config = lib.mkIf config.cli.tmux.enable {
+    home.packages = [pkgs.wl-clipboard];
     programs.tmux = {
       enable = true;
       baseIndex = 1;
