@@ -4,7 +4,7 @@
   inputs,
   ...
 }: let
-  sikreto = builtins.toString inputs.sikreto;
+  secretsPath = builtins.toString inputs.sikreto;
 in {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
@@ -19,7 +19,7 @@ in {
 
   config = lib.mkIf config.security.sops.enable {
     sops = {
-      defaultSopsFile = "${sikreto}/secrets.enc.yaml";
+      defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
       validateSopsFiles = false;
       gnupg = {
         home = "${config.xdg.dataHome}/gnupg";

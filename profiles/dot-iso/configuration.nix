@@ -72,10 +72,23 @@
         	exit 1
         fi
 
+        sudo cryptsetup luksOpen /dev/disk/by-uuid/74e50d1c-ff8b-43e9-b1d4-ad037f9b746f luksvol
+        sleep 1
+        sudo systemctl daemon-reload
+        sleep 1
+        mkdir "$HOME/usb"
+        sudo mount /dev/mapper/luksvol "$HOME/usb"
+        gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
+
         dots_dir="$HOME/nix-dots";
+        sec_dir="$HOME/sikreto";
 
         if [ ! -d "$dots_dir/.git" ]; then
         	git clone git@gitlab.com:percygt/nix-dots.git "$dots_dir"
+        fi
+
+        if [ ! -d "$sec_dir/.git" ]; then
+        	git clone git@gitlab.com:percygt/sikreto.git "$sec_dir"
         fi
 
         TARGET_HOST=$(ls -1 "$dots_dir"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
@@ -92,23 +105,23 @@
 
         [ -e "/tmp/$TARGET_HOST.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST.keyfile"
 
-        # [ -e "/tmp/host.enc.yaml" ] || printf "user-hashedPassword: $(mkpasswd -s)" > "/tmp/host.enc.yaml"
-
         SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile"
         AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")
 
-        pushd $dots_dir &> /dev/null;
+        pushd $sec_dir &> /dev/null;
         if [ $(git status --porcelain | wc -l) -eq "0" ]; then
           # sops \
           #   --encrypt \
           #   --age $AGE_PUBLIC_KEY \
-          # --in-place "/tmp/host.enc.yaml"
+          #   --in-place "/tmp/host.enc.yaml"
           # cp -f "/tmp/host.enc.yaml" "$dots_dir/profiles/$TARGET_HOST/"
-          yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$dots_dir/.sops.yaml"
+          yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$sec_dir/.sops.yaml"
           sops updatekeys secrets.enc.yaml
           git add .
-          popd &> /dev/null;
+          git commit -m "Install/reinstall $TARGET_HOST"
+          git push origin main
         fi
+        popd &> /dev/null;
 
         gum confirm  --default=true \
           "WARNING!!!! This will ERASE ALL DATA on the disks $TARGET_HOST. Are you sure you want to continue?"
