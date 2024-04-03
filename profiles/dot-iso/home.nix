@@ -1,9 +1,15 @@
 {
   userModules = {
-    git.enable = true;
+    git = {
+      enable = true;
+      gh.enable = true;
+      glab.enable = true;
+      credentials.enable = true;
+    };
     gpg.enable = true;
     ssh.enable = true;
   };
+
   cli = {
     direnv.enable = true;
     fzf.enable = true;

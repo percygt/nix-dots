@@ -15,6 +15,8 @@
         lib.mkEnableOption "Enable git";
       credentials.enable = lib.mkEnableOption "Enable git credentials";
       glab.enable = lib.mkEnableOption "Enable git credentials";
+      ghq.enable = lib.mkEnableOption "Enable ghq";
+      gh.enable = lib.mkEnableOption "Enable gh";
     };
   };
   config = lib.mkIf config.userModules.git.enable {

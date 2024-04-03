@@ -3,9 +3,19 @@
   lib,
   ...
 }: {
+  imports = [
+    ./gh.nix
+    ./glab.nix
+    ./credentials.nix
+  ];
   options = {
-    userModules.git.enable =
-      lib.mkEnableOption "Enable git";
+    userModules.git = {
+      enable =
+        lib.mkEnableOption "Enable git";
+      credentials.enable = lib.mkEnableOption "Enable git credentials";
+      glab.enable = lib.mkEnableOption "Enable git credentials";
+      gh.enable = lib.mkEnableOption "Enable gh";
+    };
   };
   config = lib.mkIf config.userModules.git.enable {
     programs.git = {
@@ -22,7 +32,11 @@
         rebase.autoStash = true;
         rerere.enabled = true;
         branch.sort = "-committerdate";
-        core.compression = 0;
+        maintenance.auto = false;
+        maintenance.strategy = "incremental";
+        include = lib.mkIf config.userModules.git.credentials.enable {
+          path = "${config.home.homeDirectory}/.config/git/credentials";
+        };
       };
       lfs = {enable = true;};
 
@@ -31,6 +45,11 @@
       aliases = import ./gitaliases.nix;
 
       ignores = import ./gitignores.nix;
+
+      signing = {
+        signByDefault = true;
+        key = "1F3DB564F0E44F81!";
+      };
     };
   };
 }

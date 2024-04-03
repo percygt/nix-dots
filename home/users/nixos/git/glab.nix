@@ -10,7 +10,7 @@
     ];
     sops.secrets = {
       "glab-cli/config.yml" = {
-        path = "${config.xdg.configHome}/glab-cli/config.yml";
+        path = "${config.home.homeDirectory}/.config/glab-cli/config.yml";
       };
     };
   };

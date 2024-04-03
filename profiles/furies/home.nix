@@ -8,6 +8,8 @@
   userModules = {
     git = {
       enable = true;
+      gh.enable = true;
+      ghq.enable = true;
       glab.enable = true;
       credentials.enable = true;
     };

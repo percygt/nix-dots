@@ -13,7 +13,7 @@
     root = "${config.home.homeDirectory}/data/codebox";
   };
 in {
-  config = lib.mkIf config.userModules.git.enable {
+  config = lib.mkIf config.userModules.git.ghq.enable {
     home.packages = with pkgs; [
       ghq
     ];

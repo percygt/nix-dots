@@ -75,7 +75,7 @@
         dots_dir="$HOME/nix-dots";
 
         if [ ! -d "$dots_dir/.git" ]; then
-        	git clone --depth 1 https://gitlab.com/percygt/nix-dots.git "$dots_dir"
+        	git clone git@gitlab.com/percygt/nix-dots.git "$dots_dir"
         fi
 
         TARGET_HOST=$(ls -1 "$dots_dir"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
