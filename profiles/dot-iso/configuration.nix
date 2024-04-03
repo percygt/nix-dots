@@ -50,19 +50,24 @@
     sops
     yq-go
     (
-      writeShellScriptBin "setup_gpg"
+      writeShellScriptBin "setup-gpg"
       ''
         #!/usr/bin/env bash
-        sudo cryptsetup luksOpen /dev/disk/by-uuid/74e50d1c-ff8b-43e9-b1d4-ad037f9b746f luksvol
-        sudo systemctl daemon-reload
-        sleep 1
-        mkdir "$HOME/usb"
-        sudo mount /dev/mapper/luksvol "$HOME/usb"
-        gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
+        set -euo pipefail
+        if [ ! -e /dev/mapper/luksvol ]; then
+          sudo cryptsetup luksOpen /dev/disk/by-uuid/74e50d1c-ff8b-43e9-b1d4-ad037f9b746f luksvol
+          sudo systemctl daemon-reload
+          sleep 1
+          mkdir "$HOME/usb"
+          sudo mount /dev/mapper/luksvol "$HOME/usb"
+          gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
+        else
+          echo "Nothing to do here. Already mounted"
+        fi
       ''
     )
     (
-      writeShellScriptBin "install_nixos"
+      writeShellScriptBin "setup-nixos"
       ''
         #!/usr/bin/env bash
         set -euo pipefail
@@ -72,13 +77,17 @@
         	exit 1
         fi
 
-        sudo cryptsetup luksOpen /dev/disk/by-uuid/74e50d1c-ff8b-43e9-b1d4-ad037f9b746f luksvol
-        sleep 1
-        sudo systemctl daemon-reload
-        sleep 1
-        mkdir "$HOME/usb"
-        sudo mount /dev/mapper/luksvol "$HOME/usb"
-        gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
+        if [ ! -e /dev/mapper/luksvol ]; then
+          echo "Mounting LUKS volume"
+          sudo cryptsetup luksOpen /dev/disk/by-uuid/74e50d1c-ff8b-43e9-b1d4-ad037f9b746f luksvol
+          sleep 1
+          sudo systemctl daemon-reload
+          sleep 1
+          mkdir "$HOME/usb"
+          sudo mount /dev/mapper/luksvol "$HOME/usb"
+          gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
+          echo "Mounted successfully"
+        fi
 
         dots_dir="$HOME/nix-dots";
         sec_dir="$HOME/sikreto";
@@ -110,11 +119,6 @@
 
         pushd $sec_dir &> /dev/null;
         if [ $(git status --porcelain | wc -l) -eq "0" ]; then
-          # sops \
-          #   --encrypt \
-          #   --age $AGE_PUBLIC_KEY \
-          #   --in-place "/tmp/host.enc.yaml"
-          # cp -f "/tmp/host.enc.yaml" "$dots_dir/profiles/$TARGET_HOST/"
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$sec_dir/.sops.yaml"
           SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile" sops updatekeys secrets.enc.yaml
           git add .
