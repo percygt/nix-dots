@@ -54,7 +54,7 @@
     yq-go
     home-manager
     (
-      writeShellScriptBin "setup-creds"
+      writeShellScriptBin "creds"
       ''
         #!/usr/bin/env bash
         set -euo pipefail
@@ -71,18 +71,10 @@
       ''
     )
     (
-      writeShellScriptBin "nxi"
+      writeShellScriptBin "clones"
       ''
         #!/usr/bin/env bash
         set -euo pipefail
-
-        if [ "$(id -u)" -eq 0 ]; then
-        	echo "ERROR! $(basename "$0") should be run as a regular user"
-        	exit 1
-        fi
-
-        setup-creds
-
         dots_dir="$HOME/nix-dots";
         sec_dir="$HOME/sikreto";
 
@@ -93,6 +85,23 @@
         if [ ! -d "$sec_dir/.git" ]; then
         	git clone git@gitlab.com:percygt/sikreto.git "$sec_dir"
         fi
+
+      ''
+    )
+    (
+      writeShellScriptBin "nixins"
+      ''
+        #!/usr/bin/env bash
+        set -euo pipefail
+
+        if [ "$(id -u)" -eq 0 ]; then
+        	echo "ERROR! $(basename "$0") should be run as a regular user"
+        	exit 1
+        fi
+
+        dots_dir="$HOME/nix-dots";
+        sec_dir="$HOME/sikreto";
+
 
         TARGET_HOST=$(ls -1 "$dots_dir"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
 
