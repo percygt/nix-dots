@@ -5,17 +5,6 @@
   ...
 }: {
   targets.genericLinux.enable = true;
-  userModules = {
-    git = {
-      enable = true;
-      gh.enable = true;
-      ghq.enable = true;
-      glab.enable = true;
-      credentials.enable = true;
-    };
-    gpg.enable = true;
-    ssh.enable = true;
-  };
   desktop = {
     xdg = {
       enable = true;

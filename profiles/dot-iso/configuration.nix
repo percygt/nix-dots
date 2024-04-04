@@ -4,6 +4,7 @@
   hostName,
   target_user,
   inputs,
+  self,
   ...
 }: {
   imports = [
@@ -35,22 +36,23 @@
   isoImage = {
     appendToMenuLabel = " live";
     # copy self(flake directory) to /iso path of the dot installer
-    # contents = [
-    #   {
-    #     source = self;
-    #     target = "/nix-dots";
-    #   }
-    # ];
+    contents = [
+      {
+        source = self;
+        target = "/nix-dots";
+      }
+    ];
   };
 
   environment.systemPackages = with pkgs; [
     gum
+    git
     rsync
     age
     sops
     yq-go
     (
-      writeShellScriptBin "setup-gpg"
+      writeShellScriptBin "setup-creds"
       ''
         #!/usr/bin/env bash
         set -euo pipefail
@@ -61,7 +63,8 @@
           mkdir "$HOME/usb"
           sudo mount /dev/mapper/luksvol "$HOME/usb"
           gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
-          echo "Mounted successfully"
+          sleep 1
+          sudo cp -f "$HOME/usb/git/.gitconfig"  "$HOME/"
         fi
       ''
     )
@@ -76,7 +79,7 @@
         	exit 1
         fi
 
-        setup-gpg
+        setup-creds
 
         dots_dir="$HOME/nix-dots";
         sec_dir="$HOME/sikreto";
@@ -97,8 +100,8 @@
         fi
 
         echo "Setting up secrets and keys..."
-        if grep -q "luks.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
-          echo -n "$(head -c32 /dev/random | base64)" > "/tmp/luks.keyfile"
+        if grep -q "$TARGET_HOST.luks.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
+          echo -n "$(head -c32 /dev/random | base64)" > "/tmp/$TARGET_HOST.luks.keyfile"
         fi
 
         [ -e "/tmp/$TARGET_HOST.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST.keyfile"
@@ -129,22 +132,21 @@
 
         [ -e "/mnt/etc/secrets" ] || sudo mkdir -p "/mnt/etc/secrets"
 
-        sudo cp /tmp/$TARGET_HOST.keyfile /mnt/etc/secrets
-        sudo chmod 0400 /mnt/etc/secrets/$TARGET_HOST.keyfile
+        sudo cp "/tmp/$TARGET_HOST.keyfile" "/mnt/etc/secrets"
+        sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST.keyfile"
 
-        if [[ -f "/tmp/luks.keyfile" ]]; then
-          sudo cp /tmp/luks.keyfile /mnt/etc/secrets
-          sudo chmod 0400 /mnt/etc/secrets/luks.keyfile
+        if [[ -f "/tmp/$TARGET_HOST.luks.keyfile" ]]; then
+          sudo cp "/tmp/$TARGET_HOST.luks.keyfile" "/mnt/etc/secrets"
+          sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST.luks.keyfile"
         fi
 
-        [ -e $HOME/usb/.k/sops ] && sudo cp -f /tmp/$TARGET_HOST.keyfile "$HOME/usb/.k/sops/"
+        [ -e "$HOME/usb/.k/sops" ] && sudo cp -f "/tmp/*.keyfile" "$HOME/usb/.k/sops/"
 
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"
 
-        echo "Installation complete! Don't forget to backup your secrets in \"/etc/secrets\""
         sudo umount --all
       ''
     )
