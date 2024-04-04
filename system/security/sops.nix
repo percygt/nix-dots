@@ -1,15 +1,16 @@
 {
-  lib,
-  config,
+  hostName,
+  inputs,
   ...
-}: {
-  config = lib.mkIf config.security.sops.enable {
-    sops = {
-      gnupg = {
-        home = "~/.gnupg";
-        sshKeyPaths = [];
-      };
-      age.sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-    };
+}: let
+  secretsPath = builtins.toString inputs.sikreto;
+in {
+  imports = [
+    inputs.sops-nix.nixosModules.sops
+  ];
+  sops = {
+    defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
+    validateSopsFiles = false;
+    age.keyFile = "/etc/secrets/${hostName}.keyfile";
   };
 }

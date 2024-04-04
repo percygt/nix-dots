@@ -10,7 +10,7 @@ in {
     bash
     */
     ''
-      run-shell "if [ ! -d ${resurrectDirPath} ]; then tmux new-session -d -s main; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
+      # run-shell "if [ ! -d ${resurrectDirPath} ]; then tmux new-session -d -s main; ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/scripts/save.sh; fi"
 
       # TERM override
       set terminal-overrides "xterm-256color:RGB"

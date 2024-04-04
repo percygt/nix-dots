@@ -1,6 +1,5 @@
 {
   imports = [
-    ./kernel.nix
-    ./hardening.nix
+    ./sops.nix
   ];
 }

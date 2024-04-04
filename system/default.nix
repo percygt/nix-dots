@@ -12,6 +12,7 @@
     ./services
     ./users
     ./bin
+    ./security
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 

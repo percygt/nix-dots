@@ -66,13 +66,12 @@ in {
             bg3 = "#${colors.extra.azure}",
             bg_d = "#${colors.extra.obsidian}",
             fg = "#${colors.default.foreground}",
-            -- yellow = "#${colors.normal.yellow}",
+            yellow = "#${colors.normal.yellow}",
             cyan = "#${colors.normal.cyan}",
             matchParen = "#${colors.extra.azure}",
+
             midnight = "#${colors.extra.midnight}",
             cream = "#${colors.extra.cream}",
-
-            -- Catpuccin stuff
             lavender = "#${colors.extra.lavender}",
             rosewater = "#${colors.extra.rosewater}",
             peach = "#${colors.extra.peach}",

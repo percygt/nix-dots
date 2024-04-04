@@ -61,8 +61,7 @@
           mkdir "$HOME/usb"
           sudo mount /dev/mapper/luksvol "$HOME/usb"
           gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
-        else
-          echo "Nothing to do here. Already mounted"
+          echo "Mounted successfully"
         fi
       ''
     )
@@ -77,17 +76,7 @@
         	exit 1
         fi
 
-        if [ ! -e /dev/mapper/luksvol ]; then
-          echo "Mounting LUKS volume"
-          sudo cryptsetup luksOpen /dev/disk/by-uuid/74e50d1c-ff8b-43e9-b1d4-ad037f9b746f luksvol
-          sleep 1
-          sudo systemctl daemon-reload
-          sleep 1
-          mkdir "$HOME/usb"
-          sudo mount /dev/mapper/luksvol "$HOME/usb"
-          gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
-          echo "Mounted successfully"
-        fi
+        setup-gpg
 
         dots_dir="$HOME/nix-dots";
         sec_dir="$HOME/sikreto";

@@ -65,9 +65,6 @@
       gnomeExtensions.fedora-linux-update-indicator
       hwinfo
     ];
-    activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] ''
-      /usr/bin/systemctl start --user sops-nix
-    '';
     activation.report-changes = config.lib.dag.entryAnywhere ''
       if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
         ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath

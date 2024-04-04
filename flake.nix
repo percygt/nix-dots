@@ -103,6 +103,9 @@
         profile = "fates";
         useGenericLinux = true;
       };
+      dot-iso = libx.mkHome {
+        profile = "dot-iso";
+      };
     };
   };
 }
