@@ -2,6 +2,7 @@
   config,
   lib,
   inputs,
+  useGenericLinux,
   pkgs,
   ...
 }: let
@@ -31,6 +32,19 @@ in {
         home = "${config.xdg.dataHome}/gnupg";
         sshKeyPaths = [];
       };
+    };
+    systemd.user.services.mbsync.Unit.After = ["sops-nix.service"];
+    home = {
+      activation.setupEtc =
+        if useGenericLinux
+        then
+          (config.lib.dag.entryAfter ["writeBoundary"] ''
+            /usr/bin/systemctl start --user sops-nix
+          '')
+        else
+          (config.lib.dag.entryAfter ["writeBoundary"] ''
+            /run/current-system/sw/bin/systemctl start --user sops-nix
+          '');
     };
   };
 }

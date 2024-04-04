@@ -105,6 +105,7 @@
       };
       dot-iso = libx.mkHome {
         profile = "dot-iso";
+        useIso = true;
       };
     };
   };

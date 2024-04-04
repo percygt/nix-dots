@@ -68,12 +68,16 @@
 
   mkHome = {
     profile,
+    useIso ? false,
     system ? "x86_64-linux",
     user_name ? defaultUser,
     useGenericLinux ? false,
   }: let
     inherit (inputs.home-manager) lib;
-    username = user_name;
+    username =
+      if useIso
+      then "nixos"
+      else user_name;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs

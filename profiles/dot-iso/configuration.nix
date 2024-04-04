@@ -12,6 +12,7 @@
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
   ];
+  security.sops.enable = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -51,6 +52,7 @@
     age
     sops
     yq-go
+    home-manager
     (
       writeShellScriptBin "setup-creds"
       ''
@@ -64,12 +66,12 @@
           sudo mount /dev/mapper/luksvol "$HOME/usb"
           gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
           sleep 1
-          sudo cp -f "$HOME/usb/git/.gitconfig"  "$HOME/"
+          cp -f "$HOME/usb/credentials"  "$HOME/.config/git/"
         fi
       ''
     )
     (
-      writeShellScriptBin "setup-nixos"
+      writeShellScriptBin "nxi"
       ''
         #!/usr/bin/env bash
         set -euo pipefail
