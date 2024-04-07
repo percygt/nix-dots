@@ -4,6 +4,7 @@
   hostName,
   target_user,
   inputs,
+  flakeDirectory,
   ...
 }: {
   imports = [
@@ -32,6 +33,13 @@
       suspend.enable = false;
       hibernate.enable = false;
       hybrid-sleep.enable = false;
+    };
+  };
+
+  environment = {
+    shellAliases = {
+      ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
+      ni = "sudo nixos-install --no-root-passwd --flake";
     };
   };
 
@@ -142,7 +150,7 @@
           sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST-data.keyfile"
         fi
 
-        [ -e "$HOME/usb/.k/sops" ] && sudo cp -rf /tmp/*keyfile "$HOME/usb/.k/sops/"
+        [ -e "$HOME/usb/.k/sops" ] && cp -rf /tmp/*keyfile "$HOME/usb/.k/sops/"
 
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 
@@ -150,7 +158,7 @@
         rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"
 
         findmnt /home/nixos/usb >/dev/null || sudo udisksctl -b /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
-        findmnt /home/nixos/usb >/dev/null || sudo cryptsetup luksClose /dev/disk/by-uuid/c59596c4-62e3-4d00-a7e5-aea9d19ea3f9
+        sudo cryptsetup luksClose /dev/disk/by-uuid/c59596c4-62e3-4d00-a7e5-aea9d19ea3f9
       ''
     )
     (
@@ -169,7 +177,7 @@
         rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"
 
         findmnt /home/nixos/usb >/dev/null || sudo udisksctl -b /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
-        findmnt /home/nixos/usb >/dev/null || sudo cryptsetup luksClose /dev/disk/by-uuid/c59596c4-62e3-4d00-a7e5-aea9d19ea3f9
+        sudo cryptsetup luksClose /dev/disk/by-uuid/c59596c4-62e3-4d00-a7e5-aea9d19ea3f9
       ''
     )
   ];

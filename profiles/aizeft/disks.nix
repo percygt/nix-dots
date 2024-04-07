@@ -1,7 +1,7 @@
 {disks ? ["/dev/nvme0n1" "/dev/sda"], ...}: {
   environment.etc = {
     "crypttab".text = ''
-      data  /dev/disk/by-partlabel/data  /etc/secrets/data.keyfile
+      data  /dev/disk/by-partlabel/sda_data  /etc/secrets/aizeft-data.keyfile
     '';
   };
   disko.devices = {

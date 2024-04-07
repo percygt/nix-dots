@@ -13,7 +13,7 @@ in {
       EDITOR = "vim";
     };
     shellAliases = {
-      hms = "home-manager switch --flake ${flakeDirectory}#$HOSTNAME";
+      hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
       ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
     };

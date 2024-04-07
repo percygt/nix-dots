@@ -21,10 +21,6 @@ in {
     sops = {
       defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
       validateSopsFiles = false;
-      # gnupg = {
-      #   home = "${config.xdg.dataHome}/gnupg";
-      #   sshKeyPaths = [];
-      # };
       age.keyFile = "/etc/secrets/${hostName}-sops.keyfile";
     };
   };
