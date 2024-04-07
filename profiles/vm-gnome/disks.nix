@@ -48,7 +48,7 @@
               };
             };
             windows = {
-              size = "-8500M";
+              size = "8500M";
               content = {
                 type = "filesystem";
                 format = "xfs";

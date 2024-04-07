@@ -56,15 +56,14 @@
     (
       writeShellScriptBin "creds"
       ''
-        #!/usr/bin/env bash
         set -euo pipefail
         if [ ! -e /dev/mapper/luksvol ]; then
-          sudo cryptsetup luksOpen /dev/disk/by-uuid/74e50d1c-ff8b-43e9-b1d4-ad037f9b746f luksvol
+          sudo cryptsetup luksOpen /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5 luksvol
           sudo systemctl daemon-reload
           sleep 1
           mkdir "$HOME/usb"
           sudo mount /dev/mapper/luksvol "$HOME/usb"
-          gpg --import "$HOME/usb/.k/pgp/percygtdev.subkeys.gpg"
+          gpg --import "$HOME/usb/.k/pgp/dev/subkeys.gpg"
           sleep 1
           cp -f "$HOME/usb/credentials"  "$HOME/.config/git/"
         fi
@@ -73,13 +72,13 @@
     (
       writeShellScriptBin "clones"
       ''
-        #!/usr/bin/env bash
         set -euo pipefail
         dots_dir="$HOME/nix-dots";
         sec_dir="$HOME/sikreto";
 
         if [ ! -d "$dots_dir/.git" ]; then
-        	git clone git@gitlab.com:percygt/nix-dots.git "$dots_dir"
+          cp -rf /iso/nix-dots "$dots_dir"
+        	# git clone git@gitlab.com:percygt/nix-dots.git "$dots_dir"
         fi
 
         if [ ! -d "$sec_dir/.git" ]; then
