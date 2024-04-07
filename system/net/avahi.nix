@@ -4,13 +4,13 @@
   ...
 }: {
   options = {
-    network.avahi = {
+    net.avahi = {
       enable =
         lib.mkEnableOption "Enable avahi";
     };
   };
 
-  config = lib.mkIf config.network.avahi.enable {
+  config = lib.mkIf config.net.avahi.enable {
     # network discovery, mDNS
     services.avahi = {
       enable = true;

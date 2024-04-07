@@ -20,15 +20,15 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
+                mountOptions = ["umask=0077" "shortname=winnt"];
               };
             };
             root = {
-              size = "100%";
+              size = "20G";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "nixos" "-f"];
                 mountpoint = "/";
-                mountOptions = ["defaults"];
                 subvolumes = {
                   "home" = {
                     mountOptions = ["compress=lzo"];
@@ -58,7 +58,7 @@
               };
             };
             data = {
-              size = "5G";
+              size = "100%";
               content = {
                 type = "luks";
                 name = "data";
@@ -72,7 +72,7 @@
                   format = "btrfs";
                   mountpoint = "/home/percygt/data";
                   mountOptions = ["compress=lzo" "x-gvfs-show"];
-                  extraArgs = ["-L" "DATA" "-f"];
+                  extraArgs = ["-L" "data" "-f"];
                 };
               };
             };

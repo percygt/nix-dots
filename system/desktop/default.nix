@@ -1,9 +1,9 @@
-{desktop, ...}: {
-  imports = [
-    (
-      if desktop == null
-      then ./gnome
-      else ./${desktop}
-    )
+{
+  desktop,
+  lib,
+  ...
+}: {
+  imports = lib.optionals (desktop != null) [
+    ./${desktop}
   ];
 }

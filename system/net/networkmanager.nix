@@ -4,13 +4,13 @@
   ...
 }: {
   options = {
-    network.networkmanager = {
+    net.networkmanager = {
       enable =
         lib.mkEnableOption "Enable networkmanager";
     };
   };
 
-  config = lib.mkIf config.network.networkmanager.enable {
+  config = lib.mkIf config.net.networkmanager.enable {
     networking = {
       networkmanager = {
         enable = true;

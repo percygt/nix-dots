@@ -5,13 +5,13 @@
   ...
 }: {
   options = {
-    network.syncthing = {
+    net.syncthing = {
       enable =
         lib.mkEnableOption "Enable syncthing";
     };
   };
 
-  config = lib.mkIf config.network.syncthing.enable {
+  config = lib.mkIf config.net.syncthing.enable {
     services.syncthing = {
       enable = true;
       group = "data";

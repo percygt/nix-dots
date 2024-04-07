@@ -62,6 +62,7 @@
     nixosConfigurations = {
       cryo = libx.mkSystem {
         profile = "cryo";
+        desktop = "gnome";
       };
       aizeft = libx.mkSystem {
         profile = "aizeft";
@@ -73,6 +74,7 @@
       };
       vm-gnome = libx.mkSystem {
         profile = "vm-gnome";
+        desktop = "gnome";
       };
       dot-iso = libx.mkSystem {
         profile = "dot-iso";

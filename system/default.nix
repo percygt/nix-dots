@@ -9,12 +9,11 @@
   imports = [
     ./common
     ./core
-    ./services
     ./desktop
     ./users
     ./bin
     ./infosec
-    ./network
+    ./net
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 

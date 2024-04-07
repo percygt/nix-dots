@@ -989,11 +989,11 @@
         "wezterm": "wezterm"
       },
       "locked": {
-        "lastModified": 1712494135,
-        "narHash": "sha256-MRfTaI+fkzVvEOQGnzt8zmQbwo+/8EWKshGEci9B8yo=",
+        "lastModified": 1712499752,
+        "narHash": "sha256-M7KsbgeE4hMstUor43fwJy3/cMqTMHQMYK7u3qYgFWo=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "d96353d75adcac208fbe37347423b0c4891f2b14",
+        "rev": "61297423ef1bec3f612b9437064dc3d07477b3e7",
         "type": "github"
       },
       "original": {
@@ -1132,11 +1132,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1712310679,
-        "narHash": "sha256-XgC/a/giEeNkhme/AV1ToipoZ/IVm1MV2ntiK4Tm+pw=",
+        "lastModified": 1712437997,
+        "narHash": "sha256-g0whLLwRvgO2FsyhY8fNk+TWenS3jg5UdlWL4uqgFeo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "72da83d9515b43550436891f538ff41d68eecc7f",
+        "rev": "e38d7cb66ea4f7a0eb6681920615dfcc30fc2920",
         "type": "github"
       },
       "original": {
@@ -1621,11 +1621,11 @@
     "tmux-onedark-theme": {
       "flake": false,
       "locked": {
-        "lastModified": 1711531723,
-        "narHash": "sha256-NRRX+eX/NTMwo93Ik+c/VwOho4Bcl8KDC8eazsi/A9A=",
+        "lastModified": 1712498637,
+        "narHash": "sha256-XeDaI1hzK0m8MJ9lfxm2+NyruPaweGs+HfbBdARobmA=",
         "owner": "percygt",
         "repo": "tmux-onedark-theme",
-        "rev": "301880a251220484f695359f47b0f8645a7d9586",
+        "rev": "5d68cfbc7258aa00824c82f74fd4d853e0ed48fc",
         "type": "github"
       },
       "original": {
