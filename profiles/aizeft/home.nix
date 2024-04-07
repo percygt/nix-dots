@@ -29,7 +29,7 @@
   #   pmenu.enable = true;
   # };
   #
-  # security = {
+  # infosec = {
   #   pass.enable = true;
   #   keepass.enable = true;
   #   backup.enable = true;
@@ -39,7 +39,7 @@
   #   atuin.enable = true;
   #   direnv.enable = true;
   #   extra.enable = true;
-  #   
+  #
   #   starship.enable = true;
   #   tui.enable = true;
   #   yazi.enable = true;
