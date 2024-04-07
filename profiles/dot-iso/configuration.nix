@@ -12,7 +12,7 @@
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
   ];
 
-  security.sops.enable = true;
+  infosec.sops.enable = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

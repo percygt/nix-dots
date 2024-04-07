@@ -22,7 +22,7 @@
   };
 
   infosec = {
-    sops = true;
+    sops.enable = true;
   };
 
   # drivers = {
