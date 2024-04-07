@@ -21,6 +21,7 @@
 
   services = {
     qemuGuest.enable = true;
+    udisks2.enable = true;
     openssh.settings.PermitRootLogin = lib.mkForce "yes";
   };
 
@@ -87,9 +88,8 @@
       ''
     )
     (
-      writeShellScriptBin "nixins"
+      writeShellScriptBin "diskos"
       ''
-        #!/usr/bin/env bash
         set -euo pipefail
 
         if [ "$(id -u)" -eq 0 ]; then
@@ -150,13 +150,18 @@
         fi
 
         [ -e "$HOME/usb/.k/sops" ] && sudo cp -rf /tmp/*keyfile "$HOME/usb/.k/sops/"
-
+      ''
+    )
+    (
+      writeShellScriptBin "nixins"
+      ''
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"
 
-        sudo umount --all
+        findmnt /home/nixos/usb >/dev/null || sudo cryptsetup luksClose /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
+        findmnt /home/nixos/usb >/dev/null || sudo udisksctl -b /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
       ''
     )
   ];
