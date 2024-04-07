@@ -13,7 +13,6 @@
           type = "gpt";
           partitions = {
             ESP = {
-              label = "ESP";
               size = "1024M";
               type = "EF00";
               content = {

@@ -71,7 +71,7 @@
       ''
     )
     (
-      writeShellScriptBin "diskos"
+      writeShellScriptBin "disks"
       ''
         set -euo pipefail
 
@@ -106,7 +106,7 @@
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$sec_dir/.sops.yaml"
           SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST-age.keyfile" sops updatekeys secrets.enc.yaml
           git add .
-          git commit -m "Install/reinstall $TARGET_HOST"
+          git commit -m "$TARGET_HOST install/reinstall "
           git push origin main
           popd &> /dev/null;
 
@@ -115,7 +115,7 @@
           pushd $dots_dir &> /dev/null;
           nix flake lock --update-input sikreto
           git add .
-          git commit -m "Install/reinstall $TARGET_HOST"
+          git commit -m "$TARGET_HOST install/reinstall "
           git push origin main
           popd &> /dev/null;
           touch secrets_updated
@@ -149,8 +149,8 @@
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"
 
-        findmnt /home/nixos/usb >/dev/null || sudo cryptsetup luksClose /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
         findmnt /home/nixos/usb >/dev/null || sudo udisksctl -b /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
+        findmnt /home/nixos/usb >/dev/null || sudo cryptsetup luksClose /dev/disk/by-uuid/c59596c4-62e3-4d00-a7e5-aea9d19ea3f9
       ''
     )
     (
@@ -168,8 +168,8 @@
         mkdir -p "/mnt/home/${target_user}/nix-dots"
         rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"
 
-        findmnt /home/nixos/usb >/dev/null || sudo cryptsetup luksClose /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
         findmnt /home/nixos/usb >/dev/null || sudo udisksctl -b /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
+        findmnt /home/nixos/usb >/dev/null || sudo cryptsetup luksClose /dev/disk/by-uuid/c59596c4-62e3-4d00-a7e5-aea9d19ea3f9
       ''
     )
   ];
