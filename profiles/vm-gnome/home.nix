@@ -55,7 +55,7 @@
       fi
     '';
     shellAliases = {
-      hms = "home-manager switch --flake ${flakeDirectory}#$HOSTNAME";
+      hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
     };
     sessionVariables = {

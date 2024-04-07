@@ -65,7 +65,7 @@
     ];
     shellAliases = {
       mkVM = "qemu-system-x86_64 -enable-kvm -m 2G -boot menu=on -drive file=vm.img -cpu=host -vga virtio -display sdl,gl=on -cdrom";
-      hms = "home-manager switch --flake ${flakeDirectory}#$HOSTNAME";
+      hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
     };
     sessionVariables = {
