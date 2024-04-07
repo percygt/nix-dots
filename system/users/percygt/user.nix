@@ -27,7 +27,7 @@ in {
     mutableUsers = false;
     users.percygt = {
       isNormalUser = true;
-      hashedPasswordFile = config.sops.secrets.user-hashedPassword.path;
+      hashedPasswordFile = config.sops.secrets.userHashedPassword.path;
       shell = pkgs.fish;
       extraGroups =
         [
