@@ -19,7 +19,7 @@ in {
     };
   };
 
-  sops.secrets.user-hashedPassword.neededForUsers = true;
+  sops.secrets.userHashedPassword.neededForUsers = true;
 
   users = {
     defaultUserShell = pkgs.fish;

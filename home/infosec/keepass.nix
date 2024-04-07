@@ -7,11 +7,11 @@
   kmk0 = "${config.home.homeDirectory}/data/keeps/m0.kdbx";
 in {
   options = {
-    security.keepass.enable =
+    infosec.keepass.enable =
       lib.mkEnableOption "Enable keepass";
   };
 
-  config = lib.mkIf config.security.keepass.enable {
+  config = lib.mkIf config.infosec.keepass.enable {
     home.packages = with pkgs; [
       keepassxc
     ];

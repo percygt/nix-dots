@@ -11,13 +11,13 @@ in {
     inputs.sops-nix.nixosModules.sops
   ];
   options = {
-    security.sops = {
+    infosec.sops = {
       enable =
         lib.mkEnableOption "Enable sops";
     };
   };
 
-  config = lib.mkIf config.security.sops.enable {
+  config = lib.mkIf config.infosec.sops.enable {
     sops = {
       defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
       validateSopsFiles = false;

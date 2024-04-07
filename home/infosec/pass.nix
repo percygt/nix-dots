@@ -7,11 +7,11 @@
   PASSWORD_STORE_DIR = "${config.home.homeDirectory}/data/pass";
 in {
   options = {
-    security.pass.enable =
+    infosec.pass.enable =
       lib.mkEnableOption "Enable pass";
   };
 
-  config = lib.mkIf config.security.pass.enable {
+  config = lib.mkIf config.infosec.pass.enable {
     programs = {
       password-store = {
         enable = true;

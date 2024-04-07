@@ -12,7 +12,7 @@
     ./services
     ./users
     ./bin
-    ./security
+    ./infosec
     ./network
     (modulesPath + "/installer/scan/not-detected.nix")
   ];

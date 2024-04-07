@@ -5,11 +5,11 @@
   ...
 }: {
   options = {
-    security.common.enable =
+    infosec.common.enable =
       lib.mkEnableOption "Enable common";
   };
 
-  config = lib.mkIf config.security.common.enable {
+  config = lib.mkIf config.infosec.common.enable {
     home.packages = with pkgs; [
       age
       sops

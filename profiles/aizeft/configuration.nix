@@ -21,6 +21,10 @@
     packages.enable = true;
   };
 
+  infosec = {
+    sops = true;
+  };
+
   drivers = {
     bluetooth.enable = true;
     intel.enable = true;

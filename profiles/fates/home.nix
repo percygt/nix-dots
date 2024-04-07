@@ -41,7 +41,7 @@
     pmenu.enable = true;
   };
 
-  security = {
+  infosec = {
     pass.enable = true;
     keepass.enable = true;
     backup.enable = true;

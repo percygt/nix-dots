@@ -15,7 +15,7 @@
       ./bin
       ./terminal
       ./shell
-      ./security
+      ./infosec
       ./users
       # ./backup
     ]

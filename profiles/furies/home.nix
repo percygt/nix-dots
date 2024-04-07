@@ -39,7 +39,7 @@
     pmenu.enable = true;
   };
 
-  security = {
+  infosec = {
     common.enable = true;
     pass.enable = true;
     keepass.enable = true;

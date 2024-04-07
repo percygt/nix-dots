@@ -10,6 +10,9 @@
   xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
   services.xserver = {displayManager.startx.enable = true;};
 
+  infosec = {
+    sops.enable = true;
+  };
   core = {
     zram.enable = true;
     bootmanagement.enable = true;

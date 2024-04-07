@@ -5,11 +5,11 @@
   ...
 }: {
   options = {
-    security.backup.enable =
+    infosec.backup.enable =
       lib.mkEnableOption "Enable backup";
   };
 
-  config = lib.mkIf config.security.backup.enable {
+  config = lib.mkIf config.infosec.backup.enable {
     home.packages = with pkgs; [
       pika-backup
       # borgbackup
