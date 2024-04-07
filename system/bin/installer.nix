@@ -45,8 +45,8 @@
           fi
 
           echo "Setting up secrets and keys..."
-          if grep -q "luks-data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
-            echo -n "$(head -c32 /dev/random | base64)" > "/tmp/luks-data.keyfile"
+          if grep -q "data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
+            echo -n "$(head -c32 /dev/random | base64)" > "/tmp/data.keyfile"
           fi
 
           [ -e "/tmp/$TARGET_HOST.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST.keyfile"
@@ -89,9 +89,9 @@
           sudo cp /tmp/$TARGET_HOST.keyfile /mnt/etc/secrets
           sudo chmod 0400 /mnt/etc/secrets/$TARGET_HOST.keyfile
 
-          if [[ -f "/tmp/luks-data.keyfile" ]]; then
-            sudo cp /tmp/luks-data.keyfile /mnt/etc/secrets
-            sudo chmod 0400 /mnt/etc/secrets/luks-data.keyfile
+          if [[ -f "/tmp/data.keyfile" ]]; then
+            sudo cp /tmp/data.keyfile /mnt/etc/secrets
+            sudo chmod 0400 /mnt/etc/secrets/data.keyfile
           fi
 
           nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd

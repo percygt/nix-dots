@@ -1,7 +1,7 @@
 {disks ? ["/dev/nvme0n1" "/dev/sda"], ...}: {
   environment.etc = {
     "crypttab".text = ''
-      data  /dev/disk/by-partlabel/data  /etc/secrets/luks-data.keyfile
+      data  /dev/disk/by-partlabel/data  /etc/secrets/data.keyfile
     '';
   };
   disko.devices = {

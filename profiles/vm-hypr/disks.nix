@@ -1,7 +1,7 @@
 {lib, ...}: {
   environment.etc = {
     "crypttab".text = ''
-      data  /dev/disk/by-partlabel/disk-sda-data  /etc/secrets/luks-data.keyfile
+      data  /dev/disk/by-partlabel/disk-sda-data  /etc/secrets/data.keyfile
     '';
   };
 
@@ -65,7 +65,7 @@
                 name = "data";
                 settings = {
                   allowDiscards = true;
-                  keyFile = "/tmp/luks-data.keyfile";
+                  keyFile = "/tmp/data.keyfile";
                 };
                 initrdUnlock = lib.mkForce false;
                 content = {

@@ -1,7 +1,13 @@
-{
+{lib, ...}: {
+  environment.etc = {
+    "crypttab".text = ''
+      data  /dev/disk/by-partlabel/disk-sda-data  /etc/secrets/vm-gnome-data.keyfile
+    '';
+  };
+
   disko.devices = {
     disk = {
-      nvme = {
+      sda = {
         type = "disk";
         device = "/dev/vda";
         content = {
@@ -20,9 +26,9 @@
               size = "100%";
               content = {
                 type = "btrfs";
+                extraArgs = ["-L" "nixos" "-f"];
                 mountpoint = "/";
                 mountOptions = ["defaults"];
-                extraArgs = ["-L" "NIXOS" "-f"];
                 subvolumes = {
                   "home" = {
                     mountOptions = ["compress=lzo"];
@@ -32,29 +38,42 @@
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/nix";
                   };
-                  "var/cache" = {
+                  "var/log" = {
                     mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/cache";
+                    mountpoint = "/var/log";
                   };
                   "var/tmp" = {
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/var/tmp";
                   };
-                  "var/log" = {
+                  "var/cache" = {
                     mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/log";
+                    mountpoint = "/var/cache";
+                  };
+                  "etc/secrets" = {
+                    mountOptions = ["compress=lzo" "noatime"];
+                    mountpoint = "/etc/secrets";
                   };
                 };
               };
             };
-            windows = {
-              size = "8500M";
+            data = {
+              size = "5G";
               content = {
-                type = "filesystem";
-                format = "xfs";
-                mountpoint = "/home/percygt/windows";
-                mountOptions = ["defaults"];
-                extraArgs = ["-L" "WINDOWS" "-f"];
+                type = "luks";
+                name = "data";
+                settings = {
+                  allowDiscards = true;
+                  keyFile = "/tmp/vm-gnome-data.keyfile";
+                };
+                initrdUnlock = lib.mkForce false;
+                content = {
+                  type = "filesystem";
+                  format = "btrfs";
+                  mountpoint = "/home/percygt/data";
+                  mountOptions = ["compress=lzo" "x-gvfs-show"];
+                  extraArgs = ["-L" "DATA" "-f"];
+                };
               };
             };
           };
@@ -62,6 +81,4 @@
       };
     };
   };
-
-  fileSystems."/var/log".neededForBoot = true;
 }

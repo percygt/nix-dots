@@ -100,24 +100,31 @@
         fi
 
         echo "Setting up secrets and keys..."
-        if grep -q "$TARGET_HOST.luks-data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
-          echo -n "$(head -c32 /dev/random | base64)" > "/tmp/$TARGET_HOST.luks-data.keyfile"
+        if grep -q "$TARGET_HOST-data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
+          echo -n "$(head -c32 /dev/random | base64)" > "/tmp/$TARGET_HOST-data.keyfile"
         fi
 
-        [ -e "/tmp/$TARGET_HOST.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST.keyfile"
+        [ -e "/tmp/$TARGET_HOST-sops.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST-sops.keyfile"
 
-        pushd $sec_dir &> /dev/null;
-        if [ $(git status --porcelain | wc -l) -eq "0" ] || [ ! -e "$HOME/secrets_updated" ]; then
-          SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile"
+        if [ ! -e "$HOME/secrets_updated" ]; then
+          pushd $sec_dir &> /dev/null;
+          SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST-sops.keyfile"
           AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$sec_dir/.sops.yaml"
-          SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile" sops updatekeys secrets.enc.yaml
+          SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST-age.keyfile" sops updatekeys secrets.enc.yaml
           git add .
           git commit -m "Install/reinstall $TARGET_HOST"
           git push origin main
-          touch $HOME/secrets_updated
+          popd &> /dev/null;
+
+          pushd $dots_dir &> /dev/null;
+          nix flake lock --update-input sikreto
+          git add .
+          git commit -m "Install/reinstall $TARGET_HOST"
+          git push origin main
+          popd &> /dev/null;
+          touch secrets_updated
         fi
-        popd &> /dev/null;
 
         gum confirm  --default=true \
           "WARNING!!!! This will ERASE ALL DATA on the disks $TARGET_HOST. Are you sure you want to continue?"
@@ -132,12 +139,12 @@
 
         [ -e "/mnt/etc/secrets" ] || sudo mkdir -p "/mnt/etc/secrets"
 
-        sudo cp "/tmp/$TARGET_HOST.keyfile" "/mnt/etc/secrets"
-        sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST.keyfile"
+        sudo cp "/tmp/$TARGET_HOST-sops.keyfile" "/mnt/etc/secrets"
+        sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST-sops.keyfile"
 
-        if [[ -f "/tmp/$TARGET_HOST.luks-data.keyfile" ]]; then
-          sudo cp "/tmp/$TARGET_HOST.luks-data.keyfile" "/mnt/etc/secrets"
-          sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST.luks-data.keyfile"
+        if [[ -f "/tmp/$TARGET_HOST-data.keyfile" ]]; then
+          sudo cp "/tmp/$TARGET_HOST-data.keyfile" "/mnt/etc/secrets"
+          sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST-data.keyfile"
         fi
 
         [ -e "$HOME/usb/.k/sops" ] && sudo cp -rf /tmp/*keyfile "$HOME/usb/.k/sops/"
