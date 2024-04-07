@@ -10,88 +10,100 @@
   };
 
   config = lib.mkIf config.shell.fish.enable {
-    programs.fish = {
-      enable = true;
-      plugins = with pkgs.fishPlugins; [
-        {
-          name = "fzf";
-          inherit (fzf-fish) src;
-        }
-        {
-          name = "bass";
-          inherit (bass) src;
-        }
-        {
-          name = "nix.fish";
-          src = pkgs.fetchFromGitHub {
-            owner = "kidonng";
-            repo = "nix.fish";
-            rev = "ad57d970841ae4a24521b5b1a68121cf385ba71e";
-            sha256 = "13x3bfif906nszf4mgsqxfshnjcn6qm4qw1gv7nw89wi4cdp9i8q";
-          };
-        }
-      ];
-      interactiveShellInit =
-        /*
-        fish
-        */
-        ''
-          export FZF_DEFAULT_OPTS="--border rounded --info=inline --preview-window=right,60%,, --color bg:#000000,bg+:#0e1a60,preview-bg:#00051A"
-          export FZF_TMUX=1
-          export FZF_TMUX_OPTS="-p90%,75%"
-
-          set fish_greeting # Disable greeting
-          check_directory_for_new_repository
-
-          bind \ee edit_command_buffer
-          nix-your-shell fish | source
-
-          bind \cr _fzf_search_history
-          bind -M insert \cr _fzf_search_history
-
-          fzf_configure_bindings --directory=\cf --variables=\e\cv --git_status=\cs --git_log=\cg
-        '';
-      functions = {
-        cd = {
-          body = ''
-            builtin cd $argv || return
+    programs = {
+      fzf.enable = true;
+      fish = {
+        enable = true;
+        plugins = with pkgs.fishPlugins; [
+          {
+            name = "fzf";
+            inherit (fzf-fish) src;
+          }
+          {
+            name = "bass";
+            inherit (bass) src;
+          }
+        ];
+        interactiveShellInit =
+          /*
+          fish
+          */
+          ''
             check_directory_for_new_repository
-          '';
-          wraps = "cd";
-        };
 
-        check_directory_for_new_repository = {
-          body = ''
-            set current_repository (git rev-parse --show-toplevel 2> /dev/null)
-            if [ "$current_repository" ] && \
-              [ "$current_repository" != "$last_repository" ]
-              ${pkgs.onefetch}/bin/onefetch
+
+            set fish_greeting # Disable greeting
+
+            bind \ee edit_command_buffer
+            nix-your-shell fish | source
+
+            bind \cr _fzf_search_history
+            bind -M insert \cr _fzf_search_history
+
+            bind \ct 'clear; commandline -f repaint'
+            bind -M insert \ct 'clear; commandline -f repaint'
+
+            fzf_configure_bindings --directory=\cf --variables=\ev --git_status=\cs --git_log=\cg
+          '';
+        functions = {
+          envsource = ''
+            for line in (cat $argv | grep -v '^#')
+                set item (string split -m 1 '=' $line)
+                set -gx $item[1] $item[2]
+                echo "Exported key $item[1]"
             end
-            set -gx last_repository $current_repository
           '';
-        };
-      };
-      loginShellInit = ''
-        check_directory_for_new_repository
-      '';
-      shellInit =
-        /*
-        fish
-        */
-        ''
-          # set fzf_directory_opts --bind "ctrl-e:execute($EDITOR {} &> /dev/tty)" --bind "alt-c:execute(code {} &> /dev/tty)"
-          set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
+          cd = {
+            body = ''
+              builtin cd $argv || return
+              check_directory_for_new_repository
+            '';
+            wraps = "cd";
+          };
 
-          function starship_transient_rprompt_func
-            starship module time
-          end
-            
-          fish_vi_key_bindings
-          set fish_cursor_default     block      blink
-          set fish_cursor_insert      line       blink
-          set fish_cursor_replace_one underscore blink
-          set fish_cursor_visual      block
-          # bind --mode insert --sets-mode default jk repaint    '';
+          check_directory_for_new_repository = {
+            body = ''
+              set current_repository (git rev-parse --show-toplevel 2> /dev/null)
+              if [ "$current_repository" ] && \
+                [ "$current_repository" != "$last_repository" ]
+                ${pkgs.onefetch}/bin/onefetch
+              end
+              set -gx last_repository $current_repository
+            '';
+          };
+        };
+        shellInit =
+          /*
+          fish
+          */
+          ''
+            # set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
+            # bind --mode insert --sets-mode default jk repaint
+
+            function starship_transient_rprompt_func
+              starship module time
+            end
+
+            set -gx FZF_DEFAULT_OPTS "
+              --border rounded
+              --info=inline
+              --bind=ctrl-j:down
+              --bind=ctrl-k:up
+              --bind=alt-j:preview-down
+              --bind=alt-k:preview-up
+              --preview-window=right,60%,,
+              --color bg:#000000,bg+:#0e1a60,preview-bg:#00051A"
+
+            set -gx FZF_TMUX 1
+            set -gx FZF_TMUX_OPTS "-p90%,75%"
+
+            fish_vi_key_bindings
+            set fish_cursor_default     block      blink
+            set fish_cursor_insert      line       blink
+            set fish_cursor_replace_one underscore blink
+            set fish_cursor_visual      block
+          '';
+      };
     };
     xdg.configFile = {
       "fish/themes/base16.theme" = {

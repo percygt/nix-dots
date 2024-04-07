@@ -57,13 +57,13 @@ require("lualine").setup({
         "mode",
         icon_enable = true,
         fmt = function()
-          return mode.isNormal() and (ok and devicons.get_icon(vim.fn.expand("%:t")) or "")
+          return mode.isNormal() and (ok and devicons.get_icon(vim.fn.expand("%:t")) or "")
             or mode.isInsert() and ""
             or mode.isVisual() and "󰈈"
             or mode.isCommand() and ""
             or mode.isReplace() and ""
             or vim.api.nvim_get_mode().mode == "t" and ""
-            or ""
+            or ""
         end,
       },
     },

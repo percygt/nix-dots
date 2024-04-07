@@ -23,6 +23,7 @@
 
   generic = {
     fonts.enable = true;
+    bluez-suspend.disable = true;
     xremap = {
       enable = true;
       withGnome = true;
@@ -50,7 +51,6 @@
     atuin.enable = true;
     direnv.enable = true;
     extra.enable = true;
-    fzf.enable = true;
     starship.enable = true;
     tui.enable = true;
     yazi.enable = true;
@@ -81,44 +81,7 @@
       "-gui-address=fates.atlas-qilin.ts.net:8384"
     ];
   };
-  xdg = {
-    enable = true;
-    mime.enable = true;
-    systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
-    configFile."wireplumber/50-bluez-config.lua".text = ''
-      bluez_monitor.enabled = true
-
-      bluez_monitor.properties = {
-        ["with-logind"] = true,
-      }
-
-      bluez_monitor.rules = {
-        {
-          matches = {
-            {
-              { "device.name", "matches", "bluez_card.*" },
-            },
-          },
-          apply_properties = {
-          },
-        },
-        {
-          matches = {
-            {
-              { "node.name", "matches", "bluez_input.*" },
-            },
-            {
-              { "node.name", "matches", "bluez_output.*" },
-            },
-          },
-          apply_properties = {
-            ["session.suspend-timeout-seconds"] = 0,  -- 0 disables suspend
-          },
-        },
-      }
-    '';
-  };
-
+  xdg.systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
   dconf.settings = {
     "org/gnome/shell/extensions/fedora-update" = {
       update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- fish -c \"sudo dnf check-update --refresh & sudo dnf upgrade -y; echo Done - Press enter to exit; read _\" ";

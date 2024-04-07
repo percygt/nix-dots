@@ -7,7 +7,6 @@
     ./atuin.nix
     ./direnv.nix
     ./extra.nix
-    ./fzf.nix
     ./starship.nix
     ./tui.nix
     ./yazi.nix

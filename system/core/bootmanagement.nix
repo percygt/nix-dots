@@ -23,7 +23,7 @@
       loader = {
         systemd-boot.enable = true;
         systemd-boot.consoleMode = "auto";
-        efi.efiSysMountPoint = "/boot/efi";
+        # efi.efiSysMountPoint = "/boot/efi";
         efi.canTouchEfiVariables = true;
       };
 

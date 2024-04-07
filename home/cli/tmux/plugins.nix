@@ -37,11 +37,10 @@ in {
     {
       plugin = resurrect;
       extraConfig = ''
-        set -g @resurrect-strategy-vim 'session'
-        set -g @resurrect-strategy-nvim 'session'
+        set -g @resurrect-processes '"~nvim"'
         set -g @resurrect-capture-pane-contents 'on'
         set -g @resurrect-dir ${resurrectDirPath}
-        set -g @resurrect-hook-post-save-all 'target=$(readlink -f ${resurrectDirPath}/last); sed "s| --cmd .*-vim-pack-dir||g; s|/etc/profiles/per-user/$USER/bin/||g; s|/home/$USER/.nix-profile/bin/||g" $target | sponge $target'
+        set -g @resurrect-hook-post-save-all 'resurrect-post-save "${resurrectDirPath}/last"'
       '';
     }
     {

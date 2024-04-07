@@ -12,8 +12,8 @@
   config = lib.mkIf config.security.backup.enable {
     home.packages = with pkgs; [
       pika-backup
-      borgbackup
-      borgmatic
+      # borgbackup
+      # borgmatic
     ];
   };
 }

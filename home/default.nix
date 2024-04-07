@@ -17,6 +17,7 @@
       ./shell
       ./security
       ./users
+      # ./backup
     ]
     ++ lib.optionals (desktop == "hyprland") [
       inputs.hypridle.homeManagerModules.default

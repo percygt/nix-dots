@@ -40,7 +40,7 @@
     atuin.enable = true;
     direnv.enable = true;
     extra.enable = true;
-    fzf.enable = true;
+    
     starship.enable = true;
     tui.enable = true;
     yazi.enable = true;

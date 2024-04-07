@@ -4,5 +4,6 @@
     ./pass.nix
     ./keepass.nix
     ./sops.nix
+    ./common.nix
   ];
 }

@@ -3,7 +3,7 @@
     disk = {
       nvme = {
         type = "disk";
-        device = "/dev/nvme0n1";
+        device = "/dev/vda";
         content = {
           type = "gpt";
           partitions = {
@@ -14,14 +14,10 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [
-                  "umask=0077"
-                  "shortname=winnt"
-                ];
               };
             };
             root = {
-              size = "20500M";
+              size = "100%";
               content = {
                 type = "btrfs";
                 mountpoint = "/";
@@ -52,23 +48,13 @@
               };
             };
             windows = {
-              size = "8500M";
+              size = "-8500M";
               content = {
                 type = "filesystem";
                 format = "xfs";
                 mountpoint = "/home/percygt/windows";
                 mountOptions = ["defaults"];
                 extraArgs = ["-L" "WINDOWS" "-f"];
-              };
-            };
-            data = {
-              size = "100%";
-              content = {
-                type = "filesystem";
-                format = "btrfs";
-                mountpoint = "/home/percygt/data";
-                mountOptions = ["compress=lzo" "x-gvfs-show"];
-                extraArgs = ["-L" "DATA" "-f"];
               };
             };
           };

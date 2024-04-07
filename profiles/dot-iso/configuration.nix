@@ -111,8 +111,8 @@
         fi
 
         echo "Setting up secrets and keys..."
-        if grep -q "$TARGET_HOST.luks.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
-          echo -n "$(head -c32 /dev/random | base64)" > "/tmp/$TARGET_HOST.luks.keyfile"
+        if grep -q "$TARGET_HOST.luks-data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
+          echo -n "$(head -c32 /dev/random | base64)" > "/tmp/$TARGET_HOST.luks-data.keyfile"
         fi
 
         [ -e "/tmp/$TARGET_HOST.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST.keyfile"
@@ -146,9 +146,9 @@
         sudo cp "/tmp/$TARGET_HOST.keyfile" "/mnt/etc/secrets"
         sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST.keyfile"
 
-        if [[ -f "/tmp/$TARGET_HOST.luks.keyfile" ]]; then
-          sudo cp "/tmp/$TARGET_HOST.luks.keyfile" "/mnt/etc/secrets"
-          sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST.luks.keyfile"
+        if [[ -f "/tmp/$TARGET_HOST.luks-data.keyfile" ]]; then
+          sudo cp "/tmp/$TARGET_HOST.luks-data.keyfile" "/mnt/etc/secrets"
+          sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST.luks-data.keyfile"
         fi
 
         [ -e "$HOME/usb/.k/sops" ] && sudo cp -f "/tmp/*.keyfile" "$HOME/usb/.k/sops/"

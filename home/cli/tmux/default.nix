@@ -9,12 +9,17 @@
       lib.mkEnableOption "Enable tmux";
   };
 
-  imports = [./gitmux.nix];
+  imports = [
+    ./gitmux.nix
+    ./resurrect-post-save.nix
+  ];
 
   config = lib.mkIf config.cli.tmux.enable {
+    # dependencies
     home.packages = with pkgs; [
       wl-clipboard
       moreutils
+      fzf
     ];
     programs.tmux = {
       enable = true;

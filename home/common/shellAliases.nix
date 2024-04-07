@@ -3,6 +3,7 @@
     ll = "eza --group --header --group-directories-first --long --git --all --binary --icons";
     la = "ll -a";
     ls = "eza --group-directories-first --all -1";
+    shredf = "shred -uvn 10";
     tree = "eza --tree";
     cat = "bat -p";
     dig = "dog";

@@ -26,10 +26,6 @@
       gping
       xcp
       dogdns
-
-      age
-      sops
-      git-crypt
     ];
   };
 }
