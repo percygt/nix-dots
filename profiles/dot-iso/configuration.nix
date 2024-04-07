@@ -49,15 +49,13 @@
       writeShellScriptBin "creds"
       ''
         set -euo pipefail
-        if [ ! -e /dev/mapper/luksvol ]; then
-          sudo cryptsetup luksOpen /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5 luksvol
-          sudo systemctl daemon-reload
-          sleep 1
-          mkdir "$HOME/usb"
-          sudo mount /dev/mapper/luksvol "$HOME/usb"
-          gpg --import "$HOME/usb/.k/pgp/dev/subkeys.gpg"
-          sleep 1
-        fi
+        sudo cryptsetup luksOpen /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5 luksvol
+        sudo systemctl daemon-reload
+        sleep 1
+        mkdir "$HOME/usb"
+        sudo mount /dev/mapper/luksvol "$HOME/usb"
+        gpg --import "$HOME/usb/.k/pgp/dev/subkeys.gpg"
+        sleep 1
         cp -f "$HOME/usb/credentials"  "$HOME/.config/git/"
       ''
     )
@@ -67,15 +65,9 @@
         set -euo pipefail
         dots_dir="$HOME/nix-dots";
         sec_dir="$HOME/sikreto";
-
-        if [ ! -d "$dots_dir/.git" ]; then
-        	git clone git@gitlab.com:percygt/nix-dots.git "$dots_dir"
-        fi
-
-        if [ ! -d "$sec_dir/.git" ]; then
-        	git clone git@gitlab.com:percygt/sikreto.git "$sec_dir"
-        fi
-
+        git clone git@gitlab.com:percygt/nix-dots.git "$dots_dir"
+        sleep 2
+        git clone git@gitlab.com:percygt/sikreto.git "$sec_dir"
       ''
     )
     (
@@ -117,6 +109,8 @@
           git push origin main
           popd &> /dev/null;
 
+          sleep 2
+
           pushd $dots_dir &> /dev/null;
           nix flake lock --update-input sikreto
           git add .
@@ -148,11 +142,26 @@
         fi
 
         [ -e "$HOME/usb/.k/sops" ] && sudo cp -rf /tmp/*keyfile "$HOME/usb/.k/sops/"
+
+        sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
+
+        mkdir -p "/mnt/home/${target_user}/nix-dots"
+        rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/"
+
+        findmnt /home/nixos/usb >/dev/null || sudo cryptsetup luksClose /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
+        findmnt /home/nixos/usb >/dev/null || sudo udisksctl -b /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5
       ''
     )
     (
       writeShellScriptBin "nixins"
       ''
+        TARGET_HOST=$(ls -1 "$dots_dir"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
+
+        if [ ! -e "$dots_dir/profiles/$TARGET_HOST/disks.nix" ]; then
+          echo "ERROR! $(basename "$0") could not find the required $dots_dir/profiles/$TARGET_HOST/disks.nix"
+          exit 1
+        fi
+
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 
         mkdir -p "/mnt/home/${target_user}/nix-dots"
