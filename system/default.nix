@@ -10,6 +10,7 @@
     ./common
     ./core
     ./services
+    ./desktop
     ./users
     ./bin
     ./infosec
