@@ -149,7 +149,7 @@
           sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST.luks-data.keyfile"
         fi
 
-        [ -e "$HOME/usb/.k/sops" ] && sudo cp -f "/tmp/*.keyfile" "$HOME/usb/.k/sops/"
+        [ -e "$HOME/usb/.k/sops" ] && sudo cp -rf /tmp/*keyfile "$HOME/usb/.k/sops/"
 
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 
