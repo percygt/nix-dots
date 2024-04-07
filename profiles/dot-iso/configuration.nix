@@ -92,6 +92,7 @@
         fi
 
         echo "Setting up secrets and keys..."
+
         if grep -q "$TARGET_HOST-data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
           echo -n "$(head -c32 /dev/random | base64)" > "/tmp/$TARGET_HOST-data.keyfile"
         fi
