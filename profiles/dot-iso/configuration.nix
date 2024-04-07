@@ -4,7 +4,6 @@
   hostName,
   target_user,
   inputs,
-  self,
   ...
 }: {
   imports = [
@@ -12,6 +11,7 @@
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
   ];
+
   security.sops.enable = true;
 
   boot = {
@@ -35,16 +35,7 @@
     };
   };
 
-  isoImage = {
-    appendToMenuLabel = " live";
-    # copy self(flake directory) to /iso path of the dot installer
-    contents = [
-      {
-        source = self;
-        target = "/nix-dots";
-      }
-    ];
-  };
+  isoImage.appendToMenuLabel = " live";
 
   environment.systemPackages = with pkgs; [
     gum
@@ -116,7 +107,7 @@
         [ -e "/tmp/$TARGET_HOST.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST.keyfile"
 
         pushd $sec_dir &> /dev/null;
-        if [ $(git status --porcelain | wc -l) -eq "0" ] && [ ! -e "$HOME/secrets_updated" ]; then
+        if [ $(git status --porcelain | wc -l) -eq "0" ] || [ ! -e "$HOME/secrets_updated" ]; then
           SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile"
           AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$sec_dir/.sops.yaml"
