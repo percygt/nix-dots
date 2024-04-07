@@ -13,6 +13,7 @@
     ./users
     ./bin
     ./security
+    ./network
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
