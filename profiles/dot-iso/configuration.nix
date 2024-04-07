@@ -116,13 +116,13 @@
 
         [ -e "/tmp/$TARGET_HOST.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST.keyfile"
 
-        SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile"
-        AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")
 
         pushd $sec_dir &> /dev/null;
-        if [ $(git status --porcelain | wc -l) -eq "0" ]; then
+        if [ $(git status --porcelain | wc -l) -eq "0" ] && [ -z $AGE_PUBLIC_KEY ]; then
+          export SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile"
+          export AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$sec_dir/.sops.yaml"
-          SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST.keyfile" sops updatekeys secrets.enc.yaml
+          sops updatekeys secrets.enc.yaml
           git add .
           git commit -m "Install/reinstall $TARGET_HOST"
           git push origin main
