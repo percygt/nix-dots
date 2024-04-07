@@ -2,8 +2,8 @@
   imports = [
     (
       if desktop == null
-      then "./gnome"
-      else "./${desktop}"
+      then ./gnome
+      else ./${desktop}
     )
   ];
 }
