@@ -12,11 +12,11 @@
     (with pkgs; [
       gnome-photos
       gnome-tour
+      gedit # text editor
     ])
     ++ (with pkgs.gnome; [
       cheese # webcam tool
       gnome-music
-      gedit # text editor
       epiphany # web browser
       geary # email reader
       gnome-characters
