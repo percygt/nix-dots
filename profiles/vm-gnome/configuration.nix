@@ -34,9 +34,9 @@
   #   nvidia-prime.enable = true;
   # };
 
-  # network = {
-  #   networkmanager.enable = true;
-  # };
+  network = {
+    networkmanager.enable = true;
+  };
 
   boot = {
     initrd.availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk"];

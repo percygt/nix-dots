@@ -24,6 +24,7 @@
   generic = {
     fonts.enable = true;
     bluez-suspend.disable = true;
+    # overlays.enable = true;
     xremap = {
       enable = true;
       withGnome = true;
