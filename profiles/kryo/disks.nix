@@ -1,9 +1,14 @@
-{
+{disks ? ["/dev/nvme0n1" "/dev/sda"], ...}: {
+  environment.etc = {
+    "crypttab".text = ''
+      data  /dev/disk/by-partlabel/sda_data  /etc/secrets/data.keyfile
+    '';
+  };
   disko.devices = {
     disk = {
       nvme = {
         type = "disk";
-        device = "/dev/nvme0n1";
+        device = builtins.elemAt disks 0;
         content = {
           type = "gpt";
           partitions = {
@@ -14,19 +19,16 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = [
-                  "umask=0077"
-                  "shortname=winnt"
-                ];
+                mountOptions = ["umask=0077" "shortname=winnt"];
               };
             };
             root = {
-              size = "205000M";
+              size = "100%";
               content = {
                 type = "btrfs";
                 mountpoint = "/";
                 mountOptions = ["defaults"];
-                extraArgs = ["-L" "NIXOS" "-f"];
+                extraArgs = ["-L" "nixos" "-f"];
                 subvolumes = {
                   "home" = {
                     mountOptions = ["compress=lzo"];
@@ -52,23 +54,46 @@
               };
             };
             windows = {
-              size = "85000M";
+              end = "-85000M";
               content = {
                 type = "filesystem";
                 format = "xfs";
                 mountpoint = "/home/percygt/windows";
                 mountOptions = ["defaults"];
-                extraArgs = ["-L" "WINDOWS" "-f"];
+                extraArgs = ["-L" "windows" "-f"];
               };
             };
+          };
+        };
+      };
+      #------------------------------------------------------------------------------
+      sda = {
+        device = builtins.elemAt disks 1;
+        type = "disk";
+        content = {
+          type = "gpt";
+          partitions = {
             data = {
-              size = "100%";
+              start = "0%";
+              end = "100%";
               content = {
-                type = "filesystem";
-                format = "btrfs";
-                mountpoint = "/home/percygt/data";
-                mountOptions = ["compress=lzo" "x-gvfs-show"];
-                extraArgs = ["-L" "DATA" "-f"];
+                type = "luks";
+                name = "data";
+
+                settings = {
+                  keyFile = "/tmp/data.keyfile";
+                  allowDiscards = true;
+                };
+
+                # Don't try to unlock this drive early in the boot.
+                initrdUnlock = false;
+                content = {
+                  type = "filesystem";
+                  format = "btrfs";
+                  mountpoint = "/home/percygt/data";
+                  mountOptions = ["compress=lzo" "x-gvfs-show"];
+                  extraArgs = ["-L" "data" "-f"];
+                };
               };
             };
           };
