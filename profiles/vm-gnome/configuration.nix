@@ -9,7 +9,10 @@
     ./disks.nix
     inputs.disko.nixosModules.disko
   ];
-
+  services = {
+    qemuGuest.enable = true;
+    spice-vdagentd.enable = true;
+  };
   core = {
     zram.enable = true;
     bootmanagement.enable = true;

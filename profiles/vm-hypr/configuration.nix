@@ -5,6 +5,10 @@
     ./boot.nix
   ];
 
+  services = {
+    qemuGuest.enable = true;
+    spice-vdagentd.enable = true;
+  };
   # XDG portal
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
