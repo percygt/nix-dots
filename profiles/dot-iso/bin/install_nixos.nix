@@ -23,6 +23,7 @@
         sudo chmod -R 400 /mnt/etc/secrets/*-sops.keyfile
 
         sudo cp -r /tmp/home-sops.keyfile "/mnt/home/${target_user}/.config/sops/age"
+        sudo chown -R ${target_user}:users "/mnt/home/${target_user}/.config"
         sudo chmod 755 /mnt/home/${target_user}/.config
         sudo chmod -R 700 /mnt/home/${target_user}/.config/sops
         sudo chmod 600 /mnt/home/${target_user}/.config/sops/age/home-sops.keyfile
