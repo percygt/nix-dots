@@ -25,7 +25,7 @@
         sudo cp -r /tmp/home-sops.keyfile "/mnt/home/${target_user}/.config/sops/age"
         sudo chmod 755 /mnt/home/${target_user}/.config
         sudo chmod -R 700 /mnt/home/${target_user}/.config/sops
-        sudo chmod 600 /mnt/home/${target_user}/.config/home-sops.keyfile
+        sudo chmod 600 /mnt/home/${target_user}/.config/sops/age/home-sops.keyfile
 
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
       ''
