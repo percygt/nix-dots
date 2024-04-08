@@ -109,8 +109,8 @@
         sudo cp -r /tmp/*-sops.keyfile "/mnt/etc/secrets/"
         sudo chmod -R 0400 /mnt/etc/secrets/*-sops.keyfile
 
-        if [ -e "$HOME/usb/.k/sops" ]; then
-          [ ! -e "$HOME/usb/.k/sops/$TARGET_HOST"] && mkdir -p "$HOME/usb/.k/sops/$TARGET_HOST"
+        if [ -d "$HOME/usb/.k/sops" ]; then
+          [ -d "$HOME/usb/.k/sops/$TARGET_HOST"] || mkdir -p "$HOME/usb/.k/sops/$TARGET_HOST"
           cp -rf /tmp/*.keyfile "$HOME/usb/.k/sops/$TARGET_HOST/"
         fi
 
