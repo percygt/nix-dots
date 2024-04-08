@@ -62,7 +62,7 @@
           ../profiles/${profile}/configuration.nix
           inputs.self.outputs.nixosModules.default
         ]
-        ++ nixosHomeModules;
+        ++ lib.optionals useIso nixosHomeModules;
       specialArgs = mkArgs.args;
     };
 
