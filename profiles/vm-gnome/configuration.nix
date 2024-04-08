@@ -34,7 +34,7 @@
   #   nvidia-prime.enable = true;
   # };
 
-  network = {
+  net = {
     networkmanager.enable = true;
   };
 
