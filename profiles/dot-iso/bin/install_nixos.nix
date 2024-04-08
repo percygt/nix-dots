@@ -12,7 +12,7 @@
         TARGET_HOST=$1
         dots_dir=${flakeDirectory};
         [ -d "/mnt/etc/secrets" ] || sudo mkdir -p "/mnt/etc/secrets"
-        [ -d "/mnt/home/.config/sops/age" ] || mkdir -p "/mnt/home/${target_user}/.config/sops/age"
+        [ -d "/mnt/home/.config/sops/age" ] || sudo mkdir -p "/mnt/home/${target_user}/.config/sops/age"
 
         if [[ -f "/tmp/data.keyfile" ]]; then
           sudo cp "/tmp/data.keyfile" "/mnt/etc/secrets"
@@ -23,6 +23,7 @@
         sudo chmod -R 400 /mnt/etc/secrets/*-sops.keyfile
 
         sudo cp -r /tmp/home-sops.keyfile "/mnt/home/${target_user}/.config/sops/age"
+        sudo chmod 755 /mnt/home/${target_user}/.config
         sudo chmod -R 700 /mnt/home/${target_user}/.config/sops
         sudo chmod 600 /mnt/home/${target_user}/.config/home-sops.keyfile
 

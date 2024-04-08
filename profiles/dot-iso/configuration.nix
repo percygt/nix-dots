@@ -19,7 +19,6 @@
     age
     sops
     yq-go
-    home-manager
     (
       writeShellScriptBin "blast_off"
       ''
