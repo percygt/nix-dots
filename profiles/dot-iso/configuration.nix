@@ -6,10 +6,10 @@
   ...
 }: {
   imports = [
+    ./bin
     {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-    ./bin
   ];
 
   environment.systemPackages = with pkgs; [
