@@ -1,16 +1,20 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  flakeDirectory,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     (
-      writeShellScriptBin "clonerepos"
+      writeShellScriptBin "clone_repos"
       ''
         set -euo pipefail
-        dots_dir="$HOME/nix-dots";
+        dots_dir=${flakeDirectory};
         sec_dir="$HOME/sikreto";
 
         if [ ! -d "$dots_dir/.git" ]; then
           git clone git@gitlab.com:percygt/nix-dots.git "$dots_dir"
         fi
-        sleep 2
+        sleep 1
         if [ ! -d "$sec_dir/.git" ]; then
           git clone git@gitlab.com:percygt/sikreto.git "$sec_dir"
         fi
