@@ -8,8 +8,6 @@
 }: let
   secretsPath = builtins.toString inputs.sikreto;
   sopsDefault = {
-    defaultSymlinkPath = "/run/user/1000/secrets";
-    defaultSecretsMountPoint = "/run/user/1000/secrets.d";
     defaultSopsFile = "${secretsPath}/home-secrets.enc.yaml";
     validateSopsFiles = false;
   };
