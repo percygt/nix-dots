@@ -7,6 +7,12 @@
   ...
 }: let
   secretsPath = builtins.toString inputs.sikreto;
+  sopsDefault = {
+    defaultSymlinkPath = "/run/user/1000/secrets";
+    defaultSecretsMountPoint = "/run/user/1000/secrets.d";
+    defaultSopsFile = "${secretsPath}/home-secrets.enc.yaml";
+    validateSopsFiles = false;
+  };
 in {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
@@ -23,17 +29,20 @@ in {
     home.packages = with pkgs; [
       sops
     ];
-    sops = {
-      defaultSymlinkPath = "/run/user/1000/secrets";
-      defaultSecretsMountPoint = "/run/user/1000/secrets.d";
-      defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
-      validateSopsFiles = false;
-      gnupg = {
-        home = "${config.xdg.dataHome}/gnupg";
-        sshKeyPaths = [];
-      };
-    };
-    systemd.user.services.mbsync.Unit.After = ["sops-nix.service"];
+    sops =
+      sopsDefault
+      // (
+        if useGenericLinux
+        then {
+          gnupg = {
+            home = "${config.xdg.dataHome}/gnupg";
+            sshKeyPaths = [];
+          };
+        }
+        else {
+          age.keyFile = "${config.xdg.configHome}/sops/age/home-sops.keyfile";
+        }
+      );
     home = {
       activation.setupEtc =
         if useGenericLinux
@@ -46,5 +55,6 @@ in {
             /run/current-system/sw/bin/systemctl start --user sops-nix
           '');
     };
+    systemd.user.services.mbsync.Unit.After = ["sops-nix.service"];
   };
 }

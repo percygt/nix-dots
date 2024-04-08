@@ -11,7 +11,6 @@
     ./core
     ./desktop
     ./users
-    ./bin
     ./infosec
     ./net
     (modulesPath + "/installer/scan/not-detected.nix")

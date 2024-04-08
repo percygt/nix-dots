@@ -11,9 +11,8 @@
     {isoImage.squashfsCompression = "gzip -Xcompression-level 1";}
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
+    ./bin
   ];
-
-  infosec.sops.enable = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -54,31 +53,6 @@
     yq-go
     home-manager
     (
-      writeShellScriptBin "creds"
-      ''
-        set -euo pipefail
-        sudo cryptsetup luksOpen /dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5 luksvol
-        sudo systemctl daemon-reload
-        sleep 1
-        mkdir "$HOME/usb"
-        sudo mount /dev/mapper/luksvol "$HOME/usb"
-        gpg --import "$HOME/usb/.k/pgp/dev/subkeys.gpg"
-        sleep 1
-        cp -f "$HOME/usb/credentials"  "$HOME/.config/git/"
-      ''
-    )
-    (
-      writeShellScriptBin "clones"
-      ''
-        set -euo pipefail
-        dots_dir="$HOME/nix-dots";
-        sec_dir="$HOME/sikreto";
-        git clone git@gitlab.com:percygt/nix-dots.git "$dots_dir"
-        sleep 2
-        git clone git@gitlab.com:percygt/sikreto.git "$sec_dir"
-      ''
-    )
-    (
       writeShellScriptBin "disks"
       ''
         set -euo pipefail
@@ -88,9 +62,14 @@
         	exit 1
         fi
 
+        if ! findmnt /home/nixos/usb >/dev/null; then
+          setcredentials
+        fi
+
+        clonerepos
+
         dots_dir="$HOME/nix-dots";
         sec_dir="$HOME/sikreto";
-
 
         TARGET_HOST=$(ls -1 "$dots_dir"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v ${hostName} | gum choose)
 
@@ -101,32 +80,12 @@
 
         echo "Setting up secrets and keys..."
 
-        if grep -q "$TARGET_HOST-data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
-          echo -n "$(head -c32 /dev/random | base64)" > "/tmp/$TARGET_HOST-data.keyfile"
+        if grep -q "/tmp/data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
+          echo -n "$(head -c32 /dev/random | base64)" > "/tmp/data.keyfile"
         fi
 
-        [ -e "/tmp/$TARGET_HOST-sops.keyfile" ] || age-keygen -o "/tmp/$TARGET_HOST-sops.keyfile"
-
         if [ ! -e "$HOME/secrets_updated" ]; then
-          pushd $sec_dir &> /dev/null;
-          SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST-sops.keyfile"
-          AGE_PUBLIC_KEY=$(cat $SOPS_AGE_KEY_FILE |grep -oP "public key: \K(.*)")
-          yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$AGE_PUBLIC_KEY\"" -i "$sec_dir/.sops.yaml"
-          SOPS_AGE_KEY_FILE="/tmp/$TARGET_HOST-age.keyfile" sops updatekeys secrets.enc.yaml
-          git add .
-          git commit -m "$TARGET_HOST install/reinstall "
-          git push origin main
-          popd &> /dev/null;
-
-          sleep 2
-
-          pushd $dots_dir &> /dev/null;
-          nix flake lock --update-input sikreto
-          git add .
-          git commit -m "$TARGET_HOST install/reinstall "
-          git push origin main
-          popd &> /dev/null;
-          touch secrets_updated
+          setagekey $TARGET_HOST
         fi
 
         gum confirm  --default=true \
@@ -142,15 +101,18 @@
 
         [ -e "/mnt/etc/secrets" ] || sudo mkdir -p "/mnt/etc/secrets"
 
-        sudo cp "/tmp/$TARGET_HOST-sops.keyfile" "/mnt/etc/secrets"
-        sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST-sops.keyfile"
-
-        if [[ -f "/tmp/$TARGET_HOST-data.keyfile" ]]; then
-          sudo cp "/tmp/$TARGET_HOST-data.keyfile" "/mnt/etc/secrets"
-          sudo chmod 0400 "/mnt/etc/secrets/$TARGET_HOST-data.keyfile"
+        if [[ -f "/tmp/data.keyfile" ]]; then
+          sudo cp "/tmp/data.keyfile" "/mnt/etc/secrets"
+          sudo chmod 0400 "/mnt/etc/secrets/data.keyfile"
         fi
 
-        [ -e "$HOME/usb/.k/sops" ] && cp -rf /tmp/*keyfile "$HOME/usb/.k/sops/"
+        sudo cp -r /tmp/*-sops.keyfile "/mnt/etc/secrets/"
+        sudo chmod -R 0400 /mnt/etc/secrets/*-sops.keyfile
+
+        if [ -e "$HOME/usb/.k/sops" ]; then
+          [ ! -e "$HOME/usb/.k/sops/$TARGET_HOST"] && mkdir -p "$HOME/usb/.k/sops/$TARGET_HOST"
+          cp -rf /tmp/*.keyfile "$HOME/usb/.k/sops/$TARGET_HOST/"
+        fi
 
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
 

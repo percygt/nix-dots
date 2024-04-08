@@ -39,12 +39,12 @@ in {
     };
     home = {
       activation = let
-        HM_NVIM = "${flakeDirectory}/home/editor/neovim/config";
+        hmNvim = "${flakeDirectory}/home/editor/neovim/config";
       in {
         linkNvimSpell =
           lib.hm.dag.entryAfter ["linkGeneration"]
           ''
-            [ -e "${config.xdg.configHome}/nvim/spell" ] || ln -s "${HM_NVIM}/spell" "${config.xdg.configHome}/nvim/spell"
+            [ -e "${config.xdg.configHome}/nvim/spell" ] || ln -s "${hmNvim}/spell" "${config.xdg.configHome}/nvim/spell"
           '';
       };
     };

@@ -1,5 +1,4 @@
 {
-  hostName,
   inputs,
   config,
   lib,
@@ -19,9 +18,9 @@ in {
 
   config = lib.mkIf config.infosec.sops.enable {
     sops = {
-      defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
+      defaultSopsFile = "${secretsPath}/system-secrets.enc.yaml";
       validateSopsFiles = false;
-      age.keyFile = "/etc/secrets/${hostName}-sops.keyfile";
+      age.keyFile = "/etc/secrets/system-sops.keyfile";
     };
   };
 }
