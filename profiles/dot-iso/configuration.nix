@@ -77,12 +77,5 @@
     };
   };
 
-  environment = {
-    shellAliases = {
-      ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
-      ni = "sudo nixos-install --no-root-passwd --flake";
-    };
-  };
-
   isoImage.appendToMenuLabel = " live";
 }

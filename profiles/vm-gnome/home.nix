@@ -15,35 +15,36 @@
     gnome.enable = true;
   };
 
-  editor = {
-    neovim.enable = true;
-    vscode.enable = true;
-  };
+  # editor = {
+  #   neovim.enable = true;
+  #   vscode.enable = true;
+  # };
 
   terminal = {
-    wezterm.enable = true;
+    # wezterm.enable = true;
     foot.enable = true;
   };
 
-  bin = {
-    kpass.enable = true;
-    pmenu.enable = true;
-  };
+  # bin = {
+  #   kpass.enable = true;
+  #   pmenu.enable = true;
+  # };
 
   infosec = {
-    pass.enable = true;
-    keepass.enable = true;
-    backup.enable = true;
+    # pass.enable = true;
+    # keepass.enable = true;
+    # backup.enable = true;
+    sops.enable = true;
   };
 
-  cli = {
-    atuin.enable = true;
-    direnv.enable = true;
-    extra.enable = true;
-    starship.enable = true;
-    tui.enable = true;
-    yazi.enable = true;
-  };
+  # cli = {
+  #   atuin.enable = true;
+  #   direnv.enable = true;
+  #   extra.enable = true;
+  #   starship.enable = true;
+  #   tui.enable = true;
+  #   yazi.enable = true;
+  # };
   home = {
     packages = with pkgs; [
       gnomeExtensions.battery-health-charging

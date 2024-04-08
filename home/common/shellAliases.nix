@@ -1,4 +1,4 @@
-{
+{flakeDirectory, ...}: {
   home.shellAliases = {
     ll = "eza --group --header --group-directories-first --long --git --all --binary --icons";
     la = "ll -a";
@@ -26,5 +26,6 @@
     nfu = "nix flake update";
     tldr = "tldr --list | fzf --preview=\"tldr {1} --color=always\" --preview-window=right,70% | xargs tldr";
     nfui = "nix flake lock --update-input";
+    ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
   };
 }
