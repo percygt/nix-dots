@@ -109,7 +109,7 @@
         sudo cp -r /tmp/*-sops.keyfile "/mnt/etc/secrets/"
         sudo chmod -R 0400 /mnt/etc/secrets/*-sops.keyfile
 
-        [ -d "$HOME/usb/.k/sops/$TARGET_HOST" ] || mkdir -p "$HOME/usb/.k/sops/$TARGET_HOST"
+        [ -d /home/nixos/usb/.k/sops/$TARGET_HOST ] || mkdir -p /home/nixos/usb/.k/sops/$TARGET_HOST
         cp -rf /tmp/*.keyfile "$HOME/usb/.k/sops/$TARGET_HOST/"
 
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
