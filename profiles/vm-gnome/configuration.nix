@@ -18,7 +18,7 @@
     bootmanagement.enable = true;
     ntp.enable = true;
     storage.enable = true;
-    # audioengine.enable = true;
+    audioengine.enable = true;
     systemd.enable = true;
     graphics.enable = true;
     packages.enable = true;

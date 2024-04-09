@@ -3,6 +3,7 @@
     flatpak.enable = true;
     locate.enable = true;
     printing.enable = true;
+    gvfs.enable = true;
     xserver = {
       enable = true;
       displayManager.gdm = {
