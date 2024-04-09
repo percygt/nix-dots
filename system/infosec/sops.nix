@@ -22,6 +22,7 @@ in {
       validateSopsFiles = false;
       age.keyFile = "/etc/nixos/keys/system-sops.keyfile";
       age.sshKeyPaths = [];
+      gnupg.sshKeyPaths = [];
     };
   };
 }
