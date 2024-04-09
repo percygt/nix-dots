@@ -2,7 +2,7 @@
   config,
   lib,
   inputs,
-  useGenericLinux,
+  isGeneric,
   pkgs,
   ...
 }: let
@@ -30,7 +30,7 @@ in {
     sops =
       sopsDefault
       // (
-        if useGenericLinux
+        if isGeneric
         then {
           gnupg = {
             home = "${config.xdg.dataHome}/gnupg";
@@ -45,7 +45,7 @@ in {
       );
     home = {
       activation.setupEtc =
-        if useGenericLinux
+        if isGeneric
         then
           (config.lib.dag.entryAfter ["writeBoundary"] ''
             /usr/bin/systemctl start --user sops-nix

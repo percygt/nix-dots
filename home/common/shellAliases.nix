@@ -27,7 +27,5 @@
     tldr = "tldr --list | fzf --preview=\"tldr {1} --color=always\" --preview-window=right,70% | xargs tldr";
     nfui = "nix flake lock --update-input";
     ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
-    hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
-    hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
   };
 }

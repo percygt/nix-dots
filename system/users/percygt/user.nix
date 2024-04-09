@@ -38,8 +38,6 @@ in {
           "kvm"
           "libvirt"
         ];
-
-      packages = [pkgs.home-manager];
     };
   };
 }

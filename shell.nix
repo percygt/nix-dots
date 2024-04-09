@@ -24,7 +24,6 @@
         statix
         deadnix
         alejandra
-        home-manager
         git
         sops
         ssh-to-age

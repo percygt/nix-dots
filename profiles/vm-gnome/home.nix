@@ -1,7 +1,7 @@
 {
   pkgs,
   config,
-  hostName,
+  profile,
   flakeDirectory,
   ...
 }: {
@@ -68,7 +68,7 @@
   services.syncthing = {
     enable = true;
     extraOptions = [
-      "-gui-address=${hostName}.atlas-qilin.ts.net:8384"
+      "-gui-address=${profile}.atlas-qilin.ts.net:8384"
       "-home=${config.home.homeDirectory}/data/syncthing"
     ];
   };

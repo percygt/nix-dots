@@ -14,6 +14,7 @@
     spice-vdagentd.enable = true;
   };
   core = {
+    home-manager.enable = true;
     zram.enable = true;
     bootmanagement.enable = true;
     ntp.enable = true;

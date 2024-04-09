@@ -1,5 +1,5 @@
 {
-  hostName,
+  profile,
   lib,
   stateVersion,
   pkgs,
@@ -13,7 +13,7 @@
   };
 
   networking = {
-    inherit hostName;
+    hostName = profile;
     useDHCP = lib.mkDefault true;
   };
 

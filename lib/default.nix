@@ -17,21 +17,17 @@
   mkSystem = {
     profile,
     useIso ? false,
-    user_name ? defaultUser,
+    user ? defaultUser,
     desktop ? null,
     system ? "x86_64-linux",
   }: let
     inherit (inputs.nixpkgs) lib;
-    username =
-      if useIso
-      then "nixos"
-      else user_name;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs
         outputs
         self
-        username
+        user
         defaultUser
         stateVersion
         profile
@@ -39,56 +35,37 @@
         useIso
         ;
     };
-    nixosHomeModules = [
-      inputs.home-manager.nixosModules.home-manager
-      {
-        home-manager = {
-          extraSpecialArgs = mkArgs.args;
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users.${username} = {
-            imports = [
-              ../profiles/${profile}/home.nix
-              inputs.self.outputs.homeManagerModules.default
-            ];
-          };
-        };
-      }
-    ];
   in
     lib.nixosSystem {
       inherit system;
-      modules =
-        [
-          ../profiles/${profile}/configuration.nix
-          inputs.self.outputs.nixosModules.default
-        ]
-        ++ nixosHomeModules;
+      modules = [
+        ../profiles/${profile}/configuration.nix
+        inputs.self.outputs.nixosModules.default
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.extraSpecialArgs = mkArgs.args;
+        }
+      ];
       specialArgs = mkArgs.args;
     };
 
   mkHome = {
     profile,
-    useIso ? false,
     system ? "x86_64-linux",
-    user_name ? defaultUser,
-    useGenericLinux ? false,
+    user ? defaultUser,
   }: let
     inherit (inputs.home-manager) lib;
-    username =
-      if useIso
-      then "nixos"
-      else user_name;
+    isGeneric = true;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs
         outputs
         self
-        username
+        user
         defaultUser
         stateVersion
         profile
-        useGenericLinux
+        isGeneric
         ;
     };
   in

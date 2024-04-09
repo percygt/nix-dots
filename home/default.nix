@@ -2,7 +2,7 @@
   lib,
   desktop,
   inputs,
-  useGenericLinux,
+  isGeneric,
   ...
 }: {
   imports =
@@ -22,7 +22,7 @@
       inputs.hypridle.homeManagerModules.default
       inputs.hyprlock.homeManagerModules.default
     ]
-    ++ lib.optionals useGenericLinux [
+    ++ lib.optionals isGeneric [
       ./generic
     ];
 }

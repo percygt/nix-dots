@@ -2,17 +2,20 @@
   self,
   inputs,
   outputs,
-  username,
+  user,
   defaultUser,
   stateVersion,
   profile,
+  isGeneric ? false,
   desktop ? null,
   useIso ? false,
-  useGenericLinux ? false,
 }: rec {
   inherit (inputs.nixpkgs) lib;
 
-  inherit username;
+  username =
+    if useIso
+    then "nixos"
+    else user;
 
   homeDirectory = "/home/${username}";
 
@@ -26,8 +29,6 @@
     wallpaper = "${homeDirectory}/.local/share/backgrounds/nice-mountain.jpg";
   };
 
-  hostName = profile;
-
   args =
     {
       inherit
@@ -36,12 +37,12 @@
         outputs
         homeDirectory
         username
-        hostName
+        profile
         ui
+        isGeneric
         desktop
         flakeDirectory
         stateVersion
-        useGenericLinux
         useIso
         ;
     }
