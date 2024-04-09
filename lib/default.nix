@@ -44,6 +44,8 @@
       {
         home-manager = {
           extraSpecialArgs = mkArgs.args;
+          useGlobalPkgs = true;
+          useUserPackages = true;
           users.${username} = {
             imports = [
               ../profiles/${profile}/home.nix

@@ -9,7 +9,7 @@ in {
     {
       plugin = tmuxinoicer;
       extraConfig = ''
-        set -g @tmuxinoicer-find-base "${config.home.homeDirectory}/data:1:4,${config.xdg.configHome}/home-manager,${config.home.homeDirectory}/nix-dots"
+        set -g @tmuxinoicer-find-base "${config.home.homeDirectory}/data:1:4,${config.home.homeDirectory}:1:1"
         set -g @tmuxinoicer-extras "find"
       '';
     }
@@ -40,6 +40,7 @@ in {
         set -g @resurrect-processes '"~nvim"'
         set -g @resurrect-capture-pane-contents 'on'
         set -g @resurrect-dir ${resurrectDirPath}
+        ## ./resurrect-post-save.nix
         set -g @resurrect-hook-post-save-all 'resurrect-post-save "${resurrectDirPath}/last"'
       '';
     }

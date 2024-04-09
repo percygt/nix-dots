@@ -10,6 +10,7 @@
     ./common
     ./core
     ./desktop
+    ./services
     ./users
     ./infosec
     ./net
