@@ -10,10 +10,6 @@
   sopsDefault = {
     defaultSopsFile = "${secretsPath}/home-secrets.enc.yaml";
     validateSopsFiles = false;
-    gnupg = {
-      home = "${config.xdg.dataHome}/gnupg";
-      sshKeyPaths = [];
-    };
   };
 in {
   imports = [
@@ -33,9 +29,18 @@ in {
     ];
     sops =
       sopsDefault
-      // lib.optionalAttrs (!useGenericLinux) {
-        age.keyFile = "${config.xdg.configHome}/sops/age/home-sops.keyfile";
-      };
+      // (
+        if useGenericLinux
+        then {
+          gnupg = {
+            home = "${config.xdg.dataHome}/gnupg";
+            sshKeyPaths = [];
+          };
+        }
+        else {
+          age.keyFile = "${config.xdg.configHome}/sops/age/home-sops.keyfile";
+        }
+      );
     home = {
       activation.setupEtc =
         if useGenericLinux
