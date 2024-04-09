@@ -85,18 +85,6 @@
     homeManagerModules.default = ./home;
 
     homeConfigurations = {
-      cryo = libx.mkHome {
-        profile = "cryo";
-      };
-      aizeft = libx.mkHome {
-        profile = "aizeft";
-      };
-      vm-hypr = libx.mkHome {
-        profile = "vm-hypr";
-      };
-      vm-gnome = libx.mkHome {
-        profile = "vm-gnome";
-      };
       furies = libx.mkHome {
         profile = "furies";
         useGenericLinux = true;

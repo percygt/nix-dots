@@ -3,6 +3,7 @@
   lib,
   stateVersion,
   username,
+  pkgs,
   ...
 }: {
   nixpkgs.config = {
@@ -19,15 +20,15 @@
 
   system = {
     inherit stateVersion;
-    # activationScripts.diff = {
-    #   supportsDryActivation = true;
-    #   text = ''
-    #     ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff /run/current-system "$systemConfig"
-    #   '';
-    # };
+    activationScripts.diff = {
+      supportsDryActivation = true;
+      text = ''
+        ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff /run/current-system "$systemConfig"
+      '';
+    };
   };
   # Create dirs for home-manager
-  # systemd.tmpfiles.rules = [
-  #   "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"
-  # ];
+  systemd.tmpfiles.rules = [
+    "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"
+  ];
 }
