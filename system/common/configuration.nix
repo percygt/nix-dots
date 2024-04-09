@@ -2,7 +2,6 @@
   hostName,
   lib,
   stateVersion,
-  username,
   pkgs,
   ...
 }: {
@@ -27,8 +26,4 @@
       '';
     };
   };
-  # Create dirs for home-manager
-  systemd.tmpfiles.rules = [
-    "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"
-  ];
 }
