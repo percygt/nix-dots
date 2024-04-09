@@ -56,6 +56,8 @@
     )
   ];
 
+  core.home-manager.enable = true;
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = lib.mkForce ["btrfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs"];
