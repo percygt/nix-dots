@@ -87,7 +87,7 @@ in {
       pointerCursor = {
         inherit (config.gtk.cursorTheme) name package size;
         gtk.enable = true;
-        x11.enable = true;
+        # x11.enable = true;
       };
       sessionVariables = {
         GTK_THEME = config.gtk.theme.name;

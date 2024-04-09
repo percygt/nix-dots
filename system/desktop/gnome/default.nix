@@ -56,6 +56,7 @@
 
   environment.systemPackages = with pkgs; [
     gnome.gnome-tweaks
+    phinger-cursors
   ];
 
   services.gnome.gnome-keyring.enable = true;
