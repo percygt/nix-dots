@@ -3,8 +3,12 @@
   config,
   profile,
   flakeDirectory,
+  inputs,
   ...
 }: {
+  imports = [
+    inputs.self.outputs.homeManagerModules.default
+  ];
   desktop = {
     xdg = {
       enable = true;
@@ -34,7 +38,6 @@
     # pass.enable = true;
     # keepass.enable = true;
     # backup.enable = true;
-    sops.enable = true;
   };
 
   cli = {

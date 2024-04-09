@@ -15,7 +15,8 @@
       ./terminal
       ./shell
       ./infosec
-      ./users
+      ./dev
+      # ./users
       # ./backup
     ]
     ++ lib.optionals (desktop == "hyprland") [

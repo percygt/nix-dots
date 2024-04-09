@@ -24,7 +24,6 @@
       users.${username} = {
         imports = [
           ../profiles/${profile}/home.nix
-          inputs.self.outputs.homeManagerModules.default
         ];
       };
     };

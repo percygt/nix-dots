@@ -6,9 +6,15 @@
 }: {
   imports = [
     ./ghq.nix
-    ./credentials.nix
   ];
-  config = lib.mkIf config.userModules.git.enable {
+
+  options.dev = {
+    git = {
+      enable = lib.mkEnableOption "Enable git";
+      ghq.enable = lib.mkEnableOption "Enable ghq";
+    };
+  };
+  config = lib.mkIf config.dev.git.enable {
     home.packages = with pkgs; [
       glab
     ];
@@ -39,7 +45,7 @@
         branch.sort = "-committerdate";
         maintenance.auto = false;
         maintenance.strategy = "incremental";
-        include = lib.mkIf config.userModules.git.credentials.enable {
+        include = lib.mkIf config.dev.git.enable {
           path = "${config.home.homeDirectory}/.config/git/credentials";
         };
       };

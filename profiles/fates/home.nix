@@ -24,12 +24,12 @@
   generic = {
     fonts.enable = true;
     bluez-suspend.disable = true;
+    sops.enable = true;
     overlays.enable = true;
     xremap = {
       enable = true;
       withGnome = true;
     };
-    sops.enable = true;
   };
 
   terminal = {

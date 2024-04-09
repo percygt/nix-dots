@@ -23,6 +23,7 @@
   generic = {
     fonts.enable = true;
     bluez-suspend.disable = true;
+    sops.enable = true;
     overlays.enable = true;
     xremap = {
       enable = true;
@@ -40,12 +41,20 @@
     pmenu.enable = true;
   };
 
+  dev = {
+    git = {
+      enable = true;
+      ghq.enable = true;
+    };
+  };
+
   infosec = {
+    gpg.enable = true;
+    ssh.enable = true;
     common.enable = true;
     pass.enable = true;
     keepass.enable = true;
     backup.enable = true;
-    sops.enable = true;
   };
 
   cli = {

@@ -1,9 +1,10 @@
 {
   imports = [
+    ./ssh.nix
+    ./gpg.nix
     ./backup.nix
     ./pass.nix
     ./keepass.nix
-    ./sops.nix
     ./common.nix
   ];
 }

@@ -4,5 +4,6 @@
     ./fonts.nix
     ./bluez-suspend.nix
     ./overlays.nix
+    ./sops
   ];
 }

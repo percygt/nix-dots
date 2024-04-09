@@ -13,22 +13,22 @@ in
     src = fetchFromGitHub {
       owner = "repsac-by";
       repo = "gnome-shell-extension-quake-mode";
-      rev = "50d4505d109ac474ed7b82397447559ddcebd7f8";
-      hash = "sha256-er71pDa13orFVerWLKVGb2jR+74AUbRWhZZAgW+xm7g=";
+      rev = "d1f1a3d35f81cb581617635753f621af4a3cdee8";
+      hash = "sha256-eqmY3oU5+kN8vaYXv3WzjU6c9CnabsTgoGUVGsjPoXs=";
     };
 
     nativeBuildInputs = [glib];
 
     buildPhase = ''
       runHook preBuild
-      glib-compile-schemas --strict --targetdir="quake-mode@repsac-by.github.com/schemas/" "quake-mode@repsac-by.github.com/schemas"
+      glib-compile-schemas --strict ${uuid}/schemas
       runHook postBuild
     '';
 
     installPhase = ''
       runHook preInstall
-      mkdir -p $out/share/gnome-shell/extensions
-      cp -r "quake-mode@repsac-by.github.com" $out/share/gnome-shell/extensions
+      mkdir -p $out/share/gnome-shell/extensions/${uuid}
+      cp -r ${uuid}/. $out/share/gnome-shell/extensions/${uuid}
       runHook postInstall
     '';
 

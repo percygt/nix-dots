@@ -1,6 +1,6 @@
-{pkgs, ...}: {
-  imports = [./go.nix];
-  home.packages = with pkgs; [
-    ghidra
+{
+  imports = [
+    ./git
+    ./go.nix
   ];
 }
