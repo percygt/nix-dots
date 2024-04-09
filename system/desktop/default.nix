@@ -5,6 +5,5 @@
 }: {
   imports = lib.optionals (desktop != null) [
     ./${desktop}
-    ./gtk
   ];
 }
