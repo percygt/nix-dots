@@ -38,7 +38,7 @@ in {
           };
         }
         else {
-          age.keyFile = "${config.home.homeDirectory}/.nixos/home-sops.keyfile";
+          age.keyFile = "${config.home.homeDirectory}/.nixos/keys/home-sops.keyfile";
         }
       );
     home = {
