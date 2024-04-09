@@ -39,7 +39,7 @@ in {
         }
         else {
           age.keyFile = "${config.home.homeDirectory}/.nixos/keys/home-sops.keyfile";
-          sshKeyPaths = [];
+          age.sshKeyPaths = [];
         }
       );
     home = {

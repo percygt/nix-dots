@@ -21,7 +21,7 @@ in {
       defaultSopsFile = "${secretsPath}/system-secrets.enc.yaml";
       validateSopsFiles = false;
       age.keyFile = "/etc/nixos/keys/system-sops.keyfile";
-      sshKeyPaths = [];
+      age.sshKeyPaths = [];
     };
   };
 }
