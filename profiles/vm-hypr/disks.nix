@@ -1,7 +1,7 @@
 {lib, ...}: {
   environment.etc = {
     "crypttab".text = ''
-      data  /dev/disk/by-partlabel/disk-sda-data  /etc/secrets/data.keyfile
+      data  /dev/disk/by-partlabel/disk-sda-data  /etc/nixos/keys/data.keyfile
     '';
   };
 
@@ -53,7 +53,7 @@
                   };
                   "etc/secrets" = {
                     mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/etc/secrets";
+                    mountpoint = "/etc/nixos/keys";
                   };
                 };
               };

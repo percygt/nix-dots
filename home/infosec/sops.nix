@@ -38,7 +38,7 @@ in {
           };
         }
         else {
-          age.keyFile = "${config.xdg.configHome}/sops/age/home-sops.keyfile";
+          age.keyFile = "${config.home.homeDirectory}/.nixos/home-sops.keyfile";
         }
       );
     home = {
@@ -53,6 +53,5 @@ in {
             /run/current-system/sw/bin/systemctl start --user sops-nix
           '');
     };
-    systemd.user.services.mbsync.Unit.After = ["sops-nix.service"];
   };
 }

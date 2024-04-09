@@ -20,7 +20,7 @@ in {
     sops = {
       defaultSopsFile = "${secretsPath}/system-secrets.enc.yaml";
       validateSopsFiles = false;
-      age.keyFile = "/etc/secrets/system-sops.keyfile";
+      age.keyFile = "/etc/nixos/keys/system-sops.keyfile";
     };
   };
 }
