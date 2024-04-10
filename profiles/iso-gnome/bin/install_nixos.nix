@@ -24,7 +24,7 @@
         cp /tmp/home-sops.keyfile "/mnt/home/${targetUser}/.nixos/keys/"
         sudo chmod -R 700 /mnt/home/${targetUser}/.nixos
         sudo chmod 400 /mnt/home/${targetUser}/.nixos/keys/home-sops.keyfile
-        sudo chown 0:0 /mnt/home/${targetUser}/.nixos/keys/home-sops.keyfile
+        sudo chown 1000:users /mnt/home/${targetUser}/.nixos/keys/home-sops.keyfile
 
         sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
       ''
