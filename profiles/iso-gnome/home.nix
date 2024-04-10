@@ -1,10 +1,4 @@
-{
-  flakeDirectory,
-  self,
-  lib,
-  config,
-  ...
-}: {
+{flakeDirectory, ...}: {
   home = {
     shellAliases = {
       ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";

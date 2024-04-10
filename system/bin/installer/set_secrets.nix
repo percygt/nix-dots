@@ -22,12 +22,12 @@
           system_age="/tmp/system-sops.keyfile"
           system_age_pubkey=$(cat $system_age |grep -oP "public key: \K(.*)")
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$system_age_pubkey\"" -i "$sec_dir/.sops.yaml"
-          SOPS_AGE_KEY_FILE="$system_age" sops updatekeys secrets.enc.yaml
+          # SOPS_AGE_KEY_FILE="$system_age" sops updatekeys secrets.enc.yaml
 
           home_age="/tmp/home-sops.keyfile"
           home_age_pubkey=$(cat $home_age |grep -oP "public key: \K(.*)")
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST\") | path | .[-1]] = \"$home_age_pubkey\"" -i "$sec_dir/.sops.yaml"
-          SOPS_AGE_KEY_FILE="$home_age" sops updatekeys home-secrets.enc.yaml
+          SOPS_AGE_KEY_FILE="$home_age" sops updatekeys secrets.enc.yaml
 
           git add .
           git commit -m "$TARGET_HOST install/reinstall "
