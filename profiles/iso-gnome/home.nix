@@ -19,6 +19,7 @@
         ''
           mkdir -p "${config.home.homeDirectory}/nix-dots"
           cp -r "${self}/." "${config.home.homeDirectory}/nix-dots"
+          sudo chmod -R 1000:users "${config.home.homeDirectory}/nix-dots"
         '';
     };
   };

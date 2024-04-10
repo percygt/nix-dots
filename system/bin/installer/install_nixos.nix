@@ -1,6 +1,5 @@
 {
   pkgs,
-  flakeDirectory,
   targetUser,
   ...
 }: {
@@ -10,7 +9,7 @@
       ''
         set -euo pipefail
         TARGET_HOST=$1
-        dots_dir=${flakeDirectory};
+        dots_dir="$HOME/nix-dots";
         [ -d "/mnt/etc/nixos/keys" ] || sudo mkdir -p "/mnt/etc/nixos/keys"
         if [[ -f "/tmp/data.keyfile" ]]; then
           sudo cp "/tmp/data.keyfile" "/mnt/etc/nixos/keys"

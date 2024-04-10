@@ -1,6 +1,5 @@
 {
   pkgs,
-  flakeDirectory,
   targetUser,
   ...
 }: {
@@ -10,7 +9,7 @@
       ''
         set -euo pipefail
         TARGET_HOST=$1
-        dots_dir=${flakeDirectory};
+        dots_dir="$HOME/nix-dots";
         sec_dir="$HOME/sikreto";
 
         mkdir -p "/mnt/home/${targetUser}/.nixos/nix-dots"

@@ -1,8 +1,4 @@
-{
-  pkgs,
-  flakeDirectory,
-  ...
-}: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     gum
     rsync
@@ -26,7 +22,7 @@
 
         clone_repos
 
-        dots_dir=${flakeDirectory};
+        dots_dir="$HOME/nix-dots";
 
         TARGET_HOST=$(ls -1 "$dots_dir"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v "iso" | gum choose)
 

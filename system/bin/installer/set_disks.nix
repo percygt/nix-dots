@@ -1,14 +1,10 @@
-{
-  pkgs,
-  flakeDirectory,
-  ...
-}: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     (
       writeShellScriptBin "set_disks" ''
         set -euo pipefail
         TARGET_HOST=$1
-        dots_dir=${flakeDirectory};
+        dots_dir="$HOME/nix-dots";
         gum confirm  --default=true \
           "WARNING!!!! This will ERASE ALL DATA on the disks $TARGET_HOST. Are you sure you want to continue?"
 
