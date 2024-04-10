@@ -27,17 +27,14 @@
     };
   };
 
-  terminal = {
-    wezterm.enable = true;
-    foot.enable = true;
-  };
+  terminal.wezterm.enable = true;
+
+  dev.git.ghq.enable = true;
 
   bin = {
     kpass.enable = true;
     pmenu.enable = true;
   };
-
-  dev.git.ghq.enable = true;
 
   infosec = {
     common.enable = true;

@@ -1,39 +1,13 @@
-{
-  pkgs,
-  config,
-  profile,
-  flakeDirectory,
-  ...
-}: {
-  desktop = {
-    xdg = {
-      enable = true;
-      linkDirsToData.enable = true;
-    };
-    gtk.enable = true;
-    qt.enable = true;
-    gnome.enable = true;
-  };
+{flakeDirectory, ...}: {
+  desktop.xdg.enable = true;
 
-  editor = {
-    neovim.enable = true;
-    # vscode.enable = true;
-  };
+  editor.neovim.enable = true;
 
-  terminal = {
-    wezterm.enable = true;
-    foot.enable = true;
-  };
+  terminal.wezterm.enable = true;
 
   bin = {
     kpass.enable = true;
     pmenu.enable = true;
-  };
-
-  infosec = {
-    # pass.enable = true;
-    # keepass.enable = true;
-    # backup.enable = true;
   };
 
   cli = {
@@ -46,10 +20,6 @@
   };
 
   home = {
-    packages = with pkgs; [
-      gnomeExtensions.battery-health-charging
-      hwinfo
-    ];
     shellAliases = {
       hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
@@ -58,12 +28,5 @@
       LIBVIRT_DEFAULT_URI = "qemu:///system";
       EDITOR = "nvim";
     };
-  };
-  services.syncthing = {
-    enable = true;
-    extraOptions = [
-      "-gui-address=${profile}.atlas-qilin.ts.net:8384"
-      "-home=${config.home.homeDirectory}/data/syncthing"
-    ];
   };
 }

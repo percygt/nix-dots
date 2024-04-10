@@ -8,7 +8,7 @@
   ...
 }: let
   secretsPath = builtins.toString inputs.sikreto;
-  sops_start =
+  sopsStart =
     if isGeneric
     then "/usr/bin/systemctl start --user sops-nix"
     else "/run/current-system/sw/bin/systemctl start --user sops-nix";
@@ -37,7 +37,7 @@ in {
 
   config = lib.mkIf config.infosec.sops.enable {
     home.packages = [pkgs.sops];
-    home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sops_start;
+    home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sopsStart;
     sops =
       {
         defaultSopsFile = "${secretsPath}/secrets.enc.yaml";

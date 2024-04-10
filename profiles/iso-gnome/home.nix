@@ -1,6 +1,8 @@
 {
   flakeDirectory,
   self,
+  lib,
+  config,
   ...
 }: {
   home = {
@@ -10,10 +12,32 @@
     };
   };
 
-  home.file.nix-dots = {
-    recursive = true;
-    source = self;
+  home = {
+    activation = {
+      copySelfToHome =
+        lib.hm.dag.entryAfter ["linkGeneration"]
+        ''
+          mkdir -p "${config.home.homeDirectory}/nix-dots"
+          cp -r "${self}/." "${config.home.homeDirectory}/nix-dots"
+        '';
+    };
   };
+  home.file.".config/autostart/foot.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Exec=foot --fullscreen fish -c 'mkNixos' 2>&1
+    Hidden=false
+    NoDisplay=false
+    X-GNOME-Autostart-enabled=true
+    Name[en_NG]=Terminal
+    Name=Terminal
+    Comment[en_NG]=Start Terminal On Startup
+    Comment=Start Terminal On Startup
+  '';
+  # home.file.nix-dots = {
+  #   source = self;
+  # };
+
   editor.neovim.enable = true;
 
   cli = {
