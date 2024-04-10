@@ -14,6 +14,7 @@
         sec_dir="$HOME/sikreto";
 
         mkdir -p "/mnt/home/${targetUser}/.nixos/nix-dots"
+        mkdir -p "/mnt/home/${targetUser}/.nixos/sikreto"
         rsync -a --delete "$dots_dir" "/mnt/home/${targetUser}/.nixos"
         rsync -a --delete "$sec_dir" "/mnt/home/${targetUser}/.nixos"
 

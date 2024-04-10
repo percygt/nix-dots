@@ -7,6 +7,7 @@
   ...
 }: {
   imports = [
+    ./bin
     ./common
     ./core
     ./desktop

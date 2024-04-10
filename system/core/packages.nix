@@ -20,7 +20,6 @@
       curl
       aria2
       wget
-      git
 
       lsof
       dig

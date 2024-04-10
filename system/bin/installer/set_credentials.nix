@@ -12,7 +12,6 @@
           sudo mount /dev/mapper/luksvol "$HOME/usb"
           gpg --import "$HOME/usb/.k/pgp/dev/subkeys.gpg"
           sleep 1
-          cp -f "$HOME/usb/credentials"  "$HOME/.config/git/"
         fi
       ''
     )

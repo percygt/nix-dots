@@ -1,5 +1,6 @@
 {
   imports = [
+    ./mkNixos.nix
     ./set_credentials.nix
     ./clone_repos.nix
     ./set_secrets.nix

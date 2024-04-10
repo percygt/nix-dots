@@ -3,10 +3,10 @@
     ./xremap.nix
     ./fonts.nix
     ./bluez-suspend.nix
-    ./overlays.nix
+    # ./overlays.nix
   ];
   generic = {
-    overlays.enable = lib.mkDefault true;
+    # overlays.enable = lib.mkDefault true;
     fonts.enable = lib.mkDefault true;
     bluez-suspend.disable = lib.mkDefault true;
   };
