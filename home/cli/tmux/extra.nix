@@ -1,6 +1,4 @@
-{config, ...}: let
-  resurrectDirPath = "${config.xdg.dataHome}/tmux/resurrect";
-in {
+{
   extraConfig =
     /*
     bash

@@ -78,8 +78,12 @@
         profile = "vm-gnome";
         desktop = "gnome";
       };
-      dot-iso = libx.mkSystem {
-        profile = "dot-iso";
+      iso-tty = libx.mkSystem {
+        profile = "iso-tty";
+        useIso = true;
+      };
+      iso-gnome = libx.mkSystem {
+        profile = "iso-gnome";
         useIso = true;
       };
     };

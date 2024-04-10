@@ -26,5 +26,6 @@
     ++ lib.optionals isGeneric [
       ./generic
     ];
+
   nixpkgs.overlays = builtins.attrValues outputs.overlays;
 }

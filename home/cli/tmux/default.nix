@@ -35,7 +35,7 @@
       escapeTime = 0;
       historyLimit = 1000000;
       inherit (import ./plugins.nix {inherit pkgs config;}) plugins;
-      inherit (import ./extra.nix {inherit pkgs config;}) extraConfig;
+      inherit (import ./extra.nix) extraConfig;
     };
   };
 }
