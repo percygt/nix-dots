@@ -18,6 +18,7 @@ in {
   users = {
     defaultUserShell = pkgs.fish;
     groups.percygt.members = ["percygt"];
+    groups.percygt.gid = 1000;
     mutableUsers = false;
     users.percygt = {
       isNormalUser = true;

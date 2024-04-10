@@ -3,6 +3,7 @@
   lib,
   inputs,
   pkgs,
+  username,
   isGeneric,
   ...
 }: let
@@ -11,6 +12,17 @@
     if isGeneric
     then "/usr/bin/systemctl start --user sops-nix"
     else "/run/current-system/sw/bin/systemctl start --user sops-nix";
+  key =
+    if isGeneric
+    then {
+      gnupg = {
+        home = "${config.xdg.dataHome}/gnupg";
+        sshKeyPaths = [];
+      };
+    }
+    else {
+      age.keyFile = "/home/${username}/.nixos/keys/home-sops.keyfile";
+    };
 in {
   imports = [
     inputs.sops-nix.homeManagerModules.sops
@@ -24,21 +36,15 @@ in {
   };
 
   config = lib.mkIf config.infosec.sops.enable {
-    home.packages = with pkgs; [
-      sops
-    ];
-    sops = {
-      defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
-      validateSopsFiles = false;
-      defaultSymlinkPath = "/run/user/1000/secrets";
-      defaultSecretsMountPoint = "/run/user/1000/secrets.d";
-      gnupg = {
-        home = "${config.xdg.dataHome}/gnupg";
-        sshKeyPaths = [];
-      };
-    };
-    home = {
-      activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sops_start;
-    };
+    home.packages = [pkgs.sops];
+    home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sops_start;
+    sops =
+      {
+        defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
+        validateSopsFiles = false;
+        defaultSymlinkPath = "/run/user/1000/secrets";
+        defaultSecretsMountPoint = "/run/user/1000/secrets.d";
+      }
+      // key;
   };
 }
