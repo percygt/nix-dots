@@ -25,7 +25,6 @@
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
     };
     sessionVariables = {
-      LIBVIRT_DEFAULT_URI = "qemu:///system";
       EDITOR = "nvim";
     };
   };
