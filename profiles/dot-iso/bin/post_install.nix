@@ -1,7 +1,7 @@
 {
   pkgs,
   flakeDirectory,
-  target_user,
+  targetUser,
   ...
 }: {
   environment.systemPackages = with pkgs; [
@@ -13,12 +13,12 @@
         dots_dir=${flakeDirectory};
         sec_dir="$HOME/sikreto";
 
-        mkdir -p "/mnt/home/${target_user}/.nixos/nix-dots"
-        rsync -a --delete "$dots_dir" "/mnt/home/${target_user}/.nixos"
-        rsync -a --delete "$sec_dir" "/mnt/home/${target_user}/.nixos"
+        mkdir -p "/mnt/home/${targetUser}/.nixos/nix-dots"
+        rsync -a --delete "$dots_dir" "/mnt/home/${targetUser}/.nixos"
+        rsync -a --delete "$sec_dir" "/mnt/home/${targetUser}/.nixos"
 
-        sudo chmod -R 700 /mnt/home/${target_user}/.nixos
-        sudo chmod 400 /mnt/home/${target_user}/.nixos/keys/home-sops.keyfile
+        sudo chmod -R 700 /mnt/home/${targetUser}/.nixos
+        sudo chmod 400 /mnt/home/${targetUser}/.nixos/keys/home-sops.keyfile
 
         [ -d "$HOME/usb/.k/sops/$TARGET_HOST" ] || mkdir -p "$HOME/usb/.k/sops/$TARGET_HOST"
         cp -rf /tmp/*.keyfile "$HOME/usb/.k/sops/$TARGET_HOST/"

@@ -9,12 +9,13 @@
     ./disks.nix
     inputs.disko.nixosModules.disko
   ];
+
   services = {
     qemuGuest.enable = true;
     spice-vdagentd.enable = true;
   };
+
   core = {
-    home-manager.enable = true;
     zram.enable = true;
     bootmanagement.enable = true;
     ntp.enable = true;
@@ -23,10 +24,6 @@
     systemd.enable = true;
     graphics.enable = true;
     packages.enable = true;
-  };
-
-  infosec = {
-    sops.enable = true;
   };
 
   # drivers = {

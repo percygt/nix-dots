@@ -3,12 +3,8 @@
   config,
   profile,
   flakeDirectory,
-  inputs,
   ...
 }: {
-  imports = [
-    inputs.self.outputs.homeManagerModules.default
-  ];
   desktop = {
     xdg = {
       enable = true;
@@ -54,11 +50,6 @@
       gnomeExtensions.battery-health-charging
       hwinfo
     ];
-    activation.report-changes = config.lib.dag.entryAnywhere ''
-      if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
-        ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath
-      fi
-    '';
     shellAliases = {
       hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";

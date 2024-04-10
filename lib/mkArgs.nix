@@ -2,8 +2,7 @@
   self,
   inputs,
   outputs,
-  user,
-  defaultUser,
+  username,
   stateVersion,
   profile,
   isGeneric ? false,
@@ -12,12 +11,15 @@
 }: rec {
   inherit (inputs.nixpkgs) lib;
 
-  username =
+  users =
     if useIso
-    then "nixos"
-    else user;
+    then {
+      targetUser = username;
+      username = "nixos";
+    }
+    else {inherit username;};
 
-  homeDirectory = "/home/${username}";
+  homeDirectory = "/home/${users.username}";
 
   flakeDirectory = "${homeDirectory}/nix-dots";
 
@@ -36,7 +38,6 @@
         inputs
         outputs
         homeDirectory
-        username
         profile
         ui
         isGeneric
@@ -46,5 +47,5 @@
         useIso
         ;
     }
-    // lib.optionalAttrs useIso {target_user = defaultUser;};
+    // users;
 }

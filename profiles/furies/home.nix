@@ -21,10 +21,6 @@
   };
 
   generic = {
-    fonts.enable = true;
-    bluez-suspend.disable = true;
-    sops.enable = true;
-    overlays.enable = true;
     xremap = {
       enable = true;
       withGnome = true;
@@ -41,16 +37,9 @@
     pmenu.enable = true;
   };
 
-  dev = {
-    git = {
-      enable = true;
-      ghq.enable = true;
-    };
-  };
+  dev.git.ghq.enable = true;
 
   infosec = {
-    gpg.enable = true;
-    ssh.enable = true;
     common.enable = true;
     pass.enable = true;
     keepass.enable = true;

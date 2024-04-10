@@ -15,9 +15,12 @@
     };
   };
   config = lib.mkIf config.dev.git.enable {
-    home.packages = with pkgs; [
-      glab
-    ];
+    home.packages = [pkgs.glab];
+    sops.secrets = {
+      "git/glab-cli/config.yml" = {
+        path = "${config.xdg.configHome}/glab-cli/config.yml";
+      };
+    };
     programs.gh = {
       enable = true;
       settings = {
@@ -31,6 +34,8 @@
     };
     programs.git = {
       enable = true;
+      userName = "Percy Timon";
+      userEmail = "percygt.dev@gmail.com";
       extraConfig = {
         init.defaultBranch = "main";
         pull.rebase = false;
@@ -45,9 +50,6 @@
         branch.sort = "-committerdate";
         maintenance.auto = false;
         maintenance.strategy = "incremental";
-        include = lib.mkIf config.dev.git.enable {
-          path = "${config.home.homeDirectory}/.config/git/credentials";
-        };
       };
       lfs = {enable = true;};
 

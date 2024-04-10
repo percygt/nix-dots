@@ -1,9 +1,13 @@
-{
+{lib, ...}: {
   imports = [
     ./xremap.nix
     ./fonts.nix
     ./bluez-suspend.nix
     ./overlays.nix
-    ./sops
   ];
+  generic = {
+    overlays.enable = lib.mkDefault true;
+    fonts.enable = lib.mkDefault true;
+    bluez-suspend.disable = lib.mkDefault true;
+  };
 }

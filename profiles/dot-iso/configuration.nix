@@ -14,7 +14,6 @@
 
   environment.systemPackages = with pkgs; [
     gum
-    git
     rsync
     age
     sops
@@ -55,8 +54,6 @@
       ''
     )
   ];
-
-  core.home-manager.enable = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

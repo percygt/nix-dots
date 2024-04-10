@@ -8,6 +8,5 @@
     ./systemd.nix
     ./graphics.nix
     ./packages.nix
-    ./home-manager.nix
   ];
 }

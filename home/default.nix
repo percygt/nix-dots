@@ -3,6 +3,7 @@
   desktop,
   inputs,
   isGeneric,
+  outputs,
   ...
 }: {
   imports =
@@ -16,7 +17,6 @@
       ./shell
       ./infosec
       ./dev
-      # ./users
       # ./backup
     ]
     ++ lib.optionals (desktop == "hyprland") [
@@ -26,4 +26,5 @@
     ++ lib.optionals isGeneric [
       ./generic
     ];
+  nixpkgs.overlays = builtins.attrValues outputs.overlays;
 }

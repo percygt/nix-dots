@@ -6,10 +6,6 @@
     };
   };
 
-  infosec = {
-    sops.enable = true;
-  };
-
   cli = {
     direnv.enable = true;
     starship.enable = true;

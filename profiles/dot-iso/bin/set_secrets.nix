@@ -26,7 +26,7 @@
           system_age="/tmp/system-sops.keyfile"
           system_age_pubkey=$(cat $system_age |grep -oP "public key: \K(.*)")
           yq ".keys[.keys[] | select(anchor == \"$TARGET_HOST-system\") | path | .[-1]] = \"$system_age_pubkey\"" -i "$sec_dir/.sops.yaml"
-          SOPS_AGE_KEY_FILE="$system_age" sops updatekeys system-secrets.enc.yaml
+          SOPS_AGE_KEY_FILE="$system_age" sops updatekeys secrets.enc.yaml
 
           home_age="/tmp/home-sops.keyfile"
           home_age_pubkey=$(cat $home_age |grep -oP "public key: \K(.*)")

@@ -5,9 +5,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
     nix-stash.url = "github:percygt/nix-stash";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.url = "github:mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
@@ -22,8 +25,6 @@
 
     nix-colors.url = "github:misterio77/nix-colors";
     xremap.url = "github:xremap/nix-flake";
-    disko.url = "github:nix-community/disko";
-    sops-nix.url = "github:mic92/sops-nix";
     impermanence.url = "github:nix-community/impermanence";
     # lanzaboote.url = "github:nix-community/lanzaboote";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
@@ -41,6 +42,7 @@
     inherit (self) outputs;
     defaultUser = "percygt";
     stateVersion = "23.11";
+
     libx = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
   in {
     packages = libx.forEachSystem (system: (import ./packages {
@@ -85,11 +87,16 @@
     homeManagerModules.default = ./home;
 
     homeConfigurations = {
+      vm-gnome = libx.mkHome {
+        profile = "vm-gnome";
+      };
       furies = libx.mkHome {
         profile = "furies";
+        isGeneric = true;
       };
       fates = libx.mkHome {
         profile = "fates";
+        isGeneric = true;
       };
     };
   };

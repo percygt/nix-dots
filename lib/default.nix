@@ -17,9 +17,9 @@
   mkSystem = {
     profile,
     useIso ? false,
-    user ? defaultUser,
     desktop ? null,
     system ? "x86_64-linux",
+    username ? defaultUser,
   }: let
     inherit (inputs.nixpkgs) lib;
     mkArgs = import ./mkArgs.nix {
@@ -27,12 +27,11 @@
         inputs
         outputs
         self
-        user
-        defaultUser
         stateVersion
         profile
         desktop
         useIso
+        username
         ;
     };
   in
@@ -43,9 +42,15 @@
         inputs.self.outputs.nixosModules.default
         inputs.home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = mkArgs.args;
+          home-manager = {
+            # useGlobalPkgs = true;
+            # useUserPackages = true;
+            extraSpecialArgs = mkArgs.args;
+            users.${mkArgs.args.username}.imports = [
+              ../profiles/${profile}/home.nix
+              inputs.self.outputs.homeManagerModules.default
+            ];
+          };
         }
       ];
       specialArgs = mkArgs.args;
@@ -53,18 +58,17 @@
 
   mkHome = {
     profile,
+    isGeneric ? false,
     system ? "x86_64-linux",
-    user ? defaultUser,
+    username ? defaultUser,
   }: let
     inherit (inputs.home-manager) lib;
-    isGeneric = true;
     mkArgs = import ./mkArgs.nix {
       inherit
         inputs
         outputs
         self
-        user
-        defaultUser
+        username
         stateVersion
         profile
         isGeneric
