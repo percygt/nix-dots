@@ -27,7 +27,7 @@
   home.file.".config/autostart/foot.desktop".text = ''
     [Desktop Entry]
     Type=Application
-    Exec=foot -m tmux 2>&1
+    Exec=foot -m fish -c 'tmux new -As \'main\' 2>&1
     Hidden=false
     NoDisplay=false
     X-GNOME-Autostart-enabled=true
@@ -36,6 +36,9 @@
     Comment[en_NG]=Start Terminal On Startup
     Comment=Start Terminal On Startup
   '';
+  # home.file.nix-dots = {
+  #   source = self;
+  # };
 
   editor.neovim.enable = true;
 
