@@ -12,18 +12,6 @@
     };
   };
 
-  home = {
-    activation = {
-      copySelfToHome =
-        lib.hm.dag.entryAfter ["linkGeneration"]
-        ''
-          mkdir -p "${config.home.homeDirectory}/nix-dots"
-          cp -r "${self}/." "${config.home.homeDirectory}/nix-dots"
-          sudo chmod -R 1000:users "${config.home.homeDirectory}/nix-dots"
-        '';
-    };
-  };
-
   home.file.".config/autostart/foot.desktop".text = ''
     [Desktop Entry]
     Type=Application
