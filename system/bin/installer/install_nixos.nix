@@ -19,8 +19,11 @@
         sudo cp -r /tmp/system-sops.keyfile "/mnt/etc/nixos/keys/"
         sudo chmod -R 400 /mnt/etc/nixos/keys/*-sops.keyfile
 
-        [ -d "/mnt/home/${targetUser}/.nixos/keys" ] || mkdir -p "/mnt/home/${targetUser}/.nixos/keys"
-        cp /tmp/home-sops.keyfile "/mnt/home/${targetUser}/.nixos/keys/"
+        if [ -d "/mnt/home/${targetUser}/.nixos" ]; then
+          sudo mkdir -p "/mnt/home/${targetUser}/.nixos/keys"
+          sudo chown -R 1000:users "/mnt/home/${targetUser}/.nixos"
+        fi
+        sudo cp /tmp/home-sops.keyfile "/mnt/home/${targetUser}/.nixos/keys/"
         sudo chmod -R 700 /mnt/home/${targetUser}/.nixos
         sudo chmod 400 /mnt/home/${targetUser}/.nixos/keys/home-sops.keyfile
         sudo chown 1000:users /mnt/home/${targetUser}/.nixos/keys/home-sops.keyfile
