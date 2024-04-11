@@ -19,7 +19,7 @@
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
-              mountOptions = ["umask=0077" "shortname=winnt"];
+              mountOptions = ["umask=0077"];
             };
           };
           root = {

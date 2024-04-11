@@ -14,7 +14,7 @@
     ./users
     ./infosec
     ./net
-    ./extra
+    # ./extra
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
