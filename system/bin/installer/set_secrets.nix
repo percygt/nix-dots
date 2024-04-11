@@ -1,20 +1,16 @@
-{
-  pkgs,
-  flakeDirectory,
-  ...
-}: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     (
       writeShellScriptBin "set_secrets" ''
         set -euo pipefail
         if [ ! -e "$HOME/secrets_updated" ]; then
           TARGET_HOST=$1
-          dots_dir="${flakeDirectory}";
+          dots_dir="$HOME/nix-dots";
           sec_dir="$HOME/sikreto";
 
           echo "Setting up secrets and keys..."
 
-          if grep -q "/tmp/data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
+          if "${pkgs.ripgrep}/bin/rg" "/tmp/data.keyfile" "$dots_dir/profiles/$TARGET_HOST/disks.nix"; then
             echo -n "$(head -c32 /dev/random | base64)" > "/tmp/data.keyfile"
           fi
 

@@ -1,6 +1,6 @@
 {
   imports = [
-    ./auto-upgrade.nix
+    ./autoupgrade.nix
     ./impermanence.nix
   ];
 }

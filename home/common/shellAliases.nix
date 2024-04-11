@@ -7,7 +7,6 @@
     tree = "eza --tree";
     cat = "bat -p";
     dig = "dog";
-    grep = "rg";
     mv = "mv -n";
     rm = "rm -i";
     rmrf = "rm -rf";
