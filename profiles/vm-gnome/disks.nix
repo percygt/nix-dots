@@ -30,6 +30,9 @@
                 extraArgs = ["-L" "nixos" "-f"];
                 mountpoint = "/";
                 subvolumes = {
+                  "root" = {
+                    mountpoint = "/";
+                  };
                   "home" = {
                     mountOptions = ["compress=lzo"];
                     mountpoint = "/home";

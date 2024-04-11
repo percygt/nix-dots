@@ -1,7 +1,7 @@
-{
+{lib, ...}: {
   environment.etc = {
     "crypttab".text = ''
-      data  /dev/disk/by-partlabel/disk-sda-data  /etc/nixos/keys/data.keyfile
+      data  /dev/disk/by-partlabel/lvm_vg-root_vg-data  /etc/nixos/keys/data.keyfile
     '';
   };
 
@@ -61,8 +61,27 @@
               };
             };
           };
+          data = {
+            size = "5G";
+            content = {
+              type = "luks";
+              name = "data";
+              settings = {
+                allowDiscards = true;
+                keyFile = "/tmp/data.keyfile";
+              };
+              initrdUnlock = lib.mkForce false;
+              content = {
+                type = "filesystem";
+                format = "btrfs";
+                mountpoint = "/home/percygt/data";
+                mountOptions = ["compress=lzo" "x-gvfs-show"];
+                extraArgs = ["-L" "data" "-f"];
+              };
+            };
+          };
           windows = {
-            size = "8500M";
+            size = "5G";
             content = {
               type = "filesystem";
               format = "xfs";
