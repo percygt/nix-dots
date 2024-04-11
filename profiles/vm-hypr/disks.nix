@@ -24,11 +24,10 @@
               };
             };
             root = {
-              size = "20G";
+              size = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = ["-L" "nixos" "-f"];
-                mountpoint = "/";
                 subvolumes = {
                   "root" = {
                     mountpoint = "/";
@@ -48,8 +47,18 @@
                 };
               };
             };
+            windows = {
+              size = "5G";
+              content = {
+                type = "filesystem";
+                format = "xfs";
+                mountpoint = "/home/percygt/windows";
+                mountOptions = ["defaults"];
+                extraArgs = ["-L" "windows" "-f"];
+              };
+            };
             data = {
-              size = "100%";
+              size = "5G";
               content = {
                 type = "luks";
                 name = "data";
