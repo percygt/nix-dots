@@ -41,7 +41,7 @@
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/nix";
                   };
-                  "etc/secrets" = {
+                  "keys" = {
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/etc/nixos/keys";
                   };
