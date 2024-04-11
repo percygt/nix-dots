@@ -45,6 +45,9 @@
               mountOptions = ["defaults"];
               extraArgs = ["-L" "nixos" "-f"];
               subvolumes = {
+                "root" = {
+                  mountpoint = "/";
+                };
                 "home" = {
                   mountOptions = ["compress=lzo"];
                   mountpoint = "/home";

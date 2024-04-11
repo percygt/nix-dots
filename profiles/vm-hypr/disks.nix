@@ -9,7 +9,7 @@
     disk = {
       sda = {
         type = "disk";
-        device = lib.mkDefault "/dev/sda";
+        device = "/dev/vda";
         content = {
           type = "gpt";
           partitions = {
@@ -19,18 +19,20 @@
               content = {
                 type = "filesystem";
                 format = "vfat";
-                mountOptions = ["umask=0077" "shortname=winnt"];
-                mountpoint = "/boot/efi";
+                mountpoint = "/boot";
+                mountOptions = ["umask=0077"];
               };
             };
             root = {
               size = "20G";
               content = {
                 type = "btrfs";
-                extraArgs = ["-L" "NIXOS" "-f"];
+                extraArgs = ["-L" "nixos" "-f"];
                 mountpoint = "/";
-                mountOptions = ["defaults"];
                 subvolumes = {
+                  "root" = {
+                    mountpoint = "/";
+                  };
                   "home" = {
                     mountOptions = ["compress=lzo"];
                     mountpoint = "/home";
@@ -38,18 +40,6 @@
                   "nix" = {
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/nix";
-                  };
-                  "var/log" = {
-                    mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/log";
-                  };
-                  "var/tmp" = {
-                    mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/tmp";
-                  };
-                  "var/cache" = {
-                    mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/cache";
                   };
                   "etc/secrets" = {
                     mountOptions = ["compress=lzo" "noatime"];
@@ -73,7 +63,7 @@
                   format = "btrfs";
                   mountpoint = "/home/percygt/data";
                   mountOptions = ["compress=lzo" "x-gvfs-show"];
-                  extraArgs = ["-L" "DATA" "-f"];
+                  extraArgs = ["-L" "data" "-f"];
                 };
               };
             };

@@ -71,7 +71,7 @@
         desktop = "gnome";
       };
       vm-cli = libx.mkSystem {
-        profile = "vm-cli";
+        profile = "vm-lvm";
       };
       vm-hypr = libx.mkSystem {
         profile = "vm-hypr";
