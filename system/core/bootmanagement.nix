@@ -13,7 +13,7 @@
 
   config = lib.mkIf config.core.bootmanagement.enable {
     boot = {
-      initrd.systemd.enable = true;
+      # initrd.systemd.enable = true;
 
       kernel.sysctl = {
         "net.ipv4.ip_forward" = 1;
