@@ -75,7 +75,6 @@
       };
       vm-hypr = libx.mkSystem {
         profile = "vm-hypr";
-        desktop = "hyprland";
       };
       vm-gnome = libx.mkSystem {
         profile = "vm-gnome";
