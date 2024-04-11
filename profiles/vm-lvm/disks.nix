@@ -41,9 +41,7 @@
             size = "100%FREE";
             content = {
               type = "btrfs";
-              mountpoint = "/";
-              mountOptions = ["defaults"];
-              extraArgs = ["-L" "nixos" "-f"];
+              extraArgs = ["-f"];
               subvolumes = {
                 "root" = {
                   mountpoint = "/";
