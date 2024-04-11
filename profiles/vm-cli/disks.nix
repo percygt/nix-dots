@@ -1,7 +1,7 @@
 {lib, ...}: {
   environment.etc = {
     "crypttab".text = ''
-      data  /dev/disk/by-partlabel/lvm_vg-root_vg-data  /etc/nixos/keys/data.keyfile
+      data  /dev/disk/by-partlabel/root_vg-data  /etc/nixos/keys/data.keyfile
     '';
   };
 

@@ -1,11 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  flakeDirectory,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     (
       writeShellScriptBin "set_secrets" ''
         set -euo pipefail
         if [ ! -e "$HOME/secrets_updated" ]; then
           TARGET_HOST=$1
-          dots_dir="$HOME/nix-dots";
+          dots_dir="${flakeDirectory}";
           sec_dir="$HOME/sikreto";
 
           echo "Setting up secrets and keys..."
