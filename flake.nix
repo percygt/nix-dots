@@ -70,7 +70,7 @@
         profile = "cryo";
         desktop = "gnome";
       };
-      vm-cli = libx.mkSystem {
+      vm-lvm = libx.mkSystem {
         profile = "vm-lvm";
       };
       vm-hypr = libx.mkSystem {
