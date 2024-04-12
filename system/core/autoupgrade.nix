@@ -5,13 +5,13 @@
   ...
 }: {
   options = {
-    extra.autoupgrade = {
+    core.autoupgrade = {
       enable =
         lib.mkEnableOption "Enable autoupgrade";
     };
   };
 
-  config = lib.mkIf config.extra.autoupgrade.enable {
+  config = lib.mkIf config.core.autoupgrade.enable {
     system.autoUpgrade = {
       enable = true;
       flake = inputs.self.outPath;

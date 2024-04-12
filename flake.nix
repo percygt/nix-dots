@@ -66,16 +66,17 @@
         profile = "aizeft";
         desktop = "hyprland";
       };
-      cryo = libx.mkSystem {
-        profile = "cryo";
+      kryo = libx.mkSystem {
+        profile = "kryo";
         desktop = "gnome";
       };
       vm-lvm = libx.mkSystem {
         profile = "vm-lvm";
       };
-      vm-hypr = libx.mkSystem {
-        profile = "vm-hypr";
-      };
+      # vm-hypr = libx.mkSystem {
+      #   profile = "vm-hypr";
+      #   desktop = "hyprland";
+      # };
       vm-gnome = libx.mkSystem {
         profile = "vm-gnome";
         desktop = "gnome";

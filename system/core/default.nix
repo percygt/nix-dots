@@ -8,5 +8,7 @@
     ./systemd.nix
     ./graphics.nix
     ./packages.nix
+    ./autoupgrade.nix
+    ./ephemeral.nix
   ];
 }

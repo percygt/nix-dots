@@ -16,5 +16,9 @@
       rateLimitBurst = 500;
       rateLimitInterval = "30s";
     };
+    systemd = {
+      targets.network-online.wantedBy = lib.mkForce []; # Normally ["multi-user.target"]
+      services.NetworkManager-wait-online.wantedBy = lib.mkForce []; # Normally ["network-online.target"]
+    };
   };
 }

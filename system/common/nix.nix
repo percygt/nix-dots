@@ -30,7 +30,7 @@
       automatic = true;
       dates = "weekly";
       # Delete older generations too
-      options = "--delete-older-than 2d";
+      options = "--delete-older-than 10d";
     };
 
     # This will add each flake input as a registry

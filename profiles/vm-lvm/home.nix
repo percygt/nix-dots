@@ -12,12 +12,13 @@
       "downloads"
       "data"
       "pictures"
-      ".gnupg"
+      ".local/share/gnupg"
       ".ssh"
       ".nixops"
       ".local/share/keyrings"
       ".local/share/direnv"
     ];
+    allowOther = true;
   };
 
   desktop.xdg.enable = true;

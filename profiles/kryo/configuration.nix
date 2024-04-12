@@ -11,7 +11,6 @@
   ];
 
   core = {
-    home-manager.enable = true;
     zram.enable = true;
     bootmanagement.enable = true;
     ntp.enable = true;
@@ -28,7 +27,7 @@
     nvidia-prime.enable = true;
   };
 
-  network = {
+  net = {
     networkmanager.enable = true;
   };
 

@@ -10,6 +10,7 @@
     ./bin
     ./common
     ./core
+    ./drivers
     ./desktop
     ./users
     ./infosec

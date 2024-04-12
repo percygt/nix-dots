@@ -63,7 +63,6 @@ in {
       };
     };
 
-    polkit.enable = true;
     gvfs.enable = true;
   };
 
