@@ -7,7 +7,7 @@ SYSTEM_AGE="/tmp/system-sops.keyfile"
 HOME_AGE="/tmp/home-sops.keyfile"
 
 if [ ! -f "$HOME"/secrets_updated ]; then
-	if grep -q "data.keyfile" "host/${TARGET_HOST}/disks.nix"; then
+	if grep "data.keyfile" "$DOTS_DIR"/profiles/"$TARGET_HOST"/disks.nix; then
 		echo -n "$(head -c32 /dev/random | base64)" >/tmp/data.keyfile
 	fi
 
