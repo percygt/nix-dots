@@ -2,14 +2,21 @@
   pkgs,
   targetUser,
   lib,
+  mkFileList,
   ...
 }: let
+  # mkSh = scripts:
+  #   map (script:
+  #     pkgs.writeShellApplication {
+  #       name = lib.removeSuffix ".sh" script;
+  #       text = builtins.readFile ./scripts/installer/${script};
+  #     })
+  #   scripts;
   mkSh = scripts:
-    map (script:
-      pkgs.writeShellApplication {
-        name = lib.removeSuffix ".sh" script;
-        text = builtins.readFile ./scripts/installer/${script};
-      })
+    map (
+      script:
+        pkgs.writeShellScriptBin (lib.removeSuffix ".sh" script) (builtins.readFile ./scripts/installer/${script})
+    )
     scripts;
 in {
   environment.systemPackages = with pkgs; [
@@ -24,7 +31,7 @@ in {
             sops
             yq-go
           ]
-          ++ mkSh (builtins.attrNames (builtins.readDir ./scripts/installer));
+          ++ mkSh (mkFileList ./scripts/installer);
 
         text = ''
           if [ "$(id -u)" -eq 0 ]; then
