@@ -4,6 +4,6 @@
   ...
 }: {
   imports = lib.optionals useIso [
-    ./installer
+    ./installer.nix
   ];
 }

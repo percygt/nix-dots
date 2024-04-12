@@ -31,6 +31,8 @@
     wallpaper = "${homeDirectory}/.local/share/backgrounds/nice-mountain.jpg";
   };
 
+  mkFileList = dir: builtins.attrNames (builtins.readDir dir);
+
   args =
     {
       inherit
@@ -42,6 +44,7 @@
         ui
         isGeneric
         desktop
+        mkFileList
         flakeDirectory
         stateVersion
         useIso
