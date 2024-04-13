@@ -4,10 +4,10 @@
   ...
 }: {
   options = {
-    desktop.qt.enable =
+    desktop.modules.qt.enable =
       lib.mkEnableOption "Enables qt";
   };
-  config = lib.mkIf config.desktop.qt.enable {
+  config = lib.mkIf config.desktop.modules.qt.enable {
     qt = {
       enable = true;
       platformTheme = "gtk";

@@ -3,6 +3,7 @@
     import ./packages {pkgs = final;};
   nix-stash = inputs.nix-stash.overlays.default;
   neovim-nightly = inputs.neovim-nightly-overlay.overlay;
+  nixpkgs-wayland = inputs.nixpkgs-wayland.overlay;
   nodePackages-extra = final: _: {
     nodePackages-extra = import ./packages/node rec {
       pkgs = final;

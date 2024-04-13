@@ -6,12 +6,14 @@
     "hypr/hyprland.conf".source = ./hyprland.conf;
   };
   desktop = {
-    xdg = {
-      enable = true;
-      linkDirsToData.enable = true;
+    modules = {
+      xdg = {
+        enable = true;
+        linkDirsToData.enable = true;
+      };
+      gtk.enable = true;
+      qt.enable = true;
     };
-    gtk.enable = true;
-    qt.enable = true;
   };
 
   editor = {

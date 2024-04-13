@@ -5,14 +5,14 @@
   ...
 }: {
   options = {
-    desktop.xdg = {
+    desktop.modules.xdg = {
       enable =
         lib.mkEnableOption "Enables xdg";
       linkDirsToData.enable =
         lib.mkEnableOption "Enables linking personal data directory";
     };
   };
-  config = lib.mkIf config.desktop.xdg.enable {
+  config = lib.mkIf config.desktop.modules.xdg.enable {
     xdg = {
       enable = true;
       mime.enable = true;
@@ -55,7 +55,7 @@
       ];
     };
 
-    home.activation = lib.mkIf config.desktop.xdg.linkDirsToData.enable {
+    home.activation = lib.mkIf config.desktop.modules.xdg.linkDirsToData.enable {
       linkXdgDirs =
         lib.hm.dag.entryAfter ["linkGeneration"]
         ''

@@ -19,10 +19,6 @@
       ./dev
       # ./backup
     ]
-    ++ lib.optionals (desktop == "hyprland") [
-      inputs.hypridle.homeManagerModules.default
-      inputs.hyprlock.homeManagerModules.default
-    ]
     ++ lib.optionals isGeneric [
       ./generic
     ];

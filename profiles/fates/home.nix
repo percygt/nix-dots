@@ -7,12 +7,14 @@
   targets.genericLinux.enable = true;
 
   desktop = {
-    xdg = {
-      enable = true;
-      linkDirsToData.enable = true;
+    modules = {
+      xdg = {
+        enable = true;
+        linkDirsToData.enable = true;
+      };
+      gtk.enable = true;
+      qt.enable = true;
     };
-    gtk.enable = true;
-    qt.enable = true;
     gnome.enable = true;
   };
 

@@ -3,18 +3,19 @@
   lib,
   pkgs,
   ui,
+  inputs,
   ...
 }: let
   inherit (ui) wallpaper;
 in {
   imports = [
+    inputs.hypridle.homeManagerModules.default
+    inputs.hyprlock.homeManagerModules.default
     ../rofi
     ../waybar
-
     ../mako.nix
     ../swappy.nix
     ../wl-common.nix
-
     ./hyprlock.nix
   ];
   nix.settings = {

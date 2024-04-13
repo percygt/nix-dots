@@ -1,8 +1,6 @@
 {
   imports = [
-    ./qt
-    ./gtk
-    ./xdg
+    ./modules
     ./gnome
   ];
 }

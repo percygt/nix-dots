@@ -21,11 +21,11 @@
     allowOther = true;
   };
 
-  desktop.xdg.enable = true;
+  desktop.modules.xdg.enable = true;
 
   editor.neovim.enable = true;
 
-  terminal.wezterm.enable = true;
+  terminal.foot.enable = true;
 
   bin = {
     kpass.enable = true;

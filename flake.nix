@@ -12,6 +12,9 @@
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
+    nixpkgs-wayland.inputs.nixpkgs.follows = "nixpkgs";
+
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     hyprland-contrib.url = "github:hyprwm/contrib";
@@ -73,10 +76,10 @@
       vm-lvm = libx.mkSystem {
         profile = "vm-lvm";
       };
-      # vm-hypr = libx.mkSystem {
-      #   profile = "vm-hypr";
-      #   desktop = "hyprland";
-      # };
+      vm-hypr = libx.mkSystem {
+        profile = "vm-hypr";
+        desktop = "hyprland";
+      };
       vm-gnome = libx.mkSystem {
         profile = "vm-gnome";
         desktop = "gnome";

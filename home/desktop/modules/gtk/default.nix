@@ -10,10 +10,10 @@
   inherit (fonts) interface;
 in {
   options = {
-    desktop.gtk.enable =
+    desktop.modules.gtk.enable =
       lib.mkEnableOption "Enables gtk";
   };
-  config = lib.mkIf config.desktop.gtk.enable {
+  config = lib.mkIf config.desktop.modules.gtk.enable {
     gtk = {
       enable = true;
       gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
