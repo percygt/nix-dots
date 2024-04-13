@@ -7,20 +7,20 @@
     inputs.impermanence.nixosModules.home-manager.impermanence
   ];
 
-  home.persistence."/persist/home" = {
-    directories = [
-      "downloads"
-      "data"
-      "pictures"
-      ".local/share/gnupg"
-      ".ssh"
-      ".nixops"
-      ".local/share/keyrings"
-      ".local/share/direnv"
-    ];
-    allowOther = true;
-  };
-
+  # home.persistence."/persist/home" = {
+  #   directories = [
+  #     "downloads"
+  #     "data"
+  #     "pictures"
+  #     ".local/share/gnupg"
+  #     ".ssh"
+  #     ".nixops"
+  #     ".local/share/keyrings"
+  #     ".local/share/direnv"
+  #   ];
+  #   allowOther = true;
+  # };
+  #
   desktop.modules.xdg.enable = true;
 
   editor.neovim.enable = true;

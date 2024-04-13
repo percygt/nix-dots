@@ -71,6 +71,7 @@
       };
       vm-lvm = libx.mkSystem {
         profile = "vm-lvm";
+        desktop = "sway";
       };
       vm-gnome = libx.mkSystem {
         profile = "vm-gnome";
