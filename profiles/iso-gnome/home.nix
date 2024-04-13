@@ -18,9 +18,6 @@
     Comment[en_NG]=Start Terminal On Startup
     Comment=Start Terminal On Startup
   '';
-  # home.file.nix-dots = {
-  #   source = self;
-  # };
 
   editor.neovim.enable = true;
 

@@ -59,6 +59,7 @@
   mkHome = {
     profile,
     isGeneric ? false,
+    desktop ? null,
     system ? "x86_64-linux",
     username ? defaultUser,
   }: let
@@ -69,6 +70,7 @@
         outputs
         self
         username
+        desktop
         stateVersion
         profile
         isGeneric

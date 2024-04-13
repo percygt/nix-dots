@@ -26,10 +26,10 @@ in {
         wantedBy = [
           "initrd.target"
         ];
-        after = [
-          # LUKS/TPM process
-          "systemd-cryptsetup@enc.service"
-        ];
+        # after = [
+        #   # LUKS/TPM process
+        #   "systemd-cryptsetup@enc.service"
+        # ];
         before = [
           "sysroot.mount"
         ];

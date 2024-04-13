@@ -67,18 +67,10 @@
     nixosConfigurations = {
       aizeft = libx.mkSystem {
         profile = "aizeft";
-        desktop = "hyprland";
-      };
-      kryo = libx.mkSystem {
-        profile = "kryo";
-        desktop = "gnome";
+        desktop = "sway";
       };
       vm-lvm = libx.mkSystem {
         profile = "vm-lvm";
-      };
-      vm-hypr = libx.mkSystem {
-        profile = "vm-hypr";
-        desktop = "hyprland";
       };
       vm-gnome = libx.mkSystem {
         profile = "vm-gnome";
@@ -99,13 +91,16 @@
     homeConfigurations = {
       vm-gnome = libx.mkHome {
         profile = "vm-gnome";
+        desktop = "gnome";
       };
       furies = libx.mkHome {
         profile = "furies";
+        desktop = "gnome";
         isGeneric = true;
       };
       fates = libx.mkHome {
         profile = "fates";
+        desktop = "gnome";
         isGeneric = true;
       };
     };
