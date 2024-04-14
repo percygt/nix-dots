@@ -3,10 +3,10 @@
   lib,
   config,
   flakeDirectory,
-  ui,
+  libx,
   ...
 }: let
-  inherit (ui) colors;
+  inherit (libx) colors;
 in {
   options = {
     editor.neovim.enable =

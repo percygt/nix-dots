@@ -1,14 +1,4 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: {
-  options = {
-    desktop.gnome.enable =
-      lib.mkEnableOption "Enable Gnome DE";
-  };
-
+{pkgs, ...}: {
   imports = [
     ./extensions
     ./ddterm.nix
@@ -17,12 +7,13 @@
     ./shell.nix
   ];
 
-  config = lib.mkIf config.desktop.gnome.enable {
-    # programs.gnome-terminal.enable = true;
-    home.packages = with pkgs; [
-      nautilus-open-any-terminal
-      gnome.dconf-editor
-      gnome.gnome-terminal
-    ];
+  # programs.gnome-terminal.enable = true;
+  home.packages = with pkgs; [
+    nautilus-open-any-terminal
+    gnome.dconf-editor
+    gnome.gnome-terminal
+  ];
+  home.sessionVariables = {
+    QT_QPA_PLATFORM = "xcb;wayland";
   };
 }

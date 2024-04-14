@@ -1,10 +1,10 @@
 {
   lib,
   pkgs,
-  ui,
+  libx,
   ...
 }: let
-  inherit (ui) colors wallpaper fonts;
+  inherit (libx) colors wallpaper fonts;
   inherit (colors.conversion) hexToRGBString;
 in {
   programs.hyprlock = {

@@ -23,15 +23,7 @@
 
   flakeDirectory = "${homeDirectory}/nix-dots";
 
-  ui = {
-    colors =
-      (import ./ui/colors.nix)
-      // inputs.nix-colors.lib;
-    fonts = import ./ui/fonts.nix;
-    wallpaper = "${homeDirectory}/.local/share/backgrounds/nice-mountain.jpg";
-  };
-
-  mkFileList = dir: builtins.attrNames (builtins.readDir dir);
+  libx = import "${self}/lib/libx" {inherit inputs homeDirectory;};
 
   args =
     {
@@ -41,10 +33,9 @@
         outputs
         homeDirectory
         profile
-        ui
+        libx
         isGeneric
         desktop
-        mkFileList
         flakeDirectory
         stateVersion
         useIso

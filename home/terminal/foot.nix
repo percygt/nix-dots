@@ -1,10 +1,10 @@
 {
-  ui,
+  libx,
   lib,
   config,
   ...
 }: let
-  inherit (ui) colors;
+  inherit (libx) colors;
 in {
   options = {
     terminal.foot.enable =

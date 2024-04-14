@@ -3,7 +3,7 @@
   pkgs,
   lib,
   desktop,
-  ui,
+  libx,
   ...
 }: let
   modules = [
@@ -28,7 +28,7 @@
     '';
   };
 
-  inherit (ui) fonts colors;
+  inherit (libx) fonts colors;
   inherit ((import ../rofi/lib.nix {inherit lib;})) toRasi;
 in {
   programs.waybar = {

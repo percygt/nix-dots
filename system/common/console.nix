@@ -1,9 +1,9 @@
 {
   pkgs,
-  ui,
+  libx,
   ...
 }: let
-  inherit (ui) fonts colors;
+  inherit (libx) fonts colors;
   inherit (colors.conversions) hexToRGBString;
 in {
   console = {

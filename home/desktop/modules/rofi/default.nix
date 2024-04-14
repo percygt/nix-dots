@@ -2,10 +2,10 @@
   config,
   pkgs,
   colors,
-  ui,
+  libx,
   ...
 }: let
-  inherit (ui) fonts;
+  inherit (libx) fonts;
   rofiTheme = (import ./theme.nix {inherit colors fonts config;}).theme;
 in {
   programs.rofi = {

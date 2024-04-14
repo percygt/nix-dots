@@ -23,8 +23,9 @@
     n2ne = "nvim $FLAKE_PATH/packages/node/packages.json";
     n2ni = "node2nix -i $FLAKE_PATH/packages/node/packages.json -e $FLAKE_PATH/packages/node/node-env.nix -o $FLAKE_PATH/packages/node/packages.nix -c $FLAKE_PATH/packages/node/default.nix";
     nfu = "nix flake update";
-    tldr = "tldr --list | fzf --preview=\"tldr {1} --color=always\" --preview-window=right,70% | xargs tldr";
+    tldrf = "tldr --list | fzf --preview=\"tldr {1} --color=always\" --preview-window=right,70% | xargs tldr";
     nfui = "nix flake lock --update-input";
     ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
+    tm = "tmux new -As main";
   };
 }

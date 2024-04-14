@@ -2,11 +2,11 @@
   config,
   lib,
   pkgs,
-  ui,
+  libx,
   inputs,
   ...
 }: let
-  inherit (ui) wallpaper;
+  inherit (libx) wallpaper;
 in {
   imports = [
     inputs.hypridle.homeManagerModules.default

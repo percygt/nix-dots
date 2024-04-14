@@ -15,7 +15,6 @@
     };
 
     home.sessionVariables = {
-      QT_QPA_PLATFORM = "xcb;wayland";
       QT_STYLE_OVERRIDE = "kvantum";
     };
 

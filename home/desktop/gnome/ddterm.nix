@@ -1,10 +1,10 @@
 {
-  ui,
+  libx,
   config,
   lib,
   ...
 }: let
-  inherit (ui) colors;
+  inherit (libx) colors;
 in {
   config = lib.mkIf config.desktop.gnome.enable {
     dconf.settings = {

@@ -2,9 +2,10 @@
   pkgs,
   targetUser,
   lib,
-  mkFileList,
+  libx,
   ...
 }: let
+  inherit (libx) mkFileList;
   mkShScripts = scripts:
     map (
       script:

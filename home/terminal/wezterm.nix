@@ -1,12 +1,12 @@
 {
   pkgs,
-  ui,
+  libx,
   lib,
   config,
   isGeneric,
   ...
 }: let
-  inherit (ui) colors;
+  inherit (libx) colors fonts;
 in {
   options = {
     terminal.wezterm.enable =
@@ -88,8 +88,8 @@ in {
           	enable_wayland = false,
             check_for_updates = false,
           	color_scheme = "Syft",
-          	font = wezterm.font("${ui.fonts.shell.name}", { weight = "DemiBold" }),
-          	font_size = tonumber("${builtins.toString ui.fonts.shell.size}"),
+          	font = wezterm.font("${fonts.shell.name}", { weight = "DemiBold" }),
+          	font_size = tonumber("${builtins.toString fonts.shell.size}"),
             allow_square_glyphs_to_overflow_width = "Always",
             animation_fps = 30,
             cursor_blink_rate = 500,
@@ -126,7 +126,7 @@ in {
           		{ key = "F11",    mods = "NONE",  action = wezterm.action.ToggleFullScreen },
           		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
           	},
-          	default_prog = { 'tmux', 'new', '-As', 'main' }
+          	-- default_prog = { 'tmux', 'new', '-As', 'main' }
           }
         '';
     };

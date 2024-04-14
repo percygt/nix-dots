@@ -46,17 +46,17 @@
     defaultUser = "percygt";
     stateVersion = "23.11";
 
-    libx = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
+    libz = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
   in {
-    packages = libx.forEachSystem (system: (import ./packages {
+    packages = libz.forEachSystem (system: (import ./packages {
       pkgs = nixpkgs.legacyPackages.${system};
     }));
 
-    devShells = libx.forEachSystem (system: (import ./shell.nix {
+    devShells = libz.forEachSystem (system: (import ./shell.nix {
       pkgs = nixpkgs.legacyPackages.${system};
     }));
 
-    formatter = libx.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = libz.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     overlays = import ./overlays.nix {inherit inputs;};
 
@@ -65,23 +65,23 @@
     nixosModules.default = ./system;
 
     nixosConfigurations = {
-      aizeft = libx.mkSystem {
+      aizeft = libz.mkSystem {
         profile = "aizeft";
         desktop = "sway";
       };
-      vm-lvm = libx.mkSystem {
+      vm-lvm = libz.mkSystem {
         profile = "vm-lvm";
         desktop = "sway";
       };
-      vm-gnome = libx.mkSystem {
+      vm-gnome = libz.mkSystem {
         profile = "vm-gnome";
         desktop = "gnome";
       };
-      iso-tty = libx.mkSystem {
+      iso-tty = libz.mkSystem {
         profile = "iso-tty";
         useIso = true;
       };
-      iso-gnome = libx.mkSystem {
+      iso-gnome = libz.mkSystem {
         profile = "iso-gnome";
         useIso = true;
       };
@@ -90,16 +90,16 @@
     homeManagerModules.default = ./home;
 
     homeConfigurations = {
-      vm-gnome = libx.mkHome {
+      vm-gnome = libz.mkHome {
         profile = "vm-gnome";
         desktop = "gnome";
       };
-      furies = libx.mkHome {
+      furies = libz.mkHome {
         profile = "furies";
-        desktop = "gnome";
+        desktop = "sway";
         isGeneric = true;
       };
-      fates = libx.mkHome {
+      fates = libz.mkHome {
         profile = "fates";
         desktop = "gnome";
         isGeneric = true;

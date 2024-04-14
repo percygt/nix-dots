@@ -2,11 +2,11 @@
   pkgs,
   config,
   self,
-  ui,
+  libx,
   lib,
   ...
 }: let
-  inherit (ui) fonts colors;
+  inherit (libx) fonts colors;
   inherit (fonts) interface;
 in {
   options = {

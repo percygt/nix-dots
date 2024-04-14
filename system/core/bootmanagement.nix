@@ -17,9 +17,8 @@
         "net.ipv6.conf.all.forwarding" = 1;
       };
 
+      # initrd.systemd.enable = true;
       consoleLogLevel = 0;
-
-      initrd.verbose = false;
 
       supportedFilesystems = ["btrfs"];
 

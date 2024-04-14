@@ -1,6 +1,6 @@
 {
   pkgs,
-  ui,
+  libx,
   lib,
   config,
   ...
@@ -14,7 +14,7 @@
 
   config = lib.mkIf config.generic.fonts.enable {
     fonts.fontconfig.enable = true;
-    home.packages = ui.fonts.packages pkgs;
+    home.packages = libx.fonts.packages pkgs;
     nixpkgs.config = {
       # Disable if you don't want unfree packages
       allowUnfree = lib.mkForce true;
