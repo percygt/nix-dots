@@ -1,8 +1,8 @@
 {pkgs, ...}: {
   programs.waybar = {
     enable = true;
-    systemd.enable = true;
-    systemd.target = "sway-session.target";
+    # systemd.enable = true;
+    # systemd.target = "sway-session.target";
     style = pkgs.runCommand "waybar-styles.css" {} ''
       sed -e 's/font-family: /font-family: Rubik, /'              \
           -e 's/font-size: 12px/font-size: 12px/' \
@@ -13,31 +13,31 @@
         layer = "top";
         position = "top";
         height = 26;
-        output = [
-          "HDMI-A-1"
-        ];
+        # output = [
+        #   "HDMI-A-1"
+        # ];
 
         modules-left = ["sway/workspaces"];
         modules-center = ["sway/mode" "clock" "idle_inhibitor"];
         modules-right = ["tray" "pulseaudio" "backlight" "cpu" "memory" "temperature" "battery" "battery#bat2"];
 
-        "sway/workspaces" = {
-          disable-scroll = true;
-          format = "{icon}";
-          format-icons = {
-            "1" = ""; # Ⅰ
-            "2" = ""; # Ⅱ
-            "3" = ""; # Ⅲ
-            "4" = "Ⅳ";
-            "5" = "Ⅴ";
-            "6" = "Ⅵ";
-            "7" = "Ⅶ";
-            "8" = "Ⅷ";
-            "9" = "Ⅸ";
-            "10" = "Ⅹ";
-            default = "";
-          };
-        };
+        # "sway/workspaces" = {
+        #   disable-scroll = true;
+        #   format = "{icon}";
+        #   format-icons = {
+        #     "1" = ""; # Ⅰ
+        #     "2" = ""; # Ⅱ
+        #     "3" = ""; # Ⅲ
+        #     "4" = "Ⅳ";
+        #     "5" = "Ⅴ";
+        #     "6" = "Ⅵ";
+        #     "7" = "Ⅶ";
+        #     "8" = "Ⅷ";
+        #     "9" = "Ⅸ";
+        #     "10" = "Ⅹ";
+        #     default = "";
+        #   };
+        # };
 
         "sway/mode".format = "<span style=\"italic\">{}</span>";
 

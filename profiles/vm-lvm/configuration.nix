@@ -36,7 +36,7 @@
   environment.persistence."/persist/system" = {
     hideMounts = true;
     directories = [
-      "/etc/nixos"
+      # "/var/keys"
       # "/etc/NetworkManager/system-connections"
       # "/var/lib/bluetooth"
       # "/var/lib/docker"
@@ -51,11 +51,19 @@
       #   mode = "u=rwx,g=rx,o=";
       # }
     ];
-    # files = [
-    #   "/var/lib/NetworkManager/secret_key"
-    #   "/var/lib/NetworkManager/seen-bssids"
-    #   "/var/lib/NetworkManager/timestamps"
-    # ];
+    files = [
+      {
+        file = "/var/keys/data.keyfile";
+        parentDirectory = {mode = "u=rwx,g=,o=";};
+      }
+      {
+        file = "/var/keys/system-sops.keyfile";
+        parentDirectory = {mode = "u=rwx,g=,o=";};
+      }
+      # "/var/lib/NetworkManager/secret_key"
+      # "/var/lib/NetworkManager/seen-bssids"
+      # "/var/lib/NetworkManager/timestamps"
+    ];
   };
 
   programs.fuse.userAllowOther = true;

@@ -2,7 +2,6 @@
   pkgs,
   libx,
   isGeneric,
-  config,
   ...
 }: let
   inherit (libx) fonts sway;
@@ -13,7 +12,8 @@
     else pkgs.stash.wezterm_nightly;
 in {
   imports = [
-    ./waybar.nix
+    ../modules/waybar
+    ./kanshi.nix
   ];
 
   home.packages = [
@@ -50,16 +50,16 @@ in {
       down = "j";
       left = "h";
       right = "l";
-      output = {
-        HDMI-A-1 = {
-          pos = "0 -1080";
-          res = "1920x1080";
-        };
-        eDP-1 = {
-          pos = "0 0";
-          res = "1920x1080";
-        };
-      };
+      # output = {
+      #   HDMI-A-1 = {
+      #     pos = "0 -1080";
+      #     res = "1920x1080";
+      #   };
+      #   eDP-1 = {
+      #     pos = "0 0";
+      #     res = "1920x1080";
+      #   };
+      # };
       window = {
         titlebar = false;
         border = 1;
@@ -164,7 +164,12 @@ in {
       focus.newWindow = "urgent";
       gaps.inner = 2;
       defaultWorkspace = "workspace number 1";
-      bars = [{mode = "invisible";}];
+      # bars = [{mode = "invisible";}];
+      bars = [
+        {
+          command = "${pkgs.waybar}/bin/waybar";
+        }
+      ];
       startup = [
         # {command = "${pkgs.mako}/bin/mako";}
 

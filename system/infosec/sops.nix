@@ -21,9 +21,8 @@ in {
       defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
       validateSopsFiles = false;
       age = {
-        keyFile = "/etc/nixos/keys/system-sops.keyfile";
-        sshKeyPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-        generateKey = true;
+        keyFile = "/var/keys/system-sops.keyfile";
+        sshKeyPaths = [];
       };
       gnupg.sshKeyPaths = [];
     };

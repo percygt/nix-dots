@@ -27,12 +27,16 @@
       fi
     '';
   };
-
-  inherit (libx) fonts colors;
-  inherit ((import ../rofi/lib.nix {inherit lib;})) toRasi;
+  # inherit (libx) fonts colors;
 in {
   programs.waybar = {
     enable = true;
+
+    style = pkgs.runCommand "waybar-styles.css" {} ''
+      sed -e 's/font-family: /font-family: Rubik, /'              \
+          -e 's/font-size: 12px/font-size: 12px/' \
+          ${pkgs.waybar}/etc/xdg/waybar/style.css > $out
+    '';
 
     systemd = {
       enable = true;
@@ -47,11 +51,11 @@ in {
         passthrough = false;
         gtk-layer-shell = true;
 
-        modules-left = ["hyprland/workspaces"];
+        modules-left = ["sway/workspaces"];
         modules-center = ["clock" "idle_inhibitor"];
         modules-right = modules;
 
-        "hyprland/workspaces" = {
+        "sway/workspaces" = {
           format = "{icon}";
           format-icons = {
             "1" = "";
@@ -71,7 +75,7 @@ in {
           format-disconnected = "";
           tooltip-format = "{ifname} / {essid} ({signalStrength}%) / {ipaddr}";
           max-length = 15;
-          on-click = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.networkmanager}/bin/nmtui";
+          on-click = "${pkgs.foot}/bin/foot -e ${pkgs.networkmanager}/bin/nmtui";
         };
 
         "idle_inhibitor" = {
@@ -167,11 +171,11 @@ in {
     # This is a bit of a hack. Rasi turns out to be basically CSS, and there is
     # a handy helper to convert nix -> rasi in the home-manager module for rofi,
     # so I'm using that here to render the stylesheet for waybar
-    style = toRasi (import ./theme.nix {inherit config pkgs fonts colors;}).theme;
+    # style = toRasi (import ./theme.nix {inherit config pkgs fonts colors;}).theme;
   };
 
-  # This is a hack to ensure that hyprctl ends up in the PATH for the waybar service on hyprland
-  systemd.user.services.waybar.Service.Environment =
-    lib.mkForce
-    "PATH=${lib.makeBinPath [pkgs."${desktop}"]}";
+  # # This is a hack to ensure that hyprctl ends up in the PATH for the waybar service on hyprland
+  # systemd.user.services.waybar.Service.Environment =
+  #   lib.mkForce
+  #   "PATH=${lib.makeBinPath [pkgs."${desktop}"]}";
 }

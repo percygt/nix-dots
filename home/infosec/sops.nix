@@ -21,7 +21,7 @@
       };
     }
     else {
-      age.keyFile = "/home/${username}/.nixos/keys/home-sops.keyfile";
+      age.keyFile = "/home/${username}/.var/keys/home-sops.keyfile";
     };
 in {
   imports = [

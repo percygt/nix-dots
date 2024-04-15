@@ -18,7 +18,7 @@
         rsync -a --delete "$sec_dir" "/mnt/home/${targetUser}/.nixos"
 
         sudo chmod -R 700 /mnt/home/${targetUser}/.nixos
-        sudo chmod 400 /mnt/home/${targetUser}/.nixos/keys/home-sops.keyfile
+        sudo chmod 400 /mnt/home/${targetUser}/.var/keys/home-sops.keyfile
 
         [ -d "$HOME/usb/.k/sops/$TARGET_HOST" ] || mkdir -p "$HOME/usb/.k/sops/$TARGET_HOST"
         cp -rf /tmp/*.keyfile "$HOME/usb/.k/sops/$TARGET_HOST/"
