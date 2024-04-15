@@ -15,7 +15,7 @@
     ];
     files = [
       {
-        file = "./var/keys/home-sops.keyfile";
+        file = ".var/keys/home-sops.keyfile";
         parentDirectory = {mode = "u=rwx,g=,o=";};
       }
     ];
