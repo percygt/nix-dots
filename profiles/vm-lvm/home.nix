@@ -14,10 +14,7 @@
       ".ssh"
     ];
     files = [
-      {
-        file = ".var/keys/home-sops.keyfile";
-        parentDirectory = {mode = "u=rwx,g=,o=";};
-      }
+      ".var/keys/home-sops.keyfile"
     ];
     allowOther = true;
   };
