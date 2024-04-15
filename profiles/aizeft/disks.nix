@@ -25,25 +25,22 @@
               size = "100%";
               content = {
                 type = "btrfs";
-                mountpoint = "/";
-                mountOptions = ["defaults"];
                 extraArgs = ["-L" "nixos" "-f"];
                 subvolumes = {
+                  "root" = {
+                    mountpoint = "/";
+                  };
                   "home" = {
                     mountOptions = ["compress=lzo"];
                     mountpoint = "/home";
                   };
+                  "persist" = {
+                    mountOptions = ["compress=lzo" "noatime"];
+                    mountpoint = "/persist";
+                  };
                   "nix" = {
                     mountOptions = ["compress=lzo" "noatime"];
                     mountpoint = "/nix";
-                  };
-                  "var/cache" = {
-                    mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/cache";
-                  };
-                  "var/tmp" = {
-                    mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/tmp";
                   };
                   "var/log" = {
                     mountOptions = ["compress=lzo" "noatime"];
@@ -53,7 +50,7 @@
               };
             };
             windows = {
-              end = "-85000M";
+              size = "85G";
               content = {
                 type = "filesystem";
                 format = "xfs";

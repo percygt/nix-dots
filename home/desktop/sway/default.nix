@@ -15,6 +15,11 @@ in {
   imports = [
     ./waybar.nix
   ];
+
+  home.packages = [
+    pkgs.j4-dmenu-desktop
+    pkgs.dmenu
+  ];
   wayland.windowManager.sway = {
     enable = true;
     extraSessionCommands = ''
@@ -77,11 +82,13 @@ in {
           "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Shift+c" = "reload";
-          "${modifier}+e" = "exec ${rofi}/bin/rofi -show combi -theme glue_pro_blue | xargs swaymsg exec --";
+          "${modifier}+e" = "exec ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu=${pkgs.bemenu}/bin/bemenu' | xargs ${pkgs.sway}/bin/swaymsg exec --";
+
+          # "${modifier}+e" = "exec ${rofi}/bin/rofi -show combi -theme glue_pro_blue | xargs swaymsg exec --";
           "${modifier}+i" = "exec ${rofi}/bin/rofi -show emoji -theme glue_pro_blue";
           "${modifier}+d" = "exec ${rofi}/bin/rofi -show drun -theme glue_pro_blue";
           "Ctrl+Alt+l" = "workspace next";
-          "Ctrl+Alt+p" = "workspace prev";
+          "Ctrl+Alt+h" = "workspace prev";
           # Split in horizontal orientation:
           "${modifier}+h" = "split h";
 

@@ -32,32 +32,33 @@
     networkmanager.enable = true;
   };
 
-  # # symlinks to enable "erase your darlings"
-  # environment.persistence."/persist/system" = {
-  #   hideMounts = true;
-  #   directories = [
-  #     "/etc/NetworkManager/system-connections"
-  #     "/var/lib/bluetooth"
-  #     "/var/lib/docker"
-  #     "/var/lib/power-profiles-daemon"
-  #     "/var/lib/tailscale"
-  #     "/var/lib/upower"
-  #     "/var/lib/systemd/coredump"
-  #     {
-  #       directory = "/var/lib/colord";
-  #       user = "colord";
-  #       group = "colord";
-  #       mode = "u=rwx,g=rx,o=";
-  #     }
-  #   ];
-  #   files = [
-  #     "/var/lib/NetworkManager/secret_key"
-  #     "/var/lib/NetworkManager/seen-bssids"
-  #     "/var/lib/NetworkManager/timestamps"
-  #   ];
-  # };
-  #
-  # programs.fuse.userAllowOther = true;
+  # symlinks to enable "erase your darlings"
+  environment.persistence."/persist/system" = {
+    hideMounts = true;
+    directories = [
+      "/etc/nixos"
+      # "/etc/NetworkManager/system-connections"
+      # "/var/lib/bluetooth"
+      # "/var/lib/docker"
+      # "/var/lib/power-profiles-daemon"
+      # "/var/lib/tailscale"
+      # "/var/lib/upower"
+      # "/var/lib/systemd/coredump"
+      # {
+      #   directory = "/var/lib/colord";
+      #   user = "colord";
+      #   group = "colord";
+      #   mode = "u=rwx,g=rx,o=";
+      # }
+    ];
+    # files = [
+    #   "/var/lib/NetworkManager/secret_key"
+    #   "/var/lib/NetworkManager/seen-bssids"
+    #   "/var/lib/NetworkManager/timestamps"
+    # ];
+  };
+
+  programs.fuse.userAllowOther = true;
 
   fileSystems."/persist".neededForBoot = true;
 

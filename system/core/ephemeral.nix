@@ -1,16 +1,8 @@
 {
   lib,
-  pkgs,
   config,
   ...
-}: let
-  root-reset-src = builtins.readFile ../bin/scripts/rootReset.sh;
-  root-diff = pkgs.writeShellApplication {
-    name = "root-diff";
-    runtimeInputs = [pkgs.btrfs-progs];
-    text = builtins.readFile ../bin/scripts/rootDiff.sh;
-  };
-in {
+}: {
   options = {
     core.ephemeral = {
       enable =
