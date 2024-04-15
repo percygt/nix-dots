@@ -36,11 +36,7 @@ in {
       export QT_QPA_PLATFORM=wayland
     '';
     wrapperFeatures = {
-      # Fixes GTK applications under Sway
       gtk = true;
-      # To run Sway with dbus-run-session and other stuff
-      # (dbus-run-session is unneeded since dbus is socket activated in NixOS now)
-      base = true;
     };
 
     swaynag.enable = true;
@@ -50,24 +46,14 @@ in {
       down = "j";
       left = "h";
       right = "l";
-      # output = {
-      #   HDMI-A-1 = {
-      #     pos = "0 -1080";
-      #     res = "1920x1080";
-      #   };
-      #   eDP-1 = {
-      #     pos = "0 0";
-      #     res = "1920x1080";
-      #   };
-      # };
       window = {
         titlebar = false;
         border = 1;
         commands = [
           {
-            command = "gaps border 0";
+            command = "border pixel 0";
             criteria = {
-              pid = "2972";
+              title = "org.wezfurlong.wezterm";
             };
           }
         ];
@@ -141,7 +127,7 @@ in {
       modes.resize = {
         "${left}" = "resize shrink width 10px"; # Pressing left will shrink the window’s width.
         "${right}" = "resize grow width 10px"; # Pressing right will grow the window’s width.
-        "${up}" = "resize shrink height 10px"; # Pressing up will shrink the window’s height.
+        "${up}" = "resize shrink height 11px"; # Pressing up will shrink the window’s height.
         "${down}" = "resize grow height 10px"; # Pressing down will grow the window’s height.
 
         Left = "resize shrink width 10px";
@@ -165,11 +151,11 @@ in {
       gaps.inner = 2;
       defaultWorkspace = "workspace number 1";
       # bars = [{mode = "invisible";}];
-      bars = [
-        {
-          command = "${pkgs.waybar}/bin/waybar";
-        }
-      ];
+      # bars = [
+      #   {
+      #     command = "${pkgs.waybar}/bin/waybar";
+      #   }
+      # ];
       startup = [
         # {command = "${pkgs.mako}/bin/mako";}
 

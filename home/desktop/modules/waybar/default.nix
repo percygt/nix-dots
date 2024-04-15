@@ -38,12 +38,13 @@ in {
           ${pkgs.waybar}/etc/xdg/waybar/style.css > $out
     '';
 
-    # systemd = {
-    #   enable = true;
-    # };
+    systemd.enable = true;
+    systemd.target = "sway-session.target";
 
-    settings = [
-      {
+    settings = {
+      main = {
+        ipc = true;
+        id = "bar-0";
         exclusive = true;
         position = "top";
         layer = "top";
@@ -165,8 +166,8 @@ in {
           on-click-right = "${lib.getExe' pkgs.blueberry "blueberry"}";
           on-click = "${lib.getExe bluetoothToggle}";
         };
-      }
-    ];
+      };
+    };
 
     # This is a bit of a hack. Rasi turns out to be basically CSS, and there is
     # a handy helper to convert nix -> rasi in the home-manager module for rofi,

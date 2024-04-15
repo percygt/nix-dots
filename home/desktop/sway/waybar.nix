@@ -5,7 +5,7 @@
     # systemd.target = "sway-session.target";
     style = pkgs.runCommand "waybar-styles.css" {} ''
       sed -e 's/font-family: /font-family: Rubik, /'              \
-          -e 's/font-size: 12px/font-size: 12px/' \
+          -e 's/font-size: 13px/font-size: 12px/' \
           ${pkgs.waybar}/etc/xdg/waybar/style.css > $out
     '';
     settings = [

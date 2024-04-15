@@ -10,8 +10,14 @@
   home.persistence."/persist/home" = {
     directories = [
       ".local/share/gnupg"
-      ".nixos"
+      ".var/keys/"
       ".ssh"
+    ];
+    files = [
+      {
+        file = "./var/keys/home-sops.keyfile";
+        parentDirectory = {mode = "u=rwx,g=,o=";};
+      }
     ];
     allowOther = true;
   };
