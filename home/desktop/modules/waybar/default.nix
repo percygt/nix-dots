@@ -38,9 +38,9 @@ in {
           ${pkgs.waybar}/etc/xdg/waybar/style.css > $out
     '';
 
-    systemd = {
-      enable = true;
-    };
+    # systemd = {
+    #   enable = true;
+    # };
 
     settings = [
       {

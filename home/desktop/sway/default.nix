@@ -177,10 +177,10 @@ in {
         # {command = "${pkgs.dbus}/bin/dbus-update-activation-environment WAYLAND_DISPLAY";}
 
         # Reload kanshi on reload of config
-        # {
-        #   command = "${config.systemd.package}/bin/systemctl --user restart kanshi";
-        #   always = true;
-        # }
+        {
+          command = "systemctl --user restart kanshi";
+          always = true;
+        }
       ];
     };
   };

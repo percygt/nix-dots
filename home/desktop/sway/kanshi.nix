@@ -14,7 +14,7 @@
           {
             criteria = "Lenovo Group Limited D24-20 U760KTZC";
             mode = "1920x1080@60Hz";
-            position = "0,1080";
+            position = "0,-1080";
             status = "enable";
           }
           {
