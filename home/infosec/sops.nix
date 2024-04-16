@@ -10,8 +10,9 @@
   secretsPath = builtins.toString inputs.sikreto;
   sopsStart =
     if isGeneric
-    then "systemctl start --user sops-nix"
-    else "${config.systemd.package}/bin/systemctl --user start sops-nix";
+    then "/usr/bin/systemctl --user start sops-nix"
+    else "/run/current-system/sw/bin/systemctl --user start sops-nix";
+
   key =
     if isGeneric
     then {
