@@ -41,7 +41,7 @@ in {
     home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sopsStart;
     sops =
       {
-        defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
+        defaultSopsFile = "${secretsPath}/secrets-home.enc.yaml";
         validateSopsFiles = false;
         defaultSymlinkPath = "/run/user/1000/secrets";
         defaultSecretsMountPoint = "/run/user/1000/secrets.d";

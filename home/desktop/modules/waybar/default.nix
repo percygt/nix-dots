@@ -6,15 +6,6 @@
   libx,
   ...
 }: let
-  modules = [
-    "network"
-    "battery"
-    "wireplumber"
-    "pulseaudio#source"
-    "bluetooth"
-    "group/group-power"
-  ];
-
   bluetoothToggle = pkgs.writeShellApplication {
     name = "bluetooth-toggle";
     runtimeInputs = with pkgs; [gnugrep bluez];
@@ -27,24 +18,21 @@
       fi
     '';
   };
-  # inherit (libx) fonts colors;
+  inherit (import ./lib.nix {inherit lib;}) toRasi;
+  inherit (libx) fonts colors;
 in {
   programs.waybar = {
     enable = true;
 
-    style = pkgs.runCommand "waybar-styles.css" {} ''
-      sed -e 's/font-family: /font-family: Rubik, /'              \
-          -e 's/font-size: 12px/font-size: 12px/' \
-          ${pkgs.waybar}/etc/xdg/waybar/style.css > $out
-    '';
+    style = toRasi (import ./theme.nix {inherit config fonts colors;}).theme;
 
     systemd.enable = true;
-    systemd.target = "sway-session.target";
+    # systemd.target = "sway-session.target";
 
     settings = {
       main = {
-        ipc = true;
-        id = "bar-0";
+        # ipc = true;
+        # id = "bar-0";
         exclusive = true;
         position = "top";
         layer = "top";
@@ -53,27 +41,43 @@ in {
         gtk-layer-shell = true;
 
         modules-left = ["sway/workspaces"];
-        modules-center = ["clock" "idle_inhibitor"];
-        modules-right = modules;
+        modules-center = ["sway/mode" "clock" "idle_inhibitor"];
+        modules-right = [
+          "tray"
+          "network"
+          "backlight"
+          "cpu"
+          "memory"
+          "temperature"
+          "battery"
+          "battery#bat2"
+          "wireplumber"
+          "pulseaudio"
+          "bluetooth"
+          "group/group-power"
+        ];
 
         "sway/workspaces" = {
           format = "{icon}";
           format-icons = {
             "1" = "";
-            "2" = "";
+            "2" = "";
             "3" = "󰙀";
             "4" = "";
             "5" = "";
             "6" = "";
-            "7" = "";
+            "7" = "";
           };
           on-click = "activate";
         };
 
         "network" = {
-          format-wifi = "{essid} ";
-          format-ethernet = "{ifname} ";
-          format-disconnected = "";
+          format-alt = "{ifname}";
+          format-disconnected = "Disconnected ⚠";
+          format-ethernet = "{ifname}";
+          format-linked = "{ifname} (No IP) ";
+          format-wifi = "{essid} ({signalStrength}%) ";
+          interval = 15;
           tooltip-format = "{ifname} / {essid} ({signalStrength}%) / {ipaddr}";
           max-length = 15;
           on-click = "${pkgs.foot}/bin/foot -e ${pkgs.networkmanager}/bin/nmtui";
@@ -94,13 +98,18 @@ in {
             critical = 10;
           };
           format = "{capacity}% {icon}";
-          format-charging = "{capacity}% ";
-          format-plugged = "";
-          tooltip-format = "{time} ({capacity}%)";
           format-alt = "{time} {icon}";
-          format-full = "";
+          format-charging = "{capacity}% ";
+          format-full = "{capacity}% {icon}";
+          format-good = "{capacity}% {icon}";
           format-icons = ["" "" "" "" ""];
+          format-plugged = "{capacity}% ";
         };
+
+        "battery#bat2".bat = "BAT2";
+
+        backlight.format = "{percent}% {icon}";
+        backlight.format-icons = ["" ""];
 
         "group/group-power" = {
           orientation = "inherit";
@@ -110,24 +119,24 @@ in {
           };
           modules = [
             "custom/power"
-            "custom/quit"
-            "custom/lock"
+            # "custom/quit"
+            # "custom/lock"
             "custom/reboot"
           ];
         };
 
-        "custom/quit" = {
-          format = "󰗼";
-          on-click = "${pkgs.hyprland}/bin/hyprctl dispatch exit";
-          tooltip = false;
-        };
-
-        "custom/lock" = {
-          format = "󰍁";
-          on-click = "${lib.getExe pkgs.hyprlock}";
-          tooltip = false;
-        };
-
+        # "custom/quit" = {
+        #   format = "󰗼";
+        #   on-click = "${pkgs.}/bin/hyprctl dispatch exit";
+        #   tooltip = false;
+        # };
+        #
+        # "custom/lock" = {
+        #   format = "󰍁";
+        #   on-click = "${lib.getExe pkgs.hyprlock}";
+        #   tooltip = false;
+        # };
+        #
         "custom/reboot" = {
           format = "󰜉";
           on-click = "${pkgs.systemd}/bin/systemctl reboot";
@@ -142,6 +151,8 @@ in {
 
         "clock" = {format = "{:%d %b %H:%M}";};
 
+        "sway/mode".format = "<span style=\"italic\">{}</span>";
+
         "wireplumber" = {
           format = "{volume}% {icon}";
           format-muted = "";
@@ -150,13 +161,36 @@ in {
           tooltip-format = "{volume}% / {node_name}";
         };
 
-        "pulseaudio#source" = {
-          format = "{format_source}";
-          format-source = "";
+        "pulseaudio" = {
+          format = "{volume}% {icon} {format_source}";
+          format-bluetooth = "{volume}% {icon} {format_source}";
+          format-bluetooth-muted = " {icon} {format_source}";
+          format-muted = " {format_source}";
+          format-source = "{volume}% ";
           format-source-muted = "";
+          format-icons = {
+            headphone = "";
+            hands-free = "";
+            headset = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = ["" "" ""];
+          };
           on-click = "${lib.getExe pkgs.pavucontrol}";
           tooltip-format = "{source_volume}% / {desc}";
         };
+
+        "temperature" = {
+          critical-threshold = 80;
+          format = "{icon} {temperatureC}°C";
+          format-icons = ["" "" ""];
+        };
+
+        cpu.format = "{usage}% ";
+        cpu.tooltip = true;
+
+        memory.format = "{}% ";
 
         "bluetooth" = {
           format-on = "";
@@ -172,7 +206,6 @@ in {
     # This is a bit of a hack. Rasi turns out to be basically CSS, and there is
     # a handy helper to convert nix -> rasi in the home-manager module for rofi,
     # so I'm using that here to render the stylesheet for waybar
-    # style = toRasi (import ./theme.nix {inherit config pkgs fonts colors;}).theme;
   };
 
   # # This is a hack to ensure that hyprctl ends up in the PATH for the waybar service on hyprland

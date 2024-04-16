@@ -4,7 +4,7 @@
   isGeneric,
   ...
 }: let
-  inherit (libx) fonts sway;
+  inherit (libx) sway;
   inherit (sway) mkWorkspaceKeys mkDirectionKeys;
   wezterm =
     if isGeneric
@@ -13,6 +13,7 @@
 in {
   imports = [
     ../modules/waybar
+    ../modules/rofi
     ./kanshi.nix
   ];
 
@@ -40,39 +41,33 @@ in {
     };
 
     swaynag.enable = true;
+    extraConfig = ''
+      for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable, resize set width 1030 height 710
+      for_window [class="org.wezfurlong.wezterm"] gaps inner current set 0
+    '';
     config = rec {
       modifier = "Mod4";
       up = "k";
       down = "j";
       left = "h";
       right = "l";
+
       window = {
         titlebar = false;
-        border = 1;
-        commands = [
-          {
-            command = "border pixel 0";
-            criteria = {
-              title = "org.wezfurlong.wezterm";
-            };
-          }
-        ];
+        border = 0;
       };
 
-      keybindings = let
-        rofi = pkgs.rofi.override {plugins = [pkgs.rofi-emoji];};
-        # pactl = "${pkgs.pulseaudio}/bin/pactl";
-      in
+      keybindings =
         {
           "${modifier}+f" = "exec ${pkgs.foot}/bin/foot";
-          "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm";
+          "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm start -- ${pkgs.tmux}/bin/tmux new -As main";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Shift+c" = "reload";
           "${modifier}+e" = "exec ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu=${pkgs.bemenu}/bin/bemenu' | xargs ${pkgs.sway}/bin/swaymsg exec --";
 
           # "${modifier}+e" = "exec ${rofi}/bin/rofi -show combi -theme glue_pro_blue | xargs swaymsg exec --";
-          "${modifier}+i" = "exec ${rofi}/bin/rofi -show emoji -theme glue_pro_blue";
-          "${modifier}+d" = "exec ${rofi}/bin/rofi -show drun -theme glue_pro_blue";
+          "${modifier}+i" = "exec ${pkgs.rofi}/bin/rofi -show emoji -theme glue_pro_blue";
+          "${modifier}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun -theme glue_pro_blue";
           "Ctrl+Alt+l" = "workspace next";
           "Ctrl+Alt+h" = "workspace prev";
           # Split in horizontal orientation:
@@ -101,10 +96,10 @@ in {
           # XF86MonBrightnessDown = "exec ${pkgs.acpilight}/bin/xbacklight -dec 10";
           #
           # # Audio:
-          # XF86AudioMute = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          # XF86AudioLowerVolume = "exec pactl set-sink-volume @DEFAULT_SINK@ -10%";
-          # XF86AudioRaiseVolume = "exec pactl set-sink-volume @DEFAULT_SINK@ +10%";
-          # XF86AudioMicMute = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          XF86AudioMute = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          XF86AudioLowerVolume = "exec pactl set-sink-volume @DEFAULT_SINK@ -10%";
+          XF86AudioRaiseVolume = "exec pactl set-sink-volume @DEFAULT_SINK@ +10%";
+          XF86AudioMicMute = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
           # Focus the parent container
           # "${modifier}+a" = "focus parent";
 
@@ -148,9 +143,9 @@ in {
 
       focus.wrapping = "workspace";
       focus.newWindow = "urgent";
-      gaps.inner = 2;
+      gaps.inner = 5;
       defaultWorkspace = "workspace number 1";
-      # bars = [{mode = "invisible";}];
+      bars = [{mode = "invisible";}];
       # bars = [
       #   {
       #     command = "${pkgs.waybar}/bin/waybar";

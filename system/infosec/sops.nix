@@ -18,7 +18,7 @@ in {
 
   config = lib.mkIf config.infosec.sops.enable {
     sops = {
-      defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
+      defaultSopsFile = "${secretsPath}/secrets-system.enc.yaml";
       validateSopsFiles = false;
       age = {
         keyFile = "/persist/system/keys/system-sops.keyfile";

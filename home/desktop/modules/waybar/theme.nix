@@ -10,8 +10,8 @@
     "*" = {
       border = mkLiteral "none";
       padding = mkLiteral "0px";
-      font-family = "${fonts.interface.name}";
-      font-size = mkLiteral "15px";
+      font-family = "VictorMono Nerd Font";
+      font-size = mkLiteral "12px";
     };
 
     "window#waybar" = {
@@ -19,15 +19,15 @@
     };
 
     "window>box" = {
-      margin = mkLiteral "8px 8px 0px 8px";
+      margin = mkLiteral "0px";
       background = mkLiteral "#${colors.default.background}";
       opacity = mkLiteral "0.8";
-      border-radius = mkLiteral "8px";
+      border-radius = mkLiteral "0px";
     };
 
     ".modules-right" = {
-      margin-right = mkLiteral "10px";
-      padding = mkLiteral "5px 10px";
+      margin-right = mkLiteral "5px";
+      padding = mkLiteral "0px";
     };
 
     ".modules-center" = {
@@ -36,14 +36,15 @@
     };
 
     ".modules-left" = {
-      margin-left = mkLiteral "10px";
-      padding = mkLiteral "5px 0px";
+      margin-left = mkLiteral "0px";
+      padding = mkLiteral "0px";
     };
 
     "#workspaces button" = {
-      padding = mkLiteral "0px 10px";
+      padding = mkLiteral "0px";
       background-color = mkLiteral "transparent";
       font-weight = mkLiteral "lighter";
+      border-radius = mkLiteral "0px";
       color = mkLiteral "#${colors.default.foreground}";
     };
 
@@ -68,6 +69,7 @@
       #custom-reboot,
       #group-group-power,
       #idle_inhibitor,
+      #backlight,
       #memory,
       #network,
       #pulseaudio,
@@ -98,7 +100,7 @@
     };
 
     "#battery.warning:not(.charging)" = {
-      color = mkLiteral "#${colors.normal.orange}";
+      color = mkLiteral "#${colors.normal.yellow}";
     };
 
     "#battery.critical:not(.charging)" = {
@@ -110,15 +112,15 @@
     };
 
     "#bluetooth.off" = {
-      color = mkLiteral "#${colors.normal.orange}";
+      color = mkLiteral "#${colors.normal.yellow}";
     };
 
     "#wireplumber.muted" = {
-      color = mkLiteral "#${colors.normal.orange}";
+      color = mkLiteral "#${colors.normal.yellow}";
     };
 
     "#pulseaudio.source-muted" = {
-      color = mkLiteral "#${colors.normal.orange}";
+      color = mkLiteral "#${colors.normal.yellow}";
     };
   };
 }
