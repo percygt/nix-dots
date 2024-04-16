@@ -17,7 +17,7 @@
   };
 
   core = {
-    # ephemeral.enable = true;
+    ephemeral.enable = true;
     zram.enable = true;
     bootmanagement.enable = true;
     ntp.enable = true;

@@ -12,11 +12,8 @@ mkdir -p /mnt/home/"$TARGET_USER"/.nixos/sikreto
 rsync -a --delete "$DOTS" /mnt/home/"$TARGET_USER"/.nixos
 rsync -a --delete "$SECRETS" /mnt/home/"$TARGET_USER"/.nixos
 
-# sudo chmod -R 700 /mnt/home/"$TARGET_USER"/.nixos
-# sudo chmod 400 /mnt/home/"$TARGET_USER"/.var/keys/home-sops.keyfile
-
 [ -d "$HOME/usb/.k/sops/$TARGET_HOST" ] || mkdir -p "$HOME/usb/.k/sops/$TARGET_HOST"
 cp -rf /tmp/*.keyfile "$HOME/usb/.k/sops/$TARGET_HOST/"
 
 findmnt /home/nixos/usb >/dev/null && sudo udisksctl unmount -b "$LUKS"
-sudo cryptsetup luksClose "$MNT"
+sudo cryptsetup luksClose "$LUKS"

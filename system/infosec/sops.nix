@@ -21,7 +21,7 @@ in {
       defaultSopsFile = "${secretsPath}/secrets.enc.yaml";
       validateSopsFiles = false;
       age = {
-        keyFile = "/var/keys/system-sops.keyfile";
+        keyFile = "/persist/system/keys/home-sops.keyfile";
         sshKeyPaths = [];
       };
       gnupg.sshKeyPaths = [];

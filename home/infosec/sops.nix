@@ -10,8 +10,8 @@
   secretsPath = builtins.toString inputs.sikreto;
   sopsStart =
     if isGeneric
-    then "/usr/bin/systemctl start --user sops-nix"
-    else "/run/current-system/sw/bin/systemctl start --user sops-nix";
+    then "systemctl start --user sops-nix"
+    else "${config.systemd.package}/bin/systemctl --user start sops-nix";
   key =
     if isGeneric
     then {
@@ -21,7 +21,7 @@
       };
     }
     else {
-      age.keyFile = "/home/${username}/.var/keys/home-sops.keyfile";
+      age.keyFile = "/persist/home/${username}/keys/home-sops.keyfile";
     };
 in {
   imports = [
