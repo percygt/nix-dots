@@ -52,14 +52,14 @@
       # }
     ];
     files = [
-      {
-        file = "/var/keys/data.keyfile";
-        parentDirectory = {mode = "u=rwx,g=,o=";};
-      }
-      {
-        file = "/var/keys/system-sops.keyfile";
-        parentDirectory = {mode = "u=rwx,g=,o=";};
-      }
+      # {
+      #   file = "/var/keys/data.keyfile";
+      #   parentDirectory = {mode = "u=rwx,g=,o=";};
+      # }
+      # {
+      #   file = "/var/keys/system-sops.keyfile";
+      #   parentDirectory = {mode = "u=rwx,g=,o=";};
+      # }
       # "/var/lib/NetworkManager/secret_key"
       # "/var/lib/NetworkManager/seen-bssids"
       # "/var/lib/NetworkManager/timestamps"
