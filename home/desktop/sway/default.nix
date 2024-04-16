@@ -2,6 +2,8 @@
   pkgs,
   libx,
   isGeneric,
+  config,
+  lib,
   ...
 }: let
   inherit (libx) sway;
@@ -42,8 +44,7 @@ in {
 
     swaynag.enable = true;
     extraConfig = ''
-      for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable, resize set width 1030 height 710
-      for_window [class="org.wezfurlong.wezterm"] gaps inner current set 0
+      for_window [workspace="2"] gaps inner current set 0
     '';
     config = rec {
       modifier = "Mod4";
@@ -56,11 +57,13 @@ in {
         titlebar = false;
         border = 0;
       };
-
+      seat.seat0.xcursor_theme =
+        lib.mkIf (config.home.pointerCursor != null)
+        "${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}";
       keybindings =
         {
           "${modifier}+f" = "exec ${pkgs.foot}/bin/foot";
-          "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm start -- ${pkgs.tmux}/bin/tmux new -As main";
+          "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Shift+c" = "reload";
           "${modifier}+e" = "exec ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu=${pkgs.bemenu}/bin/bemenu' | xargs ${pkgs.sway}/bin/swaymsg exec --";
@@ -144,7 +147,13 @@ in {
       focus.wrapping = "workspace";
       focus.newWindow = "urgent";
       gaps.inner = 5;
-      defaultWorkspace = "workspace number 1";
+      defaultWorkspace = "1";
+      workspaceOutputAssign = [
+        {
+          output = "eDP-1";
+          workspace = "1";
+        }
+      ];
       bars = [{mode = "invisible";}];
       # bars = [
       #   {
@@ -158,6 +167,12 @@ in {
         # {command = "${pkgs.dbus}/bin/dbus-update-activation-environment WAYLAND_DISPLAY";}
 
         # Reload kanshi on reload of config
+        # {command = "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP I3SOCK DISPLAY";}
+        {command = "tmux kill-server";}
+        # {
+        #   command = "systemctl --user restart waybar.service";
+        #   always = true;
+        # }
         {
           command = "systemctl --user restart kanshi";
           always = true;

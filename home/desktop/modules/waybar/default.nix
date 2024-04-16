@@ -36,13 +36,14 @@ in {
         exclusive = true;
         position = "top";
         layer = "top";
-        height = 18;
+        height = 16;
         passthrough = false;
         gtk-layer-shell = true;
 
         modules-left = ["sway/workspaces"];
-        modules-center = ["sway/mode" "clock" "idle_inhibitor"];
+        modules-center = ["sway/mode" "clock"];
         modules-right = [
+          "idle_inhibitor"
           "tray"
           "network"
           "backlight"
@@ -148,7 +149,8 @@ in {
           tooltip = false;
         };
 
-        "clock" = {format = "{:%d %b %H:%M}";};
+        "clock" = {format = "{:%m.%d %I:%M}";};
+        # pattern = "MM.dd.yy' 🌣 'hh:mm:ss";
 
         "sway/mode".format = "<span style=\"italic\">{}</span>";
 

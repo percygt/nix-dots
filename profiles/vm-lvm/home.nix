@@ -14,31 +14,28 @@
       ".var/keys/"
       ".ssh"
     ];
-    # files = [
-    #   ".var/keys/home-sops.keyfile"
-    # ];
     allowOther = true;
   };
 
   desktop.modules.xdg.enable = true;
 
-  # editor.neovim.enable = true;
+  editor.neovim.enable = true;
 
   terminal.foot.enable = true;
 
-  # bin = {
-  #   kpass.enable = true;
-  #   pmenu.enable = true;
-  # };
+  bin = {
+    kpass.enable = true;
+    pmenu.enable = true;
+  };
 
-  # cli = {
-  #   atuin.enable = true;
-  #   direnv.enable = true;
-  #   extra.enable = true;
-  #   starship.enable = true;
-  #   tui.enable = true;
-  #   yazi.enable = true;
-  # };
+  cli = {
+    atuin.enable = true;
+    direnv.enable = true;
+    extra.enable = true;
+    starship.enable = true;
+    tui.enable = true;
+    yazi.enable = true;
+  };
 
   home = {
     shellAliases = {

@@ -26,9 +26,11 @@
         fonts = [
           "VictorMono"
           "JetBrainsMono"
+          "MartianMono"
+          "GeistMono"
         ];
       })
-      martian-mono
+      # martian-mono
       source-serif
       rubik
       work-sans

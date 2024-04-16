@@ -10,8 +10,8 @@
     "*" = {
       border = mkLiteral "none";
       padding = mkLiteral "0px";
-      font-family = "VictorMono Nerd Font";
-      font-size = mkLiteral "12px";
+      font-family = "GeistMono Nerd Font";
+      font-size = mkLiteral "10px";
     };
 
     "window#waybar" = {
@@ -41,7 +41,7 @@
     };
 
     "#workspaces button" = {
-      padding = mkLiteral "0px";
+      padding = mkLiteral "0px 5px 0px 0px";
       background-color = mkLiteral "transparent";
       font-weight = mkLiteral "lighter";
       border-radius = mkLiteral "0px";
@@ -74,11 +74,14 @@
       #temperature,
       #network,
       #pulseaudio,
+      #tray,
       #wireplumber" = {
       padding = mkLiteral "0px 10px";
       color = mkLiteral "#${colors.default.foreground}";
     };
-
+    "#clock" = {
+      font-weight = mkLiteral "700";
+    };
     "#custom-power" = {
       color = mkLiteral "#${colors.bold}";
       background-color = mkLiteral "transparent";
