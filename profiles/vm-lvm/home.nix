@@ -1,13 +1,14 @@
 {
   flakeDirectory,
   inputs,
+  username,
   ...
 }: {
   imports = [
     inputs.impermanence.nixosModules.home-manager.impermanence
   ];
 
-  home.persistence."/persist/home" = {
+  home.persistence."/persist/home/${username}" = {
     directories = [
       ".local/share/gnupg"
       ".var/keys/"
