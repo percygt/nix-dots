@@ -8,7 +8,7 @@ if ! findmnt /home/nixos/usb >/dev/null; then
 	sudo cryptsetup luksOpen "$MNT" luksvol
 	sudo systemctl daemon-reload
 	sleep 1
-	mkdir "$HOME/usb"
+	[ -d "$HOME/usb" ] || mkdir -p "$HOME/usb"
 	sudo mount /dev/mapper/luksvol "$HOME/usb"
 	gpg --import "$HOME/usb/.k/pgp/dev/subkeys.gpg"
 	sleep 1

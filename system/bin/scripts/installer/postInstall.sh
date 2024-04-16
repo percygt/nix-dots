@@ -2,8 +2,7 @@
 set -euo pipefail
 TARGET_HOST=$1
 TARGET_USER=$2
-MNT=$3
-LUKS=$4
+LUKS=$3
 DOTS="$HOME/nix-dots"
 SECRETS="$HOME/sikreto"
 

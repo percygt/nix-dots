@@ -41,7 +41,7 @@ in {
           setSecrets "$TARGET_HOST"
           setDisks "$TARGET_HOST"
           startInstall "$TARGET_HOST" "$TARGET_USER"
-          postInstall "$TARGET_HOST" "$TARGET_USER" "$MNT" "$LUKS"
+          postInstall "$TARGET_HOST" "$TARGET_USER" $LUKS"
         '';
       }
     )
