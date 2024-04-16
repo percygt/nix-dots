@@ -71,6 +71,7 @@
       #idle_inhibitor,
       #backlight,
       #memory,
+      #temperature,
       #network,
       #pulseaudio,
       #wireplumber" = {

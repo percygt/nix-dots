@@ -27,7 +27,7 @@ in {
     style = toRasi (import ./theme.nix {inherit config fonts colors;}).theme;
 
     systemd.enable = true;
-    # systemd.target = "sway-session.target";
+    systemd.target = "sway-session.target";
 
     settings = {
       main = {
@@ -49,11 +49,10 @@ in {
           "cpu"
           "memory"
           "temperature"
-          "battery"
-          "battery#bat2"
-          "wireplumber"
-          "pulseaudio"
+          "pulseaudio#source"
+          # "wireplumber"
           "bluetooth"
+          "battery#bat2"
           "group/group-power"
         ];
 
@@ -74,8 +73,8 @@ in {
         "network" = {
           format-alt = "{ifname}";
           format-disconnected = "Disconnected ⚠";
-          format-ethernet = "{ifname}";
-          format-linked = "{ifname} (No IP) ";
+          format-ethernet = "{ifname} 󰛳";
+          format-linked = "{ifname} (No IP) 󰛳";
           format-wifi = "{essid} ({signalStrength}%) ";
           interval = 15;
           tooltip-format = "{ifname} / {essid} ({signalStrength}%) / {ipaddr}";
@@ -161,7 +160,7 @@ in {
           tooltip-format = "{volume}% / {node_name}";
         };
 
-        "pulseaudio" = {
+        "pulseaudio#source" = {
           format = "{volume}% {icon} {format_source}";
           format-bluetooth = "{volume}% {icon} {format_source}";
           format-bluetooth-muted = " {icon} {format_source}";
@@ -183,14 +182,14 @@ in {
 
         "temperature" = {
           critical-threshold = 80;
-          format = "{icon} {temperatureC}°C";
-          format-icons = ["" "" ""];
+          format = "{temperatureC}°C ";
         };
 
-        cpu.format = "{usage}% ";
+        cpu.format = "{usage}% 󰍛";
         cpu.tooltip = true;
 
-        memory.format = "{}% ";
+        memory.format = "{}% ";
+        memory.tooltip = true;
 
         "bluetooth" = {
           format-on = "";
