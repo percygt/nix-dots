@@ -7,6 +7,7 @@
     core.systemd = {
       enable =
         lib.mkEnableOption "Enable systemd services";
+      initrd.enable = lib.mkEnableOption "Enable systemd initrd";
     };
   };
 
@@ -16,9 +17,8 @@
       rateLimitBurst = 500;
       rateLimitInterval = "30s";
     };
-    systemd = {
-      targets.network-online.wantedBy = lib.mkForce []; # Normally ["multi-user.target"]
-      services.NetworkManager-wait-online.wantedBy = lib.mkForce []; # Normally ["network-online.target"]
+    boot.initrd = lib.mkIf config.core.systemd.initrd.enable {
+      systemd.enable = true;
     };
   };
 }

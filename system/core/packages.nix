@@ -41,6 +41,7 @@
       tpm2-tss
       traceroute
       tree
+      cryptsetup
 
       unzip
       unrar

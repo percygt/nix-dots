@@ -1,5 +1,18 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  wpa = config.core.net.wpa.enable;
+in {
+  networking.networkmanager = lib.mkIf wpa {
+    enable = lib.mkForce false;
+  };
   services = {
+    avahi = lib.mkIf wpa {
+      enable = lib.mkForce false;
+    };
     flatpak.enable = true;
     locate.enable = true;
     printing.enable = true;

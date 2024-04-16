@@ -18,7 +18,17 @@ in {
     ../modules/rofi
     ./kanshi.nix
   ];
+  services = {
+    avizo.enable = true;
 
+    clipman.enable = true;
+
+    wlsunset = {
+      enable = true;
+      latitude = "51.51";
+      longitude = "-2.53";
+    };
+  };
   home.packages = [
     pkgs.j4-dmenu-desktop
     pkgs.dmenu
@@ -99,10 +109,10 @@ in {
           # XF86MonBrightnessDown = "exec ${pkgs.acpilight}/bin/xbacklight -dec 10";
           #
           # # Audio:
-          XF86AudioMute = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          XF86AudioLowerVolume = "exec pactl set-sink-volume @DEFAULT_SINK@ -10%";
-          XF86AudioRaiseVolume = "exec pactl set-sink-volume @DEFAULT_SINK@ +10%";
-          XF86AudioMicMute = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          XF86AudioMute = "exec volumectl -u toggle-mute";
+          XF86AudioLowerVolume = "exec volumectl -u down";
+          XF86AudioRaiseVolume = "exec volumectl -u up";
+          XF86AudioMicMute = "exec volumectl -m toggle-mute";
           # Focus the parent container
           # "${modifier}+a" = "focus parent";
 

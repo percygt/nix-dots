@@ -1,10 +1,4 @@
 {
-  # imports = [
-  #   ./hyprland.nix
-  # ];
-  xdg.configFile = {
-    "hypr/hyprland.conf".source = ./hyprland.conf;
-  };
   desktop = {
     modules = {
       xdg = {

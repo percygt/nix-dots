@@ -73,6 +73,10 @@
         profile = "vm-lvm";
         desktop = "sway";
       };
+      vm-sway = libz.mkSystem {
+        profile = "vm-sway";
+        desktop = "sway";
+      };
       vm-gnome = libz.mkSystem {
         profile = "vm-gnome";
         desktop = "gnome";

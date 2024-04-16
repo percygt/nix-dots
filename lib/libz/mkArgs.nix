@@ -21,7 +21,7 @@
 
   homeDirectory = "/home/${users.username}";
 
-  flakeDirectory = "${homeDirectory}/nix-dots";
+  flakeDirectory = "${homeDirectory}/data/nix-dots";
 
   libx = import "${self}/lib/libx" {inherit inputs homeDirectory;};
 

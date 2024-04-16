@@ -14,7 +14,6 @@
       gtk.enable = true;
       qt.enable = true;
     };
-    gnome.enable = true;
   };
 
   editor = {

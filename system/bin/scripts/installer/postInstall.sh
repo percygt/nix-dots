@@ -6,10 +6,16 @@ LUKS=$3
 DOTS="$HOME/nix-dots"
 SECRETS="$HOME/sikreto"
 
-mkdir -p /mnt/home/"$TARGET_USER"/.nixos/nix-dots
-mkdir -p /mnt/home/"$TARGET_USER"/.nixos/sikreto
-rsync -a --delete "$DOTS" /mnt/home/"$TARGET_USER"/.nixos
-rsync -a --delete "$SECRETS" /mnt/home/"$TARGET_USER"/.nixos
+sudo chown -R 1000:users /mnt/home/"$TARGET_USER"/data
+sudo chown -R 1000:users /mnt/home/"$TARGET_USER"/windows
+
+mkdir -p /mnt/home/"$TARGET_USER"/data/nix-dots
+mkdir -p /mnt/home/"$TARGET_USER"/data/sikreto
+
+rsync -a --delete "$DOTS" /mnt/home/"$TARGET_USER"/data
+rsync -a --delete "$SECRETS" /mnt/home/"$TARGET_USER"/data
+
+sudo systemd-firstboot --root=/mnt --setup-machine-id
 
 [ -d "$HOME/usb/.k/sops/$TARGET_HOST" ] || mkdir -p "$HOME/usb/.k/sops/$TARGET_HOST"
 cp -rf /tmp/*.keyfile "$HOME/usb/.k/sops/$TARGET_HOST/"

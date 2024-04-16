@@ -11,8 +11,6 @@
   home.persistence."/persist/home/${username}" = {
     directories = [
       ".local/share/gnupg"
-      ".local/bin"
-      ".local/share/nix"
       ".ssh"
     ];
     allowOther = true;

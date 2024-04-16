@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
   options = {
@@ -17,10 +18,7 @@
         "net.ipv6.conf.all.forwarding" = 1;
       };
 
-      # initrd.systemd.enable = true;
       consoleLogLevel = 0;
-
-      supportedFilesystems = ["btrfs"];
 
       loader = {
         systemd-boot.enable = true;
@@ -29,17 +27,25 @@
         efi.canTouchEfiVariables = true;
       };
 
-      # Enable Plymouth and surpress some logs by default.
-      plymouth.enable = true;
-
+      plymouth = {
+        enable = true;
+        # theme = "spinner-monochrome";
+        # themePackages = [
+        #   (pkgs.plymouth-spinner-monochrome.override {
+        #     inherit (config.boot.plymouth) logo;
+        #   })
+        # ];
+      };
+      loader.timeout = 0;
       kernelParams = [
-        # The 'splash' arg is included by the plymouth option
         "quiet"
         "loglevel=3"
-        "rd.udev.log_priority=3"
+        "systemd.show_status=auto"
+        "udev.log_level=3"
+        "rd.udev.log_level=3"
         "vt.global_cursor_default=0"
-        "boot.shell_on_fail"
       ];
+      initrd.verbose = false;
     };
   };
 }

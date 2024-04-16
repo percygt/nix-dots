@@ -10,17 +10,6 @@
     inputs.disko.nixosModules.disko
   ];
 
-  core = {
-    zram.enable = true;
-    bootmanagement.enable = true;
-    ntp.enable = true;
-    storage.enable = true;
-    audioengine.enable = true;
-    systemd.enable = true;
-    graphics.enable = true;
-    packages.enable = true;
-  };
-
   infosec = {
     sops.enable = true;
   };
@@ -31,9 +20,8 @@
     nvidia-prime.enable = true;
   };
 
-  net = {
-    networkmanager.enable = true;
-  };
+  core.systemd.initrd.enable = true;
+  core.net.wpa.enable = true;
 
   boot = {
     initrd.availableKernelModules = ["xhci_pci" "vmd" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" "rtsx_usb_sdmmc"];

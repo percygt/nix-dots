@@ -23,17 +23,13 @@
   environment.persistence."/persist/system" = {
     hideMounts = true;
     directories = [
-      "/var/lib/systemd/coredump"
-      "/var/lib/nixos"
+      "/etc/NetworkManager/system-connections"
       "/var/lib/bluetooth"
-      "/srv"
-      # "/etc/NetworkManager/system-connections"
-      # "/var/lib/bluetooth"
-      # # "/var/lib/docker"
-      # "/var/lib/power-profiles-daemon"
-      # # "/var/lib/tailscale"
-      # "/var/lib/upower"
-      # "/var/lib/systemd/coredump"
+      # "/var/lib/docker"
+      "/var/lib/power-profiles-daemon"
+      # "/var/lib/tailscale"
+      "/var/lib/upower"
+      "/var/lib/systemd/coredump"
       {
         directory = "/var/lib/colord";
         user = "colord";
@@ -41,22 +37,12 @@
         mode = "u=rwx,g=rx,o=";
       }
     ];
-    # files = [
-    #   "/var/lib/NetworkManager/secret_key"
-    #   "/var/lib/NetworkManager/seen-bssids"
-    #   "/var/lib/NetworkManager/timestamps"
-    # ];
+    files = [
+      "/var/lib/NetworkManager/secret_key"
+      "/var/lib/NetworkManager/seen-bssids"
+      "/var/lib/NetworkManager/timestamps"
+    ];
   };
-  system.activationScripts.persistent-dirs.text = let
-    mkHomePersist = user:
-      lib.optionalString user.createHome ''
-        mkdir -p /persist/${user.home}
-        chown ${user.name}:${user.group} /persist/${user.home}
-        chmod ${user.homeMode} /persist/${user.home}
-      '';
-    users = lib.attrValues config.users.users;
-  in
-    lib.concatLines (map mkHomePersist users);
 
   programs.fuse.userAllowOther = true;
 

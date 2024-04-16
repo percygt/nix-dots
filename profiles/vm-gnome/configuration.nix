@@ -15,26 +15,14 @@
     spice-vdagentd.enable = true;
   };
 
-  core = {
-    zram.enable = true;
-    bootmanagement.enable = true;
-    ntp.enable = true;
-    storage.enable = true;
-    audioengine.enable = true;
-    systemd.enable = true;
-    graphics.enable = true;
-    packages.enable = true;
-  };
+  core.systemd.initrd.enable = true;
+  core.net.wpa.enable = true;
 
   # drivers = {
   #   bluetooth.enable = true;
   #   intel.enable = true;
   #   nvidia-prime.enable = true;
   # };
-
-  net = {
-    networkmanager.enable = true;
-  };
 
   boot = {
     initrd.availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk"];
