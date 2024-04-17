@@ -24,18 +24,18 @@
 
   terminal.foot.enable = true;
 
-  bin = {
-    kpass.enable = true;
-    pmenu.enable = true;
-  };
+  # bin = {
+  #   kpass.enable = true;
+  #   pmenu.enable = true;
+  # };
 
   cli = {
-    atuin.enable = true;
-    direnv.enable = true;
-    extra.enable = true;
+    # atuin.enable = true;
+    # direnv.enable = true;
+    # extra.enable = true;
     starship.enable = true;
-    tui.enable = true;
-    yazi.enable = true;
+    # tui.enable = true;
+    # yazi.enable = true;
   };
 
   home = {

@@ -15,8 +15,6 @@ mkdir -p /mnt/home/"$TARGET_USER"/data/sikreto
 rsync -a --delete "$DOTS" /mnt/home/"$TARGET_USER"/data
 rsync -a --delete "$SECRETS" /mnt/home/"$TARGET_USER"/data
 
-sudo systemd-firstboot --root=/mnt --setup-machine-id
-
 [ -d "$HOME/usb/.k/sops/$TARGET_HOST" ] || mkdir -p "$HOME/usb/.k/sops/$TARGET_HOST"
 cp -rf /tmp/*.keyfile "$HOME/usb/.k/sops/$TARGET_HOST/"
 

@@ -27,6 +27,7 @@
       "/var/lib/nixos"
       "/var/lib/bluetooth"
       "/srv"
+      "/etc/ssh"
       # "/etc/NetworkManager/system-connections"
       # "/var/lib/bluetooth"
       # # "/var/lib/docker"
@@ -47,6 +48,7 @@
     #   "/var/lib/NetworkManager/timestamps"
     # ];
   };
+  environment.etc.machine-id.source = /persist/etc/machine-id;
   system.activationScripts.persistent-dirs.text = let
     mkHomePersist = user:
       lib.optionalString user.createHome ''

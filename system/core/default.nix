@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  useIso,
+  ...
+}: {
   imports = [
     ./audioengine.nix
     ./autoupgrade.nix
@@ -13,7 +17,7 @@
     ./zram.nix
   ];
 
-  core = {
+  core = lib.optionalAttrs (!useIso) {
     audioengine.enable = lib.mkDefault true;
     autoupgrade.enable = lib.mkDefault true;
     bootmanagement.enable = lib.mkDefault true;

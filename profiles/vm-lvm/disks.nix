@@ -46,10 +46,10 @@
                 "root" = {
                   mountpoint = "/";
                 };
-                "home" = {
-                  mountOptions = ["compress=lzo"];
-                  mountpoint = "/home";
-                };
+                # "home" = {
+                #   mountOptions = ["compress=lzo"];
+                #   mountpoint = "/home";
+                # };
                 "persist" = {
                   mountOptions = ["compress=lzo" "noatime"];
                   mountpoint = "/persist";
