@@ -47,7 +47,7 @@
     #   "/var/lib/NetworkManager/timestamps"
     # ];
   };
-  environment.etc.machine-id.source = /persist/system/etc/machine-id;
+  # environment.etc.machine-id.source = "/persist/system/etc/machine-id";
 
   # system.activationScripts.persistent-dirs.text = let
   #   mkHomePersist = user:
