@@ -3,6 +3,7 @@
   lib,
   inputs,
   config,
+  username,
   ...
 }: {
   imports = [
@@ -16,49 +17,48 @@
     spice-vdagentd.enable = true;
   };
 
-  core.systemd.initrd.enable = true;
   core.net.wpa.enable = true;
   # symlinks to enable "erase your darlings"
-  environment.persistence."/persist/system" = {
-    hideMounts = true;
-    directories = [
-      "/var/lib/systemd/coredump"
-      "/var/lib/nixos"
-      "/var/lib/bluetooth"
-      "/srv"
-      "/etc/ssh"
-      # "/etc/NetworkManager/system-connections"
-      # "/var/lib/bluetooth"
-      # # "/var/lib/docker"
-      # "/var/lib/power-profiles-daemon"
-      # # "/var/lib/tailscale"
-      # "/var/lib/upower"
-      # "/var/lib/systemd/coredump"
-      {
-        directory = "/var/lib/colord";
-        user = "colord";
-        group = "colord";
-        mode = "u=rwx,g=rx,o=";
-      }
-    ];
-    # files = [
-    #   "/var/lib/NetworkManager/secret_key"
-    #   "/var/lib/NetworkManager/seen-bssids"
-    #   "/var/lib/NetworkManager/timestamps"
-    # ];
+  environment.persistence = {
+    "/persist" = {
+      hideMounts = true;
+      users.${username} = {
+        directories = [
+          {
+            directory = ".gnupg";
+            mode = "0700";
+          }
+          {
+            directory = ".ssh";
+            mode = "0700";
+          }
+          {
+            directory = ".local/share/keyrings";
+            mode = "0700";
+          }
+        ];
+      };
+    };
+    "/persist/system" = {
+      hideMounts = true;
+      directories = [
+        "/var/lib/systemd/coredump"
+        "/var/lib/nixos"
+        "/var/lib/bluetooth"
+        "/srv"
+        "/etc/ssh"
+        {
+          directory = "/var/lib/colord";
+          user = "colord";
+          group = "colord";
+          mode = "u=rwx,g=rx,o=";
+        }
+      ];
+      files = [
+        "/etc/machine-id"
+      ];
+    };
   };
-  # environment.etc.machine-id.source = "/persist/system/etc/machine-id";
-
-  # system.activationScripts.persistent-dirs.text = let
-  #   mkHomePersist = user:
-  #     lib.optionalString user.createHome ''
-  #       mkdir -p /persist/${user.home}
-  #       chown ${user.name}:${user.group} /persist/${user.home}
-  #       chmod ${user.homeMode} /persist/${user.home}
-  #     '';
-  #   users = lib.attrValues config.users.users;
-  # in
-  #   lib.concatLines (map mkHomePersist users);
 
   programs.fuse.userAllowOther = true;
 

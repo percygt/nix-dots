@@ -12,14 +12,11 @@
     if isGeneric
     then pkgs.stash.wezterm_wrapped
     else pkgs.stash.wezterm_nightly;
-  dropdownterm = pkgs.writeShellApplication {
-    name = "dropdownterm";
-    text = builtins.readFile ./dropdownterm.sh;
-  };
 in {
   imports = [
     ../modules/waybar
     ../modules/rofi
+    # ../modules/mako.nix
     ./kanshi.nix
   ];
   services = {
@@ -58,14 +55,14 @@ in {
     swaynag.enable = true;
     extraConfig = ''
       for_window [workspace="2"] gaps inner current set 0
-      exec_always ${pkgs.foot}/bin/foot -m --title dropdown
-      for_window [title="dropdown"] {
-        floating enable
-        border none
-        resize set width 102 ppt height 50 ppt
-        move absolute position 0 37
-        move container to scratchpad
-      }
+      for_window [app_id="ddterm"] move scratchpad, resize set width 1300 height 700
+      # for_window [title="dropdown"] {
+      #   floating enable
+      #   border none
+      #   resize set width 102 ppt height 50 ppt
+      #   move absolute position 0 37
+      #   move container to scratchpad
+      # }
     '';
     config = rec {
       modifier = "Mod4";
@@ -73,6 +70,7 @@ in {
       down = "j";
       left = "h";
       right = "l";
+      workspaceLayout = "tabbed";
 
       window = {
         titlebar = false;
@@ -83,8 +81,8 @@ in {
         "${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}";
       keybindings =
         {
-          "${modifier}+w" = "scratchpad show";
-          "${modifier}+f" = "exec ${pkgs.foot}/bin/foot";
+          "${modifier}+w" = "exec ${pkgs.foot}/bin/foot --class ddterm";
+          "${modifier}+f" = "exec swaymsg [app_id=\"ddterm\"] ${pkgs.foot}/bin/foot";
           "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Shift+c" = "reload";

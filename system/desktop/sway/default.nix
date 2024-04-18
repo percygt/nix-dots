@@ -1,4 +1,12 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  username,
+  config,
+  libx,
+  ...
+}: let
+  inherit (libx) colors fonts;
+in {
   xdg.portal = {
     enable = true;
     wlr.enable = true;
@@ -11,4 +19,52 @@
   };
 
   security.polkit.enable = true;
+  programs = {
+    dconf.enable = true;
+    file-roller.enable = true;
+  };
+  security = {
+    pam = {
+      services = {
+        # unlock gnome keyring automatically with greetd
+        greetd.enableGnomeKeyring = true;
+      };
+    };
+  };
+  services = {
+    gvfs.enable = true;
+    dbus = {
+      enable = true;
+      # Make the gnome keyring work properly
+      packages = [
+        pkgs.gnome3.gnome-keyring
+        pkgs.gcr
+      ];
+    };
+
+    gnome = {
+      gnome-keyring.enable = true;
+      sushi.enable = true;
+    };
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --sessions ${config.services.xserver.displayManager.sessionData.desktops}/share/xsessions:${config.services.xserver.displayManager.sessionData.desktops}/share/wayland-sessions --remember --remember-user-session";
+          # command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+          user = username;
+        };
+      };
+    };
+  };
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Without this errors will spam on screen
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
 }
