@@ -13,6 +13,8 @@
       ".local/share/nix"
       ".local/share/atuin"
       ".local/share/nvim"
+      ".local/share/fish"
+      ".local/share/zoxide"
       ".config/BraveSoftware/Brave-Browser"
     ];
     files = [
