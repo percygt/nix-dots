@@ -17,6 +17,7 @@ in {
     ../modules/waybar
     ../modules/rofi
     ../modules/mako.nix
+    ../modules/wl-common.nix
     ./kanshi.nix
   ];
   services = {
