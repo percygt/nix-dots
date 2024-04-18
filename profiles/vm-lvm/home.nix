@@ -23,13 +23,16 @@
     allowOther = true;
   };
 
-  browser.brave.enable = true;
+  # browser.brave.enable = true;
 
   desktop.modules.xdg.enable = true;
 
   editor.neovim.enable = true;
 
-  terminal.foot.enable = true;
+  terminal = {
+    foot.enable = true;
+    wezterm.enable = true;
+  };
 
   bin = {
     kpass.enable = true;

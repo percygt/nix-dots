@@ -18,19 +18,9 @@ in {
     ../modules/rofi
     ../modules/mako.nix
     ../modules/wl-common.nix
+    ./i3-quickterm.nix
     ./kanshi.nix
   ];
-  services = {
-    avizo.enable = true;
-
-    clipman.enable = true;
-
-    wlsunset = {
-      enable = true;
-      latitude = "51.51";
-      longitude = "-2.53";
-    };
-  };
   home.packages = with pkgs; [
     dmenu
   ];
@@ -38,7 +28,9 @@ in {
     enable = true;
     extraSessionCommands = ''
       export SDL_VIDEODRIVER=wayland
-
+      # Automatically add electron/chromium wayland flags
+      export NIXOS_OZONE_WL=1
+      export _JAVA_AWT_WM_NONREPARENTING=1
       # Firefox wayland
       export MOZ_ENABLE_WAYLAND=1
 
@@ -71,6 +63,8 @@ in {
       down = "j";
       left = "h";
       right = "l";
+      terminal = "${wezterm}/bin/wezterm";
+
       workspaceLayout = "tabbed";
 
       window = {
@@ -80,10 +74,11 @@ in {
       seat.seat0.xcursor_theme =
         lib.mkIf (config.home.pointerCursor != null)
         "${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}";
+
       keybindings =
         {
-          "${modifier}+w" = "exec ${pkgs.foot}/bin/foot --class ddterm";
-          "${modifier}+f" = "exec swaymsg [app_id=\"ddterm\"] ${pkgs.foot}/bin/foot";
+          "${modifier}+f" = "exec ${pkgs.foot}/bin/foot";
+          "${modifier}+w" = "exec ${pkgs.i3-quickterm}/bin/i3-quickterm shell";
           "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Shift+c" = "reload";

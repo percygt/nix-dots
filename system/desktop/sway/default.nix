@@ -30,7 +30,7 @@
     };
   };
   services = {
-    gvfs.enable = true;
+    # gvfs.enable = true;
     dbus = {
       enable = true;
       # Make the gnome keyring work properly

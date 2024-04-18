@@ -4,8 +4,8 @@
   self,
   ...
 }: let
-  date-menu-formatter = pkgs.callPackage "${self}/packages/gnome/extensions/date-menu-formatter.nix" {};
-  quake-mode = pkgs.callPackage "${self}/packages/gnome/extensions/quake-mode.nix" {};
+  date-menu-formatter = pkgs.callPackage "${self}/std/date-menu-formatter.nix" {};
+  quake-mode = pkgs.callPackage "${self}/std/quake-mode.nix" {};
   ddterm = pkgs.gnomeExtensions.ddterm.overrideAttrs (oldAttrs: rec {
     version = "54";
     src = pkgs.fetchzip {

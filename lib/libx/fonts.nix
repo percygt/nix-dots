@@ -1,4 +1,11 @@
 {
+  wm = {
+    name = "Rubik";
+    style = "Regular";
+    package = pkgs: pkgs.rubik;
+    size = 10.0;
+  };
+
   interface = {
     name = "Rubik";
     style = "Regular";
@@ -8,7 +15,7 @@
 
   shell = {
     name = "VictorMono Nerd Font";
-    style = "Regular";
+    style = "SemiBold";
     package = pkgs: pkgs.nerdfonts.override {fonts = ["VictorMono"];};
     size = 14;
   };

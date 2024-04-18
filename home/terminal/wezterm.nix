@@ -85,7 +85,7 @@ in {
               window:set_config_overrides(overrides)
           end)
           return {
-          	enable_wayland = false,
+          	enable_wayland = true,
             check_for_updates = false,
           	color_scheme = "Syft",
           	font = wezterm.font("${fonts.shell.name}", { weight = "DemiBold" }),
@@ -126,7 +126,7 @@ in {
           		{ key = "F11",    mods = "NONE",  action = wezterm.action.ToggleFullScreen },
           		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
           	},
-          	-- default_prog = { 'tmux', 'new', '-As', 'main' }
+          	default_prog = { '${pkgs.tmux}/bin/tmux', 'new', '-As', 'main' }
           }
         '';
     };

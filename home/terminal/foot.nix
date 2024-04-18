@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  inherit (libx) colors;
+  inherit (libx) colors fonts;
 in {
   options = {
     terminal.foot.enable =
@@ -19,8 +19,7 @@ in {
         main = {
           term = "xterm-256color";
           login-shell = "yes";
-          font = "VictorMono Nerd Font:style=SemiBold:size=12";
-          letter-spacing = 0.25;
+          font = "${fonts.shell.name}:style=${fonts.shell.style}:size=${builtins.toString fonts.shell.size}";
           box-drawings-uses-font-glyphs = "yes";
         };
 

@@ -57,7 +57,7 @@ in {
     #   textColor = "${colors.highlight.foreground}";
     #
     #   extraConfig = ''
-    #     [urgency=high]
+    #     [urgency=hgh]
     #     border-color=${colors.bold}
     #   '';
     # };
