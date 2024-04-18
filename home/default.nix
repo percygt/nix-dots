@@ -17,6 +17,7 @@
       ./shell
       ./infosec
       ./dev
+      ./browser
       # ./backup
     ]
     ++ lib.optionals isGeneric [
