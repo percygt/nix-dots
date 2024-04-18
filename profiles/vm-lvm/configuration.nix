@@ -25,11 +25,11 @@
       users.${username} = {
         directories = [
           {
-            directory = ".gnupg";
+            directory = ".ssh";
             mode = "0700";
           }
           {
-            directory = ".ssh";
+            directory = ".local/share/gnupg";
             mode = "0700";
           }
           {

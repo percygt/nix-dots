@@ -16,7 +16,7 @@ in {
   imports = [
     ../modules/waybar
     ../modules/rofi
-    # ../modules/mako.nix
+    ../modules/mako.nix
     ./kanshi.nix
   ];
   services = {
