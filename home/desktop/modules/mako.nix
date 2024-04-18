@@ -1,8 +1,10 @@
 {
   config,
-  colors,
+  libx,
   ...
-}: {
+}: let
+  inherit (libx) colors fonts;
+in {
   services = {
     mako = {
       enable = true;

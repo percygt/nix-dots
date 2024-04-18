@@ -4,9 +4,7 @@
   config,
   libx,
   ...
-}: let
-  inherit (libx) colors fonts;
-in {
+}: {
   xdg.portal = {
     enable = true;
     wlr.enable = true;
