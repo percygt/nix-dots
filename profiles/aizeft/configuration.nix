@@ -20,7 +20,6 @@
     nvidia-prime.enable = true;
   };
 
-  core.systemd.initrd.enable = true;
   core.net.wpa.enable = true;
 
   boot = {

@@ -17,12 +17,6 @@
     spice-vdagentd.enable = true;
   };
 
-  # Make sure to start the home-manager activation before I log in.
-  systemd.services."home-manager-${username}" = {
-    before = ["display-manager.service"];
-    wantedBy = ["multi-user.target"];
-  };
-
   core.net.wpa.enable = true;
   # symlinks to enable "erase your darlings"
   environment.persistence = {
