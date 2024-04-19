@@ -15,10 +15,10 @@
     wrapperFeatures.gtk = true;
   };
 
-  systemd.services."home-manager-${username}" = {
-    before = ["display-manager.service"];
-    wantedBy = ["multi-user.target"];
-  };
+  # systemd.services."home-manager-${username}" = {
+  #   before = ["display-manager.service"];
+  #   wantedBy = ["multi-user.target"];
+  # };
   security.polkit.enable = true;
   programs = {
     dconf.enable = true;
