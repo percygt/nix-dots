@@ -53,6 +53,12 @@
           group = "colord";
           mode = "u=rwx,g=rx,o=";
         }
+        {
+          directory = "/var/cache/tuigreet";
+          user = "greeter";
+          group = "greeter";
+          mode = "0755";
+        }
       ];
       files = [
         "/etc/machine-id"
