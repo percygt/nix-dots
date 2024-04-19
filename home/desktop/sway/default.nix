@@ -12,6 +12,13 @@
     if isGeneric
     then pkgs.stash.wezterm_wrapped
     else pkgs.stash.wezterm_nightly;
+  quickterm =
+    pkgs.i3-quickterm.overrideAttrs
+    (oldAttrs: {
+      preBuild = ''
+        sed -i '/TERMS = {/a\    "wezterm": TERM("${wezterm}/bin/wezterm", titleopt=None),' i3_quickterm/main.py
+      '';
+    });
 in {
   imports = [
     ../modules/waybar
@@ -21,9 +28,9 @@ in {
     ./i3-quickterm.nix
     ./kanshi.nix
   ];
-  home.packages = with pkgs; [
-    dmenu
-  ];
+
+  home.packages = [pkgs.dmenu] ++ [quickterm];
+
   wayland.windowManager.sway = {
     enable = true;
     extraSessionCommands = ''
@@ -78,7 +85,7 @@ in {
       keybindings =
         {
           "${modifier}+f" = "exec ${pkgs.foot}/bin/foot";
-          "${modifier}+w" = "exec ${pkgs.i3-quickterm}/bin/i3-quickterm shell";
+          "${modifier}+w" = "exec ${quickterm}/bin/i3-quickterm shell";
           "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Shift+c" = "reload";

@@ -1,21 +1,4 @@
 {
-  pkgs,
-  isGeneric,
-  ...
-}: let
-  wezterm =
-    if isGeneric
-    then pkgs.stash.wezterm_wrapped
-    else pkgs.stash.wezterm_nightly;
-in {
-  home.packages = with pkgs; [
-    (i3-quickterm.overrideAttrs
-      (oldAttrs: {
-        preBuild = ''
-          sed -i '/TERMS = {/a\    "wezterm": TERM("${wezterm}/bin/wezterm", titleopt=None),' i3_quickterm/main.py
-        '';
-      }))
-  ];
   xdg.configFile."i3-quickterm/config.json".text = ''
     {
         "menu": "rofi -dmenu -p 'quickterm: ' -no-custom -auto-select",
