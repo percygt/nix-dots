@@ -16,7 +16,7 @@
     pkgs.i3-quickterm.overrideAttrs
     (oldAttrs: {
       preBuild = ''
-        sed -i '/TERMS = {/a\    "wezterm": TERM("wezterm", titleopt=None),' i3_quickterm/main.py
+        sed -i '/TERMS = {/a\    "wezterm": TERM("${wezterm}/bin/wezterm", titleopt=None),' i3_quickterm/main.py
       '';
     });
 in {
@@ -49,20 +49,13 @@ in {
       export QT_QPA_PLATFORM=wayland
     '';
     wrapperFeatures = {
+      base = false;
       gtk = true;
     };
 
     swaynag.enable = true;
     extraConfig = ''
       for_window [workspace="2"] gaps inner current set 0
-      for_window [app_id="ddterm"] move scratchpad, resize set width 1300 height 700
-      # for_window [title="dropdown"] {
-      #   floating enable
-      #   border none
-      #   resize set width 102 ppt height 50 ppt
-      #   move absolute position 0 37
-      #   move container to scratchpad
-      # }
     '';
     config = rec {
       modifier = "Mod4";

@@ -16,11 +16,14 @@
 
   environment.etc."greetd/environments".text = ''
     sway
+    fish
   '';
+
   programs = {
     dconf.enable = true;
     file-roller.enable = true;
   };
+
   security = {
     polkit.enable = true;
     pam = {
@@ -30,8 +33,10 @@
       };
     };
   };
+
   services = {
-    # gvfs.enable = true;
+    udev.packages = with pkgs; [gnome.gnome-settings-daemon];
+    gvfs.enable = true;
     dbus = {
       enable = true;
       # Make the gnome keyring work properly
@@ -49,7 +54,7 @@
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --sessions ${config.services.xserver.displayManager.sessionData.desktops}/share/xsessions:${config.services.xserver.displayManager.sessionData.desktops}/share/wayland-sessions --remember --remember-user-session";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --sessions ${config.services.xserver.displayManager.sessionData.desktops}/share/xsessions:${config.services.xserver.displayManager.sessionData.desktops}/share/wayland-sessions --time --remember --remember-user-session";
           user = "greeter";
         };
       };
