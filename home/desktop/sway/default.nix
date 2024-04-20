@@ -16,7 +16,7 @@
     pkgs.i3-quickterm.overrideAttrs
     (oldAttrs: {
       preBuild = ''
-        sed -i '/TERMS = {/a\    "wezterm": TERM("${wezterm}/bin/wezterm", titleopt=None)' i3_quickterm/main.py
+        sed -i '/TERMS = {/a\    "wezterm": TERM("${wezterm}/bin/wezterm", titleopt=None),' i3_quickterm/main.py
       '';
     });
 in {
