@@ -49,7 +49,6 @@ in {
       export QT_QPA_PLATFORM=wayland
     '';
     wrapperFeatures = {
-      base = false;
       gtk = true;
     };
 
@@ -182,12 +181,12 @@ in {
         # {command = "${pkgs.dbus}/bin/dbus-update-activation-environment WAYLAND_DISPLAY";}
 
         # Reload kanshi on reload of config
-        # {command = "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP I3SOCK DISPLAY";}
+        {command = "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP I3SOCK DISPLAY";}
         {command = "tmux kill-server";}
-        # {
-        #   command = "systemctl --user restart waybar.service";
-        #   always = true;
-        # }
+        {
+          command = "systemctl --user restart waybar.service";
+          always = true;
+        }
         {
           command = "systemctl --user restart kanshi";
           always = true;
