@@ -18,6 +18,8 @@
   };
 
   services = {
+    spice-vdagentd.enable = true;
+    qemuGuest.enable = true;
     udisks2.enable = true;
     openssh.settings.PermitRootLogin = lib.mkForce "yes";
   };
