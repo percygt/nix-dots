@@ -14,9 +14,9 @@ sudo chmod -R 400 /mnt/persist/system/keys/system-sops.keyfile
 [[ -f /tmp/data.keyfile ]] && sudo cp /tmp/data.keyfile /mnt/persist/system/keys
 sudo chmod -R 400 /mnt/persist/system/keys/data.keyfile
 
-sudo cp /tmp/home-sops.keyfile /mnt/persist/home/"$TARGET_USER"/keys
-sudo chown -R 1000:users /mnt/persist/home/"$TARGET_USER"/keys
-sudo chmod -R 700 /mnt/persist/home/"$TARGET_USER"/keys
-sudo chmod -R 600 /mnt/persist/home/"$TARGET_USER"/keys/home-sops.keyfile
+sudo chown -R 1000:users /mnt/persist/home/"$TARGET_USER"
+cp /tmp/home-sops.keyfile /mnt/persist/home/"$TARGET_USER"/keys
+chmod -R 700 /mnt/persist/home/"$TARGET_USER"/keys
+chmod -R 600 /mnt/persist/home/"$TARGET_USER"/keys/home-sops.keyfile
 
 sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
