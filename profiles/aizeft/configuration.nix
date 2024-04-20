@@ -22,6 +22,8 @@
 
   core.net.wpa.enable = true;
 
+  programs.sway.extraOptions = ["--unsupported-gpu"];
+
   environment.sessionVariables = {
     WLR_DRM_NO_ATOMIC = "1";
     WLR_NO_HARDWARE_CURSORS = "1";

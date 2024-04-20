@@ -1,5 +1,5 @@
 {lib, ...}: {
-  wayland.windowManager.sway.extraOptions = ["--unsupported-gpu"];
+  # wayland.windowManager.sway.extraOptions = ["--unsupported-gpu"];
   home.sessionVariables.WLR_RENDERER = lib.mkForce "gles2";
   desktop = {
     modules = {

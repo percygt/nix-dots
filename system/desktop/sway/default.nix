@@ -12,6 +12,10 @@
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
+    extraOptions = [
+      "--verbose"
+      "--debug"
+    ];
   };
 
   environment.etc."greetd/environments".text = ''
