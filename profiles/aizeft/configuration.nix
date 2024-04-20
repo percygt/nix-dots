@@ -3,11 +3,13 @@
   lib,
   inputs,
   config,
+  username,
   ...
 }: {
   imports = [
     ./disks.nix
     inputs.disko.nixosModules.disko
+    inputs.impermanence.nixosModules.impermanence
   ];
 
   infosec = {
@@ -23,6 +25,58 @@
   core.net.wpa.enable = true;
 
   programs.sway.extraOptions = ["--unsupported-gpu"];
+
+  # symlinks to enable "erase your darlings"
+  environment.persistence = {
+    "/persist" = {
+      hideMounts = true;
+      users.${username} = {
+        directories = [
+          {
+            directory = ".ssh";
+            mode = "0700";
+          }
+          {
+            directory = ".local/share/gnupg";
+            mode = "0700";
+          }
+          {
+            directory = ".local/share/keyrings";
+            mode = "0700";
+          }
+        ];
+      };
+    };
+    "/persist/system" = {
+      hideMounts = true;
+      directories = [
+        "/var/lib/systemd/coredump"
+        "/var/lib/nixos"
+        "/var/lib/bluetooth"
+        "/srv"
+        "/etc/ssh"
+        {
+          directory = "/var/lib/colord";
+          user = "colord";
+          group = "colord";
+          mode = "u=rwx,g=rx,o=";
+        }
+        {
+          directory = "/var/cache/tuigreet";
+          user = "greeter";
+          group = "greeter";
+          mode = "0755";
+        }
+      ];
+      files = [
+        "/etc/machine-id"
+      ];
+    };
+  };
+
+  programs.fuse.userAllowOther = true;
+
+  fileSystems."/persist".neededForBoot = true;
 
   environment.sessionVariables = {
     WLR_DRM_NO_ATOMIC = "1";

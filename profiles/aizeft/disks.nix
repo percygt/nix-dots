@@ -1,12 +1,16 @@
-{disks ? ["/dev/nvme0n1" "/dev/sda"], ...}: {
+{
+  lib,
+  disks ? ["/dev/nvme0n1" "/dev/sda"],
+  ...
+}: {
   environment.etc = {
     "crypttab".text = ''
-      data  /dev/disk/by-partlabel/sda_data  /var/keys/data.keyfile
+      data  /dev/disk/by-partlabel/sda_data  /persist/system/keys/data.keyfile
     '';
   };
   disko.devices = {
     disk = {
-      nvme = {
+      main = {
         type = "disk";
         device = builtins.elemAt disks 0;
         content = {
@@ -19,53 +23,23 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
+                mountOptions = ["umask=0077"];
               };
             };
             root = {
+              name = "root";
               size = "100%";
               content = {
-                type = "btrfs";
-                extraArgs = ["-L" "nixos" "-f"];
-                subvolumes = {
-                  "root" = {
-                    mountpoint = "/";
-                  };
-                  "home" = {
-                    mountOptions = ["compress=lzo"];
-                    mountpoint = "/home";
-                  };
-                  "persist" = {
-                    mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/persist";
-                  };
-                  "nix" = {
-                    mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/nix";
-                  };
-                  "var/log" = {
-                    mountOptions = ["compress=lzo" "noatime"];
-                    mountpoint = "/var/log";
-                  };
-                };
-              };
-            };
-            windows = {
-              size = "85G";
-              content = {
-                type = "filesystem";
-                format = "xfs";
-                mountpoint = "/home/percygt/windows";
-                mountOptions = ["defaults"];
-                extraArgs = ["-L" "windows" "-f"];
+                type = "lvm_pv";
+                vg = "root_vg";
               };
             };
           };
         };
       };
-      #------------------------------------------------------------------------------
       sda = {
-        device = builtins.elemAt disks 1;
         type = "disk";
+        device = builtins.elemAt disks 1;
         content = {
           type = "gpt";
           partitions = {
@@ -75,22 +49,62 @@
               content = {
                 type = "luks";
                 name = "data";
-
                 settings = {
-                  keyFile = "/tmp/data.keyfile";
                   allowDiscards = true;
+                  keyFile = "/tmp/data.keyfile";
                 };
-
                 # Don't try to unlock this drive early in the boot.
-                initrdUnlock = false;
+                initrdUnlock = lib.mkForce false;
                 content = {
                   type = "filesystem";
                   format = "btrfs";
                   mountpoint = "/home/percygt/data";
                   mountOptions = ["compress=lzo" "x-gvfs-show"];
-                  extraArgs = ["-L" "DATA" "-f"];
+                  extraArgs = ["-L" "data" "-f"];
                 };
               };
+            };
+          };
+        };
+      };
+    };
+    #------------------------------------------------------------------------------
+    lvm_vg = {
+      root_vg = {
+        type = "lvm_vg";
+        lvs = {
+          root = {
+            size = "100%FREE";
+            content = {
+              type = "btrfs";
+              extraArgs = ["-f"];
+              subvolumes = {
+                "root" = {
+                  mountpoint = "/";
+                };
+                "persist" = {
+                  mountOptions = ["compress=lzo" "noatime"];
+                  mountpoint = "/persist";
+                };
+                "nix" = {
+                  mountOptions = ["compress=lzo" "noatime"];
+                  mountpoint = "/nix";
+                };
+                "var/log" = {
+                  mountOptions = ["compress=lzo" "noatime"];
+                  mountpoint = "/var/log";
+                };
+              };
+            };
+          };
+          windows = {
+            size = "80G";
+            content = {
+              type = "filesystem";
+              format = "xfs";
+              mountpoint = "/home/percygt/windows";
+              mountOptions = ["defaults"];
+              extraArgs = ["-L" "windows" "-f"];
             };
           };
         };

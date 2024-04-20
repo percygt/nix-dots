@@ -77,10 +77,6 @@
         profile = "vm-sway";
         desktop = "sway";
       };
-      vm-gnome = libz.mkSystem {
-        profile = "vm-gnome";
-        desktop = "gnome";
-      };
       iso-tty = libz.mkSystem {
         profile = "iso-tty";
         useIso = true;
@@ -94,10 +90,6 @@
     homeManagerModules.default = ./home;
 
     homeConfigurations = {
-      vm-gnome = libz.mkHome {
-        profile = "vm-gnome";
-        desktop = "gnome";
-      };
       furies = libz.mkHome {
         profile = "furies";
         desktop = "sway";
