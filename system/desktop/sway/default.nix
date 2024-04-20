@@ -1,6 +1,5 @@
 {
   pkgs,
-  username,
   config,
   ...
 }: {
@@ -15,16 +14,15 @@
     wrapperFeatures.gtk = true;
   };
 
-  # systemd.services."home-manager-${username}" = {
-  #   before = ["display-manager.service"];
-  #   wantedBy = ["multi-user.target"];
-  # };
-  security.polkit.enable = true;
+  environment.etc."greetd/environments".text = ''
+    sway
+  '';
   programs = {
     dconf.enable = true;
     file-roller.enable = true;
   };
   security = {
+    polkit.enable = true;
     pam = {
       services = {
         # unlock gnome keyring automatically with greetd
