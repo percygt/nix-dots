@@ -12,10 +12,6 @@
     inputs.impermanence.nixosModules.impermanence
   ];
 
-  infosec = {
-    sops.enable = true;
-  };
-
   drivers = {
     bluetooth.enable = true;
     intel.enable = true;

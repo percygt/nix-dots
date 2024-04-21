@@ -58,7 +58,7 @@
 
     formatter = libz.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-    overlays = import ./overlays.nix {inherit inputs;};
+    overlays = import ./overlays {inherit inputs;};
 
     templates = import ./templates;
 

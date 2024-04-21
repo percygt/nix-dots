@@ -4,6 +4,7 @@
   isGeneric,
   config,
   lib,
+  inputs,
   ...
 }: let
   inherit (libx) sway;

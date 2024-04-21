@@ -2,11 +2,11 @@
   imports = [
     ./ssh.nix
     ./gpg.nix
-    ./sops.nix
     ./backup.nix
     ./pass.nix
     ./keepass.nix
     ./common.nix
+    ./sops.nix
   ];
 
   infosec = {
