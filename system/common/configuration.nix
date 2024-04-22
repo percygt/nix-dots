@@ -3,6 +3,7 @@
   lib,
   stateVersion,
   pkgs,
+  useIso,
   ...
 }: {
   nixpkgs.config = {
@@ -19,11 +20,13 @@
 
   system = {
     inherit stateVersion;
-    activationScripts.diff = {
-      supportsDryActivation = true;
-      text = ''
-        ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff /run/current-system "$systemConfig"
-      '';
+    activationScripts = lib.mkIf (!useIso) {
+      diff = {
+        supportsDryActivation = true;
+        text = ''
+          ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff /run/current-system "$systemConfig"
+        '';
+      };
     };
   };
 }

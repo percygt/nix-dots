@@ -36,7 +36,7 @@
         #   })
         # ];
       };
-      loader.timeout = 0;
+      # loader.timeout = 0;
       kernelParams = [
         "quiet"
         "loglevel=3"
