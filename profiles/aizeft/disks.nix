@@ -1,6 +1,6 @@
 {
   lib,
-  disks ? ["/dev/nvme0n1" "/dev/sda"],
+  disks ? ["/dev/nvme0n1" "/dev/sdc"],
   ...
 }: {
   environment.etc = {
