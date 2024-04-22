@@ -1,18 +1,14 @@
-{
-  lib,
-  disks ? ["/dev/nvme0n1" "/dev/sdc"],
-  ...
-}: {
+{lib, ...}: {
   environment.etc = {
     "crypttab".text = ''
-      data  /dev/disk/by-partlabel/sda_data  /persist/system/keys/data.keyfile
+      data  /dev/disk/by-partlabel/disk-home-data  /persist/system/keys/data.keyfile
     '';
   };
   disko.devices = {
     disk = {
       main = {
         type = "disk";
-        device = builtins.elemAt disks 0;
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
@@ -37,15 +33,14 @@
           };
         };
       };
-      sda = {
+      home = {
         type = "disk";
-        device = builtins.elemAt disks 1;
+        device = "/dev/sdb";
         content = {
           type = "gpt";
           partitions = {
             data = {
-              start = "0%";
-              end = "100%";
+              size = "100%";
               content = {
                 type = "luks";
                 name = "data";
