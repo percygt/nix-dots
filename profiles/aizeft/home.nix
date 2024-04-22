@@ -9,7 +9,12 @@
     inputs.impermanence.nixosModules.home-manager.impermanence
   ];
 
-  # wayland.windowManager.sway.extraOptions = ["--unsupported-gpu"];
+  browser.brave.enable = true;
+
+  wayland.windowManager.sway.extraOptions = ["--unsupported-gpu"];
+
+  home.sessionVariables.WLR_RENDERER = lib.mkForce "gles2";
+
   home.persistence."/persist/home/${username}" = {
     directories = [
       ".local/share/nix"
@@ -18,13 +23,11 @@
       ".local/share/fish"
       ".local/share/zoxide"
       ".config/BraveSoftware/Brave-Browser"
-    ];
-    files = [
-      ".local/share/tmux/resurrect/last"
+      ".local/share/tmux/resurrect"
     ];
     allowOther = true;
   };
-  home.sessionVariables.WLR_RENDERER = lib.mkForce "gles2";
+
   desktop = {
     modules = {
       xdg = {
@@ -36,15 +39,14 @@
     };
   };
 
+  dev.git.ghq.enable = true;
+
   editor = {
     neovim.enable = true;
-    # vscode.enable = true;
+    vscode.enable = true;
   };
 
-  terminal = {
-    wezterm.enable = true;
-    foot.enable = true;
-  };
+  terminal.wezterm.enable = true;
 
   bin = {
     kpass.enable = true;
@@ -52,6 +54,7 @@
   };
 
   infosec = {
+    common.enable = true;
     pass.enable = true;
     keepass.enable = true;
     backup.enable = true;

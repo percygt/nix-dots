@@ -4,6 +4,7 @@
       data  /dev/disk/by-partlabel/disk-home-data  /persist/system/keys/data.keyfile
     '';
   };
+
   disko.devices = {
     disk = {
       main = {
@@ -33,6 +34,7 @@
           };
         };
       };
+
       home = {
         type = "disk";
         device = "/dev/sdb";
@@ -63,6 +65,7 @@
         };
       };
     };
+
     #------------------------------------------------------------------------------
     lvm_vg = {
       root_vg = {

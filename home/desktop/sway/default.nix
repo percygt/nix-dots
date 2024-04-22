@@ -66,14 +66,6 @@ in {
     swaynag.enable = true;
     extraConfig = ''
       for_window [workspace="2"] gaps inner current set 0
-      for_window [app_id="ddterm"] move scratchpad, resize set width 1300 height 700
-      # for_window [title="dropdown"] {
-      #   floating enable
-      #   border none
-      #   resize set width 102 ppt height 50 ppt
-      #   move absolute position 0 37
-      #   move container to scratchpad
-      # }
     '';
     config = rec {
       modifier = "Mod4";
@@ -81,6 +73,7 @@ in {
       down = "j";
       left = "h";
       right = "l";
+
       terminal = "${wezterm}/bin/wezterm";
 
       workspaceLayout = "tabbed";
@@ -96,7 +89,7 @@ in {
       keybindings =
         {
           "${modifier}+f" = "exec ${pkgs.foot}/bin/foot";
-          "${modifier}+w" = "exec ${quickterm}/bin/i3-quickterm shell";
+          "${modifier}+w" = "exec i3-quickterm shell";
           "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Shift+c" = "reload";

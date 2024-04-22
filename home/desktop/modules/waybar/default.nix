@@ -40,7 +40,7 @@ in {
         passthrough = false;
         gtk-layer-shell = true;
 
-        modules-left = ["sway/workspaces"];
+        modules-left = ["sway/workspaces" "sway/window"];
         modules-center = ["sway/mode" "clock"];
         modules-right = [
           "idle_inhibitor"
@@ -56,7 +56,9 @@ in {
           "battery#bat2"
           "group/group-power"
         ];
-
+        "sway/window" = {
+          "format" = "{}";
+        };
         "sway/workspaces" = {
           format = "{icon}";
           format-icons = {

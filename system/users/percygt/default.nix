@@ -27,13 +27,13 @@ in {
       extraGroups =
         [
           "audio"
-          "networkmanager"
           "users"
           "video"
           "wheel"
           "input"
         ]
         ++ ifExists [
+          "networkmanager"
           "docker"
           "git"
           "kvm"
