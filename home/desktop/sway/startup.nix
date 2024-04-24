@@ -7,7 +7,9 @@
     {command = "${pkgs.keepassxc}/bin/keepassxc";}
     {command = "${pkgs.stash.wezterm_nightly}/bin/wezterm";}
     {command = "${pkgs.i3-quickterm}/bin/i3-quickterm shell";}
-    {command = "${pkgs.mako}/bin/mako";}
+    {
+      command = "${pkgs.mako}/bin/mako";
+    }
     {command = "tmux kill-server";}
     {
       command = "systemctl --user restart waybar.service";

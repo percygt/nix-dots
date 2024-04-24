@@ -30,6 +30,9 @@
       services = {
         # unlock gnome keyring automatically with greetd
         greetd.enableGnomeKeyring = true;
+        swaylock = {
+          text = "auth include login";
+        };
       };
     };
   };
@@ -39,11 +42,11 @@
     gvfs.enable = true;
     dbus = {
       enable = true;
-      implementation = "broker";
-      # Make the gnome keyring work properly
-      packages = [
-        pkgs.gnome3.gnome-keyring
-        pkgs.gcr
+      packages = with pkgs; [
+        gcr
+        gnome.gnome-settings-daemon
+        dconf
+        gnome3.gnome-keyring
       ];
     };
 
