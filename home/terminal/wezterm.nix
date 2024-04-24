@@ -126,7 +126,7 @@ in {
           		{ key = "F11",    mods = "NONE",  action = wezterm.action.ToggleFullScreen },
           		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
           	},
-          	-- default_prog = { '${pkgs.tmux}/bin/tmux', 'new', '-As', 'main' }
+          	default_prog = { 'tmux', 'new', '-As', 'main' }
           }
         '';
     };

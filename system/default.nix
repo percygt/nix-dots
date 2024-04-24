@@ -8,6 +8,7 @@
     ./users
     ./infosec
     ./net
+    ./virtualisation
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 }

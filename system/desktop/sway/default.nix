@@ -12,10 +12,6 @@
   programs.sway = {
     enable = true;
     wrapperFeatures.gtk = true;
-    extraOptions = [
-      "--verbose"
-      "--debug"
-    ];
   };
 
   environment.etc."greetd/environments".text = ''
@@ -43,6 +39,7 @@
     gvfs.enable = true;
     dbus = {
       enable = true;
+      implementation = "broker";
       # Make the gnome keyring work properly
       packages = [
         pkgs.gnome3.gnome-keyring
@@ -54,16 +51,19 @@
       gnome-keyring.enable = true;
       sushi.enable = true;
     };
+
     greetd = {
       enable = true;
+      vt = 2;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --sessions ${config.services.xserver.displayManager.sessionData.desktops}/share/xsessions:${config.services.xserver.displayManager.sessionData.desktops}/share/wayland-sessions --time --remember --remember-user-session";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --sessions ${config.services.displayManager.sessionData.desktops}/share/xsessions:${config.services.displayManager.sessionData.desktops}/share/wayland-sessions --time --remember --remember-user-session";
           user = "greeter";
         };
       };
     };
   };
+
   systemd.services.greetd.serviceConfig = {
     Type = "idle";
     StandardInput = "tty";

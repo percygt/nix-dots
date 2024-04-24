@@ -25,6 +25,7 @@
     nfu = "nix flake update";
     tldrf = "tldr --list | fzf --preview=\"tldr {1} --color=always\" --preview-window=right,70% | xargs tldr";
     nfui = "nix flake lock --update-input";
+    hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
     ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
     tm = "tmux new -As main";
   };

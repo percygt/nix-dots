@@ -1,4 +1,8 @@
-{pkgs, username, ...}: {
+{
+  pkgs,
+  username,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     libguestfs
     win-virtio
@@ -8,9 +12,9 @@
     virtiofsd
   ];
   programs.dconf.enable = true;
-  
-  users.users.${username}.extraGroups = ["libvirtd"];
-  
+
+  users.users.${username}.extraGroups = ["libvirtd" "kvm"];
+
   virtualisation = {
     kvmgt.enable = true;
     spiceUSBRedirection.enable = true;

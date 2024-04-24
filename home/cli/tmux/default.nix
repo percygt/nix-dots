@@ -21,6 +21,13 @@
       moreutils
       fzf
     ];
+
+    xdg.configFile = {
+      "tmux/.tmux-env".text = ''
+        TMUX_TMPDIR="${config.home.sessionVariables.TMUX_TMPDIR}"
+      '';
+    };
+
     programs.tmux = {
       enable = true;
       baseIndex = 1;

@@ -1,35 +1,19 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  libx,
+  ...
+}: {
   nixpkgs.config.joypixels.acceptLicense = true;
   fonts = {
     enableDefaultPackages = false;
     fontDir.enable = true;
-    packages = with pkgs; [
-      (nerdfonts.override {
-        fonts = [
-          "VictorMono"
-          "JetBrainsMono"
-        ];
-      })
-      martian-mono
-      source-serif
-      rubik
-      work-sans
-      noto-fonts
-      noto-fonts-cjk
-      joypixels
-      noto-fonts-emoji
-
-      corefonts
-      vistafonts
-      ubuntu_font_family
-    ];
-
+    packages = libx.fonts.packages pkgs;
     fontconfig = {
       antialias = true;
       defaultFonts = {
         serif = ["Source Serif"];
         sansSerif = ["Work Sans" "Rubik" "Noto Sans"];
-        monospace = ["JetBrainsMono Nerd Font" "VictorMono Nerd Font" "Martian Mono"];
+        monospace = ["JetBrainsMono Nerd Font" "VictorMono Nerd Font" "GeistMono Nerd Font"];
         emoji = ["Joypixels" "Noto Color Emoji"];
       };
       enable = true;

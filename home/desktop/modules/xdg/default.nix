@@ -3,7 +3,9 @@
   config,
   flakeDirectory,
   ...
-}: {
+}: let
+  inherit ((import ./file-associations.nix)) associations;
+in {
   options = {
     desktop.modules.xdg = {
       enable =
@@ -15,7 +17,10 @@
   config = lib.mkIf config.desktop.modules.xdg.enable {
     xdg = {
       enable = true;
-      mime.enable = true;
+      mimeApps = {
+        enable = true;
+        defaultApplications = associations;
+      };
       configHome = config.home.homeDirectory + "/.config";
       cacheHome = config.home.homeDirectory + "/.local/cache";
       dataHome = config.home.homeDirectory + "/.local/share";

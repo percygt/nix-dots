@@ -2,6 +2,7 @@
   imports = [
     ./foot.nix
     ./wezterm.nix
+    ./kitty.nix
   ];
 
   terminal = {

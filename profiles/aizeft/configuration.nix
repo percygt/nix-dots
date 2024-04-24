@@ -18,7 +18,10 @@
     nvidia-prime.enable = true;
   };
 
-  core.net.wpa.enable = true;
+  core = {
+    net.wpa.enable = true;
+    battery.chargeUpto = 80;
+  };
 
   programs.sway.extraOptions = ["--unsupported-gpu"];
 
@@ -48,6 +51,7 @@
       directories = [
         "/var/lib/systemd/coredump"
         "/var/lib/nixos"
+        "/var/lib/flatpak"
         "/var/lib/bluetooth"
         "/srv"
         "/etc/ssh"
@@ -74,13 +78,13 @@
 
   fileSystems."/persist".neededForBoot = true;
 
-  environment.sessionVariables = {
-    WLR_DRM_NO_ATOMIC = "1";
-    WLR_NO_HARDWARE_CURSORS = "1";
-    LIBVA_DRIVER_NAME = "nvidia";
-    MOZ_DISABLE_RDD_SANDBOX = "1";
-    EGL_PLATFORM = "wayland";
-  };
+  # environment.sessionVariables = {
+  #   WLR_DRM_NO_ATOMIC = "1";
+  #   WLR_NO_HARDWARE_CURSORS = "1";
+  #   LIBVA_DRIVER_NAME = "nvidia";
+  #   MOZ_DISABLE_RDD_SANDBOX = "1";
+  #   EGL_PLATFORM = "wayland";
+  # };
 
   boot = {
     initrd.availableKernelModules = ["xhci_pci" "vmd" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" "rtsx_usb_sdmmc"];

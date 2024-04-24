@@ -44,7 +44,6 @@ in {
     desktop ? null,
     system ? "x86_64-linux",
     username ? defaultUser,
-    overlays ? [],
   }: let
     inherit (inputs.nixpkgs) lib;
     mkArgs = import ./mkArgs.nix {

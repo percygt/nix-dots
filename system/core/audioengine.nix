@@ -12,6 +12,7 @@
   };
 
   config = lib.mkIf config.core.audioengine.enable {
+    sound.enable = true;
     programs.noisetorch.enable = true;
     hardware.pulseaudio.enable = lib.mkForce false;
     security.rtkit.enable = true;

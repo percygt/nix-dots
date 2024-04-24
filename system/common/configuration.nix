@@ -29,4 +29,6 @@
       };
     };
   };
+
+  hardware.enableRedistributableFirmware = true;
 }

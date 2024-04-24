@@ -4,7 +4,10 @@
   ...
 }: {
   imports =
-    [./modules]
+    [
+      ./modules
+      ./programs
+    ]
     ++ lib.optionals (desktop != null) [
       ./${desktop}
     ];

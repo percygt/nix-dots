@@ -1,8 +1,6 @@
 {
-  flakeDirectory,
   inputs,
   username,
-  lib,
   ...
 }: {
   imports = [
@@ -13,17 +11,22 @@
 
   wayland.windowManager.sway.extraOptions = ["--unsupported-gpu"];
 
-  home.sessionVariables.WLR_RENDERER = lib.mkForce "gles2";
+  # home.sessionVariables.WLR_RENDERER = lib.mkForce "gles2";
 
   home.persistence."/persist/home/${username}" = {
     directories = [
       ".local/share/nix"
       ".local/share/atuin"
       ".local/share/nvim"
+      ".local/state/nvim"
       ".local/share/fish"
       ".local/share/zoxide"
       ".config/BraveSoftware/Brave-Browser"
       ".local/share/tmux/resurrect"
+      ".cache/io.elementary.appcenter/"
+      ".local/share/flatpak/"
+      ".var/app/"
+      ".codeium"
     ];
     allowOther = true;
   };
@@ -46,7 +49,10 @@
     vscode.enable = true;
   };
 
-  terminal.wezterm.enable = true;
+  terminal = {
+    wezterm.enable = true;
+    kitty.enable = true;
+  };
 
   bin = {
     kpass.enable = true;

@@ -24,6 +24,7 @@ in {
       isNormalUser = true;
       hashedPasswordFile = config.sops.secrets.userHashedPassword.path;
       shell = pkgs.fish;
+      packages = [pkgs.home-manager];
       extraGroups =
         [
           "audio"
@@ -34,10 +35,7 @@ in {
         ]
         ++ ifExists [
           "networkmanager"
-          "docker"
           "git"
-          "kvm"
-          "libvirt"
         ];
     };
   };

@@ -17,4 +17,8 @@ buildPythonPackage rec {
     i3ipc
   ];
   doCheck = false;
+
+  preBuild = ''
+    sed -i '/TERMS = {/a\    "wezterm": TERM("wezterm", execopt="start", titleopt=None),' i3_quickterm/main.py
+  '';
 }

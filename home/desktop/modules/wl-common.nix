@@ -1,7 +1,17 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   services = {
-    avizo.enable = true;
-
+    avizo = {
+      enable = true;
+      settings = {
+        default = {
+          time = 1.0;
+          y-offset = 0.5;
+          fade-in = 0.1;
+          fade-out = 0.2;
+          padding = 10;
+        };
+      };
+    };
     clipman.enable = true;
 
     wlsunset = {
@@ -13,7 +23,7 @@
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     Unit.Description = "polkit-gnome-authentication-agent-1";
-    Install.WantedBy = [ "graphical-session.target" ];
+    Install.WantedBy = ["graphical-session.target"];
     Service = {
       Type = "simple";
       ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";

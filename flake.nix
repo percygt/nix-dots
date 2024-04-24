@@ -5,10 +5,13 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
     nix-stash.url = "github:percygt/nix-stash";
+
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -90,6 +93,10 @@
     homeManagerModules.default = ./home;
 
     homeConfigurations = {
+      aizeft = libz.mkHome {
+        profile = "aizeft";
+        desktop = "sway";
+      };
       furies = libz.mkHome {
         profile = "furies";
         desktop = "sway";

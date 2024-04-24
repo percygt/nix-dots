@@ -101,14 +101,14 @@ in {
       };
     };
 
-    dconf.settings = {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-        cursor-theme = config.gtk.cursorTheme.name;
-        gtk-theme = config.gtk.theme.name;
-        icon-theme = config.gtk.iconTheme.name;
-        # font-name = FONT;
-      };
-    };
+    # dconf.settings = {
+    #   "org/gnome/desktop/interface" = {
+    #     color-scheme = "prefer-dark";
+    #     cursor-theme = config.gtk.cursorTheme.name;
+    #     gtk-theme = config.gtk.theme.name;
+    #     icon-theme = config.gtk.iconTheme.name;
+    #     # font-name = FONT;
+    #   };
+    # };
   };
 }
