@@ -1,6 +1,5 @@
 {pkgs, ...}: {
   programs = {
-    firefox.enable = true;
     mpv.enable = true;
   };
 

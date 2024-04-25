@@ -5,8 +5,8 @@
 }: {
   imports =
     [
-      ./modules
-      ./programs
+      ./common
+      ./apps
     ]
     ++ lib.optionals (desktop != null) [
       ./${desktop}

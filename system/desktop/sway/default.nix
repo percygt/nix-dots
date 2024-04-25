@@ -3,14 +3,24 @@
   config,
   ...
 }: {
+  imports = [./xremap.nix];
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
+    wlr = {
+      enable = true;
+      settings.screencast = {
+        output_name = "DP-1";
+        max_fps = 30;
+        chooser_type = "simple";
+        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or -s '#99d1ce33'";
+      };
+    };
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
   };
 
   programs.sway = {
     enable = true;
+    package = pkgs.swayfx.overrideAttrs (_: {passthru.providedSessions = ["sway"];});
     wrapperFeatures.gtk = true;
   };
 
@@ -22,6 +32,7 @@
   programs = {
     dconf.enable = true;
     file-roller.enable = true;
+    gnome-disks.enable = true;
   };
 
   security = {
@@ -57,7 +68,6 @@
 
     greetd = {
       enable = true;
-      vt = 2;
       settings = {
         default_session = {
           command = "${pkgs.greetd.tuigreet}/bin/tuigreet --sessions ${config.services.displayManager.sessionData.desktops}/share/xsessions:${config.services.displayManager.sessionData.desktops}/share/wayland-sessions --time --remember --remember-user-session";

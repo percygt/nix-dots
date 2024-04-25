@@ -18,6 +18,9 @@
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     nixpkgs-wayland.inputs.nixpkgs.follows = "nixpkgs";
 
+    wayland-pipewire-idle-inhibit.url = "github:rafaelrc7/wayland-pipewire-idle-inhibit";
+    wayland-pipewire-idle-inhibit.inputs.nixpkgs.follows = "nixpkgs";
+
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland.inputs.nixpkgs.follows = "nixpkgs";
     hyprland-contrib.url = "github:hyprwm/contrib";
@@ -80,12 +83,12 @@
         profile = "vm-sway";
         desktop = "sway";
       };
-      iso-tty = libz.mkSystem {
-        profile = "iso-tty";
+      iso-minimal = libz.mkSystem {
+        profile = "iso-minimal";
         useIso = true;
       };
-      iso-gnome = libz.mkSystem {
-        profile = "iso-gnome";
+      iso-graphical = libz.mkSystem {
+        profile = "iso-graphical";
         useIso = true;
       };
     };

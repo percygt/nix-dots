@@ -18,6 +18,7 @@
       ".local/share/nix"
       ".local/share/atuin"
       ".local/share/nvim"
+      ".local/share/keyrings"
       ".local/state/nvim"
       ".local/share/fish"
       ".local/share/zoxide"

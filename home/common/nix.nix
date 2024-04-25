@@ -6,7 +6,7 @@
   nix = {
     package = lib.mkDefault pkgs.nixVersions.unstable;
     settings = {
-      experimental-features = ["nix-command" "flakes" "repl-flake"];
+      experimental-features = ["nix-command" "flakes"];
       auto-optimise-store = true;
       warn-dirty = false;
       max-jobs = "auto";

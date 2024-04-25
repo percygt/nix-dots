@@ -7,22 +7,31 @@
   down,
   left,
   right,
+  lib,
   ...
 }: let
   inherit (libx) sway;
   inherit (sway) mkWorkspaceKeys mkDirectionKeys;
+  toggle-sway-window = pkgs.writeBabashkaScript {
+    name = "toggle-sway-window";
+    text = builtins.readFile ./toggle-sway-window.clj;
+  };
 in {
   keybindings =
     mkDirectionKeys modifier {inherit up down left right;}
     // mkWorkspaceKeys modifier ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"]
     // {
-      "${modifier}+f" = "exec ${pkgs.foot}/bin/foot";
+      "${modifier}+Shift+f" = "exec ${pkgs.foot}/bin/foot";
       # "${modifier}+Shift+k" = "exec ${pkgs.kitty}/bin/kitty";
       "${modifier}+w" = "exec ${pkgs.i3-quickterm}/bin/i3-quickterm shell";
       "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm";
       "${modifier}+Shift+q" = "kill";
       "${modifier}+Shift+c" = "reload";
-
+      "${modifier}+t" = "exec ${lib.getExe toggle-sway-window} --id btop --width 90 --height 90 -- foot --app-id=btop btop";
+      "${modifier}+p" = "exec ${lib.getExe toggle-sway-window} --id pavucontrol --width 80 --height 80 -- pavucontrol";
+      "${modifier}+m" = "exec ${lib.getExe toggle-sway-window} --id gnome-disks -- gnome-disks";
+      "${modifier}+v" = "exec ${lib.getExe toggle-sway-window} --id org.keepassxc.KeePassXC --width 80 --height 80 -- keepassxc";
+      "${modifier}+f" = "exec ${lib.getExe toggle-sway-window} --id yazi --width 80 --height 80 -- foot --app-id=yazi fish -c yazi ~";
       "${modifier}+i" = "exec ${pkgs.rofi-wayland}/bin/rofi -show emoji";
       "${modifier}+s" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun";
 

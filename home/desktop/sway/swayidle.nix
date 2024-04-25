@@ -1,25 +1,28 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  loginctl = "${pkgs.systemd}/bin/loginctl";
+  swaymsg = "${pkgs.sway}/bin/swaymsg";
+  systemctl = "${pkgs.systemd}/bin/systemctl";
+in {
   services.swayidle = {
     enable = true;
-    timeouts = [
-      {
-        timeout = 295;
-        command = "${pkgs.libnotify}/bin/notify-send 'Locking in 5 seconds' -t 5000";
-      }
-      {
-        timeout = 300;
-        command = "${pkgs.swaylock}/bin/swaylock";
-      }
-      {
-        timeout = 360;
-        command = "${pkgs.sway}/bin/swaymsg 'output * dpms off'";
-        resumeCommand = "${pkgs.sway}/bin/swaymsg 'output * dpms on'";
-      }
-    ];
+    systemdTarget = "graphical-session.target";
+
     events = [
       {
-        event = "before-sleep";
-        command = "${pkgs.swaylock}/bin/swaylock";
+        event = "lock";
+        command = "${systemctl} --user start swaylock";
+      }
+    ];
+
+    timeouts = [
+      {
+        timeout = 5 * 60;
+        command = "${swaymsg} 'output * power off'";
+        resumeCommand = "${swaymsg} 'output * power on'";
+      }
+      {
+        timeout = 6 * 60;
+        command = "${loginctl} lock-session";
       }
     ];
   };

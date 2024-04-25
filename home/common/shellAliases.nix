@@ -19,7 +19,8 @@
     curl = "curlie";
     dc = "docker compose";
     nd = "nix develop";
-    niso = "nix build .#nixosConfigurations.dot-iso.config.system.build.isoImage --impure";
+    buildIsoMinimal = "nix build .#nixosConfigurations.iso-minimal.config.system.build.isoImage";
+    buildIsoGraphical = "nix build .#nixosConfigurations.iso-graphical.config.system.build.isoImage";
     n2ne = "nvim $FLAKE_PATH/packages/node/packages.json";
     n2ni = "node2nix -i $FLAKE_PATH/packages/node/packages.json -e $FLAKE_PATH/packages/node/node-env.nix -o $FLAKE_PATH/packages/node/packages.nix -c $FLAKE_PATH/packages/node/default.nix";
     nfu = "nix flake update";
@@ -27,6 +28,6 @@
     nfui = "nix flake lock --update-input";
     hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
     ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
-    tm = "tmux new -As main";
+    home = "tmux new -As home";
   };
 }

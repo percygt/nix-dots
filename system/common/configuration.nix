@@ -4,8 +4,13 @@
   stateVersion,
   pkgs,
   useIso,
+  modulesPath,
   ...
 }: {
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
+
   nixpkgs.config = {
     allowUnfree = true;
     config.permittedInsecurePackages = [

@@ -1,8 +1,12 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }: {
+  imports = [
+    inputs.wayland-pipewire-idle-inhibit.homeModules.default
+  ];
   services = {
     clipman.enable = true;
 
@@ -24,6 +28,19 @@
       latitude = "51.51";
       longitude = "-2.53";
     };
+
+    wayland-pipewire-idle-inhibit = {
+      enable = true;
+      package = pkgs.wayland-pipewire-idle-inhibit;
+      systemdTarget = "sway-session.target";
+      settings = {
+        verbosity = "INFO";
+        idle_inhibitor = "wayland";
+        media_minimum_duration = 30;
+        sink_whitelist = [];
+        node_blacklist = [];
+      };
+    };
   };
 
   systemd.user.services = {
@@ -38,6 +55,7 @@
         WantedBy = ["sway-session.target"];
       };
     };
+
     nm-applet = {
       Unit = {
         Description = "Network manager applet";
@@ -50,6 +68,7 @@
         WantedBy = ["sway-session.target"];
       };
     };
+
     polkit-gnome-authentication-agent-1 = {
       Unit.Description = "polkit-gnome-authentication-agent-1";
       Install.WantedBy = ["graphical-session.target"];
@@ -61,6 +80,7 @@
         TimeoutStopSec = 10;
       };
     };
+
     btop = {
       Unit = {
         Description = "Btop system resource dashboard";

@@ -39,10 +39,6 @@
             directory = ".local/share/gnupg";
             mode = "0700";
           }
-          {
-            directory = ".local/share/keyrings";
-            mode = "0700";
-          }
         ];
       };
     };

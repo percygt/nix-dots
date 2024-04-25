@@ -16,7 +16,10 @@
     ./packages.nix
     ./swayidle.nix
     ./swaylock.nix
+    ./wpapered.nix
   ];
+  services.caffeine.enable = true;
+  xsession.importedVariables = ["PATH"];
   wayland.windowManager.sway = {
     enable = true;
     swaynag.enable = true;

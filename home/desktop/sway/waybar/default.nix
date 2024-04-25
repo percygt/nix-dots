@@ -5,18 +5,6 @@
   libx,
   ...
 }: let
-  bluetoothToggle = pkgs.writeShellApplication {
-    name = "bluetooth-toggle";
-    runtimeInputs = with pkgs; [gnugrep bluez];
-    text = ''
-      if [[ "$(bluetoothctl show | grep -Po "Powered: \K(.+)$")" =~ no ]]; then
-        bluetoothctl power on
-        bluetoothctl discoverable on
-      else
-        bluetoothctl power off
-      fi
-    '';
-  };
   inherit (libx) toRasi fonts colors;
 in {
   programs.waybar = {
@@ -36,36 +24,31 @@ in {
         passthrough = false;
         gtk-layer-shell = true;
 
-        modules-left = ["sway/workspaces" "sway/window"];
-        modules-center = ["sway/mode" "clock"];
+        modules-left = ["idle_inhibitor" "sway/workspaces" "sway/window"];
+        modules-center = ["sway/mode" "clock" "custom/wlsunset"];
         modules-right = [
-          "idle_inhibitor"
           "tray"
-          "network"
           "backlight"
+          "network"
           "cpu"
           "memory"
           "temperature"
-          "pulseaudio#source"
-          # "wireplumber"
-          "bluetooth"
-          "battery#bat2"
+          "wireplumber"
+          # "bluetooth"
+          "battery"
           "group/group-power"
         ];
-        "sway/window" = {
-          "format" = "{}";
-        };
         "sway/workspaces" = {
           format = "{icon}";
           all-outputs = true;
           format-icons = {
-            "1" = "1|";
-            "2" = "2|";
-            "3" = "3|󰙀";
-            "4" = "4|";
-            "5" = "5|";
-            "6" = "6|";
-            "7" = "7|";
+            "1" = "1| ";
+            "2" = "2| ";
+            "3" = "3|󰙀 ";
+            "4" = "4| ";
+            "5" = "5| ";
+            "6" = "6| ";
+            "7" = "7| ";
           };
           persistent-workspaces = {
             "1" = [];
@@ -78,8 +61,35 @@ in {
           };
           on-click = "activate";
         };
+        "custom/wlsunset" = {
+          exec = "if systemctl --user --quiet is-active wlsunset.service; then echo ' '; else echo ' '; fi";
+          interval = 2;
+        };
 
-        "network" = {
+        "sway/window" = {
+          "format" = "{}";
+        };
+
+        cpu = {
+          interval = 10;
+          format = "{usage} ";
+          on-click = "foot --app-id=system_monitor btop";
+        };
+        memory = {
+          interval = 30;
+          format = "{} ";
+        };
+        wireplumber = {
+          format = "{node_name} {volume} {icon}";
+          format-muted = "{volume} ";
+          format-icons = {default = ["" ""];};
+          on-click = "pavucontrol";
+          on-click-right = "cycle-pulse-sink";
+          on-click-middle = "helvum";
+          max-volume = 100;
+          scroll-step = 5;
+        };
+        network = {
           format-alt = "{ifname}";
           format-disconnected = "Disconnected ⚠";
           format-ethernet = "{ifname} 󰛳";
@@ -88,7 +98,7 @@ in {
           interval = 15;
           tooltip-format = "{ifname} / {essid} ({signalStrength}%) / {ipaddr}";
           max-length = 15;
-          on-click = "${pkgs.foot}/bin/foot -e ${pkgs.networkmanager}/bin/nmtui";
+          on-click = "foot ${pkgs.networkmanagerapplet}/bin/nm-applet";
         };
 
         "idle_inhibitor" = {
@@ -107,17 +117,13 @@ in {
           };
           format = "{capacity}% {icon}";
           format-alt = "{time} {icon}";
-          format-charging = "{capacity}% ";
+          format-charging = "{capacity} ";
           format-full = "{capacity}% {icon}";
           format-good = "{capacity}% {icon}";
           format-icons = ["" "" "" "" ""];
           format-plugged = "{capacity}% ";
+          max-length = 40;
         };
-
-        "battery#bat2".bat = "BAT2";
-
-        backlight.format = "{percent}% {icon}";
-        backlight.format-icons = ["" ""];
 
         "group/group-power" = {
           orientation = "inherit";
@@ -128,7 +134,7 @@ in {
           modules = [
             "custom/power"
             # "custom/quit"
-            # "custom/lock"
+            "custom/lock"
             "custom/reboot"
           ];
         };
@@ -139,11 +145,11 @@ in {
         #   tooltip = false;
         # };
         #
-        # "custom/lock" = {
-        #   format = "󰍁";
-        #   on-click = "${lib.getExe pkgs.hyprlock}";
-        #   tooltip = false;
-        # };
+        "custom/lock" = {
+          format = "󰍁";
+          on-click = "${lib.getExe config.programs.swaylock.package}";
+          tooltip = false;
+        };
         #
         "custom/reboot" = {
           format = "󰜉";
@@ -159,55 +165,16 @@ in {
 
         "clock" = {format = "{:%m.%d %I:%M}";};
         # pattern = "MM.dd.yy' 🌣 'hh:mm:ss";
-
+        backlight = {
+          interval = 5;
+          format = "{percent} {icon}";
+          format-icons = ["" "" ""];
+        };
         "sway/mode".format = "<span style=\"italic\">{}</span>";
-
-        "wireplumber" = {
-          format = "{volume}% {icon}";
-          format-muted = "";
-          on-click = "${lib.getExe pkgs.pavucontrol}";
-          format-icons = ["" "" ""];
-          tooltip-format = "{volume}% / {node_name}";
-        };
-
-        "pulseaudio#source" = {
-          format = "{volume}% {icon} {format_source}";
-          format-bluetooth = "{volume}% {icon} {format_source}";
-          format-bluetooth-muted = " {icon} {format_source}";
-          format-muted = " {format_source}";
-          format-source = "{volume}% ";
-          format-source-muted = "";
-          format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = ["" "" ""];
-          };
-          on-click = "${lib.getExe pkgs.pavucontrol}";
-          tooltip-format = "{source_volume}% / {desc}";
-        };
 
         "temperature" = {
           critical-threshold = 80;
           format = "{temperatureC}°C ";
-        };
-
-        cpu.format = "{usage}% 󰍛";
-        cpu.tooltip = true;
-
-        memory.format = "{}% ";
-        memory.tooltip = true;
-
-        "bluetooth" = {
-          format-on = "";
-          format-connected = "{device_alias} ";
-          format-off = "";
-          format-disabled = "";
-          on-click-right = "${lib.getExe' pkgs.blueberry "blueberry"}";
-          on-click = "${lib.getExe bluetoothToggle}";
         };
       };
     };

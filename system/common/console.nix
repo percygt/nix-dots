@@ -7,13 +7,10 @@
   inherit (libx) fonts colors;
   inherit (colors.conversions) hexToRGBString;
 in {
-  # console = {
-  #   earlySetup = true;
-  #   packages = with pkgs; [terminus_font powerline-fonts];
-  #   font = "ter-powerline-v32n";
-  # };
-  # High-DPI console.
-  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  console = {
+    earlySetup = true;
+    font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  };
 
   services.kmscon = {
     enable = true;

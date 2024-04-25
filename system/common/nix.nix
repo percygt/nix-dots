@@ -2,11 +2,13 @@
   lib,
   inputs,
   config,
+  pkgs,
   ...
 }: {
   nix = {
+    package = pkgs.nixVersions.unstable;
     settings = {
-      experimental-features = ["nix-command" "flakes" "repl-flake"];
+      experimental-features = ["nix-command" "flakes"];
       builders-use-substitutes = true;
       auto-optimise-store = true;
       warn-dirty = false;

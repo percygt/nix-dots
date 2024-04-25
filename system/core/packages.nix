@@ -21,6 +21,7 @@
       aria2
       wget
 
+      wev
       lsof
       dig
       dua

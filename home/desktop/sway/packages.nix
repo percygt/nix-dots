@@ -1,15 +1,15 @@
 {pkgs, ...}: {
-  home.packages = [
-    pkgs.grim
-    pkgs.kanshi
-    pkgs.libnotify
-    pkgs.pamixer
-    pkgs.slurp
-    pkgs.swaylock
-    pkgs.wdisplays
-    pkgs.wl-clipboard
-    pkgs.wl-mirror
-    pkgs.xdg-utils
-    pkgs.xwayland
+  home.packages = with pkgs; [
+    grim
+    kanshi
+    libnotify
+    pamixer
+    slurp
+    wdisplays
+    wl-clipboard
+    wl-mirror
+    xdg-utils
+    xwayland
+    btop
   ];
 }

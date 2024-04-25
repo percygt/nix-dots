@@ -21,7 +21,7 @@ in {
     right = "l";
     terminal = "${pkgs.wezterm}/bin/wezterm";
     output."*".bg = "${wallpaper} fill";
-    inherit (import ./keybindings.nix {inherit modifier pkgs libx wezterm up down left right;}) keybindings;
+    inherit (import ./keybindings.nix {inherit modifier pkgs libx lib wezterm up down left right;}) keybindings;
     inherit (import ./startup.nix {inherit config pkgs;}) startup;
     inherit (import ./window.nix) window;
 
