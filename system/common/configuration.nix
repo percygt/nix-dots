@@ -3,7 +3,7 @@
   lib,
   stateVersion,
   pkgs,
-  useIso,
+  isIso,
   modulesPath,
   ...
 }: {
@@ -25,7 +25,7 @@
 
   system = {
     inherit stateVersion;
-    activationScripts = lib.mkIf (!useIso) {
+    activationScripts = lib.mkIf (!isIso) {
       diff = {
         supportsDryActivation = true;
         text = ''

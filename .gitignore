@@ -6,7 +6,6 @@
 *.asc
 *.pem
 *.keyfile
-*iso*
 result
 atuin
 key

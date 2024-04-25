@@ -9,7 +9,7 @@
   mkShScripts = scripts:
     map (
       script:
-        pkgs.writeShellScriptBin (lib.removeSuffix ".sh" script) (builtins.readFile ./scripts/installer/${script})
+        pkgs.writeShellScriptBin (lib.removeSuffix ".sh" script) (builtins.readFile ./scripts/${script})
     )
     scripts;
 in {
@@ -20,7 +20,7 @@ in {
 
         runtimeInputs =
           [gum rsync age sops yq-go]
-          ++ mkShScripts (mkFileList ./scripts/installer);
+          ++ mkShScripts (mkFileList ./scripts);
 
         text = ''
           if [ "$(id -u)" -eq 0 ]; then
@@ -36,7 +36,7 @@ in {
           cloneDots
 
           TARGET_USER="${targetUser}"
-          TARGET_HOST=$(find "$DOTS_DIR"/profiles/*/configuration.nix | cut -d'/' -f6 | grep -v "iso" | gum choose)
+          TARGET_HOST=$(find "$DOTS_DIR"/profiles/*/configuration.nix | cut -d'/' -f6 | gum choose)
 
           setSecrets "$TARGET_HOST"
           setDisks "$TARGET_HOST"

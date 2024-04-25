@@ -11,7 +11,7 @@ in {
   forEachSystem = inputs.nixpkgs.lib.genAttrs systems;
   mkSystem = {
     profile,
-    useIso ? false,
+    isIso ? false,
     desktop ? null,
     system ? "x86_64-linux",
     username ? defaultUser,
@@ -19,14 +19,14 @@ in {
     inherit (inputs.nixpkgs) lib;
     mkArgs =
       import ./mkArgs.nix
-      {inherit inputs outputs self username desktop stateVersion profile useIso;};
+      {inherit inputs outputs self username desktop stateVersion profile isIso;};
     homeArgs = mkArgs.args;
   in
     lib.nixosSystem {
       inherit system;
       modules =
-        if useIso
-        then ["${self}/installer/${profile}/configuration.nix"]
+        if isIso
+        then ["${self}/isobuilder/${profile}/configuration.nix"]
         else [outputs.nixosModules.default];
       specialArgs = {inherit homeArgs;} // mkArgs.args;
     };

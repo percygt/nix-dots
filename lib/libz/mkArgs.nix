@@ -7,12 +7,12 @@
   profile,
   isGeneric ? false,
   desktop ? null,
-  useIso ? false,
+  isIso ? false,
 }: rec {
   inherit (inputs.nixpkgs) lib;
 
   users =
-    if useIso
+    if isIso
     then {
       targetUser = username;
       username = "nixos";
@@ -38,7 +38,7 @@
         desktop
         flakeDirectory
         stateVersion
-        useIso
+        isIso
         ;
     }
     // users;

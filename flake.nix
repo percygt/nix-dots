@@ -21,17 +21,6 @@
     wayland-pipewire-idle-inhibit.url = "github:rafaelrc7/wayland-pipewire-idle-inhibit";
     wayland-pipewire-idle-inhibit.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland-contrib.url = "github:hyprwm/contrib";
-    hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
-    hypridle.url = "github:hyprwm/hypridle";
-    hypridle.inputs.nixpkgs.follows = "nixpkgs";
-    hyprlock.url = "github:hyprwm/hyprlock";
-    hyprlock.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland-plugins.url = "github:hyprwm/hyprland-plugins";
-    hyprland-plugins.inputs.hyprland.follows = "hyprland";
-
     nix-colors.url = "github:misterio77/nix-colors";
     xremap.url = "github:xremap/nix-flake";
     impermanence.url = "github:nix-community/impermanence";
@@ -79,17 +68,13 @@
         profile = "vm-lvm";
         desktop = "sway";
       };
-      vm-sway = libz.mkSystem {
-        profile = "vm-sway";
-        desktop = "sway";
+      minimal = libz.mkSystem {
+        profile = "minimal";
+        isIso = true;
       };
-      iso-minimal = libz.mkSystem {
-        profile = "iso-minimal";
-        useIso = true;
-      };
-      iso-graphical = libz.mkSystem {
-        profile = "iso-graphical";
-        useIso = true;
+      graphical = libz.mkSystem {
+        profile = "graphical";
+        isIso = true;
       };
     };
 
