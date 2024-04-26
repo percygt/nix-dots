@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: {
   options = {
@@ -13,6 +12,7 @@
 
   config = lib.mkIf config.core.bootmanagement.enable {
     boot = {
+      tmp.cleanOnBoot = true;
       kernel.sysctl = {
         "net.ipv4.ip_forward" = 1;
         "net.ipv6.conf.all.forwarding" = 1;
@@ -21,10 +21,13 @@
       consoleLogLevel = 0;
 
       loader = {
-        systemd-boot.enable = true;
-        systemd-boot.consoleMode = "auto";
-        # efi.efiSysMountPoint = "/boot/efi";
+        timeout = 0;
         efi.canTouchEfiVariables = true;
+        systemd-boot = {
+          enable = true;
+          configurationLimit = 5;
+          editor = false;
+        };
       };
 
       plymouth = {
@@ -36,7 +39,6 @@
         #   })
         # ];
       };
-      # loader.timeout = 0;
       kernelParams = [
         "quiet"
         "loglevel=3"

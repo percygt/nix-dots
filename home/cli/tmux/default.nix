@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  username,
   ...
 }: {
   options = {
@@ -15,12 +16,20 @@
   ];
 
   config = lib.mkIf config.cli.tmux.enable {
-    # dependencies
-    home.packages = with pkgs; [
-      wl-clipboard
-      moreutils
-      fzf
-    ];
+    home = {
+      shellAliases.home = "tmux new -As home";
+      # dependencies
+      packages = with pkgs; [
+        wl-clipboard
+        moreutils
+        fzf
+      ];
+      persistence."/persist/home/${username}" = {
+        directories = [
+          ".local/share/tmux/resurrect"
+        ];
+      };
+    };
 
     xdg.configFile = {
       "tmux/.tmux-env".text = ''

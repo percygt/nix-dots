@@ -39,11 +39,6 @@
     foot.enable = true;
   };
 
-  bin = {
-    kpass.enable = true;
-    pmenu.enable = true;
-  };
-
   infosec = {
     pass.enable = true;
     keepass.enable = true;

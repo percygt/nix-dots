@@ -4,7 +4,13 @@
   ...
 }: {
   # Enable the Docker service
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+    enableOnBoot = false;
+  };
 
   # Give access to the user
   users.users.${username}.extraGroups = ["docker"];

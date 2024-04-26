@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  username,
   ...
 }: {
   options.infosec = {
@@ -12,7 +13,6 @@
     services.openssh = {
       enable = lib.mkDefault false;
       settings = {
-        KbdInteractiveAuthentication = false;
         PasswordAuthentication = false;
         PermitRootLogin = "no";
       };
@@ -23,8 +23,21 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMySpo7UqnJPYVICF1gmVtgk5kLNbCvBuzYz8FMNl009 C14"
     ];
 
+    # not needed, i use gpg-agent
     programs.ssh.startAgent = lib.mkForce false;
 
     networking.firewall.allowedTCPPorts = [22];
+
+    environment.persistence = {
+      "/persist/system".directories = [
+        "/etc/ssh"
+      ];
+      "/persist".users.${username}.directories = [
+        {
+          directory = ".ssh";
+          mode = "0700";
+        }
+      ];
+    };
   };
 }

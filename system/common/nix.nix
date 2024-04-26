@@ -6,7 +6,7 @@
   ...
 }: {
   nix = {
-    package = pkgs.nixVersions.unstable;
+    package = lib.mkDefault pkgs.nixVersions.unstable;
     settings = {
       experimental-features = ["nix-command" "flakes"];
       builders-use-substitutes = true;
@@ -18,7 +18,6 @@
       keep-derivations = true;
       keep-outputs = true;
       substituters = [
-        "https://cache.nixos.org?priority=10"
         "https://nix-community.cachix.org"
         "https://percygtdev.cachix.org"
       ];
@@ -29,9 +28,7 @@
     };
     gc = {
       automatic = true;
-      dates = "weekly";
-      # Delete older generations too
-      options = "--delete-older-than 10d";
+      dates = "Sun";
     };
 
     # This will add each flake input as a registry

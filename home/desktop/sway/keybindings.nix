@@ -2,88 +2,137 @@
   modifier,
   pkgs,
   libx,
-  wezterm,
   up,
   down,
   left,
   right,
   lib,
+  terminal,
+  config,
   ...
 }: let
+  mod = modifier;
   inherit (libx) sway;
   inherit (sway) mkWorkspaceKeys mkDirectionKeys;
   toggle-sway-window = pkgs.writeBabashkaScript {
     name = "toggle-sway-window";
     text = builtins.readFile ./toggle-sway-window.clj;
   };
+  cycle-sway-output = pkgs.writeBabashkaScript {
+    name = "cycle-sway-output";
+    text = builtins.readFile ./cycle-sway-output.clj;
+  };
+  cycle-sway-scale = pkgs.writeBabashkaScript {
+    name = "cycle-sway-scale";
+    text = builtins.readFile ./cycle-sway-scale.clj;
+  };
+  cycle-pulse-sink = pkgs.writeBabashkaScript {
+    name = "cycle-pulse-sink";
+    text = builtins.readFile ./cycle-pulse-sink.clj;
+    runtimeInputs = [pkgs.pulseaudioFull];
+  };
+  toggle-notifications = pkgs.writers.writeBash "toggle-notifications" ''
+    if makoctl mode | grep -q "default"; then
+      makoctl mode -s hidden
+    else
+      makoctl mode -s default
+    fi
+  '';
+  dropdown-terminal = pkgs.writers.writeBash "dropdown_terminal" ''
+    TERM_PIDFILE="/tmp/wezterm-dropdown"
+    TERM_PID="$(<"$TERM_PIDFILE")"
+    if swaymsg "[ pid=$TERM_PID ] scratchpad show"
+    then
+        swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position 0 0"
+    else
+        echo "$$" > "$TERM_PIDFILE"
+        swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position 0 0 ; move to scratchpad ; scratchpad show'"
+        exec "${config.programs.wezterm.package}/bin/wezterm";
+    fi
+  '';
+  power-menu = pkgs.writers.writeBash "power-menu" ''
+    pkill tofi || case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | ${pkgs.tofi}/bin/tofi) in
+    "Power Off")
+      systemctl poweroff
+      ;;
+    "Restart")
+      systemctl reboot
+      ;;
+    "Suspend")
+      systemctl suspend
+      ;;
+    "Lock")
+      swaylock
+      ;;
+    "Log Out")
+      swaymsg exit
+      ;;
+    esac
+  '';
 in {
   keybindings =
-    mkDirectionKeys modifier {inherit up down left right;}
-    // mkWorkspaceKeys modifier ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"]
+    mkDirectionKeys mod {inherit up down left right;}
+    // mkWorkspaceKeys mod ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"]
     // {
-      "${modifier}+Shift+f" = "exec ${pkgs.foot}/bin/foot";
-      # "${modifier}+Shift+k" = "exec ${pkgs.kitty}/bin/kitty";
-      "${modifier}+w" = "exec ${pkgs.i3-quickterm}/bin/i3-quickterm shell";
-      "${modifier}+Shift+w" = "exec ${wezterm}/bin/wezterm";
-      "${modifier}+Shift+q" = "kill";
-      "${modifier}+Shift+c" = "reload";
-      "${modifier}+t" = "exec ${lib.getExe toggle-sway-window} --id btop --width 90 --height 90 -- foot --app-id=btop btop";
-      "${modifier}+p" = "exec ${lib.getExe toggle-sway-window} --id pavucontrol --width 80 --height 80 -- pavucontrol";
-      "${modifier}+m" = "exec ${lib.getExe toggle-sway-window} --id gnome-disks -- gnome-disks";
-      "${modifier}+v" = "exec ${lib.getExe toggle-sway-window} --id org.keepassxc.KeePassXC --width 80 --height 80 -- keepassxc";
-      "${modifier}+f" = "exec ${lib.getExe toggle-sway-window} --id yazi --width 80 --height 80 -- foot --app-id=yazi fish -c yazi ~";
-      "${modifier}+i" = "exec ${pkgs.rofi-wayland}/bin/rofi -show emoji";
-      "${modifier}+s" = "exec ${pkgs.rofi-wayland}/bin/rofi -show drun";
+      "${mod}+w" = "exec ${dropdown-terminal}";
+      "${mod}+return" = "exec ${terminal}";
+      "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
+      "${mod}+s" = "exec pkill tofi-drun || ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
+      "${mod}+x" = "exec pkill tofi-run || ${pkgs.tofi}/bin/tofi-run | xargs swaymsg exec --";
+      "${mod}+m" = "exec ${lib.getExe toggle-sway-window} --id btop -- ${terminal} --app-id=btop ${lib.getExe pkgs.btop}";
+      "${mod}+v" = "exec ${lib.getExe toggle-sway-window} --id pavucontrol -- pavucontrol";
+      "${mod}+Shift+d" = "exec ${lib.getExe toggle-sway-window} --id gnome-disks -- gnome-disks";
+      "${mod}+b" = "exec ${lib.getExe toggle-sway-window} --id .blueman-manager-wrapped --width 80 --height 80 -- blueman-manager";
+      "${mod}+Shift+k" = "exec ${lib.getExe toggle-sway-window} --id org.keepassxc.KeePassXC -- keepassxc";
+      "${mod}+f" = "exec ${lib.getExe toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
+      "${mod}+shift+tab" = "exec ${lib.getExe cycle-sway-output}";
+      "${mod}+backslash" = "exec ${lib.getExe cycle-sway-scale}";
+      "${mod}+shift+v" = "exec ${lib.getExe cycle-pulse-sink}";
+      "${mod}+shift+n" = "exec ${toggle-notifications}";
+      "${mod}+delete" = "exec swaylock";
+      XF86Calculator = "exec ${lib.getExe toggle-sway-window} --id qalculate-gtk -- qalculate-gtk";
+      XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
+
+      "F11" = "fullscreen toggle";
+      "${mod}+Shift+q" = "kill";
+      "${mod}+n" = "layout stacking";
+      "${mod}+t" = "layout tabbed";
+      "${mod}+e" = "layout toggle split";
+      "${mod}+Shift+s" = "sticky toggle";
+      "${mod}+less" = "focus parent";
+      "${mod}+greater" = "focus child";
+      "${mod}+tab" = "workspace back_and_forth";
+      "${mod}+Shift+minus" = "split h";
+      "${mod}+Shift+backslash" = "split v";
+      "${mod}+Shift+space" = "floating toggle";
+      "${mod}+space" = "focus mode_toggle";
+      "${mod}+Shift+r" = "reload";
 
       "Ctrl+Alt+l" = "workspace next";
       "Ctrl+Alt+h" = "workspace prev";
 
-      # Split in horizontal orientation:
-      "${modifier}+Shift+s" = "split h";
-
-      # Split in vertical orientation:
-      "${modifier}+Shift+v" = "split v";
-
-      # Change layout of focused container:
-      "${modifier}+o" = "layout stacking";
-      "${modifier}+comma" = "layout tabbed";
-      "${modifier}+period" = "layout toggle split";
-
-      # Fullscreen for the focused container:
-      "${modifier}+u" = "fullscreen toggle";
-
-      # Toggle the current focus between tiling and floating mode:
-      "${modifier}+Shift+space" = "floating toggle";
-
-      # Swap focus between the tiling area and the floating area:
-      "${modifier}+space" = "focus mode_toggle";
-
       Print = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";
 
       # Backlight:
-      XF86MonBrightnessUp = "exec lightctl up";
-      XF86MonBrightnessDown = "exec lightctl down";
+      XF86MonBrightnessUp = "exec brightnessctl set 5%+";
+      XF86MonBrightnessDown = "exec brightnessctl set 5%-";
 
       # Audio:
-      XF86AudioMute = "exec volumectl -u toggle-mute";
-      XF86AudioLowerVolume = "exec volumectl -u down";
-      XF86AudioRaiseVolume = "exec volumectl -u up";
-      XF86AudioMicMute = "exec volumectl -m toggle-mute";
-
-      # Focus the parent container
-      "${modifier}+a" = "focus parent";
-
-      # Focus the child container
-      "${modifier}+d" = "focus child";
+      XF86AudioMute = "exec pamixer --toggle-mute";
+      XF86AudioLowerVolume = "exec pamixer --decrease 5";
+      XF86AudioRaiseVolume = "exec pamixer --increase 5";
+      XF86AudioMicMute = "exec pamixer --default-source -t";
 
       # Move window to scratchpad:
-      "${modifier}+Shift+minus" = "move scratchpad";
+      "${mod}+Shift+plus" = "move scratchpad";
 
       # Show scratchpad window and cycle through them:
-      "${modifier}+minus" = "scratchpad show";
+      "${mod}+plus" = "scratchpad show";
 
       # Enter other modes:
-      "${modifier}+r" = "mode resize";
-      "${modifier}+Shift+r" = "mode passthrough";
+      "${mod}+r" = "mode resize";
+      "${mod}+Shift+p" = "mode passthrough";
+
+      "${mod}+Shift+e" = "exec ${power-menu}";
     };
 }

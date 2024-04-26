@@ -12,7 +12,7 @@ vmap("Q", "<nop>")
 -- Quit
 nmap("QQ", ":q!<cr>", silent)
 -- Format
-nnoremap("ff", "<cmd>lua require('conform').format()<cr>", silent)
+nnoremap("fm", "<cmd>lua require('conform').format()<cr>", silent)
 -- trouble navigation
 nmap("<a-k>", "<cmd>lua require('trouble').next({ skip_groups = true, jump = true })<cr>zz", silent)
 nmap("<a-j>", "<cmd>lua require('trouble').previous({ skip_groups = true, jump = true })<cr>zz", silent)

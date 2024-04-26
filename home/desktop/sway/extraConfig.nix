@@ -1,26 +1,25 @@
 {
   extraConfig = ''
+    shadows enable
+    blur_radius 7
+    blur_passes 4
+    corner_radius 10
+    smart_corner_radius enable
+    default_dim_inactive 0.2
+    layer_effects "waybar" "blur enable"; shadows enable
+
     bindgesture swipe:4:right workspace prev
     bindgesture swipe:4:left workspace next
     bindgesture swipe:3:right focus left
     bindgesture swipe:3:left focus right
     bindswitch lid:off output * power off
 
+    # for_window [sticky] dim_inactive 0
+
     for_window [title=".*"] inhibit_idle fullscreen
-    for_window [class=com.bitwig.BitwigStudio] inhibit_idle focus
-    for_window [app_id=nmtui] floating enable, resize set width 80 ppt height 80 ppt, move position center
-    for_window [app_id=qalculate-gtk] floating enable, move position center
-    for_window [app_id=org.gnome.Calculator] floating enable, move position center
-    for_window [app_id=\.?blueman-manager(-wrapped)?] floating enable, resize set width 80 ppt height 80 ppt, move position center
-    for_window [app_id=nixos_rebuild_log] floating enable, resize set width 80 ppt height 80 ppt, move position center
-    for_window [app_id=btop] floating enable, resize set width 80 ppt height 80 ppt, move position center
-    for_window [app_id=pavucontrol] floating enable, resize set width 80 ppt height 80 ppt, move position center
-    for_window [app_id=yazi] floating enable, resize set width 80 ppt height 80 ppt, move position center
-    for_window [app_id=gnome-disks] floating enable, resize set width 80 ppt height 80 ppt, move position center
-    for_window [app_id=audacious] floating enable, resize set width 80 ppt height 80 ppt, move position center
-    for_window [title="^Picture in picture$"] floating enable, resize set width 600 px height 300 px, move position 830 px 565 px, sticky on, border pixel 1
 
     exec sleep 2 && exec swaymsg "workspace 3; exec brave --profile-directory=\"Profile 1\""
-    exec sleep 8 && exec swaymsg "workspace 2; exec brave --profile-directory=\"Default\""
+    exec sleep 8 && exec swaymsg "workspace 1; exec brave --profile-directory=\"Default\""
+    # exec sleep 12 && exec swaymsg "workspace 2; exec i3-quickterm shell"
   '';
 }

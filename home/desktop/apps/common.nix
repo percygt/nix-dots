@@ -5,11 +5,9 @@
 
   home.packages = with pkgs; [
     gnome.nautilus
-    # zoom-us
+    zoom-us
     audacity
     # bambu-studio
-    desktop-file-utils
-    libnotify
     loupe
     # mumble
     # obsidian

@@ -34,11 +34,6 @@
     wezterm.enable = true;
   };
 
-  bin = {
-    kpass.enable = true;
-    pmenu.enable = true;
-  };
-
   cli = {
     atuin.enable = true;
     direnv.enable = true;

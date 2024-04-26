@@ -11,7 +11,6 @@
       warn-dirty = false;
       max-jobs = "auto";
       trusted-users = ["@wheel" "root"];
-      use-xdg-base-directories = true;
       # for direnv GC roots
       keep-derivations = true;
       keep-outputs = true;

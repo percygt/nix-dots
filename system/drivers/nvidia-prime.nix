@@ -47,7 +47,7 @@
         finegrained = false;
       };
 
-      open = false;
+      open = true;
       nvidiaSettings = false; # gui app
       package = config.boot.kernelPackages.nvidiaPackages.latest;
     };

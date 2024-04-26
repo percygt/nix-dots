@@ -4,9 +4,31 @@
   lib,
   config,
   isGeneric,
+  flakeDirectory,
+  homeDirectory,
+  desktop,
   ...
 }: let
   inherit (libx) colors fonts;
+  window-title =
+    if (desktop == "sway")
+    then "Wezterm - Dropdown Terminal"
+    else "Wezterm";
+  launch-tmux = pkgs.writers.writeBash "launch-tmux" ''
+    if [ -d ${flakeDirectory} ]; then
+      tmux has-session -t nix-dots 2>/dev/null
+      if [ $? != 0 ]; then
+        tmux new-session -ds nix-dots -c "${flakeDirectory}"
+      fi
+      tmux new-session -As nix-dots
+    else
+      tmux has-session -t home 2>/dev/null
+      if [ $? != 0 ]; then
+        tmux new-session -ds home -c "${homeDirectory}"
+      fi
+      tmux new-session -As home
+    fi
+  '';
 in {
   options = {
     terminal.wezterm.enable =
@@ -64,6 +86,9 @@ in {
               overrides.window_background_opacity = nil
             end
             window:set_config_overrides(overrides)
+          end)
+          wezterm.on('format-window-title', function()
+            return "${window-title}"
           end)
           wezterm.on('user-var-changed', function(window, pane, name, value)
               local overrides = window:get_config_overrides() or {}
@@ -126,7 +151,8 @@ in {
           		{ key = "F11",    mods = "NONE",  action = wezterm.action.ToggleFullScreen },
           		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
           	},
-          	default_prog = { 'tmux', 'new', '-As', 'main' }
+            default_gui_startup_args = {'start', '--always-new-process'},
+          	default_prog = { '${launch-tmux}' }
           }
         '';
     };

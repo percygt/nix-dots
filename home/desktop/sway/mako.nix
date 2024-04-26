@@ -1,30 +1,26 @@
-{
-  libx,
-  config,
-  ...
-}: let
-  inherit (libx) colors;
+{libx, ...}: let
+  inherit (libx) colors fonts;
 in {
   services = {
     mako = {
       enable = true;
       actions = true;
       anchor = "top-right";
-      defaultTimeout = 4500;
+      defaultTimeout = 5000;
       ignoreTimeout = true;
-      borderSize = 1;
-      borderRadius = 2;
-      font = config.gtk.font.name;
+      borderSize = 2;
+      borderRadius = 5;
+      font = fonts.interface.name;
       icons = true;
       layer = "overlay";
       maxVisible = 3;
-      padding = "10";
-      width = 300;
+      padding = "15";
+      width = 400;
       # iconPath = "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}";
-      backgroundColor = "#${colors.extra.midnight}";
-      borderColor = "#${colors.bold}";
+      backgroundColor = "#${colors.normal.black}";
+      borderColor = "#${colors.normal.blue}";
       progressColor = "over #${colors.highlight.background}";
-      textColor = "#${colors.highlight.foreground}";
+      textColor = "#${colors.default.foreground}";
     };
   };
 }

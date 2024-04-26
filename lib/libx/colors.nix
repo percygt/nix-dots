@@ -47,8 +47,8 @@
     sapphire = "74c7ec"; # [#74c7ec]
     sky = "89dceb"; # [#89dceb]
     mauve = "cba6f7"; # [#cba6f7]
-    overlay0 = "6e738d";
-    overlay1 = "8087a2";
-    overlay2 = "939ab7";
+    overlay0 = "292538"; #292538
+    overlay1 = "6e738d"; #6e738d
+    overlay2 = "939ab7"; #939ab7
   };
 }

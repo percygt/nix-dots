@@ -11,9 +11,5 @@
       implementation = "broker";
     };
     gnome.gnome-keyring.enable = true;
-    gvfs.enable = true;
-    pcscd.enable = true;
-    udisks2.enable = true;
-    fwupd.enable = true;
   };
 }

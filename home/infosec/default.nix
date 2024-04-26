@@ -7,6 +7,8 @@
     ./keepass.nix
     ./common.nix
     ./sops.nix
+    ./kpass.nix
+    ./pmenu.nix
   ];
 
   infosec = {

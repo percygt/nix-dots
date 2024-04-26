@@ -4,11 +4,11 @@
   ...
 }: {
   options = {
-    browser.firefox.enable =
+    desktop.apps.firefox.enable =
       lib.mkEnableOption "Enable firefox";
   };
 
-  config = lib.mkIf config.browser.firefox.enable {
+  config = lib.mkIf config.desktop.apps.firefox.enable {
     programs. firefox = {
       enable = true;
       policies = {
@@ -29,9 +29,6 @@
           "browser.urlbar.suggest.engines" = locked false;
           "browser.urlbar.suggest.searches" = locked false;
           "dom.security.https_only_mode" = locked true;
-          # It looks like firefox doesn't allow font settings to be overridden
-          "font.name.monospace.x-western" = locked "FiraMono Nerd Font";
-          "font.size.monospace.x-western" = locked 16;
           "media.ffmpeg.vaapi.enabled" = locked true;
         };
         DisableFirefoxStudies = true;

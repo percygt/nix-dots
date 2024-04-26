@@ -10,9 +10,10 @@
       screenshots = true;
       clock = true;
       indicator = true;
-      indicator-radius = 500;
+      indicator-radius = 200;
       indicator-thickness = 7;
       effect-blur = "7x5";
+      grace = 2;
     };
   };
 

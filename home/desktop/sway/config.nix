@@ -1,58 +1,63 @@
 {
   pkgs,
-  isGeneric,
   config,
   lib,
   libx,
   ...
 }: let
-  inherit (libx) colors wallpaper;
+  inherit (libx) colors fonts sway wallpaper;
+  fnts = fonts;
+  inherit (sway) mkAppsFloatCenter;
   clrs = colors;
-  wezterm =
-    if isGeneric
-    then pkgs.stash.wezterm_wrapped
-    else pkgs.stash.wezterm_nightly;
 in {
   config = rec {
+    fonts = {
+      names = [fnts.app.name];
+      style = fnts.app.style;
+      size = fnts.app.size;
+    };
     modifier = "Mod4";
     up = "k";
     down = "j";
     left = "h";
     right = "l";
-    terminal = "${pkgs.wezterm}/bin/wezterm";
+    terminal = "${pkgs.foot}/bin/foot";
     output."*".bg = "${wallpaper} fill";
-    inherit (import ./keybindings.nix {inherit modifier pkgs libx lib wezterm up down left right;}) keybindings;
-    inherit (import ./startup.nix {inherit config pkgs;}) startup;
-    inherit (import ./window.nix) window;
-
-    # workspaceLayout = "tabbed";
-    seat.seat0.xcursor_theme =
-      lib.mkIf (config.home.pointerCursor != null)
-      "${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}";
-
-    # assigns = {
-    #   "2" = [{app_id = "brave-browser";}];
-    # };
+    inherit (import ./keybindings.nix {inherit modifier pkgs libx lib config up down left right terminal;}) keybindings;
+    inherit (import ./startup.nix) startup;
+    inherit (import ./window.nix {inherit mkAppsFloatCenter;}) window;
+    input = {
+      "type:touchpad" = {
+        tap = "enabled";
+        accel_profile = "adaptive";
+      };
+    };
+    seat.seat0 = {
+      xcursor_theme =
+        lib.mkIf (config.home.pointerCursor != null)
+        "${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}";
+      hide_cursor = "3000";
+    };
     colors = {
       focused = {
-        background = "#${clrs.extra.azure}";
-        border = "#${clrs.extra.midnight}";
-        childBorder = "#${clrs.normal.black}";
-        indicator = "#${clrs.normal.black}";
-        text = "#${clrs.bold}";
-      };
-      unfocused = {
         background = "#${clrs.normal.black}";
-        border = "#${clrs.extra.obsidian}";
-        childBorder = "#${clrs.normal.black}";
-        indicator = "#${clrs.normal.black}";
+        border = "#${clrs.extra.overlay0}";
+        childBorder = "#${clrs.extra.overlay0}";
+        indicator = "#${clrs.extra.overlay0}";
         text = "#${clrs.default.foreground}";
       };
+      unfocused = {
+        background = "#${clrs.extra.nocturne}";
+        border = "#${clrs.extra.overlay0}";
+        childBorder = "#${clrs.extra.overlay0}";
+        indicator = "#${clrs.extra.overlay0}";
+        text = "#${clrs.extra.overlay1}";
+      };
       focusedInactive = {
-        background = "#${clrs.normal.black}";
-        border = "#${clrs.extra.obsidian}";
-        childBorder = "#${clrs.normal.black}";
-        indicator = "#${clrs.normal.black}";
+        background = "#${clrs.extra.nocturne}";
+        border = "#${clrs.extra.overlay0}";
+        childBorder = "#${clrs.extra.overlay0}";
+        indicator = "#${clrs.extra.overlay0}";
         text = "#${clrs.default.foreground}";
       };
     };

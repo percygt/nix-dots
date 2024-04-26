@@ -1,9 +1,20 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
-  imports = [./xremap.nix];
+{pkgs, ...}: {
+  imports = [
+    ./xremap.nix
+    ./cursor.nix
+    ./tuigreet.nix
+  ];
+  programs = {
+    sway = {
+      enable = true;
+      package = pkgs.swayfx.overrideAttrs (_: {passthru.providedSessions = ["sway"];});
+      wrapperFeatures.gtk = true;
+    };
+    dconf.enable = true;
+    file-roller.enable = true;
+    gnome-disks.enable = true;
+  };
+
   xdg.portal = {
     enable = true;
     wlr = {
@@ -19,14 +30,8 @@
   };
 
   nix.settings = {
-    trusted-substituters = ["https://nixpkgs-wayland.cachix.org"];
+    substituters = ["https://nixpkgs-wayland.cachix.org"];
     trusted-public-keys = ["nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="];
-  };
-
-  programs.sway = {
-    enable = true;
-    package = pkgs.swayfx.overrideAttrs (_: {passthru.providedSessions = ["sway"];});
-    wrapperFeatures.gtk = true;
   };
 
   environment.etc."greetd/environments".text = ''
@@ -34,23 +39,9 @@
     fish
   '';
 
-  programs = {
-    dconf.enable = true;
-    file-roller.enable = true;
-    gnome-disks.enable = true;
-  };
-
   security = {
     polkit.enable = true;
-    pam = {
-      services = {
-        # unlock gnome keyring automatically with greetd
-        greetd.enableGnomeKeyring = true;
-        swaylock = {
-          text = "auth include login";
-        };
-      };
-    };
+    pam.services.swaylock.text = "auth include login";
   };
 
   services = {
@@ -65,31 +56,9 @@
         gnome3.gnome-keyring
       ];
     };
-
     gnome = {
       gnome-keyring.enable = true;
       sushi.enable = true;
     };
-
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --sessions ${config.services.displayManager.sessionData.desktops}/share/xsessions:${config.services.displayManager.sessionData.desktops}/share/wayland-sessions --time --remember --remember-user-session";
-          user = "greeter";
-        };
-      };
-    };
-  };
-
-  systemd.services.greetd.serviceConfig = {
-    Type = "idle";
-    StandardInput = "tty";
-    StandardOutput = "tty";
-    StandardError = "journal"; # Without this errors will spam on screen
-    # Without these bootlogs will spam on screen
-    TTYReset = true;
-    TTYVHangup = true;
-    TTYVTDisallocate = true;
   };
 }

@@ -28,6 +28,5 @@
     nfui = "nix flake lock --update-input";
     hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
     ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
-    home = "tmux new -As home";
   };
 }

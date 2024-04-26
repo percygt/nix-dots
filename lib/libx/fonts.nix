@@ -1,12 +1,20 @@
-{
-  wm = {
-    name = "Rubik";
-    style = "Regular";
-    package = pkgs: pkgs.rubik;
-    size = 10.0;
-  };
+{desktop, ...}: {
+  interface =
+    if desktop == "gnome"
+    then {
+      name = "Rubik";
+      style = "Regular";
+      package = pkgs: pkgs.rubik;
+      size = 10.0;
+    }
+    else {
+      name = "GeistMono Nerd Font";
+      style = "Regular";
+      package = pkgs: pkgs.nerdfonts.override {fonts = ["GeistMono"];};
+      size = 10.0;
+    };
 
-  interface = {
+  app = {
     name = "Rubik";
     style = "Regular";
     package = pkgs: pkgs.rubik;
@@ -45,6 +53,7 @@
       noto-fonts-cjk
       joypixels
       noto-fonts-emoji
+      font-awesome
 
       corefonts
       vistafonts

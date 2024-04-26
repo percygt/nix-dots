@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: {
   options = {
@@ -9,45 +10,27 @@
   };
 
   config = lib.mkIf config.cli.yazi.enable {
-    home.shellAliases.y = "yazi";
+    home = {
+      shellAliases.y = "yazi";
+      #deps
+      packages = with pkgs; [
+        jq
+        poppler
+        fd
+        ripgrep
+        fzf
+        zoxide
+        wl-clipboard
+        glow
+      ];
+    };
+    xdg.configFile = {
+      "yazi/plugins/glow.yazi/init.lua".source = "";
+    };
     programs.yazi = {
       enable = true;
       enableFishIntegration = true;
       enableBashIntegration = true;
-      # keymap = {
-      #   input.keymap = [
-      #     {
-      #       exec = "close";
-      #       on = ["<c-q>"];
-      #     }
-      #     {
-      #       exec = "close --submit";
-      #       on = ["<enter>"];
-      #     }
-      #     {
-      #       exec = "escape";
-      #       on = ["<esc>"];
-      #     }
-      #     {
-      #       exec = "backspace";
-      #       on = ["<backspace>"];
-      #     }
-      #   ];
-      #   manager.keymap = [
-      #     {
-      #       exec = "escape";
-      #       on = ["<esc>"];
-      #     }
-      #     {
-      #       exec = "quit";
-      #       on = ["q"];
-      #     }
-      #     {
-      #       exec = "close";
-      #       on = ["<c-q>"];
-      #     }
-      #   ];
-      # };
       theme = {
         filetype = {
           rules = [
@@ -71,14 +54,47 @@
         };
       };
       settings = {
-        log = {
-          enabled = false;
-        };
         manager = {
-          show_hidden = true;
-          sort_by = "modified";
+          ratio = [
+            0
+            2
+            3
+          ];
+          sort_by = "alphabetical";
           sort_dir_first = true;
-          sort_reverse = true;
+          sort_sensitive = false;
+          sort_reverse = false;
+          linemode = "size";
+          show_hidden = true;
+        };
+        sixel_fraction = 12;
+        plugin = {
+          prepend_previewers = [
+            {
+              name = "*.md";
+              run = "glow";
+            }
+          ];
+        };
+      };
+
+      theme = {
+        manager = {
+          preview_hovered = {
+            underline = false;
+          };
+          folder_offset = [
+            1
+            0
+            1
+            0
+          ];
+          preview_offset = [
+            1
+            1
+            1
+            1
+          ];
         };
       };
     };

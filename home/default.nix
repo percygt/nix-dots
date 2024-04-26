@@ -12,7 +12,6 @@
     ./cli
     ./desktop
     ./editor
-    ./bin
     ./terminal
     ./shell
     ./infosec
@@ -29,8 +28,10 @@ in {
     ]
     ++ lib.optionals isGeneric [./generic];
 
-  nixpkgs.overlays =
-    builtins.attrValues outputs.overlays
-    ++ lib.optionals (desktop == "sway")
-    (builtins.attrValues (import "${self}/overlays/sway.nix" {inherit inputs;}));
+  nixpkgs = {
+    overlays =
+      builtins.attrValues outputs.overlays
+      ++ lib.optionals (desktop == "sway")
+      (builtins.attrValues (import "${self}/overlays/sway.nix" {inherit inputs;}));
+  };
 }

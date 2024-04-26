@@ -2,6 +2,7 @@
   buildPythonPackage,
   fetchPypi,
   i3ipc,
+  lib,
   ...
 }:
 buildPythonPackage rec {
@@ -21,4 +22,11 @@ buildPythonPackage rec {
   preBuild = ''
     sed -i '/TERMS = {/a\    "wezterm": TERM("wezterm", execopt="start", titleopt=None),' i3_quickterm/main.py
   '';
+
+  meta = with lib; {
+    description = "A small drop-down terminal for i3wm and sway";
+    license = licenses.mit;
+    mainProgram = "i3-quickterm";
+    platforms = platforms.linux;
+  };
 }

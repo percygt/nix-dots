@@ -32,11 +32,6 @@
 
   dev.git.ghq.enable = true;
 
-  bin = {
-    kpass.enable = true;
-    pmenu.enable = true;
-  };
-
   infosec = {
     common.enable = true;
     pass.enable = true;

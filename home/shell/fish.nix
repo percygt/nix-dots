@@ -2,8 +2,11 @@
   lib,
   config,
   pkgs,
+  libx,
   ...
-}: {
+}: let
+  inherit (libx) colors;
+in {
   options = {
     shell.fish.enable =
       lib.mkEnableOption "Enable fish";
@@ -11,7 +14,30 @@
 
   config = lib.mkIf config.shell.fish.enable {
     programs = {
-      fzf.enable = true;
+      fzf = {
+        enable = true;
+        colors = {
+          "bg+" = "#${colors.extra.azure}";
+          bg = "#${colors.normal.black}";
+          preview-bg = "#${colors.default.background}";
+        };
+        tmux = {
+          enableShellIntegration = true;
+          shellIntegrationOptions = [
+            "-p 100%,100%"
+            "--preview-window=right,60%,,"
+          ];
+        };
+        defaultCommand = "fd --type file --hidden --exclude .git";
+        defaultOptions = [
+          "--border rounded"
+          "--info=inline"
+        ];
+        # CTRL-T - $FZF_CTRL_T_COMMAND
+        fileWidgetCommand = "rg --files --hidden -g !.git";
+        # ALT-C - $FZF_ALT_C_COMMAND
+        changeDirWidgetCommand = "fd --type directory --hidden --exclude .git";
+      };
       fish = {
         enable = true;
         plugins = with pkgs.fishPlugins; [
@@ -92,7 +118,7 @@
               --bind=alt-j:preview-down
               --bind=alt-k:preview-up
               --preview-window=right,60%,,
-              --color bg:#000000,bg+:#0e1a60,preview-bg:#00051A"
+              --color bg:#${colors.normal.black},bg+:#${colors.extra.azure},preview-bg:#${colors.default.background}"
 
             set -gx FZF_TMUX 1
             set -gx FZF_TMUX_OPTS "-p90%,75%"

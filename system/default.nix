@@ -24,6 +24,7 @@ in {
       # profile specific configuration.nix
       "${self}/profiles/${profile}/configuration.nix"
       inputs.sops-nix.nixosModules.sops
+      inputs.nix-flatpak.nixosModules.nix-flatpak
     ];
 
   nixpkgs.overlays =

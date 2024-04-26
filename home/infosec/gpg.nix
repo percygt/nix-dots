@@ -8,7 +8,7 @@
   gpg-sshid-ctl = pkgs.writeShellApplication {
     name = "gpg-sshid-ctl";
     runtimeInputs = with pkgs; [openssh gnupg];
-    text = builtins.readFile ../bin/scripts/gpg-sshid-ctl.sh;
+    text = builtins.readFile ../bin/gpg-sshid-ctl.sh;
   };
 in {
   options.infosec = {
@@ -30,7 +30,7 @@ in {
     };
 
     # gnome-keyring is greedy and will override SSH_AUTH_SOCK where undesired
-    services.gnome-keyring.enable = lib.mkDefault false;
+    # services.gnome-keyring.enable = lib.mkDefault false;
 
     services.gpg-agent = {
       enableSshSupport = true;

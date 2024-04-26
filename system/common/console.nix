@@ -7,22 +7,19 @@
   inherit (libx) fonts colors;
   inherit (colors.conversions) hexToRGBString;
 in {
-  console = {
-    earlySetup = true;
-    font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-  };
+  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 
   services.kmscon = {
     enable = true;
     hwRender = true;
     fonts = [
       {
-        inherit (fonts.console) name;
-        package = fonts.console.package pkgs;
+        inherit (fonts.shell) name;
+        package = fonts.shell.package pkgs;
       }
     ];
     extraConfig = ''
-      font-size=${builtins.toString fonts.console.size}
+      font-size=${builtins.toString fonts.shell.size}
       xkb-layout=us
       xkb-options=compose:caps
       xkb-repeat-rate=25

@@ -1,6 +1,10 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  config,
+  ...
+}: let
   loginctl = "${pkgs.systemd}/bin/loginctl";
-  swaymsg = "${pkgs.sway}/bin/swaymsg";
+  swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
   systemctl = "${pkgs.systemd}/bin/systemctl";
 in {
   services.swayidle = {

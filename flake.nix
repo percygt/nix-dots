@@ -2,9 +2,13 @@
   description = "PercyGT's nix config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.11";
     nix-stash.url = "github:percygt/nix-stash";
+
+    nixpkgs.follows = "nix-stash/nixpkgs";
+    nixpkgs-stable.follows = "nix-stash/nixpkgs-stable";
+
+    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
+    nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -24,8 +28,9 @@
     nix-colors.url = "github:misterio77/nix-colors";
     xremap.url = "github:xremap/nix-flake";
     impermanence.url = "github:nix-community/impermanence";
-    # lanzaboote.url = "github:nix-community/lanzaboote";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+    # lanzaboote.url = "github:nix-community/lanzaboote";
 
     sikreto = {
       url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
@@ -41,17 +46,13 @@
     defaultUser = "percygt";
     stateVersion = "23.11";
 
-    libz = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
+    bldr = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
   in {
-    packages = libz.forEachSystem (system: (import ./packages {
+    packages = bldr.forEachSystem (system: (import ./packages {
       pkgs = nixpkgs.legacyPackages.${system};
     }));
 
-    devShells = libz.forEachSystem (system: (import ./shell.nix {
-      pkgs = nixpkgs.legacyPackages.${system};
-    }));
-
-    formatter = libz.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = bldr.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     overlays = import ./overlays {inherit inputs;};
 
@@ -60,19 +61,19 @@
     nixosModules.default = ./system;
 
     nixosConfigurations = {
-      aizeft = libz.mkSystem {
+      aizeft = bldr.buildSystem {
         profile = "aizeft";
         desktop = "sway";
       };
-      vm-lvm = libz.mkSystem {
-        profile = "vm-lvm";
-        desktop = "sway";
-      };
-      minimal = libz.mkSystem {
+      # vm-lvm = bldr.bldSystem {
+      #   profile = "vm-lvm";
+      #   desktop = "sway";
+      # };
+      minimal = bldr.buildSystem {
         profile = "minimal";
         isIso = true;
       };
-      graphical = libz.mkSystem {
+      graphical = bldr.buildSystem {
         profile = "graphical";
         isIso = true;
       };
@@ -81,16 +82,16 @@
     homeManagerModules.default = ./home;
 
     homeConfigurations = {
-      aizeft = libz.mkHome {
+      aizeft = bldr.buildHome {
         profile = "aizeft";
         desktop = "sway";
       };
-      furies = libz.mkHome {
+      furies = bldr.buildHome {
         profile = "furies";
         desktop = "sway";
         isGeneric = true;
       };
-      fates = libz.mkHome {
+      fates = bldr.buildHome {
         profile = "fates";
         desktop = "gnome";
         isGeneric = true;

@@ -9,7 +9,7 @@
     ./extra.nix
     ./starship.nix
     ./tui.nix
-    ./yazi.nix
+    ./yazi
 
     # enable true by default
     ./common.nix

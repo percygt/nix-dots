@@ -3,10 +3,16 @@
   pkgs,
   lib,
   libx,
+  desktop,
   ...
 }: let
   inherit (libx) toRasi fonts colors;
+  toggle-sway-window = pkgs.writeBabashkaScript {
+    name = "toggle-sway-window";
+    text = builtins.readFile ../toggle-sway-window.clj;
+  };
 in {
+  services.playerctld.enable = true;
   programs.waybar = {
     enable = true;
 
@@ -15,97 +21,103 @@ in {
     systemd.enable = true;
     systemd.target = "sway-session.target";
 
-    settings = {
-      main = {
+    settings = [
+      {
         exclusive = true;
         position = "top";
         layer = "top";
+        output = ["HDMI-A-1"];
         height = 16;
+        margin-top = 0;
+        margin-bottom = 0;
         passthrough = false;
         gtk-layer-shell = true;
 
-        modules-left = ["idle_inhibitor" "sway/workspaces" "sway/window"];
-        modules-center = ["sway/mode" "clock" "custom/wlsunset"];
-        modules-right = [
-          "tray"
-          "backlight"
-          "network"
-          "cpu"
-          "memory"
-          "temperature"
-          "wireplumber"
-          # "bluetooth"
-          "battery"
-          "group/group-power"
-        ];
+        modules-left = ["sway/workspaces" "sway/window"];
+        modules-center = ["sway/mode" "idle_inhibitor" "clock" "custom/wlsunset"];
+        modules-right = ["mpris" "tray" "backlight" "network" "cpu" "memory" "temperature" "wireplumber" "pulseaudio#source" "battery" "group/group-power"];
+
         "sway/workspaces" = {
           format = "{icon}";
+          disable-scroll = true;
           all-outputs = true;
           format-icons = {
-            "1" = "1| ";
-            "2" = "2| ";
-            "3" = "3|󰙀 ";
-            "4" = "4| ";
-            "5" = "5| ";
-            "6" = "6| ";
-            "7" = "7| ";
+            "1" = "1 | www";
+            "2" = "2 | term";
+            "3" = "3 | notes";
+            "4" = "4 | media";
           };
           persistent-workspaces = {
             "1" = [];
             "2" = [];
             "3" = [];
             "4" = [];
-            "5" = [];
-            "6" = [];
-            "7" = [];
           };
           on-click = "activate";
         };
-        "custom/wlsunset" = {
-          exec = "if systemctl --user --quiet is-active wlsunset.service; then echo ' '; else echo ' '; fi";
-          interval = 2;
+        "tray" = {
+          icon-size = 10;
+          spacing = 10;
         };
-
         "sway/window" = {
-          "format" = "{}";
+          format = "❯ {}";
+        };
+        "mpris" = {
+          format = "{player_icon} {dynamic}";
+          format-paused = "{status_icon} {dynamic}";
+          player-icons.default = "";
+          status-icons.paused = "";
+          dynamic-len = 45;
+          dynamic-order = ["title" "artist" "album"];
+          max-length = 80;
         };
 
-        cpu = {
+        "cpu" = {
           interval = 10;
-          format = "{usage} ";
-          on-click = "foot --app-id=system_monitor btop";
+          format = " {usage}%";
+          on-click = "${lib.getExe toggle-sway-window} --id btop -- foot --app-id=btop btop";
         };
-        memory = {
+
+        "memory" = {
           interval = 30;
-          format = "{} ";
+          format = " {}%";
+          on-click = "${lib.getExe toggle-sway-window} --id btop -- foot --app-id=btop btop";
         };
-        wireplumber = {
+
+        "pulseaudio#source" = {
+          format = "{format_source}";
+          format-source = " ";
+          format-source-muted = "  ";
+          tooltip-format = "{source_volume}% / {desc}";
+          on-click = "pamixer --default-source -t";
+        };
+
+        "wireplumber" = {
           format = "{node_name} {volume} {icon}";
-          format-muted = "{volume} ";
-          format-icons = {default = ["" ""];};
-          on-click = "pavucontrol";
-          on-click-right = "cycle-pulse-sink";
-          on-click-middle = "helvum";
+          format-muted = "{volume} ";
+          format-icons = {default = ["" "" ""];};
+          on-click = "pamixer --toggle-mute";
+          on-click-right = "${lib.getExe toggle-sway-window} --id pavucontrol -- pavucontrol";
+          on-click-middle = "${lib.getExe toggle-sway-window} --id qpwgraph -- qpwgraph";
+          tooltip-format = "{source_volume}% / {desc}";
           max-volume = 100;
           scroll-step = 5;
         };
-        network = {
-          format-alt = "{ifname}";
+        "network" = {
           format-disconnected = "Disconnected ⚠";
-          format-ethernet = "{ifname} 󰛳";
-          format-linked = "{ifname} (No IP) 󰛳";
-          format-wifi = "{essid} ({signalStrength}%) ";
+          format-ethernet = "󰛳 {ifname}";
+          format-linked = "󰛳 {ifname} (No IP) ";
+          format-wifi = " {essid} ({signalStrength}%)";
           interval = 15;
           tooltip-format = "{ifname} / {essid} ({signalStrength}%) / {ipaddr}";
           max-length = 15;
-          on-click = "foot ${pkgs.networkmanagerapplet}/bin/nm-applet";
         };
 
         "idle_inhibitor" = {
           format = "{icon}";
           format-icons = {
-            activated = "";
-            deactivated = "";
+            activated = " ";
+            deactivated = "a";
           };
         };
 
@@ -115,14 +127,41 @@ in {
             warning = 20;
             critical = 10;
           };
-          format = "{capacity}% {icon}";
-          format-alt = "{time} {icon}";
-          format-charging = "{capacity} ";
-          format-full = "{capacity}% {icon}";
-          format-good = "{capacity}% {icon}";
+          format = "{icon} {capacity}%";
+          format-alt = "{icon} {time}";
+          format-charging = " {capacity}";
+          format-full = "{icon} {capacity}%";
+          format-good = "{icon} {capacity}%";
           format-icons = ["" "" "" "" ""];
-          format-plugged = "{capacity}% ";
-          max-length = 40;
+          format-plugged = " {capacity}%";
+        };
+
+        "clock" = {
+          format = "{:%y.%m.%d | %I:%M:%S}";
+          tooltip-format = "<tt><small>{calendar}</small></tt>";
+          interval = 1;
+        };
+
+        "custom/wlsunset" = {
+          exec = "if systemctl --user --quiet is-active wlsunset.service; then echo ' '; else echo ' '; fi";
+          on-click = "${lib.getExe pkgs.toggle-service} wlsunset";
+          interval = 2;
+        };
+
+        "backlight" = {
+          format = "{icon} {percent}%";
+          format-icons = ["󰃚" "󰃞" "󰃠"];
+          tooltip = false;
+          on-scroll-down = "brightnessctl set 5%-";
+          on-scroll-up = "brightnessctl set +5%";
+        };
+
+        "sway/mode".format = "<span style=\"italic\">{}</span>";
+
+        "temperature" = {
+          critical-threshold = 80;
+          format = " {temperatureC}°C";
+          thermal-zone = 7;
         };
 
         "group/group-power" = {
@@ -133,59 +172,44 @@ in {
           };
           modules = [
             "custom/power"
-            # "custom/quit"
+            "custom/suspend"
+            "custom/logout"
             "custom/lock"
             "custom/reboot"
           ];
         };
 
-        # "custom/quit" = {
-        #   format = "󰗼";
-        #   on-click = "${pkgs.}/bin/hyprctl dispatch exit";
-        #   tooltip = false;
-        # };
-        #
+        "custom/logout" = {
+          format = "";
+          on-click = "swaymsg exit";
+          tooltip = false;
+        };
+        "custom/suspend" = {
+          format = "󰒲";
+          on-click = "systemctl suspend";
+          tooltip = false;
+        };
         "custom/lock" = {
-          format = "󰍁";
-          on-click = "${lib.getExe config.programs.swaylock.package}";
+          format = "";
+          on-click = "swaymsg exec swaylock";
           tooltip = false;
         };
         #
         "custom/reboot" = {
-          format = "󰜉";
-          on-click = "${pkgs.systemd}/bin/systemctl reboot";
+          format = "";
+          on-click = "systemctl reboot";
           tooltip = false;
         };
 
         "custom/power" = {
-          format = "";
-          on-click = "${pkgs.systemd}/bin/systemctl poweroff";
+          format = "⏻";
+          on-click = "systemctl poweroff";
           tooltip = false;
         };
-
-        "clock" = {format = "{:%m.%d %I:%M}";};
-        # pattern = "MM.dd.yy' 🌣 'hh:mm:ss";
-        backlight = {
-          interval = 5;
-          format = "{percent} {icon}";
-          format-icons = ["" "" ""];
-        };
-        "sway/mode".format = "<span style=\"italic\">{}</span>";
-
-        "temperature" = {
-          critical-threshold = 80;
-          format = "{temperatureC}°C ";
-        };
-      };
-    };
-
-    # This is a bit of a hack. Rasi turns out to be basically CSS, and there is
-    # a handy helper to convert nix -> rasi in the home-manager module for rofi,
-    # so I'm using that here to render the stylesheet for waybar
+      }
+    ];
   };
-
-  # # This is a hack to ensure that hyprctl ends up in the PATH for the waybar service on hyprland
-  # systemd.user.services.waybar.Service.Environment =
-  #   lib.mkForce
-  #   "PATH=${lib.makeBinPath [pkgs."${desktop}"]}";
+  systemd.user.services.waybar.Service.Environment =
+    lib.mkForce
+    "PATH=${lib.makeBinPath [pkgs."${desktop}" pkgs.foot pkgs.btop pkgs.qpwgraph pkgs.brightnessctl pkgs.pamixer pkgs.systemd]}";
 }

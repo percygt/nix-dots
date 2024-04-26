@@ -5,6 +5,7 @@
   homeDirectory,
   config,
   pkgs,
+  self,
   ...
 }: {
   programs.home-manager.enable = true;
@@ -24,11 +25,14 @@
       fi
     '';
   };
+
+  xdg.dataFile.backgrounds.source = "${self}/lib/backgrounds";
   xdg.configFile."nixpkgs/config.nix".text = ''
     {
       allowUnfree = true;
     }
   '';
+
   nixpkgs.config = {
     # Disable if you don't want unfree packages
     allowUnfree = true;

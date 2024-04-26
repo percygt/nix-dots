@@ -6,6 +6,7 @@
   homeArgs,
   profile,
   self,
+  config,
   ...
 }: let
   ifHomeExist = builtins.pathExists "${self}/profiles/${profile}/home.nix";
@@ -17,7 +18,9 @@ in {
     [inputs.home-manager.nixosModules.home-manager];
 
   home-manager = lib.mkIf ifHomeExist {
-    extraSpecialArgs = homeArgs;
+    # useGlobalPkgs = true;
+    # useUserPackages = true;
+    extraSpecialArgs = homeArgs // {nixosConfig = config;};
     users.${username}.imports = [outputs.homeManagerModules.default];
   };
 }

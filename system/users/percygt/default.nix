@@ -2,9 +2,7 @@
   pkgs,
   config,
   ...
-}: let
-  ifExists = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-in {
+}: {
   programs.fish.enable = true;
   environment = {
     shells = with pkgs; [fish];
@@ -25,18 +23,14 @@ in {
       hashedPasswordFile = config.sops.secrets.userHashedPassword.path;
       shell = pkgs.fish;
       packages = [pkgs.home-manager];
-      extraGroups =
-        [
-          "audio"
-          "users"
-          "video"
-          "wheel"
-          "input"
-        ]
-        ++ ifExists [
-          "networkmanager"
-          "git"
-        ];
+      extraGroups = [
+        "audio"
+        "users"
+        "video"
+        "wheel"
+        "input"
+        "git"
+      ];
     };
   };
 }

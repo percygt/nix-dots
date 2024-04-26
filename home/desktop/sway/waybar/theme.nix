@@ -6,33 +6,26 @@
 }: {
   theme = let
     inherit (config.lib.formats.rasi) mkLiteral;
+    bg = mkLiteral "#${colors.default.background}";
+    bg2 = mkLiteral "#${colors.extra.azure}";
   in {
     "*" = {
       border = mkLiteral "none";
+      font-family = "${fonts.interface.name}";
+      font-size = mkLiteral "12px";
+      font-weight = mkLiteral "700";
+      background-color = bg;
       padding = mkLiteral "0px";
-      font-family = "GeistMono Nerd Font";
-      font-size = mkLiteral "10px";
-    };
-
-    "window#waybar" = {
-      background-color = mkLiteral "transparent";
-    };
-
-    "window>box" = {
-      margin = mkLiteral "0px";
-      background = mkLiteral "#${colors.default.background}";
-      opacity = mkLiteral "0.8";
-      border-radius = mkLiteral "0px";
     };
 
     ".modules-right" = {
-      margin-right = mkLiteral "5px";
+      margin-right = mkLiteral "0px";
       padding = mkLiteral "0px";
     };
 
     ".modules-center" = {
       margin = mkLiteral "0px";
-      padding = mkLiteral "5px 10px";
+      padding = mkLiteral "0px 10px";
     };
 
     ".modules-left" = {
@@ -41,60 +34,64 @@
     };
 
     "#workspaces button" = {
-      padding = mkLiteral "0px 5px 0px 0px";
-      background-color = mkLiteral "transparent";
-      font-weight = mkLiteral "lighter";
+      margin = mkLiteral "0px 5px";
+      color = mkLiteral "#${colors.extra.overlay1}";
       border-radius = mkLiteral "0px";
-      color = mkLiteral "#${colors.default.foreground}";
     };
 
     "#workspaces button:hover" = {
       color = mkLiteral "#${colors.bold}";
-      background-color = mkLiteral "transparent";
+      background-color = bg2;
     };
 
     "#workspaces button.focused, #workspaces button.active" = {
       color = mkLiteral "#${colors.bold}";
-      font-weight = mkLiteral "normal";
-      background-color = mkLiteral "transparent";
+      font-weight = mkLiteral "bold";
     };
 
     "#battery,
+      #window,
       #bluetooth,
       #clock,
       #cpu,
       #custom-lock,
       #custom-power,
-      #custom-quit,
       #custom-reboot,
+      #custom-logout,
+      #custom-suspend,
+      #custom-wlsunset,
       #group-group-power,
       #idle_inhibitor,
       #backlight,
       #memory,
       #temperature,
       #network,
+      #tray
       #pulseaudio,
-      #tray,
+      #pulseaudio-source,
       #wireplumber" = {
       padding = mkLiteral "0px 10px";
       color = mkLiteral "#${colors.default.foreground}";
     };
-    "#clock" = {
-      font-weight = mkLiteral "700";
-    };
     "#custom-power" = {
       color = mkLiteral "#${colors.bold}";
-      background-color = mkLiteral "transparent";
+      margin = mkLiteral "0px 5px";
+      background-color = bg;
     };
 
-    "#custom-quit, #custom-lock, #custom-reboot" = {
-      color = mkLiteral "#${colors.normal.green}";
-      background-color = mkLiteral "transparent";
+    "#custom-logout, #custom-suspend, #custom-lock, #custom-reboot" = {
+      background-color = bg2;
     };
-
-    /*
-    -----Indicators----
-    */
+    "#mpris" = {
+      padding = mkLiteral "0px 10px";
+      color = mkLiteral "#${colors.default.foreground}";
+    };
+    "#window" = {
+      background-color = bg;
+      color = mkLiteral "#${colors.bold}";
+      font-weight = mkLiteral "bold";
+      padding = mkLiteral "0px";
+    };
     "#idle_inhibitor.activated" = {
       color = mkLiteral "#${colors.bold}";
     };
@@ -102,27 +99,18 @@
     "#battery.charging" = {
       color = mkLiteral "#${colors.normal.green}";
     };
-
     "#battery.warning:not(.charging)" = {
       color = mkLiteral "#${colors.normal.yellow}";
     };
-
     "#battery.critical:not(.charging)" = {
       color = mkLiteral "#${colors.normal.red}";
     };
-
     "#temperature.critical" = {
       color = mkLiteral "#${colors.normal.red}";
     };
-
-    "#bluetooth.off" = {
-      color = mkLiteral "#${colors.normal.yellow}";
-    };
-
     "#wireplumber.muted" = {
       color = mkLiteral "#${colors.normal.yellow}";
     };
-
     "#pulseaudio.source-muted" = {
       color = mkLiteral "#${colors.normal.yellow}";
     };

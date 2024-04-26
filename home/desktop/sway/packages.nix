@@ -1,15 +1,31 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    mako
+    swayidle
+    swaylock-effects
+    playerctl
+    qpwgraph
+    brightnessctl
+    autotiling
+    wlsunset
+    cycle-pulse-sink
     grim
     kanshi
     libnotify
     pamixer
+    wev
+    netscanner
     slurp
     wdisplays
     wl-clipboard
-    wl-mirror
+    wtype
     xdg-utils
     xwayland
+    rofimoji
     btop
+    desktop-file-utils
+    wl-screenrec
+    libnotify
+    gnome3.adwaita-icon-theme
   ];
 }

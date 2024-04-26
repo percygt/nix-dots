@@ -1,5 +1,5 @@
 {libx, ...}: let
-  inherit (libx) colors;
+  inherit (libx) colors fonts;
 in {
   dconf.settings = {
     "org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
@@ -34,7 +34,7 @@ in {
       custom-command = "fish -i";
       default-size-columns = 200;
       default-size-rows = 50;
-      font = "JetBrainsMono Nerd Font 10";
+      font = "${fonts.shell.name} ${builtins.toString fonts.shell.size}";
       highlight-colors-set = true;
       login-shell = true;
       scrollbar-policy = "never";
