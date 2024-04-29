@@ -18,7 +18,7 @@
     name = "Rubik";
     style = "Regular";
     package = pkgs: pkgs.rubik;
-    size = 10.0;
+    size = 12.0;
   };
 
   shell = {

@@ -7,6 +7,7 @@
     smart_corner_radius enable
     default_dim_inactive 0.2
     layer_effects "waybar" "blur enable"; shadows enable
+    layer_effects "mako" shadows enable
 
     bindgesture swipe:4:right workspace prev
     bindgesture swipe:4:left workspace next
@@ -20,6 +21,5 @@
 
     exec sleep 2 && exec swaymsg "workspace 3; exec brave --profile-directory=\"Profile 1\""
     exec sleep 8 && exec swaymsg "workspace 1; exec brave --profile-directory=\"Default\""
-    # exec sleep 12 && exec swaymsg "workspace 2; exec i3-quickterm shell"
   '';
 }

@@ -1,4 +1,8 @@
-{libx, ...}: let
+{
+  libx,
+  config,
+  ...
+}: let
   inherit (libx) colors fonts;
 in {
   services = {
@@ -8,17 +12,17 @@ in {
       anchor = "top-right";
       defaultTimeout = 5000;
       ignoreTimeout = true;
-      borderSize = 2;
+      borderSize = 1;
       borderRadius = 5;
-      font = fonts.interface.name;
+      font = "${fonts.app.name} ${toString fonts.app.size}";
       icons = true;
       layer = "overlay";
       maxVisible = 3;
       padding = "15";
       width = 400;
-      # iconPath = "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}";
+      iconPath = "${config.xdg.dataHome}/icons";
       backgroundColor = "#${colors.normal.black}";
-      borderColor = "#${colors.normal.blue}";
+      borderColor = "#${colors.extra.azure}";
       progressColor = "over #${colors.highlight.background}";
       textColor = "#${colors.default.foreground}";
     };

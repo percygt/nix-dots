@@ -1,3 +1,4 @@
+; copied from https://github.com/stelcodes/nixos-config/commit/9baffbbec50d6128a18ac389f3f7c8fd5fbc7956
 #!/usr/bin/env bb
 
 (require '[babashka.process :as p])
