@@ -16,28 +16,28 @@ in {
 
   config = lib.mkIf config.core.net.enable {
     users.users.${username}.extraGroups = ["networking"];
-    services = {
-      nscd.enableNsncd = true;
-      unbound = lib.mkIf (!wpa) {
-        enable = true;
-        settings = {
-          server.qname-minimisation = true;
-          forward-zone = [
-            {
-              # ProtonVPN DNS, if available
-              name = ".";
-              forward-addr = "10.2.0.1";
-            }
-            {
-              # Cloudflare backup
-              name = ".";
-              forward-addr = "1.1.1.1";
-            }
-          ];
-        };
-        localControlSocketPath = "/run/unbound/unbound.ctl";
-      };
-    };
+    # services = {
+    #   nscd.enableNsncd = true;
+    #   unbound = lib.mkIf (!wpa) {
+    #     enable = true;
+    #     settings = {
+    #       server.qname-minimisation = true;
+    #       forward-zone = [
+    #         {
+    #           # ProtonVPN DNS, if available
+    #           name = ".";
+    #           forward-addr = "10.2.0.1";
+    #         }
+    #         {
+    #           # Cloudflare backup
+    #           name = ".";
+    #           forward-addr = "1.1.1.1";
+    #         }
+    #       ];
+    #     };
+    #     localControlSocketPath = "/run/unbound/unbound.ctl";
+    #   };
+    # };
     environment.persistence = {
       "/persist/system" = lib.mkIf (!wpa) {
         directories = [
@@ -48,7 +48,7 @@ in {
     networking =
       if (!wpa)
       then {
-        useDHCP = lib.mkForce false;
+        # useDHCP = lib.mkForce false;
         wireless.iwd.settings.Settings.AutoConnect = true;
         networkmanager = {
           enable = true;

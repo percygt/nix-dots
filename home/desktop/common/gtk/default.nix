@@ -18,8 +18,8 @@ in {
       gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
       font = {
-        inherit (fonts.app) name size;
-        package = fonts.app.package pkgs;
+        inherit (fonts.interface) name size;
+        package = fonts.interface.package pkgs;
       };
 
       cursorTheme = {

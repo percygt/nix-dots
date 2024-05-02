@@ -8,7 +8,6 @@
 }: {
   imports = [
     ./waybar
-    ./rofi
     ./mako.nix
     ./services.nix
     ./i3-quickterm.nix

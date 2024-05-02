@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  username,
   ...
 }: {
   options = {
@@ -12,7 +11,6 @@
 
   imports = [
     ./gitmux.nix
-    ./resurrect-post-save.nix
   ];
 
   config = lib.mkIf config.cli.tmux.enable {
@@ -24,11 +22,6 @@
         moreutils
         fzf
       ];
-      persistence."/persist/home/${username}" = {
-        directories = [
-          ".local/share/tmux/resurrect"
-        ];
-      };
     };
 
     xdg.configFile = {
@@ -51,7 +44,7 @@
       escapeTime = 0;
       historyLimit = 1000000;
       inherit (import ./plugins.nix {inherit pkgs config;}) plugins;
-      inherit (import ./extra.nix) extraConfig;
+      inherit (import ./extra.nix {inherit pkgs;}) extraConfig;
     };
   };
 }

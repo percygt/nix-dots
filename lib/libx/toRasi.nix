@@ -1,5 +1,3 @@
-# This work is licensed under the terms of the Apache License Version 2.0, January 2004 by jnsgruk
-# For a copy, see <https://github.com/jnsgruk/nixos-config/commit/4732a95dc9592079d5dc4aa6c1dd11aeadb7a79d>
 {lib, ...}: let
   inherit (lib) isBool isInt;
   inherit (builtins) toString isList isString concatStringsSep concatMap removeAttrs isAttrs;

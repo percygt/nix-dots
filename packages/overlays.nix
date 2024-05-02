@@ -9,11 +9,25 @@
     text = builtins.readFile ./clj/cycle-pulse-sink.clj;
     runtimeInputs = [pkgs.pulseaudioFull];
   };
+  cycle-sway-output = pkgs.writeBabashkaScript {
+    name = "cycle-sway-output";
+    text = builtins.readFile ./clj/cycle-sway-output.clj;
+  };
+  cycle-sway-scale = pkgs.writeBabashkaScript {
+    name = "cycle-sway-scale";
+    text = builtins.readFile ./clj/cycle-sway-scale.clj;
+  };
+  toggle-sway-window = pkgs.writeBabashkaScript {
+    name = "toggle-sway-window";
+    text = builtins.readFile ./clj/toggle-sway-window.clj;
+  };
+
   nodePackages-extra = import ./node rec {
     inherit pkgs;
     inherit (pkgs) system;
     nodejs = pkgs.nodejs_20;
   };
+
   json2nix = pkgs.writeScriptBin "json2nix" ''
     ${pkgs.python3}/bin/python ${pkgs.fetchurl {
       url = "https://gitlab.com/-/snippets/3613708/raw/main/json2nix.py";

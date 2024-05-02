@@ -13,8 +13,8 @@
     kanshi
     libnotify
     pamixer
+    # nvtop
     wev
-    netscanner
     slurp
     wdisplays
     wl-clipboard
@@ -22,7 +22,6 @@
     xdg-utils
     xwayland
     rofimoji
-    btop
     desktop-file-utils
     wl-screenrec
     libnotify

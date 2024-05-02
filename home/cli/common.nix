@@ -11,6 +11,22 @@
 
   config = lib.mkIf config.cli.common.enable {
     home.packages = with pkgs; [
+      # entr
+      jdupes
+      hyperfine
+      most
+      procs
+      exiftool
+      sd
+      glances
+      cointop
+      ddgr
+      buku
+      mutt
+      newsboat
+      navi
+      bandwhich
+      scc
       git
       du-dust
       dua

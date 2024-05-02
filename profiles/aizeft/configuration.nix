@@ -3,6 +3,7 @@
   lib,
   inputs,
   config,
+  username,
   ...
 }: {
   imports = [
@@ -26,7 +27,26 @@
 
   # symlinks to enable "erase your darlings"
   environment.persistence = {
-    "/persist".hideMounts = true;
+    "/persist" = {
+      hideMounts = true;
+      users.${username} = {
+        directories = [
+          ".local/share/nvim"
+          ".local/cache/nvim"
+          ".local/state/nvim"
+          ".local/share/atuin"
+          ".local/share/fish"
+          ".local/share/zoxide"
+          ".local/share/navi"
+          ".local/share/tmux/resurrect"
+          ".config/keepassxc"
+          ".config/BraveSoftware/Brave-Browser"
+        ];
+        files = [
+          ".local/share/tmux/resurrect/last"
+        ];
+      };
+    };
     "/persist/system" = {
       hideMounts = true;
       directories = [
@@ -57,8 +77,6 @@
       ];
     };
   };
-
-  programs.fuse.userAllowOther = true;
 
   fileSystems."/persist".neededForBoot = true;
 

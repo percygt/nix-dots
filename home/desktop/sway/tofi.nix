@@ -31,7 +31,7 @@ in {
     selection-color = #${colors.bold}
     text-color = #${colors.default.foreground}
     background-color = #${colors.default.background}
-    prompt-text = "❯ "
+    prompt-text = "> "
     anchor = top
     width = 100%
     height = 24

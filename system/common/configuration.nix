@@ -5,13 +5,12 @@
   pkgs,
   isIso,
   modulesPath,
-  username,
   ...
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
-
+  programs.command-not-found.enable = false;
   nixpkgs.config = {
     allowUnfree = true;
     config.permittedInsecurePackages = [
@@ -38,5 +37,5 @@
 
   hardware.enableRedistributableFirmware = true;
   # Create dirs for home-manager
-  systemd.tmpfiles.rules = ["d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"];
+  # systemd.tmpfiles.rules = ["d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root"];
 }

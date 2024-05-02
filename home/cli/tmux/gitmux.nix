@@ -37,7 +37,7 @@
               insertions: "#[fg=green]"
               deletions: "#[fg=red]"
               clean: "#[fg=blue]"
-          layout: [branch, divergence, " \\ ", flags]
+          layout: [branch, divergence, "  ", flags]
           options:
               branch_max_len: 0
               branch_trim: right

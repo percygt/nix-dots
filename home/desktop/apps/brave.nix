@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  username,
   ...
 }: {
   options = {
@@ -11,13 +10,8 @@
   };
 
   config = lib.mkIf config.desktop.apps.brave.enable {
-    home.persistence."/persist/home/${username}" = {
-      directories = [
-        ".config/BraveSoftware/Brave-Browser"
-      ];
-    };
     programs.chromium = {
-      package = pkgs.stash.brave;
+      package = pkgs.brave;
       enable = true;
       extensions = [
         {id = "cjpalhdlnbpafiamejdnhcphjbkeiagm";} # ublock origin

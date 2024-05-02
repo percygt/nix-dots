@@ -1,38 +1,26 @@
-{desktop, ...}: {
-  interface =
-    if desktop == "gnome"
-    then {
-      name = "Rubik";
-      style = "Regular";
-      package = pkgs: pkgs.rubik;
-      size = 10.0;
-    }
-    else {
-      name = "GeistMono Nerd Font";
-      style = "Regular";
-      package = pkgs: pkgs.nerdfonts.override {fonts = ["GeistMono"];};
-      size = 10.0;
-    };
-
-  app = {
+{
+  interface = {
     name = "Rubik";
     style = "Regular";
+    weight = "400";
     package = pkgs: pkgs.rubik;
+    size = 12.0;
+  };
+
+  icon = {
+    name = "Font Awesome 6 Free";
+    style = "Regular";
+    weight = "400";
+    package = pkgs: pkgs.font-awesome;
     size = 12.0;
   };
 
   shell = {
     name = "VictorMono Nerd Font";
     style = "SemiBold";
+    weight = "600";
     package = pkgs: pkgs.nerdfonts.override {fonts = ["VictorMono"];};
-    size = 14;
-  };
-
-  console = {
-    name = "JetBrainsMono Nerd Font";
-    style = "Regular";
-    package = pkgs: pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
-    size = 14;
+    size = 14.0;
   };
 
   packages = pkgs:

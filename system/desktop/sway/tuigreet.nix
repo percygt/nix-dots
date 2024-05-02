@@ -1,8 +1,16 @@
 {
   pkgs,
   config,
+  lib,
   ...
-}: {
+}: let
+  unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;
+  sway-run = pkgs.writeShellScriptBin "sway-run" ''
+    export XDG_SESSION_TYPE=wayland
+    export XDG_CURRENT_DESKTOP=sway
+    systemd-cat -t xsession sway ${lib.optionalString unsupported-gpu "--unsupported-gpu"}
+  '';
+in {
   services.greetd = {
     enable = true;
     settings = {
@@ -12,6 +20,16 @@
       };
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    sway-run
+    pciutils
+  ];
+
+  environment.etc."greetd/environments".text = ''
+    sway-run
+    fish
+  '';
 
   security.pam.services.greetd.enableGnomeKeyring = true;
 

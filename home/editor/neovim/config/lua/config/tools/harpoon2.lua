@@ -5,7 +5,7 @@ harpoon:setup()
 -- REQUIRED
 
 setKey("n", "<a-m>", function()
-  harpoon:list():append()
+  harpoon:list():add()
 end)
 setKey("n", "<a-1>", function()
   harpoon:list():select(1)

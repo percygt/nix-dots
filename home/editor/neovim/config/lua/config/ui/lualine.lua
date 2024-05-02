@@ -70,7 +70,7 @@ require("lualine").setup({
     lualine_b = {
       {
         "buffers",
-        max_length = vim.o.columns * 3 / 5, -- Maximum width of buffers component,
+        max_length = vim.o.columns * 8 / 10, -- Maximum width of buffers component,
         filetype_names = {
           minifiles = "Files",
         },

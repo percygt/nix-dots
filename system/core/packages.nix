@@ -21,6 +21,7 @@
       aria2
       wget
 
+      lshw
       wev
       lsof
       dig

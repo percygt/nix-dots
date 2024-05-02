@@ -6,15 +6,15 @@
   ...
 }: let
   inherit (libx) colors fonts sway wallpaper;
-  fnts = fonts;
+  fnts = fonts.interface;
   inherit (sway) mkAppsFloatCenter;
   clrs = colors;
 in {
   config = rec {
     fonts = {
-      names = [fnts.app.name];
-      style = fnts.app.style;
-      size = fnts.app.size;
+      names = [fnts.name];
+      inherit (fnts) style;
+      inherit (fnts) size;
     };
     modifier = "Mod4";
     up = "k";

@@ -1,33 +1,10 @@
 {
-  inputs,
-  username,
-  ...
-}: {
-  imports = [
-    inputs.impermanence.nixosModules.home-manager.impermanence
-  ];
-
   desktop.apps = {
-    brave.enable = true;
     firefox.enable = true;
+    brave.enable = true;
   };
 
   wayland.windowManager.sway.extraOptions = ["--unsupported-gpu"];
-
-  home.persistence."/persist/home/${username}" = {
-    directories = [
-      ".local/cache/nix"
-      ".local/share/atuin"
-      ".local/share/keyrings"
-      ".local/share/fish"
-      ".local/share/zoxide"
-      ".config/BraveSoftware/Brave-Browser"
-      ".local/share/flatpak/"
-      ".var/app/"
-      ".codeium"
-    ];
-    allowOther = true;
-  };
 
   desktop = {
     modules = {

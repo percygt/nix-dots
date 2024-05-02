@@ -14,23 +14,6 @@
   mod = modifier;
   inherit (libx) sway;
   inherit (sway) mkWorkspaceKeys mkDirectionKeys;
-  toggle-sway-window = pkgs.writeBabashkaScript {
-    name = "toggle-sway-window";
-    text = builtins.readFile ./toggle-sway-window.clj;
-  };
-  cycle-sway-output = pkgs.writeBabashkaScript {
-    name = "cycle-sway-output";
-    text = builtins.readFile ./cycle-sway-output.clj;
-  };
-  cycle-sway-scale = pkgs.writeBabashkaScript {
-    name = "cycle-sway-scale";
-    text = builtins.readFile ./cycle-sway-scale.clj;
-  };
-  cycle-pulse-sink = pkgs.writeBabashkaScript {
-    name = "cycle-pulse-sink";
-    text = builtins.readFile ./cycle-pulse-sink.clj;
-    runtimeInputs = [pkgs.pulseaudioFull];
-  };
   toggle-notifications = pkgs.writers.writeBash "toggle-notifications" ''
     if makoctl mode | grep -q "default"; then
       makoctl mode -s hidden
@@ -79,18 +62,18 @@ in {
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
       "${mod}+s" = "exec pkill tofi-drun || ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
       "${mod}+x" = "exec pkill tofi-run || ${pkgs.tofi}/bin/tofi-run | xargs swaymsg exec --";
-      "${mod}+m" = "exec ${lib.getExe toggle-sway-window} --id btop -- ${terminal} --app-id=btop ${lib.getExe pkgs.btop}";
-      "${mod}+v" = "exec ${lib.getExe toggle-sway-window} --id pavucontrol -- pavucontrol";
-      "${mod}+Shift+d" = "exec ${lib.getExe toggle-sway-window} --id gnome-disks -- gnome-disks";
-      "${mod}+b" = "exec ${lib.getExe toggle-sway-window} --id .blueman-manager-wrapped --width 80 --height 80 -- blueman-manager";
-      "${mod}+Shift+k" = "exec ${lib.getExe toggle-sway-window} --id org.keepassxc.KeePassXC -- keepassxc";
-      "${mod}+f" = "exec ${lib.getExe toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
-      "${mod}+shift+tab" = "exec ${lib.getExe cycle-sway-output}";
-      "${mod}+backslash" = "exec ${lib.getExe cycle-sway-scale}";
-      "${mod}+shift+v" = "exec ${lib.getExe cycle-pulse-sink}";
+      "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --app-id=btop btop";
+      "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
+      "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
+      "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped --width 80 --height 80 -- blueman-manager";
+      "${mod}+Shift+k" = "exec ${lib.getExe pkgs.toggle-sway-window} --id org.keepassxc.KeePassXC -- keepassxc";
+      "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
+      "${mod}+shift+tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
+      "${mod}+backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
+      "${mod}+shift+v" = "exec ${lib.getExe pkgs.cycle-pulse-sink}";
       "${mod}+shift+n" = "exec ${toggle-notifications}";
       "${mod}+delete" = "exec swaylock";
-      XF86Calculator = "exec ${lib.getExe toggle-sway-window} --id qalculate-gtk -- qalculate-gtk";
+      XF86Calculator = "exec ${lib.getExe pkgs.toggle-sway-window} --id qalculate-gtk -- qalculate-gtk";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
 
       "F11" = "fullscreen toggle";

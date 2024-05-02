@@ -17,12 +17,6 @@ in {
   config = lib.mkIf config.editor.neovim.enable {
     home = {
       shellAliases.v = "nvim";
-      persistence."/persist/home/${username}" = {
-        directories = [
-          ".local/share/nvim"
-          ".local/cache/nvim"
-        ];
-      };
     };
     programs.neovim = {
       enable = true;

@@ -4,10 +4,19 @@
   desktop ? "null",
 }: rec {
   colors = (import ./colors.nix) // inputs.nix-colors.lib;
-  fonts = import ./fonts.nix {inherit desktop;};
+  fonts = import ./fonts.nix;
   wallpaper = "${homeDirectory}/.local/share/backgrounds/nice-mountain.jpg";
   sway = import ./sway.nix {inherit (inputs.nixpkgs) lib;};
   toRasi = import ./toRasi.nix {inherit (inputs.nixpkgs) lib;};
+  mkLiteral = value: {
+    _type = "literal";
+    inherit value;
+  };
+  mkWaybarFont = {
+    i,
+    s ? "medium",
+    c ? colors.normal.white,
+  }: "<span size='${s}' color='#${c}'>${i}</span>";
   mkFileList = dir: builtins.attrNames (builtins.readDir dir);
   cursorTheme = {
     name = "phinger-cursors-light";

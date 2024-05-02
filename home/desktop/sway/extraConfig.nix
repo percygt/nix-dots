@@ -20,6 +20,6 @@
     for_window [title=".*"] inhibit_idle fullscreen
 
     exec sleep 2 && exec swaymsg "workspace 3; exec brave --profile-directory=\"Profile 1\""
-    exec sleep 8 && exec swaymsg "workspace 1; exec brave --profile-directory=\"Default\""
+    exec sleep 8 && exec swaymsg "workspace 2; exec brave --profile-directory=\"Default\""
   '';
 }
