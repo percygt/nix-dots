@@ -44,7 +44,10 @@ in {
         "E7FC17A1A41AD93D71B6B5A9853A9AA3ECBFCB53"
         "0F35FAA58C77270C1FC8CC77D2B107310955DD82"
       ];
-      pinentryPackage = pkgs.pinentry-gnome3;
+      pinentryPackage =
+        if config.gtk.enable
+        then pkgs.pinentry-gnome3
+        else pkgs.pinentry-curses;
       extraConfig = ''
         disable-scdaemon
       '';

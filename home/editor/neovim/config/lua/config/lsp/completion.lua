@@ -108,6 +108,7 @@ cmp.setup({
     { name = "buffer" },
     { name = "path" },
     { name = "codeium" },
+    { name = "conjure" },
   },
   -- Pictograms
   formatting = {

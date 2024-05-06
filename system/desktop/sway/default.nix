@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  libx,
+  ...
+}: let
+  swayPkg = libx.sway.package;
+in {
   imports = [
     ./xremap.nix
     ./cursor.nix
@@ -7,7 +13,8 @@
   programs = {
     sway = {
       enable = true;
-      package = pkgs.swayfx.overrideAttrs (_: {passthru.providedSessions = ["sway"];});
+      # package = pkgs.swayfx.overrideAttrs (_: {passthru.providedSessions = ["sway"];});
+      package = swayPkg pkgs;
       wrapperFeatures.gtk = true;
     };
     dconf.enable = true;

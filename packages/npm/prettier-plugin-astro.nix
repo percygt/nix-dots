@@ -1,6 +1,5 @@
 {
   buildNpmPackage,
-  fetchFromGitHub,
   ...
 }:
 buildNpmPackage rec {

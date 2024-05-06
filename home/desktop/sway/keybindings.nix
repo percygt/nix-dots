@@ -64,6 +64,7 @@ in {
       "${mod}+x" = "exec pkill tofi-run || ${pkgs.tofi}/bin/tofi-run | xargs swaymsg exec --";
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --app-id=btop btop";
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
+      "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped --width 80 --height 80 -- blueman-manager";
       "${mod}+Shift+k" = "exec ${lib.getExe pkgs.toggle-sway-window} --id org.keepassxc.KeePassXC -- keepassxc";
@@ -78,7 +79,7 @@ in {
 
       "F11" = "fullscreen toggle";
       "${mod}+Shift+q" = "kill";
-      "${mod}+n" = "layout stacking";
+      "${mod}+Shift+t" = "layout stacking";
       "${mod}+t" = "layout tabbed";
       "${mod}+e" = "layout toggle split";
       "${mod}+Shift+s" = "sticky toggle";

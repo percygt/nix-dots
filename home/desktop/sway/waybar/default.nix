@@ -8,7 +8,11 @@
 }: let
   inherit (libx) toRasi mkLiteral fonts colors mkWaybarFont;
   swaypkg = config.wayland.windowManager.${desktop}.package;
-  waybar_config = import ./config.nix {inherit mkWaybarFont colors;};
+  daylight = pkgs.writeBabashkaScript {
+    name = "daylight";
+    text = libx.clj.daylight;
+  };
+  waybar_config = import ./config.nix {inherit lib daylight mkWaybarFont colors;};
 in {
   # needed for mpris
   services.playerctld.enable = true;
@@ -20,6 +24,8 @@ in {
   ];
   systemd.user.services.waybar.Service.Environment = lib.mkForce "PATH=${lib.makeBinPath (with pkgs; [
     swaypkg
+    wpa_supplicant_gui
+    pulseaudio
     toggle-service
     toggle-sway-window
     foot

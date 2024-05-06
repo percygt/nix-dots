@@ -15,7 +15,6 @@ in {
   };
 
   config = lib.mkIf config.core.net.enable {
-    users.users.${username}.extraGroups = ["networking"];
     # services = {
     #   nscd.enableNsncd = true;
     #   unbound = lib.mkIf (!wpa) {
@@ -48,7 +47,6 @@ in {
     networking =
       if (!wpa)
       then {
-        # useDHCP = lib.mkForce false;
         wireless.iwd.settings.Settings.AutoConnect = true;
         networkmanager = {
           enable = true;
@@ -117,6 +115,7 @@ in {
     };
 
     users.groups.network = lib.mkIf wpa {};
+    users.users.${username}.extraGroups = ["network"];
 
     systemd = {
       services.wpa_supplicant.preStart = lib.mkIf wpa "touch /etc/wpa_supplicant.conf";

@@ -22,6 +22,7 @@
       pycodestyle = {enabled = false;};
     };
   };
+  clojure_lsp = {};
   clangd = {};
   nil_ls = {};
   dockerls = {};

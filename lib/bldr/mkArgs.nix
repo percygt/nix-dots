@@ -21,7 +21,7 @@
 
   flakeDirectory = "${homeDirectory}/data/nix-dots";
 
-  libx = import "${self}/lib/libx" {inherit inputs homeDirectory desktop;};
+  libx = import "${self}/lib/libx" {inherit inputs homeDirectory;};
 
   args =
     {

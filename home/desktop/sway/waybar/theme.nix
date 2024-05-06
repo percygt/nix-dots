@@ -15,109 +15,76 @@
       border = mkLiteral "none";
       font-family = "${rubik}, ${font_awesome}";
       font-size = mkLiteral fsize;
+    };
+    "window#waybar" = {
+      padding-top = mkLiteral "5px";
       background-color = bg;
+      color = mkLiteral "#${colors.extra.lavender}";
     };
-
     "label.module" = {
-      padding = mkLiteral "0 10px";
+      padding = mkLiteral "0px";
+      margin = mkLiteral "0px";
     };
-
     "tooltip" = {
       padding = mkLiteral "15px 15px";
     };
-
     ".modules-right" = {
-      margin-left = mkLiteral "5px";
-      padding = mkLiteral "0px";
+      padding-right = mkLiteral "0px";
     };
-
     ".modules-center" = {
       margin = mkLiteral "0px";
       padding = mkLiteral "0px";
     };
-
     ".modules-left" = {
-      margin-right = mkLiteral "5px";
+      padding-left = mkLiteral "0px";
+    };
+    "#custom-daylight,
+    #clock" = {
       padding = mkLiteral "0px";
     };
-
-    "#clock" = {
-      font-weight = mkLiteral "700";
-      padding = mkLiteral "0px 5px";
+    "#workspaces" = {
+      padding = mkLiteral "0";
+      margin = mkLiteral "0";
     };
     "#workspaces button" = {
       margin = mkLiteral "0";
-      color = mkLiteral "#${colors.extra.overlay1}";
       padding = mkLiteral "0";
+      color = mkLiteral "#${colors.extra.overlay1}";
+      border-radius = mkLiteral "0px";
     };
-
     "#workspaces button:hover" = {
-      color = mkLiteral "#${colors.bold}";
+      color = mkLiteral "#${colors.extra.lavender}";
       background-color = bg2;
     };
-
     "#workspaces button.focused, #workspaces button.active" = {
-      color = mkLiteral "#${colors.bold}";
-      font-weight = mkLiteral "700";
-    };
-
-    "#battery,
-      #window,
-      #bluetooth,
-      #custom-lock,
-      #custom-reboot,
-      #custom-logout,
-      #custom-suspend,
-      #custom-wlsunset,
-      #backlight,
-      #network,
-      #tray
-      #wireplumber" = {
-      padding = mkLiteral "0px 5px";
-      color = mkLiteral "#${colors.default.foreground}";
-    };
-
-    "#pulseaudio" = {
-      padding = mkLiteral "0px 5px";
-      margin = mkLiteral "0px";
-    };
-
-    "#custom-power" = {
-      color = mkLiteral "#${colors.normal.blue}";
-      padding = mkLiteral "0px 5px";
-      margin = mkLiteral "0px";
-      background-color = bg;
-    };
-
-    "#cpu,
-      #memory,
-      #temperature" = {
-      padding = mkLiteral "0 5px";
-      color = mkLiteral "#${colors.normal.white}";
-    };
-
-    "#custom-logout, #custom-suspend, #custom-lock, #custom-reboot" = {
-      color = mkLiteral "#${colors.normal.yellow}";
+      font-weight = mkLiteral "500";
       background-color = bg2;
+    };
+
+    "#group-power" = {
+      padding = mkLiteral "0px";
+    };
+    "#custom-power, #custom-logout, #custom-suspend, #custom-lock, #custom-reboot" = {
+      padding-right = mkLiteral "10px";
+    };
+    "#pulseaudio,
+    #cpu,
+    #tray,
+    #custom-wlsunset,
+    #battery,
+    #bluetooth,
+    #network,
+    #temperature,
+    #backlight,
+    #idle_inhibitor,
+    #memory,
+    #window,
+    #wireplumber" = {
+      padding = mkLiteral "0px 5px";
     };
     "#mpris" = {
       padding = mkLiteral "0px 10px";
-      color = mkLiteral "#${colors.default.foreground}";
     };
-    "#window" = {
-      background-color = bg;
-      color = mkLiteral "#${colors.bold}";
-      padding = mkLiteral "0px";
-    };
-
-    "#idle_inhibitor" = {
-      color = mkLiteral "#${colors.default.foreground}";
-      padding = mkLiteral "0px 5px";
-    };
-    "#idle_inhibitor.activated" = {
-      color = mkLiteral "#${colors.normal.blue}";
-    };
-
     "#temperature.critical" = {
       color = mkLiteral "#${colors.normal.red}";
     };

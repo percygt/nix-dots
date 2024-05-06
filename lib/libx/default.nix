@@ -1,8 +1,8 @@
 {
   inputs,
   homeDirectory ? "~",
-  desktop ? "null",
 }: rec {
+  inherit (import ../../packages/args.nix) clj;
   colors = (import ./colors.nix) // inputs.nix-colors.lib;
   fonts = import ./fonts.nix;
   wallpaper = "${homeDirectory}/.local/share/backgrounds/nice-mountain.jpg";
@@ -35,7 +35,7 @@
   gtkTheme = {
     name = "Colloid-Dark-Nord";
     package = pkgs:
-      pkgs.colloid-gtk-theme.overrideAttrs (oldAttrs: {
+      pkgs.colloid-gtk-theme.overrideAttrs (_oldAttrs: {
         src = pkgs.fetchFromGitHub {
           owner = "vinceliuice";
           repo = "Colloid-gtk-theme";

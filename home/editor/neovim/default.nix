@@ -4,7 +4,6 @@
   config,
   flakeDirectory,
   libx,
-  username,
   ...
 }: let
   inherit (libx) colors;

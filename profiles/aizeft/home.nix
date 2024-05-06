@@ -21,7 +21,7 @@
 
   editor = {
     neovim.enable = true;
-    vscode.enable = true;
+    # vscode.enable = true;
   };
 
   terminal = {

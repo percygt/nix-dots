@@ -1,7 +1,7 @@
 local g, opt = vim.g, vim.opt
 
 g.mapleader = " "
-g.maplocalleader = " "
+g.maplocalleader = ","
 
 opt.nu = true -- Show numberline
 opt.relativenumber = true -- Show number relative to the current cursor position
@@ -31,6 +31,7 @@ opt.virtualedit = "block" -- Allow going past end of line in visual block mode
 opt.splitbelow = true -- Splitting a new window below the current one
 opt.splitright = true -- Splitting a new window at the right of the current one
 opt.conceallevel = 2
+opt.colorcolumn = "120"
 
 opt.swapfile = false -- Disable swapfiles
 opt.backup = false

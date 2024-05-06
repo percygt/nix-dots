@@ -17,6 +17,6 @@
   };
 in
   import ./packages.nix {
-    inherit (pkgs) fetchurl nix-gitignore stdenv lib fetchgit;
+    inherit (pkgs) fetchurl;
     inherit nodeEnv;
   }

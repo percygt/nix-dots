@@ -13,3 +13,5 @@ key
 *bfg*
 *tmp
 test
+.clj-kondo
+.lsp

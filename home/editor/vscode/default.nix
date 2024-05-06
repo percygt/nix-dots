@@ -22,7 +22,7 @@ in {
       enableUpdateCheck = true;
       mutableExtensionsDir = true;
       enableExtensionUpdateCheck = true;
-      extensions = inputs.nix-stash.lib.vscodeExtensions {inherit (pkgs) system;};
+      extensions = "${inputs.nix-stash}" {inherit (pkgs) system;};
       userSettings = builtins.fromJSON (builtins.readFile ./config/settings.json);
       keybindings = builtins.fromJSON (builtins.readFile ./config/keybindings.json);
     };

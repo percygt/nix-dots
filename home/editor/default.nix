@@ -1,6 +1,6 @@
 {
- imports = [
-   ./neovim
-   ./vscode
- ];
+  imports = [
+    ./neovim
+    # ./vscode
+  ];
 }

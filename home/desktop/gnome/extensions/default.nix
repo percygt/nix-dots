@@ -6,7 +6,7 @@
 }: let
   date-menu-formatter = pkgs.callPackage "${self}/standard/date-menu-formatter.nix" {};
   quake-mode = pkgs.callPackage "${self}/standard/quake-mode.nix" {};
-  ddterm = pkgs.gnomeExtensions.ddterm.overrideAttrs (oldAttrs: rec {
+  ddterm = pkgs.gnomeExtensions.ddterm.overrideAttrs (_oldAttrs: rec {
     version = "54";
     src = pkgs.fetchzip {
       url = "https://github.com/ddterm/gnome-shell-extension-ddterm/releases/download/v${version}/ddterm@amezin.github.com.shell-extension.zip";
@@ -15,7 +15,7 @@
     };
   });
 
-  blur-my-shell = pkgs.gnomeExtensions.blur-my-shell.overrideAttrs (oldAttrs: rec {
+  blur-my-shell = pkgs.gnomeExtensions.blur-my-shell.overrideAttrs (_oldAttrs: rec {
     version = "56";
     src = pkgs.fetchzip {
       url = "https://github.com/aunetx/blur-my-shell/releases/download/v${version}/blur-my-shell@aunetx.shell-extension.zip";

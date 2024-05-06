@@ -11,13 +11,13 @@
 
   config = lib.mkIf config.cli.common.enable {
     home.packages = with pkgs; [
-      # entr
       jdupes
       hyperfine
       most
       procs
       exiftool
       sd
+      entr
       glances
       cointop
       ddgr

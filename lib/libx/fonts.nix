@@ -4,7 +4,7 @@
     style = "Regular";
     weight = "400";
     package = pkgs: pkgs.rubik;
-    size = 12.0;
+    size = 13.0;
   };
 
   icon = {

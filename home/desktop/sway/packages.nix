@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    wpa_supplicant_gui
     mako
     swayidle
     swaylock-effects
@@ -8,7 +9,7 @@
     brightnessctl
     autotiling
     wlsunset
-    cycle-pulse-sink
+    # cycle-pulse-sink
     grim
     kanshi
     libnotify

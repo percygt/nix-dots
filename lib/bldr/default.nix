@@ -17,9 +17,7 @@ in {
     username ? defaultUser,
   }: let
     inherit (inputs.nixpkgs.lib) nixosSystem;
-    mkArgs =
-      import ./mkArgs.nix
-      {inherit inputs outputs self username desktop stateVersion profile isIso;};
+    mkArgs = import ./mkArgs.nix {inherit inputs outputs self username desktop stateVersion profile isIso;};
     homeArgs = mkArgs.args;
   in
     nixosSystem {

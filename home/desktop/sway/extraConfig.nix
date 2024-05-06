@@ -1,13 +1,12 @@
 {
   extraConfig = ''
     shadows enable
-    blur_radius 7
-    blur_passes 4
+    blur_radius 4
+    blur_passes 2
     corner_radius 10
     smart_corner_radius enable
     default_dim_inactive 0.2
     layer_effects "waybar" "blur enable"; shadows enable
-    layer_effects "mako" shadows enable
 
     bindgesture swipe:4:right workspace prev
     bindgesture swipe:4:left workspace next

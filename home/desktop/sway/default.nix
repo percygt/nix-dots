@@ -5,7 +5,9 @@
   lib,
   isGeneric,
   ...
-}: {
+}: let
+  swayPkg = libx.sway.package;
+in {
   imports = [
     ./waybar
     ./mako.nix
@@ -16,23 +18,22 @@
     ./swayidle.nix
     ./swaylock.nix
     ./swappy.nix
-    # ./wpapered.nix
     ./tofi.nix
+    # ./wpapered.nix
   ];
   dconf.settings."org/gnome/desktop/wm/preferences".button-layout = ":appmenu";
   nix.settings.substituters = ["https://nixpkgs-wayland.cachix.org"];
   nix.settings.trusted-public-keys = ["nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="];
-  services.caffeine.enable = true;
-  xsession.importedVariables = ["PATH"];
+  # xsession.importedVariables = ["PATH"];
   wayland.windowManager.sway = {
     enable = true;
-    package = pkgs.swayfx.overrideAttrs (_: {passthru.providedSessions = ["sway"];});
+    package = swayPkg pkgs;
     swaynag.enable = true;
     systemd.enable = true;
     systemd.xdgAutostart = true;
+    wrapperFeatures.gtk = true;
     inherit (import ./extraConfig.nix) extraConfig;
     inherit (import ./extraSessionCommands.nix) extraSessionCommands;
     inherit (import ./config.nix {inherit pkgs config lib libx isGeneric;}) config;
-    wrapperFeatures.gtk = true;
   };
 }

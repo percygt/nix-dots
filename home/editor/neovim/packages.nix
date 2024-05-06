@@ -54,6 +54,9 @@
     go-tools
     gofumpt
 
+    #clj
+    clojure-lsp
+
     #docker
     hadolint
 

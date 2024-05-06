@@ -19,7 +19,7 @@
   };
 
   core = {
-    # net.wpa.enable = true;
+    net.wpa.enable = true;
     battery.chargeUpto = 80;
   };
 
@@ -41,6 +41,7 @@
           ".local/share/tmux/resurrect"
           ".config/keepassxc"
           ".config/BraveSoftware/Brave-Browser"
+          ".config/gh"
         ];
         files = [
           ".local/share/tmux/resurrect/last"

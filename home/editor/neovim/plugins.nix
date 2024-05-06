@@ -29,7 +29,26 @@ in {
       type = "lua";
       config = ''require("config.ui.zen-mode")'';
     }
-    # devicons
+    {
+      plugin = conjure;
+      type = "lua";
+      config =
+        /*
+        lua
+        */
+        ''
+          vim.g['conjure#mapping#prefix'] = ','
+          vim.g['conjure#log#hud#width'] = 1
+          vim.g['conjure#log#hud#height'] = 0.6
+          vim.g['conjure#client#clojure#nrepl#connection#auto_repl#enabled'] = false
+          vim.g['conjure#eval#gsubs'] = {
+            ['do-comment'] = {'^%(comment[%s%c]', '(do '}
+          }
+          vim.g['conjure#eval#result_register'] = '*'
+          vim.g['conjure#mapping#doc_word'] = '<localleader>K'
+          vim.g['conjure#client_on_load'] = false
+        '';
+    } # devicons
     nvim-web-devicons
     trouble-nvim
     dressing-nvim
@@ -46,6 +65,7 @@ in {
       type = "lua";
       config = ''require("config.tools.telescope")'';
     }
+    telescope-manix
     telescope-file-browser-nvim
     telescope-fzf-native-nvim
     telescope-undo-nvim

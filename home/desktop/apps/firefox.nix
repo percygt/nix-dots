@@ -9,7 +9,7 @@
   };
 
   config = lib.mkIf config.desktop.apps.firefox.enable {
-    programs. firefox = {
+    programs.firefox = {
       enable = true;
       policies = {
         Preferences = let

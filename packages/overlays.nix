@@ -4,6 +4,10 @@
   # babashka script source: https://github.com/stelcodes/nixos-config/commit/95d8734bad6162157f92f77951215c0aaa6b71d2
   writeBabashkaScript = pkgs.callPackage ./clj/writeBabashkaScript.nix {};
 
+  # daylight = pkgs.writeBabashkaScript {
+  #   name = "daylight";
+  #   text = builtins.readFile ./clj/daylight.clj;
+  # };
   cycle-pulse-sink = pkgs.writeBabashkaScript {
     name = "cycle-pulse-sink";
     text = builtins.readFile ./clj/cycle-pulse-sink.clj;

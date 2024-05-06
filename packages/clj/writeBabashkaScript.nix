@@ -8,7 +8,6 @@
   name,
   text,
   runtimeInputs ? [],
-  checkPhase ? null,
 }: let
   sourceFile = writeTextFile {inherit name text;};
 in

@@ -1,26 +1,25 @@
 #!/usr/bin/env bash
-white="#96c7f1"
-dim_1="#aaa8af"
-dim_2="#5c6370"
-black="#000000",
-nocturne="#120d22"
-azure="#0e1a60"
-lavender="#b4befe"
-peach="#fab387"
-
-get() {
+get_tmux_option() {
 	local option=$1
 	local default_value=$2
 	local option_value
-	option_value="$(tmux show-option -gqv "$option")"
 
-	if [ "$option_value" = "" ]; then
-		echo "$default_value"
-	else
-		echo "$option_value"
-	fi
+	option_value=$(tmux show -gqv "$option")
+	echo "${option_value:-$default_value}"
 }
-gitmux_dir() {
+
+handle_tmux_option() {
+	WHITE=$(get_tmux_option "@color1" "#96c7f1")
+	GREY=$(get_tmux_option "@color2" "#aaa8af")
+	BLACK=$(get_tmux_option "@color3" "#000000")
+	NOCTURNE=$(get_tmux_option "@color4" "#120d22")
+	AZURE=$(get_tmux_option "@color5" "#0e1a60")
+	LAVENDER=$(get_tmux_option "@color6" "#b4befe")
+	PEACH=$(get_tmux_option "@color7" "#fab387")
+}
+handle_tmux_option
+
+getGitmuxDir() {
 	if [ -f "$HOME/.gitmux.conf" ]; then
 		echo "$HOME/.gitmux.conf"
 	elif [ -f "$HOME/.config/gitmux/gitmux.conf" ]; then
@@ -29,7 +28,8 @@ gitmux_dir() {
 		echo ""
 	fi
 }
-get_os_logo() {
+
+getOsLogo() {
 	declare -A os_logos
 	os_logos["nixos"]=""
 	os_logos["debian"]=""
@@ -37,71 +37,77 @@ get_os_logo() {
 	os_logos["fedora"]=""
 	os_logos["archlinux"]=""
 	os_logos["pop_os"]=""
-
-	# Get the value of the ID from /etc/os-release
 	os_id=$(grep ^ID /etc/os-release | cut -d= -f2)
-
-	# Use the associative array to get the corresponding logo
 	logo=${os_logos[$os_id]}
 	if [ -z "$logo" ]; then
 		logo=""
 	fi
-
-	# Echo the logo
 	echo "$logo"
 }
 
-set() {
-	local option=$1
-	local value=$2
-	tmux set-option -gq "$option" "$value"
-}
+gitmuxDir=$(getGitmuxDir)
+osName=$(grep ^NAME /etc/os-release | cut -d= -f2)
 
-setw() {
+setWinOpt() {
 	local option=$1
 	local value=$2
 	tmux set-window-option -gq "$option" "$value"
 }
 
-set "status" "on"
-set "status-justify" "left"
-set "status-left-length" "100"
-set "status-right-length" "100"
-set "status-right-attr" "none"
-set "message-fg" "$white"
-set "message-bg" "$nocturne"
-set "message-command-fg" "$white"
-set "message-command-bg" "$nocturne"
-set "status-attr" "none"
-set "status-left-attr" "none"
-setw "window-status-fg" "$nocturne"
-setw "window-status-bg" "$nocturne"
-setw "window-status-attr" "none"
-setw "window-status-activity-bg" "$nocturne"
-setw "window-status-activity-fg" "$nocturne"
-setw "window-status-activity-attr" "none"
-setw "window-status-separator" ""
-set "window-style" "fg=$dim_2"
-set "window-active-style" "fg=$white"
-set "pane-border-fg" "$white"
-set "pane-border-bg" "$nocturne"
-set "pane-active-border-fg" "$lavender"
-set "pane-active-border-bg" "$nocturne"
-set "status-bg" "$nocturne"
-set "status-fg" "$white"
+setOpt() {
+	local option=$1
+	local value=$2
+	tmux set-option -gq "$option" "$value"
+}
 
-prefix_status_color="#{?client_prefix,$peach,$lavender}"
-sl_sep="#[fg=$nocturne,bg=$prefix_status_color,bold]"
-set "status-left" "#[fg=$nocturne,bg=$prefix_status_color,bold]   #S #[bg=$prefix_status_color,bold]${sl_sep}"
-gitmux="#(gitmux -cfg $(gitmux_dir) #{pane_current_path})"
-git_status="#[fg=$white,bg=$azure,bold]${gitmux}#[fg=$white,bg=$azure,bold]"
-os_name="#[fg=$azure,bg=$prefix_status_color,bold]$(get_os_logo)  $(grep ^NAME /etc/os-release | cut -d= -f2)"
-sr_sep1="#[fg=$nocturne,bg=$azure,bold]"
-sr_sep2="#[fg=$azure,bg=$prefix_status_color,bold]"
-set "status-right" "${sr_sep1}#[fg=$white,bg=$azure] ${git_status} ${sr_sep2}#[fg=$azure,bg=$prefix_status_color,bold] ${os_name}  "
-ws_sep1="#[bg=$black,fg=$nocturne,bold]"
-ws_sep2="#[bg=$black,fg=$nocturne,bold]"
-ws_index="#[fg=$dim_1,bg=$black,bold] #I #[fg=$dim_1,bg=$black,bold]"
-ws_run="#[fg=$dim_1,bg=$black,bold] #W  "
-set "window-status-format" "${ws_sep1}${ws_index}${ws_run}${ws_sep2}"
-set "window-status-current-format" "#[bg=$azure,fg=$nocturne,bold]#[fg=$white,bg=$azure]#{?window_zoomed_flag,󰁌 ,}#[fg=$dim_1,bg=$azure]#{?window_zoomed_flag,,} #[fg=$white,bg=$azure]#W #[fg=$dim_1,bg=$azure,bold]#[fg=$white,bg=$azure,bold] #(basename #{pane_current_path}) #[bg=$azure,fg=$nocturne,bold]"
+handle_tmux_option
+
+setWinOpt "window-status-fg" "$NOCTURNE"
+setWinOpt "window-status-bg" "$NOCTURNE"
+setWinOpt "window-status-attr" "none"
+setWinOpt "window-status-activity-bg" "$NOCTURNE"
+setWinOpt "window-status-activity-fg" "$NOCTURNE"
+setWinOpt "window-status-activity-attr" "none"
+setWinOpt "window-status-separator" ""
+setOpt "status" "on"
+setOpt "status-justify" "left"
+setOpt "status-left-length" "100"
+setOpt "status-right-length" "100"
+setOpt "status-right-attr" "none"
+setOpt "message-fg" "$WHITE"
+setOpt "message-bg" "$NOCTURNE"
+setOpt "message-command-fg" "$WHITE"
+setOpt "message-command-bg" "$NOCTURNE"
+setOpt "status-attr" "none"
+setOpt "status-left-attr" "none"
+setOpt "window-style" "fg=$GREY"
+setOpt "window-active-style" "fg=$WHITE"
+setOpt "pane-border-fg" "$WHITE"
+setOpt "pane-border-bg" "$NOCTURNE"
+setOpt "pane-active-border-fg" "$LAVENDER"
+setOpt "pane-active-border-bg" "$NOCTURNE"
+setOpt "status-bg" "$NOCTURNE"
+setOpt "status-fg" "$WHITE"
+
+prefixStatus="#{?client_prefix,$PEACH,$LAVENDER}"
+stLfSeparator="#[fg=$NOCTURNE,bg=$prefixStatus,bold]"
+stLfSession="#[fg=$NOCTURNE,bg=$prefixStatus,bold]   #S #[bg=$prefixStatus,bold]"
+gitmux="#(gitmux -cfg ${gitmuxDir} #{pane_current_path})"
+stRtGitStatus="#[fg=$WHITE,bg=$AZURE] #[fg=$WHITE,bg=$AZURE,bold]${gitmux}#[fg=$WHITE,bg=$AZURE,bold] "
+stRtLinuxName="#[fg=$AZURE,bg=$prefixStatus,bold] #[fg=$AZURE,bg=$prefixStatus,bold]$(getOsLogo)  ${osName}  "
+stRtSeparator1="#[fg=$NOCTURNE,bg=$AZURE,bold]"
+stRtSeparator2="#[fg=$AZURE,bg=$prefixStatus,bold]"
+winStSeparator1="#[bg=$BLACK,fg=$NOCTURNE,bold]"
+winStSeparator2="#[bg=$BLACK,fg=$NOCTURNE,bold]"
+winStIndex="#[fg=$GREY,bg=$BLACK,bold] #I #[fg=$GREY,bg=$BLACK,bold]"
+winStRunningProg="#[fg=$GREY,bg=$BLACK,bold] #W  "
+winStCurSeparator1="#[bg=$AZURE,fg=$NOCTURNE,bold]"
+winStCurSeparator2="#[bg=$AZURE,fg=$NOCTURNE,bold]"
+winStCurZoom="#[fg=$WHITE,bg=$AZURE]#{?window_zoomed_flag, 󰁌 ,}#[fg=$GREY,bg=$AZURE]#{?window_zoomed_flag,,} "
+winStCurRunningProg="#[fg=$WHITE,bg=$AZURE]#W #[fg=$GREY,bg=$AZURE,bold]"
+winStCurPath="#[fg=$WHITE,bg=$AZURE,bold] #(basename #{pane_current_path}) "
+
+setOpt "status-right" "${stRtSeparator1}${stRtGitStatus}${stRtSeparator2}${stRtLinuxName}"
+setOpt "status-left" "${stLfSession}${stLfSeparator}"
+setOpt "window-status-format" "${winStSeparator1}${winStIndex}${winStRunningProg}${winStSeparator2}"
+setOpt "window-status-current-format" "${winStCurSeparator1}${winStCurZoom}${winStCurRunningProg}${winStCurPath}${winStCurSeparator2}"
