@@ -7,7 +7,7 @@
 }: let
   inherit (libx) colors fonts sway wallpaper;
   fnts = fonts.interface;
-  inherit (sway) mkAppsFloatCenter;
+  inherit (sway) mkAppsFloat;
   clrs = colors;
 in {
   config = rec {
@@ -25,7 +25,7 @@ in {
     output."*".bg = "${wallpaper} fill";
     inherit (import ./keybindings.nix {inherit modifier pkgs libx lib config up down left right terminal;}) keybindings;
     inherit (import ./startup.nix) startup;
-    inherit (import ./window.nix {inherit mkAppsFloatCenter;}) window;
+    inherit (import ./window.nix {inherit mkAppsFloat;}) window;
     input = {
       "type:touchpad" = {
         tap = "enabled";

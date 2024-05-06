@@ -17,7 +17,7 @@
 in {
   exclusive = true;
   layer = "top";
-  height = 24;
+  height = 26;
   margin-top = 0;
   margin-bottom = 0;
   passthrough = false;

@@ -14,7 +14,7 @@ in {
 
     ; BEHAVIOR OPTIONS
     hide-cursor = true
-    text-cursor = true
+    text-cursor = false
     history = true
     fuzzy-match = false
     require-match = true
@@ -32,17 +32,18 @@ in {
     text-color = #${colors.default.foreground}
     background-color = #${colors.default.background}
     prompt-text = "> "
+    prompt-padding = 2
     anchor = top
     width = 100%
     height = 24
     horizontal = true
-    font-size = 9
+    font-size = 10
     outline-width = 0
     border-width = 0
     min-input-width = 120
-    result-spacing = 15
-    padding-top = 4
-    padding-bottom = 4
+    result-spacing = 10
+    padding-top = 5
+    padding-bottom = 3
     padding-left = 0
     padding-right = 0
   '';

@@ -34,7 +34,7 @@
     fi
   '';
   power-menu = pkgs.writers.writeBash "power-menu" ''
-    pkill tofi || case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | ${pkgs.tofi}/bin/tofi) in
+    pkill tofi || case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | ${pkgs.tofi}/bin/tofi  --prompt-text="Power Menu: ") in
     "Power Off")
       systemctl poweroff
       ;;
@@ -60,8 +60,9 @@ in {
       "${mod}+w" = "exec ${dropdown-terminal}";
       "${mod}+return" = "exec ${terminal}";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
-      "${mod}+s" = "exec pkill tofi-drun || ${pkgs.tofi}/bin/tofi-drun --drun-launch=true";
-      "${mod}+x" = "exec pkill tofi-run || ${pkgs.tofi}/bin/tofi-run | xargs swaymsg exec --";
+      "${mod}+Shift+e" = "exec ${power-menu}";
+      "${mod}+s" = "exec pkill tofi-drun || ${pkgs.tofi}/bin/tofi-drun --drun-launch=true --prompt-text=\"Apps: \"";
+      "${mod}+x" = "exec pkill tofi-run || ${pkgs.tofi}/bin/tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --app-id=btop btop";
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
@@ -116,7 +117,5 @@ in {
       # Enter other modes:
       "${mod}+r" = "mode resize";
       "${mod}+Shift+p" = "mode passthrough";
-
-      "${mod}+Shift+e" = "exec ${power-menu}";
     };
 }

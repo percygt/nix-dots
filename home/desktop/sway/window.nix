@@ -1,10 +1,10 @@
-{mkAppsFloatCenter}: {
+{mkAppsFloat}: {
   window = {
     titlebar = false;
     border = 1;
     hideEdgeBorders = "smart";
     commands =
-      (mkAppsFloatCenter
+      (mkAppsFloat
         {
           app_ids = [
             "org.gnome.Calculator"
@@ -29,22 +29,26 @@
             "zoom"
           ];
         })
-      ++ (mkAppsFloatCenter {
-        titles = [
-          "^Picture in picture$"
-        ];
+      ++ (mkAppsFloat {
+        titles = ["^Picture in picture$"];
         command = ''floating enable, resize set width 600 px height 300 px, move position 830 px 565 px, sticky on'';
       })
-      ++ (mkAppsFloatCenter {
-        app_ids = [
-          "wpa_gui"
-          "pavucontrol"
-          "\.?blueman-manager(-wrapped)?"
-        ];
-        w = 50;
-        h = 50;
+      ++ (mkAppsFloat {
+        app_ids = ["wpa_gui" "pavucontrol" "\.?blueman-manager(-wrapped)?"];
+        command = ''floating enable, resize set width 50ppt height 50ppt, move position 50ppt 0'';
+      })
+      ++ (mkAppsFloat {
+        titles = [".*"];
+        command = ''move position center, inhibit_idle fullscreen'';
       })
       ++ [
+        {
+          command = ''move position center'';
+          criteria = {
+            app_id = "org.gnome.Nautilus";
+            title = "";
+          };
+        }
         {
           command = ''blur enable'';
           criteria = {

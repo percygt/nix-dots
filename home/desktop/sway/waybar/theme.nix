@@ -17,7 +17,6 @@
       font-size = mkLiteral fsize;
     };
     "window#waybar" = {
-      padding-top = mkLiteral "5px";
       background-color = bg;
       color = mkLiteral "#${colors.extra.lavender}";
     };
@@ -29,11 +28,12 @@
       padding = mkLiteral "15px 15px";
     };
     ".modules-right" = {
+      padding-top = mkLiteral "2px";
       padding-right = mkLiteral "0px";
     };
     ".modules-center" = {
       margin = mkLiteral "0px";
-      padding = mkLiteral "0px";
+      padding-top = mkLiteral "2px";
     };
     ".modules-left" = {
       padding-left = mkLiteral "0px";
@@ -48,7 +48,7 @@
     };
     "#workspaces button" = {
       margin = mkLiteral "0";
-      padding = mkLiteral "0";
+      padding = mkLiteral "2px 0 0 0";
       color = mkLiteral "#${colors.extra.overlay1}";
       border-radius = mkLiteral "0px";
     };

@@ -44,13 +44,13 @@ in rec {
       }
     )
     crits;
-  mkAppsFloatCenter = {
+  mkAppsFloat = {
     app_ids ? null,
     classes ? null,
     titles ? null,
     w ? 80,
     h ? 80,
-    command ? ''floating enable, resize set width ${toString w} ppt height ${toString h} ppt, move position center'',
+    command ? ''floating enable, resize set width ${toString w} ppt height ${toString h} ppt'',
   }:
     lib.optionals (app_ids != null) (mapApps {
       inherit command;
