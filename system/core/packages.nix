@@ -51,6 +51,8 @@
 
       usbutils
       yq-go
+      #nix
+      comma
     ];
   };
 }

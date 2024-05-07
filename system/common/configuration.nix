@@ -10,7 +10,16 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
-  programs.command-not-found.enable = false;
+
+  programs = {
+    nix-index.enable = true;
+    nix-index-database.comma.enable = true;
+    command-not-found.enable = false;
+    bash.interactiveShellInit = ''
+      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+    '';
+  };
+
   nixpkgs.config = {
     allowUnfree = true;
     config.permittedInsecurePackages = [

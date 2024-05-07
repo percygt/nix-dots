@@ -6,7 +6,7 @@
   ...
 }: {
   nix = {
-    package = lib.mkDefault pkgs.nixVersions.unstable;
+    package = lib.mkDefault pkgs.nixVersions.git;
     settings = {
       experimental-features = ["nix-command" "flakes"];
       builders-use-substitutes = true;

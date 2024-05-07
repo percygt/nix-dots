@@ -16,6 +16,7 @@ in {
       inherit (fnts) style;
       inherit (fnts) size;
     };
+    # gaps.inner = 5;
     modifier = "Mod4";
     up = "k";
     down = "j";

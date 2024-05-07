@@ -1,6 +1,4 @@
-{pkgs}: let
-  tmuxStatusBar = pkgs.writers.writeBash "tmuxStatusBar" (builtins.readFile ./tmux-status-bar.sh);
-in {
+{pkgs}: {
   extraConfig =
     /*
     bash
@@ -17,8 +15,6 @@ in {
       set -g pane-active-border-style 'fg=magenta,bg=default'
       set -g pane-border-style 'fg=brightblack,bg=default'
 
-      set -g status-position top
-      run-shell ${tmuxStatusBar}
       # make Prefix p paste the buffer.
       unbind p
       bind p paste-buffer

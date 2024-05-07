@@ -1,7 +1,7 @@
 {lib}: let
   wsToKey = ws: builtins.substring 0 1 ws;
 in rec {
-  package = pkgs: pkgs.swayfx.overrideAttrs (_: {passthru.providedSessions = ["sway"];});
+  package = pkgs: pkgs.stash.swayfx;
   mkWorkspaceKeys = mod: workspaces:
     builtins.listToAttrs ((map (ws: {
           name = mod + "+" + wsToKey ws;

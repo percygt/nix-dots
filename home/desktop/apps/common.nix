@@ -5,12 +5,13 @@
 
   home.packages = with pkgs; [
     gnome.nautilus
-    zoom-us
+    # zoom-us
     audacity
+    nvitop
     # bambu-studio
     loupe
     # mumble
-    # obsidian
+    obsidian
     # rambox
     # signal-desktop
     # todoist-electron

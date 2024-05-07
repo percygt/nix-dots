@@ -28,12 +28,12 @@
       padding = mkLiteral "15px 15px";
     };
     ".modules-right" = {
-      padding-top = mkLiteral "2px";
+      padding-top = mkLiteral "1px";
       padding-right = mkLiteral "0px";
     };
     ".modules-center" = {
+      padding-top = mkLiteral "1px";
       margin = mkLiteral "0px";
-      padding-top = mkLiteral "2px";
     };
     ".modules-left" = {
       padding-left = mkLiteral "0px";
@@ -48,7 +48,7 @@
     };
     "#workspaces button" = {
       margin = mkLiteral "0";
-      padding = mkLiteral "2px 0 0 0";
+      padding = mkLiteral "1px 0 0 0";
       color = mkLiteral "#${colors.extra.overlay1}";
       border-radius = mkLiteral "0px";
     };

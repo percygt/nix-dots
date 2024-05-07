@@ -25,6 +25,10 @@ in {
       '';
     }
     {
+      plugin = tmuxst;
+      extraConfig = "set -g status-position top";
+    }
+    {
       plugin = tmux-thumbs;
       extraConfig = ''
         set -g @thumbs-command 'tmux set-buffer -- {} && tmux display-message "Copied {}" && printf %s {} | xclip -i -selection clipboard'

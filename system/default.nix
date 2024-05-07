@@ -23,6 +23,7 @@ in {
     ++ [
       # profile specific configuration.nix
       "${self}/profiles/${profile}/configuration.nix"
+      inputs.nix-index-database.nixosModules.nix-index
       inputs.sops-nix.nixosModules.sops
       inputs.nix-flatpak.nixosModules.nix-flatpak
     ];

@@ -46,14 +46,18 @@
           command = ''move position center'';
           criteria = {
             app_id = "org.gnome.Nautilus";
-            title = "";
+            title = "^$";
+          };
+        }
+        {
+          command = ''border pixel 0, corner_radius pixel 0'';
+          criteria = {
+            app_id = "org.wezfurlong.wezterm";
           };
         }
         {
           command = ''blur enable'';
-          criteria = {
-            app_id = "yazi";
-          };
+          criteria = {app_id = "yazi";};
         }
         {
           command = ''blur enable'';

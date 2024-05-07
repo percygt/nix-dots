@@ -42,9 +42,7 @@
           ".config/keepassxc"
           ".config/BraveSoftware/Brave-Browser"
           ".config/gh"
-        ];
-        files = [
-          ".local/share/tmux/resurrect/last"
+          ".mozilla"
         ];
       };
     };

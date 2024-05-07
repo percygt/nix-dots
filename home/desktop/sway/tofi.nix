@@ -42,7 +42,7 @@ in {
     border-width = 0
     min-input-width = 120
     result-spacing = 10
-    padding-top = 5
+    padding-top = 4
     padding-bottom = 3
     padding-left = 0
     padding-right = 0

@@ -4,11 +4,6 @@
   colors,
   daylight,
 }: let
-  lavenderFnt = el:
-    mkWaybarFont {
-      i = el;
-      c = colors.extra.lavender;
-    };
   redFnt = el:
     mkWaybarFont {
       i = el;
@@ -17,7 +12,7 @@
 in {
   exclusive = true;
   layer = "top";
-  height = 26;
+  height = 22;
   margin-top = 0;
   margin-bottom = 0;
   passthrough = false;
@@ -50,8 +45,8 @@ in {
   "mpris" = {
     format = "{player_icon} {dynamic}";
     format-paused = "{status_icon} {dynamic}";
-    player-icons.default = lavenderFnt " ";
-    status-icons.paused = lavenderFnt " ";
+    player-icons.default = " ";
+    status-icons.paused = " ";
     dynamic-len = 45;
     dynamic-order = ["artist" "title" "album"];
     max-length = 100;
@@ -60,21 +55,12 @@ in {
   "cpu" = {
     interval = 1;
     format = "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}";
-    format-icons = [
-      (lavenderFnt "▁")
-      (lavenderFnt "▂")
-      (lavenderFnt "▃")
-      (lavenderFnt "▄")
-      (lavenderFnt "▅")
-      (lavenderFnt "▆")
-      (lavenderFnt "▇")
-      (redFnt "█")
-    ];
+    format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" (redFnt "█")];
   };
 
   "memory" = {
     interval = 30;
-    format = "${lavenderFnt ""} {percentage}%    ${lavenderFnt ""}    {swapPercentage}%";
+    format = " {percentage}%        {swapPercentage}%";
     tooltip = true;
     tooltip-format = "{used:0.1f}G/{total:0.1f}G | {swapUsed:0.1f}G/{swapTotal:0.1f}G";
     on-click = "toggle-sway-window --id btop -- foot --app-id=btop btop";
@@ -84,22 +70,22 @@ in {
     thermal-zone = 7;
     critical-threshold = 80;
     tooltip = false;
-    format = "${lavenderFnt "{icon}"} {temperatureC}°C";
+    format = "{icon} {temperatureC}°C";
     format-icons = ["" "" "" "" ""];
     on-click = "toggle-sway-window --id btop -- foot --app-id=btop btop";
   };
 
   "pulseaudio#source" = {
     format-source = "";
-    format = lavenderFnt "{format_source}";
+    format = "{format_source}";
     format-source-muted = "";
     tooltip-format = "{source_volume}% / {desc}";
     on-click = "pamixer --default-source -t";
   };
 
   "wireplumber" = {
-    format = "${lavenderFnt "{icon}"}  {volume}% {node_name}";
-    format-muted = "${lavenderFnt ""}    {volume}";
+    format = "{icon}  {volume}% {node_name}";
+    format-muted = "    {volume}";
     format-icons = {default = ["" "" ""];};
     on-click = "pamixer --toggle-mute";
     on-click-right = "toggle-sway-window --id pavucontrol -- pavucontrol";
@@ -109,10 +95,10 @@ in {
   };
 
   "network" = {
-    format-disconnected = lavenderFnt "󰲛";
-    format-ethernet = lavenderFnt "󰛳";
-    format-linked = "${lavenderFnt "󰛳"} (No IP)";
-    format-wifi = "${lavenderFnt ""}";
+    format-disconnected = "󰲛";
+    format-ethernet = "󰛳";
+    format-linked = "󰛳 (No IP)";
+    format-wifi = "";
     tooltip-format = "{ifname} / {essid} ({signalStrength}%) / {ipaddr}";
     on-click = "toggle-sway-window --id wpa_gui -- wpa_gui";
     max-length = 15;
@@ -121,8 +107,8 @@ in {
   "idle_inhibitor" = {
     format = "{icon}";
     format-icons = {
-      activated = lavenderFnt "󱎴";
-      deactivated = lavenderFnt "󰍹";
+      activated = "󱎴";
+      deactivated = "󰍹";
     };
   };
 
@@ -132,13 +118,13 @@ in {
       warning = 20;
       critical = 10;
     };
-    format = "${lavenderFnt "{icon}"} {capacity}%";
-    format-alt = "${lavenderFnt "{icon}"} {time}";
-    format-charging = "${lavenderFnt ""} {capacity}%";
-    format-full = "${lavenderFnt "{icon}"} {capacity}%";
-    format-good = "${lavenderFnt "{icon}"} {capacity}%";
+    format = "{icon} {capacity}%";
+    format-alt = "{icon} {time}";
+    format-charging = " {capacity}%";
+    format-full = "{icon} {capacity}%";
+    format-good = "{icon} {capacity}%";
     format-icons = ["" "" "" "" ""];
-    format-plugged = lavenderFnt "";
+    format-plugged = "";
   };
 
   "clock#date" = {
@@ -152,6 +138,7 @@ in {
     exec = "${lib.getExe daylight}";
     interval = 3600;
     tooltip = false;
+    min-length = 3;
   };
   "clock#time" = {
     format = "{:%I:%M:%S}";
@@ -161,16 +148,16 @@ in {
   };
 
   "custom/wlsunset" = {
-    format = lavenderFnt "{}";
-    exec = "if systemctl --user --quiet is-active wlsunset.service; then echo ''; else echo ''; fi";
+    format = "{}";
+    exec = "if systemctl --user --quiet is-active wlsunset.service; then echo '󰋴'; else echo '󰋶'; fi";
     on-click = "toggle-service wlsunset";
     interval = 2;
     tooltip = false;
   };
 
   "backlight" = {
-    format = "${lavenderFnt "{icon}"}";
-    format-icons = ["󱩎" "󱩏" "󱩐" "󱩑" "󱩓" "󱩔" "󱩕" "󱩖" "󰛨"];
+    format = "{icon}";
+    format-icons = ["󰃞" "󰃟" "󰃠"];
     tooltip = false;
     on-scroll-down = "brightnessctl set 5%-";
     on-scroll-up = "brightnessctl set +5%";
@@ -195,31 +182,31 @@ in {
   };
 
   "custom/logout" = {
-    format = lavenderFnt "";
+    format = "";
     on-click = "swaymsg exit";
     tooltip = false;
   };
 
   "custom/suspend" = {
-    format = lavenderFnt "󰒲";
+    format = "󰒲";
     on-click = "systemctl suspend";
     tooltip = false;
   };
 
   "custom/lock" = {
-    format = lavenderFnt "";
+    format = "";
     on-click = "swaymsg exec swaylock";
     tooltip = false;
   };
 
   "custom/reboot" = {
-    format = lavenderFnt "";
+    format = "";
     on-click = "systemctl reboot";
     tooltip = false;
   };
 
   "custom/power" = {
-    format = lavenderFnt "⏻";
+    format = "⏻";
     on-click = "systemctl poweroff";
     tooltip = false;
   };
