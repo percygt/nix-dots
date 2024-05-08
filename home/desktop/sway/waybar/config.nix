@@ -13,8 +13,9 @@ in {
   exclusive = true;
   layer = "top";
   height = 22;
-  margin-top = 0;
-  margin-bottom = 0;
+  spacing = 5;
+  margin-left = 2;
+  margin-right = 2;
   passthrough = false;
   gtk-layer-shell = true;
   # fixed-center = true;
@@ -25,12 +26,13 @@ in {
 
   "sway/workspaces" = {
     format = "{name}";
-    # all-outputs = true;
+    all-outputs = true;
     persistent-workspaces = {
       "1" = [];
       "2" = [];
       "3" = [];
       "4" = [];
+      "5" = [];
     };
     on-click = "activate";
   };

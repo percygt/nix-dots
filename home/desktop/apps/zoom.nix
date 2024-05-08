@@ -1,16 +1,7 @@
-{pkgs, ...}: {
-  programs.firefox.webapps.zoom = {
+{
+  programs.chromium.webapps.zoom = {
     enable = true;
-
-    url = "https://us04web.zoom.us/myhome";
-    id = 2;
-
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      zoom-redirector
-    ];
-
-    backgroundColor = "#202225";
-
+    url = "https://app.zoom.us/wc";
     comment = "Zoom Video Conference";
     genericName = "Zoom Client";
     categories = [

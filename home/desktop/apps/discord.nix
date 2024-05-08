@@ -1,13 +1,7 @@
-{config, ...}: {
-  programs.firefox.webapps.discord = {
+{
+  programs.chromium.webapps.discord = {
     enable = true;
-
-    url = "https://discord.com";
-    id = 1;
-
-    extraSettings = config.programs.firefox.profiles."home".settings;
-    backgroundColor = "#202225";
-
+    url = "https://discord.com/channels/@me";
     comment = "All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.";
     genericName = "Internet Messenger";
     categories = [

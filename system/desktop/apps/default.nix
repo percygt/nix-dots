@@ -1,6 +1,6 @@
 {
   imports = [
     ./flatpak.nix
-    # ./aagl.nix
+    ./chromium.nix
   ];
 }

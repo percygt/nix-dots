@@ -1,9 +1,4 @@
 {
-  desktop.apps = {
-    firefox.enable = true;
-    brave.enable = true;
-  };
-
   wayland.windowManager.sway.extraOptions = ["--unsupported-gpu"];
 
   desktop = {

@@ -7,6 +7,9 @@
       onCalendar = "weekly"; # Default value
     };
     packages = [
+      "com.rafaelmardojai.SharePreview"
+      "net.nokyan.Resources"
+      "io.github.flattool.Warehouse"
       "org.mozilla.Thunderbird"
       "com.github.finefindus.eyedropper"
       "com.github.muriloventuroso.pdftricks"

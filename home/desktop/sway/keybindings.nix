@@ -61,13 +61,14 @@ in {
       "${mod}+return" = "exec ${terminal}";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
       "${mod}+Shift+e" = "exec ${power-menu}";
-      "${mod}+s" = "exec pkill tofi-drun || ${pkgs.tofi}/bin/tofi-drun --drun-launch=true --prompt-text=\"Apps: \"";
+      "${mod}+s" = "exec pkill tofi-drun || ${pkgs.tofi}/bin/tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || ${pkgs.tofi}/bin/tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --app-id=btop btop";
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
+      "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"brave-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
-      "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped --width 80 --height 80 -- blueman-manager";
+      "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
       "${mod}+Shift+k" = "exec ${lib.getExe pkgs.toggle-sway-window} --id org.keepassxc.KeePassXC -- keepassxc";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
       "${mod}+shift+tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
@@ -75,6 +76,7 @@ in {
       "${mod}+shift+v" = "exec ${lib.getExe pkgs.cycle-pulse-sink}";
       "${mod}+shift+n" = "exec ${toggle-notifications}";
       "${mod}+delete" = "exec swaylock";
+
       XF86Calculator = "exec ${lib.getExe pkgs.toggle-sway-window} --id qalculate-gtk -- qalculate-gtk";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
 

@@ -2,7 +2,6 @@
   window = {
     titlebar = false;
     border = 1;
-    hideEdgeBorders = "smart";
     commands =
       (mkAppsFloat
         {
@@ -24,6 +23,8 @@
             "org.rncbc.qpwgraph"
             "qpwgraph"
             "virt-manager"
+            "brave-chatgpt.com__-WebApp-ai"
+            "brave-app.zoom.us__wc-WebApp-zoom"
           ];
           classes = [
             "zoom"
@@ -31,34 +32,18 @@
         })
       ++ (mkAppsFloat {
         titles = ["^Picture in picture$"];
-        command = ''floating enable, resize set width 600 px height 300 px, move position 830 px 565 px, sticky on'';
+        command = ''floating enable, resize set width 25ppt height 25ppt, move position 50ppt 100ppt, sticky on'';
       })
       ++ (mkAppsFloat {
+        w = 50;
+        h = 50;
         app_ids = ["wpa_gui" "pavucontrol" "\.?blueman-manager(-wrapped)?"];
-        command = ''floating enable, resize set width 50ppt height 50ppt, move position 50ppt 0'';
       })
       ++ (mkAppsFloat {
         titles = [".*"];
-        command = ''move position center, inhibit_idle fullscreen'';
+        command = ''inhibit_idle fullscreen'';
       })
       ++ [
-        {
-          command = ''move position center'';
-          criteria = {
-            app_id = "org.gnome.Nautilus";
-            title = "^$";
-          };
-        }
-        {
-          command = ''border pixel 0, corner_radius pixel 0'';
-          criteria = {
-            app_id = "org.wezfurlong.wezterm";
-          };
-        }
-        {
-          command = ''blur enable'';
-          criteria = {app_id = "yazi";};
-        }
         {
           command = ''blur enable'';
           criteria = {

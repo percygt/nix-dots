@@ -13,12 +13,14 @@
    :exec-args {:floating true
                :kill false
                :width nil
-               :height nil}
+               :height nil
+               :spawn_pos "center"}
    :validate {:id string?
               :floating boolean?
               :kill boolean?
               :width (some-fn nil? pos?)
-              :height (some-fn nil? pos?)}})
+              :height (some-fn nil? pos?)
+              :spawn_pos string?}})
 
 (def cli-results (cli/parse-args *command-line-args* cli-opts))
 
@@ -27,14 +29,14 @@
 (def args (:args cli-results))
 
 (defn make-resize-str []
-  (let [{:keys [width height]} opts]
+  (let [{:keys [width height spawn_pos]} opts]
     (when (or width height)
-      (str "resize set" (when width (str " width " width " ppt ")) (when height (str " height " height " ppt ")) ", "))))
+      (str "resize set" (when width (str " width " width " ppt ")) (when height (str " height " height " ppt ")) ", move position " spawn_pos))))
 
 (def position-cmds (str "floating "
                         (if-not (:floating opts)
                           "disable"
-                          (str "enable, " (make-resize-str) "move position center"))))
+                          (str "enable, " (make-resize-str)))))
 
 (def criteria (str "[app_id=" (:id opts) "]"))
 

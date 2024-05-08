@@ -3,8 +3,10 @@
     ./common.nix
     ./brave.nix
     ./firefox.nix
-    ./discord.nix
     ./zoom.nix
-    ./firefox-webapp.nix
+    ./brave-webapp.nix
+    ./discord.nix
+    ./element.nix
+    ./ai.nix
   ];
 }

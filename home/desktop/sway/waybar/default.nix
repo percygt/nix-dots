@@ -45,11 +45,15 @@ in {
         // {
           position = "top";
           output = "HDMI-A-1";
+          margin-top = 2;
+          margin-bottom = 1;
         })
       (waybar_config
         // {
           position = "bottom";
           output = "eDP-1";
+          margin-bottom = 2;
+          margin-top = 1;
         })
     ];
   };

@@ -6,7 +6,6 @@
 }: {
   theme = let
     bg = mkLiteral "#${colors.default.background}";
-    bg2 = mkLiteral "#${colors.extra.azure}";
     rubik = fonts.interface.name;
     font_awesome = fonts.icon.name;
     fsize = "${toString fonts.interface.size}px";
@@ -32,56 +31,74 @@
       padding-right = mkLiteral "0px";
     };
     ".modules-center" = {
-      padding-top = mkLiteral "1px";
-      margin = mkLiteral "0px";
+      padding = mkLiteral "1px 5px 0 5px";
     };
     ".modules-left" = {
       padding-left = mkLiteral "0px";
     };
+
+    ".modules-left > widget:first-child > #workspaces" = {
+      margin-left = mkLiteral "0px";
+    };
+
+    ".modules-right > widget:last-child > #workspaces" = {
+      margin-right = mkLiteral "0px";
+    };
+
     "#custom-daylight,
     #clock" = {
       padding = mkLiteral "0px";
+      font-weight = mkLiteral "400";
     };
     "#workspaces" = {
-      padding = mkLiteral "0";
-      margin = mkLiteral "0";
+      padding = mkLiteral "0px";
+      margin = mkLiteral "0px";
     };
     "#workspaces button" = {
-      margin = mkLiteral "0";
-      padding = mkLiteral "1px 0 0 0";
+      margin = mkLiteral "0px";
+      padding = mkLiteral "0px";
       color = mkLiteral "#${colors.extra.overlay1}";
-      border-radius = mkLiteral "0px";
+      border-radius = mkLiteral "5px";
     };
     "#workspaces button:hover" = {
       color = mkLiteral "#${colors.extra.lavender}";
-      background-color = bg2;
     };
     "#workspaces button.focused, #workspaces button.active" = {
       font-weight = mkLiteral "500";
-      background-color = bg2;
+      color = mkLiteral "#${colors.extra.lavender}";
     };
 
     "#group-power" = {
       padding = mkLiteral "0px";
     };
-    "#custom-power, #custom-logout, #custom-suspend, #custom-lock, #custom-reboot" = {
-      padding-right = mkLiteral "10px";
+
+    "#custom-power" = {
+      padding-right = mkLiteral "5px";
     };
-    "#pulseaudio,
-    #cpu,
+    "#custom-logout, #custom-suspend, #custom-lock, #custom-reboot" = {
+      padding = mkLiteral "0 5px";
+    };
+
+    "#cpu,
     #tray,
     #custom-wlsunset,
-    #battery,
     #bluetooth,
-    #network,
     #temperature,
-    #backlight,
-    #idle_inhibitor,
     #memory,
-    #window,
+    #window
+    #pulseaudio,
     #wireplumber" = {
       padding = mkLiteral "0px 5px";
     };
+
+    "#custom-wlsunset,
+    #battery,
+    #network,
+    #backlight,
+    #idle_inhibitor" = {
+      padding = mkLiteral "0px 5px";
+    };
+
     "#mpris" = {
       padding = mkLiteral "0px 10px";
     };

@@ -16,7 +16,6 @@ in {
       inherit (fnts) style;
       inherit (fnts) size;
     };
-    # gaps.inner = 5;
     modifier = "Mod4";
     up = "k";
     down = "j";
@@ -24,6 +23,7 @@ in {
     right = "l";
     terminal = "${pkgs.foot}/bin/foot";
     output."*".bg = "${wallpaper} fill";
+    gaps.inner = 2;
     inherit (import ./keybindings.nix {inherit modifier pkgs libx lib config up down left right terminal;}) keybindings;
     inherit (import ./startup.nix) startup;
     inherit (import ./window.nix {inherit mkAppsFloat;}) window;
@@ -91,7 +91,7 @@ in {
     bars = [{mode = "invisible";}];
     workspaceOutputAssign = [
       {
-        output = "eDP-1";
+        output = "HDMI-A-1";
         workspace = "1";
       }
       {

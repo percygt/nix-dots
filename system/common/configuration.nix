@@ -12,7 +12,10 @@
   ];
 
   programs = {
-    nix-index.enable = true;
+    nix-index = {
+      enable = true;
+      enableFishIntegration = true;
+    };
     nix-index-database.comma.enable = true;
     command-not-found.enable = false;
     bash.interactiveShellInit = ''
