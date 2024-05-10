@@ -7,7 +7,6 @@ local nmap = keymap.nmap
 local vmap = keymap.vmap
 local imap = keymap.imap
 local builtin = require("telescope.builtin")
-local extensions = require("telescope").extensions
 nmap("<leader>", "<nop>", silent)
 vmap("<leader>", "<nop>", silent)
 vmap("Q", "<nop>")
@@ -18,6 +17,11 @@ nnoremap("<a-f>", "<cmd>lua require('conform').format()<cr>", silent)
 -- trouble navigation
 nmap("<a-k>", "<cmd>lua require('trouble').next({ skip_groups = true, jump = true })<cr>zz", silent)
 nmap("<a-j>", "<cmd>lua require('trouble').previous({ skip_groups = true, jump = true })<cr>zz", silent)
+
+nmap("<enter>", "<cmd>lua require('flash').jump()<cr>", silent)
+nmap("<s-enter>", "<cmd>lua require('flash').treesitter()<cr>", silent)
+nmap("<a-enter>", "<cmd>lua require('flash').treesitter_search()<cr>", silent)
+nmap("<c-enter>", "<cmd>lua require('flash').remote()<cr>", silent)
 
 nmap("gp", "<cmd>lua require('actions-preview').code_actions()<cr>", silent)
 vmap("gp", "<cmd>lua require('actions-preview').code_actions()<cr>", silent)
@@ -42,9 +46,9 @@ nnoremap("<leader>sg", builtin.live_grep, { desc = "Grep" })
 nnoremap("<leader>sd", builtin.diagnostics, { desc = "Diagnostics" })
 nnoremap("<leader>sb", builtin.buffers, { desc = "Buffers" })
 nnoremap("<leader>sc", builtin.commands, { desc = "Commands" })
-nnoremap("<leader>sn", extensions.notify.notify, { desc = "Notifications" })
-nnoremap("<leader>se", extensions.file_browser.file_browser, { desc = "File Browser" })
-nnoremap("<leader>su", extensions.undo.undo, { desc = "Undo tree" })
+nnoremap("<leader>sn", "<cmd>Telescope notify<cr>", { desc = "Notifications" })
+nnoremap("<leader>se", "<cmd>Telescope file_browser<cr>", { desc = "File Browser" })
+nnoremap("<leader>su", "<cmd>Telescope undo<cr>", { desc = "Undo tree" })
 nnoremap("<leader>sl", "<cmd>TodoTelescope<cr>", { desc = "Todo" })
 nnoremap("<leader>gs", builtin.git_status, { desc = "Git status" })
 -- Better vertical motions

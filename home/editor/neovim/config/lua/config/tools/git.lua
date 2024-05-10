@@ -1,5 +1,3 @@
-local extensions = require("telescope").extensions
-
 require("gitsigns").setup({
   signs = {
     add = { text = "+" },
@@ -41,8 +39,18 @@ require("gitsigns").setup({
     end, { expr = true })
 
     --Git Worktree
-    map("n", "<leader>gl", extensions.git_worktree.git_worktrees, { desc = "Worktree list" })
-    map("n", "<leader>gc", extensions.git_worktree.create_git_worktree, { desc = "Create worktree" })
+    map(
+      "n",
+      "<leader>gl",
+      "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
+      { desc = "Worktree list" }
+    )
+    map(
+      "n",
+      "<leader>gc",
+      "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>",
+      { desc = "Create worktree" }
+    )
 
     -- Actions
     map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })

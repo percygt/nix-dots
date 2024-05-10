@@ -7,5 +7,5 @@
 (def curTime (Integer/parseInt (.format PH-time pattern)))
 
 (if (and (<= 6 curTime) (> 18 curTime))
-  (do (println "󰖙"),true)
-  (do (println " "),false))
+  (do (println "󰖜"),true)
+  (do (println "󰖛"),false))

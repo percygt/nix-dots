@@ -13,7 +13,7 @@ in {
 
   config = lib.mkIf config.infosec.keepass.enable {
     home = {
-      packages = with pkgs; [keepassxc];
+      packages = with pkgs; [keepassxc stash.keepmenu];
       sessionVariables.KPDB = kmk0;
       file.".cache/keepassxc/keepassxc.ini".text = lib.generators.toINI {} {
         General.LastActiveDatabase = kmk0;

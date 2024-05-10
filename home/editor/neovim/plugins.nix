@@ -84,11 +84,7 @@ in {
       type = "lua";
       config = ''require("config.lsp.completion")'';
     }
-    {
-      plugin = flash-nvim;
-      type = "lua";
-      config = ''require("config.tools.flash")'';
-    }
+    flash-nvim
     cmp-path
     cmp-buffer
     cmp-cmdline
@@ -195,7 +191,6 @@ in {
       type = "lua";
       config = ''require("config.tools.obsidian")'';
     }
-    lazygit-nvim
     markdown-preview-nvim
     todo-comments-nvim
     comment-nvim

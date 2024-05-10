@@ -13,12 +13,6 @@ wk.register({
 
 wk.register({
   c = "Code",
-  l = {
-    name = "Flash",
-    s = { "<cmd>lua require('flash').jump() <cr>", "Flash Jump" },
-    t = { "<cmd>lua require('flash').treesitter() <cr>", "Flash Treesitter" },
-    r = { "<cmd>lua require('flash').treesitter_search() <cr>", "Flash Treesitter Search" },
-  },
   D = {
     name = "Debug",
     t = { "<cmd>DapUiToggle<Cr>", "Toggle UI" },

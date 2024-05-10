@@ -140,7 +140,7 @@ in {
     exec = "${lib.getExe daylight}";
     interval = 3600;
     tooltip = false;
-    min-length = 3;
+    min-length = 2;
   };
   "clock#time" = {
     format = "{:%I:%M:%S}";
