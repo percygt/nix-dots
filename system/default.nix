@@ -23,7 +23,6 @@ in {
     ++ [
       # profile specific configuration.nix
       "${self}/profiles/${profile}/configuration.nix"
-      inputs.nix-index-database.nixosModules.nix-index
       inputs.sops-nix.nixosModules.sops
       inputs.nix-flatpak.nixosModules.nix-flatpak
     ];
@@ -31,7 +30,5 @@ in {
   nixpkgs.overlays =
     builtins.attrValues outputs.overlays
     ++ lib.optionals (desktop == "sway")
-    (builtins.attrValues (import "${self}/overlays/sway.nix" {inherit inputs;}))
-    ++ lib.optionals (desktop == "hyprland")
-    (builtins.attrValues (import "${self}/overlays/hyprland.nix" {inherit inputs;}));
+    (builtins.attrValues (import "${self}/overlays/sway.nix" {inherit inputs;}));
 }

@@ -6,30 +6,47 @@ local vnoremap = keymap.xnoremap
 local nmap = keymap.nmap
 local vmap = keymap.vmap
 local imap = keymap.imap
+local builtin = require("telescope.builtin")
+local extensions = require("telescope").extensions
 nmap("<leader>", "<nop>", silent)
 vmap("<leader>", "<nop>", silent)
 vmap("Q", "<nop>")
 -- Quit
 nmap("QQ", ":q!<cr>", silent)
 -- Format
-nnoremap("fm", "<cmd>lua require('conform').format()<cr>", silent)
+nnoremap("<a-f>", "<cmd>lua require('conform').format()<cr>", silent)
 -- trouble navigation
 nmap("<a-k>", "<cmd>lua require('trouble').next({ skip_groups = true, jump = true })<cr>zz", silent)
 nmap("<a-j>", "<cmd>lua require('trouble').previous({ skip_groups = true, jump = true })<cr>zz", silent)
 
-nmap("gf", "<cmd>lua require('actions-preview').code_actions()<cr>", silent)
-vmap("gf", "<cmd>lua require('actions-preview').code_actions()<cr>", silent)
--- Exit insert mode
--- imap("jj", "<esc>")
+nmap("gp", "<cmd>lua require('actions-preview').code_actions()<cr>", silent)
+vmap("gp", "<cmd>lua require('actions-preview').code_actions()<cr>", silent)
 -- Save
 nmap("WW", ":w!<cr>", silent)
 imap("WW", "<esc>:w!<cr>", silent)
 -- Move text up and down
 vmap("<a-j>", ":m '>+1<CR>gv=gv", silent)
 vmap("<a-k>", ":m '<-2<CR>gv=gv", silent)
--- replace word under cursor
--- nnoremap("<leader>j", "*``cgn")
--- xnoremap("<leader>j", "y<cmd>substitute(escape(@\", '/'), '\n', '\\n', 'g')<cr>\"_cgn")
+-- Telescope
+nnoremap("<leader>?", builtin.oldfiles, { desc = "Find recently opened files" })
+nnoremap("<leader>/", function()
+  builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+    winblend = 10,
+    previewer = false,
+  }))
+end)
+nnoremap("<leader>sf", builtin.find_files, { desc = "Files" })
+nnoremap("<leader>sh", builtin.help_tags, { desc = "Help" })
+nnoremap("<leader>sw", builtin.grep_string, { desc = "Current word" })
+nnoremap("<leader>sg", builtin.live_grep, { desc = "Grep" })
+nnoremap("<leader>sd", builtin.diagnostics, { desc = "Diagnostics" })
+nnoremap("<leader>sb", builtin.buffers, { desc = "Buffers" })
+nnoremap("<leader>sc", builtin.commands, { desc = "Commands" })
+nnoremap("<leader>sn", extensions.notify.notify, { desc = "Notifications" })
+nnoremap("<leader>se", extensions.file_browser.file_browser, { desc = "File Browser" })
+nnoremap("<leader>su", extensions.undo.undo, { desc = "Undo tree" })
+nnoremap("<leader>sl", "<cmd>TodoTelescope<cr>", { desc = "Todo" })
+nnoremap("<leader>gs", builtin.git_status, { desc = "Git status" })
 -- Better vertical motions
 nnoremap("<c-d>", "<c-d>zz")
 nnoremap("<c-u>", "<c-u>zz")

@@ -11,6 +11,7 @@
 
   config = lib.mkIf config.cli.common.enable {
     home.packages = with pkgs; [
+      ripgrep
       jdupes
       hyperfine
       most
@@ -33,8 +34,6 @@
       duf
       yq-go # portable command-line YAML, JSON and XML processor
       fd
-      ripgrep
-      unrar
       curlie
       p7zip
       jq

@@ -28,7 +28,7 @@ require("zen-mode").setup({
     tmux = { enabled = true }, -- disables the tmux statusline
     wezterm = {
       enabled = true,
-      font = "+4", -- (10% increase per step)
+      font = "+1", -- (10% increase per step)
     },
   },
 })

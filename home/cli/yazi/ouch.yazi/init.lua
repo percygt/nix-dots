@@ -1,3 +1,4 @@
+-- source: https://github.com/ndtoan96/ouch.yazi
 local M = {}
 
 function M:peek()
@@ -31,14 +32,11 @@ function M:peek()
 
 	child:start_kill()
 	if self.skip > 0 and num_lines < limit then
-		ya.manager_emit(
-			"peek",
-			{
-				tostring(math.max(0, self.skip - (limit - num_lines))),
-				only_if = tostring(self.file.url),
-				upper_bound = "",
-			}
-		)
+		ya.manager_emit("peek", {
+			tostring(math.max(0, self.skip - (limit - num_lines))),
+			only_if = tostring(self.file.url),
+			upper_bound = "",
+		})
 	else
 		ya.preview_widgets(self, { ui.Paragraph.parse(self.area, lines) })
 	end

@@ -30,7 +30,7 @@ in {
     font-variations = "wght 700"
     selection-color = #${colors.extra.lavender}
     prompt-color =  #${colors.extra.lavender}
-    text-color = #${colors.extra.overlay2}
+    text-color = #${colors.extra.overlay1}
     prompt-color = #${colors.extra.lavender}
     background-color = #${colors.default.background}
     prompt-padding = 2

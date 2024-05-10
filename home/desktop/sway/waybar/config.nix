@@ -153,7 +153,7 @@ in {
     format = "{}";
     exec = "if systemctl --user --quiet is-active wlsunset.service; then echo '󰋴'; else echo '󰋶'; fi";
     on-click = "toggle-service wlsunset";
-    interval = 2;
+    exec-on-event = true;
     tooltip = false;
   };
 

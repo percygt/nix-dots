@@ -3,7 +3,7 @@
     foreground = "96c7f1"; # [#96c7f1]
     background = "00051A"; # [#00051A]
   };
-  alpha = 0.75;
+  alpha = 0.65;
   bold = "a1d408"; # [#a1d408]
   cursor = {
     foreground = "000000"; # [#000000]

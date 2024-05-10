@@ -45,6 +45,7 @@
           ".local/share/tmux/resurrect"
           ".config/keepassxc"
           ".config/BraveSoftware/Brave-Browser"
+          ".config/nautilus"
           ".config/gh"
           ".mozilla"
         ];

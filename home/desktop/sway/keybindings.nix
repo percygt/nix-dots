@@ -26,11 +26,21 @@
     TERM_PID="$(<"$TERM_PIDFILE")"
     if swaymsg "[ pid=$TERM_PID ] scratchpad show"
     then
-        swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position 0 0"
+        swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
     else
         echo "$$" > "$TERM_PIDFILE"
-        swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position 0 0 ; move to scratchpad ; scratchpad show'"
+        swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
         exec "${config.programs.wezterm.package}/bin/wezterm";
+    fi
+  '';
+  toggle-blur = pkgs.writers.writeBash "toggle-blur" ''
+    BLUR_STATUS_FILE="/tmp/blur-status"
+    BLUR_STATUS=$(<"$BLUR_STATUS_FILE")
+    if [ ! -f "$BLUR_STATUS_FILE" ]; then
+        echo "0" > "$BLUR_STATUS_FILE"
+    else
+        swaymsg "blur $BLUR_STATUS"
+        echo $((1 - BLUR_STATUS)) > "$BLUR_STATUS_FILE"
     fi
   '';
   power-menu = pkgs.writers.writeBash "power-menu" ''
@@ -57,6 +67,7 @@ in {
     mkDirectionKeys mod {inherit up down left right;}
     // mkWorkspaceKeys mod ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"]
     // {
+      "Ctrl+KP_Multiply" = "exec ${toggle-blur}";
       "${mod}+w" = "exec ${dropdown-terminal}";
       "${mod}+return" = "exec ${terminal}";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
@@ -73,9 +84,10 @@ in {
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
       "${mod}+shift+tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
       "${mod}+backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
+      "${mod}+delete" = "exec swaylock";
+      #FIXME:
       "${mod}+shift+v" = "exec ${lib.getExe pkgs.cycle-pulse-sink}";
       "${mod}+shift+n" = "exec ${toggle-notifications}";
-      "${mod}+delete" = "exec swaylock";
 
       XF86Calculator = "exec ${lib.getExe pkgs.toggle-sway-window} --id qalculate-gtk -- qalculate-gtk";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";

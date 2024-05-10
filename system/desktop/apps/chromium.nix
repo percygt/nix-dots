@@ -1,10 +1,11 @@
 {
   programs.chromium = {
     enable = true; # only enables polices to be put in etc, doesn't install chromium
-    extensions = [
-      "gighmmpiobklfepjocnamgkkbiglidom" # adblock
-    ];
+    # extensions = [
+    #   "cjpalhdlnbpafiamejdnhcphjbkeiagm"
+    # ];
     extraOpts = {
+      ShowHomeButton = true;
       AdvancedProtectionAllowed = false;
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;

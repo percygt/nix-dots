@@ -11,9 +11,7 @@
   };
 
   config = lib.mkIf config.core.ntp.enable {
-    services = {
-      chrony.enable = true;
-    };
+    services.chrony.enable = true;
     networking.timeServers = [
       "time.upd.edu.ph"
       "time.cloudflare.com"

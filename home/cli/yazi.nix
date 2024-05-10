@@ -17,7 +17,6 @@
         jq
         poppler
         fd
-        ripgrep
         fzf
         zoxide
         wl-clipboard

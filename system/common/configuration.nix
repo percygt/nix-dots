@@ -11,17 +11,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  programs = {
-    nix-index = {
-      enable = true;
-      enableFishIntegration = true;
-    };
-    nix-index-database.comma.enable = true;
-    command-not-found.enable = false;
-    bash.interactiveShellInit = ''
-      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-    '';
-  };
+  programs.command-not-found.enable = false;
 
   nixpkgs.config = {
     allowUnfree = true;

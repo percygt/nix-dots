@@ -3,6 +3,7 @@
   homeDirectory ? "~",
 }: rec {
   inherit (import ../../packages/args.nix) clj;
+  corePackages = pkgs: import ../../packages/corePackages.nix {inherit pkgs;};
   colors = (import ./colors.nix) // inputs.nix-colors.lib;
   fonts = import ./fonts.nix;
   wallpaper = "${homeDirectory}/.local/share/backgrounds/nice-mountain.jpg";

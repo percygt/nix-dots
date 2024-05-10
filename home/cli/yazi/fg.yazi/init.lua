@@ -1,4 +1,4 @@
--- source: https://github.com/DreamMaoMao/fg.yazi/commit/c9d1cda3c17ce0308a26e1316d6529e008006f5a
+-- source: https://github.com/DreamMaoMao/fg.yazi
 local function splitAndGetFirst(inputstr, sep)
 	if sep == nil then
 		sep = "%s"

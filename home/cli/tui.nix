@@ -11,33 +11,13 @@
 
   config = lib.mkIf config.cli.tui.enable {
     programs = {
-      # bottom = {
-      #   enable = true;
-      #   settings = {
-      #     flags = {
-      #       avg_cpu = true;
-      #       temperature_type = "c";
-      #       enable_gpu = true;
-      #     };
-      #
-      #     colors = {
-      #       low_battery_color = "red";
-      #     };
-      #   };
-      # };
       btop = {
         enable = true;
         package = pkgs.btop.override {
           cudaSupport = true;
         };
-        # package = pkgs.btop.overrideAttrs (oldAttrs: {
-        #   nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [pkgs.addOpenGLRunpath];
-        #   postFixup = ''
-        #     addOpenGLRunpath $out/bin/btop
-        #   '';
-        # });
         settings = {
-          theme_background = "True";
+          theme_background = "False";
           vim_keys = "True";
         };
       };

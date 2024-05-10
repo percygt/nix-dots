@@ -22,7 +22,10 @@ in {
     {
       plugin = which-key-nvim;
       type = "lua";
-      config = ''require("config.ui.which-key")'';
+      config = ''
+        require("config.ui.which-key")
+        require("config.whichkeymaps")
+      '';
     }
     {
       plugin = zen-mode-nvim;
@@ -73,13 +76,18 @@ in {
     {
       plugin = pkgs.vimPlugins.mini-nvim;
       type = "lua";
-      config = ''require("config.ui.mini")'';
+      config = ''require("config.mini")'';
     }
-    # Completion #-------------------------------------------------------------------------------------
+    # Completion/motions #-------------------------------------------------------------------------------------
     {
       plugin = nvim-cmp;
       type = "lua";
       config = ''require("config.lsp.completion")'';
+    }
+    {
+      plugin = flash-nvim;
+      type = "lua";
+      config = ''require("config.tools.flash")'';
     }
     cmp-path
     cmp-buffer
@@ -175,26 +183,18 @@ in {
     {
       plugin = better-escape;
       type = "lua";
-      # config = ''require("config.tools.better-esc")'';
-      config = ''require("better_escape").setup()'';
+      config = ''require("config.tools.betterescape")'';
     }
     {
       plugin = nvim-spectre;
       type = "lua";
-      config = ''require("spectre").setup()'';
+      config = ''require("config.tools.spectre")'';
     }
     {
       plugin = pkgs.vimPlugins.obsidian-nvim;
       type = "lua";
       config = ''require("config.tools.obsidian")'';
     }
-    # hardtime-nvim
-    # {
-    #   plugin = "hard-time";
-    #   type = "lua";
-    #   config = ''require("hardtime").setup()'';
-    # }
-
     lazygit-nvim
     markdown-preview-nvim
     todo-comments-nvim
@@ -203,7 +203,6 @@ in {
     multicursors-nvim
     vim-maximizer
     vim-tmux-navigator
-    vim-surround
     vim-repeat
     plenary-nvim
   ];

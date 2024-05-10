@@ -1,3 +1,4 @@
+-- source: https://github.com/Sonico98/exifaudio.yazi
 local M = {}
 
 function M:peek()

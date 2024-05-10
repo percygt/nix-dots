@@ -25,6 +25,8 @@ in {
       # profile specific home.nix
       "${self}/profiles/${profile}/home.nix"
       inputs.sops-nix.homeManagerModules.sops
+      inputs.nix-index-database.hmModules.nix-index
+      {programs.nix-index-database.comma.enable = true;}
     ]
     ++ lib.optionals isGeneric [./generic];
 

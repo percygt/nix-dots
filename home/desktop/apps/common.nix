@@ -1,6 +1,12 @@
 {pkgs, ...}: {
   programs = {
     mpv.enable = true;
+    zathura = {
+      enable = true;
+      options = {
+        selection-clipboard = "clipboard";
+      };
+    };
   };
 
   home.packages = with pkgs; [
@@ -9,18 +15,14 @@
     stash.anime-borb-launcher
     stash.honkers-railway-launcher
     stash.honkers-launcher
-
+    chromium
+    qalculate-gtk
     gnome.nautilus
-    # zoom-us
     audacity
     nvitop
-    # bambu-studio
     loupe
+    zathura
     # mumble
     obsidian
-    # rambox
-    # signal-desktop
-    # todoist-electron
-    # xorg.xlsclients
   ];
 }

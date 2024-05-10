@@ -27,11 +27,10 @@
       padding = mkLiteral "15px 15px";
     };
     ".modules-right" = {
-      padding-top = mkLiteral "1px";
       padding-right = mkLiteral "0px";
     };
     ".modules-center" = {
-      padding = mkLiteral "1px 5px 0 5px";
+      padding = mkLiteral "0px 5px";
     };
     ".modules-left" = {
       padding-left = mkLiteral "0px";

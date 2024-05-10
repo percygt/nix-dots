@@ -40,15 +40,5 @@
       mime = "application/x-xz";
       run = "ouch";
     }
-    {
-      on = ["f" "g"];
-      run = "plugin fg";
-      desc = "find file by content";
-    }
-    {
-      on = ["f" "f"];
-      run = "plugin fg --args='fzf'";
-      desc = "find file by file name";
-    }
   ];
 }

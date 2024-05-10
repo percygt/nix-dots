@@ -6,6 +6,7 @@
       (mkAppsFloat
         {
           app_ids = [
+            "xdg-desktop-portal-gtk"
             "org.gnome.Calculator"
             "org.gnome.Calendar"
             "org.gnome.Firmware"
@@ -42,14 +43,6 @@
       ++ (mkAppsFloat {
         titles = [".*"];
         command = ''inhibit_idle fullscreen'';
-      })
-      ++ [
-        {
-          command = ''blur enable'';
-          criteria = {
-            app_id = "foot";
-          };
-        }
-      ];
+      });
   };
 }

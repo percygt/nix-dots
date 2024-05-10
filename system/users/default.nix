@@ -12,7 +12,6 @@
   ifHomeExist = builtins.pathExists "${self}/profiles/${profile}/home.nix";
 in {
   imports =
-    lib.optionals (builtins.pathExists ./${username})
     [./${username}]
     ++ lib.optionals ifHomeExist
     [inputs.home-manager.nixosModules.home-manager];

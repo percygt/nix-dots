@@ -14,10 +14,10 @@
       shellAliases.y = "yazi";
       # dependencies
       packages = with pkgs; [
+        ripgrep
         jq
         poppler
         fd
-        ripgrep
         fzf
         zoxide
         wl-clipboard
@@ -60,6 +60,22 @@
       };
 
       theme = {
+        status = {
+          separator_open = "";
+          separator_close = "";
+        };
+        prepend_keymap = [
+          {
+            on = ["f" "g"];
+            run = "plugin fg";
+            desc = "find file by content";
+          }
+          {
+            on = ["f" "f"];
+            run = "plugin fg --args='fzf'";
+            desc = "find file by file name";
+          }
+        ];
         manager = {
           preview_hovered = {
             underline = false;

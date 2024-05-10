@@ -12,7 +12,7 @@
 
   config = lib.mkIf config.core.bootmanagement.enable {
     boot = {
-      tmp.cleanOnBoot = true;
+      # tmp.cleanOnBoot = true;
       kernel.sysctl = {
         "net.ipv4.ip_forward" = 1;
         "net.ipv6.conf.all.forwarding" = 1;
@@ -30,15 +30,7 @@
         };
       };
 
-      plymouth = {
-        enable = true;
-        # theme = "spinner-monochrome";
-        # themePackages = [
-        #   (pkgs.plymouth-spinner-monochrome.override {
-        #     inherit (config.boot.plymouth) logo;
-        #   })
-        # ];
-      };
+      plymouth.enable = true;
       kernelParams = [
         "quiet"
         "loglevel=3"

@@ -1,3 +1,0 @@
-{
-  services.supergfxd.enable = true;
-}

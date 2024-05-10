@@ -7,9 +7,6 @@
     nixpkgs.follows = "nix-stash/nixpkgs";
     nixpkgs-stable.follows = "nix-stash/nixpkgs-stable";
 
-    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
-    nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs-stable";
-
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     aagl.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -35,6 +32,7 @@
     xremap.url = "github:xremap/nix-flake";
     impermanence.url = "github:nix-community/impermanence";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     # lanzaboote.url = "github:nix-community/lanzaboote";
 
@@ -52,7 +50,6 @@
     inherit (self) outputs;
     defaultUser = "percygt";
     stateVersion = "23.11";
-
     bldr = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
   in {
     packages = bldr.forEachSystem (system: (import ./packages {
@@ -72,10 +69,6 @@
         profile = "aizeft";
         desktop = "sway";
       };
-      # vm-lvm = bldr.bldSystem {
-      #   profile = "vm-lvm";
-      #   desktop = "sway";
-      # };
       minimal = bldr.buildSystem {
         profile = "minimal";
         isIso = true;

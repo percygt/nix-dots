@@ -3,12 +3,9 @@
   lib,
   ...
 }: {
-  imports =
-    [
-      ./common
-      ./apps
-    ]
-    ++ lib.optionals (desktop != null) [
-      ./${desktop}
-    ];
+  imports = lib.optionals (desktop != null) [
+    ./${desktop}
+    ./apps
+    ./common
+  ];
 }

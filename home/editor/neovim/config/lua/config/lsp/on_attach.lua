@@ -1,20 +1,5 @@
 local telescope = require("telescope.builtin")
--- local lsp_format = require("lsp-format")
--- lsp_format.setup()
 return function(client, bufnr)
-  -- local exclude_ft = { "nix" }
-  -- local table_contains = function(tbl, x)
-  --   local found = false
-  --   for _, v in pairs(tbl) do
-  --     if v == x then
-  --       found = true
-  --     end
-  --   end
-  --   return found
-  -- end
-  -- if not table_contains(exclude_ft, vim.bo[bufnr].filetype) then
-  --   lsp_format.on_attach(client, bufnr)
-  -- end
   local nmap = function(keys, func, desc)
     vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
@@ -25,8 +10,6 @@ return function(client, bufnr)
 
   nmap("[d", vim.diagnostic.goto_prev, "Diagnostics: Go to Previous")
   nmap("]d", vim.diagnostic.goto_next, "Diagnostics: Go to Next")
-
-  nmap("<leader>st", telescope.treesitter, "Treesitter")
 
   if client.supports_method("textDocument/documentSymbol") then
     nmap("gs", telescope.lsp_document_symbols, "Document symbols")

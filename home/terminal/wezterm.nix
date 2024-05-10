@@ -6,14 +6,10 @@
   isGeneric,
   flakeDirectory,
   homeDirectory,
-  desktop,
   ...
 }: let
   inherit (libx) colors fonts;
-  window-title =
-    if (desktop == "sway")
-    then "Wezterm - Dropdown Terminal"
-    else "Wezterm";
+  window-title = "Wezterm";
   launch-tmux = pkgs.writers.writeBash "launch-tmux" ''
     if [ -d ${flakeDirectory} ]; then
       tmux has-session -t nix-dots 2>/dev/null
@@ -147,7 +143,7 @@ in {
           		{ key = "V",      mods = "CTRL",  action = wezterm.action.PasteFrom("Clipboard") },
           		{ key = "Copy",   mods = "NONE",  action = wezterm.action.CopyTo("Clipboard") },
           		{ key = "Paste",  mods = "NONE",  action = wezterm.action.PasteFrom("Clipboard") },
-              { key = "*",      mods = "CTRL",  action = wezterm.action.EmitEvent("toggle-opacity") },
+              { key = "*",      mods = "CTRL|SHIFT",  action = wezterm.action.EmitEvent("toggle-opacity") },
           		{ key = "F11",    mods = "NONE",  action = wezterm.action.ToggleFullScreen },
           		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
           	},
