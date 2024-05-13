@@ -8,7 +8,7 @@
     home.packages = with pkgs; [
       (
         writeShellScriptBin
-        "kpass"
+        "keepfzf"
         /*
         bash
         */

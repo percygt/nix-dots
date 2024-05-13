@@ -24,11 +24,6 @@ in {
         };
       };
     };
-    # services.pass-secret-service = {
-    #   enable = true;
-    #   storePath = PASSWORD_STORE_DIR;
-    #   extraArgs = ["-e${config.programs.password-store.package}/bin/pass"];
-    # };
     home.packages = with pkgs; [
       zbar
       wl-clipboard

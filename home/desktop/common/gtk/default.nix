@@ -42,7 +42,7 @@ in {
       };
 
       gtk4.extraConfig = {
-        "gtk-application-prefer-dark-theme" = 1;
+        "color-scheme" = "prefer-dark";
       };
     };
     xdg = {

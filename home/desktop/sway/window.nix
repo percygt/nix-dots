@@ -8,6 +8,7 @@
           app_ids = [
             "xdg-desktop-portal-gtk"
             "org.gnome.Calculator"
+            "org.telegram.desktop"
             "org.gnome.Calendar"
             "org.gnome.Firmware"
             "org.gnome.Snapshot"
@@ -39,6 +40,10 @@
         w = 50;
         h = 50;
         app_ids = ["wpa_gui" "pavucontrol" "\.?blueman-manager(-wrapped)?"];
+      })
+      ++ (mkAppsFloat {
+        w = 100;
+        h = 100;
       })
       ++ (mkAppsFloat {
         titles = [".*"];

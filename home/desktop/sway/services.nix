@@ -1,7 +1,11 @@
-{pkgs, ...}: {
-  # imports = [
-  #   inputs.wayland-pipewire-idle-inhibit.homeModules.default
-  # ];
+{
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    inputs.wayland-pipewire-idle-inhibit.homeModules.default
+  ];
   services = {
     clipman.enable = true;
 
@@ -16,18 +20,18 @@
       };
     };
 
-    # wayland-pipewire-idle-inhibit = {
-    #   enable = true;
-    #   package = pkgs.wayland-pipewire-idle-inhibit;
-    #   systemdTarget = "sway-session.target";
-    #   settings = {
-    #     verbosity = "INFO";
-    #     idle_inhibitor = "wayland";
-    #     media_minimum_duration = 30;
-    #     sink_whitelist = [];
-    #     node_blacklist = [];
-    #   };
-    # };
+    wayland-pipewire-idle-inhibit = {
+      enable = true;
+      package = pkgs.wayland-pipewire-idle-inhibit;
+      systemdTarget = "sway-session.target";
+      settings = {
+        verbosity = "INFO";
+        idle_inhibitor = "wayland";
+        media_minimum_duration = 30;
+        sink_whitelist = [];
+        node_blacklist = [];
+      };
+    };
   };
 
   systemd.user.services = {

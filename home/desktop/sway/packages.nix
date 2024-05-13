@@ -19,7 +19,7 @@
     slurp
     wdisplays
     wl-clipboard
-    wtype
+    ydotool
     xdg-utils
     xwayland
     rofimoji

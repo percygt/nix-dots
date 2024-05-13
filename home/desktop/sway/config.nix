@@ -85,38 +85,46 @@ in {
       "${modifier}+Shift+r" = "mode default";
     };
 
-    focus.wrapping = "workspace";
+    # focus.wrapping = "workspace";
     focus.newWindow = "urgent";
-    defaultWorkspace = "1";
-    bars = [{mode = "invisible";}];
+    defaultWorkspace = "0-home";
+    bars = [
+      {
+        command = lib.getExe config.programs.waybar.package;
+        mode = "dock";
+        hiddenState = "show";
+        position = "top";
+      }
+      {
+        id = "bar-1";
+        command = "true";
+        position = "bottom";
+      }
+    ];
     workspaceOutputAssign = [
       {
-        output = "HDMI-A-1";
+        workspace = "0-home";
+        output = "eDP-1";
+      }
+      {
         workspace = "1";
+        output = "HDMI-A-1";
       }
       {
-        output = "HDMI-A-1";
         workspace = "2";
+        output = "HDMI-A-1";
       }
       {
-        output = "HDMI-A-1";
         workspace = "3";
+        output = "HDMI-A-1";
       }
       {
-        output = "HDMI-A-1";
         workspace = "4";
+        output = "HDMI-A-1";
       }
       {
-        output = "HDMI-A-1";
         workspace = "5";
-      }
-      {
         output = "HDMI-A-1";
-        workspace = "6";
-      }
-      {
-        output = "HDMI-A-1";
-        workspace = "7";
       }
     ];
   };

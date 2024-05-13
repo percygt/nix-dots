@@ -1,24 +1,21 @@
 {
   inputs,
   homeDirectory ? "~",
-}: rec {
+}: let
+  inherit (inputs.nixpkgs) lib;
+in rec {
   inherit (import ../../packages/args.nix) clj;
   corePackages = pkgs: import ../../packages/corePackages.nix {inherit pkgs;};
   colors = (import ./colors.nix) // inputs.nix-colors.lib;
   fonts = import ./fonts.nix;
   wallpaper = "${homeDirectory}/.local/share/backgrounds/nice-mountain.jpg";
-  sway = import ./sway.nix {inherit (inputs.nixpkgs) lib;};
-  toRasi = import ./toRasi.nix {inherit (inputs.nixpkgs) lib;};
+  sway = import ./sway.nix {inherit lib;};
+  toRasi = import ./toRasi.nix {inherit lib;};
   mkLiteral = value: {
     _type = "literal";
     inherit value;
   };
-  mkWaybarFont = {
-    i,
-    s ? "medium",
-    c ? colors.normal.white,
-  }: "<span size='${s}' color='#${c}'>${i}</span>";
-  mkFileList = dir: builtins.attrNames (builtins.readDir dir);
+  mkPathList = dir: builtins.attrNames (removeAttrs (builtins.readDir dir) ["default.nix"]);
   cursorTheme = {
     name = "phinger-cursors-light";
     package = pkgs: pkgs.phinger-cursors;
@@ -36,7 +33,7 @@
   gtkTheme = {
     name = "Colloid-Dark-Nord";
     package = pkgs:
-      pkgs.colloid-gtk-theme.overrideAttrs (_oldAttrs: {
+      pkgs.colloid-gtk-theme.overrideAttrs (_: {
         src = pkgs.fetchFromGitHub {
           owner = "vinceliuice";
           repo = "Colloid-gtk-theme";

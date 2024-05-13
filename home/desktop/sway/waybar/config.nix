@@ -3,36 +3,37 @@
   lib,
   colors,
   daylight,
-}: let
-  redFnt = el:
-    mkWaybarFont {
-      i = el;
-      c = colors.normal.red;
-    };
-in {
+}: {
+  position = "top";
+  margin-top = 2;
+  margin-bottom = 1;
+  margin-left = 2;
+  margin-right = 2;
   exclusive = true;
   layer = "top";
   height = 22;
   spacing = 5;
-  margin-left = 2;
-  margin-right = 2;
   passthrough = false;
   gtk-layer-shell = true;
-  # fixed-center = true;
+  fixed-center = true;
 
   modules-left = ["sway/workspaces" "sway/window"];
   modules-center = ["clock#time" "custom/daylight" "clock#date"];
   modules-right = ["mpris" "tray" "cpu" "memory" "temperature" "wireplumber" "pulseaudio#source" "custom/wlsunset" "idle_inhibitor" "backlight" "network" "battery" "group/group-power"];
 
   "sway/workspaces" = {
-    format = "{name}";
-    all-outputs = true;
+    format = "{icon}";
+    disable-scroll = true;
     persistent-workspaces = {
+      "0-home" = ["eDP-1"];
       "1" = [];
       "2" = [];
       "3" = [];
       "4" = [];
       "5" = [];
+    };
+    format-icons = {
+      "0-home" = "󰋜";
     };
     on-click = "activate";
   };
@@ -57,7 +58,7 @@ in {
   "cpu" = {
     interval = 1;
     format = "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}";
-    format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" (redFnt "█")];
+    format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "<span color='#${colors.normal.red}'>█</span>"];
   };
 
   "memory" = {
@@ -133,14 +134,14 @@ in {
     format = "{:%m.%d.%y}";
     tooltip-format = "<tt><small>{calendar}</small></tt>";
     interval = 3600;
-    min-length = 7;
+    max-length = 7;
   };
   "custom/daylight" = {
     format = "{}";
     exec = "${lib.getExe daylight}";
     interval = 3600;
     tooltip = false;
-    min-length = 2;
+    min-length = 3;
   };
   "clock#time" = {
     format = "{:%I:%M:%S}";
@@ -151,9 +152,10 @@ in {
 
   "custom/wlsunset" = {
     format = "{}";
-    exec = "if systemctl --user --quiet is-active wlsunset.service; then echo '󰋴'; else echo '󰋶'; fi";
+    exec = "if systemctl --user --quiet is-active wlsunset.service; then echo '󰋴'; else echo '󰂵'; fi";
     on-click = "toggle-service wlsunset";
     exec-on-event = true;
+    interval = 2;
     tooltip = false;
   };
 

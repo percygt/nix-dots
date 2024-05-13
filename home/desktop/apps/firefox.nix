@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.firefox = {
     enable = true;
-    package = pkgs.stash.firefox.override {nativeMessagingHosts = [pkgs.tridactyl-native];};
+    package = pkgs.firefox-wayland.override {nativeMessagingHosts = [pkgs.tridactyl-native];};
     profiles."home" = {
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         aria2-integration
@@ -17,5 +17,10 @@
         zoom-redirector
       ];
     };
+  };
+  xdg.configFile."chromium-flags.conf" = {
+    source = pkgs.writeText "chromium-flags.conf" ''
+      --force-device-scale-factor=1
+    '';
   };
 }

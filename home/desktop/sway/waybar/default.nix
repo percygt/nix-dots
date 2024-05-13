@@ -38,22 +38,16 @@ in {
   programs.waybar = {
     enable = true;
     style = toRasi (import ./theme.nix {inherit mkLiteral fonts colors;}).theme;
-    systemd.enable = true;
-    systemd.target = "sway-session.target";
     settings = [
       (waybar_config
         // {
-          position = "top";
           output = "HDMI-A-1";
-          margin-top = 2;
-          margin-bottom = 1;
         })
       (waybar_config
         // {
-          position = "bottom";
+          ipc = true;
+          id = "bar-1";
           output = "eDP-1";
-          margin-bottom = 2;
-          margin-top = 1;
         })
     ];
   };

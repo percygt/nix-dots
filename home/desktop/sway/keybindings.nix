@@ -14,13 +14,21 @@
   mod = modifier;
   inherit (libx) sway;
   inherit (sway) mkWorkspaceKeys mkDirectionKeys;
-  toggle-notifications = pkgs.writers.writeBash "toggle-notifications" ''
-    if makoctl mode | grep -q "default"; then
-      makoctl mode -s hidden
-    else
-      makoctl mode -s default
-    fi
-  '';
+  # passmenu = pkgs.writers.writeBash "passmenu" ''
+  #   # shopt -s nullglob globstar
+  #
+  #   dmenu=${pkgs.tofi}/bin/tofi  --prompt-text="Power Menu: "
+  #
+  #   prefix=''${PASSWORD_STORE_DIR- ~/.password-store}
+  #   password_files=( "$prefix"/**/*.gpg )
+  #   password_files=( "''${password_files[@]#"$prefix"/}" )
+  #   password_files=( "''${password_files[@]%.gpg}" )
+  #   password=''$(printf '%s\n' "''${password_files[@]}" | "$dmenu" "$@")
+  #
+  #   [[ -n $password ]] || exit
+  #
+  #   pass show -c "$password" 2>/dev/null
+  # '';
   dropdown-terminal = pkgs.writers.writeBash "dropdown_terminal" ''
     TERM_PIDFILE="/tmp/wezterm-dropdown"
     TERM_PID="$(<"$TERM_PIDFILE")"
@@ -80,14 +88,14 @@ in {
       "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"brave-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
-      "${mod}+Shift+k" = "exec ${lib.getExe pkgs.toggle-sway-window} --id org.keepassxc.KeePassXC -- keepassxc";
+      "${mod}+Shift+k" = "exec keepmenu -C";
+      # "${mod}+k" = "exec ${passmenu}";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
       "${mod}+shift+tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
       "${mod}+backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
       "${mod}+delete" = "exec swaylock";
       #FIXME:
       "${mod}+shift+v" = "exec ${lib.getExe pkgs.cycle-pulse-sink}";
-      "${mod}+shift+n" = "exec ${toggle-notifications}";
 
       XF86Calculator = "exec ${lib.getExe pkgs.toggle-sway-window} --id qalculate-gtk -- qalculate-gtk";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";

@@ -17,7 +17,6 @@
     stash.honkers-launcher
     chromium
     qalculate-gtk
-    gnome.nautilus
     audacity
     nvitop
     loupe

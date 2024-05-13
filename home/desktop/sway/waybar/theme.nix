@@ -14,6 +14,7 @@
       border = mkLiteral "none";
       font-family = "${rubik}, ${font_awesome}";
       font-size = mkLiteral fsize;
+      min-height = mkLiteral "0px";
     };
     "window#waybar" = {
       background-color = bg;

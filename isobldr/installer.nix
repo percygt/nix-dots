@@ -5,8 +5,8 @@
   libx,
   ...
 }: let
-  inherit (libx) mkFileList;
-  mkShScripts = scripts:
+  inherit (libx) mkPathList;
+  mkBashScriptsFromList = scripts:
     map (
       script:
         pkgs.writeShellScriptBin (lib.removeSuffix ".sh" script) (builtins.readFile ./scripts/${script})
@@ -21,7 +21,7 @@ in {
 
         runtimeInputs =
           [gum rsync age sops yq-go udisks]
-          ++ mkShScripts (mkFileList ./scripts);
+          ++ mkBashScriptsFromList (mkPathList ./scripts);
 
         text = ''
           if [ "$(id -u)" -eq 0 ]; then

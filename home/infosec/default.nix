@@ -7,8 +7,8 @@
     ./keepass.nix
     ./common.nix
     ./sops.nix
-    ./kpass.nix
-    ./pmenu.nix
+    ./keepfzf.nix
+    ./tofipass.nix
   ];
 
   infosec = {
