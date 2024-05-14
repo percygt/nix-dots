@@ -17,6 +17,26 @@ in {
     home = {
       shellAliases.v = "nvim";
     };
+    xdg.desktopEntries = {
+      neovim = {
+        name = "Neovim";
+        genericName = "Text Editor";
+        exec = let
+          app = pkgs.writeShellScript "neovim-terminal" ''
+            # Killing foot from sway results in non-zero exit code which triggers
+            # xdg-mime to use next valid entry, so we must always exit successfully
+            if [ "$SWAYSOCK" ]; then
+              foot -- nvim "$1" || true
+            else
+              gnome-terminal -- nvim "$1" || true
+            fi
+          '';
+        in "${app} %U";
+        terminal = false;
+        categories = ["Utility" "TextEditor"];
+        mimeType = ["text/markdown" "text/plain" "text/javascript"];
+      };
+    };
     programs.neovim = {
       enable = true;
       package = pkgs.neovim-nightly.overrideAttrs (_: {CFLAGS = "-O3";});

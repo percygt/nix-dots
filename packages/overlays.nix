@@ -1,5 +1,5 @@
-{pkgs ? (import ./nixpkgs.nix) {}}:
-(import ./. {inherit pkgs;})
+{pkgs}:
+(import ./derivations.nix {inherit pkgs;})
 // {
   # babashka script source: https://github.com/stelcodes/nixos-config/commit/95d8734bad6162157f92f77951215c0aaa6b71d2
   writeBabashkaScript = pkgs.callPackage ./clj/writeBabashkaScript.nix {};

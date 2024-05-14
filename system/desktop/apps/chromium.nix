@@ -1,9 +1,10 @@
 {
   programs.chromium = {
     enable = true; # only enables polices to be put in etc, doesn't install chromium
-    # extensions = [
-    #   "cjpalhdlnbpafiamejdnhcphjbkeiagm"
-    # ];
+    extensions = [
+      "cjpalhdlnbpafiamejdnhcphjbkeiagm"
+      "dbepggeogbaibhgnhhndojpepiihcmeb"
+    ];
     extraOpts = {
       ShowHomeButton = true;
       AdvancedProtectionAllowed = false;
@@ -22,15 +23,9 @@
       DefaultLocalFontsSetting = 2;
       DefaultNotificationsSetting = 2;
       DefaultPopupsSetting = 2;
-      # DefaultSearchProviderEnabled = true;
-      # DefaultSearchProviderName = "DuckDuckGo";
-      # DefaultSearchProviderSearchURL = "https://duckduckgo.com/?q={searchTerms}";
       DefaultSensorsSetting = 2;
       DefaultSerialGuardSetting = 2;
       DefaultThirdPartyStoragePartitioningSetting = 2;
-      # DefaultWebBluetoothGuardSetting = 2;
-      # DefaultWebHidGuardSetting = 2;
-      # DefaultWebUsbGuardSetting = 2;
       DefaultWindowManagementSetting = 2;
       DNSInterceptionChecksEnabled = false;
       DnsOverHttpsMode = "automatic";

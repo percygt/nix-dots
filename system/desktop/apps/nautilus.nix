@@ -1,11 +1,13 @@
 {pkgs, ...}: {
   environment = {
     systemPackages = with pkgs; [
-      ffmpegthumbnailer
       gnome.nautilus
-      libheif.bin
-      libheif.out
-      nufraw
+      gnome.nautilus-python
+      # ptyxis
+      nautilus-open-any-terminal
+    ];
+    pathsToLink = [
+      "/share/nautilus-python/extensions"
     ];
   };
 }

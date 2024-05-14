@@ -6,17 +6,11 @@
   config,
   pkgs,
   self,
-  inputs,
   ...
 }: {
   programs.home-manager.enable = true;
 
   systemd.user.startServices = "sd-switch";
-
-  home.file = {
-    "${config.xdg.cacheHome}/nix-index/files".source =
-      inputs.nix-index-database.legacyPackages.${pkgs.system}.database;
-  };
 
   programs.nix-index = {
     enable = true;

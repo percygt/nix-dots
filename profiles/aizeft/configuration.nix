@@ -31,9 +31,8 @@
       hideMounts = true;
       users.${username} = {
         directories = [
-          ".local/share/nvim"
-          ".local/cache/nvim"
           ".local/state/nvim"
+          ".local/share/nvim"
           ".local/share/anime-game-launcher"
           ".local/share/anime-games-launcher"
           ".local/share/honkers-launcher"
@@ -43,9 +42,10 @@
           ".local/share/zoxide"
           ".local/share/navi"
           ".local/share/tmux/resurrect"
+          ".local/cache/nvim"
+          ".local/cache/nix-index"
           ".config/keepassxc"
           ".config/BraveSoftware/Brave-Browser"
-          # ".config/nautilus"
           ".config/gh"
           ".mozilla"
         ];

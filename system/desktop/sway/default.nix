@@ -13,7 +13,6 @@ in {
   programs = {
     sway = {
       enable = true;
-      # package = pkgs.swayfx.overrideAttrs (_: {passthru.providedSessions = ["sway"];});
       package = swayPkg pkgs;
       wrapperFeatures.gtk = true;
     };
@@ -56,6 +55,7 @@ in {
     gvfs.enable = true;
     dbus = {
       enable = true;
+      implementation = "broker";
       packages = with pkgs; [
         gcr
         gnome.gnome-settings-daemon
@@ -66,6 +66,9 @@ in {
     gnome = {
       gnome-keyring.enable = true;
       sushi.enable = true;
+      evolution-data-server.enable = true;
+      glib-networking.enable = true;
+      gnome-online-accounts.enable = true;
     };
   };
 }

@@ -8,5 +8,8 @@
     ./discord.nix
     ./element.nix
     ./ai.nix
+    ./mpv.nix
+    ./zathura.nix
+    ./loupe.nix
   ];
 }

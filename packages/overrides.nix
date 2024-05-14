@@ -1,3 +1,6 @@
-{pkgs}: {
-  ripgrep = pkgs.ripgrep.override {withPCRE2 = true;};
+{
+  prev,
+  final,
+}: {
+  ripgrep = prev.ripgrep.override {withPCRE2 = true;};
 }

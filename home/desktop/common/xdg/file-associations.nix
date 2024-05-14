@@ -2,77 +2,102 @@ let
   browser = ["brave-browser.desktop"];
   archiveManager = ["org.gnome.FileRoller.desktop"];
   imageViewer = ["org.gnome.Loupe.desktop"];
+  audioPlayer = ["audacious.desktop"];
+  documentViewer = ["org.pwmt.zathura.desktop"];
+  textEditor = ["neovim.desktop"];
+  videoPlayer = ["mpv.desktop"];
+  fileManager = ["nemo.desktop"];
 in {
   # XDG MIME types
   associations = {
-    "application/x-extension-htm" = browser;
-    "application/x-extension-html" = browser;
-    "application/x-extension-shtml" = browser;
-    "application/x-extension-xht" = browser;
-    "application/x-extension-xhtml" = browser;
-    "application/xhtml+xml" = browser;
+    "application/http" = browser;
     "text/html" = browser;
-    "x-scheme-handler/about" = browser;
-    "x-scheme-handler/chrome" = browser;
-    "x-scheme-handler/ftp" = browser;
     "x-scheme-handler/http" = browser;
     "x-scheme-handler/https" = browser;
-    "x-scheme-handler/unknown" = browser;
-
-    "audio/*" = ["mpv.desktop"];
-    "video/*" = ["mpv.dekstop"];
-    "image/*" = ["org.gnome.Loupe.desktop"];
-
-    "application/json" = browser;
-
-    "application/pdf" = ["org.pwmt.zathura.desktop.desktop"];
-
-    # Archives / compressed files
+    "application/bzip2" = archiveManager;
+    "application/gzip" = archiveManager;
+    "application/vnd.android.package-archive" = archiveManager;
+    "application/vnd.ms-cab-compressed" = archiveManager;
+    "application/vnd.debian.binary-package" = archiveManager;
     "application/x-7z-compressed" = archiveManager;
     "application/x-7z-compressed-tar" = archiveManager;
+    "application/x-ace" = archiveManager;
+    "application/x-alz" = archiveManager;
+    "application/x-apple-diskimage" = archiveManager;
+    "application/x-ar" = archiveManager;
+    "application/x-archive" = archiveManager;
+    "application/x-arj" = archiveManager;
+    "application/x-brotli" = archiveManager;
+    "application/x-bzip-brotli-tar" = archiveManager;
     "application/x-bzip" = archiveManager;
     "application/x-bzip-compressed-tar" = archiveManager;
+    "application/x-bzip1" = archiveManager;
+    "application/x-bzip1-compressed-tar" = archiveManager;
+    "application/x-cabinet" = archiveManager;
+    "application/x-cd-image" = archiveManager;
     "application/x-compress" = archiveManager;
     "application/x-compressed-tar" = archiveManager;
     "application/x-cpio" = archiveManager;
+    "application/x-chrome-extension" = archiveManager;
+    "application/x-deb" = archiveManager;
+    "application/x-ear" = archiveManager;
+    "application/x-ms-dos-executable" = archiveManager;
+    "application/x-gtar" = archiveManager;
     "application/x-gzip" = archiveManager;
+    "application/x-gzpostscript" = archiveManager;
+    "application/x-java-archive" = archiveManager;
     "application/x-lha" = archiveManager;
+    "application/x-lhz" = archiveManager;
+    "application/x-lrzip" = archiveManager;
+    "application/x-lrzip-compressed-tar" = archiveManager;
+    "application/x-lz4" = archiveManager;
     "application/x-lzip" = archiveManager;
     "application/x-lzip-compressed-tar" = archiveManager;
     "application/x-lzma" = archiveManager;
     "application/x-lzma-compressed-tar" = archiveManager;
+    "application/x-lzop" = archiveManager;
+    "application/x-lz4-compressed-tar" = archiveManager;
+    "application/x-ms-wim" = archiveManager;
+    "application/x-rar" = archiveManager;
+    "application/x-rar-compressed" = archiveManager;
+    "application/x-rpm" = archiveManager;
+    "application/x-source-rpm" = archiveManager;
+    "application/x-rzip" = archiveManager;
+    "application/x-rzip-compressed-tar" = archiveManager;
     "application/x-tar" = archiveManager;
     "application/x-tarz" = archiveManager;
+    "application/x-tzo" = archiveManager;
+    "application/x-stuffit" = archiveManager;
+    "application/x-war" = archiveManager;
     "application/x-xar" = archiveManager;
     "application/x-xz" = archiveManager;
     "application/x-xz-compressed-tar" = archiveManager;
+    "application/x-zip" = archiveManager;
+    "application/x-zip-compressed" = archiveManager;
+    "application/x-zstd-compressed-tar" = archiveManager;
+    "application/x-zoo" = archiveManager;
     "application/zip" = archiveManager;
-    "application/gzip" = archiveManager;
-    "application/bzip2" = archiveManager;
-    "application/vnd.rar" = archiveManager;
+    "application/zstd" = archiveManager;
+    "image/*" = imageViewer;
+    "video/*" = videoPlayer;
 
-    # Images
-    "image/jpeg" = imageViewer;
-    "image/png" = imageViewer;
-    "image/gif" = imageViewer;
-    "image/webp" = imageViewer;
-    "image/tiff" = imageViewer;
-    "image/x-tga" = imageViewer;
-    "image/vnd-ms.dds" = imageViewer;
-    "image/x-dds" = imageViewer;
-    "image/bmp" = imageViewer;
-    "image/vnd.microsoft.icon" = imageViewer;
-    "image/vnd.radiance" = imageViewer;
-    "image/x-exr" = imageViewer;
-    "image/x-portable-bitmap" = imageViewer;
-    "image/x-portable-graymap" = imageViewer;
-    "image/x-portable-pixmap" = imageViewer;
-    "image/x-portable-anymap" = imageViewer;
-    "image/x-qoi" = imageViewer;
-    "image/svg+xml" = imageViewer;
-    "image/svg+xml-compressed" = imageViewer;
-    "image/avif" = imageViewer;
-    "image/heic" = imageViewer;
-    "image/jxl" = imageViewer;
+    "audio/*" = audioPlayer;
+    "application/ogg" = audioPlayer;
+    "application/x-cue" = audioPlayer;
+    "application/x-ogg" = audioPlayer;
+    "application/xspf+xml" = audioPlayer;
+    "x-content/audio-cdda" = audioPlayer;
+
+    "text/markdown" = textEditor;
+    "text/plain" = textEditor;
+    "application/x-zerosize" = textEditor; # empty files
+
+    "application/epub+zip" = documentViewer;
+    "application/pdf" = documentViewer;
+    "application/oxps" = documentViewer;
+    "application/x-fictionbook" = documentViewer;
+
+    "inode/directory" = fileManager;
+    "x-scheme-handler/obsidian" = ["obsidian.desktop"];
   };
 }

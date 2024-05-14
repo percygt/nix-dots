@@ -7,6 +7,8 @@
       onCalendar = "weekly"; # Default value
     };
     packages = [
+      "re.sonny.Tangram"
+      "com.github.johnfactotum.Foliate"
       "org.mozilla.Thunderbird"
       "com.github.finefindus.eyedropper"
       "com.github.muriloventuroso.pdftricks"
@@ -14,7 +16,6 @@
       "io.beekeeperstudio.Studio"
       "io.github.dvlv.boxbuddyrs"
       "io.github.shiftey.Desktop"
-      "md.obsidian.Obsidian"
       "org.gimp.GIMP"
       "org.gnome.Calculator"
       "org.gnome.Firmware"
@@ -24,7 +25,6 @@
       "page.codeberg.Imaginer.Imaginer"
       "rest.insomnia.Insomnia"
       "io.github.Qalculate"
-      "us.zoom.Zoom"
     ];
   };
   fileSystems = {
