@@ -5,8 +5,8 @@
   daylight,
 }: {
   position = "top";
-  margin-top = 2;
-  margin-bottom = 1;
+  margin-top = 3;
+  margin-bottom = 3;
   margin-left = 2;
   margin-right = 2;
   exclusive = true;

@@ -2,7 +2,7 @@
   interface = {
     name = "Rubik";
     style = "Regular";
-    weight = "400";
+    weight = "500";
     package = pkgs: pkgs.rubik;
     size = 13.0;
   };

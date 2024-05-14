@@ -6,7 +6,6 @@
 (require '[clojure.string :as str])
 
 (defmacro debug [sym] `(do (println ~(keyword sym)) (pp/pprint ~sym) (println)))
-
 (def sinks
   (let [default-sink-name (->> (p/sh ["pactl" "info"])
                                :out

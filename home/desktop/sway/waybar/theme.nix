@@ -28,13 +28,13 @@
       padding = mkLiteral "15px 15px";
     };
     ".modules-right" = {
-      padding-right = mkLiteral "0px";
+      padding = mkLiteral "1px 0px";
     };
     ".modules-center" = {
-      padding = mkLiteral "0px 5px";
+      padding = mkLiteral "1px 5px";
     };
     ".modules-left" = {
-      padding-left = mkLiteral "0px";
+      padding = mkLiteral "1px 0px";
     };
 
     ".modules-left > widget:first-child > #workspaces" = {

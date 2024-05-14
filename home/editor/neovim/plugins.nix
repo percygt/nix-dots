@@ -134,6 +134,7 @@ in {
       type = "lua";
       config = ''require("config.lsp.treesitter")'';
     }
+    clangd_extensions-nvim
     lsp-format-nvim
     lsp_signature-nvim
     nvim-treesitter-textobjects

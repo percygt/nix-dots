@@ -8,7 +8,7 @@
     ./common.nix
     ./sops.nix
     ./keepfzf.nix
-    ./tofipass.nix
+    # ./tofipass.nix
   ];
 
   infosec = {
