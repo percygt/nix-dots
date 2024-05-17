@@ -2,8 +2,12 @@
   pkgs,
   username,
   ...
-}: {
+}: let
+  bridgeName = "br0";
+  ethName = "eno2";
+in {
   environment.systemPackages = with pkgs; [
+    gnome.adwaita-icon-theme
     libguestfs
     win-virtio
     win-spice
@@ -14,14 +18,31 @@
     virtiofsd
     qemu
     kmod
+    quickemu
     pciutils
+    (pkgs.writeShellScriptBin "qemu-system-x86_64-uefi" ''
+      qemu-system-x86_64 \
+        -bios ${pkgs.OVMFFull.fd}/FV/OVMF_CODE.fd \
+        "$@"
+    '')
   ];
   programs.dconf.enable = true;
+
   programs.virt-manager.enable = true;
 
   boot.kernelParams = ["intel_iommu=on" "iommu=pt"];
-
-  users.users.${username}.extraGroups = ["libvirtd" "kvm"];
+  # networking = {
+  #   interfaces.${bridgeName}.useDHCP = true;
+  #   bridges = {
+  #     ${bridgeName} = {
+  #       interfaces = [ethName];
+  #     };
+  #   };
+  # };
+  users = {
+    users.${username}.extraGroups = ["libvirtd" "qemu" "kvm"];
+    groups.qemu = {};
+  };
   services.spice-vdagentd.enable = true;
   virtualisation = {
     kvmgt.enable = true;
@@ -29,12 +50,12 @@
     libvirtd = {
       enable = true;
       allowedBridges = [
-        "br0"
+        bridgeName
       ];
       onBoot = "ignore";
       onShutdown = "shutdown";
       qemu = {
-        package = pkgs.qemu_kvm;
+        # package = pkgs.qemu_kvm;
         swtpm.enable = true;
         ovmf = {
           enable = true;

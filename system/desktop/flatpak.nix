@@ -5,10 +5,9 @@
     update.auto = {
       enable = true;
       onCalendar = "weekly"; # Default value
+      onActivation = true;
     };
     packages = [
-      "re.sonny.Tangram"
-      "com.github.johnfactotum.Foliate"
       "org.mozilla.Thunderbird"
       "com.github.finefindus.eyedropper"
       "com.github.muriloventuroso.pdftricks"
@@ -24,7 +23,6 @@
       "org.telegram.desktop"
       "page.codeberg.Imaginer.Imaginer"
       "rest.insomnia.Insomnia"
-      "io.github.Qalculate"
     ];
   };
   fileSystems = {

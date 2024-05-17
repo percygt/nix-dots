@@ -200,6 +200,6 @@ in {
     vim-maximizer
     vim-tmux-navigator
     vim-repeat
-    plenary-nvim
+    pkgs.vimPlugins.plenary-nvim
   ];
 }

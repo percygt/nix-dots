@@ -20,12 +20,12 @@ in {
 
     timeouts = [
       {
-        timeout = 5 * 60;
+        timeout = 15 * 60;
         command = "${swaymsg} 'output * power off'";
         resumeCommand = "${swaymsg} 'output * power on'";
       }
       {
-        timeout = 6 * 60;
+        timeout = 30 * 60;
         command = "${loginctl} lock-session";
       }
     ];

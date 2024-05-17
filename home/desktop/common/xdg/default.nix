@@ -48,15 +48,13 @@ in {
     gtk.gtk3 = {
       bookmarks = [
         "file:///${flakeDirectory}"
+        "file://${config.home.homeDirectory}/data"
+        "file://${config.home.homeDirectory}/windows"
         "file://${config.home.homeDirectory}/data/codebox"
         "file://${config.home.homeDirectory}/data/git-repo"
         "file://${config.home.homeDirectory}/.local/share"
         "file://${config.home.homeDirectory}/.config"
-        "file://${config.home.homeDirectory}/data"
-        "file:///windows"
-        "file:///backup"
         "file://${config.home.homeDirectory}/data/playground"
-        "file://${config.home.homeDirectory}/data/logs"
       ];
     };
 

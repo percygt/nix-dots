@@ -10,8 +10,7 @@
   config = lib.mkIf config.desktop.modules.qt.enable {
     qt = {
       enable = true;
-      platformTheme = "gtk";
-      # platformTheme.name = "gtk";
+      platformTheme.name = "gtk";
       style.name = "kvantum";
     };
 
@@ -22,9 +21,9 @@
     xdg.configFile = {
       "Kvantum" = {
         recursive = false;
-        source = ./config/qt/Kvantum;
+        source = ./config/Kvantum;
       };
-      kdeglobals.source = ./config/qt/kdeglobals;
+      kdeglobals.source = ./config/kdeglobals;
     };
   };
 }

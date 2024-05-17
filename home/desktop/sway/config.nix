@@ -28,8 +28,14 @@ in {
     inherit (import ./startup.nix) startup;
     inherit (import ./window.nix {inherit mkAppsFloat;}) window;
     input = {
+      "type:keyboard" = {
+        xkb_layout = "us";
+      };
       "type:touchpad" = {
         tap = "enabled";
+        accel_profile = "adaptive";
+      };
+      "type:pointer" = {
         accel_profile = "adaptive";
       };
     };

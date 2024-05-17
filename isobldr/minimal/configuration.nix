@@ -10,11 +10,11 @@
 }: {
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
+    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
     "${self}/system/core/packages.nix"
     "${self}/system/common"
-    "${self}/isobuilder/installer.nix"
+    "${self}/isobldr/installer.nix"
   ];
 
   isoImage.squashfsCompression = "gzip -Xcompression-level 1";

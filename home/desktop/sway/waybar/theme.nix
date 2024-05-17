@@ -28,13 +28,13 @@
       padding = mkLiteral "15px 15px";
     };
     ".modules-right" = {
-      padding = mkLiteral "1px 0px";
+      padding = mkLiteral "5px";
     };
     ".modules-center" = {
-      padding = mkLiteral "1px 5px";
+      padding = mkLiteral "5px";
     };
     ".modules-left" = {
-      padding = mkLiteral "1px 0px";
+      padding = mkLiteral "3px";
     };
 
     ".modules-left > widget:first-child > #workspaces" = {
@@ -47,7 +47,7 @@
 
     "#custom-daylight,
     #clock" = {
-      padding = mkLiteral "0px";
+      padding = mkLiteral "0px 5px";
       font-weight = mkLiteral "400";
     };
     "#workspaces" = {
@@ -75,8 +75,11 @@
     "#custom-power" = {
       padding-right = mkLiteral "5px";
     };
-    "#custom-logout, #custom-suspend, #custom-lock, #custom-reboot" = {
-      padding = mkLiteral "0 5px";
+    "#custom-reboot" = {
+      padding = mkLiteral "0 15px 0 10px";
+    };
+    "#custom-logout, #custom-suspend, #custom-lock" = {
+      padding = mkLiteral "0 10px";
     };
 
     "#cpu,

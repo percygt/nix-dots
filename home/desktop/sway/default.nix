@@ -22,12 +22,6 @@ in {
     # ./wpapered.nix
   ];
 
-  dconf.settings = {
-    "org/gnome/desktop/wm/preferences".button-layout = ":appmenu";
-    "org/gnome/terminal/legacy".default-show-menubar = false;
-  };
-  nix.settings.substituters = ["https://nixpkgs-wayland.cachix.org"];
-  nix.settings.trusted-public-keys = ["nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="];
   xsession.importedVariables = ["PATH"];
   wayland.windowManager.sway = {
     enable = true;
@@ -36,6 +30,7 @@ in {
     systemd.enable = true;
     systemd.xdgAutostart = true;
     wrapperFeatures.gtk = true;
+    checkConfig = false;
     inherit (import ./extraConfig.nix) extraConfig;
     inherit (import ./extraSessionCommands.nix) extraSessionCommands;
     inherit (import ./config.nix {inherit pkgs config lib libx isGeneric;}) config;

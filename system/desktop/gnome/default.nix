@@ -1,18 +1,11 @@
 {
   pkgs,
-  config,
-  lib,
+  libx,
   ...
 }: let
-  wpa = config.core.net.wpa.enable;
+  inherit (libx) gnomeShellTheme;
 in {
-  networking.networkmanager = lib.mkIf wpa {
-    enable = lib.mkForce false;
-  };
   services = {
-    avahi = lib.mkIf wpa {
-      enable = lib.mkForce false;
-    };
     flatpak.enable = true;
     locate.enable = true;
     printing.enable = true;
@@ -51,10 +44,12 @@ in {
       gnome-initial-setup
     ]);
 
-  environment.systemPackages = with pkgs; [
-    gnome.gnome-tweaks
-    phinger-cursors
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      gnome.gnome-tweaks
+      phinger-cursors
+    ]
+    ++ [gnomeShellTheme.package pkgs];
 
   services.gnome.gnome-keyring.enable = true;
 

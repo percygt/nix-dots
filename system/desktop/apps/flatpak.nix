@@ -26,8 +26,6 @@
       "org.telegram.desktop"
       "page.codeberg.Imaginer.Imaginer"
       "rest.insomnia.Insomnia"
-      "io.github.Qalculate"
-      # "us.zoom.Zoom"
     ];
   };
   fileSystems = {

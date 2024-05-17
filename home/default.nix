@@ -6,6 +6,7 @@
   inputs,
   profile,
   outputs,
+  libx,
   ...
 }: let
   commonImports = [
@@ -26,7 +27,10 @@ in {
       "${self}/profiles/${profile}/home.nix"
       inputs.sops-nix.homeManagerModules.sops
     ]
-    ++ lib.optionals isGeneric [./generic];
+    ++ lib.optionals isGeneric [
+      ./generic
+      libx.nixpkgsConfig
+    ];
 
   nixpkgs = {
     overlays =

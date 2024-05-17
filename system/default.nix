@@ -5,6 +5,7 @@
   lib,
   profile,
   outputs,
+  libx,
   ...
 }: let
   commonImports = [
@@ -25,6 +26,7 @@ in {
       "${self}/profiles/${profile}/configuration.nix"
       inputs.sops-nix.nixosModules.sops
       inputs.nix-flatpak.nixosModules.nix-flatpak
+      libx.nixpkgsConfig
     ];
 
   nixpkgs.overlays =

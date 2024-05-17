@@ -3,5 +3,6 @@
     ./qt
     ./gtk
     ./xdg
+    ./dconf
   ];
 }

@@ -1,25 +1,20 @@
 {
-  mkWaybarFont,
   lib,
   colors,
   daylight,
 }: {
   position = "top";
-  margin-top = 3;
-  margin-bottom = 3;
-  margin-left = 2;
-  margin-right = 2;
   exclusive = true;
   layer = "top";
-  height = 22;
+  height = 30;
   spacing = 5;
   passthrough = false;
   gtk-layer-shell = true;
   fixed-center = true;
 
   modules-left = ["sway/workspaces" "sway/window"];
-  modules-center = ["clock#time" "custom/daylight" "clock#date"];
-  modules-right = ["mpris" "tray" "cpu" "memory" "temperature" "wireplumber" "pulseaudio#source" "custom/wlsunset" "idle_inhibitor" "backlight" "network" "battery" "group/group-power"];
+  modules-center = ["clock#time" "clock#icon" "clock#date"];
+  modules-right = ["mpris" "tray" "cpu" "memory" "temperature" "wireplumber" "pulseaudio#source" "idle_inhibitor" "custom/wlsunset" "backlight" "network" "battery" "group/group-power"];
 
   "sway/workspaces" = {
     format = "{icon}";
@@ -63,7 +58,7 @@
 
   "memory" = {
     interval = 30;
-    format = " {percentage}%        {swapPercentage}%";
+    format = "󰆼 {percentage}%     󰿡  {swapPercentage}%";
     tooltip = true;
     tooltip-format = "{used:0.1f}G/{total:0.1f}G | {swapUsed:0.1f}G/{swapTotal:0.1f}G";
     on-click = "toggle-sway-window --id btop -- foot --app-id=btop btop";
@@ -73,7 +68,7 @@
     thermal-zone = 7;
     critical-threshold = 80;
     tooltip = false;
-    format = "{icon} {temperatureC}°C";
+    format = "<small>{icon}</small> {temperatureC}°C";
     format-icons = ["" "" "" "" ""];
     on-click = "toggle-sway-window --id btop -- foot --app-id=btop btop";
   };
@@ -84,11 +79,12 @@
     format-source-muted = "";
     tooltip-format = "{source_volume}% / {desc}";
     on-click = "pamixer --default-source -t";
+    min-length = 2;
   };
 
   "wireplumber" = {
     format = "{icon}  {volume}% {node_name}";
-    format-muted = "    {volume}";
+    format-muted = " ";
     format-icons = {default = ["" "" ""];};
     on-click = "pamixer --toggle-mute";
     on-click-right = "toggle-sway-window --id pavucontrol -- pavucontrol";
@@ -99,8 +95,8 @@
 
   "network" = {
     format-disconnected = "󰲛";
-    format-ethernet = "󰛳";
-    format-linked = "󰛳 (No IP)";
+    format-ethernet = "󰈀";
+    format-linked = "󰈀 (No IP)";
     format-wifi = "";
     tooltip-format = "{ifname} / {essid} ({signalStrength}%) / {ipaddr}";
     on-click = "toggle-sway-window --id wpa_gui -- wpa_gui";
@@ -110,8 +106,8 @@
   "idle_inhibitor" = {
     format = "{icon}";
     format-icons = {
-      activated = "󱎴";
-      deactivated = "󰍹";
+      activated = "󰌿";
+      deactivated = "󱙱";
     };
   };
 
@@ -127,7 +123,7 @@
     format-full = "{icon} {capacity}%";
     format-good = "{icon} {capacity}%";
     format-icons = ["" "" "" "" ""];
-    format-plugged = "";
+    format-plugged = "<span size='medium'></span>";
   };
 
   "clock#date" = {
@@ -136,13 +132,19 @@
     interval = 3600;
     max-length = 7;
   };
-  "custom/daylight" = {
-    format = "{}";
-    exec = "${lib.getExe daylight}";
-    interval = 3600;
-    tooltip = false;
-    min-length = 3;
+
+  "clock#icon" = {
+    format = " ";
+    tooltip-format = "<tt><small>{calendar}</small></tt>";
   };
+
+  # "custom/daylight" = {
+  #   format = "{}";
+  #   exec = "${lib.getExe daylight}";
+  #   interval = 3600;
+  #   tooltip = false;
+  #   min-length = 3;
+  # };
   "clock#time" = {
     format = "{:%I:%M:%S}";
     tooltip-format = "<tt><small>{calendar}</small></tt>";
@@ -152,11 +154,11 @@
 
   "custom/wlsunset" = {
     format = "{}";
-    exec = "if systemctl --user --quiet is-active wlsunset.service; then echo '󰋴'; else echo '󰂵'; fi";
+    exec = "if systemctl --user --quiet is-active wlsunset.service; then echo '󰖔'; else echo '󰃚'; fi";
     on-click = "toggle-service wlsunset";
-    exec-on-event = true;
-    interval = 2;
+    exec-if = "systemctl --user --quiet is-active wlsunset.service; pkill -RTMIN+9 waybar";
     tooltip = false;
+    signal = 9;
   };
 
   "backlight" = {
@@ -192,19 +194,19 @@
   };
 
   "custom/suspend" = {
-    format = "󰒲";
+    format = "󰪓";
     on-click = "systemctl suspend";
     tooltip = false;
   };
 
   "custom/lock" = {
-    format = "";
+    format = "<small>󰷛</small>";
     on-click = "swaymsg exec swaylock";
     tooltip = false;
   };
 
   "custom/reboot" = {
-    format = "";
+    format = "󰜉";
     on-click = "systemctl reboot";
     tooltip = false;
   };

@@ -17,8 +17,8 @@ in {
     [inputs.home-manager.nixosModules.home-manager];
 
   home-manager = lib.mkIf ifHomeExist {
-    # useGlobalPkgs = true;
-    # useUserPackages = true;
+    useGlobalPkgs = true;
+    useUserPackages = true;
     extraSpecialArgs = homeArgs // {nixosConfig = config;};
     users.${username}.imports = [outputs.homeManagerModules.default];
   };

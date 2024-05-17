@@ -2,16 +2,14 @@
   pkgs,
   lib,
   config,
+  desktop,
   ...
 }: {
-  config = lib.mkIf config.infosec.keepass.enable {
+  config = lib.mkIf (config.infosec.keepass.enable && desktop == null) {
     home.packages = with pkgs; [
       (
         writeShellScriptBin
         "keepfzf"
-        /*
-        bash
-        */
         ''
           check_dep () {
               for dep; do

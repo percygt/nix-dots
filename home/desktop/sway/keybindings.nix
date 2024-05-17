@@ -21,7 +21,7 @@
     password_files=( "$prefix"/**/*.gpg )
     password_files=( "''${password_files[@]#"$prefix"/}" )
     password_files=( "''${password_files[@]%.gpg}" )
-    password=$(printf '%s\n' "''${password_files[@]}" | ${pkgs.tofi}/bin/tofi  --prompt-text="Passmenu: ")
+    password=$(printf '%s\n' "''${password_files[@]}" | ${pkgs.tofi}/bin/tofi  --prompt-text="Passmenu: " | xargs swaymsg exec --)
     [[ -n $password ]] || exit
     pass show -c "$password" 2>/dev/null
   '';
@@ -48,7 +48,7 @@
     fi
   '';
   power-menu = pkgs.writers.writeBash "power-menu" ''
-    pkill tofi || case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | ${pkgs.tofi}/bin/tofi  --prompt-text="Power Menu: ") in
+    case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | ${pkgs.tofi}/bin/tofi  --prompt-text="Power Menu: ") in
     "Power Off")
       systemctl poweroff
       ;;
@@ -75,17 +75,17 @@ in {
       "${mod}+w" = "exec ${dropdown-terminal}";
       "${mod}+return" = "exec ${terminal}";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
-      "${mod}+Shift+e" = "exec ${power-menu}";
-      "${mod}+s" = "exec pkill tofi-drun || ${pkgs.tofi}/bin/tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
-      "${mod}+x" = "exec pkill tofi-run || ${pkgs.tofi}/bin/tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
+      "${mod}+Shift+e" = "exec pkill tofi || ${power-menu}";
+      "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
+      "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --app-id=btop btop";
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
       "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"brave-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
-      "${mod}+k" = "exec keepmenu -C";
-      "${mod}+Shift+k" = "exec ${tofipass}";
+      "${mod}+k" = "exec pkill tofi || keepmenu -C | xargs swaymsg exec --";
+      "${mod}+Shift+k" = "exec pkill tofi || ${tofipass}";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
       "${mod}+shift+tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
       "${mod}+backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";

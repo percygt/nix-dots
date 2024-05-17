@@ -6,9 +6,10 @@
     blur_noise 0.05
     blur_contrast 1
     blur enable
-    corner_radius 10
+    corner_radius 5
     default_dim_inactive 0.3
     scratchpad_minimize enable
+    # layer_effects "waybar" "shadows enable"
     bindgesture swipe:4:right workspace prev
     bindgesture swipe:4:left workspace next
     bindgesture swipe:3:right focus left

@@ -33,9 +33,7 @@
         directories = [
           ".local/state/nvim"
           ".local/share/nvim"
-          ".local/share/anime-game-launcher"
-          ".local/share/anime-games-launcher"
-          ".local/share/honkers-launcher"
+          ".local/share/Mumble"
           ".local/share/atuin"
           ".local/share/keyrings"
           ".local/share/fish"
@@ -44,10 +42,15 @@
           ".local/share/tmux/resurrect"
           ".local/cache/nvim"
           ".local/cache/nix-index"
+          ".local/cache/amberol"
           ".config/keepassxc"
           ".config/BraveSoftware/Brave-Browser"
           ".config/gh"
+          ".config/Mumble"
           ".mozilla"
+        ];
+        files = [
+          ".local/state/tofi-drun-history"
         ];
       };
     };

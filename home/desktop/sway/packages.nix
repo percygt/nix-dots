@@ -14,6 +14,7 @@
     kanshi
     libnotify
     pamixer
+    sway-contrib.inactive-windows-transparency
     # nvtop
     wev
     slurp

@@ -2,13 +2,12 @@ let
   browser = ["brave-browser.desktop"];
   archiveManager = ["org.gnome.FileRoller.desktop"];
   imageViewer = ["org.gnome.Loupe.desktop"];
-  audioPlayer = ["audacious.desktop"];
+  audioPlayer = ["io.bassi.Amberol.desktop"];
   documentViewer = ["org.pwmt.zathura.desktop"];
   textEditor = ["neovim.desktop"];
   videoPlayer = ["mpv.desktop"];
   fileManager = ["nemo.desktop"];
 in {
-  # XDG MIME types
   associations = {
     "application/http" = browser;
     "text/html" = browser;
@@ -78,25 +77,73 @@ in {
     "application/x-zoo" = archiveManager;
     "application/zip" = archiveManager;
     "application/zstd" = archiveManager;
-    "image/*" = imageViewer;
-    "video/*" = videoPlayer;
-
-    "audio/*" = audioPlayer;
+    "image/bmp" = imageViewer;
+    "image/gif" = imageViewer;
+    "image/jpeg" = imageViewer;
+    "image/jpg" = imageViewer;
+    "image/pjpeg" = imageViewer;
+    "image/png" = imageViewer;
+    "image/tiff" = imageViewer;
+    "image/webp" = imageViewer;
+    "image/x-bmp" = imageViewer;
+    "image/x-gray" = imageViewer;
+    "image/x-icb" = imageViewer;
+    "image/x-ico" = imageViewer;
+    "image/x-png" = imageViewer;
+    "image/x-portable-anymap" = imageViewer;
+    "image/x-portable-bitmap" = imageViewer;
+    "image/x-portable-graymap" = imageViewer;
+    "image/x-portable-pixmap" = imageViewer;
+    "image/x-xbitmap" = imageViewer;
+    "image/x-xpixmap" = imageViewer;
+    "image/x-pcx" = imageViewer;
+    "image/svg+xml" = imageViewer;
+    "image/svg+xml-compressed" = imageViewer;
+    "image/vnd.wap.wbmp" = imageViewer;
+    "image/x-icns" = imageViewer;
     "application/ogg" = audioPlayer;
     "application/x-cue" = audioPlayer;
     "application/x-ogg" = audioPlayer;
     "application/xspf+xml" = audioPlayer;
+    "audio/aac" = audioPlayer;
+    "audio/flac" = audioPlayer;
+    "audio/midi" = audioPlayer;
+    "audio/mp3" = audioPlayer;
+    "audio/mp4" = audioPlayer;
+    "audio/mpeg" = audioPlayer;
+    "audio/mpegurl" = audioPlayer;
+    "audio/ogg" = audioPlayer;
+    "audio/prs.sid" = audioPlayer;
+    "audio/wav" = audioPlayer;
+    "audio/x-flac" = audioPlayer;
+    "audio/x-it" = audioPlayer;
+    "audio/x-mod" = audioPlayer;
+    "audio/x-mp3" = audioPlayer;
+    "audio/x-mpeg" = audioPlayer;
+    "audio/x-mpegurl" = audioPlayer;
+    "audio/x-ms-asx" = audioPlayer;
+    "audio/x-ms-wma" = audioPlayer;
+    "audio/x-musepack" = audioPlayer;
+    "audio/x-s3m" = audioPlayer;
+    "audio/x-scpls" = audioPlayer;
+    "audio/x-stm" = audioPlayer;
+    "audio/x-vorbis+ogg" = audioPlayer;
+    "audio/x-wav" = audioPlayer;
+    "audio/vnd.wave" = audioPlayer;
+    "audio/x-wavpack" = audioPlayer;
+    "audio/x-xm" = audioPlayer;
+    "audio/x-opus+ogg" = audioPlayer;
+    "audio/x-aiff" = audioPlayer;
     "x-content/audio-cdda" = audioPlayer;
-
     "text/markdown" = textEditor;
     "text/plain" = textEditor;
     "application/x-zerosize" = textEditor; # empty files
-
+    "video/vnd.avi" = videoPlayer;
+    "video/mkv" = videoPlayer;
     "application/epub+zip" = documentViewer;
     "application/pdf" = documentViewer;
     "application/oxps" = documentViewer;
     "application/x-fictionbook" = documentViewer;
-
     "inode/directory" = fileManager;
     "x-scheme-handler/obsidian" = ["obsidian.desktop"];
   };
