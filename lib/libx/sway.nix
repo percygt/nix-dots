@@ -1,11 +1,70 @@
 {lib}: let
   wsToKey = ws: builtins.substring 0 1 ws;
 in rec {
-  package = pkgs:
+  package = {pkgs}:
     pkgs.swayfx.override {
       inherit (pkgs) swayfx-unwrapped;
     };
 
+  tofipass = {pkgs}:
+    pkgs.writers.writeBash "tofipass" ''
+      shopt -s nullglob globstar
+      dmenu="${pkgs.tofi}/bin/tofi"
+      prefix=''${PASSWORD_STORE_DIR- ~/.password-store}
+      password_files=( "$prefix"/**/*.gpg )
+      password_files=( "''${password_files[@]#"$prefix"/}" )
+      password_files=( "''${password_files[@]%.gpg}" )
+      password=$(printf '%s\n' "''${password_files[@]}" | ${pkgs.tofi}/bin/tofi  --prompt-text="Passmenu: " | xargs swaymsg exec --)
+      [[ -n $password ]] || exit
+      pass show -c "$password" 2>/dev/null
+    '';
+  dropdown-terminal = {
+    pkgs,
+    weztermPackage,
+  }:
+    pkgs.writers.writeBash "dropdown_terminal" ''
+      TERM_PIDFILE="/tmp/wezterm-dropdown"
+      TERM_PID="$(<"$TERM_PIDFILE")"
+      if swaymsg "[ pid=$TERM_PID ] scratchpad show"
+      then
+          swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
+      else
+          echo "$$" > "$TERM_PIDFILE"
+          swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
+          exec "${weztermPackage}/bin/wezterm";
+      fi
+    '';
+  toggle-blur = {pkgs}:
+    pkgs.writers.writeBash "toggle-blur" ''
+      BLUR_STATUS_FILE="/tmp/blur-status"
+      BLUR_STATUS=$(<"$BLUR_STATUS_FILE")
+      if [ ! -f "$BLUR_STATUS_FILE" ]; then
+          echo "0" > "$BLUR_STATUS_FILE"
+      else
+          swaymsg "blur $BLUR_STATUS"
+          echo $((1 - BLUR_STATUS)) > "$BLUR_STATUS_FILE"
+      fi
+    '';
+  power-menu = {pkgs}:
+    pkgs.writers.writeBash "power-menu" ''
+      case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | ${pkgs.tofi}/bin/tofi  --prompt-text="Power Menu: ") in
+      "Power Off")
+        systemctl poweroff
+        ;;
+      "Restart")
+        systemctl reboot
+        ;;
+      "Suspend")
+        systemctl suspend
+        ;;
+      "Lock")
+        swaylock
+        ;;
+      "Log Out")
+        swaymsg exit
+        ;;
+      esac
+    '';
   mkWorkspaceKeys = mod: workspaces:
     builtins.listToAttrs ((map (ws: {
           name = mod + "+" + wsToKey ws;

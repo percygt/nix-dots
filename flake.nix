@@ -82,16 +82,16 @@
     homeManagerModules.default = ./home;
 
     homeConfigurations = {
-      aizeft = bldr.buildHome {
+      "${defaultUser}@aizeft" = bldr.buildHome {
         profile = "aizeft";
         desktop = "sway";
       };
-      furies = bldr.buildHome {
+      "${defaultUser}@furies" = bldr.buildHome {
         profile = "furies";
         desktop = "sway";
         isGeneric = true;
       };
-      fates = bldr.buildHome {
+      "${defaultUser}@fates" = bldr.buildHome {
         profile = "fates";
         desktop = "gnome";
         isGeneric = true;

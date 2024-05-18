@@ -7,6 +7,8 @@
       onCalendar = "weekly"; # Default value
     };
     packages = [
+      "com.obsproject.Studio"
+      "org.kde.kdenlive"
       "com.rafaelmardojai.SharePreview"
       "net.nokyan.Resources"
       "io.github.flattool.Warehouse"

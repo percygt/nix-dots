@@ -5,9 +5,7 @@
   lib,
   isGeneric,
   ...
-}: let
-  swayPkg = libx.sway.package;
-in {
+}: {
   imports = [
     ./waybar
     ./mako.nix
@@ -25,7 +23,7 @@ in {
   xsession.importedVariables = ["PATH"];
   wayland.windowManager.sway = {
     enable = true;
-    package = swayPkg pkgs;
+    package = libx.sway.package {inherit pkgs;};
     swaynag.enable = true;
     systemd.enable = true;
     systemd.xdgAutostart = true;

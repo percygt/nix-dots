@@ -128,14 +128,14 @@
 
   "clock#date" = {
     format = "{:%m.%d.%y}";
-    tooltip-format = "<tt><small>{calendar}</small></tt>";
+    tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
     interval = 3600;
     max-length = 7;
   };
 
   "clock#icon" = {
     format = " ";
-    tooltip-format = "<tt><small>{calendar}</small></tt>";
+    tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
   };
 
   # "custom/daylight" = {
@@ -147,7 +147,7 @@
   # };
   "clock#time" = {
     format = "{:%I:%M:%S}";
-    tooltip-format = "<tt><small>{calendar}</small></tt>";
+    tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
     interval = 1;
     min-length = 7;
   };
@@ -155,10 +155,9 @@
   "custom/wlsunset" = {
     format = "{}";
     exec = "if systemctl --user --quiet is-active wlsunset.service; then echo '󰖔'; else echo '󰃚'; fi";
-    on-click = "toggle-service wlsunset";
-    exec-if = "systemctl --user --quiet is-active wlsunset.service; pkill -RTMIN+9 waybar";
+    on-click = "toggle-service wlsunset; pkill -SIGRTMIN+8 waybar";
     tooltip = false;
-    signal = 9;
+    signal = 8;
   };
 
   "backlight" = {

@@ -2,18 +2,15 @@
   pkgs,
   libx,
   ...
-}: let
-  swayPkg = libx.sway.package;
-in {
+}: {
   imports = [
-    ./xremap.nix
     ./cursor.nix
     ./tuigreet.nix
   ];
   programs = {
     sway = {
       enable = true;
-      package = swayPkg pkgs;
+      package = libx.sway.package {inherit pkgs;};
       wrapperFeatures.gtk = true;
     };
     dconf.enable = true;
@@ -26,18 +23,13 @@ in {
     wlr = {
       enable = true;
       settings.screencast = {
-        output_name = "DP-1";
+        output_name = "eDP-1";
         max_fps = 30;
         chooser_type = "simple";
         chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or -s '#99d1ce33'";
       };
     };
     extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  };
-
-  nix.settings = {
-    substituters = ["https://nixpkgs-wayland.cachix.org"];
-    trusted-public-keys = ["nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="];
   };
 
   environment.etc."greetd/environments".text = ''

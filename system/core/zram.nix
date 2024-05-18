@@ -16,8 +16,8 @@
 
     # Hibernate and hybrid-sleep won't work correctly without
     # an on-disk swap.
-    systemd.targets.hibernate.enable = false;
-    systemd.targets.hybrid-sleep.enable = false;
+    systemd.targets.hibernate.enable = lib.mkForce false;
+    systemd.targets.hybrid-sleep.enable = lib.mkForce false;
 
     # Enable zramSwap
     zramSwap = {

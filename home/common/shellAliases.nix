@@ -18,15 +18,15 @@
     jcu = "journalctl --user -ex --unit";
     curl = "curlie";
     dc = "docker compose";
-    nd = "nix develop";
+    # nd = "nix develop";
     buildIsoMinimal = "nix build .#nixosConfigurations.iso-minimal.config.system.build.isoImage";
     buildIsoGraphical = "nix build .#nixosConfigurations.iso-graphical.config.system.build.isoImage";
     n2ne = "nvim $FLAKE_PATH/packages/node/packages.json";
     n2ni = "node2nix -i $FLAKE_PATH/packages/node/packages.json -e $FLAKE_PATH/packages/node/node-env.nix -o $FLAKE_PATH/packages/node/packages.nix -c $FLAKE_PATH/packages/node/default.nix";
-    nfu = "nix flake update";
+    # nfu = "nix flake update";
     tldrf = "tldr --list | fzf --preview=\"tldr {1} --color=always\" --preview-window=right,70% | xargs tldr";
-    nfui = "nix flake lock --update-input";
-    hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
-    ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
+    # nfui = "nix flake lock --update-input";
+    # hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
+    # ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
   };
 }

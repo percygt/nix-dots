@@ -6,6 +6,5 @@
     amberol
     foliate
     mumble
-    obsidian
   ];
 }

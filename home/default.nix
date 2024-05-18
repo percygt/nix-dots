@@ -26,6 +26,7 @@ in {
       # profile specific home.nix
       "${self}/profiles/${profile}/home.nix"
       inputs.sops-nix.homeManagerModules.sops
+      # libx.nixpkgsConfig
     ]
     ++ lib.optionals isGeneric [
       ./generic

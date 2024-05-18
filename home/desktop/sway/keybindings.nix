@@ -13,69 +13,18 @@
 }: let
   mod = modifier;
   inherit (libx) sway;
-  inherit (sway) mkWorkspaceKeys mkDirectionKeys;
-  tofipass = pkgs.writers.writeBash "tofipass" ''
-    shopt -s nullglob globstar
-    dmenu="${pkgs.tofi}/bin/tofi"
-    prefix=''${PASSWORD_STORE_DIR- ~/.password-store}
-    password_files=( "$prefix"/**/*.gpg )
-    password_files=( "''${password_files[@]#"$prefix"/}" )
-    password_files=( "''${password_files[@]%.gpg}" )
-    password=$(printf '%s\n' "''${password_files[@]}" | ${pkgs.tofi}/bin/tofi  --prompt-text="Passmenu: " | xargs swaymsg exec --)
-    [[ -n $password ]] || exit
-    pass show -c "$password" 2>/dev/null
-  '';
-  dropdown-terminal = pkgs.writers.writeBash "dropdown_terminal" ''
-    TERM_PIDFILE="/tmp/wezterm-dropdown"
-    TERM_PID="$(<"$TERM_PIDFILE")"
-    if swaymsg "[ pid=$TERM_PID ] scratchpad show"
-    then
-        swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
-    else
-        echo "$$" > "$TERM_PIDFILE"
-        swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
-        exec "${config.programs.wezterm.package}/bin/wezterm";
-    fi
-  '';
-  toggle-blur = pkgs.writers.writeBash "toggle-blur" ''
-    BLUR_STATUS_FILE="/tmp/blur-status"
-    BLUR_STATUS=$(<"$BLUR_STATUS_FILE")
-    if [ ! -f "$BLUR_STATUS_FILE" ]; then
-        echo "0" > "$BLUR_STATUS_FILE"
-    else
-        swaymsg "blur $BLUR_STATUS"
-        echo $((1 - BLUR_STATUS)) > "$BLUR_STATUS_FILE"
-    fi
-  '';
-  power-menu = pkgs.writers.writeBash "power-menu" ''
-    case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | ${pkgs.tofi}/bin/tofi  --prompt-text="Power Menu: ") in
-    "Power Off")
-      systemctl poweroff
-      ;;
-    "Restart")
-      systemctl reboot
-      ;;
-    "Suspend")
-      systemctl suspend
-      ;;
-    "Lock")
-      swaylock
-      ;;
-    "Log Out")
-      swaymsg exit
-      ;;
-    esac
-  '';
+  inherit (sway) mkWorkspaceKeys mkDirectionKeys tofipass toggle-blur dropdown-terminal power-menu;
+  weztermPackage = config.programs.wezterm.package;
 in {
   keybindings =
     mkDirectionKeys mod {inherit up down left right;}
     // mkWorkspaceKeys mod ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"]
     // {
-      "Ctrl+KP_Multiply" = "exec ${toggle-blur}";
-      "${mod}+w" = "exec ${dropdown-terminal}";
+      "Ctrl+KP_Multiply" = "exec ${toggle-blur {inherit pkgs;}}";
+      "${mod}+w" = "exec ${dropdown-terminal {inherit pkgs weztermPackage;}}";
       "${mod}+return" = "exec ${terminal}";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
-      "${mod}+Shift+e" = "exec pkill tofi || ${power-menu}";
+      "${mod}+Shift+e" = "exec pkill tofi || ${power-menu {inherit pkgs;}}";
       "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --app-id=btop btop";
@@ -85,7 +34,7 @@ in {
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
       "${mod}+k" = "exec pkill tofi || keepmenu -C | xargs swaymsg exec --";
-      "${mod}+Shift+k" = "exec pkill tofi || ${tofipass}";
+      "${mod}+Shift+k" = "exec pkill tofi || ${tofipass {inherit pkgs;}}";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
       "${mod}+shift+tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
       "${mod}+backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";

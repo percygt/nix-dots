@@ -11,18 +11,18 @@
     qt = {
       enable = true;
       platformTheme.name = "gtk";
-      style.name = "kvantum";
+      # style.name = "kvantum";
     };
 
-    home.sessionVariables = {
-      QT_STYLE_OVERRIDE = "kvantum";
-    };
+    # home.sessionVariables = {
+    #   QT_STYLE_OVERRIDE = "kvantum";
+    # };
 
     xdg.configFile = {
-      "Kvantum" = {
-        recursive = false;
-        source = ./config/Kvantum;
-      };
+      # "Kvantum" = {
+      #   recursive = false;
+      #   source = ./config/Kvantum;
+      # };
       kdeglobals.source = ./config/kdeglobals;
     };
   };
