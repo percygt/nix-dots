@@ -4,5 +4,6 @@
     ./gtk
     ./xdg
     ./dconf
+    ./audio.nix
   ];
 }

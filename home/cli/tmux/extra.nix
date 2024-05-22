@@ -29,7 +29,8 @@
       # renumber all windows when any window is closed
       set -g renumber-windows on
 
-      bind-key X kill-session
+      bind-key Delete kill-session
+      bind-key X kill-window -a
       set-option -g detach-on-destroy off
 
       # Split

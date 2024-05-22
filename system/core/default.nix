@@ -18,6 +18,7 @@
   core = {
     audioengine.enable = lib.mkDefault true;
     # autoupgrade.enable = lib.mkDefault true;
+    battery.enable = lib.mkDefault true;
     bootmanagement.enable = lib.mkDefault true;
     ephemeral.enable = lib.mkDefault true;
     filesystem.enable = lib.mkDefault true;

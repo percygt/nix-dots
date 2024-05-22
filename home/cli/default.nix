@@ -8,6 +8,8 @@
     ./direnv.nix
     ./extra.nix
     ./starship.nix
+    ./aria.nix
+    ./ncmpcpp.nix
     ./tui.nix
     ./yazi
 

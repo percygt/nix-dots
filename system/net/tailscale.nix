@@ -1,6 +1,8 @@
 {
   lib,
   config,
+  pkgs,
+  username,
   ...
 }: {
   options = {
@@ -17,7 +19,7 @@
       allowedUDPPorts = [config.services.tailscale.port];
       checkReversePath = "loose";
     };
-
+    users.users.${username}.packages = [pkgs.tailscale];
     # inter-machine VPN
     services.tailscale = {
       enable = true;

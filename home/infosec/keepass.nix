@@ -2,9 +2,10 @@
   pkgs,
   lib,
   config,
+  homeDirectory,
   ...
 }: let
-  kmk0 = "${config.home.homeDirectory}/data/keeps/m0.kdbx";
+  kmk0 = "${homeDirectory}/data/config/keeps/m0.kdbx";
 in {
   options = {
     infosec.keepass.enable =

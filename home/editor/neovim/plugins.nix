@@ -74,7 +74,7 @@ in {
     telescope-undo-nvim
     # File Browser #---------------------------------------------------------------------------------------
     {
-      plugin = pkgs.vimPlugins.mini-nvim;
+      plugin = mini-nvim;
       type = "lua";
       config = ''require("config.mini")'';
     }
@@ -97,7 +97,7 @@ in {
     friendly-snippets
     # AI #-------------------------------------------------------------------------------------
     {
-      plugin = codeium-nvim;
+      plugin = pkgs.vimPlugins.codeium-nvim;
       type = "lua";
       config = ''require("config.lsp.codeium")'';
     }

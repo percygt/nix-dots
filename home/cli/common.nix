@@ -11,6 +11,7 @@
 
   config = lib.mkIf config.cli.common.enable {
     home.packages = with pkgs; [
+      tailscale
       ripgrep
       jdupes
       hyperfine

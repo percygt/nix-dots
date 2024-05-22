@@ -1,10 +1,10 @@
 {
   pkgs,
   libx,
+  username,
   ...
 }: {
   imports = [
-    ./cursor.nix
     ./tuigreet.nix
   ];
   programs = {
@@ -13,9 +13,11 @@
       package = libx.sway.package {inherit pkgs;};
       wrapperFeatures.gtk = true;
     };
-    dconf.enable = true;
-    file-roller.enable = true;
-    gnome-disks.enable = true;
+  };
+  # Make sure to start the home-manager activation before I log in.
+  systemd.services."home-manager-${username}" = {
+    before = ["display-manager.service"];
+    wantedBy = ["multi-user.target"];
   };
 
   xdg.portal = {
@@ -44,7 +46,6 @@
 
   services = {
     udev.packages = with pkgs; [gnome.gnome-settings-daemon];
-    gvfs.enable = true;
     dbus = {
       enable = true;
       implementation = "broker";
@@ -52,12 +53,11 @@
         gcr
         gnome.gnome-settings-daemon
         dconf
-        gnome3.gnome-keyring
+        gnome.gnome-keyring
       ];
     };
     gnome = {
       gnome-keyring.enable = true;
-      sushi.enable = true;
       evolution-data-server.enable = true;
       glib-networking.enable = true;
       gnome-online-accounts.enable = true;

@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  PASSWORD_STORE_DIR = "${config.home.homeDirectory}/data/pass";
+  PASSWORD_STORE_DIR = "${config.home.homeDirectory}/data/config/pass";
 in {
   options = {
     infosec.pass.enable =

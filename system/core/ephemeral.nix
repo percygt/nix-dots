@@ -46,9 +46,9 @@ in {
         wantedBy = [
           "initrd.target"
         ];
-        after = [
-          "systemd-cryptsetup@data.service"
-        ];
+        # after = [
+        #   "systemd-cryptsetup@data.service"
+        # ];
         before = [
           "sysroot.mount"
         ];

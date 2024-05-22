@@ -12,7 +12,7 @@
 
   config = lib.mkIf config.core.bootmanagement.enable {
     boot = {
-      # tmp.cleanOnBoot = true;
+      tmp.cleanOnBoot = true;
       kernel.sysctl = {
         "net.ipv4.ip_forward" = 1;
         "net.ipv6.conf.all.forwarding" = 1;
@@ -26,6 +26,7 @@
         systemd-boot = {
           enable = true;
           configurationLimit = 5;
+          consoleMode = "max";
           editor = false;
         };
       };
@@ -33,11 +34,10 @@
       plymouth.enable = true;
       kernelParams = [
         "quiet"
-        "loglevel=3"
-        "systemd.show_status=auto"
-        "udev.log_level=3"
+        "rd.systemd.show_status=false"
         "rd.udev.log_level=3"
-        "vt.global_cursor_default=0"
+        "udev.log_priority=3"
+        "boot.shell_on_fail"
       ];
       initrd.verbose = false;
     };

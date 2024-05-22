@@ -33,6 +33,8 @@
   };
 
   cli = {
+    ncmpcpp.enable = true;
+    aria.enable = true;
     atuin.enable = true;
     direnv.enable = true;
     extra.enable = true;

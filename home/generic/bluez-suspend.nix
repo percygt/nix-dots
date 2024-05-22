@@ -29,9 +29,6 @@
         {
           matches = {
             {
-              { "node.name", "matches", "bluez_input.*" },
-            },
-            {
               { "node.name", "matches", "bluez_output.*" },
             },
           },

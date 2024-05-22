@@ -20,7 +20,11 @@
 
   core = {
     net.wpa.enable = true;
-    battery.chargeUpto = 80;
+  };
+
+  net = {
+    tailscale.enable = true;
+    # syncthing.enable = true;
   };
 
   programs.sway.extraOptions = ["--unsupported-gpu"];
@@ -59,12 +63,6 @@
       directories = [
         "/var/lib/systemd/coredump"
         "/var/lib/nixos"
-
-        # "/var/lib/alsa"
-        # "/var/lib/blueman"
-        # "/var/lib/bluetooth"
-        # "/var/lib/chrony"
-        # "/var/lib/fwupd"
         "/srv"
         {
           directory = "/var/lib/colord";

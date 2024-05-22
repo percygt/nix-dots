@@ -5,29 +5,29 @@
   ...
 }: let
   unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;
-  sway-run = pkgs.writeShellScriptBin "sway-run" ''
-    export XDG_SESSION_TYPE=wayland
-    export XDG_CURRENT_DESKTOP=sway
-    systemd-cat -t xsession sway ${lib.optionalString unsupported-gpu "--unsupported-gpu"}
-  '';
+  xSessions = "${config.services.displayManager.sessionData.desktops}/share/xsessions";
+  wlSessions = "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
 in {
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --sessions ${config.services.displayManager.sessionData.desktops}/share/xsessions:${config.services.displayManager.sessionData.desktops}/share/wayland-sessions --time --remember --remember-user-session";
+        command = ''
+          ${pkgs.greetd.tuigreet}/bin/tuigreet \
+          --time \
+          --asterisks \
+          --sessions ${xSessions}:${wlSessions} \
+          --remember \
+          --remember-user-session
+          --cmd sway ${lib.optionalString unsupported-gpu "--unsupported-gpu"}
+        '';
         user = "greeter";
       };
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    sway-run
-    pciutils
-  ];
-
   environment.etc."greetd/environments".text = ''
-    sway-run
+    sway
     fish
   '';
 

@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: {
   options = {
@@ -14,12 +13,12 @@
   config = lib.mkIf config.drivers.bluetooth.enable {
     # bluetooth
     hardware.bluetooth = {
-      package = pkgs.bluez;
       enable = true;
       settings = {
         General = {
           Experimental = true;
           KernelExperimental = true;
+          Enable = "Source,Sink,Media,Socket";
         };
       };
     };

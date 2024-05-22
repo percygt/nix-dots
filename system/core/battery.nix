@@ -1,38 +1,25 @@
 {
-  config,
-  pkgs,
   lib,
+  config,
   ...
-}: let
-  p = pkgs.writeScriptBin "charge-upto" ''
-    echo ''${0:-100} > /sys/class/power_supply/BAT?/charge_control_end_threshold
-  '';
-  cfg = config.core.battery;
-in {
+}: {
   options.core.battery = {
-    chargeUpto = lib.mkOption {
-      description = "Maximum level of charge for your battery, as a percentage.";
-      default = 100;
-      type = lib.types.int;
-    };
-    enableChargeUptoScript = lib.mkOption {
-      description = "Whether to add charge-upto to environment.systemPackages. `charge-upto 75` temporarily sets the charge limit to 75%.";
-      default = true;
-      type = lib.types.bool;
-    };
+    enable =
+      lib.mkEnableOption "Enable battery optimization";
   };
-  config = {
-    environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [p];
-    systemd.services.battery-charge-threshold = {
-      wantedBy = ["local-fs.target" "suspend.target"];
-      after = ["local-fs.target" "suspend.target"];
-      description = "Set the battery charge threshold to ${toString cfg.chargeUpto}%";
-      startLimitBurst = 5;
-      startLimitIntervalSec = 1;
-      serviceConfig = {
-        Type = "oneshot";
-        Restart = "on-failure";
-        ExecStart = "${pkgs.runtimeShell} -c 'echo ${toString cfg.chargeUpto} > /sys/class/power_supply/BAT?/charge_control_end_threshold'";
+  config = lib.mkIf config.core.battery.enable {
+    boot = {
+      kernelModules = ["acpi_call"];
+      extraModulePackages = with config.boot.kernelPackages; [acpi_call];
+    };
+    services.thermald.enable = true;
+    services.tlp = {
+      enable = true;
+      settings = {
+        TLP_DEFAULT_MODE = "BAT";
+        TLP_PERSISTENT_DEFAULT = 1;
+        START_CHARGE_THRESH_BAT0 = 50;
+        STOP_CHARGE_THRESH_BAT0 = 80;
       };
     };
   };

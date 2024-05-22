@@ -8,6 +8,8 @@
       onActivation = true;
     };
     packages = [
+      "ca.desrt.dconf-editor"
+      "com.github.KRTirtho.Spotube"
       "org.mozilla.Thunderbird"
       "com.github.finefindus.eyedropper"
       "com.github.muriloventuroso.pdftricks"

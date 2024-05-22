@@ -13,7 +13,6 @@
 in {
   # needed for mpris
   services.playerctld.enable = true;
-  services.network-manager-applet.enable = true;
   # add binary path to waybar systemd environment
   home.packages = with pkgs; [
     toggle-service
@@ -22,6 +21,7 @@ in {
 
   programs.waybar = {
     enable = true;
+    package = pkgs.stash.waybar;
     style = toRasi (import ./theme.nix {inherit mkLiteral fonts colors;}).theme;
     settings = [
       (waybar_config

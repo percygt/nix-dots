@@ -23,10 +23,17 @@
     buildIsoGraphical = "nix build .#nixosConfigurations.iso-graphical.config.system.build.isoImage";
     n2ne = "nvim $FLAKE_PATH/packages/node/packages.json";
     n2ni = "node2nix -i $FLAKE_PATH/packages/node/packages.json -e $FLAKE_PATH/packages/node/node-env.nix -o $FLAKE_PATH/packages/node/packages.nix -c $FLAKE_PATH/packages/node/default.nix";
-    # nfu = "nix flake update";
     tldrf = "tldr --list | fzf --preview=\"tldr {1} --color=always\" --preview-window=right,70% | xargs tldr";
-    # nfui = "nix flake lock --update-input";
-    # hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
-    # ns = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$hostname";
+    ts = "tailscale";
+    tssh = "tailscale ssh";
+    tst = "tailscale status";
+    tsu = "sudo tailscale up --ssh --operator=$USER";
+    tsd = "tailscale down";
+    cleanup-nix = "nh clean all --keep-since 10d --keep 3";
+    nfu = "nix flake update";
+    nsu = "nh os switch -u ${flakeDirectory}";
+    ns = "nh os switch ${flakeDirectory}";
+    hs = "nh home switch ${flakeDirectory}";
+    nhs = "ns;hms";
   };
 }
