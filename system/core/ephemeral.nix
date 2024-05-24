@@ -51,6 +51,7 @@ in {
         # ];
         before = [
           "sysroot.mount"
+          "systemd-cryptsetup@data.service"
         ];
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";

@@ -60,7 +60,6 @@ in {
         gui = {
           user = username;
           theme = "black";
-          password = "$y$j9T$RXwJlW0yW1fntQmh3A2xm1$CvWQYPeAkShnL07MPzr3oATUPzndv1rYdg2dJkLOMqB";
         };
         devices.phone.id = "NMI66EH-U5GFS4R-VV32KKU-34FNTLC-CEB6KXO-A6L3E37-KZOC24S-P3PPDQQ";
         folders = {

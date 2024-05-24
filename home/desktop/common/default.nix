@@ -5,5 +5,6 @@
     ./xdg
     ./dconf
     ./audio.nix
+    ./automount.nix
   ];
 }

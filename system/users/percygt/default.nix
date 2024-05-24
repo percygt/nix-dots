@@ -25,6 +25,7 @@
       packages = [pkgs.home-manager];
       extraGroups = [
         "audio"
+        "storage"
         "users"
         "video"
         "wheel"

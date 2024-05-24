@@ -5,9 +5,11 @@
     ./gpg.nix
     ./hardening.nix
     ./kernel.nix
+    ./backup.nix
   ];
 
   infosec = {
+    backup.enable = lib.mkDefault true;
     sops.enable = lib.mkDefault true;
     gpg.enable = lib.mkDefault true;
     ssh.enable = lib.mkDefault true;

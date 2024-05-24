@@ -27,7 +27,6 @@
             "io.bassi.Amberol"
             "qalculate-gtk"
             "info.mumble.Mumble"
-            "nemo"
           ];
           classes = [
             "\.?qemu-system-x86_64(-wrapped)?"
@@ -36,7 +35,7 @@
       ++ (mkAppsFloat {
         w = 50;
         h = 50;
-        app_ids = ["wpa_gui" "pavucontrol" "\.?blueman-manager(-wrapped)?"];
+        app_ids = ["wpa_gui" "udiskie" "pavucontrol" "\.?blueman-manager(-wrapped)?"];
       })
       ++ (mkAppsFloat {
         titles = [".*"];
@@ -55,6 +54,20 @@
           criteria = {
             title = "^New VM$";
             app_id = "virt-manager";
+          };
+        }
+        {
+          command = ''floating enable, resize set width 50ppt height 50ppt, move position center'';
+          criteria = {
+            title = ".*";
+            app_id = "nemo";
+          };
+        }
+        {
+          command = ''floating enable, move position center'';
+          criteria = {
+            title = "";
+            app_id = "nemo";
           };
         }
         # {

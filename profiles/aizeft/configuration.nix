@@ -24,7 +24,7 @@
 
   net = {
     tailscale.enable = true;
-    # syncthing.enable = true;
+    syncthing.enable = true;
   };
 
   programs.sway.extraOptions = ["--unsupported-gpu"];
