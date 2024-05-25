@@ -24,11 +24,17 @@ in {
   };
   config = lib.mkIf config.core.battery.enable {
     services.thermald.enable = true;
-    services.tlp = {
+    services.auto-cpufreq = {
       enable = true;
       settings = {
-        TLP_DEFAULT_MODE = "BAT";
-        TLP_PERSISTENT_DEFAULT = 1;
+        battery = {
+          governor = "powersave";
+          turbo = "never";
+        };
+        charger = {
+          governor = "performance";
+          turbo = "auto";
+        };
       };
     };
     environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [p];

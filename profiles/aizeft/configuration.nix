@@ -1,15 +1,11 @@
 {
-  pkgs,
   lib,
-  inputs,
   config,
   username,
   ...
 }: {
   imports = [
     ./disks.nix
-    inputs.disko.nixosModules.disko
-    inputs.impermanence.nixosModules.impermanence
   ];
 
   drivers = {
@@ -18,16 +14,10 @@
     nvidia-prime.enable = true;
   };
 
-  core = {
-    net.wpa.enable = true;
-  };
-
   net = {
     tailscale.enable = true;
     syncthing.enable = true;
   };
-
-  programs.sway.extraOptions = ["--unsupported-gpu"];
 
   # symlinks to enable "erase your darlings"
   environment.persistence = {
@@ -47,6 +37,7 @@
           ".local/cache/nvim"
           ".local/cache/nix-index"
           ".local/cache/amberol"
+          ".config/goa-1.0"
           ".config/keepassxc"
           ".config/BraveSoftware/Brave-Browser"
           ".config/gh"
@@ -90,7 +81,6 @@
     initrd.kernelModules = [];
     kernelModules = ["kvm-intel"];
     extraModulePackages = [];
-    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   swapDevices = [];

@@ -8,12 +8,14 @@
     ./tuigreet.nix
   ];
   programs = {
+    seahorse.enable = true;
     sway = {
       enable = true;
       package = libx.sway.package {inherit pkgs;};
       wrapperFeatures.gtk = true;
     };
   };
+
   # Make sure to start the home-manager activation before I log in.
   systemd.services."home-manager-${username}" = {
     before = ["display-manager.service"];
@@ -43,7 +45,6 @@
     polkit.enable = true;
     pam.services.swaylock.text = "auth include login";
   };
-
   services = {
     udev.packages = with pkgs; [gnome.gnome-settings-daemon];
     dbus = {

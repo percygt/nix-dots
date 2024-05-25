@@ -16,6 +16,7 @@
     ./users
     ./infosec
     ./net
+    ./extras
     ./virtualisation
   ];
 in {
@@ -24,6 +25,8 @@ in {
     ++ [
       # profile specific configuration.nix
       "${self}/profiles/${profile}/configuration.nix"
+      inputs.disko.nixosModules.disko
+      inputs.impermanence.nixosModules.impermanence
       inputs.sops-nix.nixosModules.sops
       inputs.nix-flatpak.nixosModules.nix-flatpak
       libx.nixpkgsConfig

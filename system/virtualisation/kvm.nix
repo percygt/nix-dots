@@ -4,7 +4,6 @@
   ...
 }: let
   bridgeName = "br0";
-  ethName = "eno2";
 in {
   environment.systemPackages = with pkgs; [
     gnome.adwaita-icon-theme
@@ -31,14 +30,6 @@ in {
   programs.virt-manager.enable = true;
 
   boot.kernelParams = ["intel_iommu=on" "iommu=pt"];
-  # networking = {
-  #   interfaces.${bridgeName}.useDHCP = true;
-  #   bridges = {
-  #     ${bridgeName} = {
-  #       interfaces = [ethName];
-  #     };
-  #   };
-  # };
   users = {
     users.${username}.extraGroups = ["libvirtd" "qemu" "kvm"];
     groups.qemu = {};

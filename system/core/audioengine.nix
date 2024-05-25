@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  username,
   ...
 }: {
   options = {
@@ -12,8 +13,12 @@
   };
 
   config = lib.mkIf config.core.audioengine.enable {
+    environment.persistence = {
+      "/persist".users.${username}.directories = [
+        ".local/state/wireplumber"
+      ];
+    };
     sound.enable = true;
-    # programs.noisetorch.enable = true;
     hardware.pulseaudio.enable = lib.mkForce false;
     security.rtkit.enable = true;
     services.pipewire = {

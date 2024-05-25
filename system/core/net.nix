@@ -10,7 +10,11 @@ in {
     core.net = {
       enable =
         lib.mkEnableOption "Enable networking services";
-      wpa.enable = lib.mkEnableOption "Enable wpa";
+      wpa.enable = lib.mkOption {
+        description = "Enable wpa";
+        default = true;
+        type = lib.types.bool;
+      };
     };
   };
 
@@ -96,7 +100,10 @@ in {
     users.users.${username}.extraGroups = ["network"];
 
     systemd = {
-      services.wpa_supplicant.preStart = lib.mkIf wpa "touch /etc/wpa_supplicant.conf";
+      services.wpa_supplicant = {
+        preStart = lib.mkIf wpa "touch /etc/wpa_supplicant.conf";
+        serviceConfig.TimeoutSec = "10";
+      };
       services.NetworkManager-wait-online.wantedBy = lib.mkForce []; # Normally ["network-online.target"]
       targets.network-online.wantedBy = lib.mkForce []; # Normally ["multi-user.target"]
     };

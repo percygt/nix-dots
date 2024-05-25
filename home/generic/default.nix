@@ -4,6 +4,7 @@
     ./fonts.nix
     ./bluez-suspend.nix
     ./packages.nix
+    ./nvd.nix
     ./overlays.nix
   ];
   generic = {

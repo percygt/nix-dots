@@ -38,21 +38,13 @@ in {
   config = lib.mkIf config.core.ephemeral.enable {
     boot.initrd = {
       supportedFilesystems = ["btrfs"];
-      # NOTE: Currently using this
       postDeviceCommands = lib.mkIf (!phase1Systemd) (lib.mkBefore wipeScript);
-      # FIXME: Not working on a my system
       systemd.services.restore-root = lib.mkIf phase1Systemd {
         description = "Rollback btrfs rootfs";
-        wantedBy = [
-          "initrd.target"
-        ];
-        # after = [
-        #   "systemd-cryptsetup@data.service"
-        # ];
-        before = [
-          "sysroot.mount"
-          "systemd-cryptsetup@data.service"
-        ];
+        wantedBy = ["initrd.target"];
+        requires = [config.core.systemd.initrd.rootDevice];
+        after = [config.core.systemd.initrd.rootDevice];
+        before = ["sysroot.mount"];
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         script = wipeScript;

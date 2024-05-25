@@ -7,7 +7,16 @@
     core.systemd = {
       enable =
         lib.mkEnableOption "Enable systemd services";
-      initrd.enable = lib.mkEnableOption "Enable systemd initrd";
+      initrd.enable = lib.mkOption {
+        description = "Enable systemd initrd";
+        default = true;
+        type = lib.types.bool;
+      };
+      initrd.rootDevice = lib.mkOption {
+        description = "Required root device in initrd before executing wipeScript";
+        default = "dev-root_vg-root.device";
+        type = lib.types.string;
+      };
     };
   };
 
@@ -17,8 +26,13 @@
       rateLimitBurst = 500;
       rateLimitInterval = "30s";
     };
+    systemd.extraConfig = "DefaultTimeoutStopSec=10s";
     boot.initrd = lib.mkIf config.core.systemd.initrd.enable {
-      systemd.enable = true;
+      services.lvm.enable = true;
+      systemd = {
+        enable = true;
+        emergencyAccess = true;
+      };
     };
   };
 }

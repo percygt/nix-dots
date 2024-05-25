@@ -3,9 +3,8 @@
   username,
   stateVersion,
   homeDirectory,
-  config,
-  pkgs,
   self,
+  isGeneric,
   ...
 }: {
   programs.home-manager.enable = true;
@@ -23,11 +22,12 @@
       stateVersion
       homeDirectory
       ;
-    activation.report-changes = config.lib.dag.entryAnywhere ''
-      if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
-        ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath
-      fi
-    '';
+    activation = lib.optionalAttrs (!isGeneric) {
+      rmUselessDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        rm -rf ${homeDirectory}/.nix-defexpr
+        rm -rf ${homeDirectory}/.nix-profile
+      '';
+    };
   };
 
   xdg.dataFile.backgrounds.source = "${self}/lib/backgrounds";

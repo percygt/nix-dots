@@ -82,10 +82,6 @@
     homeManagerModules.default = ./home;
 
     homeConfigurations = {
-      "${defaultUser}@aizeft" = bldr.buildHome {
-        profile = "aizeft";
-        desktop = "sway";
-      };
       "${defaultUser}@furies" = bldr.buildHome {
         profile = "furies";
         desktop = "sway";
