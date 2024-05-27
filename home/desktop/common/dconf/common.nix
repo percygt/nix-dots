@@ -10,5 +10,8 @@
       gtk-theme = config.gtk.theme.name;
       icon-theme = config.gtk.iconTheme.name;
     };
+    "org/nemo/window-state" = {
+      start-with-menu-bar = false;
+    };
   };
 }

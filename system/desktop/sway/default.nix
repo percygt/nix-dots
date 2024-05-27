@@ -8,7 +8,6 @@
     ./tuigreet.nix
   ];
   programs = {
-    seahorse.enable = true;
     sway = {
       enable = true;
       package = libx.sway.package {inherit pkgs;};
@@ -58,10 +57,8 @@
       ];
     };
     gnome = {
+      gnome-settings-daemon.enable = true;
       gnome-keyring.enable = true;
-      evolution-data-server.enable = true;
-      glib-networking.enable = true;
-      gnome-online-accounts.enable = true;
     };
   };
 }

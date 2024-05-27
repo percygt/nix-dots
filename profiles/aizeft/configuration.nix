@@ -27,6 +27,7 @@
         directories = [
           ".local/state/nvim"
           ".local/share/nvim"
+          ".local/share/aria2"
           ".local/share/Mumble"
           ".local/share/atuin"
           ".local/share/keyrings"
@@ -79,7 +80,7 @@
   boot = {
     initrd.availableKernelModules = ["xhci_pci" "vmd" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" "rtsx_usb_sdmmc"];
     initrd.kernelModules = [];
-    kernelModules = ["kvm-intel"];
+    kernelModules = ["kvm-intel" "intel_agp"];
     extraModulePackages = [];
   };
 

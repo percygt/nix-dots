@@ -16,8 +16,7 @@
     environment.systemPackages = with pkgs;
       [
         foot
-        (neovim-nightly.overrideAttrs
-          (_: {CFLAGS = "-O3";}))
+        neovim
       ]
       ++ (libx.corePackages pkgs);
   };

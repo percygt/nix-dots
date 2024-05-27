@@ -42,6 +42,7 @@
       gping
       xcp
       dogdns
+      dive
     ];
   };
 }

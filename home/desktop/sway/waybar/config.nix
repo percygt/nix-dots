@@ -36,9 +36,8 @@
     icon-size = 12;
     spacing = 5;
   };
-  "sway/window" = {
-    format = "{}";
-  };
+
+  "sway/window".format = "{}";
 
   "mpris" = {
     format = "{player_icon} {dynamic}";
@@ -138,13 +137,6 @@
     tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
   };
 
-  # "custom/daylight" = {
-  #   format = "{}";
-  #   exec = "${lib.getExe daylight}";
-  #   interval = 3600;
-  #   tooltip = false;
-  #   min-length = 3;
-  # };
   "clock#time" = {
     format = "{:%I:%M:%S}";
     tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";

@@ -39,7 +39,6 @@ in {
     };
     programs.neovim = {
       enable = true;
-      package = pkgs.neovim-nightly.overrideAttrs (_: {CFLAGS = "-O3";});
       defaultEditor = true;
       vimAlias = true;
       viAlias = true;

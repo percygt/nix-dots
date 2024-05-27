@@ -6,6 +6,5 @@
       inherit final prev;
     };
   nix-stash = inputs.nix-stash.overlays.default;
-  neovim-nightly = inputs.neovim-nightly-overlay.overlay;
-  nurpkgs = inputs.nurpkgs.overlay;
+  neovim-nightly = inputs.neovim-nightly-overlay.overlays.default;
 }

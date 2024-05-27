@@ -16,7 +16,6 @@
             "org.keepassxc.KeePassXC"
             "btop"
             "yazi"
-            "gnome-disk"
             "page.codeberg.Imaginer.Imaginer"
             "com.github.finefindus.eyedropper"
             "org.gnome.Nautilus"
@@ -28,9 +27,6 @@
             "qalculate-gtk"
             "info.mumble.Mumble"
           ];
-          classes = [
-            "\.?qemu-system-x86_64(-wrapped)?"
-          ];
         })
       ++ (mkAppsFloat {
         w = 50;
@@ -40,6 +36,12 @@
       ++ (mkAppsFloat {
         titles = [".*"];
         command = ''inhibit_idle fullscreen'';
+      })
+      ++ (mkAppsFloat {
+        classes = [
+          "\.?qemu-system-x86_64(-wrapped)?"
+          "Spotify"
+        ];
       })
       ++ [
         {
@@ -57,7 +59,7 @@
           };
         }
         {
-          command = ''floating enable, resize set width 50ppt height 50ppt, move position center'';
+          command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
           criteria = {
             title = ".*";
             app_id = "nemo";
@@ -70,12 +72,20 @@
             app_id = "nemo";
           };
         }
-        # {
-        #   command = ''corner_radius 0'';
-        #   criteria = {
-        #     app_id = "org.wezfurlong.wezterm";
-        #   };
-        # }
+        {
+          command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
+          criteria = {
+            title = "Disks";
+            app_id = "gnome-disks";
+          };
+        }
+        {
+          command = ''floating enable, move position center'';
+          criteria = {
+            title = ".*";
+            app_id = "gnome-disks";
+          };
+        }
         {
           command = ''floating enable, resize set width 30ppt height 60ppt, move position center'';
           criteria = {
@@ -83,13 +93,13 @@
           };
         }
         {
-          command = ''floating enable, resize set width 75ppt height 75ppt, move position center'';
+          command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
           criteria = {
             title = "^Brave$";
           };
         }
         {
-          command = ''floating enable, resize set width 15ppt height 15ppt, move position 50ppt 100ppt, sticky on'';
+          command = ''floating enable, resize set width 15ppt height 15ppt, move position 85ppt 85ppt, sticky on'';
           criteria = {
             title = "^Picture in picture$";
           };

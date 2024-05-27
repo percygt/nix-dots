@@ -12,17 +12,21 @@
   };
 
   config = lib.mkIf config.drivers.nvidia-prime.enable {
+    boot.kernelParams = ["mem_sleep_default=deep" "nouveau.modeset=0" "ipv6.disable=1"]; # Oddly, ipv6 was horribly buggy and causing problems for me in other areas
+    boot.blacklistedKernelModules = ["nouveau" "bbswitch" "nvidiafb"];
     services.xserver.videoDrivers = ["nvidia"];
-
-    services.supergfxd = {
-      enable = true;
-      settings = {
-        mode = "Hybrid";
-        vfio_enable = false;
-        vfio_save = false;
-        always_reboot = false;
-        no_logind = false;
-        logout_timeout_s = 180;
+    systemd.services.supergfxd.path = [pkgs.pciutils];
+    services = {
+      supergfxd = {
+        enable = true;
+        settings = {
+          mode = "Hybrid";
+          vfio_enable = false;
+          vfio_save = false;
+          always_reboot = false;
+          no_logind = false;
+          logout_timeout_s = 180;
+        };
       };
     };
 
@@ -42,7 +46,7 @@
       modesetting.enable = true;
 
       powerManagement = {
-        enable = true;
+        enable = false;
         finegrained = false;
       };
 
@@ -50,6 +54,9 @@
       nvidiaSettings = true; # gui app
       package = config.boot.kernelPackages.nvidiaPackages.latest;
     };
+    environment.systemPackages = with pkgs; [
+      glxinfo
+    ];
     environment.variables = {
       # Required to run the correct GBM backend for nvidia GPUs on wayland
       GBM_BACKEND = "nvidia-drm";
