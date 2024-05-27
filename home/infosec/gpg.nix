@@ -5,18 +5,12 @@
   ...
 }: let
   timeout = 432000;
-  gpg-sshid-ctl = pkgs.writeShellApplication {
-    name = "gpg-sshid-ctl";
-    runtimeInputs = with pkgs; [openssh gnupg];
-    text = builtins.readFile ../bin/gpg-sshid-ctl.sh;
-  };
 in {
   options.infosec = {
     gpg.enable = lib.mkEnableOption "Enable gpg";
   };
 
   config = lib.mkIf config.infosec.gpg.enable {
-    home.packages = lib.mkAfter [gpg-sshid-ctl];
     programs = {
       gpg = {
         enable = true;
