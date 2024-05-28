@@ -92,12 +92,12 @@ in {
     cmp-nvim-lua
     cmp_luasnip
     lspkind-nvim
-    nvim-autopairs
+    # nvim-autopairs
     luasnip
     friendly-snippets
     # AI #-------------------------------------------------------------------------------------
     {
-      plugin = pkgs.vimPlugins.codeium-nvim;
+      plugin = codeium-nvim;
       type = "lua";
       config = ''require("config.lsp.codeium")'';
     }

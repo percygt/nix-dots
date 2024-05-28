@@ -73,6 +73,18 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.recently_used,
+      require("clangd_extensions.cmp_scores"),
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
   mapping = cmp.mapping.preset.insert({
     ["<c-u>"] = cmp.mapping.scroll_docs(-4),
     ["<c-d>"] = cmp.mapping.scroll_docs(4),
@@ -137,7 +149,7 @@ cmp.setup.cmdline(":", {
   }),
 })
 
--- Autopairs
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-require("nvim-autopairs").setup({ check_ts = true })
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))
+-- -- Autopairs
+-- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+-- require("nvim-autopairs").setup({ check_ts = true })
+-- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))

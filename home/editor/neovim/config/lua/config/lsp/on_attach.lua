@@ -1,9 +1,10 @@
 local telescope = require("telescope.builtin")
 return function(client, bufnr)
+  require("clangd_extensions.inlay_hints").setup_autocmd()
+  require("clangd_extensions.inlay_hints").set_inlay_hints()
   local nmap = function(keys, func, desc)
     vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end
-
   vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
   nmap("K", vim.lsp.buf.hover, "Hover Documentation")
