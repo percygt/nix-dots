@@ -18,6 +18,10 @@
     ./net
     ./extras
     ./virtualisation
+    ./cli
+    ./dev
+    ./editor
+    ./shell
   ];
 in {
   imports =

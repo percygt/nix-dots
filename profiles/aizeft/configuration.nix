@@ -4,10 +4,8 @@
   username,
   ...
 }: {
-  imports = [
-    ./disks.nix
-  ];
-
+  imports = [./disks.nix];
+  home-manager.users.${username} = import ./home.nix;
   drivers = {
     bluetooth.enable = true;
     intel.enable = true;

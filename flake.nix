@@ -62,7 +62,7 @@
 
     templates = import ./templates;
 
-    nixosModules.default = ./system;
+    nixosModules.default = ./modules;
 
     nixosConfigurations = {
       aizeft = bldr.buildSystem {
@@ -78,8 +78,6 @@
         isIso = true;
       };
     };
-
-    homeManagerModules.default = ./home;
 
     homeConfigurations = {
       "${defaultUser}@furies" = bldr.buildHome {

@@ -44,7 +44,7 @@ in {
   in
     homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      modules = [outputs.homeManagerModules.default];
+      # modules = [outputs.homeManagerModules.default];
       extraSpecialArgs = mkArgs.args // {nixosConfig = {};};
     };
 }

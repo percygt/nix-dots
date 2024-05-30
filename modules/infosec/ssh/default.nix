@@ -10,6 +10,8 @@
     };
   };
   config = lib.mkIf config.infosec.ssh.enable {
+    home-manager.users.${username} = import ./home.nix;
+
     services.openssh = {
       enable = lib.mkDefault false;
       settings = {

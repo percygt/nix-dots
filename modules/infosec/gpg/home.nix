@@ -7,7 +7,13 @@
   timeout = 432000;
 in {
   options.infosec = {
-    gpg.enable = lib.mkEnableOption "Enable gpg";
+    gpg = {
+      enable = lib.mkOption {
+        description = "Enable gpg";
+        default = true;
+        type = lib.types.bool;
+      };
+    };
   };
 
   config = lib.mkIf config.infosec.gpg.enable {

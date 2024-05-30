@@ -2,6 +2,7 @@
   inputs,
   config,
   lib,
+  username,
   ...
 }: let
   secretsPath = builtins.toString inputs.sikreto;
@@ -14,6 +15,7 @@ in {
   };
 
   config = lib.mkIf config.infosec.sops.enable {
+    home-manager.users.${username} = import ./home.nix;
     sops = {
       defaultSopsFile = "${secretsPath}/secrets-system.enc.yaml";
       validateSopsFiles = false;

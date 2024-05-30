@@ -1,11 +1,16 @@
-{lib, ...}: {
-  imports = [
+{
+  lib,
+  username,
+  ...
+}: {
+  home-manager.users.${username}.imports = [
     ./bash.nix
     ./fish.nix
+    {
+      shell = {
+        fish.enable = lib.mkDefault true;
+        bash.enable = lib.mkDefault true;
+      };
+    }
   ];
-
-  shell = {
-    fish.enable = lib.mkDefault true;
-    bash.enable = lib.mkDefault true;
-  };
 }

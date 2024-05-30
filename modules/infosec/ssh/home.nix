@@ -4,8 +4,13 @@
   ...
 }: {
   options = {
-    infosec.ssh.enable =
-      lib.mkEnableOption "Enable ssh";
+    infosec.ssh = {
+      enable = lib.mkOption {
+        description = "Enable ssh";
+        default = true;
+        type = lib.types.bool;
+      };
+    };
   };
 
   config = lib.mkIf config.infosec.ssh.enable {

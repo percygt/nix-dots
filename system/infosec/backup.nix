@@ -15,7 +15,7 @@ in {
     usbId = lib.mkOption {
       description = "The bus and device id of the usb device e.g. 4-2 acquired from lsusb command 'Bus 004 Device 002'";
       default = "4-2";
-      type = lib.types.string;
+      type = lib.types.str;
     };
   };
   # configured in home

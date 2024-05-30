@@ -27,8 +27,11 @@
 in {
   options = {
     infosec.sops = {
-      enable =
-        lib.mkEnableOption "Enable sops";
+      enable = lib.mkOption {
+        description = "Enable sops";
+        default = true;
+        type = lib.types.bool;
+      };
     };
   };
 

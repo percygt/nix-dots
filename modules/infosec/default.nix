@@ -1,7 +1,7 @@
 {lib, ...}: {
   imports = [
-    ./sops.nix
-    ./ssh.nix
+    ./sops
+    ./ssh
     ./gpg.nix
     ./hardening.nix
     ./kernel.nix

@@ -11,6 +11,7 @@
   };
   # configured in home
   config = lib.mkIf config.infosec.gpg.enable {
+    home-manager.users.${username} = import ./home.nix;
     environment.persistence = {
       "/persist".users.${username}.directories = [
         {
