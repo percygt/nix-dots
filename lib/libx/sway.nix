@@ -40,7 +40,7 @@ in rec {
       BLUR_STATUS=$(<"$BLUR_STATUS_FILE")
       if [ ! -f "$BLUR_STATUS_FILE" ]; then
           echo "1" > "$BLUR_STATUS_FILE"
-          swaymsg "blur $BLUR_STATUS"
+          swaymsg "blur 1"
       else
           swaymsg "blur $BLUR_STATUS"
           echo $((1 - BLUR_STATUS)) > "$BLUR_STATUS_FILE"

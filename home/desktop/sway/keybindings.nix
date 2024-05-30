@@ -37,6 +37,7 @@ in {
       "${mod}+Shift+k" = "exec pkill tofi || ${tofipass {inherit pkgs;}}";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
       "${mod}+shift+tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
+      "${mod}+tab" = "workspace back_and_forth";
       "${mod}+backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
       "${mod}+delete" = "exec swaylock";
       #FIXME:
@@ -53,7 +54,6 @@ in {
       "${mod}+Shift+s" = "sticky toggle";
       "${mod}+less" = "focus parent";
       "${mod}+greater" = "focus child";
-      "${mod}+tab" = "workspace back_and_forth";
       "${mod}+Shift+minus" = "split h";
       "${mod}+Shift+backslash" = "split v";
       "${mod}+Shift+space" = "floating toggle";

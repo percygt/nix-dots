@@ -32,10 +32,13 @@
 
     nix-colors.url = "github:misterio77/nix-colors";
     impermanence.url = "github:nix-community/impermanence";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     spicetify.url = "github:the-argus/spicetify-nix";
+
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
     sikreto = {
       url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";

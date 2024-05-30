@@ -2,6 +2,6 @@
   imports = [
     ./neovim
     ./emacs
-    # ./vscode
+    ./vscode
   ];
 }

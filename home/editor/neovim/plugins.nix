@@ -85,15 +85,16 @@ in {
       config = ''require("config.lsp.completion")'';
     }
     flash-nvim
-    cmp-path
+    cmp-async-path
     cmp-buffer
     cmp-cmdline
     cmp-nvim-lsp
     cmp-nvim-lua
+    cmp-under-comparator
     cmp_luasnip
+    luasnip
     lspkind-nvim
     # nvim-autopairs
-    luasnip
     friendly-snippets
     # AI #-------------------------------------------------------------------------------------
     {
@@ -135,7 +136,6 @@ in {
       config = ''require("config.lsp.treesitter")'';
     }
     clangd_extensions-nvim
-    lsp-format-nvim
     lsp_signature-nvim
     nvim-treesitter-textobjects
     neodev-nvim
