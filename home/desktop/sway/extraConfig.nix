@@ -6,7 +6,6 @@
     blur_noise 0.05
     blur_contrast 1
     blur enable
-    corner_radius 5
     default_dim_inactive 0.3
     scratchpad_minimize enable
     # layer_effects "waybar" "shadows enable"

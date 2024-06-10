@@ -1,6 +1,4 @@
 {
-  wayland.windowManager.sway.extraOptions = ["--unsupported-gpu"];
-
   desktop = {
     modules = {
       xdg = {

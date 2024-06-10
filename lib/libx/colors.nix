@@ -18,7 +18,6 @@
     red = "aa0000"; # [#aa0000]
     green = "0eba0e"; # [#0eba0e]
     yellow = "a1d408"; # [#a1d408]
-    # blue = "2222cd"; # [#2222c1]
     blue = "0780da"; # [#0780DA]
     magenta = "ad26f6"; # [#9f00f4]
     cyan = "00aaaa"; # [#00aaaa]

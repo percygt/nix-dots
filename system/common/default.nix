@@ -5,5 +5,6 @@
     ./locale.nix
     ./nix.nix
     ./fonts.nix
+    ./persist.nix
   ];
 }

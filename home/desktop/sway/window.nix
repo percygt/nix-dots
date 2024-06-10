@@ -59,6 +59,18 @@
           };
         }
         {
+          command = ''corner_radius 10'';
+          criteria = {
+            floating = true;
+          };
+        }
+        {
+          command = ''corner_radius 0'';
+          criteria = {
+            app_id = "org.wezfurlong.wezterm";
+          };
+        }
+        {
           command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
           criteria = {
             title = ".*";

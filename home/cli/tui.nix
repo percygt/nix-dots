@@ -13,9 +13,6 @@
     programs = {
       btop = {
         enable = true;
-        package = pkgs.btop.override {
-          cudaSupport = true;
-        };
         settings = {
           theme_background = "False";
           vim_keys = "True";

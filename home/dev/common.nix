@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     leiningen
     babashka
-    ghidra
+    ghidra-bin
     gdb
   ];
 }
