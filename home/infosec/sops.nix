@@ -1,10 +1,10 @@
 {
-  inputs,
   config,
   lib,
+  inputs,
+  pkgs,
   username,
   isGeneric,
-  pkgs,
   ...
 }: let
   secretsPath = builtins.toString inputs.sikreto;
@@ -33,7 +33,6 @@ in {
   };
 
   config = lib.mkIf config.infosec.sops.enable {
-    home-manager.users.${username} = {
     home.packages = [pkgs.sops];
     home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sopsStart;
     sops =
@@ -44,16 +43,5 @@ in {
         defaultSecretsMountPoint = "/run/user/1000/secrets.d";
       }
       // key;
-  };
-    };
-    sops = {
-      defaultSopsFile = "${secretsPath}/secrets-system.enc.yaml";
-      validateSopsFiles = false;
-      age = {
-        keyFile = "/persist/system/keys/system-sops.keyfile";
-        sshKeyPaths = [];
-      };
-      gnupg.sshKeyPaths = [];
-    };
   };
 }
