@@ -12,8 +12,8 @@
     inputs.home-manager.nixosModules.home-manager
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-    "${self}/system/core/packages.nix"
-    "${self}/system/common"
+    "${self}/modules/core/packages.nix"
+    "${self}/modules/common"
     "${self}/isobldr/installer.nix"
   ];
 

@@ -6,9 +6,9 @@
   ...
 }: {
   imports = [
-    "${self}/home/editor/neovim"
-    "${self}/home/cli/starship.nix"
-    "${self}/home/common/nix.nix"
+    "${self}/modules/editor/neovim"
+    "${self}/modules/cli/starship.nix"
+    "${self}/modules/common/nix.nix"
   ];
 
   programs.home-manager.enable = true;
