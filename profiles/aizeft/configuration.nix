@@ -1,5 +1,14 @@
-{lib, ...}: {
-  imports = [./disks.nix];
+{
+  lib,
+  username,
+  inputs,
+  ...
+}: {
+  imports = [
+    inputs.disko.nixosModules.disko
+    ./disks.nix
+  ];
+
   drivers = {
     bluetooth.enable = true;
     intel.enable = true;

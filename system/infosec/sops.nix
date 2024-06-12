@@ -6,6 +6,8 @@
 }: let
   secretsPath = builtins.toString inputs.sikreto;
 in {
+  imports = [inputs.sops-nix.nixosModules.sops];
+
   options = {
     infosec.sops = {
       enable =
