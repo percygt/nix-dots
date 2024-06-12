@@ -1,9 +1,11 @@
 {
   lib,
   username,
+  inputs,
   ...
 }: {
   imports = [
+    inputs.disko.nixosModules.disko
     ./disks.nix
   ];
 
