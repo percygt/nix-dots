@@ -1,4 +1,4 @@
-{
+{username, ...}: {
   imports = [
     ./configuration.nix
     ./console.nix
@@ -9,4 +9,11 @@
     ./nixpkgs/overlay.nix
     ./nixpkgs/config.nix
   ];
+  home-manager.users.${username} = {
+    config,
+    lib,
+    ...
+  }: {
+    imports = [./home.nix];
+  };
 }

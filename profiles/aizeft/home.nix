@@ -1,22 +1,5 @@
 {
-  desktop = {
-    modules = {
-      xdg = {
-        enable = true;
-        linkDirsToData.enable = true;
-      };
-      gtk.enable = true;
-      qt.enable = true;
-    };
-  };
-
   dev.git.ghq.enable = true;
-  #
-  editor = {
-    neovim.enable = true;
-    emacs.enable = true;
-    vscode.enable = true;
-  };
   terminal = {
     wezterm.enable = true;
     kitty.enable = true;

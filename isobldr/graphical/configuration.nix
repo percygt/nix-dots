@@ -14,8 +14,11 @@
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
     "${self}/modules/core/packages.nix"
     "${self}/modules/common"
+    "${self}/modules/editor/neovim"
     "${self}/isobldr/installer.nix"
   ];
+
+  editor.neovim.enable = true;
 
   isoImage.squashfsCompression = "gzip -Xcompression-level 1";
 

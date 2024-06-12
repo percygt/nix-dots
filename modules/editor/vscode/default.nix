@@ -5,45 +5,50 @@
   inputs,
   flakeDirectory,
   homeDirectory,
+  username,
   ...
-}: let
-  HM_VSCODE = "${flakeDirectory}/home/editor/vscode/config";
-  USER_VSCODE = "${config.xdg.configHome}/VSCodium/User/settings.json";
-in {
+}: {
   options = {
     editor.vscode.enable =
       lib.mkEnableOption "Enable vscode";
   };
-  imports = [
-    inputs.vscode-server.homeModules.default
-  ];
   config = lib.mkIf config.editor.vscode.enable {
-    home.shellAliases.code = "codium";
-    services.vscode-server = {
-      enable = true;
-      enableFHS = false;
-      installPath = "${homeDirectory}/.vscode-oss";
-    };
-    programs.vscode = {
-      enable = true;
-      package = pkgs.vscodium.fhsWithPackages (ps: with ps; [rustup zlib]);
-      enableUpdateCheck = true;
-      mutableExtensionsDir = false;
-      enableExtensionUpdateCheck = true;
-      extensions = inputs.nix-stash.vscodeExtensions."${pkgs.system}";
-      userSettings = builtins.fromJSON (builtins.readFile ./config/settings.json);
-      keybindings = builtins.fromJSON (builtins.readFile ./config/keybindings.json);
-    };
-    home = {
-      activation = {
-        removeExistingVSCodeSettings = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
-          [ -e ${USER_VSCODE} ] && rm "${USER_VSCODE}"
-        '';
+    home-manager.users.${username} = {
+      config,
+      lib,
+      ...
+    }: let
+      HM_VSCODE = "${flakeDirectory}/home/editor/vscode/config";
+      USER_VSCODE = "${config.xdg.configHome}/VSCodium/User/settings.json";
+    in {
+      imports = [inputs.vscode-server.homeModules.default];
+      home.shellAliases.code = "codium";
+      services.vscode-server = {
+        enable = true;
+        enableFHS = false;
+        installPath = "${homeDirectory}/.vscode-oss";
+      };
+      programs.vscode = {
+        enable = true;
+        package = pkgs.vscodium.fhsWithPackages (ps: with ps; [rustup zlib]);
+        enableUpdateCheck = true;
+        mutableExtensionsDir = false;
+        enableExtensionUpdateCheck = true;
+        extensions = inputs.nix-stash.vscodeExtensions."${pkgs.system}";
+        userSettings = builtins.fromJSON (builtins.readFile ./config/settings.json);
+        keybindings = builtins.fromJSON (builtins.readFile ./config/keybindings.json);
+      };
+      home = {
+        activation = {
+          removeExistingVSCodeSettings = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
+            [ -e ${USER_VSCODE} ] && rm "${USER_VSCODE}"
+          '';
 
-        overwriteVSCodeSymlink = lib.hm.dag.entryAfter ["linkGeneration"] ''
-          rm "${USER_VSCODE}"
-          ln -s "${HM_VSCODE}" "${USER_VSCODE}"
-        '';
+          overwriteVSCodeSymlink = lib.hm.dag.entryAfter ["linkGeneration"] ''
+            rm "${USER_VSCODE}"
+            ln -s "${HM_VSCODE}" "${USER_VSCODE}"
+          '';
+        };
       };
     };
   };

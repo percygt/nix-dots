@@ -1,20 +1,15 @@
 {
-  lib,
-  config,
   flakeDirectory,
+  username,
   ...
 }: let
   inherit ((import ./file-associations.nix)) associations;
 in {
-  options = {
-    desktop.modules.xdg = {
-      enable =
-        lib.mkEnableOption "Enables xdg";
-      linkDirsToData.enable =
-        lib.mkEnableOption "Enables linking personal data directory";
-    };
-  };
-  config = lib.mkIf config.desktop.modules.xdg.enable {
+  home-manager.users.${username} = {
+    config,
+    lib,
+    ...
+  }: {
     xdg = {
       enable = true;
       mimeApps = {
@@ -58,7 +53,7 @@ in {
       ];
     };
 
-    home.activation = lib.mkIf config.desktop.modules.xdg.linkDirsToData.enable {
+    home.activation = {
       linkXdgDirs =
         lib.hm.dag.entryAfter ["linkGeneration"]
         ''

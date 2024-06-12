@@ -10,12 +10,21 @@
   ];
 
   drivers = {
+    adb.enable = true;
     bluetooth.enable = true;
     intel.enable = true;
     intel.gpu.driver = "xe";
     nvidia.bye = true;
   };
 
+  editor = {
+    neovim = {
+      enable = true;
+      persist = true;
+    };
+    emacs.enable = true;
+    vscode.enable = true;
+  };
   net = {
     tailscale.enable = true;
     syncthing.enable = true;
@@ -25,8 +34,6 @@
     "/persist" = {
       users.${username} = {
         directories = [
-          ".local/state/nvim"
-          ".local/share/nvim"
           ".local/share/aria2"
           ".local/share/Mumble"
           ".local/share/atuin"
@@ -35,7 +42,6 @@
           ".local/share/zoxide"
           ".local/share/navi"
           ".local/share/tmux/resurrect"
-          ".local/cache/nvim"
           ".local/cache/nix-index"
           ".local/cache/amberol"
           ".config/goa-1.0"

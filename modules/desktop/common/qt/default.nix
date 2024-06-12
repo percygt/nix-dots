@@ -1,13 +1,5 @@
-{
-  lib,
-  config,
-  ...
-}: {
-  options = {
-    desktop.modules.qt.enable =
-      lib.mkEnableOption "Enables qt";
-  };
-  config = lib.mkIf config.desktop.modules.qt.enable {
+{username, ...}: {
+  home-manager.users.${username} = {
     qt = {
       enable = true;
       platformTheme.name = "gtk";

@@ -12,10 +12,13 @@
     inputs.home-manager.nixosModules.home-manager
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-    "${self}/system/core/packages.nix"
-    "${self}/system/common"
+    "${self}/modules/core/packages.nix"
+    "${self}/modules/common"
+    "${self}/modules/editor/neovim"
     "${self}/isobldr/installer.nix"
   ];
+
+  editor.neovim.enable = true;
 
   isoImage.squashfsCompression = "gzip -Xcompression-level 1";
 

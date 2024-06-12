@@ -1,10 +1,13 @@
 {
   desktop,
-  lib,
+  username,
   ...
 }: {
-  imports = [
-    ./${desktop}.nix
-    ./common.nix
-  ];
+  programs.dconf.enable = true;
+  home-manager.users.${username} = {
+    imports = [
+      ./${desktop}.nix
+      ./common.nix
+    ];
+  };
 }

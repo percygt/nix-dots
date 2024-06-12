@@ -1,17 +1,15 @@
 {
-  pkgs,
-  config,
   libx,
-  lib,
+  username,
   ...
 }: let
   inherit (libx) fonts cursorTheme iconTheme gtkTheme;
 in {
-  options = {
-    desktop.modules.gtk.enable =
-      lib.mkEnableOption "Enables gtk";
-  };
-  config = lib.mkIf config.desktop.modules.gtk.enable {
+  home-manager.users.${username} = {
+    config,
+    pkgs,
+    ...
+  }: {
     gtk = {
       enable = true;
 

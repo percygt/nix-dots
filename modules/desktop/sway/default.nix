@@ -7,6 +7,7 @@
   imports = [
     ./tuigreet.nix
   ];
+  home-manager.users.${username} = import ./home.nix;
   programs = {
     sway = {
       enable = true;
