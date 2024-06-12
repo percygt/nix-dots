@@ -35,6 +35,7 @@ in {
 
   config = lib.mkIf config.infosec.sops.enable {
     home-manager.users.${username} = {config, ...}: {
+      imports = [inputs.sops-nix.homeManagerModules.sops];
       home.packages = [pkgs.sops];
       home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sopsStart;
       sops =

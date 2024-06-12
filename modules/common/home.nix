@@ -7,12 +7,14 @@
   isGeneric,
   ...
 }: {
-  imports = [
-    ./shellAliases.nix
-    ./sessionVariables.nix
-    ./nixpkgs/overlay.nix
-    ./nix.nix
-  ];
+  imports =
+    [
+      ./shellAliases.nix
+      ./sessionVariables.nix
+      ./nixpkgs/overlay.nix
+      ./nix.nix
+    ]
+    ++ lib.optionals isGeneric [./generic];
 
   programs.home-manager.enable = true;
 
