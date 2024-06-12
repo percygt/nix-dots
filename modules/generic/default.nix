@@ -6,6 +6,7 @@
     ./packages.nix
     ./nvd.nix
     ./overlays.nix
+    ../common/nixpkgs/config.nix
   ];
   generic = {
     # overlays.enable = lib.mkDefault true;
