@@ -1,6 +1,10 @@
-{username, ...}: {
-  imports = [./nixos];
-  home-manager.users.${username} = {
-    imports = [./home-manager];
-  };
+{
+  imports = [
+    ./configuration.nix
+    ./console.nix
+    ./locale.nix
+    ./nix.nix
+    ./fonts.nix
+    ./persist.nix
+  ];
 }

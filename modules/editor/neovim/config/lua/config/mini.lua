@@ -24,6 +24,9 @@ local header_art = [[
 -- NOTE: MINI SURROUND
 require("mini.surround").setup()
 
+-- NOTE: MINI PAIRS
+require("mini.pairs").setup()
+
 -- NOTE: MINI SESSIONS
 require("mini.sessions").setup({
   autoread = false,

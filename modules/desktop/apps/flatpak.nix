@@ -33,6 +33,7 @@
       "org.telegram.desktop"
       "page.codeberg.Imaginer.Imaginer"
       "rest.insomnia.Insomnia"
+      "info.febvre.Komikku"
     ];
   };
   fileSystems = {
@@ -44,6 +45,7 @@
     ];
     "/persist".users.${username}.directories = [
       ".var/app/org.telegram.desktop"
+      ".var/app/info.febvre.Komikku"
     ];
   };
 }

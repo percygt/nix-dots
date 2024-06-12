@@ -32,6 +32,7 @@ opt.splitbelow = true -- Splitting a new window below the current one
 opt.splitright = true -- Splitting a new window at the right of the current one
 opt.conceallevel = 2
 opt.colorcolumn = "120"
+opt.listchars = { tab = ">─", trail = "·", nbsp = "¤" }
 
 opt.swapfile = false -- Disable swapfiles
 opt.backup = false

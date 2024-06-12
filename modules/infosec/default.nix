@@ -1,11 +1,12 @@
 {lib, ...}: {
   imports = [
-    ./sops
-    ./ssh
+    ./sops.nix
+    ./ssh.nix
     ./gpg.nix
     ./hardening.nix
     ./kernel.nix
     ./backup.nix
+    ./fprintd.nix
   ];
 
   infosec = {
@@ -13,6 +14,7 @@
     sops.enable = lib.mkDefault true;
     gpg.enable = lib.mkDefault true;
     ssh.enable = lib.mkDefault true;
+    # fprintd.enable = lib.mkDefault true;
     # hardening.enable = lib.mkDefault true;
     kernel.enable = lib.mkDefault true;
   };

@@ -26,10 +26,20 @@ in {
     };
   };
 
-  environment.etc."greetd/environments".text = ''
-    sway
-    fish
-  '';
+  environment = {
+    persistence."/persist/system".directories = [
+      {
+        directory = "/var/cache/tuigreet";
+        user = "greeter";
+        group = "greeter";
+        mode = "0755";
+      }
+    ];
+    etc."greetd/environments".text = ''
+      sway
+      fish
+    '';
+  };
 
   security.pam.services.greetd.enableGnomeKeyring = true;
 

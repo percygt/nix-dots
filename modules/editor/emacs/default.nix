@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }: {
   options.editor.emacs = {
@@ -10,30 +9,27 @@
   };
 
   config = lib.mkIf config.editor.emacs.enable {
-    nixpkgs.overlays = [inputs.emacs-overlay.overlay];
-    home.packages = with pkgs; [
-      ## Doom dependencies
-      git
-      ripgrep
-      gnutls # for TLS connectivity
+    programs.emacs = {
+      package = pkgs.emacs-unstable-pgtk;
+      enable = true;
+      extraPackages = epkgs:
+        with epkgs; [
+          wal-mode
+          nix-mode
+          magit
+          tramp
+          notmuch
+          offlineimap
+          org
+          direnv
+          doom
+        ];
+    };
+    services.emacs = {
+      enable = true;
+      startWithUserSession = "graphical";
+    };
 
-      ## Optional dependencies
-      fd # faster projectile indexing
-      imagemagick # for image-dired
-      zstd # for undo-fu-session/undo-tree compression
-
-      # go-mode
-      # gocode # project archived, use gopls instead
-
-      ## Module dependencies
-      # :checkers spell
-      (aspellWithDicts (ds: with ds; [en en-computers en-science]))
-      # :tools editorconfig
-      editorconfig-core-c # per-project style config
-      # :tools lookup & :lang org +roam
-      sqlite
-      # :lang latex & :lang org (latex previews)
-      # texlive.combined.scheme-medium
-    ];
+    programs.offlineimap.enable = true;
   };
 }

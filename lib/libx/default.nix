@@ -16,7 +16,7 @@ in rec {
     _type = "literal";
     inherit value;
   };
-  mkPathList = dir: builtins.attrNames (removeAttrs (builtins.readDir dir) ["default.nix"]);
+  mkPathList = dir: builtins.attrNames (removeAttrs (builtins.readDir dir) ["default.nix" "home.nix"]);
   gtkPackage = pkgs:
     pkgs.colloid-gtk-theme.overrideAttrs (_: {
       src = pkgs.fetchFromGitHub {

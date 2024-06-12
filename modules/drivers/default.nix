@@ -2,6 +2,6 @@
   imports = [
     ./bluetooth.nix
     ./intel.nix
-    ./nvidia-prime.nix
+    ./nvidia.nix
   ];
 }

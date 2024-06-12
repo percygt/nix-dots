@@ -2,6 +2,7 @@
   lib,
   username,
   inputs,
+  outputs,
   homeArgs,
   profile,
   self,
@@ -19,6 +20,6 @@ in {
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = homeArgs // {nixosConfig = config;};
-    # users.${username}.imports = [outputs.homeManagerModules.default];
+    users.${username}.imports = [outputs.homeManagerModules.default];
   };
 }

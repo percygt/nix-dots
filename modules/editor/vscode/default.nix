@@ -4,6 +4,7 @@
   lib,
   inputs,
   flakeDirectory,
+  homeDirectory,
   ...
 }: let
   HM_VSCODE = "${flakeDirectory}/home/editor/vscode/config";
@@ -13,16 +14,23 @@ in {
     editor.vscode.enable =
       lib.mkEnableOption "Enable vscode";
   };
-
+  imports = [
+    inputs.vscode-server.homeModules.default
+  ];
   config = lib.mkIf config.editor.vscode.enable {
     home.shellAliases.code = "codium";
+    services.vscode-server = {
+      enable = true;
+      enableFHS = false;
+      installPath = "${homeDirectory}/.vscode-oss";
+    };
     programs.vscode = {
       enable = true;
-      package = pkgs.vscodium;
+      package = pkgs.vscodium.fhsWithPackages (ps: with ps; [rustup zlib]);
       enableUpdateCheck = true;
-      mutableExtensionsDir = true;
+      mutableExtensionsDir = false;
       enableExtensionUpdateCheck = true;
-      extensions = "${inputs.nix-stash}" {inherit (pkgs) system;};
+      extensions = inputs.nix-stash.vscodeExtensions."${pkgs.system}";
       userSettings = builtins.fromJSON (builtins.readFile ./config/settings.json);
       keybindings = builtins.fromJSON (builtins.readFile ./config/keybindings.json);
     };

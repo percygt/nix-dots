@@ -5,6 +5,7 @@
   lib,
   profile,
   outputs,
+  username,
   libx,
   ...
 }: let
@@ -18,11 +19,10 @@
     ./net
     ./extras
     ./virtualisation
-    ./cli
-    ./dev
-    ./editor
-    ./shell
   ];
+  homePathList =
+    builtins.filter (path: builtins.pathExists path) (map (dir: ./${dir}/home.nix)
+      (builtins.attrNames (removeAttrs (builtins.readDir ./.) ["default.nix" "home.nix"])));
 in {
   imports =
     commonImports
@@ -35,6 +35,8 @@ in {
       inputs.nix-flatpak.nixosModules.nix-flatpak
       libx.nixpkgsConfig
     ];
+
+  home-manager.users.${username}.imports = homePathList;
 
   nixpkgs.overlays =
     builtins.attrValues outputs.overlays

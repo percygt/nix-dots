@@ -73,6 +73,10 @@ in {
             path = "${config.services.syncthing.dataDir}/playbook";
             devices = builtins.attrNames devices;
           };
+          audiobooks = {
+            path = "${config.services.syncthing.dataDir}/audiobooks";
+            devices = builtins.attrNames devices;
+          };
           pictures = images "pictures";
           pint = images "pint";
           pext = images "pext";

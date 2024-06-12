@@ -40,6 +40,7 @@ in {
     programs.neovim = {
       enable = true;
       defaultEditor = true;
+      vimdiffAlias = true;
       vimAlias = true;
       viAlias = true;
       withNodeJs = true;
