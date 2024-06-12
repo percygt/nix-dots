@@ -25,6 +25,7 @@
       age.keyFile = "/persist/home/${username}/keys/home-sops.keyfile";
     };
 in {
+  imports = [inputs.sops-nix.nixosModules.sops];
   options = {
     infosec.sops = {
       enable =

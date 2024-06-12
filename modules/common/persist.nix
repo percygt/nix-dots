@@ -1,4 +1,5 @@
-{
+{inputs, ...}: {
+  imports = [inputs.impermanence.nixosModules.impermanence];
   fileSystems."/persist".neededForBoot = true;
   environment.persistence = {
     "/persist/system" = {
