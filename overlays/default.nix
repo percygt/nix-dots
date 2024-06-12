@@ -7,4 +7,5 @@
     };
   nix-stash = inputs.nix-stash.overlays.default;
   neovim-nightly = inputs.neovim-nightly-overlay.overlays.default;
+  emacs = inputs.emacs-overlay.overlay;
 }

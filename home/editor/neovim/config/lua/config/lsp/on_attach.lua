@@ -1,7 +1,8 @@
 local telescope = require("telescope.builtin")
+local clangd_inlay = require("clangd_extensions.inlay_hints")
 return function(client, bufnr)
-  require("clangd_extensions.inlay_hints").setup_autocmd()
-  require("clangd_extensions.inlay_hints").set_inlay_hints()
+  clangd_inlay.setup_autocmd()
+  clangd_inlay.set_inlay_hints()
   local nmap = function(keys, func, desc)
     vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
   end

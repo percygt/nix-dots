@@ -30,6 +30,7 @@ in {
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --app-id=btop btop";
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
+      "${mod}+e" = "exec ${lib.getExe pkgs.toggle-sway-window} --id emacs -- emacs ${config.xdg.configHome}/emacs}";
       "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"brave-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
@@ -50,7 +51,7 @@ in {
       "${mod}+Shift+q" = "kill";
       "${mod}+Shift+t" = "layout stacking";
       "${mod}+t" = "layout tabbed";
-      "${mod}+e" = "layout toggle split";
+      "${mod}+Alt+s" = "layout toggle split";
       "${mod}+Shift+s" = "sticky toggle";
       "${mod}+less" = "focus parent";
       "${mod}+greater" = "focus child";

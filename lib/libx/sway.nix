@@ -37,16 +37,14 @@ in rec {
   toggle-blur = {pkgs}:
     pkgs.writers.writeBash "toggle-blur" ''
       BLUR_STATUS_FILE="/tmp/blur-status"
-      BLUR_STATUS=$(<"$BLUR_STATUS_FILE" :- 0)
-      # BLUR_STATUS=$(<"$BLUR_STATUS_FILE")
+      BLUR_STATUS=$(<"$BLUR_STATUS_FILE")
       if [ ! -f "$BLUR_STATUS_FILE" ]; then
           echo "1" > "$BLUR_STATUS_FILE"
-          # swaymsg "blur 1"
+          swaymsg "blur 1"
       else
-          # swaymsg "blur $BLUR_STATUS"
+          swaymsg "blur $BLUR_STATUS"
           echo $((1 - BLUR_STATUS)) > "$BLUR_STATUS_FILE"
       fi
-      swaymsg "blur $BLUR_STATUS"
     '';
   power-menu = {pkgs}:
     pkgs.writers.writeBash "power-menu" ''

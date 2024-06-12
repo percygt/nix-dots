@@ -45,6 +45,12 @@
       })
       ++ [
         {
+          command = ''floating enable, resize set width 40ppt height 100ppt, move position 60ppt 0ppt'';
+          criteria = {
+            app_id = "info.febvre.Komikku";
+          };
+        }
+        {
           command = ''floating enable, resize set width 50ppt height 50ppt, move position center'';
           criteria = {
             title = "^Virtual Machine Manager$";
@@ -56,18 +62,6 @@
           criteria = {
             title = "^New VM$";
             app_id = "virt-manager";
-          };
-        }
-        {
-          command = ''corner_radius 10'';
-          criteria = {
-            floating = true;
-          };
-        }
-        {
-          command = ''corner_radius 0'';
-          criteria = {
-            app_id = "org.wezfurlong.wezterm";
           };
         }
         {

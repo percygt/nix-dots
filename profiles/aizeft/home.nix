@@ -14,7 +14,7 @@
 
   editor = {
     neovim.enable = true;
-    # emacs.enable = true;
+    emacs.enable = true;
     vscode.enable = true;
   };
 
