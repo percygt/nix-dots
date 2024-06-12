@@ -1,11 +1,30 @@
 local luasnip = require("luasnip")
 local cmp = require("cmp")
 local lspkind = require("lspkind")
+local cmp_under_comparator = require("cmp-under-comparator")
+local extends = {
+  ["typescript"] = { "tsdoc" },
+  ["javascript"] = { "jsdoc" },
+  ["lua"] = { "luadoc" },
+  ["python"] = { "pydoc" },
+  ["rust"] = { "rustdoc" },
+  ["cs"] = { "csharpdoc" },
+  ["java"] = { "javadoc" },
+  ["c"] = { "cdoc" },
+  ["cpp"] = { "cppdoc" },
+  ["sh"] = { "shelldoc" },
+}
+
 luasnip.setup({
+  history = true,
   region_check_events = "CursorMoved",
+  delete_check_events = "TextChanged",
 })
--- Friendly snippets
 require("luasnip.loaders.from_vscode").lazy_load()
+
+for k, v in ipairs(extends) do
+  luasnip.filetype_extend(k, v)
+end
 local icons = {
   Namespace = "󰌗",
   Text = "󰉿",
@@ -73,15 +92,30 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.recently_used,
+      require("clangd_extensions.cmp_scores"),
+      cmp.config.compare.score,
+      cmp_under_comparator.under,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
   mapping = cmp.mapping.preset.insert({
-    ["<c-u>"] = cmp.mapping.scroll_docs(-4),
-    ["<c-d>"] = cmp.mapping.scroll_docs(4),
     ["<c-c>"] = cmp.mapping.abort(),
     ["<c-space>"] = cmp.mapping.complete(),
-    ["<cr>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = false,
-    }),
+    ["<cr>"] = cmp.mapping(
+      cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      }),
+      { "i", "c" }
+    ),
     ["<tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -102,12 +136,12 @@ cmp.setup({
     end, { "i", "s" }),
   }),
   sources = {
-    { name = "nvim_lua" },
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-    { name = "buffer" },
-    { name = "path" },
-    { name = "codeium" },
+    { name = "async_path", priority_weight = 110 },
+    { name = "nvim_lsp", priority_weight = 100 },
+    { name = "nvim_lua", priority_weight = 90 },
+    { name = "luasnip", priority_weight = 80 },
+    { name = "buffer", max_item_count = 5, priority_weight = 50 },
+    { name = "codeium", priority_weight = 70 },
     { name = "conjure" },
   },
   -- Pictograms
@@ -131,13 +165,19 @@ cmp.setup.cmdline({ "/", "?" }, {
 cmp.setup.cmdline(":", {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = "path" },
+    { name = "async_path" },
   }, {
     { name = "cmdline" },
   }),
 })
-
--- Autopairs
-local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-require("nvim-autopairs").setup({ check_ts = true })
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))
+-- Setup up vim-dadbod
+cmp.setup.filetype({ "sql" }, {
+  sources = {
+    { name = "vim-dadbod-completion" },
+    { name = "buffer" },
+  },
+})
+-- -- Autopairs
+-- local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+-- require("nvim-autopairs").setup({ check_ts = true })
+-- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))

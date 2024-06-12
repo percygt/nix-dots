@@ -68,7 +68,7 @@ in {
           Restart = "no";
           LogRateLimitIntervalSec = 0;
           ExecStartPre = "${pkgs.coreutils}/bin/sleep 1m";
-          ExecStart = "systemd-inhibit --who=\"borgmatic\" --what=\"sleep:shutdown\" --why=\"Prevent interrupting scheduled backup\" ${lib.getExe pkgs.borgmatic} --verbosity -2 --syslog-verbosity 1";
+          ExecStart = "systemd-inhibit --who=\"borgmatic\" --what=\"sleep:shutdown\" --why=\"Prevent interrupting scheduled backup\" ${pkgs.borgmatic}/bin/borgmatic --verbosity -2 --syslog-verbosity 1";
         };
       };
     };

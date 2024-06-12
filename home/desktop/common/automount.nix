@@ -10,6 +10,9 @@
     notify = true;
     automount = true;
     settings = {
+      program_options = {
+        file_manager = "${pkgs.xdg-utils}/bin/xdg-open";
+      };
       device_config = [
         {
           id_uuid = "129829fa-acfb-4c09-815d-b450ebaa9262";

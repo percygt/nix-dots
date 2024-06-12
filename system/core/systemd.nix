@@ -15,7 +15,7 @@
       initrd.rootDevice = lib.mkOption {
         description = "Required root device in initrd before executing wipeScript";
         default = "dev-root_vg-root.device";
-        type = lib.types.string;
+        type = lib.types.str;
       };
     };
   };

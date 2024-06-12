@@ -39,7 +39,8 @@ in rec {
       BLUR_STATUS_FILE="/tmp/blur-status"
       BLUR_STATUS=$(<"$BLUR_STATUS_FILE")
       if [ ! -f "$BLUR_STATUS_FILE" ]; then
-          echo "0" > "$BLUR_STATUS_FILE"
+          echo "1" > "$BLUR_STATUS_FILE"
+          swaymsg "blur 1"
       else
           swaymsg "blur $BLUR_STATUS"
           echo $((1 - BLUR_STATUS)) > "$BLUR_STATUS_FILE"

@@ -1,4 +1,8 @@
 {
+  c = {
+    path = ./c;
+    description = "C";
+  };
   javascript = {
     path = ./javascript;
     description = "A javascript Nix flake with devenv integration.";

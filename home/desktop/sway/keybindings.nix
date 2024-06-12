@@ -30,6 +30,7 @@ in {
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --app-id=btop btop";
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
+      "${mod}+e" = "exec ${lib.getExe pkgs.toggle-sway-window} --id emacs -- emacs ${config.xdg.configHome}/emacs}";
       "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"brave-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
@@ -37,6 +38,7 @@ in {
       "${mod}+Shift+k" = "exec pkill tofi || ${tofipass {inherit pkgs;}}";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
       "${mod}+shift+tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
+      "${mod}+tab" = "workspace back_and_forth";
       "${mod}+backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
       "${mod}+delete" = "exec swaylock";
       #FIXME:
@@ -49,11 +51,10 @@ in {
       "${mod}+Shift+q" = "kill";
       "${mod}+Shift+t" = "layout stacking";
       "${mod}+t" = "layout tabbed";
-      "${mod}+e" = "layout toggle split";
+      "${mod}+Alt+s" = "layout toggle split";
       "${mod}+Shift+s" = "sticky toggle";
       "${mod}+less" = "focus parent";
       "${mod}+greater" = "focus child";
-      "${mod}+tab" = "workspace back_and_forth";
       "${mod}+Shift+minus" = "split h";
       "${mod}+Shift+backslash" = "split v";
       "${mod}+Shift+space" = "floating toggle";

@@ -14,7 +14,6 @@
       warn-dirty = false;
       max-jobs = "auto";
       trusted-users = ["@wheel" "root"];
-      # for direnv GC roots
       keep-derivations = true;
       keep-outputs = true;
       substituters = [
@@ -26,10 +25,6 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
-    # gc = {
-    #   automatic = true;
-    #   dates = "Sun";
-    # };
 
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake

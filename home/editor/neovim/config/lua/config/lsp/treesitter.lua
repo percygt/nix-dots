@@ -22,7 +22,7 @@ treesitter.setup({
     disable = { "yaml" },
     additional_vim_regex_highlighting = false,
   },
-  autopairs = { enable = true },
+  -- autopairs = { enable = true },
 
   textobjects = {
     select = {

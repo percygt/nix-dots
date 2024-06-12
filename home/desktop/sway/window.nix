@@ -45,6 +45,12 @@
       })
       ++ [
         {
+          command = ''floating enable, resize set width 40ppt height 100ppt, move position 60ppt 0ppt'';
+          criteria = {
+            app_id = "info.febvre.Komikku";
+          };
+        }
+        {
           command = ''floating enable, resize set width 50ppt height 50ppt, move position center'';
           criteria = {
             title = "^Virtual Machine Manager$";

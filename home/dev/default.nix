@@ -3,6 +3,7 @@
     ./git
     ./go.nix
     ./common.nix
+    ./jujutsu.nix
   ];
 
   dev = {
