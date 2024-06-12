@@ -1,7 +1,6 @@
 {
   imports = [
     ./brave
-    ./common.nix
     ./mpv.nix
     ./zathura.nix
     ./loupe.nix

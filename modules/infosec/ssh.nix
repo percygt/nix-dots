@@ -10,7 +10,7 @@
     };
   };
   config = lib.mkIf config.infosec.ssh.enable {
-    home-manager.users.${username} = {
+    home-manager.users.${username} = {config, ...}: {
       programs.ssh = {
         enable = true;
         userKnownHostsFile = "~/.ssh/known_hosts ~/.ssh/additional_known_host";

@@ -33,18 +33,17 @@ in {
   };
 
   config = lib.mkIf config.infosec.sops.enable {
-    home-manager.users.${username} = {
-    home.packages = [pkgs.sops];
-    home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sopsStart;
-    sops =
-      {
-        defaultSopsFile = "${secretsPath}/secrets-home.enc.yaml";
-        validateSopsFiles = false;
-        defaultSymlinkPath = "/run/user/1000/secrets";
-        defaultSecretsMountPoint = "/run/user/1000/secrets.d";
-      }
-      // key;
-  };
+    home-manager.users.${username} = {config, ...}: {
+      home.packages = [pkgs.sops];
+      home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sopsStart;
+      sops =
+        {
+          defaultSopsFile = "${secretsPath}/secrets-home.enc.yaml";
+          validateSopsFiles = false;
+          defaultSymlinkPath = "/run/user/1000/secrets";
+          defaultSecretsMountPoint = "/run/user/1000/secrets.d";
+        }
+        // key;
     };
     sops = {
       defaultSopsFile = "${secretsPath}/secrets-system.enc.yaml";

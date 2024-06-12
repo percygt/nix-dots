@@ -14,7 +14,7 @@ in {
   };
   # configured in home
   config = lib.mkIf config.infosec.gpg.enable {
-    home-manager.users.${username} = {
+    home-manager.users.${username} = {config, ...}: {
       programs = {
         gpg = {
           enable = true;
