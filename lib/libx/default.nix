@@ -1,6 +1,8 @@
 {
   inputs,
   homeDirectory ? "~",
+  username,
+  isGeneric,
 }: let
   inherit (inputs.nixpkgs) lib;
 in rec {
@@ -16,7 +18,53 @@ in rec {
     _type = "literal";
     inherit value;
   };
+  getModules = {
+    cfg ? null,
+    subCfg ? null,
+    modules,
+  }: let
+    ifSubCfg = module:
+      if (subCfg == null && cfg != null)
+      then cfg.${lib.removeSuffix ".nix" (builtins.baseNameOf module)}.enable
+      else subCfg;
+  in
+    builtins.filter ifSubCfg modules;
+
+  importModules = {
+    modules,
+    cfg,
+    rootDir ? null,
+    fileName ? "persist",
+  }:
+    if isGeneric
+    then {
+      imports = getModules {inherit modules cfg;};
+    }
+    else {
+      imports = lib.optionals (rootDir != null) (scanDirs {
+        inherit fileName rootDir;
+      });
+      config.home-manager.users.${username} = {...}: {
+        imports = getModules {inherit modules cfg;};
+      };
+    };
+
+  enableModules = modules:
+    builtins.listToAttrs (map (module: {
+        name = lib.removeSuffix ".nix" (builtins.baseNameOf module);
+        value = {enable = true;};
+      })
+      modules);
+
+  scanDirs = {
+    fileName,
+    rootDir,
+  }:
+    builtins.filter (path: builtins.pathExists path) (map (dir: ./${dir}/${fileName}.nix)
+      (builtins.attrNames (removeAttrs rootDir ["default.nix"])));
+
   mkPathList = dir: builtins.attrNames (removeAttrs (builtins.readDir dir) ["default.nix" "home.nix"]);
+
   gtkPackage = pkgs:
     pkgs.colloid-gtk-theme.overrideAttrs (_: {
       src = pkgs.fetchFromGitHub {

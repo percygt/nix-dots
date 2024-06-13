@@ -9,11 +9,5 @@
     ./nixpkgs/overlay.nix
     ./nixpkgs/config.nix
   ];
-  home-manager.users.${username} = {
-    config,
-    lib,
-    ...
-  }: {
-    imports = [./home.nix];
-  };
+  home-manager.users.${username} = import ./home.nix;
 }

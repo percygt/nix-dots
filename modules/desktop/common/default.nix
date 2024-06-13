@@ -1,11 +1,22 @@
 {
-  imports = [
-    ./xremap.nix
+  isGeneric,
+  username,
+  ...
+}: let
+  homeModules = [
     ./qt
     ./gtk
     ./xdg
-    ./dconf
     ./audio.nix
     ./automount.nix
   ];
-}
+in
+  if isGeneric
+  then {imports = homeModules;}
+  else {
+    imports = [
+      ./xremap.nix
+      ./dconf
+    ];
+    home-manager.users.${username} = {imports = homeModules;};
+  }

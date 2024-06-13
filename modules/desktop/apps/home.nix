@@ -1,10 +1,10 @@
 {
   imports = [
     ./brave
-    ./mpv.nix
-    ./zathura.nix
     ./loupe.nix
+    ./mpv.nix
     ./quickemu.nix
     ./spicetify.nix
+    ./zathura.nix
   ];
 }

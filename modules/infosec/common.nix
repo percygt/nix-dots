@@ -1,7 +1,7 @@
 {
-  pkgs,
   lib,
   config,
+  username,
   ...
 }: {
   options = {
@@ -10,13 +10,15 @@
   };
 
   config = lib.mkIf config.infosec.common.enable {
-    home.packages = with pkgs; [
-      age
-      sops
-      git-crypt
-      veracrypt
-      xkcdpass
-      pika-backup
-    ];
+    home-manager.users.${username} = {pkgs, ...}: {
+      home.packages = with pkgs; [
+        age
+        sops
+        git-crypt
+        veracrypt
+        xkcdpass
+        pika-backup
+      ];
+    };
   };
 }

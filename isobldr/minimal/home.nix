@@ -6,8 +6,9 @@
   ...
 }: {
   imports = [
-    "${self}/modules/cli/starship.nix"
     "${self}/modules/common/nix.nix"
+    "${self}/modules/cli/starship.nix"
+    "${self}/modules/editor/neovim"
   ];
 
   programs.home-manager.enable = true;
@@ -22,6 +23,4 @@
       ni = "sudo nixos-install --no-root-passwd --flake";
     };
   };
-
-  cli.starship.enable = true;
 }

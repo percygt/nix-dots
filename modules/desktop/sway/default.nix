@@ -2,8 +2,12 @@
   pkgs,
   libx,
   username,
+  isGeneric,
   ...
-}: {
+}:
+if isGeneric
+then {imports = [./home];}
+else {
   imports = [
     ./tuigreet.nix
   ];

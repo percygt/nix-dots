@@ -7,6 +7,10 @@
     ./kernel.nix
     ./backup.nix
     ./fprintd.nix
+    ./pass.nix
+    ./keepass.nix
+    ./common.nix
+    ./keepfzf.nix
   ];
 
   infosec = {

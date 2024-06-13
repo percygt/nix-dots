@@ -12,71 +12,65 @@
   sessionFile = "${dataHome}/aria2/session";
   aria2p-tui = pkgs.python3.withPackages (ps: with ps; [aria2p] ++ aria2p.optional-dependencies.tui);
 in {
-  options = {
-    cli.aria.enable =
-      lib.mkEnableOption "Enables aria";
+  home.packages = [aria2p-tui];
+  programs.aria2 = {
+    enable = true;
+    settings = {
+      # Download directory
+      dir = "${config.xdg.userDirs.download}/aria";
+      check-integrity = true;
+
+      ## General optimization
+      # Don't download files if they're already in the download directory
+      conditional-get = true;
+      file-allocation = "falloc"; # Assume ext4, this is faster there
+      optimize-concurrent-downloads = true;
+      disk-cache = "512M"; # In-memory cache to avoid fragmentation
+
+      ## Torrent options
+      bt-force-encryption = true;
+      bt-detach-seed-only = true; # Don't block downloads when seeding
+      seed-ratio = 2;
+      seed-time = 60;
+    };
   };
-  config = lib.mkIf config.cli.aria.enable {
-    home.packages = [aria2p-tui];
-    programs.aria2 = {
-      enable = true;
-      settings = {
-        # Download directory
-        dir = "${config.xdg.userDirs.download}/aria";
-        check-integrity = true;
 
-        ## General optimization
-        # Don't download files if they're already in the download directory
-        conditional-get = true;
-        file-allocation = "falloc"; # Assume ext4, this is faster there
-        optimize-concurrent-downloads = true;
-        disk-cache = "512M"; # In-memory cache to avoid fragmentation
+  systemd.user.services.aria2 = {
+    Unit.Description = "aria2 download manager";
+    Service = {
+      ExecStartPre = let
+        prestart = writeScript "aria2-prestart" ''
+          #!${runtimeShell}
+          ${coreutils-bin}/mkdir -p ${dataHome}/aria2
 
-        ## Torrent options
-        bt-force-encryption = true;
-        bt-detach-seed-only = true; # Don't block downloads when seeding
-        seed-ratio = 2;
-        seed-time = 60;
-      };
+          if [ ! -e "${sessionFile}" ]; then
+              ${coreutils-bin}/touch ${sessionFile}
+          fi
+        '';
+      in "${prestart}";
+
+      ExecStart = concatStringsSep " " [
+        "${aria2-bin}"
+        "--enable-rpc"
+        "--conf-path=${configHome}/aria2/aria2.conf"
+        "--save-session=${sessionFile}"
+        "--save-session-interval=1800"
+        "--input-file=${sessionFile}"
+      ];
+
+      ExecReload = "${coreutils-bin}/kill -HUP $MAINPID";
+
+      # We don't want to class an exit before downloads finish as a
+      # failure if we stop aria2c, since the entire point of it is
+      # that it will resume the downloads.
+      SuccessExitStatus = "7";
+
+      # We use falloc, so if we use this unit on any other fs it will
+      # cause issues
+      Slice = "session.slice";
+      ProtectSystem = "full";
     };
 
-    systemd.user.services.aria2 = {
-      Unit.Description = "aria2 download manager";
-      Service = {
-        ExecStartPre = let
-          prestart = writeScript "aria2-prestart" ''
-            #!${runtimeShell}
-            ${coreutils-bin}/mkdir -p ${dataHome}/aria2
-
-            if [ ! -e "${sessionFile}" ]; then
-                ${coreutils-bin}/touch ${sessionFile}
-            fi
-          '';
-        in "${prestart}";
-
-        ExecStart = concatStringsSep " " [
-          "${aria2-bin}"
-          "--enable-rpc"
-          "--conf-path=${configHome}/aria2/aria2.conf"
-          "--save-session=${sessionFile}"
-          "--save-session-interval=1800"
-          "--input-file=${sessionFile}"
-        ];
-
-        ExecReload = "${coreutils-bin}/kill -HUP $MAINPID";
-
-        # We don't want to class an exit before downloads finish as a
-        # failure if we stop aria2c, since the entire point of it is
-        # that it will resume the downloads.
-        SuccessExitStatus = "7";
-
-        # We use falloc, so if we use this unit on any other fs it will
-        # cause issues
-        Slice = "session.slice";
-        ProtectSystem = "full";
-      };
-
-      Install.WantedBy = ["graphical-session.target"];
-    };
+    Install.WantedBy = ["graphical-session.target"];
   };
 }
