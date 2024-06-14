@@ -3,10 +3,7 @@
   lib,
   ...
 }: {
-  options = {
-    cli.ncmpcpp.enable =
-      lib.mkEnableOption "Enables ncmpcpp";
-  };
+  options.cli.ncmpcpp.home.enable = lib.mkEnableOption "Enables ncmpcpp";
   config = lib.mkIf config.cli.ncmpcpp.home.enable {
     programs.ncmpcpp = {
       enable = true;

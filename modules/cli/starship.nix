@@ -8,11 +8,7 @@
     format = "via [$symbol $version](${color}) ";
   };
 in {
-  options = {
-    cli.starship.enable =
-      lib.mkEnableOption "Enable starship";
-  };
-
+  options.cli.starship.home.enable = lib.mkEnableOption "Enable starship";
   config = lib.mkIf config.cli.starship.home.enable {
     programs.starship = {
       enable = true;

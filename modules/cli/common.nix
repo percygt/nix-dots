@@ -4,11 +4,7 @@
   config,
   ...
 }: {
-  options = {
-    cli.common.enable =
-      lib.mkEnableOption "Enable common cli tools";
-  };
-
+  options.cli.common.home.enable = lib.mkEnableOption "Enable common cli tools";
   config = lib.mkIf config.cli.common.home.enable {
     home.packages = with pkgs; [
       tailscale

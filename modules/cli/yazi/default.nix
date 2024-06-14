@@ -4,11 +4,7 @@
   pkgs,
   ...
 }: {
-  options = {
-    cli.yazi.enable =
-      lib.mkEnableOption "Enable yazi";
-  };
-
+  options.cli.yazi.home.enable = lib.mkEnableOption "Enable yazi";
   config = lib.mkIf config.cli.yazi.home.enable {
     home = {
       shellAliases.y = "yazi";

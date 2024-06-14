@@ -45,20 +45,15 @@
     "/persist" = {
       users.${username} = {
         directories = [
-          ".local/share/aria2"
           ".local/share/Mumble"
-          ".local/share/atuin"
           ".local/share/keyrings"
           ".local/share/fish"
-          ".local/share/zoxide"
           ".local/share/navi"
-          ".local/share/tmux/resurrect"
           ".local/cache/nix-index"
           ".local/cache/amberol"
           ".config/goa-1.0"
           ".config/keepassxc"
           ".config/BraveSoftware/Brave-Browser"
-          ".config/gh"
           ".config/Mumble"
         ];
         files = [

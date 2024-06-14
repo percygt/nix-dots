@@ -4,11 +4,7 @@
   config,
   ...
 }: {
-  options = {
-    cli.nixtools.enable =
-      lib.mkEnableOption "Enable nix tools";
-  };
-
+  options.cli.nixtools.home.enable = lib.mkEnableOption "Enable nix tools";
   config = lib.mkIf config.cli.nixtools.home.enable {
     home.packages = with pkgs; [
       alejandra

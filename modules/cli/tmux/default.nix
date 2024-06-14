@@ -4,15 +4,8 @@
   lib,
   ...
 }: {
-  options = {
-    cli.tmux.enable =
-      lib.mkEnableOption "Enable tmux";
-  };
-
-  imports = [
-    ./gitmux.nix
-  ];
-
+  imports = [./gitmux.nix];
+  options.cli.tmux.home.enable = lib.mkEnableOption "Enable tmux";
   config = lib.mkIf config.cli.tmux.home.enable {
     home = {
       shellAliases.home = "tmux new -As home";

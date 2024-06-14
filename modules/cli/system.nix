@@ -9,27 +9,31 @@
       "/persist" = {
         users.${username} = {
           directories = [
-            ".vscode-oss"
+            ".local/share/tmux/resurrect"
+            ".local/share/aria2"
+            ".local/share/atuin"
+            ".local/share/zoxide"
+            ".config/gh"
           ];
         };
       };
     };
     home-manager.users.${username} = {
       imports = [./home.nix];
-      cli.home = {
-        atuin.enable = lib.mkDefault true;
-        direnv.enable = lib.mkDefault true;
-        extra.enable = lib.mkDefault true;
-        starship.enable = lib.mkDefault true;
-        aria.enable = lib.mkDefault true;
-        ncmpcpp.enable = lib.mkDefault true;
-        tui.enable = lib.mkDefault true;
-        yazi.enable = lib.mkDefault true;
-        common.enable = lib.mkDefault true;
-        bat.enable = lib.mkDefault true;
-        eza.enable = lib.mkDefault true;
-        tmux.enable = lib.mkDefault true;
-        nixtools.enable = lib.mkDefault true;
+      cli = {
+        atuin.home.enable = lib.mkDefault true;
+        direnv.home.enable = lib.mkDefault true;
+        extra.home.enable = lib.mkDefault true;
+        starship.home.enable = lib.mkDefault true;
+        aria.home.enable = lib.mkDefault true;
+        ncmpcpp.home.enable = lib.mkDefault true;
+        tui.home.enable = lib.mkDefault true;
+        yazi.home.enable = lib.mkDefault true;
+        common.home.enable = lib.mkDefault true;
+        bat.home.enable = lib.mkDefault true;
+        eza.home.enable = lib.mkDefault true;
+        tmux.home.enable = lib.mkDefault true;
+        nixtools.home.enable = lib.mkDefault true;
       };
     };
   };

@@ -4,18 +4,14 @@
   pkgs,
   ...
 }: {
-  options = {
-    cli.tui.enable =
-      lib.mkEnableOption "Enable tui";
-  };
-
+  options.cli.tui.home.enable = lib.mkEnableOption "Enable tui's";
   config = lib.mkIf config.cli.tui.home.enable {
     programs = {
       btop = {
         enable = true;
         settings = {
-          theme_background = "False";
-          vim_keys = "True";
+          theme_background = false;
+          vim_keys = true;
         };
       };
       lazygit.enable = true;

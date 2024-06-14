@@ -12,10 +12,7 @@
   sessionFile = "${dataHome}/aria2/session";
   aria2p-tui = pkgs.python3.withPackages (ps: with ps; [aria2p] ++ aria2p.optional-dependencies.tui);
 in {
-  options = {
-    cli.aria.enable =
-      lib.mkEnableOption "Enables aria";
-  };
+  options.cli.aria.home.enable = lib.mkEnableOption "Enables aria";
   config = lib.mkIf config.cli.aria.home.enable {
     home.packages = [aria2p-tui];
     programs.aria2 = {
