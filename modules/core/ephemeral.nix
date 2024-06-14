@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  inputs,
   ...
 }: let
   wipeScript = ''
@@ -29,6 +30,7 @@
   '';
   phase1Systemd = config.core.systemd.initrd.enable;
 in {
+  imports = [inputs.impermanence.nixosModules.impermanence];
   options = {
     core.ephemeral = {
       enable =
@@ -48,6 +50,26 @@ in {
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         script = wipeScript;
+      };
+    };
+    fileSystems."/persist".neededForBoot = true;
+    environment.persistence = {
+      "/persist/system" = {
+        hideMounts = true;
+        directories = [
+          "/var/lib/systemd/coredump"
+          "/var/lib/nixos"
+          "/srv"
+          {
+            directory = "/var/lib/colord";
+            user = "colord";
+            group = "colord";
+            mode = "u=rwx,g=rx,o=";
+          }
+        ];
+        files = [
+          "/etc/machine-id"
+        ];
       };
     };
   };

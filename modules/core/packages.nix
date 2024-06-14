@@ -16,7 +16,6 @@
     environment.systemPackages = with pkgs;
       [
         foot
-        neovim
       ]
       ++ (libx.corePackages pkgs);
   };

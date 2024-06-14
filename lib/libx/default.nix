@@ -24,32 +24,89 @@ in rec {
     modules,
   }: let
     ifSubCfg = module:
-      if (subCfg == null && cfg != null)
-      then cfg.${lib.removeSuffix ".nix" (builtins.baseNameOf module)}.enable
-      else subCfg;
+      if (subCfg != null && cfg == null)
+      then subCfg.enable
+      else cfg.${lib.removeSuffix ".nix" (builtins.baseNameOf module)}.enable;
   in
     builtins.filter ifSubCfg modules;
 
   importModules = {
     modules,
-    cfg,
+    cfg ? null,
+    subCfg ? null,
     rootDir ? null,
     fileName ? "persist",
   }:
     if isGeneric
     then {
-      imports = getModules {inherit modules cfg;};
+      imports = getModules {inherit modules cfg subCfg;};
     }
     else {
-      imports = lib.optionals (rootDir != null) (scanDirs {
-        inherit fileName rootDir;
-      });
+      # imports = lib.optionals (rootDir != null) (scanDirs {
+      #   inherit fileName rootDir;
+      # });
       config.home-manager.users.${username} = {...}: {
-        imports = getModules {inherit modules cfg;};
+        imports = getModules {inherit modules cfg subCfg;};
+      };
+    };
+  importSubModules = {
+    homeModules,
+    systemModules ? null,
+    persistModules ? null,
+    persistEnabled ? subCfg.persist,
+    subCfg ? null,
+    moduleAttrMain,
+    moduleAttrSub ? null,
+  }: let
+    configOpt =
+      if (moduleAttrSub == null)
+      then "${moduleAttrMain}"
+      else "${moduleAttrMain}"."${moduleAttrSub}";
+  in
+    if isGeneric
+    then {
+      imports = homeModules;
+
+      ${configOpt} = enableModules {
+        modules = homeModules;
+      };
+      # ${moduleAttrMain} = { ${moduleAttrSub} = enableModules {
+      #     modules = homeModules;
+      #   };
+      # };
+    }
+    else {
+      imports =
+        lib.optionals (systemModules != null) systemModules
+        ++ lib.optionals (persistModules != null) persistModules;
+      config.home-manager.users.${username} = {
+        config,
+        lib,
+        ...
+      }: {
+        imports = homeModules;
+        # ${moduleAttrMain} = {
+        #   ${moduleAttrSub} = enableModules {
+        #     modules = homeModules;
+        #     inherit lib;
+        #   };
+        # };
+        ${configOpt} = enableModules {
+          modules = homeModules;
+        };
       };
     };
 
-  enableModules = modules:
+  mkModuleOptions = {modules}:
+    builtins.listToAttrs (map (module: {
+        name = lib.removeSuffix ".nix" (builtins.baseNameOf module);
+        value = {enable = lib.mkEnableOption "Enable ${lib.removeSuffix ".nix" (builtins.baseNameOf module)} module";};
+      })
+      modules);
+  enableModules = {
+    modules,
+    lib,
+  }:
     builtins.listToAttrs (map (module: {
         name = lib.removeSuffix ".nix" (builtins.baseNameOf module);
         value = {enable = true;};

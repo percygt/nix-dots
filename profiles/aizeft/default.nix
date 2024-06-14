@@ -29,23 +29,12 @@
     keepass.enable = true;
   };
 
-  cli = {
-    ncmpcpp.enable = true;
-    aria.enable = true;
-    atuin.enable = true;
-    direnv.enable = true;
-    extra.enable = true;
-    starship.enable = true;
-    tui.enable = true;
-    yazi.enable = true;
-  };
+  cli.system.enable = true;
+
   editor = {
-    neovim = {
-      enable = true;
-      # persist = true;
-    };
-    emacs.enable = true;
-    vscode.enable = true;
+    neovim.system.enable = true;
+    emacs.system.enable = true;
+    vscode.system.enable = true;
   };
   net = {
     tailscale.enable = true;
