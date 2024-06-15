@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: let
   gh_http_repo = "https://github.com/percygt/";
@@ -12,15 +13,15 @@
     root = "${config.home.homeDirectory}/data/codebox";
   };
 in {
-  home.packages = with pkgs; [
-    ghq
-  ];
-  programs.git.extraConfig.ghq = {
-    vcs = "git";
-    root = "${config.home.homeDirectory}/data/git-repo";
-    ${glab_ssh_repo} = codebox;
-    ${gh_ssh_repo} = codebox;
-    ${glab_http_repo} = codebox;
-    ${gh_http_repo} = codebox;
+  config = lib.mkIf config.dev.home.enable {
+    home.packages = with pkgs; [ghq];
+    programs.git.extraConfig.ghq = {
+      vcs = "git";
+      root = "${config.home.homeDirectory}/data/git-repo";
+      ${glab_ssh_repo} = codebox;
+      ${gh_ssh_repo} = codebox;
+      ${glab_http_repo} = codebox;
+      ${gh_http_repo} = codebox;
+    };
   };
 }

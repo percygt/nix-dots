@@ -4,13 +4,8 @@
   config,
   ...
 }: {
-  options.infosec = {
-    hardening = {
-      enable = lib.mkEnableOption "Enable hardening";
-    };
-  };
-  # configured in home
-  config = lib.mkIf config.infosec.hardening.enable {
+  options.infosec.hardening.system.enable = lib.mkEnableOption "Enable hardening";
+  config = lib.mkIf config.infosec.hardening.system.enable {
     security = {
       protectKernelImage = false;
       tpm2 = {

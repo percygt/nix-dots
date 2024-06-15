@@ -1,6 +1,8 @@
 {
   pkgs,
   username,
+  lib,
+  config,
   ...
 }: {
   home-manager.users.${username} = {
@@ -24,4 +26,15 @@
   environment.systemPackages = with pkgs; [
     cinnamon.nemo-with-extensions
   ];
+  environment.persistence = lib.mkIf config.core.ephemeral.enable {
+    "/persist" = {
+      users.${username} = {
+        directories = [
+          ".local/share/Mumble"
+          ".config/Mumble"
+          ".local/cache/amberol"
+        ];
+      };
+    };
+  };
 }

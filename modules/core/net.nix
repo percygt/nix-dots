@@ -6,15 +6,17 @@
 }: let
   wpa = config.core.net.wpa.enable;
 in {
-  options = {
-    core.net = {
-      enable =
-        lib.mkEnableOption "Enable networking services";
-      wpa.enable = lib.mkOption {
-        description = "Enable wpa";
-        default = true;
-        type = lib.types.bool;
-      };
+  options.core.net = {
+    enable = lib.mkOption {
+      description = "Enable networking services";
+      default = true;
+      type = lib.types.bool;
+    };
+
+    wpa.enable = lib.mkOption {
+      description = "Enable wpa";
+      default = true;
+      type = lib.types.bool;
     };
   };
 

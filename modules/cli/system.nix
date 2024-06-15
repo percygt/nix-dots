@@ -4,6 +4,14 @@
   config,
   ...
 }: {
+  options = {
+    cli.system.enable = lib.mkEnableOption "Enable cli systemwide";
+    cli.persist.enable = lib.mkOption {
+      description = "Enable vscode persist";
+      default = config.core.ephemeral.enable;
+      type = lib.types.bool;
+    };
+  };
   config = lib.mkIf config.cli.system.enable {
     environment.persistence = lib.mkIf config.cli.persist.enable {
       "/persist" = {
@@ -13,7 +21,7 @@
             ".local/share/aria2"
             ".local/share/atuin"
             ".local/share/zoxide"
-            ".config/gh"
+            ".local/share/navi"
           ];
         };
       };

@@ -1,24 +1,18 @@
 {
+  pkgs,
   lib,
   config,
-  username,
   ...
 }: {
-  options = {
-    infosec.common.enable =
-      lib.mkEnableOption "Enable common";
-  };
-
-  config = lib.mkIf config.infosec.common.enable {
-    home-manager.users.${username} = {pkgs, ...}: {
-      home.packages = with pkgs; [
-        age
-        sops
-        git-crypt
-        veracrypt
-        xkcdpass
-        pika-backup
-      ];
-    };
+  options.infosec.common.home.enable = lib.mkEnableOption "Enable common";
+  config = lib.mkIf config.infosec.common.home.enable {
+    home.packages = with pkgs; [
+      age
+      sops
+      git-crypt
+      veracrypt
+      xkcdpass
+      pika-backup
+    ];
   };
 }

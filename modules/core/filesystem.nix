@@ -3,10 +3,11 @@
   lib,
   ...
 }: {
-  options = {
-    core.filesystem = {
-      enable =
-        lib.mkEnableOption "Enable filesystem services";
+  options.core.filesystem = {
+    enable = lib.mkOption {
+      description = "Enable filesystem services";
+      default = true;
+      type = lib.types.bool;
     };
   };
 

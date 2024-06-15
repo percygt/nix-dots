@@ -8,9 +8,9 @@
 }: let
   backupMountPath = "/media/stash";
   configDir = ".config/borgmatic.d";
-  cfg = config.infosec.backup;
+  cfg = config.infosec.backup.system;
 in {
-  options.infosec.backup = {
+  options.infosec.backup.system = {
     enable = lib.mkEnableOption "Enable backups";
     usbId = lib.mkOption {
       description = "The bus and device id of the usb device e.g. 4-2 acquired from lsusb command 'Bus 004 Device 002'";

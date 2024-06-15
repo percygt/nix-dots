@@ -1,10 +1,11 @@
 {
-  lib,
   username,
   stateVersion,
   homeDirectory,
   self,
   isGeneric,
+  lib,
+  config,
   ...
 }: {
   imports =

@@ -3,10 +3,11 @@
   lib,
   ...
 }: {
-  options = {
-    core.zram = {
-      enable =
-        lib.mkEnableOption "Enable zram";
+  options.core.zram = {
+    enable = lib.mkOption {
+      description = "Enable zram";
+      default = true;
+      type = lib.types.bool;
     };
   };
 

@@ -3,10 +3,11 @@
   lib,
   ...
 }: {
-  options = {
-    core.firmware = {
-      enable =
-        lib.mkEnableOption "Enable firmware services";
+  options.core.firmware = {
+    enable = lib.mkOption {
+      description = "Enable firmware services";
+      default = true;
+      type = lib.types.bool;
     };
   };
 

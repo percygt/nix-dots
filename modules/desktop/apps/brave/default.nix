@@ -1,10 +1,9 @@
 {
-  imports = [
-    ./brave.nix
-    ./brave-webapp.nix
-    ./ai.nix
-    ./zoom.nix
-    ./discord.nix
-    ./element.nix
-  ];
-}
+  lib,
+  config,
+  isGeneric,
+  ...
+}:
+if (! isGeneric)
+then {imports = [./system.nix];}
+else {imports = [./home.nix];}

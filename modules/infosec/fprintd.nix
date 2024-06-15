@@ -4,12 +4,8 @@
   config,
   ...
 }: {
-  options.infosec = {
-    fprintd = {
-      enable = lib.mkEnableOption "Enable fprintd";
-    };
-  };
-  config = lib.mkIf config.infosec.fprintd.enable {
+  options.infosec.fprintd.system.enable = lib.mkEnableOption "Enable fprintd";
+  config = lib.mkIf config.infosec.fprintd.system.enable {
     services.fprintd = {
       enable = true;
       package = pkgs.fprintd-tod;

@@ -5,6 +5,14 @@
   pkgs,
   ...
 }: {
+  options.editor = {
+    neovim.system.enable = lib.mkEnableOption "Enable neovim systemwide";
+    neovim.persist.enable = lib.mkOption {
+      description = "Enable neovim persist";
+      default = config.core.ephemeral.enable;
+      type = lib.types.bool;
+    };
+  };
   config = lib.mkIf config.editor.neovim.system.enable {
     environment.systemPackages = with pkgs; [neovim];
     environment.persistence = lib.mkIf config.editor.neovim.persist.enable {

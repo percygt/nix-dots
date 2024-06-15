@@ -3,10 +3,11 @@
   lib,
   ...
 }: {
-  options = {
-    core.ntp = {
-      enable =
-        lib.mkEnableOption "Enable ntp services";
+  options.core.ntp = {
+    enable = lib.mkOption {
+      description = "Enable ntp services";
+      default = true;
+      type = lib.types.bool;
     };
   };
 

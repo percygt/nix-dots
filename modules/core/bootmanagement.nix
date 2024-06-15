@@ -4,10 +4,11 @@
   pkgs,
   ...
 }: {
-  options = {
-    core.bootmanagement = {
-      enable =
-        lib.mkEnableOption "Enable bootmanagement";
+  options.core.bootmanagement = {
+    enable = lib.mkOption {
+      description = "Enable bootmanagement";
+      default = true;
+      type = lib.types.bool;
     };
   };
 

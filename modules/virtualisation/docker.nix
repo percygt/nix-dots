@@ -1,22 +1,27 @@
 {
   pkgs,
   username,
+  lib,
+  config,
   ...
 }: {
   # Enable the Docker service
-  virtualisation.docker = {
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
+  options.virtual.docker.enable = lib.mkEnableOption "Enable docker";
+  config = lib.mkIf config.virtual.docker.enable {
+    virtualisation.docker = {
+      rootless = {
+        enable = true;
+        setSocketVariable = true;
+      };
+      enableOnBoot = false;
     };
-    enableOnBoot = false;
+
+    # Give access to the user
+    users.users.${username}.extraGroups = ["docker"];
+
+    # Include other utilities
+    environment.systemPackages = with pkgs; [
+      docker-compose
+    ];
   };
-
-  # Give access to the user
-  users.users.${username}.extraGroups = ["docker"];
-
-  # Include other utilities
-  environment.systemPackages = with pkgs; [
-    docker-compose
-  ];
 }

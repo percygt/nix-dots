@@ -3,10 +3,11 @@
   lib,
   ...
 }: {
-  options = {
-    core.graphics = {
-      enable =
-        lib.mkEnableOption "Enable graphics";
+  options.core.graphics = {
+    enable = lib.mkOption {
+      description = "Enable graphics";
+      default = true;
+      type = lib.types.bool;
     };
   };
 

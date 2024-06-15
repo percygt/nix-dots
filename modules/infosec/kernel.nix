@@ -4,13 +4,9 @@
   config,
   ...
 }: {
-  options.infosec = {
-    kernel = {
-      enable = lib.mkEnableOption "Enable kernel";
-    };
-  };
+  options.infosec.kernel.system.enable = lib.mkEnableOption "Enable kernel";
   # configured in home
-  config = lib.mkIf config.infosec.kernel.enable {
+  config = lib.mkIf config.infosec.kernel.system.enable {
     boot.kernel.sysctl = {
       # The Magic SysRq key is a key combo that allows users connected to the
       # system console of a Linux kernel to perform some low-level commands.

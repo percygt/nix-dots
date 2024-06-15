@@ -7,12 +7,10 @@
 }: let
   inherit (libx) colors;
 in {
-  options = {
-    shell.fish.enable = lib.mkOption {
-      description = "Enable fish";
-      default = true;
-      type = lib.types.bool;
-    };
+  options.shell.fish.enable = lib.mkOption {
+    description = "Enable fish";
+    default = true;
+    type = lib.types.bool;
   };
 
   config = lib.mkIf config.shell.fish.enable {

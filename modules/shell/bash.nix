@@ -4,14 +4,14 @@
   ...
 }: {
   options = {
-    shell.bash.enable = lib.mkOption {
+    shell.bash.home.enable = lib.mkOption {
       description = "Enable bash";
       default = true;
       type = lib.types.bool;
     };
   };
 
-  config = lib.mkIf config.shell.bash.enable {
+  config = lib.mkIf config.shell.bash.home.enable {
     programs.bash = {
       enable = true;
 

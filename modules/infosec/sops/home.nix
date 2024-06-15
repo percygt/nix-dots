@@ -1,9 +1,10 @@
 {
-  inputs,
   config,
+  lib,
+  inputs,
+  pkgs,
   username,
   isGeneric,
-  pkgs,
   ...
 }: let
   secretsPath = builtins.toString inputs.sikreto;
@@ -24,14 +25,19 @@
       age.keyFile = "/persist/home/${username}/keys/home-sops.keyfile";
     };
 in {
-  home.packages = [pkgs.sops];
-  home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sopsStart;
-  sops =
-    {
-      defaultSopsFile = "${secretsPath}/secrets-home.enc.yaml";
-      validateSopsFiles = false;
-      defaultSymlinkPath = "/run/user/1000/secrets";
-      defaultSecretsMountPoint = "/run/user/1000/secrets.d";
-    }
-    // key;
+  imports = [inputs.sops-nix.homeManagerModules.sops];
+  options.infosec.sops.home.enable = lib.mkEnableOption "Enable sops";
+
+  config = lib.mkIf config.infosec.sops.home.enable {
+    home.packages = [pkgs.sops];
+    home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] sopsStart;
+    sops =
+      {
+        defaultSopsFile = "${secretsPath}/secrets-home.enc.yaml";
+        validateSopsFiles = false;
+        defaultSymlinkPath = "/run/user/1000/secrets";
+        defaultSecretsMountPoint = "/run/user/1000/secrets.d";
+      }
+      // key;
+  };
 }

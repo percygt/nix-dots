@@ -5,14 +5,9 @@
   username,
   ...
 }: {
-  options = {
-    net.tailscale = {
-      enable =
-        lib.mkEnableOption "Enable tailscale";
-    };
-  };
+  options.net.tailscale.system.enable = lib.mkEnableOption "Enable tailscale";
 
-  config = lib.mkIf config.net.tailscale.enable {
+  config = lib.mkIf config.net.tailscale.system.enable {
     networking.firewall = {
       trustedInterfaces = ["tailscale0"];
       # required to connect to Tailscale exit nodes

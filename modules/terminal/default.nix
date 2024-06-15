@@ -1,24 +1,10 @@
 {
   lib,
-  libx,
-  username,
   config,
+  username,
+  isGeneric,
   ...
-}: let
-  cfg = config.terminal;
-  modules = [./wezterm.nix ./foot.nix ./kitty.nix];
-in
-  libx.importModules {inherit modules cfg;}
-  // {
-    options = {
-      terminal = {
-        foot.enable = lib.mkOption {
-          description = "Enable fish";
-          default = true;
-          type = lib.types.bool;
-        };
-        kitty.enable = lib.mkEnableOption "Enable kitty";
-        wezterm.enable = lib.mkEnableOption "Enable wezterm";
-      };
-    };
-  }
+}:
+if (! isGeneric)
+then {imports = [./system.nix];}
+else {imports = [./home.nix];}

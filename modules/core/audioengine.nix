@@ -5,10 +5,11 @@
   username,
   ...
 }: {
-  options = {
-    core.audioengine = {
-      enable =
-        lib.mkEnableOption "Enable audioengine services";
+  options.core.audioengine = {
+    enable = lib.mkOption {
+      description = "Enable audioengine";
+      default = true;
+      type = lib.types.bool;
     };
   };
 

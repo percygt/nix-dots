@@ -1,4 +1,21 @@
 {
+  username,
+  config,
+  lib,
+  ...
+}: {
+  home-manager.users.${username} = {
+    imports = [./home.nix];
+  };
+  environment.persistence = lib.mkIf config.core.ephemeral.enable {
+    "/persist" = {
+      users.${username} = {
+        directories = [
+          ".config/BraveSoftware/Brave-Browser"
+        ];
+      };
+    };
+  };
   programs.chromium = {
     enable = true; # only enables polices to be put in etc, doesn't install chromium
     extensions = [

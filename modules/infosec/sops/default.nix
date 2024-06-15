@@ -1,36 +1,10 @@
 {
-  inputs,
-  config,
   lib,
-  isGeneric,
+  config,
   username,
+  isGeneric,
   ...
-}: let
-  secretsPath = builtins.toString inputs.sikreto;
-in
-  {
-    options = {
-      infosec.sops = {
-        enable =
-          lib.mkEnableOption "Enable sops";
-      };
-    };
-  }
-  // {
-    config = lib.mkIf config.infosec.sops.enable (
-      if isGeneric
-      then {imports = [./home.nix];}
-      else {
-        home-manager.users.${username} = import ./home.nix;
-        sops = {
-          defaultSopsFile = "${secretsPath}/secrets-system.enc.yaml";
-          validateSopsFiles = false;
-          age = {
-            keyFile = "/persist/system/keys/system-sops.keyfile";
-            sshKeyPaths = [];
-          };
-          gnupg.sshKeyPaths = [];
-        };
-      }
-    );
-  }
+}:
+if (! isGeneric)
+then {imports = [./system.nix];}
+else {imports = [./home.nix];}

@@ -1,6 +1,5 @@
 {
   lib,
-  username,
   inputs,
   ...
 }: {
@@ -17,51 +16,28 @@
     nvidia.bye = true;
   };
 
-  dev.enable = true;
-
-  terminal = {
-    wezterm.enable = true;
-    kitty.enable = true;
-  };
-  infosec = {
-    common.enable = true;
-    pass.enable = true;
-    keepass.enable = true;
-  };
-
   cli.system.enable = true;
+  dev.system.enable = true;
+  terminal.system.enable = true;
 
   editor = {
     neovim.system.enable = true;
     emacs.system.enable = true;
     vscode.system.enable = true;
   };
+
   net = {
-    tailscale.enable = true;
-    syncthing.enable = true;
+    tailscale.system.enable = true;
+    syncthing.system.enable = true;
   };
 
-  environment.persistence = {
-    "/persist" = {
-      users.${username} = {
-        directories = [
-          ".local/share/Mumble"
-          ".local/share/keyrings"
-          ".local/share/fish"
-          ".local/share/navi"
-          ".local/cache/nix-index"
-          ".local/cache/amberol"
-          ".config/goa-1.0"
-          ".config/keepassxc"
-          ".config/BraveSoftware/Brave-Browser"
-          ".config/Mumble"
-        ];
-        files = [
-          ".local/state/tofi-drun-history"
-        ];
-      };
-    };
+  virtual = {
+    docker.enable = true;
+    podman.enable = true;
+    kvm.enable = true;
+    vmvariant.enable = true;
   };
+
   boot = {
     initrd.availableKernelModules = ["xhci_pci" "vmd" "ahci" "nvme" "usb_storage" "usbhid" "uas" "sd_mod" "rtsx_usb_sdmmc"];
     kernelModules = ["kvm-intel"];

@@ -4,10 +4,11 @@
   config,
   ...
 }: {
-  options = {
-    core.autoupgrade = {
-      enable =
-        lib.mkEnableOption "Enable autoupgrade";
+  options.core.autoupgrade = {
+    enable = lib.mkOption {
+      description = "Enable autoupgrade";
+      default = true;
+      type = lib.types.bool;
     };
   };
 

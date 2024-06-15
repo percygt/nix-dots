@@ -7,9 +7,12 @@
   services.flatpak = {
     enable = true;
     uninstallUnmanaged = true;
-    update.auto = {
-      enable = true;
-      onCalendar = "weekly"; # Default value
+    update = {
+      onActivation = false;
+      auto = {
+        enable = true;
+        onCalendar = "weekly"; # Default value
+      };
     };
     packages = [
       "io.gitlab.librewolf-community"

@@ -5,8 +5,11 @@
 }: {
   options = {
     core.systemd = {
-      enable =
-        lib.mkEnableOption "Enable systemd services";
+      enable = lib.mkOption {
+        description = "Enable systemd services";
+        default = true;
+        type = lib.types.bool;
+      };
       initrd.enable = lib.mkOption {
         description = "Enable systemd initrd";
         default = true;

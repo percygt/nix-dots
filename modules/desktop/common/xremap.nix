@@ -1,7 +1,5 @@
 {inputs, ...}: {
-  imports = [
-    inputs.xremap.nixosModules.default
-  ];
+  imports = [inputs.xremap.nixosModules.default];
   services.xremap.withWlroots = true;
   services.xremap.config.modmap = [
     {

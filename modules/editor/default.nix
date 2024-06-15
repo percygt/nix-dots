@@ -1,3 +1,7 @@
 {
-  imports = [./neovim ./vscode ./emacs];
+  imports = [
+    ./neovim
+    ./vscode
+    ./emacs
+  ];
 }

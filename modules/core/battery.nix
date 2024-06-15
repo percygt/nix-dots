@@ -10,7 +10,11 @@
   cfg = config.core.battery;
 in {
   options.core.battery = {
-    enable = lib.mkEnableOption "Enable battery optimization";
+    enable = lib.mkOption {
+      description = "Enable battery optimization";
+      default = true;
+      type = lib.types.bool;
+    };
     chargeUpto = lib.mkOption {
       description = "Maximum level of charge for your battery, as a percentage.";
       default = 80;
@@ -22,7 +26,7 @@ in {
       type = lib.types.bool;
     };
   };
-  config = lib.mkIf config.core.battery.enable {
+  config = lib.mkIf cfg.enable {
     services.thermald.enable = true;
     services.auto-cpufreq = {
       enable = true;

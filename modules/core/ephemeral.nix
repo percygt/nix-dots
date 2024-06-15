@@ -31,10 +31,11 @@
   phase1Systemd = config.core.systemd.initrd.enable;
 in {
   imports = [inputs.impermanence.nixosModules.impermanence];
-  options = {
-    core.ephemeral = {
-      enable =
-        lib.mkEnableOption "Enable ephemeral";
+  options.core.ephemeral = {
+    enable = lib.mkOption {
+      description = "Enable ephemeral filesystem";
+      default = true;
+      type = lib.types.bool;
     };
   };
   config = lib.mkIf config.core.ephemeral.enable {

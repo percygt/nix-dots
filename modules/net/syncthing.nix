@@ -30,14 +30,9 @@
     devices = builtins.attrNames config.services.syncthing.settings.devices;
   };
 in {
-  options = {
-    net.syncthing = {
-      enable =
-        lib.mkEnableOption "Enable syncthing";
-    };
-  };
+  options.net.syncthing.system.enable = lib.mkEnableOption "Enable syncthing";
 
-  config = lib.mkIf config.net.syncthing.enable {
+  config = lib.mkIf config.net.syncthing.system.enable {
     users = {
       users.${username}.packages = [pkgs.syncthing];
     };
