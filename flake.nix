@@ -72,14 +72,14 @@
         profile = "aizeft";
         desktop = "sway";
       };
-      # minimal = bldr.buildSystem {
-      #   profile = "minimal";
-      #   isIso = true;
-      # };
-      # graphical = bldr.buildSystem {
-      #   profile = "graphical";
-      #   isIso = true;
-      # };
+      minimal = bldr.buildSystem {
+        profile = "minimal";
+        isIso = true;
+      };
+      graphical = bldr.buildSystem {
+        profile = "graphical";
+        isIso = true;
+      };
     };
 
     homeConfigurations = {

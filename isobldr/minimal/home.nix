@@ -6,12 +6,15 @@
   ...
 }: {
   imports = [
-    "${self}/modules/common/nix.nix"
     "${self}/modules/cli/starship.nix"
-    "${self}/modules/editor/neovim"
+    "${self}/modules/editor/neovim/home.nix"
   ];
 
   programs.home-manager.enable = true;
+
+  editor.neovim.home.enable = true;
+
+  cli.starship.home.enable = true;
 
   home = {
     inherit
