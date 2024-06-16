@@ -3,8 +3,8 @@
   config,
   ...
 }: {
-  options.virtual.vmvariant.enable = lib.mkEnableOption "Enable vmvariant";
-  config = lib.mkIf config.virtual.vmvariant.enable {
+  options.virt.vmvariant.enable = lib.mkEnableOption "Enable vmvariant";
+  config = lib.mkIf config.virt.vmvariant.enable {
     virtualisation.vmVariant = {
       # following configuration is added only when building VM with build-vm
       virtualisation = {

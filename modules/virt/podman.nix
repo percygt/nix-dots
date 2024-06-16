@@ -3,10 +3,10 @@
   lib,
   ...
 }: let
-  dockerEnabled = config.virtualisation.docker.enable;
+  dockerEnabled = config.virt.docker.enable;
 in {
-  options.virtual.podman.enable = lib.mkEnableOption "Enable podman";
-  config = lib.mkIf config.virtual.podman.enable {
+  options.virt.podman.enable = lib.mkEnableOption "Enable podman";
+  config = lib.mkIf config.virt.podman.enable {
     virtualisation.podman = {
       enable = true;
       dockerCompat = !dockerEnabled;

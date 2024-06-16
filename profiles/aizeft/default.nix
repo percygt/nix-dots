@@ -31,7 +31,7 @@
     syncthing.system.enable = true;
   };
 
-  virtual = {
+  virt = {
     docker.enable = true;
     podman.enable = true;
     kvm.enable = true;

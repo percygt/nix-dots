@@ -6,21 +6,10 @@
 }: {
   targets.genericLinux.enable = true;
 
-  desktop = {
-    modules = {
-      xdg = {
-        enable = true;
-        linkDirsToData.enable = true;
-      };
-      gtk.enable = true;
-      qt.enable = true;
-    };
-    gnome.enable = true;
-  };
-
   editor = {
-    neovim.enable = true;
-    vscode.enable = true;
+    neovim.home.enable = true;
+    vscode.home.enable = true;
+    emacs.home.enable = true;
   };
 
   generic = {

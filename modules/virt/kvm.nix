@@ -5,8 +5,8 @@
   config,
   ...
 }: {
-  options.virtual.kvm.enable = lib.mkEnableOption "Enable kvm";
-  config = lib.mkIf config.virtual.kvm.enable {
+  options.virt.kvm.enable = lib.mkEnableOption "Enable kvm";
+  config = lib.mkIf config.virt.kvm.enable {
     environment.systemPackages = with pkgs; [
       gnome.adwaita-icon-theme
       win-virtio

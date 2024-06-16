@@ -6,8 +6,8 @@
   ...
 }: {
   # Enable the Docker service
-  options.virtual.docker.enable = lib.mkEnableOption "Enable docker";
-  config = lib.mkIf config.virtual.docker.enable {
+  options.virt.docker.enable = lib.mkEnableOption "Enable docker";
+  config = lib.mkIf config.virt.docker.enable {
     virtualisation.docker = {
       rootless = {
         enable = true;
