@@ -56,7 +56,11 @@
       bind-key f new-window 'yazi; tmux kill-pane'
       bind-key K new-window 'kpass; tmux kill-pane'
       bind k send-keys -t.- 'pmenu' Enter
-
+      # Resize window
+      bind -n M-H resize-pane -L 2
+      bind -n M-L resize-pane -R 2
+      bind -n M-K resize-pane -U 2
+      bind -n M-J resize-pane -D 2
       # Easier move of windows
       bind-key -r Home swap-window -t - \; select-window -t -
       bind-key -r End swap-window -t + \; select-window -t +

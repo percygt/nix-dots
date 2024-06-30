@@ -15,8 +15,8 @@ nmap("QQ", ":q!<cr>", silent)
 -- Format
 nnoremap("<a-f>", "<cmd>lua require('conform').format()<cr>", silent)
 -- trouble navigation
-nmap("<a-k>", "<cmd>lua require('trouble').next({ skip_groups = true, jump = true })<cr>zz", silent)
-nmap("<a-j>", "<cmd>lua require('trouble').previous({ skip_groups = true, jump = true })<cr>zz", silent)
+-- nmap("<a-k>", "<cmd>lua require('trouble').next({ skip_groups = true, jump = true })<cr>zz", silent)
+-- nmap("<a-j>", "<cmd>lua require('trouble').previous({ skip_groups = true, jump = true })<cr>zz", silent)
 
 nmap("<enter>", "<cmd>lua require('flash').jump()<cr>", silent)
 nmap("<s-enter>", "<cmd>lua require('flash').treesitter()<cr>", silent)
@@ -28,9 +28,12 @@ vmap("gp", "<cmd>lua require('actions-preview').code_actions()<cr>", silent)
 -- Save
 nmap("WW", ":w!<cr>", silent)
 imap("WW", "<esc>:w!<cr>", silent)
--- Move text up and down
-vmap("<a-j>", ":m '>+1<CR>gv=gv", silent)
-vmap("<a-k>", ":m '<-2<CR>gv=gv", silent)
+-- Move back to the beginning of line
+nmap("<c-b>", "^", silent)
+vmap("<c-b>", "^", silent)
+-- Move forward to the end of line
+nmap("<c-e>", "$", silent)
+vmap("<c-e>", "$", silent)
 -- Telescope
 nnoremap("<leader>?", builtin.oldfiles, { desc = "Find recently opened files" })
 nnoremap("<leader>/", function()

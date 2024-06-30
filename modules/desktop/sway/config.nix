@@ -23,19 +23,15 @@ in {
     right = "l";
     terminal = "${pkgs.foot}/bin/foot";
     output."*".bg = "${wallpaper} fill";
-    gaps.inner = 2;
+    gaps.inner = 4;
     inherit (import ./keybindings.nix {inherit modifier pkgs libx lib config up down left right terminal;}) keybindings;
     inherit (import ./startup.nix) startup;
     inherit (import ./window.nix {inherit mkAppsFloat;}) window;
     input = {
-      "type:keyboard" = {
-        xkb_layout = "us";
-      };
+      "type:keyboard".xkb_layout = "us";
+      "type:pointer".accel_profile = "adaptive";
       "type:touchpad" = {
         tap = "enabled";
-        accel_profile = "adaptive";
-      };
-      "type:pointer" = {
         accel_profile = "adaptive";
       };
     };
@@ -48,9 +44,9 @@ in {
     colors = {
       focused = {
         background = "#${clrs.normal.black}";
-        border = "#${clrs.extra.overlay0}";
-        childBorder = "#${clrs.extra.overlay0}";
-        indicator = "#${clrs.extra.overlay0}";
+        border = "#${clrs.extra.azure}";
+        childBorder = "#${clrs.extra.azure}";
+        indicator = "#${clrs.extra.azure}";
         text = "#${clrs.default.foreground}";
       };
       unfocused = {

@@ -28,21 +28,13 @@
       padding = mkLiteral "15px 15px";
     };
     ".modules-right" = {
-      padding = mkLiteral "5px";
+      padding = mkLiteral "7px 7px 7px 0px";
     };
     ".modules-center" = {
-      padding = mkLiteral "5px";
+      padding = mkLiteral "7px 7px 7px 0px";
     };
     ".modules-left" = {
-      padding = mkLiteral "3px";
-    };
-
-    ".modules-left > widget:first-child > #workspaces" = {
-      margin-left = mkLiteral "0px";
-    };
-
-    ".modules-right > widget:last-child > #workspaces" = {
-      margin-right = mkLiteral "0px";
+      padding = mkLiteral "7px 7px 7px 0px";
     };
 
     "#custom-daylight,
@@ -51,7 +43,7 @@
       font-weight = mkLiteral "400";
     };
     "#workspaces" = {
-      padding = mkLiteral "0px";
+      padding-left = mkLiteral "7px";
       margin = mkLiteral "0px";
     };
     "#workspaces button" = {
@@ -73,7 +65,7 @@
     };
 
     "#custom-power" = {
-      padding-right = mkLiteral "5px";
+      padding-right = mkLiteral "7px";
     };
     "#custom-reboot" = {
       padding = mkLiteral "0 15px 0 10px";

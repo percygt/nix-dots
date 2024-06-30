@@ -11,7 +11,7 @@ in rec {
   nixpkgsConfig = import ./nixpkgsConfig.nix;
   colors = (import ./colors.nix) // inputs.nix-colors.lib;
   fonts = import ./fonts.nix;
-  wallpaper = "${homeDirectory}/.local/share/backgrounds/nice-mountain.jpg";
+  wallpaper = "${homeDirectory}/.local/share/backgrounds/old-factory.jpg";
   sway = import ./sway.nix {inherit lib;};
   toRasi = import ./toRasi.nix {inherit lib;};
   mkLiteral = value: {
@@ -131,26 +131,30 @@ in rec {
         hash = "sha256-+YzZ+RqqIOSj7rxavBdcROQ0fyeG5I1c54vapJjwcbg=";
       };
 
-      installPhase = ''
-        runHook preInstall
-        # override colors
-        sed -i "s\window-radius: 12px\window-radius: 5px\g" ./src/sass/_variables.scss
+      installPhase =
+        /*
+        bash
+        */
+        ''
+          runHook preInstall
+          # override colors
+          # sed -i "s\window-radius: 12px\window-radius: 5px\g" ./src/sass/_variables.scss
 
-        sed -i "s\#0d0e11\#${colors.default.background}\g" ./src/sass/_color-palette-nord.scss
-        sed -i "s\#bf616a\#${colors.bright.red}\g" ./src/sass/_color-palette-nord.scss
-        sed -i "s\#a3be8c\#${colors.normal.magenta}\g" ./src/sass/_color-palette-nord.scss
-        sed -i "s\#ebcb8b\#${colors.bright.yellow}\g" ./src/sass/_color-palette-nord.scss
-        sed -i "s\#3a4150\#${colors.extra.azure}\g" ./src/sass/_color-palette-nord.scss
-        sed -i "s\#333a47\#${colors.extra.nocturne}\g" ./src/sass/_color-palette-nord.scss
-        sed -i "s\#242932\#${colors.extra.nocturne}\g" ./src/sass/_color-palette-nord.scss
-        sed -i "s\#1e222a\#${colors.extra.obsidian}\g" ./src/sass/_color-palette-nord.scss
-        name= HOME="$TMPDIR" ./install.sh \
-          --color dark \
-          --tweaks rimless nord \
-          --dest $out/share/themes
-        jdupes --quiet --link-soft --recurse $out/share
-        runHook postInstall
-      '';
+          sed -i "s\#0d0e11\#${colors.default.background}\g" ./src/sass/_color-palette-nord.scss
+          sed -i "s\#bf616a\#${colors.bright.red}\g" ./src/sass/_color-palette-nord.scss
+          sed -i "s\#a3be8c\#${colors.normal.magenta}\g" ./src/sass/_color-palette-nord.scss
+          sed -i "s\#ebcb8b\#${colors.bright.yellow}\g" ./src/sass/_color-palette-nord.scss
+          sed -i "s\#3a4150\#${colors.extra.azure}\g" ./src/sass/_color-palette-nord.scss
+          sed -i "s\#333a47\#${colors.extra.nocturne}\g" ./src/sass/_color-palette-nord.scss
+          sed -i "s\#242932\#${colors.extra.nocturne}\g" ./src/sass/_color-palette-nord.scss
+          sed -i "s\#1e222a\#${colors.extra.obsidian}\g" ./src/sass/_color-palette-nord.scss
+          name= HOME="$TMPDIR" ./install.sh \
+            --color dark \
+            --tweaks rimless nord \
+            --dest $out/share/themes
+          jdupes --quiet --link-soft --recurse $out/share
+          runHook postInstall
+        '';
     });
   cursorTheme = {
     name = "phinger-cursors-light";

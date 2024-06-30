@@ -17,7 +17,35 @@ local customOneDark = {
   command = { a = { fg = colors.bg0, bg = colors.sky, gui = "bold" } },
   terminal = { a = { fg = colors.bg0, bg = colors.mauve, gui = "bold" } },
 }
+-- LSP clients attached to buffer
+local function clients_lsp()
+  -- local bufnr = vim.api.nvim_get_current_buf()
 
+  local clients = vim.lsp.get_clients()
+  if next(clients) == nil then
+    return "󰌘  No servers"
+  end
+
+  local buf_client_names = {}
+  for _, client in pairs(clients) do
+    local client_name = client.name:gsub("%_", ""):gsub("(ls)", function(match)
+      return match:upper()
+    end)
+    table.insert(buf_client_names, client_name)
+  end
+
+  local hash = {}
+  local unique_client_names = {}
+
+  for _, v in ipairs(buf_client_names) do
+    if not hash[v] then
+      unique_client_names[#unique_client_names + 1] = v
+      hash[v] = true
+    end
+  end
+  local language_servers = table.concat(unique_client_names, "  ")
+  return "󰌘  " .. language_servers
+end
 -- color for lualine progress
 vim.api.nvim_set_hl(0, "progressHl1", { fg = colors.red })
 vim.api.nvim_set_hl(0, "progressHl2", { fg = colors.orange })
@@ -30,23 +58,11 @@ require("multicursors").setup({
   hint_config = false,
 })
 
-local function is_active()
-  local ok, hydra = pcall(require, "hydra.statusline")
-  return ok and hydra.is_active()
-end
-
-local function get_name()
-  local ok, hydra = pcall(require, "hydra.statusline")
-  if ok then
-    return hydra.get_name()
-  end
-  return ""
-end
 local ok, devicons = pcall(require, "nvim-web-devicons")
 require("lualine").setup({
   options = {
     component_separators = { left = "", right = "" },
-    section_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
     theme = customOneDark,
     disabled_filetypes = { tabline = { "NvimTree" } },
     globalstatus = true,
@@ -89,9 +105,8 @@ require("lualine").setup({
       },
     },
     lualine_x = {
-      { get_name, cond = is_active },
       "diagnostics",
-      "filesize",
+      "diff",
     },
     lualine_y = {
       {
@@ -107,8 +122,6 @@ require("lualine").setup({
           }
         end,
       },
-    },
-    lualine_z = {
       {
         "selectioncount",
         fmt = function(count)
@@ -118,9 +131,9 @@ require("lualine").setup({
           return "[" .. count .. "]"
         end,
       },
-      {
-        "location",
-      },
+    },
+    lualine_z = {
+      clients_lsp,
     },
   },
   inactive_sections = {

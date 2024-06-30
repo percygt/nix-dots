@@ -5,28 +5,29 @@
   pkgs,
   ...
 }: {
+  imports = [./emacs.nix];
   options.editor = {
     emacs.system.enable = lib.mkEnableOption "Enable emacs systemwide";
-    emacs.persist.enable = lib.mkOption {
-      description = "Enable emacs persist";
-      default = config.core.ephemeral.enable;
-      type = lib.types.bool;
+    emacs.package = lib.mkOption {
+      description = "emacs package to use";
+      default = pkgs.emacs-unstable-pgtk.override {withTreeSitter = true;};
+      type = lib.types.package;
     };
   };
-  config = lib.mkIf config.editor.neovim.system.enable {
-    environment.systemPackages = with pkgs; [emacs-unstable-pgtk];
-    environment.persistence = lib.mkIf config.editor.neovim.persist.enable {
+  config = lib.mkIf config.editor.emacs.system.enable {
+    environment.persistence = lib.mkIf config.core.ephemeral.enable {
       "/persist" = {
         users.${username} = {
           directories = [
-            ".config/emacs"
+            ".local/share/emacs"
+            ".local/cache/emacs"
           ];
         };
       };
     };
-    home-manager.users.${username} = {
-      imports = [./home.nix];
-      editor.emacs.home.enable = lib.mkDefault true;
-    };
+    # home-manager.users.${username} = {
+    #   imports = [./home.nix];
+    #   editor.emacs.home.enable = lib.mkDefault true;
+    # };
   };
 }

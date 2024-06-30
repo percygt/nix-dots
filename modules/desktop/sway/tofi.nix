@@ -24,7 +24,7 @@ in {
 
       # STYLE OPTIONS
       font = ${fonts.interface.name}
-      font-variations = "wght 700"
+      font-variations = "wght ${fonts.interface.weight}"
       selection-color = #${colors.extra.lavender}
       prompt-color =  #${colors.extra.lavender}
       text-color = #${colors.extra.overlay1}
@@ -32,22 +32,23 @@ in {
       background-color = #${colors.default.background}
       prompt-padding = 2
       anchor = top
-      height = 30
       width = 0
       horizontal = true
-      font-size = 10
+      font-size = 11
       outline-width = 0
       border-width = 0
       min-input-width = 120
       result-spacing = 10
-      corner-radius = 0
-      # margin-top = 2
-      # margin-left = 2
-      # margin-right = 2
-      # margin-bottom = 1
-      padding-top = 6
-      padding-left = 5
-      padding-right = 5
+      corner-radius = 12
+      height = 32
+      margin-top = 5
+      margin-left = 5
+      margin-right = 5
+      margin-bottom = 0
+      padding-top = 3
+      padding-bottom = 0
+      padding-left = 10
+      padding-right = 10
     '';
   };
 }

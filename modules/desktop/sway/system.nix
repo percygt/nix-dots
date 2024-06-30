@@ -16,9 +16,7 @@
           ".config/goa-1.0"
           ".local/cache/nix-index"
         ];
-        files = [
-          ".local/state/tofi-drun-history"
-        ];
+        files = [".local/state/tofi-drun-history"];
       };
     };
   };

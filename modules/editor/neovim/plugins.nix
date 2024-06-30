@@ -51,7 +51,7 @@ in {
           vim.g['conjure#mapping#doc_word'] = '<localleader>K'
           vim.g['conjure#client_on_load'] = false
         '';
-    } # devicons
+    }
     nvim-web-devicons
     trouble-nvim
     dressing-nvim

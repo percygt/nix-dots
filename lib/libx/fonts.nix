@@ -20,7 +20,7 @@
     style = "SemiBold";
     weight = "600";
     package = pkgs: pkgs.nerdfonts.override {fonts = ["VictorMono"];};
-    size = 15.0;
+    size = 14.0;
   };
 
   packages = pkgs:

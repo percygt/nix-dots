@@ -6,7 +6,10 @@
   position = "top";
   exclusive = true;
   layer = "top";
-  height = 30;
+  margin-top = 5;
+  margin-left = 5;
+  margin-right = 5;
+  height = 32;
   spacing = 5;
   passthrough = false;
   gtk-layer-shell = true;

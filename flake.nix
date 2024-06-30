@@ -1,5 +1,4 @@
-{
-  description = "PercyGT's nix config";
+{description = "PercyGT's nix config";
 
   inputs = {
     nix-stash.url = "github:percygt/nix-stash";
@@ -36,10 +35,18 @@
     spicetify.url = "github:the-argus/spicetify-nix";
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+    };
+
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
-
+    from-elisp = {
+      url = "github:o-santi/from-elisp";
+      flake = false;
+    };
     sikreto = {
       url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
       flake = false;
@@ -52,7 +59,7 @@
   } @ inputs: let
     inherit (self) outputs;
     defaultUser = "percygt";
-    stateVersion = "23.11";
+    stateVersion = "24.05";
     bldr = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
   in {
     packages = bldr.forEachSystem (system: (import ./packages {

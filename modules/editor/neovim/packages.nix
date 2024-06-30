@@ -56,6 +56,8 @@
 
     #clj
     clojure-lsp
+    leiningen
+    babashka
 
     #docker
     hadolint
@@ -65,11 +67,11 @@
 
     # Additional
     yamllint
-    nodePackages.bash-language-server
-    nodePackages.yaml-language-server
-    nodePackages.dockerfile-language-server-nodejs
-    nodePackages.vscode-langservers-extracted
-    nodePackages.markdownlint-cli
+    bash-language-server
+    yaml-language-server
+    dockerfile-language-server-nodejs
+    vscode-langservers-extracted
+    markdownlint-cli
     taplo-cli
     codespell
     gitlint

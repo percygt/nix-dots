@@ -9,13 +9,10 @@
     brightnessctl
     autotiling
     wlsunset
-    # cycle-pulse-sink
     grim
     kanshi
     libnotify
     pamixer
-    sway-contrib.inactive-windows-transparency
-    # nvtop
     wev
     slurp
     wdisplays

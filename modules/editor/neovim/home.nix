@@ -55,24 +55,27 @@ in {
     };
     home = {
       activation = let
-        hmNvim = "${flakeDirectory}/home/editor/neovim/config";
+        hmNvim = "${flakeDirectory}/modules/editor/neovim";
       in {
-        linkNvimSpell =
+        linkNvim =
           lib.hm.dag.entryAfter ["linkGeneration"]
           ''
-            [ -e "${config.xdg.configHome}/nvim/spell" ] || ln -s "${hmNvim}/spell" "${config.xdg.configHome}/nvim/spell"
+            [ -e "${config.xdg.configHome}/nvim/spell" ] || ln -s ${hmNvim}/spell ${config.xdg.configHome}/nvim/spell
+            [ -e "${config.xdg.configHome}/nvim/ftdetect" ] || ln -s ${hmNvim}/ftdetect ${config.xdg.configHome}/nvim/ftdetect
+            [ -e "${config.xdg.configHome}/nvim/lua" ] || mkdir -p "${config.xdg.configHome}/nvim/lua/config"
+            [ -e "${config.xdg.configHome}/nvim/lua/config" ] && cp -rs ${hmNvim}/lua/config/. ${config.xdg.configHome}/nvim/lua/config/
           '';
       };
     };
     xdg.configFile = {
-      "nvim/lua" = {
-        recursive = true;
-        source = ./config/lua;
-      };
-      "nvim/ftdetect" = {
-        recursive = true;
-        source = ./config/ftdetect;
-      };
+      # "nvim/lua" = {
+      #   recursive = true;
+      #   source = ./config/lua;
+      # };
+      # "nvim/ftdetect" = {
+      #   recursive = true;
+      #   source = ./config/ftdetect;
+      # };
       "nvim/lua/config/colors.lua" = {
         text = ''
           return {

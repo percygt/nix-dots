@@ -1,0 +1,238 @@
+#+TITLE: PercyGT' Emacs Config
+
+* Core
+** Remove bar mode
+#+begin_src emacs-lisp :tangle yes
+;; Define XDG directories
+(defvar user-emacs-config-directory
+  (concat (getenv "HOME") "/.config/emacs"))
+
+(defvar user-emacs-data-directory
+  (concat (getenv "HOME") "/.local/share/emacs"))
+
+(defvar user-emacs-cache-directory
+  (concat (getenv "HOME") "/.cache/emacs"))
+
+;; Set some variables.
+(setq-default
+ ;; Don't show the welcome splash screen.
+ inhibit-startup-screen t
+
+ ;; Avoid creation of ~/.emacs.d/
+ user-emacs-directory user-emacs-data-directory)
+
+(scroll-bar-mode -1)        ; Disable visible scrollbar
+(tool-bar-mode -1)          ; Disable the toolbar
+(tooltip-mode -1)           ; Disable tooltips
+(set-fringe-mode 10)        ; Give some breathing room
+(global-display-line-numbers-mode 1)
+(menu-bar-mode -1)            ; Disable the menu bar
+
+;; Set up the visible bell
+(setq visible-bell t)
+
+(setq use-short-answers t)
+
+(setq ring-bell-function 'ignore)
+(setq-default indent-tabs-mode nil)
+#+end_src
+
+** Font
+#+begin_src emacs-lisp :tangle yes
+(set-face-attribute 'default nil
+  :family "VictorMono Nerd Font"
+  :width 'normal
+  :weight 'normal)
+#+end_src
+
+** Backups
+#+begin_src emacs-lisp :tangle yes
+(setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist '(("." . "~/.saves/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)
+#+end_src
+
+** Background opacity
+Remove background on terminal, and add transparency on GUI
+#+begin_src emacs-lisp :tangle yes
+(defun on-after-init ()
+  (unless (display-graphic-p (selected-frame))
+    (set-face-background 'default "unspecified-bg" (selected-frame))))
+
+(add-hook 'window-setup-hook 'on-after-init)
+(set-frame-parameter nil 'alpha-background 70)
+(add-to-list 'default-frame-alist '(alpha-background . 70))
+#+end_src
+
+
+* Utility
+
+#+begin_src emacs-lisp :tangle yes
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+#+end_src
+
+** Direnv
+To integrate with nix shells.
+#+begin_src emacs-lisp :tangle yes
+(use-package direnv
+  :custom (direnv-always-show-summary nil)
+  :config (direnv-mode))
+#+end_src
+** Magit
+Configurations for magit
+*** Use Magit
+#+begin_src emacs-lisp :tangle yes
+(use-package magit
+  :custom (magit-process-finish-apply-ansi-colors t))
+#+end_src
+** Vertico, Orderless, Marginalia
+Pretty minibuffer support
+#+begin_src emacs-lisp :tangle yes
+  (use-package vertico
+    :config (vertico-mode))
+
+  (use-package orderless
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-defaults nil)
+    (completion-category-overrides '((file (styles basic partial-completion)))))
+
+  (use-package marginalia
+    :config (marginalia-mode))
+
+  (use-package ctrlf
+    :config (ctrlf-mode +1))
+#+end_src
+** Helpful and which key
+Better help defaults
+#+begin_src emacs-lisp :tangle yes
+(use-package helpful
+  :config (global-set-key (kbd "C-h f") #'helpful-callable)
+  :config (global-set-key (kbd "C-h v") #'helpful-variable)
+  :config (global-set-key (kbd "C-h x") #'helpful-command))
+
+(use-package which-key
+  :config (which-key-mode))
+#+end_src
+** Windows
+I wanna test out =winner-mode=
+#+begin_src emacs-lisp
+(use-package winner-mode
+  :config (winner-mode))
+#+end_src
+** Bind key
+#+begin_src emacs-lisp :tangle yes
+(use-package bind-key)
+#+end_src
+** Eglot
+Language server support. Already comes installed but used to configure additional language servers.
+#+begin_src emacs-lisp :tangle yes
+(use-package eglot
+  :config (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
+#+end_src
+
+** Corfu
+Completion popup system
+#+begin_src emacs-lisp :tangle yes
+(use-package corfu
+  :config (global-corfu-mode)
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  (corfu-separator ?\s)
+  (corfu-quit-no-match t))
+#+end_src
+** Vterm
+#+begin_src emacs-lisp :tangle yes
+(use-package vterm)
+#+end_src
+** Compilation
+Add support for ansi escape codes in compilation
+#+begin_src emacs-lisp :tangle yes
+(use-package ansi-color
+  :hook (compilation-filter . ansi-color-compilation-filter))
+#+end_src
+
+It also relies on python lsp server with builtin ruff support.
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+(add-hook 'python-ts-mode-hook #'eglot-ensure)
+#+end_src
+
+** Nix
+#+begin_src emacs-lisp :tangle yes
+(use-package nix-mode
+  :hook (nix-mode . eglot-ensure))
+#+end_src
+** Rust
+Try to use the package.
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+(add-hook 'rust-ts-mode-hook #'eglot-ensure)
+
+(setq rust-ts-mode-indent-offset 2)
+#+end_src
+
+** Markdown
+#+begin_src emacs-lisp :tangle yes
+(use-package markdown-mode
+  :mode "\\.md\\'")
+#+end_src
+* Personal
+** RSS reader
+#+begin_src emacs-lisp :tangle yes
+(use-package elfeed
+  :bind ("C-c r e" . elfeed)
+  :custom
+  (elfeed-feeds '("https://planet.emacslife.com/atom.xml"
+                  "https://fasterthanli.me/index.xml"
+                  "https://nullprogram.com/feed/"
+                  "https://without.boats/index.xml"
+                  "https://smallcultfollowing.com/babysteps/atom.xml"
+                  "https://surma.dev/index.xml")))
+#+end_src
+
+** Org mode and agenda.
+#+begin_src emacs-lisp :tangle yes
+(use-package org
+  :hook (org-mode . org-indent-mode)
+  :bind ("C-c a" . org-agenda)
+  :custom
+  (org-ellipsis " …")
+  (org-hide-emphasis-markers nil)
+  (org-fontify-quote-and-verse-blocks t)
+  (org-image-actual-width nil)
+  (org-indirect-buffer-display 'other-window)
+  (org-confirm-babel-evaluate nil)
+  (org-edit-src-content-indentation 0)
+  (org-agenda-files '("~/agenda.org"))
+  (org-agenda-window-setup 'current-window)
+  (org-agenda-restore-windows-after-quit t)
+  (org-agenda-block-separator nil)
+  (org-agenda-sticky t)
+  (org-agenda-time-grid
+      '((daily today require-timed)
+        ()
+        "......" "----------------"))
+  )
+#+end_src

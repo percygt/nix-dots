@@ -27,6 +27,9 @@ require("mini.surround").setup()
 -- NOTE: MINI PAIRS
 require("mini.pairs").setup()
 
+-- NOTE: MINI MOVE
+require("mini.move").setup()
+
 -- NOTE: MINI SESSIONS
 require("mini.sessions").setup({
   autoread = false,
@@ -99,6 +102,7 @@ mini_files.setup({
     width_preview = 100,
   },
   mappings = {
+    close = "<esc>",
     go_in = "L",
     go_in_plus = "l",
   },
@@ -106,9 +110,9 @@ mini_files.setup({
 
 local keymap = require("config.helpers")
 local nnoremap = keymap.nnoremap
-local minifiles_toggle = function(...)
-  if not mini_files.close() then
-    mini_files.open(...)
-  end
-end
-nnoremap("<leader>f", minifiles_toggle) -- open file browser
+-- local minifiles_toggle = function(...)
+--   if not mini_files.close() then
+--     mini_files.open(...)
+--   end
+-- end
+nnoremap("<leader>f", "<cmd>lua require('mini.files').open()<cr>") -- open file browser

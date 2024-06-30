@@ -1,5 +1,44 @@
 -- Highlight on yank
 -- See `:help vim.highlight.on_yank()`
+local lsp = require("vim.lsp")
+local get_clients = vim.lsp.get_clients
+
+vim.api.nvim_create_user_command("LspStop", function(kwargs)
+  local name = kwargs.fargs[1]
+  for _, client in ipairs(get_clients({ name = name })) do
+    client.stop()
+  end
+end, {
+  nargs = 1,
+  complete = function()
+    return vim.tbl_map(function(c)
+      return c.name
+    end, get_clients())
+  end,
+})
+vim.api.nvim_create_user_command("LspRestart", function(kwargs)
+  local name = kwargs.fargs[1]
+  for _, client in ipairs(get_clients({ name = name })) do
+    local bufs = lsp.get_buffers_by_client_id(client.id)
+    client.stop()
+    vim.wait(30000, function()
+      return lsp.get_client_by_id(client.id) == nil
+    end)
+    local client_id = lsp.start_client(client.config)
+    if client_id then
+      for _, buf in ipairs(bufs) do
+        lsp.buf_attach_client(buf, client_id)
+      end
+    end
+  end
+end, {
+  nargs = 1,
+  complete = function()
+    return vim.tbl_map(function(c)
+      return c.name
+    end, get_clients())
+  end,
+})
 vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
   callback = function()

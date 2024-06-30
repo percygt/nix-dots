@@ -18,15 +18,17 @@
       "/persist".users.${username}.directories = [
         ".local/state/wireplumber"
       ];
+      "/persist/system".directories = [
+        "/var/lib/alsa"
+      ];
     };
-    sound.enable = true;
+    # sound.enable = false;
     hardware.pulseaudio.enable = lib.mkForce false;
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      jack.enable = true;
       pulse.enable = true;
 
       wireplumber.configPackages = [
