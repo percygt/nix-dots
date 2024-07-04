@@ -157,7 +157,11 @@ cmp.setup({
 
 cmp.setup.cmdline("/", {
   mapping = cmp.mapping.preset.cmdline({
+    -- disables autocomplete
     ["<esc>"] = {
+      c = cmp.mapping.confirm({ select = false }),
+    },
+    ["<cr>"] = {
       c = cmp.mapping.confirm({ select = false }),
     },
   }),
@@ -165,14 +169,19 @@ cmp.setup.cmdline("/", {
     { name = "buffer" },
   },
 })
--- cmp.setup.cmdline(":", {
---   mapping = cmp.mapping.preset.cmdline(),
---   sources = cmp.config.sources({
---     { name = "async_path" },
---   }, {
---     { name = "cmdline" },
---   }),
--- })
+cmp.setup.cmdline(":", {
+  mapping = cmp.mapping.preset.cmdline({
+    -- disables autocomplete
+    ["<cr>"] = {
+      c = cmp.mapping.confirm({ select = false }),
+    },
+  }),
+  sources = cmp.config.sources({
+    { name = "async_path" },
+  }, {
+    { name = "cmdline" },
+  }),
+})
 -- Setup up vim-dadbod
 cmp.setup.filetype({ "sql" }, {
   sources = {

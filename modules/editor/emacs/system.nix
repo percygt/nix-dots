@@ -1,11 +1,33 @@
 {
-  username,
+  pkgs,
+  inputs,
   lib,
   config,
-  pkgs,
+  username,
   ...
-}: {
-  imports = [./emacs.nix];
+}: let
+  cfg = config.editor.emacs;
+
+  emacsConfig = pkgs.concatTextFile {
+    name = "config.el";
+    files = map (dir: ./config/${dir}) (builtins.attrNames (builtins.readDir ./config));
+  };
+
+  extraPackages = import ./extraPackages.nix {inherit pkgs;};
+
+  emacs = pkgs.emacsWithPackagesFromUsePackage {
+    inherit (cfg) package;
+    alwaysEnsure = true;
+    config = builtins.readFile emacsConfig;
+    extraEmacsPackages = epkgs:
+      [epkgs.treesit-grammars.with-all-grammars]
+      ++ extraPackages;
+  };
+
+  emacsWithExtraPackages = pkgs.runCommand "emacs" {nativeBuildInputs = [pkgs.makeWrapper];} ''
+    makeWrapper ${emacs}/bin/emacs $out/bin/emacs --prefix PATH : ${lib.makeBinPath extraPackages}
+  '';
+in {
   options.editor = {
     emacs.system.enable = lib.mkEnableOption "Enable emacs systemwide";
     emacs.package = lib.mkOption {
@@ -15,6 +37,17 @@
     };
   };
   config = lib.mkIf config.editor.emacs.system.enable {
+    nixpkgs.overlays = [inputs.emacs-overlay.overlays.default];
+    environment.systemPackages = [
+      (pkgs.aspellWithDicts (dicts: with dicts; [en en-computers]))
+      emacsWithExtraPackages
+    ];
+    fonts.packages = with pkgs; [
+      emacs-all-the-icons-fonts
+      (nerdfonts.override {fonts = ["VictorMono"];})
+      (iosevka-bin.override {variant = "Aile";})
+      (iosevka-bin.override {variant = "Etoile";})
+    ];
     environment.persistence = lib.mkIf config.core.ephemeral.enable {
       "/persist" = {
         users.${username} = {
@@ -25,9 +58,9 @@
         };
       };
     };
-    # home-manager.users.${username} = {
-    #   imports = [./home.nix];
-    #   editor.emacs.home.enable = lib.mkDefault true;
-    # };
+    home-manager.users.${username} = {
+      imports = [./home.nix];
+      editor.emacs.home.enable = lib.mkDefault true;
+    };
   };
 }

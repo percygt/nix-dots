@@ -1,22 +1,24 @@
 {pkgs, ...}: {
+  extraLuaPackages = luaPkgs: with luaPkgs; [jsregexp];
+  extraPython3Packages = pyPkgs:
+    with pyPkgs; [
+      python-lsp-server
+      python-lsp-ruff
+      # pylsp-mypy
+    ];
   extraPackages = with pkgs; [
     # Essentials
     nodePackages.npm
     nodePackages.neovim
+    tree-sitter
+    fswatch
+    gnumake
+    cmake
 
     # Telescope dependencies
+    manix
     ripgrep
     fd
-
-    # python
-    (python3.withPackages (ps:
-      with ps; [
-        python-lsp-server
-        # pylsp-mypy
-        python-lsp-ruff
-      ]))
-    # ruff
-    # nodePackages.pyright
 
     # Lua
     lua-language-server
@@ -28,6 +30,7 @@
     nil
 
     # C, C++
+    gcc
     clang-tools
     cppcheck
 
@@ -51,6 +54,7 @@
     gopls
     golangci-lint
     delve
+    gotools
     go-tools
     gofumpt
 

@@ -73,6 +73,13 @@
         {
           command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
           criteria = {
+            title = "(null)";
+            class = "Electron";
+          };
+        }
+        {
+          command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
+          criteria = {
             title = ".*";
             app_id = "nemo";
           };

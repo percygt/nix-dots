@@ -1,4 +1,5 @@
-{description = "PercyGT's nix config";
+{
+  description = "PercyGT's nix config";
 
   inputs = {
     nix-stash.url = "github:percygt/nix-stash";
@@ -34,7 +35,10 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     spicetify.url = "github:the-argus/spicetify-nix";
 
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";

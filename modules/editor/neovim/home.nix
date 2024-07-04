@@ -51,7 +51,12 @@ in {
         require("config.ui.misc")
       '';
       inherit (import ./plugins.nix {inherit pkgs;}) plugins;
-      inherit (import ./packages.nix {inherit pkgs;}) extraPackages;
+      inherit
+        (import ./packages.nix {inherit pkgs;})
+        extraPackages
+        extraLuaPackages
+        extraPython3Packages
+        ;
     };
     home = {
       activation = let
@@ -60,9 +65,9 @@ in {
         linkNvim =
           lib.hm.dag.entryAfter ["linkGeneration"]
           ''
+            [ -e "${config.xdg.configHome}/nvim/lua" ] || mkdir -p "${config.xdg.configHome}/nvim/lua/config"
             [ -e "${config.xdg.configHome}/nvim/spell" ] || ln -s ${hmNvim}/spell ${config.xdg.configHome}/nvim/spell
             [ -e "${config.xdg.configHome}/nvim/ftdetect" ] || ln -s ${hmNvim}/ftdetect ${config.xdg.configHome}/nvim/ftdetect
-            [ -e "${config.xdg.configHome}/nvim/lua" ] || mkdir -p "${config.xdg.configHome}/nvim/lua/config"
             [ -e "${config.xdg.configHome}/nvim/lua/config" ] && cp -rs ${hmNvim}/lua/config/. ${config.xdg.configHome}/nvim/lua/config/
           '';
       };

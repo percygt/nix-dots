@@ -15,6 +15,7 @@
       foliate
       mumble
       obsidian
+      logseq
       gnome-podcasts
     ];
   };
@@ -32,6 +33,7 @@
         directories = [
           ".local/share/Mumble"
           ".config/Mumble"
+          ".config/Logseq"
           ".local/cache/amberol"
         ];
       };
