@@ -4,12 +4,27 @@
   libx,
   ...
 }: let
-  inherit (libx) toRasi mkLiteral fonts colors;
+  inherit (libx) toRasi mkLiteral fonts colors sway;
+  inherit (sway) viewRebuildLogCmd;
   daylight = pkgs.writeBabashkaScript {
     name = "daylight";
     text = libx.clj.daylight;
   };
-  waybar_config = import ./config.nix {inherit lib daylight colors;};
+  waybarRebuild = pkgs.writeShellApplication {
+    name = "waybar-rebuild-exec";
+    runtimeInputs = [pkgs.coreutils-full pkgs.systemd pkgs.gnugrep];
+    text = ''
+      status="$(systemctl is-active nixos-rebuild.service || true)"
+      if grep -q "inactive" <<< "$status"; then
+        printf "rebuild: "
+      elif grep -q "active" <<< "$status"; then
+        printf "rebuild: "
+      elif grep -q "failed" <<< "$status"; then
+        printf "rebuild: "
+      fi
+    '';
+  };
+  waybar_config = import ./config.nix {inherit lib daylight colors waybarRebuild viewRebuildLogCmd;};
 in {
   # needed for mpris
   services.playerctld.enable = true;

@@ -2,6 +2,8 @@
   lib,
   colors,
   daylight,
+  waybarRebuild,
+  viewRebuildLogCmd,
 }: {
   position = "top";
   exclusive = true;
@@ -17,7 +19,7 @@
 
   modules-left = ["sway/workspaces" "sway/window"];
   modules-center = ["clock#time" "clock#icon" "clock#date"];
-  modules-right = ["mpris" "tray" "cpu" "memory" "temperature" "wireplumber" "pulseaudio#source" "idle_inhibitor" "custom/wlsunset" "backlight" "network" "battery" "group/group-power"];
+  modules-right = ["mpris" "tray" "cpu" "memory" "temperature" "wireplumber" "custom/rebuild" "pulseaudio#source" "idle_inhibitor" "custom/wlsunset" "backlight" "network" "battery" "group/group-power"];
 
   "sway/workspaces" = {
     format = "{icon}";
@@ -209,5 +211,12 @@
     format = "⏻";
     on-click = "systemctl poweroff";
     tooltip = false;
+  };
+  "custom/rebuild" = {
+    format = "{}";
+    max-length = 12;
+    interval = 2;
+    exec = lib.getExe waybarRebuild;
+    on-click = viewRebuildLogCmd;
   };
 }

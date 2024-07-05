@@ -13,9 +13,8 @@
 }: let
   mod = modifier;
   inherit (libx) sway;
-  inherit (sway) mkWorkspaceKeys mkDirectionKeys tofipass toggle-blur dropdown-terminal power-menu;
+  inherit (sway) viewRebuildLogCmd mkWorkspaceKeys mkDirectionKeys tofipass toggle-blur dropdown-terminal power-menu;
   weztermPackage = config.programs.wezterm.package;
-  viewRebuildLogCmd = "foot --app-id=nixos_rebuild_log -- journalctl -efo cat -u nixos-rebuild.service";
 in {
   keybindings =
     mkDirectionKeys mod {inherit up down left right;}

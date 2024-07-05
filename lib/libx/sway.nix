@@ -6,6 +6,8 @@ in rec {
       inherit (pkgs) swayfx-unwrapped;
     };
 
+  viewRebuildLogCmd = "foot --app-id=nixos_rebuild_log -- journalctl -efo cat -u nixos-rebuild.service";
+
   tofipass = {pkgs}:
     pkgs.writers.writeBash "tofipass" ''
       shopt -s nullglob globstar

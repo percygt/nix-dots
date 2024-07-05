@@ -77,6 +77,7 @@
     "#cpu,
     #tray,
     #custom-wlsunset,
+    #custom-rebuild,
     #bluetooth,
     #temperature,
     #memory,
