@@ -36,27 +36,22 @@
       LIBVA_DRIVER_NAME = "iHD";
     };
 
-    hardware = {
-      opengl.extraPackages = with pkgs; [
-        (
-          if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11")
-          then vaapiIntel
-          else intel-vaapi-driver
-        )
-        vaapiVdpau
-        libvdpau-va-gl
-        intel-media-driver
-      ];
-      opengl.extraPackages32 = with pkgs.driversi686Linux; [
-        (
-          if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11")
-          then vaapiIntel
-          else intel-vaapi-driver
-        )
-        vaapiVdpau
-        libvdpau-va-gl
-        intel-media-driver
-      ];
-    };
+    hardware.graphics.extraPackages = with pkgs; [
+      (
+        if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11")
+        then vaapiIntel
+        else intel-vaapi-driver
+      )
+      intel-media-driver
+    ];
+
+    hardware.graphics.extraPackages32 = with pkgs.driversi686Linux; [
+      (
+        if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11")
+        then vaapiIntel
+        else intel-vaapi-driver
+      )
+      intel-media-driver
+    ];
   };
 }

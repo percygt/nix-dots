@@ -15,11 +15,7 @@
       jedi_completion = {fuzzy = true;};
       black = {enabled = false;};
       pyls_isort = {enabled = false;};
-      autopep8 = {enabled = false;};
-      yapf = {enabled = false;};
       pylint = {enabled = false;};
-      pyflakes = {enabled = false;};
-      pycodestyle = {enabled = false;};
     };
   };
   clojure_lsp = {};

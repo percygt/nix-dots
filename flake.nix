@@ -2,10 +2,10 @@
   description = "PercyGT's nix config";
 
   inputs = {
-    nix-stash.url = "github:percygt/nix-stash";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nixpkgs.follows = "nix-stash/nixpkgs";
-    nixpkgs-stable.follows = "nix-stash/nixpkgs-stable";
+    nix-stash.url = "github:percygt/nix-stash";
 
     scenefx.url = "github:wlrfx/scenefx";
     scenefx.inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +39,7 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,10 +48,7 @@
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
-    from-elisp = {
-      url = "github:o-santi/from-elisp";
-      flake = false;
-    };
+
     sikreto = {
       url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
       flake = false;

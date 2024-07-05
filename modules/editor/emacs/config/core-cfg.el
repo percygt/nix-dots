@@ -1,8 +1,6 @@
 ;;; core-cfg.el --- Org Mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(use-package diminish :after use-package) ;; if you use :diminish
-
 (use-package emacs
   :ensure nil
   :demand
@@ -25,6 +23,8 @@
   (read-extended-command-predicate  #'command-completion-default-include-p)
   :hook ((prog-mode . display-fill-column-indicator-mode)
          ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
+
+(use-package diminish :after use-package) ;; if you use :diminish
 
 (use-package font
   :ensure nil

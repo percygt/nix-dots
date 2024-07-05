@@ -2,15 +2,13 @@
   pkgs,
   targetUser,
   lib,
-  libx,
   ...
 }: let
-  inherit (libx) mkPathList;
+  mkPathList = dir: builtins.attrNames (builtins.readDir dir);
   mkBashScriptsFromList = scripts:
-    map (
-      script:
-        pkgs.writeShellScriptBin (lib.removeSuffix ".sh" script) (builtins.readFile ./scripts/${script})
-    )
+    map (script:
+      pkgs.writeShellScriptBin
+      (lib.removeSuffix ".bash" script) (builtins.readFile ./scripts/${script}))
     scripts;
 in {
   services.udisks2.enable = true;

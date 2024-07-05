@@ -8,7 +8,7 @@ in {
   borgmatic = prev.borgmatic.override {enableSystemd = false;};
   logseq = prev.logseq.overrideAttrs (oldAttrs: {
     postFixup = ''
-      makeWrapper ${prev.electron_28}/bin/electron $out/bin/${oldAttrs.pname} \
+      makeWrapper ${prev.electron}/bin/electron $out/bin/${oldAttrs.pname} \
         --add-flags $out/share/${oldAttrs.pname}/resources/app \
         --add-flags "--use-gl=desktop" \
         --prefix LD_LIBRARY_PATH : "${prev.lib.makeLibraryPath [prev.stdenv.cc.cc.lib]}"

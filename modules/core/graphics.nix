@@ -14,7 +14,6 @@
   config = lib.mkIf config.core.graphics.enable {
     hardware.opengl = {
       enable = true;
-      driSupport = true;
       driSupport32Bit = true;
     };
   };

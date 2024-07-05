@@ -57,7 +57,18 @@ vim.api.nvim_set_hl(0, "progressHl7", { fg = colors.purple })
 require("multicursors").setup({
   hint_config = false,
 })
+local function is_active()
+  local ok, hydra = pcall(require, "hydra.statusline")
+  return ok and hydra.is_active()
+end
 
+local function get_name()
+  local ok, hydra = pcall(require, "hydra.statusline")
+  if ok then
+    return hydra.get_name()
+  end
+  return ""
+end
 local ok, devicons = pcall(require, "nvim-web-devicons")
 require("lualine").setup({
   options = {
@@ -105,6 +116,8 @@ require("lualine").setup({
       },
     },
     lualine_x = {
+      -- multicursor status
+      { get_name, cond = is_active },
       "diagnostics",
       "diff",
     },

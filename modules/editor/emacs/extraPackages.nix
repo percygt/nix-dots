@@ -1,5 +1,6 @@
 {pkgs}:
 with pkgs; [
+  (aspellWithDicts (dicts: with dicts; [en en-computers]))
   (python3.withPackages (ps:
     with ps; [
       python-lsp-server
