@@ -36,8 +36,12 @@
         };
       };
 
-      hardware.opengl.extraPackages = with pkgs; [
-        vaapiVdpau
+      hardware.graphics.extraPackages = [
+        (
+          if pkgs ? libva-vdpau-driver
+          then pkgs.libva-vdpau-driver
+          else pkgs.vaapiVdpau
+        )
       ];
 
       hardware.nvidia = {

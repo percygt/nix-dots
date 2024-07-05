@@ -1,6 +1,21 @@
 {pkgs}:
 (import ./derivations.nix {inherit pkgs;})
 // {
+  success-alert = pkgs.fetchurl {
+    # https://freesound.org/people/martcraft/sounds/651624/
+    url = "https://cdn.freesound.org/previews/651/651624_14258856-lq.mp3";
+    sha256 = "urNwmGEG2YJsKOtqh69n9VHdj9wSV0UPYEQ3caEAF2c=";
+  };
+  failure-alert = pkgs.fetchurl {
+    # https://freesound.org/people/martcraft/sounds/651625/
+    url = "https://cdn.freesound.org/previews/651/651625_14258856-lq.mp3";
+    sha256 = "XAEJAts+KUNVRCFLXlGYPIJ06q4EjdT39G0AsXGbT2M=";
+  };
+  pomo-alert = pkgs.fetchurl {
+    # https://freesound.org/people/dersinnsspace/sounds/421829/
+    url = "https://cdn.freesound.org/previews/421/421829_8224400-lq.mp3";
+    sha256 = "049x6z6d3ssfx6rh8y11var1chj3x67nfrakigydnj3961hnr6ar";
+  };
   # babashka script source: https://github.com/stelcodes/nixos-config/commit/95d8734bad6162157f92f77951215c0aaa6b71d2
   writeBabashkaScript = pkgs.callPackage ./clj/writeBabashkaScript.nix {};
   cycle-pulse-sink = pkgs.writeBabashkaScript {

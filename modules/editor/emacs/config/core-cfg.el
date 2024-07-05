@@ -104,6 +104,7 @@
   (gc-cons-percentage 0.8))
 
 (use-package savehist
+  :ensure nil
   :hook (after-init . savehist-mode))
 
 (use-package recentf

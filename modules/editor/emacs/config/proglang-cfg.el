@@ -54,6 +54,7 @@
 ;; Go mode
 (use-package go-mode)
 (use-package go-ts-mode
+  :ensure nil
   :hook ((go-ts-mode . go-format-on-save-mode)
          (go-ts-mode . eglot-ensure))
   :mode (("\\.go\\'" . go-ts-mode)
@@ -65,6 +66,7 @@
 
 (use-package rust-mode)
 (use-package rust-ts-mode
+  :ensure nil
   :mode (("\\.rs\\'" . rust-ts-mode))
   :hook (rust-ts-mode . eglot-ensure))
 

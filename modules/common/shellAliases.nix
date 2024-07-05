@@ -11,11 +11,14 @@
     rm = "rm -i";
     rmrf = "rm -rf";
     rmt = "trash";
+    date-sortable = "date +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with local timezone
+    date-sortable-utc = "date -u +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with UTC timezone
+    d = "dua --stay-on-filesystem interactive";
     r = "rsync --archive --verbose --human-readable --progress --one-file-system --ignore-existing";
     sc = "systemctl";
     scu = "systemctl --user";
-    jc = "journalctl -ex --unit";
-    jcu = "journalctl --user -ex --unit";
+    jc = "journalctl -exf --unit";
+    jcu = "journalctl --user -exf --unit";
     curl = "curlie";
     dc = "docker compose";
     # nd = "nix develop";
@@ -33,7 +36,12 @@
     nfu = "nix flake update";
     nsu = "nh os switch -u ${flakeDirectory}";
     ns = "nh os switch ${flakeDirectory}";
+    ns_ = "systemctl start --user nixos-rebuild.service";
     hs = "nh home switch ${flakeDirectory}";
     nhs = "ns;hms";
+    swaytree = "swaymsg -t get_tree | nvim -R";
+    swayinputs = "swaymsg -t get_inputs | nvim -R";
+    swayoutputs = "swaymsg -t get_outputs | nvim -R";
+    nix-repl-flake = "nix repl --expr \"(builtins.getFlake (toString ${flakeDirectory})).nixosConfigurations.$hostname\"";
   };
 }

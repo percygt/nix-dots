@@ -15,14 +15,17 @@
   inherit (libx) sway;
   inherit (sway) mkWorkspaceKeys mkDirectionKeys tofipass toggle-blur dropdown-terminal power-menu;
   weztermPackage = config.programs.wezterm.package;
+  viewRebuildLogCmd = "foot --app-id=nixos_rebuild_log -- journalctl -efo cat -u nixos-rebuild.service";
 in {
   keybindings =
     mkDirectionKeys mod {inherit up down left right;}
     // mkWorkspaceKeys mod ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"]
     // {
       "Ctrl+KP_Multiply" = "exec ${toggle-blur {inherit pkgs;}}";
+      "Ctrl+KP_Insert" = "exec ${lib.getExe pkgs.toggle-sway-window} --id nixos_rebuild_log --width 80 --height 80 -- ${viewRebuildLogCmd}";
+      "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
       "${mod}+w" = "exec ${dropdown-terminal {inherit pkgs weztermPackage;}}";
-      "${mod}+return" = "exec ${terminal}";
+      "${mod}+Return" = "exec ${terminal}";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
       "${mod}+Shift+e" = "exec pkill tofi || ${power-menu {inherit pkgs;}}";
       "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
@@ -37,12 +40,12 @@ in {
       "${mod}+k" = "exec pkill tofi || keepmenu -C | xargs swaymsg exec --";
       "${mod}+Shift+k" = "exec pkill tofi || ${tofipass {inherit pkgs;}}";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
-      "${mod}+shift+tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
-      "${mod}+tab" = "workspace back_and_forth";
-      "${mod}+backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
-      "${mod}+delete" = "exec swaylock";
+      "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
+      "${mod}+Tab" = "workspace back_and_forth";
+      "${mod}+Backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
+      "${mod}+Delete" = "exec swaylock";
       #FIXME:
-      "${mod}+shift+v" = "exec ${lib.getExe pkgs.cycle-pulse-sink}";
+      "${mod}+Shift+v" = "exec ${lib.getExe pkgs.cycle-pulse-sink}";
 
       XF86Calculator = "exec ${lib.getExe pkgs.toggle-sway-window} --id qalculate-gtk -- qalculate-gtk";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
@@ -53,12 +56,12 @@ in {
       "${mod}+t" = "layout tabbed";
       "${mod}+Alt+s" = "layout toggle split";
       "${mod}+Shift+s" = "sticky toggle";
-      "${mod}+less" = "focus parent";
-      "${mod}+greater" = "focus child";
-      "${mod}+Shift+minus" = "split h";
-      "${mod}+Shift+backslash" = "split v";
-      "${mod}+Shift+space" = "floating toggle";
-      "${mod}+space" = "focus mode_toggle";
+      "${mod}+Less" = "focus parent";
+      "${mod}+Greater" = "focus child";
+      "${mod}+Shift+Minus" = "split h";
+      "${mod}+Shift+Backslash" = "split v";
+      "${mod}+Shift+Space" = "floating toggle";
+      "${mod}+Space" = "focus mode_toggle";
       "${mod}+Shift+r" = "reload";
 
       "Ctrl+Alt+l" = "workspace next";
@@ -77,10 +80,10 @@ in {
       XF86AudioMicMute = "exec pamixer --default-source -t";
 
       # Move window to scratchpad:
-      "${mod}+Shift+plus" = "move scratchpad";
+      "${mod}+Shift+Plus" = "move scratchpad";
 
       # Show scratchpad window and cycle through them:
-      "${mod}+plus" = "scratchpad show";
+      "${mod}+Plus" = "scratchpad show";
 
       # Enter other modes:
       "${mod}+r" = "mode resize";

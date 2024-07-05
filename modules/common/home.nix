@@ -5,7 +5,6 @@
   self,
   isGeneric,
   lib,
-  config,
   ...
 }: {
   imports =
@@ -40,7 +39,9 @@
     };
   };
 
-  xdg.dataFile.backgrounds.source = "${self}/lib/backgrounds";
+  xdg.dataFile = {
+    backgrounds.source = "${self}/lib/backgrounds";
+  };
   xdg.configFile."nixpkgs/config.nix".text = ''
     {
       allowUnfree = true;

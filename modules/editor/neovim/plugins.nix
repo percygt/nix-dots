@@ -182,11 +182,11 @@ in {
       type = "lua";
       config = ''require("config.tools.betterescape")'';
     }
-    {
-      plugin = pkgs.vimPlugins.nvim-spectre;
-      type = "lua";
-      config = ''require("config.tools.spectre")'';
-    }
+    # {
+    #   plugin = pkgs.vimPlugins.nvim-spectre;
+    #   type = "lua";
+    #   config = ''require("config.tools.spectre")'';
+    # }
     {
       plugin = pkgs.vimPlugins.obsidian-nvim;
       type = "lua";

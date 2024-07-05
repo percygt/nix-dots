@@ -1,19 +1,24 @@
 {
   description = "PercyGT's nix config";
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://percygtdev.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
+    ];
+  };
 
   inputs = {
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
     nix-stash.url = "github:percygt/nix-stash";
+    nixpkgs.follows = "nix-stash/nixpkgs";
+    nixpkgs-stable.follows = "nix-stash/nixpkgs-stable";
 
-    scenefx.url = "github:wlrfx/scenefx";
-    scenefx.inputs.nixpkgs.follows = "nixpkgs";
-    swayfx-unwrapped = {
-      url = "github:WillPower3309/swayfx";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.scenefx.follows = "scenefx";
-    };
+    swayfx-unwrapped.follows = "nix-stash/nix-sources/swayfx-unwrapped";
+    neovim-nightly-overlay.follows = "nix-stash/nix-sources/neovim-nightly-overlay";
+    emacs-overlay.follows = "nix-stash/nix-sources/emacs-overlay";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -21,8 +26,11 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    sops-nix.url = "github:mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix = {
+      url = "github:mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
+    };
 
     wayland-pipewire-idle-inhibit.url = "github:rafaelrc7/wayland-pipewire-idle-inhibit";
     wayland-pipewire-idle-inhibit.inputs.nixpkgs.follows = "nixpkgs";
@@ -34,17 +42,6 @@
     impermanence.url = "github:nix-community/impermanence";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     spicetify.url = "github:the-argus/spicetify-nix";
-
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
-    };
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";

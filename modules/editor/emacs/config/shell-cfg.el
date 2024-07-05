@@ -11,6 +11,7 @@
 (use-package fish-mode)
 
 (use-package eshell
+  :ensure nil
   :commands eshell
   :config
   (setq eshell-destroy-buffer-when-process-dies t))

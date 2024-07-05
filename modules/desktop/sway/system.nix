@@ -6,7 +6,7 @@
   lib,
   ...
 }: {
-  imports = [./tuigreet.nix];
+  imports = [./tuigreet.nix ./nixos-rebuild.nix];
   home-manager.users.${username} = import ./home.nix;
   environment.persistence = lib.mkIf config.core.ephemeral.enable {
     "/persist" = {
@@ -67,7 +67,7 @@
         gcr
         gnome.gnome-settings-daemon
         dconf
-        gnome.gnome-keyring
+        gnome-keyring
       ];
     };
     gnome = {

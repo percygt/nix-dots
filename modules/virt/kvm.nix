@@ -8,7 +8,7 @@
   options.virt.kvm.enable = lib.mkEnableOption "Enable kvm";
   config = lib.mkIf config.virt.kvm.enable {
     environment.systemPackages = with pkgs; [
-      gnome.adwaita-icon-theme
+      adwaita-icon-theme
       win-virtio
       win-spice
       spice
