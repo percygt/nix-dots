@@ -7,7 +7,6 @@
   ...
 }:
 let
-  g = config._general;
   cfg = config.wayland.windowManager.sway.config;
   mod = cfg.modifier;
   wez-ddterm = if isGeneric then pkgs.wez-wrapped-ddterm else pkgs.wez-nightly-ddterm;
@@ -18,12 +17,6 @@ let
     mkWorkspaceKeys
     mkDirectionKeys
     ;
-  emacsconfig = pkgs.writers.writeBash "emacsconfig" ''
-    emacsclient -F '((name . "EmacsConfig"))' -c ${g.flakeDirectory}/modules/editor/emacs;
-  '';
-  emacsnote = pkgs.writers.writeBash "emacsnote" ''
-    emacsclient -c -e '(org-roam-node-find)' -F '((name . "Notes"))' 
-  '';
 in
 {
   wayland.windowManager.sway = {
@@ -50,8 +43,6 @@ in
         "${mod}+v" = "exec $toggle_window --id pavucontrol -- pavucontrol";
         "${mod}+r" = "exec $toggle_window --id info.febvre.Komikku -- info.febvre.Komikku";
         "${mod}+n" = "exec $toggle_window --id wpa_gui -- wpa_gui";
-        "${mod}+e" = "exec ddapp -p '[app_id=emacs title=^Notes$]' -c ${emacsnote}";
-        "${mod}+Shift+e" = "exec ddapp -p '[app_id=emacs title=^EmacsConfig$]' -c ${emacsconfig}";
         "${mod}+Shift+i" = "exec $toggle_window --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
         "${mod}+Shift+d" = "exec $toggle_window --id gnome-disks -- gnome-disks";
         "${mod}+b" = "exec $toggle_window --id .blueman-manager-wrapped -- blueman-manager";

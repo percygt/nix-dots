@@ -19,21 +19,21 @@
   :ensure nil
   :general
   (local-definer
-    :keymaps 'emacs-lisp-mode-map
-    "e" '(nil :which-key "eval")
-    "es" '(eval-last-sexp :which-key "eval-sexp")
-    "ee" '(eval-defun :which-key "eval-defun")
-    "er" '(eval-region :which-key "eval-region")
-    "eb" '(eval-buffer :which-key "eval-buffer")
+   :keymaps 'emacs-lisp-mode-map
+   "e" '(nil :which-key "eval")
+   "es" '(eval-last-sexp :which-key "eval-sexp")
+   "ee" '(eval-defun :which-key "eval-defun")
+   "er" '(eval-region :which-key "eval-region")
+   "eb" '(eval-buffer :which-key "eval-buffer")
 
-    "g" '(counsel-imenu :which-key "imenu")
-    "c" '(check-parens :which-key "check parens")
-    "I" '(indent-region :which-key "indent-region")
+   "g" '(counsel-imenu :which-key "imenu")
+   "c" '(check-parens :which-key "check parens")
+   "I" '(indent-region :which-key "indent-region")
 
-    "b" '(nil :which-key "org src")
-    "bc" 'org-edit-src-abort
-    "bb" 'org-edit-src-exit
-    )
+   "b" '(nil :which-key "org src")
+   "bc" 'org-edit-src-abort
+   "bb" 'org-edit-src-exit
+   )
   )
 (use-package buttercup :defer t)
 (use-package package-lint :defer t)
@@ -68,14 +68,12 @@
   :hook (nix-ts-mode . eglot-ensure))
 
 ;; Lua mode
-(use-package lua-mode)
 (use-package lua-ts-mode
   :ensure nil
   :mode (("\\.lua\\'" . lua-ts-mode))
   :hook (lua-ts-mode . eglot-ensure))
 
 ;; Go mode
-(use-package go-mode)
 (use-package go-ts-mode
   :ensure nil
   :hook ((go-ts-mode . go-format-on-save-mode)
@@ -84,10 +82,9 @@
          ("/go\\.mod\\'" . go-mod-ts-mode))
   :config
   (reformatter-define go-format
-                      :program "goimports"
-                      :args '("/dev/stdin")))
+    :program "goimports"
+    :args '("/dev/stdin")))
 
-(use-package rust-mode)
 (use-package rust-ts-mode
   :ensure nil
   :mode (("\\.rs\\'" . rust-ts-mode))

@@ -17,7 +17,7 @@
       };
     };
     colorscheme = import ./colorscheme.nix;
-    opacity = 0.85;
+    opacity = 0.7;
     cursorTheme = {
       name = "phinger-cursors-light";
       package = pkgs.phinger-cursors;

@@ -61,20 +61,6 @@ in
           };
         }
         {
-          command = ''floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show '';
-          criteria = {
-            app_id = "emacs";
-            title = "^EmacsConfig$";
-          };
-        }
-        {
-          command = ''floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show '';
-          criteria = {
-            app_id = "emacs";
-            title = "^Notes$";
-          };
-        }
-        {
           command = ''floating enable, resize set width 40ppt height 100ppt, move position 0ppt 0ppt'';
           criteria = {
             app_id = "info.febvre.Komikku";

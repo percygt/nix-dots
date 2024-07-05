@@ -9,46 +9,37 @@
             "~/org/modules/"
             doom-modules-dir))
 
-;; NOTE Move your cursor over a module's name (or its flags) and press 'K' to
-;;      view its documentation. This works on flags as well (those symbols that
-;;      start with a plus).
-;;
-;;      Alternatively, press 'gd' on a module to browse its directory (for easy
-;;      access to its source code).
 
 (doom! :_general
-       core
-       ui
-       extra
+       ;; core
+       lsp
+       ts-mode
+       theme
+       ;; extra
+       cmp
+
        :config
-       (default +smartparens) ; Doom's built-in defaults
-       ;; default-exts
+       default ; Doom's built-in defaults
 
        :editor
        (evil +everywhere)
-       ;; evil-exts
        file-templates
        (format +onsave)
        fold
        multiple-cursors
        rotate-text
-       ;; smartparens-exts
        snippets
-       ;; snippets-exts
        word-wrap
 
        :emacs
        (dired +icons +dirvish)
-       ;; dired-exts
        (ibuffer +icons)
        (undo +tree)
-       ;; ediff-exts
        vc
-       ;; vc-exts
 
        :completion
        (corfu +icons +orderless +dabbrev)
-       (vertico +childframe +icons)
+       (vertico +icons)
 
        :checkers
        (spell +aspell +everywhere)
@@ -76,52 +67,32 @@
        (terraform +lsp)
 
        :lang
-       ;; asm
-       (cc +tree-sitter)
        data
        emacs-lisp
-       ;; emacs-lisp-exts
-       (elixir +tree-sitter +lsp)
-       ;; (graphql +lsp)
-       (json +tree-sitter +lsp)
-       (java +tree-sitter +lsp)
+       (org +dragndrop +roam2 +pretty +present)
        (latex +lsp +fold)
-       (lua +tree-sitter +lsp)
-       (nix +tree-sitter +lsp)
-
-       (ocaml +tree-sitter +lsp)
-       (org +dragndrop +roam2)
-       ;; (org-exts
-       ;;  +citations
-       ;;  ;; +initial-buffers
-       ;;  +modern
-       ;;  +nursery
-       ;;  +roam
-       ;;  +slack)
-
-       (rust +tree-sitter +lsp)
-       (sh +tree-sitter +lsp)
-       (javascript +tree-sitter +lsp)
-       ;; (typescript +tree-sitter +lsp)
-       (web +tree-sitter +lsp)
-       (yaml +tree-sitter +lsp)
-       (zig +tree-sitter +lsp)
+       cc
+       web
+       (json +lsp)
+       (python +poetry)
+       (java +lsp)
+       (lua +lsp)
+       (nix +lsp)
+       (ocaml +lsp)
+       (rust +lsp)
+       (sh +lsp)
+       (javascript +lsp)
+       (yaml +lsp)
+       (zig +lsp)
 
        :ui
-       ;; doom
        doom-dashboard    ; a nifty splash screen for Emacs
-       ;; doom-exts
        (popup +defaults +all)
        hl-todo
        indent-guides
-       ;; leader
        treemacs
-       ;; (ligatures +fira)
        modeline
        ophints
        (vc-gutter +pretty)
        vi-tilde-fringe
-
-       ;; :private
-       ;; org
        )
