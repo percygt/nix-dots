@@ -21,7 +21,7 @@ in {
     // mkWorkspaceKeys mod ["1" "2" "3" "4" "5" "6" "7" "8" "9" "10"]
     // {
       "Ctrl+KP_Multiply" = "exec ${toggle-blur {inherit pkgs;}}";
-      "Ctrl+KP_Insert" = "exec ${lib.getExe pkgs.toggle-sway-window} --id nixos_rebuild_log --width 80 --height 80 -- ${viewRebuildLogCmd}";
+      "Ctrl+KP_Insert" = "exec ${lib.getExe pkgs.toggle-sway-window} --id nixos_rebuild_log -- ${viewRebuildLogCmd}";
       "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
       "${mod}+w" = "exec ${dropdown-terminal {inherit pkgs weztermPackage;}}";
       "${mod}+Return" = "exec ${terminal}";

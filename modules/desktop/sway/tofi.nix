@@ -40,7 +40,7 @@ in {
       min-input-width = 120
       result-spacing = 10
       corner-radius = 12
-      height = 32
+      height = 30
       margin-top = 5
       margin-left = 5
       margin-right = 5

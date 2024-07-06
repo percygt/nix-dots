@@ -11,7 +11,7 @@
   margin-top = 5;
   margin-left = 5;
   margin-right = 5;
-  height = 32;
+  height = 30;
   spacing = 5;
   passthrough = false;
   gtk-layer-shell = true;
@@ -42,11 +42,16 @@
     spacing = 5;
   };
 
-  "sway/window".format = "{}";
+  "sway/window" = {
+    format = "<span font='10' rise='-4444'>{}</span>";
+    all-outputs = true;
+    icon = true;
+    icon-size = 12;
+  };
 
   "mpris" = {
-    format = "{player_icon} {dynamic}";
-    format-paused = "{status_icon} {dynamic}";
+    format = "<span font='10' rise='-4444'>{player_icon} {dynamic}</span>";
+    format-paused = "<span font='10' rise='-4444'>{status_icon} {dynamic}</span>";
     player-icons.default = " ";
     status-icons.paused = " ";
     dynamic-len = 45;
@@ -217,6 +222,6 @@
     max-length = 12;
     interval = 2;
     exec = lib.getExe waybarRebuild;
-    on-click = viewRebuildLogCmd;
+    on-click = "toggle-sway-window --id nixos_rebuild_log  -- ${viewRebuildLogCmd}";
   };
 }

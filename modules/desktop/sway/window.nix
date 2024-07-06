@@ -16,6 +16,7 @@
             "org.keepassxc.KeePassXC"
             "btop"
             "yazi"
+            "nixos_rebuild_log"
             "page.codeberg.Imaginer.Imaginer"
             "com.github.finefindus.eyedropper"
             "org.gnome.Nautilus"

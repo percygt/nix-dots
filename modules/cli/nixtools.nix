@@ -16,6 +16,8 @@
       nix-your-shell
       cachix
       json2nix
+      nix-output-monitor
+      nvd
       # stash.yaml2nix
       nix-prefetch-scripts
       nix-prefetch-github

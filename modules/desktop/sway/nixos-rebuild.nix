@@ -5,7 +5,7 @@
   username,
   ...
 }: {
-  home-manager.users.${username} = {
+  home-manager.users.${username} = {pkgs, ...}: {
     systemd.user.services = {
       nixos-rebuild = {
         Service = {
@@ -84,7 +84,7 @@
             runtimeInputs = [pkgs.coreutils pkgs.iputils pkgs.nixos-rebuild pkgs.git];
             text = ''
               flake_dir="${flakeDirectory}"
-              flags=("--option" "eval-cache" "false")
+              flags=("--accept-flake-config" "--option" "eval-cache" "false")
               stderr() { printf "%s\n" "$*" >&2; }
               printf "╔════════════════════════════════════════════════════╗\n"
               printf "║                                                    ║\n"

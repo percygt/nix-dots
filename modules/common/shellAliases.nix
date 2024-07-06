@@ -33,9 +33,9 @@
     tsu = "sudo tailscale up --ssh --operator=$USER";
     tsd = "tailscale down";
     cleanup-nix = "nh clean all --keep-since 10d --keep 3";
-    nfu = "nix flake update";
-    nsu = "nh os switch -u ${flakeDirectory}";
-    ns = "nh os switch ${flakeDirectory}";
+    nfu = "nix flake update --accept-flake-config";
+    nsu = "nh os switch -u ${flakeDirectory} -- --accept-flake-config";
+    ns = "nh os switch ${flakeDirectory} -- --accept-flake-config";
     ns_ = "systemctl start --user nixos-rebuild.service";
     hs = "nh home switch ${flakeDirectory}";
     nhs = "ns;hms";
