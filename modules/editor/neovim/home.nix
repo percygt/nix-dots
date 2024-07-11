@@ -41,9 +41,6 @@ in {
       withPython3 = true;
       withRuby = false;
       extraLuaConfig = ''
-        if vim.loader then
-          vim.loader.enable()
-        end
         require("config.general")
         require("config.remaps")
         require("config.autocmds")

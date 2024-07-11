@@ -11,7 +11,7 @@
   margin-top = 5;
   margin-left = 5;
   margin-right = 5;
-  height = 30;
+  height = 26;
   spacing = 5;
   passthrough = false;
   gtk-layer-shell = true;
@@ -43,14 +43,14 @@
   };
 
   "sway/window" = {
-    format = "<span font='10' rise='-4444'>{}</span>";
+    format = "<span font='9' rise='-4444'>{}</span>";
     all-outputs = true;
     icon = true;
     icon-size = 12;
   };
 
   "mpris" = {
-    format = "<span font='10' rise='-4444'>{player_icon} {dynamic}</span>";
+    format = "<span font='9' rise='-4444'>{player_icon} {dynamic}</span>";
     format-paused = "<span font='10' rise='-4444'>{status_icon} {dynamic}</span>";
     player-icons.default = " ";
     status-icons.paused = " ";
@@ -143,7 +143,7 @@
   };
 
   "clock#icon" = {
-    format = " ";
+    format = "<span font='9' rise='-4444'></span>";
     tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
   };
 

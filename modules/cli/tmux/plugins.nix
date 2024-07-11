@@ -16,37 +16,51 @@
     sed -ie "s|:bash .*/tmp/nix-shell-.*/rc|:nix-shell|g" "$1"
   '';
 in {
-  plugins = with pkgs.stash.tmuxPlugins; [
+  plugins = [
     {
-      plugin = tmuxinoicer;
+      plugin = pkgs.tmuxPlugins.mkTmuxPlugin {
+        pluginName = "config-before-plugins";
+        version = "hack";
+        src = "${pkgs.writeTextDir "pluginDir/config-before-plugins.tmux" ''#!/usr/bin/env bash''}/pluginDir";
+      };
+      extraConfig = ''
+        source ${config.xdg.configHome}/tmux/variables.tmux
+        source ${config.xdg.configHome}/tmux/statusline.tmux
+      '';
+      # extraConfig = builtins.readFile (pkgs.concatTextFile {
+      #   name = "config.tmux";
+      #   files = [./statusline.tmux ./variables.tmux ./keybinds.tmux];
+      # });
+    }
+    {
+      plugin = pkgs.stash.tmuxPlugins.tmuxinoicer;
       extraConfig = ''
         set -g @tmuxinoicer-find-base "${config.home.homeDirectory}/data:1:4,${config.home.homeDirectory}:1:1"
         set -g @tmuxinoicer-extras "find"
       '';
     }
+    #   plugin = pkgs.stash.tmuxPlugins.tmuxst;
+    #   extraConfig = "set -g status-position top";
+    # }
     {
-      plugin = tmuxst;
-      extraConfig = "set -g status-position top";
-    }
-    {
-      plugin = tmux-thumbs;
+      plugin = pkgs.stash.tmuxPlugins.tmux-thumbs;
       extraConfig = ''
         set -g @thumbs-command 'tmux set-buffer -- {} && tmux display-message "Copied {}" && printf %s {} | xclip -i -selection clipboard'
       '';
     }
     {
-      plugin = fzf-url;
+      plugin = pkgs.stash.tmuxPlugins.fzf-url;
       extraConfig = ''
         set -g @fzf-url-fzf-options '-h 50% --multi -0 --no-preview'
       '';
     }
-    better-mouse-mode
-    extrakto
-    vim-tmux-navigator
-    yank
-    tmux-fzf
+    pkgs.stash.tmuxPlugins.better-mouse-mode
+    pkgs.stash.tmuxPlugins.extrakto
+    pkgs.stash.tmuxPlugins.vim-tmux-navigator
+    pkgs.stash.tmuxPlugins.yank
+    pkgs.stash.tmuxPlugins.tmux-fzf
     {
-      plugin = resurrect;
+      plugin = pkgs.stash.tmuxPlugins.resurrect;
       extraConfig = ''
         set -g @resurrect-processes '"~nvim"'
         set -g @resurrect-capture-pane-contents 'on'
@@ -55,7 +69,7 @@ in {
       '';
     }
     {
-      plugin = continuum;
+      plugin = pkgs.stash.tmuxPlugins.continuum;
       extraConfig = ''
         set -g @continuum-restore 'on'
         set -g @continuum-boot 'on'

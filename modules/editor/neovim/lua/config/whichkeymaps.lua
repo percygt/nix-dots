@@ -1,4 +1,5 @@
 local wk = require("which-key")
+local builtin = require("telescope.builtin")
 wk.register({
   n = {
     name = "Multicursors",
@@ -22,7 +23,42 @@ wk.register({
   },
   d = "which_key_ignore",
   f = { name = "Files" },
-  g = { name = "Git" },
+  g = {
+    name = "Git",
+    k = { "<cmd>lua require 'gitsigns'.prev_hunk({navigation_message = false})<cr>", "Prev Hunk" },
+    j = { "<cmd>lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>", "Next Hunk" },
+    l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
+    p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
+    r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
+    R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
+    s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
+    u = {
+      "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
+      "Undo Stage Hunk",
+    },
+    o = { builtin.git_status, "Open changed file" },
+    b = { builtin.git_branches, "Checkout branch" },
+    c = { builtin.git_commits, "Checkout commit" },
+    C = {
+      builtin.git_bcommits,
+      "Checkout commit(for current file)",
+    },
+    d = {
+      "<cmd>Gitsigns diffthis HEAD<cr>",
+      "Git Diff",
+    },
+    w = {
+      name = "Worktree",
+      w = {
+        "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
+        "Worktree list",
+      },
+      c = {
+        "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>",
+        "Create worktree",
+      },
+    },
+  },
   m = { "<cmd>lua require('harpoon').ui:toggle_quick_menu(harpoon:list())<cr>", "Harpoon" },
   h = {
     name = "Helper",
@@ -45,7 +81,19 @@ wk.register({
     r = { "<cmd>DBUIRenameBuffer<cr>", "Rename buffer" },
     q = { "<cmd>DBUILastQueryInfo<Cr>", "Last query info" },
   },
-  s = { name = "Search" },
+  s = {
+    name = "Search",
+    f = { builtin.find_files, "Files" },
+    h = { builtin.help_tags, "Help" },
+    w = { builtin.grep_string, "Current word" },
+    g = { builtin.live_grep, "Grep" },
+    d = { builtin.diagnostics, "Diagnostics" },
+    -- b = { builtin.buffers, "Buffers" },
+    c = { builtin.commands, "Commands" },
+    n = { "<cmd>Telescope notify<cr>", "Notifications" },
+    u = { "<cmd>Telescope undo<cr>", "Undo tree" },
+    l = { "<cmd>TodoTelescope<cr>", "Todo" },
+  },
   t = { name = "Theme" },
   x = {
     name = "Trouble",

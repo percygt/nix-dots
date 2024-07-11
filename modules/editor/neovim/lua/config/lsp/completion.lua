@@ -1,6 +1,5 @@
 local luasnip = require("luasnip")
 local cmp = require("cmp")
-local lspkind = require("lspkind")
 local cmp_under_comparator = require("cmp-under-comparator")
 local extends = {
   ["typescript"] = { "tsdoc" },
@@ -25,48 +24,7 @@ require("luasnip.loaders.from_vscode").lazy_load()
 for k, v in ipairs(extends) do
   luasnip.filetype_extend(k, v)
 end
-local icons = {
-  Namespace = "󰌗",
-  Text = "󰉿",
-  Method = "󰆧",
-  Function = "󰆧",
-  Constructor = "",
-  Field = "󰜢",
-  Variable = "󰀫",
-  Class = "󰠱",
-  Interface = "",
-  Module = "",
-  Property = "󰜢",
-  Unit = "󰑭",
-  Value = "󰎠",
-  Enum = "",
-  Keyword = "󰌋",
-  Snippet = "",
-  Color = "󰏘",
-  File = "󰈚",
-  Reference = "󰈇",
-  Folder = "󰉋",
-  EnumMember = "",
-  Constant = "󰏿",
-  Struct = "󰙅",
-  Event = "",
-  Operator = "󰆕",
-  TypeParameter = "󰊄",
-  Table = "",
-  Object = "󰅩",
-  Tag = "",
-  Array = "[]",
-  Boolean = "",
-  Number = "",
-  Null = "󰟢",
-  String = "󰉿",
-  Calendar = "",
-  Watch = "󰥔",
-  Package = "",
-  Copilot = "",
-  Codeium = "",
-  TabNine = "",
-}
+local icons = require("config.ui.icons").kind
 local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
 cmp.setup({
   preselect = cmp.PreselectMode.None,
@@ -143,15 +101,27 @@ cmp.setup({
     { name = "buffer", max_item_count = 5, priority_weight = 50 },
     { name = "codeium", priority_weight = 70 },
     { name = "conjure" },
+    { name = "calc" },
+    { name = "emoji" },
+    { name = "treesitter" },
+    { name = "crates" },
   },
   -- Pictograms
   formatting = {
-    format = lspkind.cmp_format({
-      mode = "symbol",
-      maxwidth = 50,
-      ellipsis_char = "...",
-      symbol_map = icons,
-    }),
+    format = function(entry, item)
+      local color_item = require("nvim-highlight-colors").format(entry, { kind = item.kind })
+      item = require("lspkind").cmp_format({
+        mode = "symbol",
+        maxwidth = 50,
+        ellipsis_char = "...",
+        symbol_map = icons,
+      })(entry, item)
+      if color_item.abbr_hl_group then
+        item.kind_hl_group = color_item.abbr_hl_group
+        item.kind = color_item.abbr
+      end
+      return item
+    end,
   },
 })
 

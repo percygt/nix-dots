@@ -1,0 +1,136 @@
+add_newline = false
+command_timeout = 1000
+format = "$all$shlvl$fill$direnv$hostname$time\n$container$character"
+scan_timeout = 10
+
+[c]
+format = "via [$symbol $version](blue) "
+symbol = ""
+
+[character]
+error_symbol = "[](bold red) "
+success_symbol = "[](bold green) "
+vimcmd_replace_one_symbol = "[󰰠](bold purple) "
+vimcmd_replace_symbol = "[󰰠](bold purple) "
+vimcmd_symbol = "[󰰔](bold green) "
+vimcmd_visual_symbol = "[󰰬](bold yellow) "
+
+[cmd_duration]
+disabled = false
+format = "[󰔛 $duration]($style) "
+min_time = 1000
+
+[container]
+format = "[$symbol]($style)"
+symbol = "󰮄 "
+
+[directory.substitutions]
+"~/data" = "[](bold bright-cyan) "
+"~/windows" = "[󰖳](bold bright-blue) "
+
+[direnv]
+allowed_msg = "󱩰"
+disabled = false
+loaded_msg = "󰦕"
+not_allowed_msg = "󰼩"
+unloaded_msg = "󰲼"
+
+[fill]
+symbol = " "
+
+[git_branch]
+disabled = true
+format = "[$symbol $branch](fg:purple)(:$remote_branch) "
+symbol = ""
+
+[git_status]
+deleted = "✗"
+disabled = true
+modified = "✶"
+staged = "✓"
+stashed = "≡"
+
+[golang]
+format = "via [$symbol $version](blue) "
+symbol = ""
+
+[hostname]
+disabled = false
+format = "[$ssh_symbol$hostname]($style) "
+ssh_only = true
+style = "white"
+
+[java]
+format = "via [$symbol $version](red) "
+symbol = ""
+
+[line_break]
+disabled = true
+
+[lua]
+format = "via [$symbol $version](blue) "
+symbol = "󰢱"
+
+[nix_shell]
+disabled = false
+format = "in [ $name](fg:white) "
+impure_msg = ""
+
+[nodejs]
+format = "via [$symbol $version](yellow) "
+symbol = " "
+
+[os]
+disabled = true
+format = "$symbol"
+
+[os.symbols]
+Arch = "[ ](fg:bright-blue)"
+Debian = "[ ](fg:red)"
+EndeavourOS = "[ ](fg:purple)"
+Fedora = "[ ](fg:bright-blue)"
+NixOS = "[ ](fg:bright-blue)"
+SUSE = "[ ](fg:green)"
+Ubuntu = "[ ](fg:bright-red)"
+openSUSE = "[ ](fg:green)"
+
+[package]
+format = "is [󰏗 $version](fg:bright-blue) "
+
+[python]
+format = "via [$symbol $version](yellow) "
+symbol = ""
+
+[rust]
+format = "via [$symbol $version](red) "
+symbol = ""
+
+[shell]
+bash_indicator = "bash"
+disabled = true
+fish_indicator = "fish"
+format = "[$indicator]($style)"
+style = "yellow"
+
+[shlvl]
+disabled = false
+format = "[󰶼 $shlvl](purple) "
+threshold = 2
+
+[status]
+disabled = false
+format = "[$symbol](fg:red) "
+map_symbol = true
+not_executable_symbol = " "
+not_found_symbol = " "
+sigint_symbol = "󰂭 "
+signal_symbol = "󱑽 "
+success_symbol = ""
+symbol = " "
+
+[time]
+disabled = false
+format = "[$time]($style) "
+style = "yellow dimmed"
+time_format = "%I:%M:%S"
+use_12hr = true

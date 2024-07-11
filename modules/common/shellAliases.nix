@@ -34,8 +34,8 @@
     tsd = "tailscale down";
     cleanup-nix = "nh clean all --keep-since 10d --keep 3";
     nfu = "nix flake update --accept-flake-config";
-    nsu = "nh os switch -u ${flakeDirectory} -- --accept-flake-config";
-    ns = "nh os switch ${flakeDirectory} -- --accept-flake-config";
+    nsu = "nh os switch -u -- --accept-flake-config";
+    ns = "nh os switch -- --accept-flake-config";
     ns_ = "systemctl start --user nixos-rebuild.service";
     hs = "nh home switch ${flakeDirectory}";
     nhs = "ns;hms";

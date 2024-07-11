@@ -24,17 +24,17 @@
       padding = mkLiteral "0px";
       margin = mkLiteral "0px";
     };
-    "tooltip" = {
-      padding = mkLiteral "15px 15px";
-    };
+    # "tooltip" = {
+    #   padding = mkLiteral "15px 15px";
+    # };
     ".modules-right" = {
-      padding = mkLiteral "7px 7px 7px 0px";
+      padding = mkLiteral "0px 7px 0px 0px";
     };
     ".modules-center" = {
-      padding = mkLiteral "7px 7px 7px 0px";
+      padding = mkLiteral "0px 7px 0px 0px";
     };
     ".modules-left" = {
-      padding = mkLiteral "7px 7px 7px 0px";
+      padding = mkLiteral "0px 7px 0px 0px";
     };
 
     "#custom-daylight,

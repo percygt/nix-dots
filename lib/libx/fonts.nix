@@ -4,7 +4,7 @@
     style = "Regular";
     weight = "500";
     package = pkgs: pkgs.rubik;
-    size = 13.0;
+    size = 14.0;
   };
 
   icon = {
@@ -19,21 +19,18 @@
     name = "VictorMono Nerd Font";
     style = "SemiBold";
     weight = "600";
-    package = pkgs: pkgs.nerdfonts.override {fonts = ["VictorMono"];};
+    package = pkgs: pkgs.nerdfonts;
     size = 14.0;
   };
 
   packages = pkgs:
     with pkgs; [
-      (nerdfonts.override {
-        fonts = [
-          "VictorMono"
-          "JetBrainsMono"
-          "MartianMono"
-          "GeistMono"
-        ];
-      })
-      # martian-mono
+      nerdfonts
+      nerdfonts-fontconfig
+      google-fonts
+      (iosevka-bin.override {variant = "Aile";})
+      (iosevka-bin.override {variant = "Etoile";})
+      emacs-all-the-icons-fonts
       source-serif
       rubik
       work-sans

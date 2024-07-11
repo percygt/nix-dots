@@ -13,7 +13,7 @@
       defaultFonts = {
         serif = ["Source Serif"];
         sansSerif = ["Work Sans" "Rubik" "Noto Sans"];
-        monospace = ["JetBrainsMono Nerd Font" "VictorMono Nerd Font" "GeistMono Nerd Font"];
+        monospace = ["VictorMono Nerd Font" "Symbols Nerd Font Mono"];
         emoji = ["Joypixels" "Noto Color Emoji"];
       };
       enable = true;

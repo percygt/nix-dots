@@ -3,7 +3,7 @@
     ./atuin.nix
     ./direnv.nix
     ./extra.nix
-    ./starship.nix
+    ./starship
     ./aria.nix
     ./ncmpcpp.nix
     ./tui.nix

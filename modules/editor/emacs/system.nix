@@ -25,8 +25,13 @@
   };
 
   emacsWithExtraPackages = pkgs.runCommand "emacs" {nativeBuildInputs = [pkgs.makeWrapper];} ''
+    makeWrapper ${emacs}/bin/emacsclient $out/bin/emacsclient --prefix PATH : ${lib.makeBinPath extraPackages}
     makeWrapper ${emacs}/bin/emacs $out/bin/emacs --prefix PATH : ${lib.makeBinPath extraPackages}
   '';
+  # emacsClientWithExtraPackages = pkgs.runCommand "emacs" {nativeBuildInputs = [pkgs.makeWrapper];} ''
+  #   makeWrapper ${emacs}/bin/emacsclient $out/bin/emacsclient --prefix PATH : ${lib.makeBinPath extraPackages}
+  #   makeWrapper ${emacs}/bin/emacs $out/bin/emacs --prefix PATH : ${lib.makeBinPath extraPackages}
+  # '';
 in {
   options.editor = {
     emacs.system.enable = lib.mkEnableOption "Enable emacs systemwide";
@@ -42,12 +47,11 @@ in {
       (pkgs.aspellWithDicts (dicts: with dicts; [en en-computers]))
       emacsWithExtraPackages
     ];
-    fonts.packages = with pkgs; [
-      emacs-all-the-icons-fonts
-      (nerdfonts.override {fonts = ["VictorMono"];})
-      (iosevka-bin.override {variant = "Aile";})
-      (iosevka-bin.override {variant = "Etoile";})
-    ];
+    services.emacs = {
+      enable = true;
+      package = emacsWithExtraPackages;
+      startWithGraphical = true;
+    };
     environment.persistence = lib.mkIf config.core.ephemeral.enable {
       "/persist" = {
         users.${username} = {

@@ -25,21 +25,21 @@ in {
         };
         format = lib.strings.concatStrings [
           "$all"
-          "$fill"
           "$shlvl"
+          "$fill"
           "$os"
           " "
           "$hostname"
-          " [|](red) "
-          "$shell"
-          " [|](red) "
+          # " [|](red) "
+          # "$shell"
+          # " [|](red) "
           "$time"
           "\n$container$character"
         ];
         status = {
           symbol = "✗";
           not_found_symbol = "󰍉 Not Found";
-          not_executable_symbol = " Can't Execute E";
+          not_executable_symbol = "  Can't Execute";
           sigint_symbol = "󰂭 ";
           signal_symbol = "󱑽 ";
           success_symbol = "";
@@ -57,7 +57,7 @@ in {
         hostname = {
           ssh_only = false;
           style = "white";
-          format = "[$ssh_symbol$hostname]($style) ";
+          format = "[$ssh_symbol]($style) [|](red) ";
           disabled = false;
         };
         cmd_duration = {
@@ -66,16 +66,24 @@ in {
           disabled = false;
         };
         character = {
-          success_symbol = "[❯](bold green) ";
-          error_symbol = "[❯](bold red)";
-          vimcmd_symbol = "[](bold green)";
-          vimcmd_replace_one_symbol = "[](bold purple)";
-          vimcmd_replace_symbol = "[](bold purple)";
-          vimcmd_visual_symbol = "[](bold yellow)";
+          success_symbol = "[ ](bold green) ";
+          error_symbol = "[ ](bold red)";
+          vimcmd_symbol = "[󰰔 ](bold green)";
+          vimcmd_replace_one_symbol = "[󰰠 ](bold purple)";
+          vimcmd_replace_symbol = "[󰰠 ](bold purple)";
+          vimcmd_visual_symbol = "[󰰬 ](bold yellow)";
         };
         container = {
-          symbol = "󰮄 ";
+          symbol = "󰏗 ";
           format = "[$symbol]($style) ";
+        };
+        directory = {
+          truncate_to_repo = false;
+          read_only = "";
+        };
+        direnv = {
+          disabled = false;
+          symbol = "󰮄 ";
         };
         # directory.substitutions = {
         #   "Documents" = "󰈙 ";
@@ -90,12 +98,14 @@ in {
         git_branch = {
           symbol = "";
           format = "[$symbol $branch](fg:purple)(:$remote_branch) ";
+          disabled = true;
         };
         git_status = {
           deleted = "✗";
           modified = "✶";
           staged = "✓";
           stashed = "≡";
+          disabled = true;
         };
         os = {
           disabled = false;
@@ -116,7 +126,7 @@ in {
           fish_indicator = "fish";
           bash_indicator = "bash";
           style = "yellow";
-          disabled = false;
+          disabled = true;
         };
         nix_shell = {
           disabled = false;
@@ -130,7 +140,7 @@ in {
         shlvl = {
           disabled = false;
           threshold = 2;
-          format = "[󰄿 $shlvl](purple) [|](red) ";
+          format = "[󰄿 $shlvl](purple) ";
         };
         python = lang "" "yellow";
         nodejs = lang " " "yellow";

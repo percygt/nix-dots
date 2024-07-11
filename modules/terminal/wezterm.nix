@@ -118,11 +118,12 @@ in {
             front_end="OpenGL",
           	disable_default_key_bindings = true,
           	window_close_confirmation = "NeverPrompt",
+            line_height = 1.2,
             window_padding = {
-              left = 0,
-              right = 0,
-              top = 0,
-              bottom = 0,
+              left = 5,
+              right = 5,
+              top = 7.5,
+              bottom = 7.5,
             },
             visual_bell = {
                 fade_in_function = "Ease",

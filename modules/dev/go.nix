@@ -6,7 +6,8 @@
   config = lib.mkIf config.dev.home.enable {
     programs.go = {
       enable = true;
-      goPath = "${config.xdg.configHome}/go";
+      goPath = ".local/share/go";
+      goBin = ".local/share/go/bin";
     };
   };
 }
