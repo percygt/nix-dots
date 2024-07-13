@@ -6,8 +6,6 @@ local imap = keymap.imap
 local xmap = keymap.xmap
 local cmap = keymap.cmap
 local nvmap = keymap.nvmap
-nmap("<leader>", "<nop>", silent)
-vmap("<leader>", "<nop>", silent)
 vmap("Q", "<nop>", silent)
 -- Quit
 nmap("QQ", ":q!<cr>", silent)
@@ -42,14 +40,11 @@ nmap("<c-up>", "<cmd>resize -2<cr>")
 nmap("<c-down>", "<cmd>resize +2<cr>")
 nmap("<c-left>", "<cmd>vertical resize -2<cr>")
 nmap("<c-right>", "<cmd>vertical resize +2<cr>")
--- Better indenting
--- vmap("<", "<gv")
--- vmap(">", ">gv")
 -- Clear search
 nmap("ss", "<cmd>noh<cr>")
 -- Other ways to yank, delete and paste
 nvmap("<leader>y", [["+y]])
-nvmap("<leader>Y", [["+Y]])
+nmap("<leader>Y", [["+Y]])
 nvmap("<leader>d", [["_d]])
 xmap("<leader>p", [["_dP]])
 -- Navigate buffers

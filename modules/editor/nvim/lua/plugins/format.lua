@@ -9,7 +9,7 @@ return {
 		local prettier = { "prettierd", "prettier" }
 		return {
 			formatters_by_ft = {
-				nix = { "alejandra" },
+				nix = { "nixfmt" },
 				javascript = { "deno_fmt" },
 				typescript = { "deno_fmt" },
 				javascriptreact = { "deno_fmt" },

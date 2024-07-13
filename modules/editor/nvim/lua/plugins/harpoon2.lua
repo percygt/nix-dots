@@ -10,8 +10,8 @@ return {
 		{ "<a-2>", function() require("harpoon"):list():select(2) end, desc = "Harpoon select 2" },
 		{ "<a-3>", function() require("harpoon"):list():select(3) end, desc = "Harpoon select 3" },
 		{ "<a-4>", function() require("harpoon"):list():select(4) end, desc = "Harpoon select 4" },
-		{ "<a-,>", function() require("harpoon"):list():prev() end, desc = "Harpoon previous" },
-		{ "<a-.>", function() require("harpoon"):list():next() end, desc = "Harpoon next" },
+		{ "<a-h>", function() require("harpoon"):list():prev() end, desc = "Harpoon previous" },
+		{ "<a-l>", function() require("harpoon"):list():next() end, desc = "Harpoon next" },
 	},
 	config = function()
 		require("harpoon"):setup()

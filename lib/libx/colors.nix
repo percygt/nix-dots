@@ -16,8 +16,8 @@
   normal = {
     black = "000000"; # [#000000]
     red = "aa0000"; # [#aa0000]
-    green = "0eba0e"; # [#0eba0e]
-    yellow = "a1d408"; # [#a1d408]
+    green = "a6e3a1"; # [#a6e3a1]
+    yellow = "f9e2af"; # [ #f9e2af]
     blue = "0780da"; # [#0780DA]
     magenta = "ad26f6"; # [#9f00f4]
     cyan = "00aaaa"; # [#00aaaa]
@@ -36,9 +36,11 @@
 
   extra = {
     obsidian = "030205"; # [#030205]
-    nocturne = "120d22"; # [#120d22]
-    midnight = "08103a"; # [#08103a]
-    azure = "0e1a60"; # [#0e1a60]
+    abyss = "120d22"; # [#120d22]
+    midnight = "081028"; # [#081028]
+    navynight = "08103a"; # [#08103a]
+    nocturne = "191970"; # [#191970]
+    azure = "007fff"; # [#007fff]
     cream = "fffae5"; # [#fffae5]
     lavender = "b4befe"; # [#b4befe]
     peach = "fab387"; # [#fab387]
@@ -46,8 +48,8 @@
     sapphire = "74c7ec"; # [#74c7ec]
     sky = "89dceb"; # [#89dceb]
     mauve = "cba6f7"; # [#cba6f7]
-    overlay0 = "292538"; #292538
-    overlay1 = "6e738d"; #6e738d
-    overlay2 = "939ab7"; #939ab7
+    overlay0 = "292538"; # 292538
+    overlay1 = "6e738d"; # 6e738d
+    overlay2 = "939ab7"; # 939ab7
   };
 }

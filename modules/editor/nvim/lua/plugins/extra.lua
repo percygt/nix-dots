@@ -17,13 +17,20 @@ return {
 			{ python = "120" },
 		},
 	},
-	-- TODO:
 	{
 		"folke/todo-comments.nvim",
 		dependencies = {
+			"nvim-tree/nvim-web-devicons",
 			"nvim-lua/plenary.nvim",
 		},
-		opts = {},
+		event = { "BufNewFile", "BufReadPost" },
+		config = function()
+			require("todo-comments").setup({
+				keywords = {
+					TODO = { icon = " ", color = "#de9e00" },
+				},
+			})
+		end,
 	},
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",

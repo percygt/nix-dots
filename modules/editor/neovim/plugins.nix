@@ -1,5 +1,7 @@
-{pkgs, ...}: let
-  lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
+{ pkgs, ... }:
+let
+  lsp_servers = pkgs.writeText "lsp-servers.json"
+    (builtins.toJSON (import ./lsp-servers.nix { inherit pkgs; }));
   # lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
 in {
   plugins = with pkgs.stash.vimPlugins; [
@@ -42,9 +44,7 @@ in {
       plugin = conjure;
       type = "lua";
       config =
-        /*
-        lua
-        */
+        # lua
         ''
           vim.g['conjure#mapping#prefix'] = ','
           vim.g['conjure#log#hud#width'] = 1
@@ -114,7 +114,8 @@ in {
     {
       plugin = nvim-lspconfig;
       type = "lua";
-      config = ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
+      config =
+        ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
     }
     {
       plugin = garbage-day-nvim;
@@ -166,7 +167,8 @@ in {
     }
     {
       plugin = sqlite-lua;
-      config = "let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'";
+      config =
+        "let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'";
     }
     vim-dadbod-ui
     vim-dadbod-completion

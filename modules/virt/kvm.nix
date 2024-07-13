@@ -1,10 +1,4 @@
-{
-  pkgs,
-  username,
-  lib,
-  config,
-  ...
-}: {
+{ pkgs, username, lib, config, ... }: {
   options.virt.kvm.enable = lib.mkEnableOption "Enable kvm";
   config = lib.mkIf config.virt.kvm.enable {
     environment.systemPackages = with pkgs; [
@@ -23,14 +17,12 @@
 
     programs.virt-manager.enable = true;
 
-    boot.kernelParams = ["intel_iommu=on" "iommu=pt"];
+    boot.kernelParams = [ "intel_iommu=on" "iommu=pt" ];
     users = {
-      users.${username}.extraGroups = ["qemu" "kvm"];
-      groups.qemu = {};
+      users.${username}.extraGroups = [ "qemu" "kvm" ];
+      groups.qemu = { };
     };
     # services.spice-vdagentd.enable = true;
-    virtualisation = {
-      spiceUSBRedirection.enable = true;
-    };
+    virtualisation = { spiceUSBRedirection.enable = true; };
   };
 }

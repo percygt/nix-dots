@@ -1,5 +1,3 @@
-local map = require("config.utils").map
-
 return {
 	-- Universal language parser
 	{
@@ -11,11 +9,7 @@ return {
 		dependencies = {
 			{ "nvim-treesitter/nvim-treesitter-textobjects" },
 		},
-		init = function()
-			map({
-				["<leader>T"] = { ":Inspect<CR>", "Show highlighting groups and captures" },
-			})
-		end,
+		keys = { "<leader>T", "<cmd>Inspect<cr>", desc = "Show highlighting groups and captures" },
 		config = function()
 			if vim.gcc_bin_path ~= nil then
 				require("nvim-treesitter.install").compilers = { vim.g.gcc_bin_path }
@@ -211,11 +205,6 @@ return {
 	-- 		}, { mode = "x" })
 	-- 	end,
 	-- 	config = true,
-	-- },
-	-- {
-	-- 	"calops/hmts.nvim",
-	-- 	enabled = false,
-	-- 	dev = false,
 	-- },
 	{
 		"folke/todo-comments.nvim",

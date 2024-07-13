@@ -7,7 +7,8 @@
   options.cli.nixtools.home.enable = lib.mkEnableOption "Enable nix tools";
   config = lib.mkIf config.cli.nixtools.home.enable {
     home.packages = with pkgs; [
-      alejandra
+      # alejandra
+      nixfmt
       deadnix
       statix
       nurl

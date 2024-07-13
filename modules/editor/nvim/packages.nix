@@ -1,10 +1,7 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 with pkgs; [
   # Essentials
-  (lua5_1.withPackages (ps:
-    with ps; [
-      luarocks
-    ]))
+  (lua5_1.withPackages (ps: with ps; [ luarocks ]))
   (python3.withPackages (ps:
     with ps; [
       python-lsp-server
@@ -41,7 +38,9 @@ with pkgs; [
 
   # Nix
   statix
-  alejandra
+  # alejandra
+  # nixfmt
+  nixfmt-rfc-style
   nil
   nixd
 

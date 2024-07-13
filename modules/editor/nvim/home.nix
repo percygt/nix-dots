@@ -1,11 +1,5 @@
-{
-  pkgs,
-  lib,
-  config,
-  flakeDirectory,
-  libx,
-  ...
-}: let
+{ pkgs, lib, config, flakeDirectory, libx, ... }:
+let
   inherit (libx) colors;
   hmNvim = "${flakeDirectory}/modules/editor/nvim";
 in {
@@ -25,7 +19,7 @@ in {
         "--prefix"
         "LD_LIBRARY_PATH"
         ":"
-        "${lib.makeLibraryPath [pkgs.libgit2 pkgs.gpgme]}"
+        "${lib.makeLibraryPath [ pkgs.libgit2 pkgs.gpgme ]}"
       ];
 
       extraLuaConfig =
@@ -41,15 +35,13 @@ in {
       plugins = [
         pkgs.vimPlugins.lazy-nvim # All other plugins are managed by lazy-nvim
       ];
-      extraPackages = import ./packages.nix {inherit pkgs;};
+      extraPackages = import ./packages.nix { inherit pkgs; };
     };
     home = {
-      activation = let
-        hmNvim = "${flakeDirectory}/modules/editor/nvim";
+      activation = let hmNvim = "${flakeDirectory}/modules/editor/nvim";
       in {
-        linkNvim =
-          lib.hm.dag.entryAfter ["linkGeneration"] # bash
-          
+        linkNvim = lib.hm.dag.entryAfter [ "linkGeneration" ] # bash
+
           ''
             [ -e "${config.xdg.configHome}/nvim" ] || mkdir -p "${config.xdg.configHome}/nvim/lua/config"
             [ -e "${config.xdg.configHome}/nvim/lua/config" ] && cp -rs ${hmNvim}/lua/config/. ${config.xdg.configHome}/nvim/lua/config/
@@ -57,9 +49,10 @@ in {
             [ -e "${config.xdg.configHome}/nvim/spell" ] || ln -s ${hmNvim}/spell ${config.xdg.configHome}/nvim/spell
             [ -e "${config.xdg.configHome}/nvim/ftdetect" ] || ln -s ${hmNvim}/ftdetect ${config.xdg.configHome}/nvim/ftdetect
           '';
-        neovim =
-          lib.hm.dag.entryAfter ["linkGeneration"]
-          # bash
+        neovim = lib.hm.dag.entryAfter [
+          "linkGeneration"
+        ]
+        # bash
           ''
             LOCK_FILE=$(readlink -f ~/.config/nvim/lazy-lock.json)
             echo $LOCK_FILE
@@ -85,8 +78,9 @@ in {
     };
     xdg = {
       configFile = {
-        "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${hmNvim}/lazy-lock.json";
-        # Nixd LSP configuratio
+        "nvim/lazy-lock.json".source =
+          config.lib.file.mkOutOfStoreSymlink "${hmNvim}/lazy-lock.json";
+        # Nixd LSP configuration
         "${flakeDirectory}/.nixd.json".text = builtins.toJSON {
           options = {
             enable = true;
@@ -97,23 +91,32 @@ in {
           text = ''
             return {
               bg0 = "#${colors.normal.black}",
-              bg1 = "#${colors.bright.black}",
-              bg2 = "#${colors.extra.nocturne}",
-              bg3 = "#${colors.extra.azure}",
+              bg1 = "#${colors.extra.abyss}",
+              bg2 = "#${colors.extra.midnight}",
+              bg3 = "#${colors.extra.navynight}",
               bg_d = "#${colors.extra.obsidian}",
+
               fg = "#${colors.default.foreground}",
+              bg = "#${colors.default.background}",
               yellow = "#${colors.normal.yellow}",
               cyan = "#${colors.normal.cyan}",
+              grey = "#${colors.extra.overlay1}",
+              dark_grey = "#${colors.extra.overlay0}",
               matchParen = "#${colors.extra.azure}",
 
-              midnight = "#${colors.extra.midnight}",
-              cream = "#${colors.extra.cream}",
-              lavender = "#${colors.extra.lavender}",
-              rosewater = "#${colors.extra.rosewater}",
-              peach = "#${colors.extra.peach}",
-              sapphire = "#${colors.extra.sapphire}",
-              sky = "#${colors.extra.sky}",
-              mauve = "#${colors.extra.mauve}",
+              obsidian = "#${colors.extra.obsidian}", -- [#030205]
+              abyss = "#${colors.extra.abyss}", -- [#120d22]
+              midnight = "#${colors.extra.midnight}", -- [#081028]
+              navynight = "#${colors.extra.navynight}", -- [#08103a]
+              nocturne = "#${colors.extra.nocturne}", -- [#191970]
+              azure = "#${colors.extra.azure}", -- [#007FFF]
+              cream = "#${colors.extra.cream}", -- [#fffae5]
+              lavender = "#${colors.extra.lavender}", -- [#b4befe]
+              peach = "#${colors.extra.peach}", -- [#fab387]
+              rosewater = "#${colors.extra.rosewater}", -- [#f5e0dc]
+              sapphire = "#${colors.extra.sapphire}", -- [#74c7ec]
+              sky = "#${colors.extra.sky}", -- [#89dceb]
+              mauve = "#${colors.extra.mauve}", -- [#cba6f7]
             }
           '';
         };
@@ -123,21 +126,19 @@ in {
           name = "Neovim";
           genericName = "Text Editor";
           exec = let
-            app =
-              pkgs.writeShellScript "neovim-terminal"
-              ''
-                # Killing foot from sway results in non-zero exit code which triggers
-                # xdg-mime to use next valid entry, so we must always exit successfully
-                if [ "$SWAYSOCK" ]; then
-                  foot -- nvim "$1" || true
-                else
-                  gnome-terminal -- nvim "$1" || true
-                fi
-              '';
+            app = pkgs.writeShellScript "neovim-terminal" ''
+              # Killing foot from sway results in non-zero exit code which triggers
+              # xdg-mime to use next valid entry, so we must always exit successfully
+              if [ "$SWAYSOCK" ]; then
+                foot -- nvim "$1" || true
+              else
+                gnome-terminal -- nvim "$1" || true
+              fi
+            '';
           in "${app} %U";
           terminal = false;
-          categories = ["Utility" "TextEditor"];
-          mimeType = ["text/markdown" "text/plain" "text/javascript"];
+          categories = [ "Utility" "TextEditor" ];
+          mimeType = [ "text/markdown" "text/plain" "text/javascript" ];
         };
       };
     };

@@ -3,7 +3,7 @@ return {
 		"navarasu/onedark.nvim",
 		priority = 150,
 		dependencies = { "lukas-reineke/indent-blankline.nvim" },
-		-- enabled = false,
+		enabled = false,
 		name = "onedark",
 		config = function()
 			local mode = require("config.helpers")
@@ -31,13 +31,6 @@ return {
 					["@meta.jsx.children.tsx"] = { fg = "$fg" },
 					["@string.quoted.double.tsx"] = { fg = "$fg" },
 					["@string.template"] = { fg = "$fg" },
-
-					-- ["@entity.other.attribute-name"] = { fg = "$yellow", fmt = "italic" },
-					-- ["@entity.other.attribute-name.tsx"] = { fg = "$yellow", fmt = "italic" },
-					-- ["@entity.other.attribute-name.class.css"] = { fg = "$yellow", fmt = "italic" },
-					-- ["@entity.name.type.class"] = { fg = "$yellow", fmt = "italic" },
-					-- ["@meta.function"] = { fg = "$yellow", fmt = "italic" },
-					-- ["@meta.function-call"] = { fg = "$yellow", fmt = "italic" },
 
 					["@support.class.component.tsx"] = { fg = "$cyan", fmt = "italic" },
 					["@support.class.component.astro"] = { fg = "$cyan", fmt = "italic" },

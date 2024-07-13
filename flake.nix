@@ -1,10 +1,8 @@
 {
   description = "PercyGT's nix config";
   nixConfig = {
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-      "https://percygtdev.cachix.org"
-    ];
+    extra-substituters =
+      [ "https://nix-community.cachix.org" "https://percygtdev.cachix.org" ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
@@ -17,7 +15,8 @@
     nixpkgs-stable.follows = "nix-stash/nixpkgs-stable";
 
     swayfx-unwrapped.follows = "nix-stash/nix-sources/swayfx-unwrapped";
-    neovim-nightly-overlay.follows = "nix-stash/nix-sources/neovim-nightly-overlay";
+    neovim-nightly-overlay.follows =
+      "nix-stash/nix-sources/neovim-nightly-overlay";
     emacs-overlay.follows = "nix-stash/nix-sources/emacs-overlay";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -32,8 +31,10 @@
       inputs.nixpkgs-stable.follows = "nixpkgs-stable";
     };
 
-    wayland-pipewire-idle-inhibit.url = "github:rafaelrc7/wayland-pipewire-idle-inhibit";
-    wayland-pipewire-idle-inhibit.inputs.nixpkgs.follows = "nixpkgs";
+    wayland-pipewire-idle-inhibit = {
+      url = "github:rafaelrc7/wayland-pipewire-idle-inhibit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     xremap.url = "github:xremap/nix-flake";
     xremap.inputs.nixpkgs.follows = "nixpkgs";
@@ -56,54 +57,52 @@
       flake = false;
     };
   };
-  outputs = {
-    nixpkgs,
-    self,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    defaultUser = "percygt";
-    stateVersion = "24.05";
-    bldr = import ./lib {inherit self inputs outputs defaultUser stateVersion;};
-  in {
-    packages = bldr.forEachSystem (system: (import ./packages {
-      pkgs = nixpkgs.legacyPackages.${system};
-    }));
+  outputs = { nixpkgs, self, ... }@inputs:
+    let
+      inherit (self) outputs;
+      defaultUser = "percygt";
+      stateVersion = "24.05";
+      bldr =
+        import ./lib { inherit self inputs outputs defaultUser stateVersion; };
+    in {
+      packages = bldr.forEachSystem (system:
+        (import ./packages { pkgs = nixpkgs.legacyPackages.${system}; }));
 
-    formatter = bldr.forEachSystem (system: nixpkgs.legacyPackages.${system}.alejandra);
+      formatter = bldr.forEachSystem
+        (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
 
-    overlays = import ./overlays {inherit inputs;};
+      overlays = import ./overlays { inherit inputs; };
 
-    templates = import ./templates;
+      templates = import ./templates;
 
-    nixosModules.default = ./modules;
+      nixosModules.default = ./modules;
 
-    nixosConfigurations = {
-      aizeft = bldr.buildSystem {
-        profile = "aizeft";
-        desktop = "sway";
+      nixosConfigurations = {
+        aizeft = bldr.buildSystem {
+          profile = "aizeft";
+          desktop = "sway";
+        };
+        minimal = bldr.buildSystem {
+          profile = "minimal";
+          isIso = true;
+        };
+        graphical = bldr.buildSystem {
+          profile = "graphical";
+          isIso = true;
+        };
       };
-      minimal = bldr.buildSystem {
-        profile = "minimal";
-        isIso = true;
-      };
-      graphical = bldr.buildSystem {
-        profile = "graphical";
-        isIso = true;
+
+      homeConfigurations = {
+        "${defaultUser}@furies" = bldr.buildHome {
+          profile = "furies";
+          desktop = "sway";
+          isGeneric = true;
+        };
+        "${defaultUser}@fates" = bldr.buildHome {
+          profile = "fates";
+          desktop = "gnome";
+          isGeneric = true;
+        };
       };
     };
-
-    homeConfigurations = {
-      "${defaultUser}@furies" = bldr.buildHome {
-        profile = "furies";
-        desktop = "sway";
-        isGeneric = true;
-      };
-      "${defaultUser}@fates" = bldr.buildHome {
-        profile = "fates";
-        desktop = "gnome";
-        isGeneric = true;
-      };
-    };
-  };
 }

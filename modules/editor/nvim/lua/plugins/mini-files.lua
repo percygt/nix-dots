@@ -50,7 +50,8 @@ return {
 				vim.keymap.set("n", ".", toggle_dotfiles, { buffer = buf_id })
 			end,
 		})
-		vim.api.nvim_set_hl(0, "MiniFilesNormal", { bg = "NONE", ctermbg = "NONE" })
-		vim.api.nvim_set_hl(0, "MiniFilesBorder", { bg = "NONE", ctermbg = "NONE" })
+		-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE", ctermbg = "NONE" })
+		-- vim.api.nvim_set_hl(0, "MiniFilesNormal", { bg = "NONE", ctermbg = "NONE" })
+		-- vim.api.nvim_set_hl(0, "MiniFilesBorder", { bg = "NONE", ctermbg = "NONE" })
 	end,
 }

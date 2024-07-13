@@ -1,4 +1,3 @@
-local map = require("config.utils").map
 return {
 	{
 		"rcarriga/nvim-notify",
@@ -17,11 +16,9 @@ return {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
 		},
-		init = function()
-			map({
-				["<leader><leader>"] = { "<cmd>NoiceDismiss<cr>", "Noice Dismiss", silent = true },
-			})
-		end,
+		keys = {
+			{ "<leader><leader>", "<cmd>NoiceDismiss<cr>", desc = "Noice Dismiss" },
+		},
 		opts = {
 			lsp = {
 				override = {
