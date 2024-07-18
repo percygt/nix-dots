@@ -1,8 +1,5 @@
-{
-  isGeneric,
-  username,
-  ...
-}: let
+{ isGeneric, username, ... }:
+let
   homeModules = [
     ./qt
     ./gtk
@@ -11,12 +8,15 @@
     ./automount.nix
   ];
 in
-  if isGeneric
-  then {imports = homeModules;}
-  else {
+if isGeneric then
+  { imports = homeModules; }
+else
+  {
     imports = [
       ./xremap.nix
       ./dconf
     ];
-    home-manager.users.${username} = {imports = homeModules;};
+    home-manager.users.${username} = {
+      imports = homeModules;
+    };
   }

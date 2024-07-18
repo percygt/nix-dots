@@ -1,8 +1,5 @@
+{ config, lib, ... }:
 {
-  config,
-  lib,
-  ...
-}: {
   options.cli.ncmpcpp.home.enable = lib.mkEnableOption "Enables ncmpcpp";
   config = lib.mkIf config.cli.ncmpcpp.home.enable {
     programs.ncmpcpp = {

@@ -3,19 +3,17 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.generic.xremap;
-in {
-  imports = [
-    inputs.xremap.homeManagerModules.default
-  ];
+in
+{
+  imports = [ inputs.xremap.homeManagerModules.default ];
 
   options = {
     generic.xremap = {
-      enable =
-        lib.mkEnableOption "Enable xremap";
-      withGnome =
-        lib.mkEnableOption "Enable xremap withGnome";
+      enable = lib.mkEnableOption "Enable xremap";
+      withGnome = lib.mkEnableOption "Enable xremap withGnome";
     };
   };
 
@@ -27,8 +25,8 @@ in {
           name = "Global";
           remap = {
             "CAPSLOCK" = {
-              held = ["CONTROL_L"];
-              alone = ["ESC"];
+              held = [ "CONTROL_L" ];
+              alone = [ "ESC" ];
               alone_timeout_millis = 150;
             };
           };
@@ -36,7 +34,7 @@ in {
       ];
     };
     home = {
-      activation.setupXremap = config.lib.dag.entryAfter ["writeBoundary"] ''
+      activation.setupXremap = config.lib.dag.entryAfter [ "writeBoundary" ] ''
         /usr/bin/systemctl start --user xremap
       '';
     };

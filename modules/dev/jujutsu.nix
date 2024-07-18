@@ -1,8 +1,5 @@
+{ config, lib, ... }:
 {
-  config,
-  lib,
-  ...
-}: {
   config = lib.mkIf config.dev.home.enable {
     programs.jujutsu = {
       enable = true;

@@ -4,7 +4,8 @@
   lib,
   flakeDirectory,
   ...
-}: {
+}:
+{
   options.cli.tmux.home.enable = lib.mkEnableOption "Enable tmux";
   config = lib.mkIf config.cli.tmux.home.enable {
     programs.tmux = {
@@ -38,18 +39,18 @@
         fzf
         gitmux
       ];
-      activation = let
-        moduleTmux = "${flakeDirectory}/modules/cli/tmux";
-      in {
-        linkTmux =
-          lib.hm.dag.entryAfter ["linkGeneration"]
-          ''
+      activation =
+        let
+          moduleTmux = "${flakeDirectory}/modules/cli/tmux";
+        in
+        {
+          linkTmux = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
             [ -e "${config.xdg.configHome}/tmux" ] || mkdir -p "${config.xdg.configHome}/tmux"
             [ -e "${config.xdg.configHome}/tmux/gitmux.yaml" ] || ln -s ${moduleTmux}/gitmux.yaml ${config.xdg.configHome}/tmux/gitmux.yaml
             [ -e "${config.xdg.configHome}/tmux/beforePlugins.conf" ] || ln -s ${moduleTmux}/beforePlugins.conf ${config.xdg.configHome}/tmux/beforePlugins.conf
             [ -e "${config.xdg.configHome}/tmux/afterPlugins.conf" ] || ln -s ${moduleTmux}/afterPlugins.conf ${config.xdg.configHome}/tmux/afterPlugins.conf
           '';
-      };
+        };
     };
     xdg.configFile = {
       "tmux/.tmux-env".text = ''

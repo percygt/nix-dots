@@ -1,8 +1,2 @@
-{
-  username,
-  isGeneric,
-  ...
-}:
-if isGeneric
-then {imports = [./home.nix];}
-else {imports = [./system.nix];}
+{ isGeneric, ... }:
+if isGeneric then { imports = [ ./home.nix ]; } else { imports = [ ./system.nix ]; }

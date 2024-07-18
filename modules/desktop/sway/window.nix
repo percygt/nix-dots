@@ -1,41 +1,46 @@
-{mkAppsFloat}: {
+{ mkAppsFloat }:
+{
   window = {
     titlebar = false;
     border = 1;
     commands =
-      (mkAppsFloat
-        {
-          app_ids = [
-            "xdg-desktop-portal-gtk"
-            "org.gnome.Calculator"
-            "org.telegram.desktop"
-            "org.gnome.Calendar"
-            "org.gnome.Firmware"
-            "org.gnome.Snapshot"
-            "org.gnome.Loupe"
-            "org.keepassxc.KeePassXC"
-            "btop"
-            "yazi"
-            "nixos_rebuild_log"
-            "page.codeberg.Imaginer.Imaginer"
-            "com.github.finefindus.eyedropper"
-            "org.gnome.Nautilus"
-            "io.github.dvlv.boxbuddyrs"
-            "com.github.johnfactotum.Foliate"
-            "brave-chatgpt.com__-WebApp-ai"
-            "brave-app.zoom.us__wc-WebApp-zoom"
-            "io.bassi.Amberol"
-            "qalculate-gtk"
-            "info.mumble.Mumble"
-          ];
-        })
+      (mkAppsFloat {
+        app_ids = [
+          "xdg-desktop-portal-gtk"
+          "org.gnome.Calculator"
+          "org.telegram.desktop"
+          "org.gnome.Calendar"
+          "org.gnome.Firmware"
+          "org.gnome.Snapshot"
+          "org.gnome.Loupe"
+          "org.keepassxc.KeePassXC"
+          "btop"
+          "yazi"
+          "nixos_rebuild_log"
+          "page.codeberg.Imaginer.Imaginer"
+          "com.github.finefindus.eyedropper"
+          "org.gnome.Nautilus"
+          "io.github.dvlv.boxbuddyrs"
+          "com.github.johnfactotum.Foliate"
+          "brave-chatgpt.com__-WebApp-ai"
+          "brave-app.zoom.us__wc-WebApp-zoom"
+          "io.bassi.Amberol"
+          "qalculate-gtk"
+          "info.mumble.Mumble"
+        ];
+      })
       ++ (mkAppsFloat {
         w = 50;
         h = 50;
-        app_ids = ["wpa_gui" "udiskie" "pavucontrol" "\.?blueman-manager(-wrapped)?"];
+        app_ids = [
+          "wpa_gui"
+          "udiskie"
+          "pavucontrol"
+          "\.?blueman-manager(-wrapped)?"
+        ];
       })
       ++ (mkAppsFloat {
-        titles = [".*"];
+        titles = [ ".*" ];
         command = ''inhibit_idle fullscreen'';
       })
       ++ (mkAppsFloat {

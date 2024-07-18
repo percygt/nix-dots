@@ -3,11 +3,11 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   options = {
     drivers.nvidia = {
-      prime.enable =
-        lib.mkEnableOption "Enable nvidia-prime";
+      prime.enable = lib.mkEnableOption "Enable nvidia-prime";
       bye = lib.mkOption {
         description = "Disable nvidia gpu";
         default = false;
@@ -18,10 +18,18 @@
 
   config = lib.mkMerge [
     (lib.mkIf config.drivers.nvidia.prime.enable {
-      boot.kernelParams = ["mem_sleep_default=deep" "nouveau.modeset=0" "ipv6.disable=1"]; # Oddly, ipv6 was horribly buggy and causing problems for me in other areas
-      boot.blacklistedKernelModules = ["nouveau" "bbswitch" "nvidiafb"];
-      services.xserver.videoDrivers = ["nvidia"];
-      systemd.services.supergfxd.path = [pkgs.pciutils];
+      boot.kernelParams = [
+        "mem_sleep_default=deep"
+        "nouveau.modeset=0"
+        "ipv6.disable=1"
+      ]; # Oddly, ipv6 was horribly buggy and causing problems for me in other areas
+      boot.blacklistedKernelModules = [
+        "nouveau"
+        "bbswitch"
+        "nvidiafb"
+      ];
+      services.xserver.videoDrivers = [ "nvidia" ];
+      systemd.services.supergfxd.path = [ pkgs.pciutils ];
       services = {
         supergfxd = {
           enable = true;
@@ -37,11 +45,7 @@
       };
 
       hardware.graphics.extraPackages = [
-        (
-          if pkgs ? libva-vdpau-driver
-          then pkgs.libva-vdpau-driver
-          else pkgs.vaapiVdpau
-        )
+        (if pkgs ? libva-vdpau-driver then pkgs.libva-vdpau-driver else pkgs.vaapiVdpau)
       ];
 
       hardware.nvidia = {
@@ -93,7 +97,12 @@
         # Remove NVIDIA VGA/3D controller devices
         ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
       '';
-      boot.blacklistedKernelModules = ["nouveau" "nvidia" "nvidia_drm" "nvidia_modeset"];
+      boot.blacklistedKernelModules = [
+        "nouveau"
+        "nvidia"
+        "nvidia_drm"
+        "nvidia_modeset"
+      ];
     })
   ];
 }

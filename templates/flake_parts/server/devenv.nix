@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   db_user = "percygt";
   db_host = "localhost";
   db_port = 5432;
@@ -9,7 +10,8 @@
   django_port = "8000";
   redis_port = "6379";
   server_dir = "server";
-in {
+in
+{
   languages.python-with-relative-path = {
     enable = true;
     package = pkgs.python310;
@@ -49,7 +51,7 @@ in {
     enable = true;
     package = pkgs.postgresql_15;
     initialScript = "CREATE USER ${db_user} SUPERUSER;";
-    initialDatabases = [{name = db_name;}];
+    initialDatabases = [ { name = db_name; } ];
     listen_addresses = db_host;
     port = db_port;
   };

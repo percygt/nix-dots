@@ -1,8 +1,6 @@
 {
   extraSessionCommands =
-    /*
-    bash
-    */
+    # bash
     ''
       export SDL_VIDEODRIVER=wayland
       export XDG_CURRENT_DESKTOP=sway

@@ -1,9 +1,11 @@
 { pkgs, ... }:
 let
-  lsp_servers = pkgs.writeText "lsp-servers.json"
-    (builtins.toJSON (import ./lsp-servers.nix { inherit pkgs; }));
-  # lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
-in {
+  lsp_servers = pkgs.writeText "lsp-servers.json" (
+    builtins.toJSON (import ./lsp-servers.nix { inherit pkgs; })
+  );
+in
+# lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+{
   plugins = with pkgs.stash.vimPlugins; [
     # UI Enhancement #-------------------------------------------------------------------------------------
     {
@@ -114,8 +116,7 @@ in {
     {
       plugin = nvim-lspconfig;
       type = "lua";
-      config =
-        ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
+      config = ''require("config.lsp.lspconfig").setup_servers("${lsp_servers}")'';
     }
     {
       plugin = garbage-day-nvim;
@@ -167,8 +168,7 @@ in {
     }
     {
       plugin = sqlite-lua;
-      config =
-        "let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'";
+      config = "let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'";
     }
     vim-dadbod-ui
     vim-dadbod-completion

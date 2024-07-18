@@ -3,16 +3,15 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   home-manager.users.${username} = {
-    imports = [./home.nix];
+    imports = [ ./home.nix ];
   };
   environment.persistence = lib.mkIf config.core.ephemeral.enable {
     "/persist" = {
       users.${username} = {
-        directories = [
-          ".config/BraveSoftware/Brave-Browser"
-        ];
+        directories = [ ".config/BraveSoftware/Brave-Browser" ];
       };
     };
   };

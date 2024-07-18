@@ -1,9 +1,6 @@
 # security tweaks borrowed from @hlissner
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  ...
-}: {
   options.infosec.kernel.system.enable = lib.mkEnableOption "Enable kernel";
   # configured in home
   config = lib.mkIf config.infosec.kernel.system.enable {
@@ -47,6 +44,6 @@
       "net.ipv4.tcp_congestion_control" = "bbr";
       "net.core.default_qdisc" = "cake";
     };
-    boot.kernelModules = ["tcp_bbr"];
+    boot.kernelModules = [ "tcp_bbr" ];
   };
 }

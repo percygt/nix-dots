@@ -1,8 +1,5 @@
+{ lib, username, ... }:
 {
-  lib,
-  username,
-  ...
-}: {
   imports = [
     ./sops
     ./ssh
@@ -24,7 +21,7 @@
   };
 
   home-manager.users.${username} = {
-    imports = [./common.nix];
+    imports = [ ./common.nix ];
     infosec.common.home.enable = lib.mkDefault true;
   };
 }

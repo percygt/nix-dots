@@ -26,7 +26,6 @@
                 "yellow"
                 "bold"
               ];
-              optionsTextColor = [ "magenta" ];
               inactiveBorderColor = [ "cyan" ];
             };
           };

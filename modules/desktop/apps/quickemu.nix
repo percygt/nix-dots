@@ -3,9 +3,10 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   xdg = {
-    configFile."spicy/settings".text = lib.generators.toINI {} {
+    configFile."spicy/settings".text = lib.generators.toINI { } {
       general = {
         grab-keyboard = true;
         grab-mouse = true;

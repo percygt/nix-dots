@@ -3,7 +3,8 @@
   config,
   username,
   ...
-}: {
+}:
+{
   options.infosec.ssh.system.enable = lib.mkEnableOption "Enable ssh";
   config = lib.mkIf config.infosec.ssh.system.enable {
     services.openssh = {
@@ -22,12 +23,10 @@
     # not needed, i use gpg-agent
     programs.ssh.startAgent = lib.mkForce false;
 
-    networking.firewall.allowedTCPPorts = [22];
+    networking.firewall.allowedTCPPorts = [ 22 ];
 
     environment.persistence = {
-      "/persist/system".directories = [
-        "/etc/ssh"
-      ];
+      "/persist/system".directories = [ "/etc/ssh" ];
       "/persist".users.${username}.directories = [
         {
           directory = ".ssh";
@@ -36,7 +35,7 @@
       ];
     };
     home-manager.users.${username} = {
-      imports = [./home.nix];
+      imports = [ ./home.nix ];
       infosec.sops.home.enable = lib.mkDefault true;
     };
   };

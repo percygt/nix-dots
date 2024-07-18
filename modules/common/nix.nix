@@ -1,16 +1,19 @@
+{ lib, pkgs, ... }:
 {
-  lib,
-  pkgs,
-  ...
-}: {
   nix = {
     package = lib.mkDefault pkgs.nixVersions.git;
     settings = {
-      experimental-features = ["nix-command" "flakes"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       auto-optimise-store = true;
       warn-dirty = false;
       max-jobs = "auto";
-      trusted-users = ["@wheel" "root"];
+      trusted-users = [
+        "@wheel"
+        "root"
+      ];
       keep-derivations = true;
       keep-outputs = true;
       substituters = [

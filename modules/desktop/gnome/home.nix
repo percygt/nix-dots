@@ -1,8 +1,5 @@
+{ pkgs, ... }:
 {
-  pkgs,
-  config,
-  ...
-}: {
   imports = [
     ./extensions
     ./ddterm.nix

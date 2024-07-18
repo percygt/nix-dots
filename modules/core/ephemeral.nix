@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   wipeScript = ''
     mkdir /btrfs_tmp
     mount /dev/root_vg/root /btrfs_tmp
@@ -29,8 +30,9 @@
     umount /btrfs_tmp
   '';
   phase1Systemd = config.core.systemd.initrd.enable;
-in {
-  imports = [inputs.impermanence.nixosModules.impermanence];
+in
+{
+  imports = [ inputs.impermanence.nixosModules.impermanence ];
   options.core.ephemeral = {
     enable = lib.mkOption {
       description = "Enable ephemeral filesystem";
@@ -40,14 +42,14 @@ in {
   };
   config = lib.mkIf config.core.ephemeral.enable {
     boot.initrd = {
-      supportedFilesystems = ["btrfs"];
+      supportedFilesystems = [ "btrfs" ];
       postDeviceCommands = lib.mkIf (!phase1Systemd) (lib.mkBefore wipeScript);
       systemd.services.restore-root = lib.mkIf phase1Systemd {
         description = "Rollback btrfs rootfs";
-        wantedBy = ["initrd.target"];
-        requires = [config.core.systemd.initrd.rootDevice];
-        after = [config.core.systemd.initrd.rootDevice];
-        before = ["sysroot.mount"];
+        wantedBy = [ "initrd.target" ];
+        requires = [ config.core.systemd.initrd.rootDevice ];
+        after = [ config.core.systemd.initrd.rootDevice ];
+        before = [ "sysroot.mount" ];
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         script = wipeScript;
@@ -68,9 +70,7 @@ in {
             mode = "u=rwx,g=rx,o=";
           }
         ];
-        files = [
-          "/etc/machine-id"
-        ];
+        files = [ "/etc/machine-id" ];
       };
     };
   };

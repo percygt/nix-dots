@@ -5,7 +5,8 @@
   config,
   username,
   ...
-}: {
+}:
+{
   imports = [
     ./disks.nix
     inputs.disko.nixosModules.disko
@@ -59,9 +60,7 @@
           mode = "0755";
         }
       ];
-      files = [
-        "/etc/machine-id"
-      ];
+      files = [ "/etc/machine-id" ];
     };
   };
 
@@ -70,14 +69,20 @@
   fileSystems."/persist".neededForBoot = true;
 
   boot = {
-    initrd.availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk"];
-    initrd.kernelModules = [];
-    kernelModules = ["kvm-intel"];
-    extraModulePackages = [];
+    initrd.availableKernelModules = [
+      "ahci"
+      "xhci_pci"
+      "virtio_pci"
+      "sr_mod"
+      "virtio_blk"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  swapDevices = [];
+  swapDevices = [ ];
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

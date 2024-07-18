@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   options.editor = {
     vscode.system.enable = lib.mkEnableOption "Enable vscode systemwide";
     vscode.persist.enable = lib.mkOption {
@@ -16,14 +17,12 @@
     environment.persistence = lib.mkIf config.editor.vscode.persist.enable {
       "/persist" = {
         users.${username} = {
-          directories = [
-            ".vscode-oss"
-          ];
+          directories = [ ".vscode-oss" ];
         };
       };
     };
     home-manager.users.${username} = {
-      imports = [./home.nix];
+      imports = [ ./home.nix ];
       editor.vscode.home.enable = lib.mkDefault true;
     };
   };

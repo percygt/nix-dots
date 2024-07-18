@@ -1,8 +1,6 @@
 {
   xdg.configFile."i3-quickterm/config.json".text =
-    /*
-    json
-    */
+    # json
     ''
       {
           "menu": "rofi -dmenu -p 'quickterm: ' -no-custom -auto-select",

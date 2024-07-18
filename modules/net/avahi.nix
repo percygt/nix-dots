@@ -1,8 +1,5 @@
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  ...
-}: {
   options.net.avahi.system.enable = lib.mkEnableOption "Enable avahi";
 
   config = lib.mkIf config.net.avahi.system.enable {

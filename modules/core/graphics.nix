@@ -1,8 +1,5 @@
+{ config, lib, ... }:
 {
-  config,
-  lib,
-  ...
-}: {
   options.core.graphics = {
     enable = lib.mkOption {
       description = "Enable graphics";

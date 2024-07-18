@@ -1,7 +1,5 @@
-{
-  pkgs,
-  config,
-}: let
+{ pkgs, config }:
+let
   resurrectDirPath = "${config.xdg.dataHome}/tmux/resurrect";
   resurrectPostSave = pkgs.writers.writeBash "resurrectPostSave" ''
     sed -ie "s| --cmd .*-vim-pack-dir||g" "$1"
@@ -15,7 +13,8 @@
     sed -i "s| $HOME| ~|g" "$1"
     sed -ie "s|:bash .*/tmp/nix-shell-.*/rc|:nix-shell|g" "$1"
   '';
-in {
+in
+{
   extraConfig =
     # tmux
     ''

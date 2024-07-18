@@ -3,10 +3,9 @@
   inputs,
   username,
   ...
-}: {
-  imports = [
-    inputs.impermanence.nixosModules.home-manager.impermanence
-  ];
+}:
+{
+  imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
 
   home.persistence."/persist/home/${username}" = {
     directories = [
@@ -17,9 +16,7 @@
       ".local/share/zoxide"
       ".config/BraveSoftware/Brave-Browser"
     ];
-    files = [
-      ".local/share/tmux/resurrect/last"
-    ];
+    files = [ ".local/share/tmux/resurrect/last" ];
     allowOther = true;
   };
 

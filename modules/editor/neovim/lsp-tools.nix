@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   null_ls = {
     ## Built-in sources
     ## https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
@@ -13,13 +14,13 @@
 
     formatting = {
       # ruff_format = {};
-      shfmt = {};
-      clang_format = {};
-      shellharden = {};
-      alejandra = {}; # [nix]
-      nixfmt = {}; # [nix]
-      stylua = {};
-      taplo = {}; # [toml]
+      shfmt = { };
+      clang_format = { };
+      shellharden = { };
+      alejandra = { }; # [nix]
+      nixfmt = { }; # [nix]
+      stylua = { };
+      taplo = { }; # [toml]
       prettierd = {
         filetypes = [
           "css"
@@ -35,9 +36,7 @@
         # extra_filetypes = ["astro"];
       };
       prettier = {
-        filetypes = [
-          "astro"
-        ];
+        filetypes = [ "astro" ];
         extra_args = [
           "--plugin"
           "${pkgs.nodePackages-extra.prettier-plugin-astro}/lib/node_modules/prettier-plugin-astro/dist/index.js"
@@ -58,12 +57,12 @@
 
     diagnostics = {
       # ruff = {};
-      yamllint = {};
+      yamllint = { };
       # markdownlint = {};
-      cppcheck = {};
-      golangci_lint = {};
-      statix = {}; # [nix]
-      actionlint = {};
+      cppcheck = { };
+      golangci_lint = { };
+      statix = { }; # [nix]
+      actionlint = { };
       eslint_d = {
         # condition.root_has_file = [".eslintrc.js" ".eslintrc.cjs"];
       };
@@ -73,10 +72,10 @@
       eslint_d = {
         # condition.root_has_file = [".eslintrc.js" ".eslintrc.cjs"];
       };
-      shellcheck = {};
-      statix = {};
-      gitsigns = {};
+      shellcheck = { };
+      statix = { };
+      gitsigns = { };
     };
   };
-  conform = {};
+  conform = { };
 }

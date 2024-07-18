@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   languages.javascript-pnpm = {
     enable = true;
     package = pkgs.nodejs_20;

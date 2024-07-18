@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   targets.genericLinux.enable = true;
 
   editor = {
@@ -64,11 +65,9 @@
   };
   services.syncthing = {
     enable = true;
-    extraOptions = [
-      "-gui-address=fates.atlas-qilin.ts.net:8384"
-    ];
+    extraOptions = [ "-gui-address=fates.atlas-qilin.ts.net:8384" ];
   };
-  xdg.systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
+  xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
   dconf.settings = {
     "org/gnome/shell/extensions/fedora-update" = {
       update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- fish -c \"sudo dnf check-update --refresh & sudo dnf upgrade -y; echo Done - Press enter to exit; read _\" ";

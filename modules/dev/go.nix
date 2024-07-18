@@ -1,8 +1,5 @@
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  ...
-}: {
   config = lib.mkIf config.dev.home.enable {
     programs.go = {
       enable = true;

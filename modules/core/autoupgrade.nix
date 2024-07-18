@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   options.core.autoupgrade = {
     enable = lib.mkOption {
       description = "Enable autoupgrade";

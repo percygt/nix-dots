@@ -5,11 +5,13 @@
   lib,
   username,
   ...
-}: let
+}:
+let
   backupMountPath = "/media/stash";
   configDir = ".config/borgmatic.d";
   cfg = config.infosec.backup.system;
-in {
+in
+{
   options.infosec.backup.system = {
     enable = lib.mkEnableOption "Enable backups";
     usbId = lib.mkOption {
@@ -20,14 +22,14 @@ in {
   };
   # configured in home
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [borgbackup];
-    environment.persistence."/persist".users.${username}.directories = [configDir];
-    sops.secrets."borgmatic/encryption" = {};
+    environment.systemPackages = with pkgs; [ borgbackup ];
+    environment.persistence."/persist".users.${username}.directories = [ configDir ];
+    sops.secrets."borgmatic/encryption" = { };
 
     systemd = {
       timers.borgmatic = lib.mkForce {
         description = "Run borgmatic backup";
-        wantedBy = ["timers.target"];
+        wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "daily";
           Persistent = true;
@@ -36,8 +38,8 @@ in {
       };
       services.borgmatic = {
         description = "Run borgmatic backup";
-        wants = ["network-online.target"];
-        after = ["network-online.target"];
+        wants = [ "network-online.target" ];
+        after = [ "network-online.target" ];
         unitConfig.ConditionACPower = true;
         serviceConfig = {
           Type = "oneshot";
@@ -81,9 +83,7 @@ in {
             path = "${backupMountPath}/backup/data";
           }
         ];
-        source_directories = [
-          "${homeDirectory}/data"
-        ];
+        source_directories = [ "${homeDirectory}/data" ];
         exclude_caches = true;
         exclude_patterns = [
           "*.img"
@@ -91,9 +91,7 @@ in {
           "*.qcow"
           "${homeDirectory}/data/.Trash-*"
         ];
-        exclude_if_present = [
-          ".nobackup"
-        ];
+        exclude_if_present = [ ".nobackup" ];
         borgmatic_source_directory = "${homeDirectory}/${configDir}";
         encryption_passcommand = "cat ${config.sops.secrets."borgmatic/encryption".path}";
         keep_daily = 7;

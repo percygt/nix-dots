@@ -1,8 +1,5 @@
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  ...
-}: {
   options = {
     shell.bash.home.enable = lib.mkOption {
       description = "Enable bash";

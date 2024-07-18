@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   options.cli.nixtools.home.enable = lib.mkEnableOption "Enable nix tools";
   config = lib.mkIf config.cli.nixtools.home.enable {
     home.packages = with pkgs; [
@@ -19,6 +20,7 @@
       json2nix
       nix-output-monitor
       nvd
+      nix-search-cli
       # stash.yaml2nix
       nix-prefetch-scripts
       nix-prefetch-github

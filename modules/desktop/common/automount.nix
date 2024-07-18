@@ -1,9 +1,6 @@
+{ config, pkgs, ... }:
 {
-  config,
-  pkgs,
-  ...
-}: {
-  sops.secrets."backup/key" = {};
+  sops.secrets."backup/key" = { };
   services.udiskie = {
     enable = true;
     tray = "auto";

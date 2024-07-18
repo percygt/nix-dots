@@ -4,7 +4,8 @@
   stateVersion,
   homeDirectory,
   ...
-}: {
+}:
+{
   imports = [
     "${self}/modules/cli/starship.nix"
     "${self}/modules/editor/neovim/home.nix"
@@ -17,11 +18,7 @@
   cli.starship.home.enable = true;
 
   home = {
-    inherit
-      username
-      stateVersion
-      homeDirectory
-      ;
+    inherit username stateVersion homeDirectory;
     shellAliases = {
       ni = "sudo nixos-install --no-root-passwd --flake";
     };

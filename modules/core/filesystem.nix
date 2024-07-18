@@ -1,8 +1,5 @@
+{ config, lib, ... }:
 {
-  config,
-  lib,
-  ...
-}: {
   options.core.filesystem = {
     enable = lib.mkOption {
       description = "Enable filesystem services";

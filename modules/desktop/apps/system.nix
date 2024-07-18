@@ -1,4 +1,5 @@
-{username, ...}: {
+{ username, ... }:
+{
   imports = [
     ./flatpak.nix
     ./common.nix

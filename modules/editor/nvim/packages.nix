@@ -1,15 +1,15 @@
-{pkgs, ...}:
-with pkgs; [
+{ pkgs, ... }:
+with pkgs;
+[
   # Essentials
-  (lua5_1.withPackages (ps: with ps; [luarocks]))
+  (lua5_1.withPackages (ps: with ps; [ luarocks ]))
   (python3.withPackages (
-    ps:
-      with ps; [
-        python-lsp-server
-        python-lsp-ruff
-        # pylsp-mypy
-        pip
-      ]
+    ps: with ps; [
+      python-lsp-server
+      python-lsp-ruff
+      # pylsp-mypy
+      pip
+    ]
   ))
   (fenix.complete.withComponents [
     "cargo"

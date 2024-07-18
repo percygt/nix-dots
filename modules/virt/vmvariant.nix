@@ -1,8 +1,5 @@
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  ...
-}: {
   options.virt.vmvariant.enable = lib.mkEnableOption "Enable vmvariant";
   config = lib.mkIf config.virt.vmvariant.enable {
     virtualisation.vmVariant = {

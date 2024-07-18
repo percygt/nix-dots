@@ -3,18 +3,22 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib) concatStringsSep;
   inherit (pkgs) runtimeShell writeScript;
   inherit (config.xdg) configHome dataHome;
   aria2-bin = "${pkgs.aria2}/bin/aria2c";
   coreutils-bin = "${pkgs.coreutils}/bin";
   sessionFile = "${dataHome}/aria2/session";
-  aria2p-tui = pkgs.python3.withPackages (ps: with ps; [aria2p] ++ aria2p.optional-dependencies.tui);
-in {
+  aria2p-tui = pkgs.python3.withPackages (
+    ps: with ps; [ aria2p ] ++ aria2p.optional-dependencies.tui
+  );
+in
+{
   options.cli.aria.home.enable = lib.mkEnableOption "Enables aria";
   config = lib.mkIf config.cli.aria.home.enable {
-    home.packages = [aria2p-tui];
+    home.packages = [ aria2p-tui ];
     programs.aria2 = {
       enable = true;
       settings = {
@@ -40,16 +44,18 @@ in {
     systemd.user.services.aria2 = {
       Unit.Description = "aria2 download manager";
       Service = {
-        ExecStartPre = let
-          prestart = writeScript "aria2-prestart" ''
-            #!${runtimeShell}
-            ${coreutils-bin}/mkdir -p ${dataHome}/aria2
+        ExecStartPre =
+          let
+            prestart = writeScript "aria2-prestart" ''
+              #!${runtimeShell}
+              ${coreutils-bin}/mkdir -p ${dataHome}/aria2
 
-            if [ ! -e "${sessionFile}" ]; then
-                ${coreutils-bin}/touch ${sessionFile}
-            fi
-          '';
-        in "${prestart}";
+              if [ ! -e "${sessionFile}" ]; then
+                  ${coreutils-bin}/touch ${sessionFile}
+              fi
+            '';
+          in
+          "${prestart}";
 
         ExecStart = concatStringsSep " " [
           "${aria2-bin}"
@@ -73,7 +79,7 @@ in {
         ProtectSystem = "full";
       };
 
-      Install.WantedBy = ["graphical-session.target"];
+      Install.WantedBy = [ "graphical-session.target" ];
     };
   };
 }

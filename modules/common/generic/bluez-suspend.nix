@@ -1,12 +1,8 @@
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  ...
-}: {
   options = {
     generic.bluez-suspend = {
-      disable =
-        lib.mkEnableOption "Disable bluez suspend";
+      disable = lib.mkEnableOption "Disable bluez suspend";
     };
   };
 

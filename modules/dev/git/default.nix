@@ -3,11 +3,12 @@
   pkgs,
   lib,
   ...
-}: {
-  imports = [./ghq.nix];
+}:
+{
+  imports = [ ./ghq.nix ];
 
   config = lib.mkIf config.dev.home.enable {
-    home.packages = [pkgs.glab];
+    home.packages = [ pkgs.glab ];
     sops.secrets = {
       "git/glab-cli/config.yml" = {
         path = "${config.xdg.configHome}/glab-cli/config.yml";
@@ -43,7 +44,9 @@
         maintenance.auto = false;
         maintenance.strategy = "incremental";
       };
-      lfs = {enable = true;};
+      lfs = {
+        enable = true;
+      };
 
       delta = import ./delta.nix;
 

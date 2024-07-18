@@ -1,8 +1,5 @@
+{ config, lib, ... }:
 {
-  config,
-  lib,
-  ...
-}: {
   options.core.zram = {
     enable = lib.mkOption {
       description = "Enable zram";

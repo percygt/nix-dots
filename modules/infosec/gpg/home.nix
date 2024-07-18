@@ -3,10 +3,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   timeout = 432000;
-in {
-  imports = [./pass.nix];
+in
+{
+  imports = [ ./pass.nix ];
   options.infosec.gpg.home.enable = lib.mkEnableOption "Enable gpg";
 
   config = lib.mkIf config.infosec.gpg.home.enable {
@@ -37,10 +39,7 @@ in {
         "E7FC17A1A41AD93D71B6B5A9853A9AA3ECBFCB53"
         "0F35FAA58C77270C1FC8CC77D2B107310955DD82"
       ];
-      pinentryPackage =
-        if config.gtk.enable
-        then pkgs.pinentry-gnome3
-        else pkgs.pinentry-curses;
+      pinentryPackage = if config.gtk.enable then pkgs.pinentry-gnome3 else pkgs.pinentry-curses;
       extraConfig = ''
         disable-scdaemon
       '';

@@ -1,9 +1,6 @@
+{ username, inputs, ... }:
 {
-  username,
-  inputs,
-  ...
-}: {
-  imports = [inputs.nix-flatpak.nixosModules.nix-flatpak];
+  imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
   services.flatpak = {
     enable = true;
     uninstallUnmanaged = true;
@@ -45,12 +42,10 @@
     ];
   };
   fileSystems = {
-    "/var/lib/flatpak".options = ["exec"];
+    "/var/lib/flatpak".options = [ "exec" ];
   };
   environment.persistence = {
-    "/persist/system".directories = [
-      "/var/lib/flatpak"
-    ];
+    "/persist/system".directories = [ "/var/lib/flatpak" ];
     "/persist".users.${username}.directories = [
       ".var/app/org.telegram.desktop"
       ".var/app/info.febvre.Komikku"

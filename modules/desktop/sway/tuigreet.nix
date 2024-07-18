@@ -3,11 +3,13 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;
   xSessions = "${config.services.displayManager.sessionData.desktops}/share/xsessions";
   wlSessions = "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
-in {
+in
+{
   services.greetd = {
     enable = true;
     settings = {

@@ -1,11 +1,6 @@
+{ pkgs, inputs, ... }:
 {
-  pkgs,
-  inputs,
-  ...
-}: {
-  imports = [
-    inputs.wayland-pipewire-idle-inhibit.homeModules.default
-  ];
+  imports = [ inputs.wayland-pipewire-idle-inhibit.homeModules.default ];
   services = {
     clipman.enable = true;
 
@@ -28,8 +23,8 @@
         verbosity = "INFO";
         idle_inhibitor = "wayland";
         media_minimum_duration = 30;
-        sink_whitelist = [];
-        node_blacklist = [];
+        sink_whitelist = [ ];
+        node_blacklist = [ ];
       };
     };
   };
@@ -37,7 +32,7 @@
   systemd.user.services = {
     polkit-gnome-authentication-agent-1 = {
       Unit.Description = "polkit-gnome-authentication-agent-1";
-      Install.WantedBy = ["graphical-session.target"];
+      Install.WantedBy = [ "graphical-session.target" ];
       Service = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";

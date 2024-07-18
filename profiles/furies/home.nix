@@ -3,7 +3,8 @@
   pkgs,
   flakeDirectory,
   ...
-}: {
+}:
+{
   targets.genericLinux.enable = true;
   desktop = {
     modules = {
@@ -72,7 +73,7 @@
       "-home=${config.home.homeDirectory}/data/syncthing"
     ];
   };
-  xdg.systemDirs.data = ["${config.home.homeDirectory}/.nix-profile/share/applications"];
+  xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
   dconf.settings = {
     "org/gnome/shell/extensions/fedora-update" = {
       # update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- ${pkgs.fish}/bin/fish -c \"sudo dnf check-update --refresh & sudo dnf upgrade -y; echo Done - Press enter to exit; read _\" ";

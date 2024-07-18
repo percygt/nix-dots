@@ -1,12 +1,19 @@
-{pkgs}:
-with pkgs; [
-  (aspellWithDicts (dicts: with dicts; [en en-computers]))
-  (python3.withPackages (ps:
-    with ps; [
+{ pkgs }:
+with pkgs;
+[
+  (aspellWithDicts (
+    dicts: with dicts; [
+      en
+      en-computers
+    ]
+  ))
+  (python3.withPackages (
+    ps: with ps; [
       python-lsp-server
       # pylsp-mypy
       python-lsp-ruff
-    ]))
+    ]
+  ))
   # ruff
   # nodePackages.pyright
 

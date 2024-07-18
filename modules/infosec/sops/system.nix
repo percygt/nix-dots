@@ -4,10 +4,12 @@
   lib,
   username,
   ...
-}: let
+}:
+let
   secretsPath = builtins.toString inputs.sikreto;
-in {
-  imports = [inputs.sops-nix.nixosModules.sops];
+in
+{
+  imports = [ inputs.sops-nix.nixosModules.sops ];
   options.infosec.sops.system.enable = lib.mkEnableOption "Enable sops";
   config = lib.mkIf config.infosec.sops.system.enable {
     sops = {
@@ -15,13 +17,13 @@ in {
       validateSopsFiles = false;
       age = {
         keyFile = "/persist/system/keys/system-sops.keyfile";
-        sshKeyPaths = [];
+        sshKeyPaths = [ ];
       };
-      gnupg.sshKeyPaths = [];
+      gnupg.sshKeyPaths = [ ];
     };
 
     home-manager.users.${username} = {
-      imports = [./home.nix];
+      imports = [ ./home.nix ];
       infosec.ssh.home.enable = lib.mkDefault true;
     };
   };

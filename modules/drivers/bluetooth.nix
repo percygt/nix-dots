@@ -1,12 +1,8 @@
+{ config, lib, ... }:
 {
-  config,
-  lib,
-  ...
-}: {
   options = {
     drivers.bluetooth = {
-      enable =
-        lib.mkEnableOption "Enable bluetooth";
+      enable = lib.mkEnableOption "Enable bluetooth";
     };
   };
 
@@ -25,7 +21,7 @@
     services.blueman.enable = true;
     # environment.systemPackages = with pkgs; [blueberry];
     environment.persistence = {
-      "/persist/system".directories = ["/var/lib/bluetooth"];
+      "/persist/system".directories = [ "/var/lib/bluetooth" ];
     };
   };
 }

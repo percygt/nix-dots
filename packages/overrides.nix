@@ -1,7 +1,4 @@
-{ prev, final }:
-let
-  colors = import ../config/colors.nix;
-in
+{ prev }:
 {
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
   borgmatic = prev.borgmatic.override { enableSystemd = false; };

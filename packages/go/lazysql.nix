@@ -17,10 +17,18 @@ buildGoModule rec {
 
   vendorHash = "sha256-tgD6qoCVC1ox15VPJWVvhe4yg3R81ktMuW2dsaU69rY=";
 
-  ldflags = ["-s" "-w" "-X main.version=${version}"];
+  ldflags = [
+    "-s"
+    "-w"
+    "-X main.version=${version}"
+  ];
 
   doCheck = false;
-  buildInputs = [xorg.libX11 xorg.libX11.dev xorg.libX11.out];
+  buildInputs = [
+    xorg.libX11
+    xorg.libX11.dev
+    xorg.libX11.out
+  ];
   meta = with lib; {
     description = "A cross-platform TUI database management tool written in Go.";
     license = licenses.mit;

@@ -2,8 +2,9 @@
 {
   nodeEnv,
   fetchurl,
-  globalBuildInputs ? [],
-}: let
+  globalBuildInputs ? [ ],
+}:
+let
   sources = {
     "@astrojs/compiler-1.8.2" = {
       name = "_at_astrojs_slash_compiler";
@@ -51,7 +52,8 @@
       };
     };
   };
-in {
+in
+{
   prettier-plugin-astro = nodeEnv.buildNodePackage {
     name = "prettier-plugin-astro";
     packageName = "prettier-plugin-astro";

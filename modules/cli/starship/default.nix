@@ -1,20 +1,16 @@
-{
-  lib,
-  config,
-  ...
-}: let
+{ lib, config, ... }:
+let
   lang = icon: color: {
     symbol = icon;
     format = "via [$symbol $version](${color}) ";
   };
-in {
+in
+{
   options.cli.starship.home.enable = lib.mkEnableOption "Enable starship";
   config = lib.mkIf config.cli.starship.home.enable {
     programs.fish = lib.mkIf config.shell.fish.enable {
       shellInit =
-        /*
-        fish
-        */
+        # fish
         ''
           # Change previous prompts left side
           function starship_transient_prompt_func

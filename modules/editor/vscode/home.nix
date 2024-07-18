@@ -6,11 +6,13 @@
   flakeDirectory,
   homeDirectory,
   ...
-}: let
+}:
+let
   HM_VSCODE = "${flakeDirectory}/home/editor/vscode/config";
   USER_VSCODE = "${config.xdg.configHome}/VSCodium/User/settings.json";
-in {
-  imports = [inputs.vscode-server.homeModules.default];
+in
+{
+  imports = [ inputs.vscode-server.homeModules.default ];
   options.editor.vscode.home.enable = lib.mkEnableOption "Enable vscode home";
   config = lib.mkIf config.editor.neovim.home.enable {
     home.shellAliases.code = "codium";
@@ -21,7 +23,12 @@ in {
     };
     programs.vscode = {
       enable = true;
-      package = pkgs.vscodium.fhsWithPackages (ps: with ps; [rustup zlib]);
+      package = pkgs.vscodium.fhsWithPackages (
+        ps: with ps; [
+          rustup
+          zlib
+        ]
+      );
       enableUpdateCheck = true;
       mutableExtensionsDir = false;
       enableExtensionUpdateCheck = true;
@@ -31,11 +38,11 @@ in {
     };
     home = {
       activation = {
-        removeExistingVSCodeSettings = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
+        removeExistingVSCodeSettings = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
           [ -e ${USER_VSCODE} ] && rm "${USER_VSCODE}"
         '';
 
-        overwriteVSCodeSymlink = lib.hm.dag.entryAfter ["linkGeneration"] ''
+        overwriteVSCodeSymlink = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
           rm "${USER_VSCODE}"
           ln -s "${HM_VSCODE}" "${USER_VSCODE}"
         '';

@@ -1,21 +1,16 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config, lib, ... }:
+let
   inherit (builtins) stringLength substring;
   inherit (lib) mkOption mkEnableOption;
-  inherit
-    (lib.attrsets)
-    mapAttrs
-    filterAttrs
-    ;
+  inherit (lib.attrsets) mapAttrs filterAttrs;
   inherit (lib.strings) concatStringsSep toUpper;
-in {
+in
+{
   options.programs.chromium.webapps = mkOption {
-    default = {};
+    default = { };
 
-    type = with lib.types;
+    type =
+      with lib.types;
       attrsOf (submodule {
         options = {
           enable = mkEnableOption "webapp";
@@ -26,7 +21,7 @@ in {
 
           commandLineArgs = mkOption {
             type = listOf str;
-            default = [];
+            default = [ ];
             description = "Extra args to launch Brave with.";
           };
 
@@ -88,15 +83,13 @@ in {
 
   config = {
     xdg.desktopEntries = mapAttrs (name: cfg: {
-      inherit
-        (cfg)
-        prefersNonDefaultGPU
-        ;
+      inherit (cfg) prefersNonDefaultGPU;
 
       name =
-        if cfg.name == null
-        then (toUpper (substring 0 1 name)) + (substring 1 (stringLength name) name)
-        else cfg.name;
+        if cfg.name == null then
+          (toUpper (substring 0 1 name)) + (substring 1 (stringLength name) name)
+        else
+          cfg.name;
 
       startupNotify = true;
       terminal = false;
@@ -109,7 +102,7 @@ in {
           "--profile-directory=WebApp-${name}"
         ]
         ++ cfg.commandLineArgs
-        ++ ["%U"]
+        ++ [ "%U" ]
       );
 
       settings = {

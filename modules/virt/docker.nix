@@ -4,7 +4,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   # Enable the Docker service
   options.virt.docker.enable = lib.mkEnableOption "Enable docker";
   config = lib.mkIf config.virt.docker.enable {
@@ -17,11 +18,9 @@
     };
 
     # Give access to the user
-    users.users.${username}.extraGroups = ["docker"];
+    users.users.${username}.extraGroups = [ "docker" ];
 
     # Include other utilities
-    environment.systemPackages = with pkgs; [
-      docker-compose
-    ];
+    environment.systemPackages = with pkgs; [ docker-compose ];
   };
 }

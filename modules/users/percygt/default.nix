@@ -1,8 +1,5 @@
+{ pkgs, config, ... }:
 {
-  pkgs,
-  config,
-  ...
-}: {
   shell.system.enable = true;
 
   environment.sessionVariables.EDITOR = "vim";
@@ -15,7 +12,7 @@
     users.percygt = {
       isNormalUser = true;
       hashedPasswordFile = config.sops.secrets.userHashedPassword.path;
-      packages = [pkgs.home-manager];
+      packages = [ pkgs.home-manager ];
       extraGroups = [
         "audio"
         "storage"

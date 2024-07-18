@@ -6,7 +6,8 @@
   homeDirectory,
   profile,
   ...
-}: let
+}:
+let
   staggeredMonth = {
     type = "staggered";
     cleanupIntervalS = 86400; # Once every day
@@ -29,17 +30,18 @@
     ignoreDelete = true;
     devices = builtins.attrNames config.services.syncthing.settings.devices;
   };
-in {
+in
+{
   options.net.syncthing.system.enable = lib.mkEnableOption "Enable syncthing";
 
   config = lib.mkIf config.net.syncthing.system.enable {
     users = {
-      users.${username}.packages = [pkgs.syncthing];
+      users.${username}.packages = [ pkgs.syncthing ];
     };
     sops.secrets = {
-      "syncthing/cert.pem" = {};
-      "syncthing/key.pem" = {};
-      "syncthing/pw" = {};
+      "syncthing/cert.pem" = { };
+      "syncthing/key.pem" = { };
+      "syncthing/pw" = { };
     };
     services.syncthing = {
       enable = true;
@@ -80,7 +82,7 @@ in {
         options = {
           urAccepted = -1;
           urSeen = 3;
-          listenAddresses = ["default"];
+          listenAddresses = [ "default" ];
           minHomeDiskFree = {
             unit = "%";
             value = 1;

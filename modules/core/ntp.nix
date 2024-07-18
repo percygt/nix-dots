@@ -1,8 +1,5 @@
+{ config, lib, ... }:
 {
-  config,
-  lib,
-  ...
-}: {
   options.core.ntp = {
     enable = lib.mkOption {
       description = "Enable ntp services";

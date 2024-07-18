@@ -3,11 +3,11 @@
   config,
   outputs,
   ...
-}: {
+}:
+{
   options = {
     generic.overlays = {
-      enable =
-        lib.mkEnableOption "Enable overlays";
+      enable = lib.mkEnableOption "Enable overlays";
     };
   };
 

@@ -1,29 +1,38 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   # ruff_lsp = {};
   # pyright = {};
   pylsp = {
     plugins = {
       ruff = {
         enabled = true;
-        extendSelect = ["I"];
+        extendSelect = [ "I" ];
       };
       # pylsp_mypy = {
       #   enabled = true;
       #   report_progress = true;
       #   live_mode = false;
       # };
-      jedi_completion = {fuzzy = true;};
-      black = {enabled = false;};
-      pyls_isort = {enabled = false;};
-      pylint = {enabled = false;};
+      jedi_completion = {
+        fuzzy = true;
+      };
+      black = {
+        enabled = false;
+      };
+      pyls_isort = {
+        enabled = false;
+      };
+      pylint = {
+        enabled = false;
+      };
     };
   };
-  clojure_lsp = {};
-  clangd = {};
-  nil_ls = {};
-  dockerls = {};
-  bashls = {};
-  terraformls = {};
+  clojure_lsp = { };
+  clangd = { };
+  nil_ls = { };
+  dockerls = { };
+  bashls = { };
+  terraformls = { };
   gopls = {
     settings.gopls = {
       completeUnimported = true;
@@ -33,26 +42,33 @@
       };
     };
   };
-  marksman = {};
+  marksman = { };
   denols = {
-    root_pattern = ["deno.json" "deno.jsonc"];
+    root_pattern = [
+      "deno.json"
+      "deno.jsonc"
+    ];
   };
   tsserver = {
     init_options.tsserver.path = "${pkgs.nodePackages.typescript}/bin/tsserver";
     documentFormatting = false;
     single_file_support = false;
     hostInfo = "neovim";
-    root_pattern = ["package.json"];
+    root_pattern = [ "package.json" ];
   };
   astro = {
     init_options.typescript.tsdk = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib/";
   };
-  taplo = {};
-  cssls = {};
-  yamlls = {};
+  taplo = { };
+  cssls = { };
+  yamlls = { };
   # eslint = {settings.format = false;};
-  jsonls = {init_options.provideFormatter = false;};
-  html = {init_options.provideFormatter = false;};
+  jsonls = {
+    init_options.provideFormatter = false;
+  };
+  html = {
+    init_options.provideFormatter = false;
+  };
   lua_ls = {
     init_options.documentFormatting = false;
     settings.Lua = {
@@ -70,7 +86,10 @@
       };
       diagnostics = {
         enable = true;
-        globals = ["vim" "hs"];
+        globals = [
+          "vim"
+          "hs"
+        ];
       };
       workspace.library = {
         checkThirdParty = false;

@@ -18,11 +18,6 @@
 
   systemd.user.startServices = "sd-switch";
 
-  programs.nix-index = {
-    enable = true;
-    enableFishIntegration = true;
-  };
-
   home = {
     inherit username stateVersion homeDirectory;
     activation = lib.optionalAttrs (!isGeneric) {

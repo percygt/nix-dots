@@ -1,7 +1,11 @@
-{pkgs, ...}: let
-  lsp_servers = pkgs.writeText "lsp-servers.json" (builtins.toJSON (import ./lsp-servers.nix {inherit pkgs;}));
-  # lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
-in {
+{ pkgs, ... }:
+let
+  lsp_servers = pkgs.writeText "lsp-servers.json" (
+    builtins.toJSON (import ./lsp-servers.nix { inherit pkgs; })
+  );
+in
+# lsp_tools = pkgs.writeText "lsp-tools.json" (builtins.toJSON (import ./lsp-tools.nix {inherit pkgs;}));
+{
   plugins = with pkgs.stash.vimPlugins; [
     # UI Enhancement #-------------------------------------------------------------------------------------
     {
@@ -42,9 +46,7 @@ in {
       plugin = conjure;
       type = "lua";
       config =
-        /*
-        lua
-        */
+        # lua
         ''
           vim.g['conjure#mapping#prefix'] = ','
           vim.g['conjure#log#hud#width'] = 1

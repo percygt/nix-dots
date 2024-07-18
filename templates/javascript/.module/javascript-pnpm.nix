@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.languages.javascript-pnpm;
 
   nodeModulesPath = "node_modules";
@@ -41,7 +42,8 @@
       _devenv-pnpm-install
     fi
   '';
-in {
+in
+{
   options.languages.javascript-pnpm = {
     enable = lib.mkEnableOption "tools for JavaScript development";
 
@@ -83,13 +85,17 @@ in {
         cfg.pnpm.package
       ]
       ++ lib.optional cfg.pnpm.enable cfg.pnpm.package
-      ++ lib.optional cfg.corepack.enable (pkgs.runCommand "corepack-enable" {} ''
-        mkdir -p $out/bin
-        ${cfg.package}/bin/corepack enable --install-directory $out/bin
-      '');
+      ++ lib.optional cfg.corepack.enable (
+        pkgs.runCommand "corepack-enable" { } ''
+          mkdir -p $out/bin
+          ${cfg.package}/bin/corepack enable --install-directory $out/bin
+        ''
+      );
 
-    enterShell = lib.concatStringsSep "\n" (lib.optional cfg.pnpm.install.enable ''
-      source ${initPnpmScript}
-    '');
+    enterShell = lib.concatStringsSep "\n" (
+      lib.optional cfg.pnpm.install.enable ''
+        source ${initPnpmScript}
+      ''
+    );
   };
 }

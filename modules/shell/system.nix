@@ -4,7 +4,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   options = {
     shell.system.enable = lib.mkEnableOption "Enable shells";
     shell.persist.enable = lib.mkOption {
@@ -17,17 +18,15 @@
     environment.persistence = lib.mkIf config.shell.persist.enable {
       "/persist" = {
         users.${username} = {
-          directories = [
-            ".local/share/fish"
-          ];
+          directories = [ ".local/share/fish" ];
         };
       };
     };
     programs.fish.enable = true;
     users.users.${username}.shell = pkgs.fish;
-    environment.shells = with pkgs; [fish];
+    environment.shells = with pkgs; [ fish ];
     home-manager.users.${username} = {
-      imports = [./home.nix];
+      imports = [ ./home.nix ];
     };
   };
 }

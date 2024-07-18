@@ -3,9 +3,10 @@
   pkgs,
   self,
   ...
-}: let
-  date-menu-formatter = pkgs.callPackage "${self}/standard/date-menu-formatter.nix" {};
-  quake-mode = pkgs.callPackage "${self}/standard/quake-mode.nix" {};
+}:
+let
+  date-menu-formatter = pkgs.callPackage "${self}/standard/date-menu-formatter.nix" { };
+  quake-mode = pkgs.callPackage "${self}/standard/quake-mode.nix" { };
   ddterm = pkgs.gnomeExtensions.ddterm.overrideAttrs (_oldAttrs: rec {
     version = "54";
     src = pkgs.fetchzip {
@@ -23,9 +24,11 @@
       stripRoot = false;
     };
   });
-in {
+in
+{
   xdg.configFile."pop-shell/config.json".text = builtins.toJSON (import ./pop-shell.nix).config;
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       libhandy
       # gnomeExtensions.space-bar
@@ -153,8 +156,8 @@ in {
     };
 
     "org/gnome/shell/extensions/quake-mode/apps" = {
-      quake-mode-accelerator-1 = ["<Super>w"];
-      quake-mode-accelerator-2 = ["<Super><Shift>f"];
+      quake-mode-accelerator-1 = [ "<Super>w" ];
+      quake-mode-accelerator-2 = [ "<Super><Shift>f" ];
     };
 
     "org/gnome/shell/extensions/quake-mode/accelerators" = {
@@ -193,69 +196,72 @@ in {
 
     "org/gnome/shell/extensions/dash-to-panel" = {
       animate-appicon-hover = true;
-      app-ctrl-hotkey-1 = ["<Control><Alt><Super>1"];
-      app-ctrl-hotkey-10 = ["<Control><Alt><Super>0"];
-      app-ctrl-hotkey-2 = ["<Control><Alt><Super>2"];
-      app-ctrl-hotkey-3 = ["<Control><Alt><Super>3"];
-      app-ctrl-hotkey-4 = ["<Control><Alt><Super>4"];
-      app-ctrl-hotkey-5 = ["<Control><Alt><Super>5"];
-      app-ctrl-hotkey-6 = ["<Control><Alt><Super>6"];
-      app-ctrl-hotkey-7 = ["<Control><Alt><Super>7"];
-      app-ctrl-hotkey-8 = ["<Control><Alt><Super>8"];
-      app-ctrl-hotkey-9 = ["<Control><Alt><Super>9"];
-      app-ctrl-hotkey-kp-1 = ["<Control><Alt><Super>KP_1"];
-      app-ctrl-hotkey-kp-10 = ["<Control><Alt><Super>KP_0"];
-      app-ctrl-hotkey-kp-2 = ["<Control><Alt><Super>KP_2"];
-      app-ctrl-hotkey-kp-3 = ["<Control><Alt><Super>KP_3"];
-      app-ctrl-hotkey-kp-4 = ["<Control><Alt><Super>KP_4"];
-      app-ctrl-hotkey-kp-5 = ["<Control><Alt><Super>KP_5"];
-      app-ctrl-hotkey-kp-6 = ["<Control><Alt><Super>KP_6"];
-      app-ctrl-hotkey-kp-7 = ["<Control><Alt><Super>KP_7"];
-      app-ctrl-hotkey-kp-8 = ["<Control><Alt><Super>KP_8"];
-      app-ctrl-hotkey-kp-9 = ["<Control><Alt><Super>KP_9"];
-      app-hotkey-1 = ["<Alt><Super>1"];
-      app-hotkey-10 = ["<Alt><Super>0"];
-      app-hotkey-2 = ["<Alt><Super>2"];
-      app-hotkey-3 = ["<Alt><Super>3"];
-      app-hotkey-4 = ["<Alt><Super>4"];
-      app-hotkey-5 = ["<Alt><Super>5"];
-      app-hotkey-6 = ["<Alt><Super>6"];
-      app-hotkey-7 = ["<Alt><Super>7"];
-      app-hotkey-8 = ["<Alt><Super>8"];
-      app-hotkey-9 = ["<Alt><Super>9"];
-      app-hotkey-kp-1 = ["<Alt><Super>KP_1"];
-      app-hotkey-kp-10 = ["<Alt><Super>KP_0"];
-      app-hotkey-kp-2 = ["<Alt><Super>KP_2"];
-      app-hotkey-kp-3 = ["<Alt><Super>KP_3"];
-      app-hotkey-kp-4 = ["<Alt><Super>KP_4"];
-      app-hotkey-kp-5 = ["<Alt><Super>KP_5"];
-      app-hotkey-kp-6 = ["<Alt><Super>KP_6"];
-      app-hotkey-kp-7 = ["<Alt><Super>KP_7"];
-      app-hotkey-kp-8 = ["<Alt><Super>KP_8"];
-      app-hotkey-kp-9 = ["<Alt><Super>KP_9"];
-      app-shift-hotkey-1 = ["<Shift><Alt><Super>1"];
-      app-shift-hotkey-10 = ["<Shift><Alt><Super>0"];
-      app-shift-hotkey-2 = ["<Shift><Alt><Super>2"];
-      app-shift-hotkey-3 = ["<Shift><Alt><Super>3"];
-      app-shift-hotkey-4 = ["<Shift><Alt><Super>4"];
-      app-shift-hotkey-5 = ["<Shift><Alt><Super>5"];
-      app-shift-hotkey-6 = ["<Shift><Alt><Super>6"];
-      app-shift-hotkey-7 = ["<Shift><Alt><Super>7"];
-      app-shift-hotkey-8 = ["<Shift><Alt><Super>8"];
-      app-shift-hotkey-9 = ["<Shift><Alt><Super>9"];
-      app-shift-hotkey-kp-1 = ["<Shift><Alt><Super>KP_1"];
-      app-shift-hotkey-kp-10 = ["<Shift><Alt><Super>KP_0"];
-      app-shift-hotkey-kp-2 = ["<Shift><Alt><Super>KP_2"];
-      app-shift-hotkey-kp-3 = ["<Shift><Alt><Super>KP_3"];
-      app-shift-hotkey-kp-4 = ["<Shift><Alt><Super>KP_4"];
-      app-shift-hotkey-kp-5 = ["<Shift><Alt><Super>KP_5"];
-      app-shift-hotkey-kp-6 = ["<Shift><Alt><Super>KP_6"];
-      app-shift-hotkey-kp-7 = ["<Shift><Alt><Super>KP_7"];
-      app-shift-hotkey-kp-8 = ["<Shift><Alt><Super>KP_8"];
-      app-shift-hotkey-kp-9 = ["<Shift><Alt><Super>KP_9"];
+      app-ctrl-hotkey-1 = [ "<Control><Alt><Super>1" ];
+      app-ctrl-hotkey-10 = [ "<Control><Alt><Super>0" ];
+      app-ctrl-hotkey-2 = [ "<Control><Alt><Super>2" ];
+      app-ctrl-hotkey-3 = [ "<Control><Alt><Super>3" ];
+      app-ctrl-hotkey-4 = [ "<Control><Alt><Super>4" ];
+      app-ctrl-hotkey-5 = [ "<Control><Alt><Super>5" ];
+      app-ctrl-hotkey-6 = [ "<Control><Alt><Super>6" ];
+      app-ctrl-hotkey-7 = [ "<Control><Alt><Super>7" ];
+      app-ctrl-hotkey-8 = [ "<Control><Alt><Super>8" ];
+      app-ctrl-hotkey-9 = [ "<Control><Alt><Super>9" ];
+      app-ctrl-hotkey-kp-1 = [ "<Control><Alt><Super>KP_1" ];
+      app-ctrl-hotkey-kp-10 = [ "<Control><Alt><Super>KP_0" ];
+      app-ctrl-hotkey-kp-2 = [ "<Control><Alt><Super>KP_2" ];
+      app-ctrl-hotkey-kp-3 = [ "<Control><Alt><Super>KP_3" ];
+      app-ctrl-hotkey-kp-4 = [ "<Control><Alt><Super>KP_4" ];
+      app-ctrl-hotkey-kp-5 = [ "<Control><Alt><Super>KP_5" ];
+      app-ctrl-hotkey-kp-6 = [ "<Control><Alt><Super>KP_6" ];
+      app-ctrl-hotkey-kp-7 = [ "<Control><Alt><Super>KP_7" ];
+      app-ctrl-hotkey-kp-8 = [ "<Control><Alt><Super>KP_8" ];
+      app-ctrl-hotkey-kp-9 = [ "<Control><Alt><Super>KP_9" ];
+      app-hotkey-1 = [ "<Alt><Super>1" ];
+      app-hotkey-10 = [ "<Alt><Super>0" ];
+      app-hotkey-2 = [ "<Alt><Super>2" ];
+      app-hotkey-3 = [ "<Alt><Super>3" ];
+      app-hotkey-4 = [ "<Alt><Super>4" ];
+      app-hotkey-5 = [ "<Alt><Super>5" ];
+      app-hotkey-6 = [ "<Alt><Super>6" ];
+      app-hotkey-7 = [ "<Alt><Super>7" ];
+      app-hotkey-8 = [ "<Alt><Super>8" ];
+      app-hotkey-9 = [ "<Alt><Super>9" ];
+      app-hotkey-kp-1 = [ "<Alt><Super>KP_1" ];
+      app-hotkey-kp-10 = [ "<Alt><Super>KP_0" ];
+      app-hotkey-kp-2 = [ "<Alt><Super>KP_2" ];
+      app-hotkey-kp-3 = [ "<Alt><Super>KP_3" ];
+      app-hotkey-kp-4 = [ "<Alt><Super>KP_4" ];
+      app-hotkey-kp-5 = [ "<Alt><Super>KP_5" ];
+      app-hotkey-kp-6 = [ "<Alt><Super>KP_6" ];
+      app-hotkey-kp-7 = [ "<Alt><Super>KP_7" ];
+      app-hotkey-kp-8 = [ "<Alt><Super>KP_8" ];
+      app-hotkey-kp-9 = [ "<Alt><Super>KP_9" ];
+      app-shift-hotkey-1 = [ "<Shift><Alt><Super>1" ];
+      app-shift-hotkey-10 = [ "<Shift><Alt><Super>0" ];
+      app-shift-hotkey-2 = [ "<Shift><Alt><Super>2" ];
+      app-shift-hotkey-3 = [ "<Shift><Alt><Super>3" ];
+      app-shift-hotkey-4 = [ "<Shift><Alt><Super>4" ];
+      app-shift-hotkey-5 = [ "<Shift><Alt><Super>5" ];
+      app-shift-hotkey-6 = [ "<Shift><Alt><Super>6" ];
+      app-shift-hotkey-7 = [ "<Shift><Alt><Super>7" ];
+      app-shift-hotkey-8 = [ "<Shift><Alt><Super>8" ];
+      app-shift-hotkey-9 = [ "<Shift><Alt><Super>9" ];
+      app-shift-hotkey-kp-1 = [ "<Shift><Alt><Super>KP_1" ];
+      app-shift-hotkey-kp-10 = [ "<Shift><Alt><Super>KP_0" ];
+      app-shift-hotkey-kp-2 = [ "<Shift><Alt><Super>KP_2" ];
+      app-shift-hotkey-kp-3 = [ "<Shift><Alt><Super>KP_3" ];
+      app-shift-hotkey-kp-4 = [ "<Shift><Alt><Super>KP_4" ];
+      app-shift-hotkey-kp-5 = [ "<Shift><Alt><Super>KP_5" ];
+      app-shift-hotkey-kp-6 = [ "<Shift><Alt><Super>KP_6" ];
+      app-shift-hotkey-kp-7 = [ "<Shift><Alt><Super>KP_7" ];
+      app-shift-hotkey-kp-8 = [ "<Shift><Alt><Super>KP_8" ];
+      app-shift-hotkey-kp-9 = [ "<Shift><Alt><Super>KP_9" ];
       appicon-margin = 0;
       appicon-padding = 6;
-      available-monitors = [1 0];
+      available-monitors = [
+        1
+        0
+      ];
       desktop-line-use-custom-color = false;
       dot-position = "TOP";
       dot-style-focused = "SQUARES";
@@ -268,7 +274,7 @@ in {
       intellihide = false;
       intellihide-behaviour = "MAXIMIZED_WINDOWS";
       intellihide-hide-from-windows = true;
-      intellihide-key-toggle = ["<Super>i"];
+      intellihide-key-toggle = [ "<Super>i" ];
       isolate-monitors = false;
       isolate-workspaces = false;
       leftbox-padding = -1;
@@ -316,7 +322,7 @@ in {
       # primary-monitor = 1;
       progress-show-count = false;
       secondarymenu-contains-showdetails = true;
-      shortcut = ["<Super>q"];
+      shortcut = [ "<Super>q" ];
       show-apps-icon-file = "/home/percygt/Pictures/Wallpaper/bg.jpg";
       show-apps-icon-side-padding = 0;
       show-favorites = true;
@@ -396,46 +402,46 @@ in {
     };
 
     "org/gnome/shell/extensions/forge/keybindings" = {
-      con-split-horizontal = [];
-      con-split-layout-toggle = [];
-      con-split-vertical = [];
-      con-stacked-layout-toggle = [];
-      con-tabbed-layout-toggle = [];
-      con-tabbed-showtab-decoration-toggle = [];
-      focus-border-toggle = [];
+      con-split-horizontal = [ ];
+      con-split-layout-toggle = [ ];
+      con-split-vertical = [ ];
+      con-stacked-layout-toggle = [ ];
+      con-tabbed-layout-toggle = [ ];
+      con-tabbed-showtab-decoration-toggle = [ ];
+      focus-border-toggle = [ ];
       mod-mask-mouse-tile = "Super";
-      prefs-tiling-toggle = ["<Super>w"];
-      window-focus-down = ["<Super>Down"];
-      window-focus-left = ["<Super>Left"];
-      window-focus-right = ["<Super>Right"];
-      window-focus-up = ["<Super>Up"];
-      window-gap-size-decrease = [];
-      window-gap-size-increase = [];
-      window-move-down = [];
-      window-move-left = [];
-      window-move-right = [];
-      window-move-up = [];
-      window-resize-bottom-decrease = [];
-      window-resize-bottom-increase = [];
-      window-resize-left-decrease = [];
-      window-resize-left-increase = [];
-      window-resize-right-decrease = [];
-      window-resize-right-increase = [];
-      window-resize-top-decrease = [];
-      window-resize-top-increase = [];
-      window-snap-center = [];
-      window-snap-one-third-left = [];
-      window-snap-one-third-right = [];
-      window-snap-two-third-left = [];
-      window-snap-two-third-right = [];
-      window-swap-down = [];
-      window-swap-last-active = [];
-      window-swap-left = [];
-      window-swap-right = [];
-      window-swap-up = [];
-      window-toggle-always-float = ["<Shift><Super>c"];
-      window-toggle-float = ["<Super>c"];
-      workspace-active-tile-toggle = ["<Shift><Super>w"];
+      prefs-tiling-toggle = [ "<Super>w" ];
+      window-focus-down = [ "<Super>Down" ];
+      window-focus-left = [ "<Super>Left" ];
+      window-focus-right = [ "<Super>Right" ];
+      window-focus-up = [ "<Super>Up" ];
+      window-gap-size-decrease = [ ];
+      window-gap-size-increase = [ ];
+      window-move-down = [ ];
+      window-move-left = [ ];
+      window-move-right = [ ];
+      window-move-up = [ ];
+      window-resize-bottom-decrease = [ ];
+      window-resize-bottom-increase = [ ];
+      window-resize-left-decrease = [ ];
+      window-resize-left-increase = [ ];
+      window-resize-right-decrease = [ ];
+      window-resize-right-increase = [ ];
+      window-resize-top-decrease = [ ];
+      window-resize-top-increase = [ ];
+      window-snap-center = [ ];
+      window-snap-one-third-left = [ ];
+      window-snap-one-third-right = [ ];
+      window-snap-two-third-left = [ ];
+      window-snap-two-third-right = [ ];
+      window-swap-down = [ ];
+      window-swap-last-active = [ ];
+      window-swap-left = [ ];
+      window-swap-right = [ ];
+      window-swap-up = [ ];
+      window-toggle-always-float = [ "<Shift><Super>c" ];
+      window-toggle-float = [ "<Super>c" ];
+      workspace-active-tile-toggle = [ "<Shift><Super>w" ];
     };
 
     "org/gnome/shell/extensions/mpris-label" = {
@@ -464,8 +470,8 @@ in {
     };
 
     "org/gnome/shell/extensions/pano" = {
-      global-shortcut = ["<Alt><Super>c"];
-      incognito-shortcut = ["<Control><Alt><Super>c"];
+      global-shortcut = [ "<Alt><Super>c" ];
+      incognito-shortcut = [ "<Control><Alt><Super>c" ];
       is-in-incognito = false;
       paste-on-select = false;
       play-audio-on-copy = true;
@@ -481,40 +487,40 @@ in {
     };
 
     "org/gnome/shell/extensions/pop-shell" = {
-      activate-launcher = [];
+      activate-launcher = [ ];
       active-hint = false;
       active-hint-border-radius = mkUint32 15;
       gap-inner = mkUint32 1;
       gap-outer = mkUint32 1;
       hint-color-rgba = "rgba(27,29,146,0.657718)";
-      management-orientation = [];
-      pop-monitor-down = [];
-      pop-monitor-left = [];
-      pop-monitor-right = [];
-      pop-monitor-up = [];
-      pop-workspace-down = [];
-      pop-workspace-up = [];
-      tile-accept = [];
+      management-orientation = [ ];
+      pop-monitor-down = [ ];
+      pop-monitor-left = [ ];
+      pop-monitor-right = [ ];
+      pop-monitor-up = [ ];
+      pop-workspace-down = [ ];
+      pop-workspace-up = [ ];
+      tile-accept = [ ];
       tile-by-default = true;
-      tile-enter = [];
-      tile-move-down = [];
-      tile-move-left = [];
-      tile-move-left-global = [];
-      tile-move-right = [];
-      tile-move-right-global = [];
-      tile-move-up = [];
-      tile-orientation = [];
-      tile-reject = [];
-      tile-resize-down = [];
-      tile-resize-left = [];
-      tile-resize-right = [];
-      tile-resize-up = [];
-      tile-swap-down = [];
-      tile-swap-left = [];
-      tile-swap-right = [];
-      tile-swap-up = [];
-      toggle-stacking = [];
-      toggle-stacking-global = [];
+      tile-enter = [ ];
+      tile-move-down = [ ];
+      tile-move-left = [ ];
+      tile-move-left-global = [ ];
+      tile-move-right = [ ];
+      tile-move-right-global = [ ];
+      tile-move-up = [ ];
+      tile-orientation = [ ];
+      tile-reject = [ ];
+      tile-resize-down = [ ];
+      tile-resize-left = [ ];
+      tile-resize-right = [ ];
+      tile-resize-up = [ ];
+      tile-swap-down = [ ];
+      tile-swap-left = [ ];
+      tile-swap-right = [ ];
+      tile-swap-up = [ ];
+      toggle-stacking = [ ];
+      toggle-stacking-global = [ ];
     };
 
     "org/gnome/shell/extensions/quick-settings-tweaks" = {
@@ -535,7 +541,12 @@ in {
       notifications-integrated = true;
       notifications-use-native-controls = true;
       output-show-selected = false;
-      user-removed-buttons = ["NMBluetoothToggle" "RotationToggle" "BackgroundAppsToggle" "DarkModeToggle"];
+      user-removed-buttons = [
+        "NMBluetoothToggle"
+        "RotationToggle"
+        "BackgroundAppsToggle"
+        "DarkModeToggle"
+      ];
       volume-mixer-check-description = false;
       volume-mixer-enabled = false;
       volume-mixer-position = "bottom";
@@ -590,13 +601,13 @@ in {
     };
 
     "org/gnome/shell/extensions/space-bar/shortcuts" = {
-      activate-empty-key = [];
-      activate-previous-key = [];
+      activate-empty-key = [ ];
+      activate-previous-key = [ ];
       enable-activate-workspace-shortcuts = false;
       enable-move-to-workspace-shortcuts = false;
-      move-workspace-left = [];
-      move-workspace-right = [];
-      open-menu = [];
+      move-workspace-left = [ ];
+      move-workspace-right = [ ];
+      open-menu = [ ];
     };
 
     "org/gnome/shell/extensions/rounded-window-corners" = {
@@ -606,69 +617,108 @@ in {
         "foot"
       ];
       border-color = mkTuple [
-        (mkDouble 0.0039215651340782642)
-        (mkDouble 0.082352980971336365)
-        (mkDouble 0.17254902422428131)
-        (mkDouble 0.79666668176651001)
+        (mkDouble 3.921565134078264e-3)
+        (mkDouble 8.235298097133636e-2)
+        (mkDouble 0.1725490242242813)
+        (mkDouble 0.79666668176651)
       ];
       border-width = 2;
       enable-preferences-entry = true;
       focused-shadow = [
-        (mkDictionaryEntry ["vertical_offset" 0])
-        (mkDictionaryEntry ["horizontal_offset" 0])
-        (mkDictionaryEntry ["blur_offset" 16])
-        (mkDictionaryEntry ["spread_radius" 3])
-        (mkDictionaryEntry ["opacity" 85])
+        (mkDictionaryEntry [
+          "vertical_offset"
+          0
+        ])
+        (mkDictionaryEntry [
+          "horizontal_offset"
+          0
+        ])
+        (mkDictionaryEntry [
+          "blur_offset"
+          16
+        ])
+        (mkDictionaryEntry [
+          "spread_radius"
+          3
+        ])
+        (mkDictionaryEntry [
+          "opacity"
+          85
+        ])
       ];
       global-rounded-corner-settings = [
-        (mkDictionaryEntry
-          [
-            "padding"
-            (
-              mkVariant [
-                (mkDictionaryEntry ["left" (mkVariant (mkUint32 0))])
-                (mkDictionaryEntry ["right" (mkVariant (mkUint32 0))])
-                (mkDictionaryEntry ["top" (mkVariant (mkUint32 0))])
-                (mkDictionaryEntry ["bottom" (mkVariant (mkUint32 0))])
-              ]
-            )
+        (mkDictionaryEntry [
+          "padding"
+          (mkVariant [
+            (mkDictionaryEntry [
+              "left"
+              (mkVariant (mkUint32 0))
+            ])
+            (mkDictionaryEntry [
+              "right"
+              (mkVariant (mkUint32 0))
+            ])
+            (mkDictionaryEntry [
+              "top"
+              (mkVariant (mkUint32 0))
+            ])
+            (mkDictionaryEntry [
+              "bottom"
+              (mkVariant (mkUint32 0))
+            ])
           ])
-        (mkDictionaryEntry
-          [
-            "keep_rounded_corners"
-            (
-              mkVariant [
-                (mkDictionaryEntry ["maximized" (mkVariant false)])
-                (mkDictionaryEntry ["fullscreen" (mkVariant false)])
-              ]
-            )
+        ])
+        (mkDictionaryEntry [
+          "keep_rounded_corners"
+          (mkVariant [
+            (mkDictionaryEntry [
+              "maximized"
+              (mkVariant false)
+            ])
+            (mkDictionaryEntry [
+              "fullscreen"
+              (mkVariant false)
+            ])
           ])
-        (mkDictionaryEntry
-          [
-            "border_radius"
-            (mkVariant (mkUint32 12))
-          ])
-        (mkDictionaryEntry
-          [
-            "smoothing"
-            (mkVariant 0.5)
-          ])
-        (mkDictionaryEntry
-          [
-            "enabled"
-            (mkVariant true)
-          ])
+        ])
+        (mkDictionaryEntry [
+          "border_radius"
+          (mkVariant (mkUint32 12))
+        ])
+        (mkDictionaryEntry [
+          "smoothing"
+          (mkVariant 0.5)
+        ])
+        (mkDictionaryEntry [
+          "enabled"
+          (mkVariant true)
+        ])
       ];
       settings-version = mkUint32 5;
       skip-libadwaita-app = false;
       skip-libhandy-app = false;
       tweak-kitty-terminal = true;
       unfocused-shadow = [
-        (mkDictionaryEntry ["vertical_offset" 0])
-        (mkDictionaryEntry ["horizontal_offset" 0])
-        (mkDictionaryEntry ["blur_offset" 16])
-        (mkDictionaryEntry ["spread_radius" 16])
-        (mkDictionaryEntry ["opacity" 60])
+        (mkDictionaryEntry [
+          "vertical_offset"
+          0
+        ])
+        (mkDictionaryEntry [
+          "horizontal_offset"
+          0
+        ])
+        (mkDictionaryEntry [
+          "blur_offset"
+          16
+        ])
+        (mkDictionaryEntry [
+          "spread_radius"
+          16
+        ])
+        (mkDictionaryEntry [
+          "opacity"
+          60
+        ])
       ];
     };
 
@@ -747,128 +797,494 @@ in {
       panel-position = 0;
       panel-visibility = 0;
       profile-data-1 = [
-        ["mkTupleworkspaceThumbnailsPosition" "5"]
-        ["wsMaxSpacing" "350"]
-        ["wsPreviewScale" "100"]
-        ["secWsPreviewScale" "100"]
-        ["secWsPreviewShift" "false"]
-        ["wsThumbnailsFull" "true"]
-        ["secWsThumbnailsPosition" "2"]
-        ["dashPosition" "0"]
-        ["dashPositionAdjust" "0"]
-        ["wsTmbPositionAdjust" "0"]
-        ["showWsTmbLabels" "0"]
-        ["showWsTmbLabelsOnHover" "false"]
-        ["closeWsButtonMode" "1"]
-        ["secWsTmbPositionAdjust" "0"]
-        ["dashMaxIconSize" "64"]
-        ["dashShowWindowsIcon" "0"]
-        ["dashShowRecentFilesIcon" "0"]
-        ["dashShowExtensionsIcon" "1"]
-        ["centerDashToWs" "false"]
-        ["showAppsIconPosition" "2"]
-        ["wsThumbnailScale" "17"]
-        ["wsThumbnailScaleAppGrid" "17"]
-        ["secWsThumbnailScale" "13"]
-        ["showSearchEntry" "true"]
-        ["centerSearch" "true"]
-        ["centerAppGrid" "false"]
-        ["dashBgOpacity" "0"]
-        ["dashBgColor" "0"]
-        ["dashBgRadius" "0"]
-        ["dashBgGS3Style" "false"]
-        ["runningDotStyle" "1"]
-        ["enablePageShortcuts" "true"]
-        ["showWsSwitcherBg" "false"]
-        ["showWsPreviewBg" "false"]
-        ["wsPreviewBgRadius" "29"]
-        ["showBgInOverview" "true"]
-        ["overviewBgBrightness" "95"]
-        ["searchBgBrightness" "30"]
-        ["overviewBgBlurSigma" "25"]
-        ["appGridBgBlurSigma" "25"]
-        ["smoothBlurTransitions" "true"]
-        ["appGridAnimation" "4"]
-        ["searchViewAnimation" "0"]
-        ["workspaceAnimation" "1"]
-        ["animationSpeedFactor" "70"]
-        ["winPreviewIconSize" "0"]
-        ["winTitlePosition" "0"]
-        ["startupState" "1"]
-        ["overviewMode" "2"]
-        ["workspaceSwitcherAnimation" "0"]
-        ["searchIconSize" "96"]
-        ["searchViewScale" "100"]
-        ["appGridIconSize" "112"]
-        ["appGridColumns" "8"]
-        ["appGridRows" "4"]
-        ["appGridFolderIconSize" "-1"]
-        ["appGridFolderColumns" "0"]
-        ["appGridFolderRows" "0"]
-        ["appGridFolderIconGrid" "2"]
-        ["appGridContent" "4"]
-        ["appGridIncompletePages" "false"]
-        ["appGridOrder" "0"]
-        ["appFolderOrder" "0"]
-        ["appGridNamesMode" "0"]
-        ["appGridActivePreview" "false"]
-        ["appGridFolderCenter" "false"]
-        ["appGridPageWidthScale" "100"]
-        ["appGridSpacing" "12"]
-        ["searchWindowsOrder" "1"]
-        ["searchFuzzy" "true"]
-        ["searchMaxResultsRows" "5"]
-        ["dashShowWindowsBeforeActivation" "1"]
-        ["dashIconScroll" "1"]
-        ["dashIsolateWorkspaces" "false"]
-        ["searchWindowsIconScroll" "1"]
-        ["panelVisibility" "0"]
-        ["panelPosition" "0"]
-        ["windowAttentionMode" "0"]
-        ["wsSwPopupHPosition" "50"]
-        ["wsSwPopupVPosition" "50"]
-        ["wsSwPopupMode" "0"]
-        ["wsSwitcherWraparound" "false"]
-        ["wsSwitcherIgnoreLast" "false"]
-        ["favoritesNotify" "1"]
-        ["notificationPosition" "2"]
-        ["osdPosition" "6"]
-        ["hotCornerAction" "0"]
-        ["hotCornerPosition" "0"]
-        ["hotCornerFullscreen" "false"]
-        ["hotCornerRipples" "false"]
-        ["alwaysActivateSelectedWindow" "true"]
-        ["winPreviewSecBtnAction" "1"]
-        ["winPreviewMidBtnAction" "3"]
-        ["winPreviewShowCloseButton" "true"]
-        ["windowIconClickAction" "1"]
-        ["overlayKeyPrimary" "2"]
-        ["overlayKeySecondary" "0"]
-        ["overviewEscBehavior" "1"]
-        ["newWindowFocusFix" "true"]
-        ["appGridPerformance" "true"]
-        ["windowThumbnailScale" "25"]
-        ["workspaceSwitcherPopupModule" "true"]
-        ["workspaceAnimationModule" "true"]
-        ["workspaceModule" "true"]
-        ["windowManagerModule" "true"]
-        ["windowPreviewModule" "true"]
-        ["windowAttentionHandlerModule" "true"]
-        ["windowThumbnailModule" "true"]
-        ["swipeTrackerModule" "true"]
-        ["searchControllerModule" "true"]
-        ["searchModule" "true"]
-        ["panelModule" "false"]
-        ["overlayKeyModule" "true"]
-        ["osdWindowModule" "true"]
-        ["messageTrayModule" "true"]
-        ["layoutModule" "false"]
-        ["dashModule" "true"]
-        ["appFavoritesModule" "true"]
-        ["appDisplayModule" "true"]
-        ["windowSearchProviderModule" "true"]
-        ["recentFilesSearchProviderModule" "true"]
-        ["extensionsSearchProviderModule" "true"]
+        [
+          "mkTupleworkspaceThumbnailsPosition"
+          "5"
+        ]
+        [
+          "wsMaxSpacing"
+          "350"
+        ]
+        [
+          "wsPreviewScale"
+          "100"
+        ]
+        [
+          "secWsPreviewScale"
+          "100"
+        ]
+        [
+          "secWsPreviewShift"
+          "false"
+        ]
+        [
+          "wsThumbnailsFull"
+          "true"
+        ]
+        [
+          "secWsThumbnailsPosition"
+          "2"
+        ]
+        [
+          "dashPosition"
+          "0"
+        ]
+        [
+          "dashPositionAdjust"
+          "0"
+        ]
+        [
+          "wsTmbPositionAdjust"
+          "0"
+        ]
+        [
+          "showWsTmbLabels"
+          "0"
+        ]
+        [
+          "showWsTmbLabelsOnHover"
+          "false"
+        ]
+        [
+          "closeWsButtonMode"
+          "1"
+        ]
+        [
+          "secWsTmbPositionAdjust"
+          "0"
+        ]
+        [
+          "dashMaxIconSize"
+          "64"
+        ]
+        [
+          "dashShowWindowsIcon"
+          "0"
+        ]
+        [
+          "dashShowRecentFilesIcon"
+          "0"
+        ]
+        [
+          "dashShowExtensionsIcon"
+          "1"
+        ]
+        [
+          "centerDashToWs"
+          "false"
+        ]
+        [
+          "showAppsIconPosition"
+          "2"
+        ]
+        [
+          "wsThumbnailScale"
+          "17"
+        ]
+        [
+          "wsThumbnailScaleAppGrid"
+          "17"
+        ]
+        [
+          "secWsThumbnailScale"
+          "13"
+        ]
+        [
+          "showSearchEntry"
+          "true"
+        ]
+        [
+          "centerSearch"
+          "true"
+        ]
+        [
+          "centerAppGrid"
+          "false"
+        ]
+        [
+          "dashBgOpacity"
+          "0"
+        ]
+        [
+          "dashBgColor"
+          "0"
+        ]
+        [
+          "dashBgRadius"
+          "0"
+        ]
+        [
+          "dashBgGS3Style"
+          "false"
+        ]
+        [
+          "runningDotStyle"
+          "1"
+        ]
+        [
+          "enablePageShortcuts"
+          "true"
+        ]
+        [
+          "showWsSwitcherBg"
+          "false"
+        ]
+        [
+          "showWsPreviewBg"
+          "false"
+        ]
+        [
+          "wsPreviewBgRadius"
+          "29"
+        ]
+        [
+          "showBgInOverview"
+          "true"
+        ]
+        [
+          "overviewBgBrightness"
+          "95"
+        ]
+        [
+          "searchBgBrightness"
+          "30"
+        ]
+        [
+          "overviewBgBlurSigma"
+          "25"
+        ]
+        [
+          "appGridBgBlurSigma"
+          "25"
+        ]
+        [
+          "smoothBlurTransitions"
+          "true"
+        ]
+        [
+          "appGridAnimation"
+          "4"
+        ]
+        [
+          "searchViewAnimation"
+          "0"
+        ]
+        [
+          "workspaceAnimation"
+          "1"
+        ]
+        [
+          "animationSpeedFactor"
+          "70"
+        ]
+        [
+          "winPreviewIconSize"
+          "0"
+        ]
+        [
+          "winTitlePosition"
+          "0"
+        ]
+        [
+          "startupState"
+          "1"
+        ]
+        [
+          "overviewMode"
+          "2"
+        ]
+        [
+          "workspaceSwitcherAnimation"
+          "0"
+        ]
+        [
+          "searchIconSize"
+          "96"
+        ]
+        [
+          "searchViewScale"
+          "100"
+        ]
+        [
+          "appGridIconSize"
+          "112"
+        ]
+        [
+          "appGridColumns"
+          "8"
+        ]
+        [
+          "appGridRows"
+          "4"
+        ]
+        [
+          "appGridFolderIconSize"
+          "-1"
+        ]
+        [
+          "appGridFolderColumns"
+          "0"
+        ]
+        [
+          "appGridFolderRows"
+          "0"
+        ]
+        [
+          "appGridFolderIconGrid"
+          "2"
+        ]
+        [
+          "appGridContent"
+          "4"
+        ]
+        [
+          "appGridIncompletePages"
+          "false"
+        ]
+        [
+          "appGridOrder"
+          "0"
+        ]
+        [
+          "appFolderOrder"
+          "0"
+        ]
+        [
+          "appGridNamesMode"
+          "0"
+        ]
+        [
+          "appGridActivePreview"
+          "false"
+        ]
+        [
+          "appGridFolderCenter"
+          "false"
+        ]
+        [
+          "appGridPageWidthScale"
+          "100"
+        ]
+        [
+          "appGridSpacing"
+          "12"
+        ]
+        [
+          "searchWindowsOrder"
+          "1"
+        ]
+        [
+          "searchFuzzy"
+          "true"
+        ]
+        [
+          "searchMaxResultsRows"
+          "5"
+        ]
+        [
+          "dashShowWindowsBeforeActivation"
+          "1"
+        ]
+        [
+          "dashIconScroll"
+          "1"
+        ]
+        [
+          "dashIsolateWorkspaces"
+          "false"
+        ]
+        [
+          "searchWindowsIconScroll"
+          "1"
+        ]
+        [
+          "panelVisibility"
+          "0"
+        ]
+        [
+          "panelPosition"
+          "0"
+        ]
+        [
+          "windowAttentionMode"
+          "0"
+        ]
+        [
+          "wsSwPopupHPosition"
+          "50"
+        ]
+        [
+          "wsSwPopupVPosition"
+          "50"
+        ]
+        [
+          "wsSwPopupMode"
+          "0"
+        ]
+        [
+          "wsSwitcherWraparound"
+          "false"
+        ]
+        [
+          "wsSwitcherIgnoreLast"
+          "false"
+        ]
+        [
+          "favoritesNotify"
+          "1"
+        ]
+        [
+          "notificationPosition"
+          "2"
+        ]
+        [
+          "osdPosition"
+          "6"
+        ]
+        [
+          "hotCornerAction"
+          "0"
+        ]
+        [
+          "hotCornerPosition"
+          "0"
+        ]
+        [
+          "hotCornerFullscreen"
+          "false"
+        ]
+        [
+          "hotCornerRipples"
+          "false"
+        ]
+        [
+          "alwaysActivateSelectedWindow"
+          "true"
+        ]
+        [
+          "winPreviewSecBtnAction"
+          "1"
+        ]
+        [
+          "winPreviewMidBtnAction"
+          "3"
+        ]
+        [
+          "winPreviewShowCloseButton"
+          "true"
+        ]
+        [
+          "windowIconClickAction"
+          "1"
+        ]
+        [
+          "overlayKeyPrimary"
+          "2"
+        ]
+        [
+          "overlayKeySecondary"
+          "0"
+        ]
+        [
+          "overviewEscBehavior"
+          "1"
+        ]
+        [
+          "newWindowFocusFix"
+          "true"
+        ]
+        [
+          "appGridPerformance"
+          "true"
+        ]
+        [
+          "windowThumbnailScale"
+          "25"
+        ]
+        [
+          "workspaceSwitcherPopupModule"
+          "true"
+        ]
+        [
+          "workspaceAnimationModule"
+          "true"
+        ]
+        [
+          "workspaceModule"
+          "true"
+        ]
+        [
+          "windowManagerModule"
+          "true"
+        ]
+        [
+          "windowPreviewModule"
+          "true"
+        ]
+        [
+          "windowAttentionHandlerModule"
+          "true"
+        ]
+        [
+          "windowThumbnailModule"
+          "true"
+        ]
+        [
+          "swipeTrackerModule"
+          "true"
+        ]
+        [
+          "searchControllerModule"
+          "true"
+        ]
+        [
+          "searchModule"
+          "true"
+        ]
+        [
+          "panelModule"
+          "false"
+        ]
+        [
+          "overlayKeyModule"
+          "true"
+        ]
+        [
+          "osdWindowModule"
+          "true"
+        ]
+        [
+          "messageTrayModule"
+          "true"
+        ]
+        [
+          "layoutModule"
+          "false"
+        ]
+        [
+          "dashModule"
+          "true"
+        ]
+        [
+          "appFavoritesModule"
+          "true"
+        ]
+        [
+          "appDisplayModule"
+          "true"
+        ]
+        [
+          "windowSearchProviderModule"
+          "true"
+        ]
+        [
+          "recentFilesSearchProviderModule"
+          "true"
+        ]
+        [
+          "extensionsSearchProviderModule"
+          "true"
+        ]
       ];
 
       profile-name-1 = "GNOME45";

@@ -3,9 +3,11 @@
   config,
   flakeDirectory,
   ...
-}: let
+}:
+let
   inherit ((import ./file-associations.nix)) associations;
-in {
+in
+{
   xdg = {
     enable = true;
     mimeApps = {
@@ -50,21 +52,19 @@ in {
   };
 
   home.activation = {
-    linkXdgDirs =
-      lib.hm.dag.entryAfter ["linkGeneration"]
-      ''
-        if [ ! -e "${config.home.homeDirectory}/pictures/.not_empty" ] && [ -e "${config.home.homeDirectory}/data" ]; then
-            rm -rf "${config.home.homeDirectory}/pictures"
-            ln -s "${config.home.homeDirectory}/data/home/pictures" "${config.home.homeDirectory}/pictures"
-        fi
-        if [ ! -e "${config.home.homeDirectory}/downloads/.not_empty" ] && [ -e "${config.home.homeDirectory}/data" ]; then
-            rm -rf "${config.home.homeDirectory}/downloads"
-            ln -s "${config.home.homeDirectory}/data/home/downloads" "${config.home.homeDirectory}/downloads"
-        fi
-        if [ ! -e "${config.home.homeDirectory}/music/.not_empty" ] && [ -e "${config.home.homeDirectory}/data" ]; then
-            rm -rf "${config.home.homeDirectory}/music"
-            ln -s "${config.home.homeDirectory}/data/home/music" "${config.home.homeDirectory}/music"
-        fi
-      '';
+    linkXdgDirs = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      if [ ! -e "${config.home.homeDirectory}/pictures/.not_empty" ] && [ -e "${config.home.homeDirectory}/data" ]; then
+          rm -rf "${config.home.homeDirectory}/pictures"
+          ln -s "${config.home.homeDirectory}/data/home/pictures" "${config.home.homeDirectory}/pictures"
+      fi
+      if [ ! -e "${config.home.homeDirectory}/downloads/.not_empty" ] && [ -e "${config.home.homeDirectory}/data" ]; then
+          rm -rf "${config.home.homeDirectory}/downloads"
+          ln -s "${config.home.homeDirectory}/data/home/downloads" "${config.home.homeDirectory}/downloads"
+      fi
+      if [ ! -e "${config.home.homeDirectory}/music/.not_empty" ] && [ -e "${config.home.homeDirectory}/data" ]; then
+          rm -rf "${config.home.homeDirectory}/music"
+          ln -s "${config.home.homeDirectory}/data/home/music" "${config.home.homeDirectory}/music"
+      fi
+    '';
   };
 }

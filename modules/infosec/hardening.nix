@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   options.infosec.hardening.system.enable = lib.mkEnableOption "Enable hardening";
   config = lib.mkIf config.infosec.hardening.system.enable {
     security = {
@@ -34,8 +35,6 @@
     systemd.coredump.enable = false;
     services.opensnitch.enable = true;
 
-    environment.systemPackages = [
-      pkgs.opensnitch-ui
-    ];
+    environment.systemPackages = [ pkgs.opensnitch-ui ];
   };
 }

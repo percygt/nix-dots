@@ -1,8 +1,5 @@
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  ...
-}: {
   options.infosec.ssh.home.enable = lib.mkEnableOption "Enable ssh";
   config = lib.mkIf config.infosec.ssh.home.enable {
     programs.ssh = {
@@ -12,7 +9,7 @@
         gitlab = {
           host = "gitlab.com";
           identitiesOnly = true;
-          identityFile = ["~/.ssh/gpg-glab.pub"];
+          identityFile = [ "~/.ssh/gpg-glab.pub" ];
           extraOptions = {
             PreferredAuthentications = "publickey";
           };
@@ -20,7 +17,7 @@
         github = {
           host = "github.com";
           identitiesOnly = true;
-          identityFile = ["~/.ssh/gpg-gh.pub"];
+          identityFile = [ "~/.ssh/gpg-gh.pub" ];
           extraOptions = {
             PreferredAuthentications = "publickey";
           };

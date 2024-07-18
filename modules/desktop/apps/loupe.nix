@@ -1,9 +1,6 @@
+{ config, pkgs, ... }:
 {
-  config,
-  pkgs,
-  ...
-}: {
-  home.packages = with pkgs; [loupe];
+  home.packages = with pkgs; [ loupe ];
   xdg.desktopEntries."org.gnome.Loupe" = {
     name = "Image Viewer";
     exec = "env GTK_THEME=${config.gtk.theme.name} loupe %U";

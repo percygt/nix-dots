@@ -1,10 +1,8 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config, lib, ... }:
+let
   dockerEnabled = config.virt.docker.enable;
-in {
+in
+{
   options.virt.podman.enable = lib.mkEnableOption "Enable podman";
   config = lib.mkIf config.virt.podman.enable {
     virtualisation.podman = {
@@ -15,9 +13,7 @@ in {
     };
 
     environment.persistence = {
-      "/persist".directories = [
-        "/var/lib/containers"
-      ];
+      "/persist".directories = [ "/var/lib/containers" ];
     };
   };
 }

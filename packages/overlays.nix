@@ -1,5 +1,5 @@
-{pkgs}:
-(import ./derivations.nix {inherit pkgs;})
+{ pkgs }:
+(import ./derivations.nix { inherit pkgs; })
 // {
   success-alert = pkgs.fetchurl {
     # https://freesound.org/people/martcraft/sounds/651624/
@@ -17,11 +17,11 @@
     sha256 = "049x6z6d3ssfx6rh8y11var1chj3x67nfrakigydnj3961hnr6ar";
   };
   # babashka script source: https://github.com/stelcodes/nixos-config/commit/95d8734bad6162157f92f77951215c0aaa6b71d2
-  writeBabashkaScript = pkgs.callPackage ./clj/writeBabashkaScript.nix {};
+  writeBabashkaScript = pkgs.callPackage ./clj/writeBabashkaScript.nix { };
   cycle-pulse-sink = pkgs.writeBabashkaScript {
     name = "cycle-pulse-sink";
     text = builtins.readFile ./clj/cycle-pulse-sink.clj;
-    runtimeInputs = [pkgs.pulseaudioFull];
+    runtimeInputs = [ pkgs.pulseaudioFull ];
   };
   cycle-sway-output = pkgs.writeBabashkaScript {
     name = "cycle-sway-output";
@@ -43,15 +43,17 @@
   };
 
   json2nix = pkgs.writeScriptBin "json2nix" ''
-    ${pkgs.python3}/bin/python ${pkgs.fetchurl {
-      url = "https://gitlab.com/-/snippets/3613708/raw/main/json2nix.py";
-      hash = "sha256-zZeL3JwwD8gmrf+fG/SPP51vOOUuhsfcQuMj6HNfppU=";
-    }} $@
+    ${pkgs.python3}/bin/python ${
+      pkgs.fetchurl {
+        url = "https://gitlab.com/-/snippets/3613708/raw/main/json2nix.py";
+        hash = "sha256-zZeL3JwwD8gmrf+fG/SPP51vOOUuhsfcQuMj6HNfppU=";
+      }
+    } $@
   '';
 
   toggle-service = pkgs.writeShellApplication {
     name = "toggle-service";
-    runtimeInputs = [pkgs.systemd];
+    runtimeInputs = [ pkgs.systemd ];
     text = ''
       SERVICE="$1.service"
       if ! systemctl --user cat "$SERVICE" &> /dev/null; then

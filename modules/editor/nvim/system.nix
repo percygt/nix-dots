@@ -4,12 +4,13 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   options.editor = {
     neovim.system.enable = lib.mkEnableOption "Enable neovim systemwide";
   };
   config = lib.mkIf config.editor.neovim.system.enable {
-    environment.systemPackages = with pkgs; [neovim];
+    environment.systemPackages = with pkgs; [ neovim ];
     environment.persistence = lib.mkIf config.core.ephemeral.enable {
       "/persist" = {
         users.${username} = {
@@ -22,7 +23,7 @@
       };
     };
     home-manager.users.${username} = {
-      imports = [./home.nix];
+      imports = [ ./home.nix ];
       editor.neovim.home.enable = lib.mkDefault true;
     };
   };

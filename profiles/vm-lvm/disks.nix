@@ -1,4 +1,5 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   environment.etc = {
     "crypttab".text = ''
       data  /dev/root_vg/data  /persist/system/keys/data.keyfile
@@ -19,7 +20,7 @@
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
-              mountOptions = ["umask=0077"];
+              mountOptions = [ "umask=0077" ];
             };
           };
           root = {
@@ -41,7 +42,7 @@
             size = "100%FREE";
             content = {
               type = "btrfs";
-              extraArgs = ["-f"];
+              extraArgs = [ "-f" ];
               subvolumes = {
                 "root" = {
                   mountpoint = "/";
@@ -51,12 +52,18 @@
                 #   mountpoint = "/home";
                 # };
                 "persist" = {
-                  mountOptions = ["compress=lzo" "noatime"];
+                  mountOptions = [
+                    "compress=lzo"
+                    "noatime"
+                  ];
                   mountpoint = "/persist";
                 };
 
                 "nix" = {
-                  mountOptions = ["compress=lzo" "noatime"];
+                  mountOptions = [
+                    "compress=lzo"
+                    "noatime"
+                  ];
                   mountpoint = "/nix";
                 };
               };
@@ -76,8 +83,15 @@
                 type = "filesystem";
                 format = "btrfs";
                 mountpoint = "/home/percygt/data";
-                mountOptions = ["compress=lzo" "x-gvfs-show"];
-                extraArgs = ["-L" "data" "-f"];
+                mountOptions = [
+                  "compress=lzo"
+                  "x-gvfs-show"
+                ];
+                extraArgs = [
+                  "-L"
+                  "data"
+                  "-f"
+                ];
               };
             };
           };
@@ -87,8 +101,12 @@
               type = "filesystem";
               format = "xfs";
               mountpoint = "/home/percygt/windows";
-              mountOptions = ["defaults"];
-              extraArgs = ["-L" "windows" "-f"];
+              mountOptions = [ "defaults" ];
+              extraArgs = [
+                "-L"
+                "windows"
+                "-f"
+              ];
             };
           };
         };

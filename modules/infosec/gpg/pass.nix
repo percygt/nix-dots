@@ -3,9 +3,11 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   PASSWORD_STORE_DIR = "${config.home.homeDirectory}/data/config/pass";
-in {
+in
+{
   options.infosec.gpg.pass.enable = lib.mkEnableOption "Enable pass";
   config = lib.mkIf config.infosec.gpg.pass.enable {
     programs = {

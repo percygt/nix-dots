@@ -1,7 +1,8 @@
-{pkgs, ...}: {
-  extraLuaPackages = luaPkgs: with luaPkgs; [jsregexp];
-  extraPython3Packages = pyPkgs:
-    with pyPkgs; [
+{ pkgs, ... }:
+{
+  extraLuaPackages = luaPkgs: with luaPkgs; [ jsregexp ];
+  extraPython3Packages =
+    pyPkgs: with pyPkgs; [
       python-lsp-server
       python-lsp-ruff
       # pylsp-mypy

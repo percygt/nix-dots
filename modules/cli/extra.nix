@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   options.cli.extra.home.enable = lib.mkEnableOption "Enable extra";
   config = lib.mkIf config.cli.extra.home.enable {
     home.packages = with pkgs; [

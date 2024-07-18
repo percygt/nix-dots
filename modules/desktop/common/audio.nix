@@ -1,6 +1,8 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   inherit (pkgs) rnnoise-plugin;
-in {
+in
+{
   services.mpris-proxy.enable = true;
   xdg.configFile."pipewire/pipewire.conf.d/99-rnnoise.conf" = {
     text = builtins.toJSON {

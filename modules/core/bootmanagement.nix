@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   options.core.bootmanagement = {
     enable = lib.mkOption {
       description = "Enable bootmanagement";

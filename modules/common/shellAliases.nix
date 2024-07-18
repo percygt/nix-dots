@@ -1,4 +1,5 @@
-{flakeDirectory, ...}: {
+{ flakeDirectory, ... }:
+{
   home.shellAliases = {
     ll = "eza --group --header --group-directories-first --long --git --all --binary --icons";
     la = "ll -a";

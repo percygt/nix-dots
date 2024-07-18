@@ -1,12 +1,10 @@
-{
-  pkgs,
-  config,
-  ...
-}: let
+{ pkgs, config, ... }:
+let
   loginctl = "${pkgs.systemd}/bin/loginctl";
   swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
   systemctl = "${pkgs.systemd}/bin/systemctl";
-in {
+in
+{
   services.swayidle = {
     enable = true;
     systemdTarget = "graphical-session.target";

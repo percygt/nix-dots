@@ -1,13 +1,15 @@
-{config, ...}: let
+{ config, ... }:
+let
   swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
-in {
+in
+{
   services.kanshi = {
     enable = true;
     settings = [
       {
         profile = {
           name = "solo";
-          exec = ["${swaymsg} bar bar-1 mode dock"];
+          exec = [ "${swaymsg} bar bar-1 mode dock" ];
           outputs = [
             {
               criteria = "eDP-1";
@@ -19,7 +21,7 @@ in {
       {
         profile = {
           name = "with-monitor";
-          exec = ["${swaymsg} bar bar-1 mode invisible"];
+          exec = [ "${swaymsg} bar bar-1 mode invisible" ];
           outputs = [
             {
               criteria = "HDMI-A-1";

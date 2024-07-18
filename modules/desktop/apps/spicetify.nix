@@ -1,11 +1,9 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
+{ pkgs, inputs, ... }:
+let
   spicePkgs = inputs.spicetify.packages.${pkgs.system}.default;
-in {
-  imports = [inputs.spicetify.homeManagerModule];
+in
+{
+  imports = [ inputs.spicetify.homeManagerModule ];
 
   programs.spicetify = {
     enable = true;

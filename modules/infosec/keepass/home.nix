@@ -5,23 +5,32 @@
   homeDirectory,
   desktop,
   ...
-}: let
+}:
+let
   kmk0 = "${homeDirectory}/data/config/keeps/m0.kdbx";
-in {
-  imports = [./keepfzf.nix];
+in
+{
+  imports = [ ./keepfzf.nix ];
   options.infosec.keepass.home.enable = lib.mkEnableOption "Enable keepass";
 
   config = lib.mkIf config.infosec.keepass.home.enable {
     home = {
-      packages = with pkgs; [keepassxc] ++ lib.optionals (desktop == "sway") [stash.keepmenu ydotool wl-clipboard];
+      packages =
+        with pkgs;
+        [ keepassxc ]
+        ++ lib.optionals (desktop == "sway") [
+          stash.keepmenu
+          ydotool
+          wl-clipboard
+        ];
       sessionVariables.KPDB = kmk0;
-      file."${config.xdg.cacheHome}/keepassxc/keepassxc.ini".text = lib.generators.toINI {} {
+      file."${config.xdg.cacheHome}/keepassxc/keepassxc.ini".text = lib.generators.toINI { } {
         General.LastActiveDatabase = kmk0;
       };
     };
     xdg.configFile =
       lib.optionalAttrs (desktop == "sway") {
-        "keepmenu/config.ini".text = lib.generators.toINI {} {
+        "keepmenu/config.ini".text = lib.generators.toINI { } {
           dmenu = {
             dmenu_command = "${lib.getExe pkgs.tofi} --prompt-text=\"Keepmenu: \"";
             pinentry = "${lib.getExe pkgs.pinentry-gnome3}";
@@ -46,7 +55,7 @@ in {
         };
       }
       // {
-        "keepassxc/keepassxc.ini".text = lib.generators.toINI {} {
+        "keepassxc/keepassxc.ini".text = lib.generators.toINI { } {
           General = {
             ConfigVersion = 2;
             MinimizeAfterUnlock = true;

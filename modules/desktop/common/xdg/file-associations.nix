@@ -1,13 +1,14 @@
 let
-  browser = ["brave-browser.desktop"];
-  archiveManager = ["org.gnome.FileRoller.desktop"];
-  imageViewer = ["org.gnome.Loupe.desktop"];
-  audioPlayer = ["io.bassi.Amberol.desktop"];
-  documentViewer = ["org.pwmt.zathura.desktop"];
-  textEditor = ["neovim.desktop"];
-  videoPlayer = ["mpv.desktop"];
-  fileManager = ["nemo.desktop"];
-in {
+  browser = [ "brave-browser.desktop" ];
+  archiveManager = [ "org.gnome.FileRoller.desktop" ];
+  imageViewer = [ "org.gnome.Loupe.desktop" ];
+  audioPlayer = [ "io.bassi.Amberol.desktop" ];
+  documentViewer = [ "org.pwmt.zathura.desktop" ];
+  textEditor = [ "neovim.desktop" ];
+  videoPlayer = [ "mpv.desktop" ];
+  fileManager = [ "nemo.desktop" ];
+in
+{
   associations = {
     "application/http" = browser;
     "text/html" = browser;
@@ -145,6 +146,6 @@ in {
     "application/oxps" = documentViewer;
     "application/x-fictionbook" = documentViewer;
     "inode/directory" = fileManager;
-    "x-scheme-handler/obsidian" = ["obsidian.desktop"];
+    "x-scheme-handler/obsidian" = [ "obsidian.desktop" ];
   };
 }

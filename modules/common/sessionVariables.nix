@@ -1,4 +1,5 @@
-{flakeDirectory, ...}: {
+{ flakeDirectory, ... }:
+{
   home.sessionVariables = {
     FLAKE = flakeDirectory;
     LANG = "en_US.UTF-8";
