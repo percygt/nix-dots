@@ -26,7 +26,8 @@
 
     # Nix
     statix
-    alejandra
+    # alejandra
+    nixfmt-rfc-style
     nil
 
     # C, C++

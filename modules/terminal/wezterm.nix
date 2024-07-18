@@ -1,14 +1,15 @@
 {
   pkgs,
-  libx,
+  configx,
   lib,
   config,
   isGeneric,
   flakeDirectory,
   homeDirectory,
   ...
-}: let
-  inherit (libx) colors fonts;
+}:
+let
+  inherit (configx) background fonts;
   window-title = "Wezterm";
   launch-tmux = pkgs.writers.writeBash "launch-tmux" ''
     if [ -d ${flakeDirectory} ]; then
@@ -25,50 +26,47 @@
       tmux new-session -As home
     fi
   '';
-in {
+  b = config.scheme.withHashtag;
+in
+{
   options.terminal.wezterm.home.enable = lib.mkEnableOption "Enable wezterm";
 
   config = lib.mkIf config.terminal.wezterm.home.enable {
     programs.wezterm = {
       enable = true;
-      package =
-        if isGeneric
-        then pkgs.stash.wezterm_wrapped
-        else pkgs.stash.wezterm_nightly;
+      package = if isGeneric then pkgs.stash.wezterm_wrapped else pkgs.stash.wezterm_nightly;
       colorSchemes = {
         Syft = {
           ansi = [
-            "#${colors.normal.black}"
-            "#${colors.normal.red}"
-            "#${colors.normal.green}"
-            "#${colors.normal.yellow}"
-            "#${colors.normal.blue}"
-            "#${colors.normal.magenta}"
-            "#${colors.normal.cyan}"
-            "#${colors.normal.white}"
+            b.base01
+            b.base08 # red
+            b.base0B # green
+            b.base09 # yellow
+            b.base0D # blue
+            b.base0E # magenta
+            b.base0C # cyan
+            b.base06
           ];
           brights = [
-            "#${colors.bright.black}"
-            "#${colors.bright.red}"
-            "#${colors.bright.green}"
-            "#${colors.bright.yellow}"
-            "#${colors.bright.blue}"
-            "#${colors.bright.magenta}"
-            "#${colors.bright.cyan}"
-            "#${colors.bright.white}"
+            b.base02
+            b.base12 # bright red
+            b.base14 # bright green
+            b.base13 # bright yellow
+            b.base16 # bright blue
+            b.base17 # bright magenta
+            b.base15 # bright cyan
+            b.base07
           ];
-          foreground = "#${colors.default.foreground}";
-          background = "#${colors.default.background}";
-          cursor_fg = "#${colors.cursor.foreground}";
-          cursor_bg = "#${colors.cursor.background}";
-          cursor_border = "#${colors.cursor.background}";
-          selection_bg = "#${colors.highlight.background}";
+          foreground = b.base05;
+          background = b.base00;
+          cursor_bg = b.base05;
+          cursor_border = b.base05;
+          selection_fg = "none";
+          selection_bg = b.base02;
         };
       };
       extraConfig =
-        /*
-        lua
-        */
+        # lua
         ''
           local wezterm = require("wezterm")
           wezterm.on("toggle-opacity", function(window)
@@ -122,17 +120,16 @@ in {
             window_padding = {
               left = 5,
               right = 5,
-              top = 7.5,
-              bottom = 7.5,
+              top = 7,
+              bottom = 7,
             },
             visual_bell = {
-                fade_in_function = "Ease",
-                fade_in_duration_ms = 150,
-                fade_out_function = "Ease",
-                fade_out_duration_ms = 150,
+                fade_in_duration_ms = 75,
+                fade_out_duration_ms = 75,
+                target = 'CursorColor',
             },
           	window_decorations = "NONE",
-          	window_background_opacity = ${builtins.toString colors.alpha},
+          	window_background_opacity = ${builtins.toString background.opacity},
           	text_background_opacity = 1,
           	keys = {
           		{ key = "0",      mods = "CTRL|SHIFT",  action = wezterm.action.ResetFontSize },

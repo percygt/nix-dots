@@ -5,8 +5,12 @@
   config,
   lib,
   ...
-}: {
-  imports = [./tuigreet.nix ./nixos-rebuild.nix];
+}:
+{
+  imports = [
+    ./tuigreet.nix
+    ./nixos-rebuild.nix
+  ];
   home-manager.users.${username} = import ./home.nix;
   environment.persistence = lib.mkIf config.core.ephemeral.enable {
     "/persist" = {
@@ -16,22 +20,22 @@
           ".config/goa-1.0"
           ".local/cache/nix-index"
         ];
-        files = [".local/state/tofi-drun-history"];
+        files = [ ".local/state/tofi-drun-history" ];
       };
     };
   };
   programs = {
     sway = {
       enable = true;
-      package = libx.sway.package {inherit pkgs;};
+      package = libx.sway.package { inherit pkgs; };
       wrapperFeatures.gtk = true;
     };
   };
 
   # Make sure to start the home-manager activation before I log in.
   systemd.services."home-manager-${username}" = {
-    before = ["display-manager.service"];
-    wantedBy = ["multi-user.target"];
+    before = [ "display-manager.service" ];
+    wantedBy = [ "multi-user.target" ];
   };
 
   xdg.portal = {
@@ -45,7 +49,7 @@
         chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or -s '#99d1ce33'";
       };
     };
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   environment.etc."greetd/environments".text = ''
@@ -59,7 +63,7 @@
   };
 
   services = {
-    udev.packages = with pkgs; [gnome.gnome-settings-daemon];
+    udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
     dbus = {
       enable = true;
       implementation = "broker";

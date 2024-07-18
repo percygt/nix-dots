@@ -1,14 +1,12 @@
-{lib}: let
-  wsToKey = ws: builtins.substring 0 1 ws;
+{ lib }:
+let wsToKey = ws: builtins.substring 0 1 ws;
 in rec {
-  package = {pkgs}:
-    pkgs.swayfx.override {
-      inherit (pkgs) swayfx-unwrapped;
-    };
+  package = { pkgs }: pkgs.swayfx.override { inherit (pkgs) swayfx-unwrapped; };
 
-  viewRebuildLogCmd = "foot --app-id=nixos_rebuild_log -- journalctl -efo cat -u nixos-rebuild.service";
+  viewRebuildLogCmd =
+    "foot --app-id=nixos_rebuild_log -- journalctl -efo cat -u nixos-rebuild.service";
 
-  tofipass = {pkgs}:
+  tofipass = { pkgs }:
     pkgs.writers.writeBash "tofipass" ''
       shopt -s nullglob globstar
       dmenu="${pkgs.tofi}/bin/tofi  --prompt-text='Passmenu: '"
@@ -20,10 +18,7 @@ in rec {
       [[ -n $password ]] || exit
       pass show -c "$password" 2>/dev/null
     '';
-  dropdown-terminal = {
-    pkgs,
-    weztermPackage,
-  }:
+  dropdown-terminal = { pkgs, weztermPackage, }:
     pkgs.writers.writeBash "dropdown_terminal" ''
       TERM_PIDFILE="/tmp/wezterm-dropdown"
       TERM_PID="$(<"$TERM_PIDFILE")"
@@ -36,21 +31,20 @@ in rec {
           exec "${weztermPackage}/bin/wezterm";
       fi
     '';
-  toggle-blur = {pkgs}:
+  toggle-blur = { pkgs }:
     pkgs.writers.writeBash "toggle-blur" ''
       BLUR_STATUS_FILE="/tmp/blur-status"
       BLUR_STATUS=$(<"$BLUR_STATUS_FILE" :- 0)
       # BLUR_STATUS=$(<"$BLUR_STATUS_FILE")
       if [ ! -f "$BLUR_STATUS_FILE" ]; then
           echo "1" > "$BLUR_STATUS_FILE"
-          # swaymsg "blur 1"
+          swaymsg "blur 1"
       else
-          # swaymsg "blur $BLUR_STATUS"
+          swaymsg "blur $BLUR_STATUS"
           echo $((1 - BLUR_STATUS)) > "$BLUR_STATUS_FILE"
       fi
-      swaymsg "blur $BLUR_STATUS"
     '';
-  power-menu = {pkgs}:
+  power-menu = { pkgs }:
     pkgs.writers.writeBash "power-menu" ''
       case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | ${pkgs.tofi}/bin/tofi  --prompt-text="Power Menu: ") in
       "Power Off")
@@ -72,65 +66,43 @@ in rec {
     '';
   mkWorkspaceKeys = mod: workspaces:
     builtins.listToAttrs ((map (ws: {
-          name = mod + "+" + wsToKey ws;
-          value = "workspace ${ws}";
-        })
-        workspaces)
-      ++ (map (ws: {
-          name = mod + "+Shift+" + wsToKey ws;
-          value = "move container to workspace ${ws}";
-        })
-        workspaces));
+      name = mod + "+" + wsToKey ws;
+      value = "workspace ${ws}";
+    }) workspaces) ++ (map (ws: {
+      name = mod + "+Shift+" + wsToKey ws;
+      value = "move container to workspace ${ws}";
+    }) workspaces));
 
   mkDirectionKeys = mod: keypairs:
-    builtins.listToAttrs (
-      (map (v: {
-        name = mod + "+" + keypairs.${v};
-        value = "focus ${v}";
-      }) (builtins.attrNames keypairs))
-      ++ (map (v: {
-        name = mod + "+Shift+" + keypairs.${v};
-        value = "move ${v}";
-      }) (builtins.attrNames keypairs))
-      ++ (map (v: {
-        name = mod + "+Ctrl+" + keypairs.${v};
-        value = "move workspace output ${v}";
-      }) (builtins.attrNames keypairs))
-    );
+    builtins.listToAttrs ((map (v: {
+      name = mod + "+" + keypairs.${v};
+      value = "focus ${v}";
+    }) (builtins.attrNames keypairs)) ++ (map (v: {
+      name = mod + "+Shift+" + keypairs.${v};
+      value = "move ${v}";
+    }) (builtins.attrNames keypairs)) ++ (map (v: {
+      name = mod + "+Ctrl+" + keypairs.${v};
+      value = "move workspace output ${v}";
+    }) (builtins.attrNames keypairs)));
 
-  mapApps = {
-    command,
-    crit_name,
-    crits,
-  }:
-    map (
-      crit: {
-        inherit command;
-        criteria = {
-          ${crit_name} = crit;
-        };
-      }
-    )
-    crits;
-  mkAppsFloat = {
-    app_ids ? null,
-    classes ? null,
-    titles ? null,
-    w ? 80,
-    h ? 80,
-    command ? ''floating enable, resize set width ${toString w} ppt height ${toString h} ppt'',
-  }:
+  mapApps = { command, crit_name, crits, }:
+    map (crit: {
+      inherit command;
+      criteria = { ${crit_name} = crit; };
+    }) crits;
+  mkAppsFloat = { app_ids ? null, classes ? null, titles ? null, w ? 80, h ? 80
+    , command ? "floating enable, resize set width ${toString w} ppt height ${
+        toString h
+      } ppt", }:
     lib.optionals (app_ids != null) (mapApps {
       inherit command;
       crit_name = "app_id";
       crits = app_ids;
-    })
-    ++ lib.optionals (classes != null) (mapApps {
+    }) ++ lib.optionals (classes != null) (mapApps {
       inherit command;
       crit_name = "class";
       crits = classes;
-    })
-    ++ lib.optionals (titles != null) (mapApps {
+    }) ++ lib.optionals (titles != null) (mapApps {
       inherit command;
       crit_name = "title";
       crits = titles;

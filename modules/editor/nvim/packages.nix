@@ -1,14 +1,16 @@
-{ pkgs, ... }:
+{pkgs, ...}:
 with pkgs; [
   # Essentials
-  (lua5_1.withPackages (ps: with ps; [ luarocks ]))
-  (python3.withPackages (ps:
-    with ps; [
-      python-lsp-server
-      python-lsp-ruff
-      # pylsp-mypy
-      pip
-    ]))
+  (lua5_1.withPackages (ps: with ps; [luarocks]))
+  (python3.withPackages (
+    ps:
+      with ps; [
+        python-lsp-server
+        python-lsp-ruff
+        # pylsp-mypy
+        pip
+      ]
+  ))
   (fenix.complete.withComponents [
     "cargo"
     "clippy"
@@ -39,7 +41,6 @@ with pkgs; [
   # Nix
   statix
   # alejandra
-  # nixfmt
   nixfmt-rfc-style
   nil
   nixd

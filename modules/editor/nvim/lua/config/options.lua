@@ -2,6 +2,7 @@ local g, opt = vim.g, vim.opt
 
 g.mapleader = " "
 g.maplocalleader = ","
+
 opt.nu = true -- Show numberline
 opt.relativenumber = true -- Show number relative to the current cursor position
 
@@ -31,12 +32,13 @@ opt.splitbelow = true -- Splitting a new window below the current one
 opt.splitright = true -- Splitting a new window at the right of the current one
 opt.conceallevel = 2
 opt.fillchars = { eob = " " } -- change the character at the end of buffer
+
 opt.swapfile = false -- Disable swap files
 opt.backup = false
 opt.cmdheight = 1 -- more space in the neovim command line for displaying messages
 opt.showcmd = false -- Don't show the command in the last line
-opt.laststatus = 0 -- Always display the status line
-opt.pumheight = 10 -- pop up menu height
+-- opt.laststatus = 0 -- Always display the status line
+-- opt.pumheight = 10 -- pop up menu height
 opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
 opt.showtabline = 0 -- always show tabs
 opt.splitbelow = true -- force all horizontal splits to go below current window

@@ -2,10 +2,12 @@
   pkgs,
   libx,
   config,
+  configx,
   lib,
   isGeneric,
   ...
-}: {
+}:
+{
   imports = [
     ./waybar
     ./mako.nix
@@ -17,13 +19,12 @@
     ./swaylock.nix
     ./swappy.nix
     ./tofi.nix
-    # ./wpapered.nix
   ];
 
-  xsession.importedVariables = ["PATH"];
+  # xsession.importedVariables = [ "PATH" ];
   wayland.windowManager.sway = {
     enable = true;
-    package = libx.sway.package {inherit pkgs;};
+    package = libx.sway.package { inherit pkgs; };
     swaynag.enable = true;
     systemd.enable = true;
     systemd.xdgAutostart = true;
@@ -31,6 +32,18 @@
     checkConfig = false;
     inherit (import ./extraConfig.nix) extraConfig;
     inherit (import ./extraSessionCommands.nix) extraSessionCommands;
-    inherit (import ./config.nix {inherit pkgs config lib libx isGeneric;}) config;
+    inherit
+      (import ./config.nix {
+        inherit
+          pkgs
+          config
+          lib
+          configx
+          libx
+          isGeneric
+          ;
+      })
+      config
+      ;
   };
 }

@@ -4,24 +4,23 @@ return {
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
 			local colors = require("onedarkpro.helpers").get_colors()
-			local mode = require("config.helpers")
 
 			local customOneDark = {
 				inactive = {
-					a = { fg = colors.grey, bg = colors.bg0, gui = "italic" },
-					b = { fg = colors.dark_grey, bg = colors.black },
-					c = { fg = colors.dark_grey, bg = colors.black },
+					a = { fg = colors.grey, bg = colors.midnight, gui = "italic" },
+					b = { fg = colors.grey, bg = colors.black },
+					c = { fg = colors.grey, bg = colors.black },
 				},
 				normal = {
-					a = { fg = colors.fg, bg = colors.midnight, gui = "italic" },
-					b = { fg = colors.green, bg = colors.bg },
-					c = { fg = colors.blue, bg = colors.bg },
+					a = { bg = colors.midnight, gui = "italic" },
+					b = { bg = colors.bg },
+					c = { bg = colors.bg },
 				},
-				visual = { a = { fg = colors.bg0, bg = colors.rosewater, gui = "italic" } },
-				replace = { a = { fg = colors.bg0, bg = colors.sapphire, gui = "italic" } },
-				insert = { a = { fg = colors.bg0, bg = colors.peach, gui = "italic" } },
-				command = { a = { fg = colors.bg0, bg = colors.sky, gui = "italic" } },
-				terminal = { a = { fg = colors.bg0, bg = colors.mauve, gui = "italic" } },
+				visual = { a = { bg = colors.navynight, gui = "italic" } },
+				insert = { a = { bg = colors.azure, gui = "italic" } },
+				-- replace = { a = { fg = colors.black, bg = colors.sapphire, gui = "italic" } },
+				-- command = { a = { fg = colors.black, bg = colors.sky, gui = "italic" } },
+				-- terminal = { a = { fg = colors.black, bg = colors.mauve, gui = "italic" } },
 			}
 			-- LSP clients attached to buffer
 			local function clients_lsp()
@@ -66,7 +65,6 @@ return {
 							"help",
 							"Trouble",
 							"spectre_panel",
-							"toggleterm",
 						},
 						winbar = {},
 					},
@@ -79,18 +77,10 @@ return {
 					},
 					lualine_b = {
 						{
-							"filename",
-							path = 1,
-							symbols = {
-								modified = "  ",
-								readonly = "  ",
-								unnamed = "  ",
-							},
+							"diagnostics",
+							sources = { "nvim_lsp" },
+							symbols = { error = " ", warn = " ", info = " " },
 						},
-						{ "diff", symbols = { added = "󰐙 ", modified = "󱨧 ", removed = "󰍷 " } },
-						{ "harpoon2" },
-					},
-					lualine_c = {
 						{
 							require("noice").api.status.command.get,
 							cond = require("noice").api.status.command.has,
@@ -113,12 +103,11 @@ return {
 						-- multicursor status
 						{ get_name, cond = is_active },
 					},
+					lualine_c = {
+						{ "harpoon2" },
+					},
 					lualine_x = {
-						{
-							"diagnostics",
-							sources = { "nvim_lsp" },
-							symbols = { error = " ", warn = " ", info = " " },
-						},
+						{ "diff", symbols = { added = "󰐙 ", modified = "󱨧 ", removed = "󰍷 " } },
 					},
 					lualine_y = {
 						clients_lsp,

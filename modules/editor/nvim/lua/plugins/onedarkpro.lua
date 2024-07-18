@@ -12,17 +12,24 @@ return {
 			},
 			highlights = {
 				NormalFloat = { bg = "${none}" },
-				WhichKeyBorder = { bg = "${fg}", fg = "${fg}" },
+				WhichKeyBorder = { bg = "${none}", fg = "${cyan}" },
 				CursorLine = { bg = "${midnight}" },
 				CursorLineNr = { fg = "${lavender}", bold = true, italic = true },
 				ColorColumn = { bg = "${abyss}" },
 				LineNr = { fg = "${grey}" },
-				LineNrNC = { fg = "${dark_grey}" },
+				LineNrNC = { fg = "${grey}" },
 				Visual = { bg = "${navynight}" },
-				["@lsp.type.variable"] = { fg = "${fg}" },
-				["@variable"] = { fg = "${fg}", bold = true },
+				MatchParen = { fg = "${yellow}", bg = "${none}", underline = true },
+				-- Cursor = { fg = "${black}", bg = "${none}" },
+				["@function"] = { fg = "${none}", italic = true },
+				-- ["@lsp.type.variable"] = { fg = "${fg}", bold = true },
+				["@variable"] = { fg = "${fg}", bold = true, italic = false },
 				["@variable.other"] = { fg = "${fg}", bold = true },
 				["@variable.parameter"] = { fg = "${fg}", bold = true },
+				["@variable.member"] = { fg = "${fg}", bold = true },
+				-- -- ["@lsp.type.property.lua"] = { fg = "${fg}", italic = false },
+				-- ["@string"] = { fg = "#abb2bf" },
+				-- ["@constructor.lua"] = { fg = "${grey}", bold = true },
 			},
 			styles = {
 				types = "NONE",
@@ -32,7 +39,7 @@ return {
 				comments = "italic",
 				keywords = "bold,italic",
 				constants = "bold",
-				functions = "italic",
+				functions = "NONE",
 				operators = "NONE",
 				variables = "bold",
 				parameters = "NONE",
@@ -62,12 +69,12 @@ return {
 			},
 		})
 
-		local mode = require("config.helpers")
+		local mode = require("utils")
 		vim.o.guicursor = "n-o:block-nCursor,i:ver20-iCursor,v-ve:block-vCursor,c-ci-cr:ver25-cCursor,r:hor15-rCursor"
 
 		-- cursor color
 		vim.api.nvim_set_hl(0, "nCursor", { bg = colors.lavender, fg = colors.bg0 })
-		vim.api.nvim_set_hl(0, "iCursor", { bg = colors.peace, fg = colors.bg0 })
+		vim.api.nvim_set_hl(0, "iCursor", { bg = colors.peach, fg = colors.bg0 })
 		vim.api.nvim_set_hl(0, "vCursor", { bg = colors.rosewater, fg = colors.bg0 })
 		vim.api.nvim_set_hl(0, "cCursor", { bg = colors.sky, fg = colors.bg0 })
 		vim.api.nvim_set_hl(0, "rCursor", { bg = colors.sapphire, fg = colors.bg0 })
@@ -82,7 +89,6 @@ return {
 		vim.api.nvim_set_hl(0, "CursorLineNr", { fg = colors.lavender })
 
 		-- cursor color
-		vim.api.nvim_set_hl(0, "iCursor", { bg = colors.peace, fg = colors.bg0 })
 		vim.api.nvim_create_autocmd("ModeChanged", {
 			pattern = "*",
 			callback = function()

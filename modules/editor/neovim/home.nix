@@ -3,11 +3,13 @@
   lib,
   config,
   flakeDirectory,
-  libx,
+  configx,
   ...
-}: let
-  inherit (libx) colors;
-in {
+}:
+let
+  inherit (configx) colors;
+in
+{
   options.editor.neovim.home.enable = lib.mkEnableOption "Enable neovim home";
   config = lib.mkIf config.editor.neovim.home.enable {
     home.shellAliases.v = "nvim";
@@ -15,20 +17,29 @@ in {
       neovim = {
         name = "Neovim";
         genericName = "Text Editor";
-        exec = let
-          app = pkgs.writeShellScript "neovim-terminal" ''
-            # Killing foot from sway results in non-zero exit code which triggers
-            # xdg-mime to use next valid entry, so we must always exit successfully
-            if [ "$SWAYSOCK" ]; then
-              foot -- nvim "$1" || true
-            else
-              gnome-terminal -- nvim "$1" || true
-            fi
-          '';
-        in "${app} %U";
+        exec =
+          let
+            app = pkgs.writeShellScript "neovim-terminal" ''
+              # Killing foot from sway results in non-zero exit code which triggers
+              # xdg-mime to use next valid entry, so we must always exit successfully
+              if [ "$SWAYSOCK" ]; then
+                foot -- nvim "$1" || true
+              else
+                gnome-terminal -- nvim "$1" || true
+              fi
+            '';
+          in
+          "${app} %U";
         terminal = false;
-        categories = ["Utility" "TextEditor"];
-        mimeType = ["text/markdown" "text/plain" "text/javascript"];
+        categories = [
+          "Utility"
+          "TextEditor"
+        ];
+        mimeType = [
+          "text/markdown"
+          "text/plain"
+          "text/javascript"
+        ];
       };
     };
     programs.neovim = {
@@ -47,27 +58,26 @@ in {
         require("config.tools.misc")
         require("config.ui.misc")
       '';
-      inherit (import ./plugins.nix {inherit pkgs;}) plugins;
-      inherit
-        (import ./packages.nix {inherit pkgs;})
+      inherit (import ./plugins.nix { inherit pkgs; }) plugins;
+      inherit (import ./packages.nix { inherit pkgs; })
         extraPackages
         extraLuaPackages
         extraPython3Packages
         ;
     };
     home = {
-      activation = let
-        hmNvim = "${flakeDirectory}/modules/editor/neovim";
-      in {
-        linkNvim =
-          lib.hm.dag.entryAfter ["linkGeneration"]
-          ''
+      activation =
+        let
+          hmNvim = "${flakeDirectory}/modules/editor/neovim";
+        in
+        {
+          linkNvim = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
             [ -e "${config.xdg.configHome}/nvim/lua" ] || mkdir -p "${config.xdg.configHome}/nvim/lua/config"
             [ -e "${config.xdg.configHome}/nvim/spell" ] || ln -s ${hmNvim}/spell ${config.xdg.configHome}/nvim/spell
             [ -e "${config.xdg.configHome}/nvim/ftdetect" ] || ln -s ${hmNvim}/ftdetect ${config.xdg.configHome}/nvim/ftdetect
             [ -e "${config.xdg.configHome}/nvim/lua/config" ] && cp -rs ${hmNvim}/lua/config/. ${config.xdg.configHome}/nvim/lua/config/
           '';
-      };
+        };
     };
     xdg.configFile = {
       # "nvim/lua" = {

@@ -6,9 +6,103 @@ return {
 			{ "<a-T>", "<cmd>Twilight<cr>", desc = "Twilight", silent = true },
 		},
 	},
+	{
+		"levouh/tint.nvim",
+		config = function()
+			-- Override some defaults
+			require("tint").setup({
+				tint = -50, -- Darken colors, use a positive value to brighten
+				saturation = 0.6, -- Saturation to preserve
+				transforms = require("tint").transforms.SATURATE_TINT, -- Showing default behavior, but value here can be predefined set of transforms
+				tint_background_colors = true, -- Tint background portions of highlight groups
+				highlight_ignore_patterns = { "WinSeparator", "Status.*" }, -- Highlight group patterns to ignore, see `string.find`
+				window_ignore_function = function(winid)
+					local bufid = vim.api.nvim_win_get_buf(winid)
+					local buftype = vim.api.nvim_buf_get_option(bufid, "buftype")
+					local floating = vim.api.nvim_win_get_config(winid).relative ~= ""
+
+					-- Do not tint `terminal` or floating windows, tint everything else
+					return buftype == "terminal" or floating
+				end,
+			})
+		end,
+	},
+	{
+		"tzachar/local-highlight.nvim",
+		lazy = true,
+		config = function()
+			require("local-highlight").setup({
+				file_types = { "python", "cpp" }, -- If this is given only attach to this
+				-- OR attach to every filetype except:
+				disable_file_types = { "tex" },
+				hlgroup = "Search",
+				cw_hlgroup = nil,
+				-- Whether to display highlights in INSERT mode or not
+				insert_mode = false,
+				min_match_len = 1,
+				max_match_len = math.huge,
+				highlight_single_match = true,
+			})
+		end,
+	},
+	{
+		"christoomey/vim-tmux-navigator",
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		keys = {
+			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+		},
+	},
 	{ "brenoprata10/nvim-highlight-colors", event = "BufReadPost", opts = { render = "virtual" } },
-	{ "stevearc/dressing.nvim", opts = {} },
-	{ "max397574/better-escape.nvim", opts = {} },
+	{
+		"stevearc/dressing.nvim",
+		opts = {
+			input = {
+				default_prompt = "> ",
+				relative = "editor",
+				prefer_width = 50,
+				prompt_align = "center",
+				win_options = { winblend = 0 },
+			},
+			select = {
+				get_config = function(opts)
+					opts = opts or {}
+					local config = {
+						telescope = {
+							layout_config = {
+								width = 0.8,
+							},
+						},
+					}
+					if opts.kind == "legendary.nvim" then
+						config.telescope.sorter = require("telescope.sorters").fuzzy_with_index_bias({})
+					end
+					return config
+				end,
+			},
+		},
+	},
+	{
+		"max397574/better-escape.nvim",
+		opts = {
+			mappings = {
+				v = {
+					j = {
+						k = false,
+					},
+				},
+			},
+		},
+	},
 	{
 		"m4xshen/smartcolumn.nvim",
 		event = "BufReadPost",

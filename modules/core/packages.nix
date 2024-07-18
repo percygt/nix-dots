@@ -2,9 +2,10 @@
   config,
   lib,
   pkgs,
-  libx,
+  configx,
   ...
-}: {
+}:
+{
   options.core.packages = {
     enable = lib.mkOption {
       description = "Enable core packages";
@@ -14,6 +15,6 @@
   };
 
   config = lib.mkIf config.core.packages.enable {
-    environment.systemPackages = libx.corePackages pkgs;
+    environment.systemPackages = configx.corePackages pkgs;
   };
 }

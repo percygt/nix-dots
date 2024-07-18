@@ -1,11 +1,14 @@
 {
+  configx,
   pkgs,
-  libx,
   username,
+  config,
   ...
-}: let
-  inherit (libx) gnomeShellTheme;
-in {
+}:
+let
+  inherit (configx.themes) gnomeShellTheme;
+in
+{
   home-manager.users.${username} = import ./home.nix;
   services = {
     flatpak.enable = true;
@@ -28,7 +31,7 @@ in {
       displayManager.autoLogin.enable = false;
       desktopManager.gnome.enable = true;
       libinput.enable = true;
-      libinput.touchpad.tapping = true; #tap
+      libinput.touchpad.tapping = true; # tap
     };
   };
 
@@ -53,12 +56,16 @@ in {
       gnome-initial-setup
     ]);
 
-  environment.systemPackages = with pkgs;
-    [
-      gnome.gnome-tweaks
-      phinger-cursors
-    ]
-    ++ [gnomeShellTheme.package pkgs];
+  environment.systemPackages = [
+    pkgs.gnome.gnome-tweaks
+    (gnomeShellTheme.package {
+      inherit pkgs;
+      bg = config.scheme.base00;
+      border = config.scheme.base01;
+      bg-dark = config.scheme.base11;
+    })
+    pkgs.phinger-cursors
+  ];
 
   programs.dconf.enable = true;
 }

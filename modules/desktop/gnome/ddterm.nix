@@ -1,6 +1,8 @@
-{libx, ...}: let
-  inherit (libx) colors;
-in {
+{ configx, ... }:
+let
+  inherit (configx) colors;
+in
+{
   dconf.settings = {
     "com/github/amezin/ddterm" = {
       background-opacity = colors.alpha;
@@ -39,8 +41,8 @@ in {
       cursor-shape = "ibeam";
       custom-command = "fish -i";
       custom-font = "JetBrainsMono Nerd Font 11";
-      ddterm-activate-hotkey = [];
-      ddterm-toggle-hotkey = ["<Super>d"];
+      ddterm-activate-hotkey = [ ];
+      ddterm-toggle-hotkey = [ "<Super>d" ];
       detect-urls = true;
       force-x11-gdk-backend = false;
       hide-animation = "ease-in-quart";
@@ -56,34 +58,34 @@ in {
       pointer-autohide = true;
       preserve-working-directory = true;
       scroll-on-output = true;
-      shortcut-background-opacity-dec = [];
-      shortcut-background-opacity-inc = [];
-      shortcut-find-prev = [];
-      shortcut-move-tab-next = [];
-      shortcut-move-tab-prev = [];
-      shortcut-move-tab-to-other-pane = [];
-      shortcut-next-tab = [];
-      shortcut-page-close = ["<Primary><Shift>w"];
-      shortcut-prev-tab = [];
-      shortcut-split-horizontal = ["<Primary><Shift>Down"];
-      shortcut-split-vertical = ["<Primary><Shift>Right"];
-      shortcut-switch-to-tab-1 = [];
-      shortcut-switch-to-tab-10 = [];
-      shortcut-switch-to-tab-2 = [];
-      shortcut-switch-to-tab-3 = [];
-      shortcut-switch-to-tab-4 = [];
-      shortcut-switch-to-tab-5 = [];
-      shortcut-switch-to-tab-6 = [];
-      shortcut-switch-to-tab-7 = [];
-      shortcut-switch-to-tab-8 = [];
-      shortcut-switch-to-tab-9 = [];
-      shortcut-terminal-copy-html = ["<Primary><Shift>h"];
-      shortcut-terminal-paste = ["<Primary><Shift>v"];
-      shortcut-terminal-select-all = ["<Primary><Shift>a"];
-      shortcut-toggle-maximize = [];
-      shortcut-win-new-tab = ["<Primary><Shift>t"];
-      shortcut-window-size-dec = [];
-      shortcut-window-size-inc = [];
+      shortcut-background-opacity-dec = [ ];
+      shortcut-background-opacity-inc = [ ];
+      shortcut-find-prev = [ ];
+      shortcut-move-tab-next = [ ];
+      shortcut-move-tab-prev = [ ];
+      shortcut-move-tab-to-other-pane = [ ];
+      shortcut-next-tab = [ ];
+      shortcut-page-close = [ "<Primary><Shift>w" ];
+      shortcut-prev-tab = [ ];
+      shortcut-split-horizontal = [ "<Primary><Shift>Down" ];
+      shortcut-split-vertical = [ "<Primary><Shift>Right" ];
+      shortcut-switch-to-tab-1 = [ ];
+      shortcut-switch-to-tab-10 = [ ];
+      shortcut-switch-to-tab-2 = [ ];
+      shortcut-switch-to-tab-3 = [ ];
+      shortcut-switch-to-tab-4 = [ ];
+      shortcut-switch-to-tab-5 = [ ];
+      shortcut-switch-to-tab-6 = [ ];
+      shortcut-switch-to-tab-7 = [ ];
+      shortcut-switch-to-tab-8 = [ ];
+      shortcut-switch-to-tab-9 = [ ];
+      shortcut-terminal-copy-html = [ "<Primary><Shift>h" ];
+      shortcut-terminal-paste = [ "<Primary><Shift>v" ];
+      shortcut-terminal-select-all = [ "<Primary><Shift>a" ];
+      shortcut-toggle-maximize = [ ];
+      shortcut-win-new-tab = [ "<Primary><Shift>t" ];
+      shortcut-window-size-dec = [ ];
+      shortcut-window-size-inc = [ ];
       shortcuts-enabled = true;
       show-animation = "ease-in-out-sine";
       show-animation-duration = 5.0e-2;

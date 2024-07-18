@@ -1,10 +1,19 @@
-{ pkgs, config, lib, libx, ... }:
+{
+  pkgs,
+  configx,
+  config,
+  lib,
+  libx,
+  ...
+}:
 let
-  inherit (libx) colors fonts sway wallpaper;
-  fnts = fonts.interface;
+  inherit (libx) sway;
   inherit (sway) mkAppsFloat;
-  clrs = colors;
-in {
+  inherit (configx) background fonts;
+  fnts = fonts.interface;
+  c = config.scheme.withHashtag;
+in
+{
   config = rec {
     fonts = {
       names = [ fnts.name ];
@@ -17,12 +26,26 @@ in {
     left = "h";
     right = "l";
     terminal = "${pkgs.foot}/bin/foot";
-    output."*".bg = "${wallpaper} fill";
+    output."*".bg = "${pkgs.fetchurl background.wallpaper} fill";
     gaps.inner = 4;
-    inherit (import ./keybindings.nix {
-      inherit modifier pkgs libx lib config up down left right terminal;
-    })
-      keybindings;
+    inherit
+      (import ./keybindings.nix {
+        inherit
+          modifier
+          pkgs
+          libx
+          lib
+          configx
+          config
+          up
+          down
+          left
+          right
+          terminal
+          ;
+      })
+      keybindings
+      ;
     inherit (import ./startup.nix) startup;
     inherit (import ./window.nix { inherit mkAppsFloat; }) window;
     input = {
@@ -34,45 +57,40 @@ in {
       };
     };
     seat.seat0 = {
-      xcursor_theme = lib.mkIf (config.home.pointerCursor != null)
-        "${config.home.pointerCursor.name} ${
-          builtins.toString config.home.pointerCursor.size
-        }";
+      xcursor_theme = lib.mkIf (
+        config.home.pointerCursor != null
+      ) "${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}";
       hide_cursor = "3000";
     };
     colors = {
       focused = {
-        background = "#${clrs.normal.black}";
-        border = "#${clrs.extra.overlay1}";
-        childBorder = "#${clrs.extra.overlay0}";
-        indicator = "#${clrs.extra.overlay0}";
-        text = "#${clrs.default.foreground}";
+        background = c.base00;
+        border = c.base03;
+        childBorder = c.base03;
+        indicator = c.base03;
+        text = c.base05;
       };
       unfocused = {
-        background = "#${clrs.extra.navynight}";
-        border = "#${clrs.extra.overlay0}";
-        childBorder = "#${clrs.extra.overlay0}";
-        indicator = "#${clrs.extra.overlay0}";
-        text = "#${clrs.extra.overlay1}";
+        background = c.base02;
+        border = c.base03;
+        childBorder = c.base03;
+        indicator = c.base03;
+        text = c.base04;
       };
       focusedInactive = {
-        background = "#${clrs.extra.navynight}";
-        border = "#${clrs.extra.overlay0}";
-        childBorder = "#${clrs.extra.overlay0}";
-        indicator = "#${clrs.extra.overlay0}";
-        text = "#${clrs.default.foreground}";
+        background = c.base02;
+        border = c.base03;
+        childBorder = c.base03;
+        indicator = c.base03;
+        text = c.base05;
       };
     };
 
     modes.resize = {
-      "${left}" =
-        "resize shrink width 10px"; # Pressing left will shrink the window’s width.
-      "${right}" =
-        "resize grow width 10px"; # Pressing right will grow the window’s width.
-      "${up}" =
-        "resize shrink height 11px"; # Pressing up will shrink the window’s height.
-      "${down}" =
-        "resize grow height 10px"; # Pressing down will grow the window’s height.
+      "${left}" = "resize shrink width 10px"; # Pressing left will shrink the window’s width.
+      "${right}" = "resize grow width 10px"; # Pressing right will grow the window’s width.
+      "${up}" = "resize shrink height 11px"; # Pressing up will shrink the window’s height.
+      "${down}" = "resize grow height 10px"; # Pressing down will grow the window’s height.
 
       Left = "resize shrink width 10px";
       Down = "resize grow height 10px";

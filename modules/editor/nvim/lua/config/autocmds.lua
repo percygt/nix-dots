@@ -1,43 +1,16 @@
--- See `:help vim.highlight.on_yank()`
--- local lsp = require("vim.lsp")
--- local get_clients = vim.lsp.get_clients
---
--- vim.api.nvim_create_user_command("LspStop", function(kwargs)
--- 	local name = kwargs.fargs[1]
--- 	for _, client in ipairs(get_clients({ name = name })) do
--- 		client.stop()
--- 	end
--- end, {
--- 	nargs = 1,
--- 	complete = function()
--- 		return vim.tbl_map(function(c)
--- 			return c.name
--- 		end, get_clients())
--- 	end,
--- })
--- vim.api.nvim_create_user_command("LspRestart", function(kwargs)
--- 	local name = kwargs.fargs[1]
--- 	for _, client in ipairs(get_clients({ name = name })) do
--- 		local bufs = lsp.get_buffers_by_client_id(client.id)
--- 		client.stop()
--- 		vim.wait(30000, function()
--- 			return lsp.get_client_by_id(client.id) == nil
--- 		end)
--- 		local client_id = lsp.start_client(client.config)
--- 		if client_id then
--- 			for _, buf in ipairs(bufs) do
--- 				lsp.buf_attach_client(buf, client_id)
--- 			end
--- 		end
--- 	end
--- end, {
--- 	nargs = 1,
--- 	complete = function()
--- 		return vim.tbl_map(function(c)
--- 			return c.name
--- 		end, get_clients())
--- 	end,
--- })
+-- don't auto comment new line
+vim.api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
+-- go to last loc when opening a buffer
+-- this mean that when you open a file, you will be at the last position
+vim.api.nvim_create_autocmd("BufReadPost", {
+	callback = function()
+		local mark = vim.api.nvim_buf_get_mark(0, '"')
+		local lcount = vim.api.nvim_buf_line_count(0)
+		if mark[1] > 0 and mark[1] <= lcount then
+			pcall(vim.api.nvim_win_set_cursor, 0, mark)
+		end
+	end,
+})
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
 	pattern = "*",
@@ -45,6 +18,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 	group = vim.api.nvim_create_augroup("Highlight", { clear = true }),
+})
+
+-- Enable spell checking for certain file types
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = { "*.txt", "*.md", "*.tex" },
+	callback = function()
+		vim.opt.spell = true
+		vim.opt.spelllang = "en,de"
+	end,
 })
 -- Open help window in a vertical split to the right.
 vim.api.nvim_create_autocmd("BufWinEnter", {

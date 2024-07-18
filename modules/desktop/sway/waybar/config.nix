@@ -1,36 +1,62 @@
 {
   lib,
-  colors,
-  daylight,
   waybarRebuild,
   viewRebuildLogCmd,
-}: {
+  config,
+  ...
+}:
+let
+  c = config.scheme.withHashtag;
+in
+{
   position = "top";
   exclusive = true;
   layer = "top";
   margin-top = 5;
   margin-left = 5;
   margin-right = 5;
-  height = 26;
+  height = 25;
   spacing = 5;
   passthrough = false;
   gtk-layer-shell = true;
   fixed-center = true;
 
-  modules-left = ["sway/workspaces" "sway/window"];
-  modules-center = ["clock#time" "clock#icon" "clock#date"];
-  modules-right = ["mpris" "tray" "cpu" "memory" "temperature" "wireplumber" "custom/rebuild" "pulseaudio#source" "idle_inhibitor" "custom/wlsunset" "backlight" "network" "battery" "group/group-power"];
+  modules-left = [
+    "sway/workspaces"
+    "sway/window"
+  ];
+  modules-center = [
+    "clock#time"
+    "clock#icon"
+    "clock#date"
+  ];
+  modules-right = [
+    "mpris"
+    "tray"
+    "cpu"
+    "memory"
+    "temperature"
+    "wireplumber"
+    "custom/rebuild"
+    "pulseaudio#source"
+    "idle_inhibitor"
+    "custom/wlsunset"
+    "backlight"
+    "network"
+    "battery"
+    "group/group-power"
+  ];
 
   "sway/workspaces" = {
     format = "{icon}";
     disable-scroll = true;
     persistent-workspaces = {
-      "0-home" = ["eDP-1"];
-      "1" = [];
-      "2" = [];
-      "3" = [];
-      "4" = [];
-      "5" = [];
+      "0-home" = [ "eDP-1" ];
+      "1" = [ ];
+      "2" = [ ];
+      "3" = [ ];
+      "4" = [ ];
+      "5" = [ ];
     };
     format-icons = {
       "0-home" = "󰋜";
@@ -55,14 +81,27 @@
     player-icons.default = " ";
     status-icons.paused = " ";
     dynamic-len = 45;
-    dynamic-order = ["artist" "title" "album"];
+    dynamic-order = [
+      "artist"
+      "title"
+      "album"
+    ];
     max-length = 100;
   };
 
   "cpu" = {
     interval = 1;
     format = "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}";
-    format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "<span color='#${colors.normal.red}'>█</span>"];
+    format-icons = [
+      "▁"
+      "▂"
+      "▃"
+      "▄"
+      "▅"
+      "▆"
+      "▇"
+      "<span color='${c.base08}'>█</span>"
+    ];
   };
 
   "memory" = {
@@ -78,7 +117,13 @@
     critical-threshold = 80;
     tooltip = false;
     format = "<small>{icon}</small> {temperatureC}°C";
-    format-icons = ["" "" "" "" ""];
+    format-icons = [
+      ""
+      ""
+      ""
+      ""
+      ""
+    ];
     on-click = "toggle-sway-window --id btop -- foot --app-id=btop btop";
   };
 
@@ -94,7 +139,13 @@
   "wireplumber" = {
     format = "{icon}  {volume}% {node_name}";
     format-muted = " ";
-    format-icons = {default = ["" "" ""];};
+    format-icons = {
+      default = [
+        ""
+        ""
+        ""
+      ];
+    };
     on-click = "pamixer --toggle-mute";
     on-click-right = "toggle-sway-window --id pavucontrol -- pavucontrol";
     tooltip-format = "{source_volume}% / {desc}";
@@ -131,25 +182,34 @@
     format-charging = " {capacity}%";
     format-full = "{icon} {capacity}%";
     format-good = "{icon} {capacity}%";
-    format-icons = ["" "" "" "" ""];
+    format-icons = [
+      ""
+      ""
+      ""
+      ""
+      ""
+    ];
     format-plugged = "<span size='medium'></span>";
   };
 
   "clock#date" = {
     format = "{:%m.%d.%y}";
-    tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+    tooltip-format = ''
+      <big>{:%Y %B}</big>
+      <tt><small>{calendar}</small></tt>'';
     interval = 3600;
     max-length = 7;
   };
 
   "clock#icon" = {
-    format = "<span font='9' rise='-4444'></span>";
-    tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+    format = "<span font='9' rise='-4444'> </span>";
   };
 
   "clock#time" = {
     format = "{:%I:%M:%S}";
-    tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+    tooltip-format = ''
+      <big>{:%Y %B}</big>
+      <tt><small>{calendar}</small></tt>'';
     interval = 1;
     min-length = 7;
   };
@@ -164,13 +224,17 @@
 
   "backlight" = {
     format = "{icon}";
-    format-icons = ["󰃞" "󰃟" "󰃠"];
+    format-icons = [
+      "󰃞"
+      "󰃟"
+      "󰃠"
+    ];
     tooltip = false;
     on-scroll-down = "brightnessctl set 5%-";
     on-scroll-up = "brightnessctl set +5%";
   };
 
-  "sway/mode".format = "<span style=\"italic\">{}</span>";
+  "sway/mode".format = ''<span style="italic">{}</span>'';
 
   "group/group-power" = {
     orientation = "inherit";

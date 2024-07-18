@@ -2,9 +2,13 @@
   pkgs,
   lib,
   libx,
+  configx,
+  config,
   ...
-}: let
-  inherit (libx) toRasi mkLiteral fonts colors sway;
+}:
+let
+  inherit (libx) toRasi mkLiteral sway;
+  inherit (configx) fonts;
   inherit (sway) viewRebuildLogCmd;
   daylight = pkgs.writeBabashkaScript {
     name = "daylight";
@@ -12,7 +16,11 @@
   };
   waybarRebuild = pkgs.writeShellApplication {
     name = "waybar-rebuild-exec";
-    runtimeInputs = [pkgs.coreutils-full pkgs.systemd pkgs.gnugrep];
+    runtimeInputs = [
+      pkgs.coreutils-full
+      pkgs.systemd
+      pkgs.gnugrep
+    ];
     text = ''
       status="$(systemctl is-active nixos-rebuild.service || true)"
       if grep -q "inactive" <<< "$status"; then
@@ -24,8 +32,17 @@
       fi
     '';
   };
-  waybar_config = import ./config.nix {inherit lib daylight colors waybarRebuild viewRebuildLogCmd;};
-in {
+  waybar_config = import ./config.nix {
+    inherit
+      lib
+      config
+      daylight
+      waybarRebuild
+      viewRebuildLogCmd
+      ;
+  };
+in
+{
   # needed for mpris
   services.playerctld.enable = true;
   # add binary path to waybar systemd environment
@@ -37,18 +54,17 @@ in {
   programs.waybar = {
     enable = true;
     package = pkgs.stash.waybar;
-    style = toRasi (import ./theme.nix {inherit mkLiteral fonts colors;}).theme;
+    style = toRasi (import ./theme.nix { inherit mkLiteral config fonts; }).theme;
     settings = [
-      (waybar_config
-        // {
-          output = "HDMI-A-1";
-        })
-      (waybar_config
+      (waybar_config // { output = "HDMI-A-1"; })
+      (
+        waybar_config
         // {
           ipc = true;
           id = "bar-1";
           output = "eDP-1";
-        })
+        }
+      )
     ];
   };
 }

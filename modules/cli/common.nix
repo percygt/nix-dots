@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   options.cli.common.home.enable = lib.mkEnableOption "Enable common cli tools";
   config = lib.mkIf config.cli.common.home.enable {
     home.packages = with pkgs; [
@@ -21,7 +22,6 @@
       ddgr
       buku
       mutt
-      newsboat
       navi
       bandwhich
       scc

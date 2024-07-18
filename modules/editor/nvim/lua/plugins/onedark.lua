@@ -6,7 +6,7 @@ return {
 		enabled = false,
 		name = "onedark",
 		config = function()
-			local mode = require("config.helpers")
+			local mode = require("utils")
 			require("onedark").setup({
 				style = "deep",
 				transparent = true,

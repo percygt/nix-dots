@@ -3,11 +3,12 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   options = {
     cli.system.enable = lib.mkEnableOption "Enable cli systemwide";
     cli.persist.enable = lib.mkOption {
-      description = "Enable vscode persist";
+      description = "Enable cli persist";
       default = config.core.ephemeral.enable;
       type = lib.types.bool;
     };
@@ -27,7 +28,7 @@
       };
     };
     home-manager.users.${username} = {
-      imports = [./home.nix];
+      imports = [ ./home.nix ];
       cli = {
         atuin.home.enable = lib.mkDefault true;
         direnv.home.enable = lib.mkDefault true;

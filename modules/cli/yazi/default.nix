@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   options.cli.yazi.home.enable = lib.mkEnableOption "Enable yazi";
   config = lib.mkIf config.cli.yazi.home.enable {
     home = {
@@ -55,27 +56,33 @@
         plugin = import ./plugin.nix;
       };
 
-      theme = {
-        status = {
-          separator_open = "";
-          separator_close = "";
-        };
+      theme = (builtins.fromTOML (builtins.readFile ./mocha.toml)) // {
+        # status = {
+        #   separator_open = "";
+        #   separator_close = "";
+        # };
         prepend_keymap = [
           {
-            on = ["f" "g"];
+            on = [
+              "f"
+              "g"
+            ];
             run = "plugin fg";
             desc = "find file by content";
           }
           {
-            on = ["f" "f"];
+            on = [
+              "f"
+              "f"
+            ];
             run = "plugin fg --args='fzf'";
             desc = "find file by file name";
           }
         ];
         manager = {
-          preview_hovered = {
-            underline = false;
-          };
+          # preview_hovered = {
+          #   underline = false;
+          # };
           folder_offset = [
             1
             0

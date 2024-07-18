@@ -1,11 +1,9 @@
+{ lib, configx, ... }:
+let
+  wallpaper = "file://${configx.wallpaper}";
+  inherit (configx.themes) gnomeShellTheme;
+in
 {
-  lib,
-  libx,
-  ...
-}: let
-  wallpaper = "file://${libx.wallpaper}";
-  inherit (libx) gnomeShellTheme;
-in {
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/shell/extensions/user-theme" = {
       inherit (gnomeShellTheme) name;
@@ -92,7 +90,7 @@ in {
       center-new-windows = true;
       dynamic-workspaces = true;
       edge-tiling = false;
-      experimental-features = ["scale-monitor-framebuffer"];
+      experimental-features = [ "scale-monitor-framebuffer" ];
       locate-pointer-key = "Control_L";
       overlay-key = "";
       workspaces-only-on-primary = true;

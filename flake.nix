@@ -1,8 +1,10 @@
 {
   description = "PercyGT's nix config";
   nixConfig = {
-    extra-substituters =
-      [ "https://nix-community.cachix.org" "https://percygtdev.cachix.org" ];
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+      "https://percygtdev.cachix.org"
+    ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
@@ -15,8 +17,7 @@
     nixpkgs-stable.follows = "nix-stash/nixpkgs-stable";
 
     swayfx-unwrapped.follows = "nix-stash/nix-sources/swayfx-unwrapped";
-    neovim-nightly-overlay.follows =
-      "nix-stash/nix-sources/neovim-nightly-overlay";
+    neovim-nightly-overlay.follows = "nix-stash/nix-sources/neovim-nightly-overlay";
     emacs-overlay.follows = "nix-stash/nix-sources/emacs-overlay";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -41,10 +42,10 @@
 
     nixd.url = "github:nix-community/nixd";
     nix-colors.url = "github:misterio77/nix-colors";
+    base16.url = "github:SenchoPens/base16.nix";
     impermanence.url = "github:nix-community/impermanence";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     spicetify.url = "github:the-argus/spicetify-nix";
-
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -57,19 +58,28 @@
       flake = false;
     };
   };
-  outputs = { nixpkgs, self, ... }@inputs:
+  outputs =
+    { nixpkgs, self, ... }@inputs:
     let
       inherit (self) outputs;
       defaultUser = "percygt";
       stateVersion = "24.05";
-      bldr =
-        import ./lib { inherit self inputs outputs defaultUser stateVersion; };
-    in {
-      packages = bldr.forEachSystem (system:
-        (import ./packages { pkgs = nixpkgs.legacyPackages.${system}; }));
+      bldr = import ./lib {
+        inherit
+          self
+          inputs
+          outputs
+          defaultUser
+          stateVersion
+          ;
+      };
+    in
+    {
+      packages = bldr.forEachSystem (
+        system: (import ./packages { pkgs = nixpkgs.legacyPackages.${system}; })
+      );
 
-      formatter = bldr.forEachSystem
-        (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = bldr.forEachSystem (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
 
       overlays = import ./overlays { inherit inputs; };
 

@@ -1,6 +1,6 @@
 <div align="center">
 <h1>
-<img width="96" src="./lib/assets/catppuccin-macchiato.png"></img> <br>
+<img width="96" src="./assets/catppuccin-macchiato.png"></img> <br>
   Nix Dots
 </h1>
 
@@ -17,5 +17,5 @@
 </p>
 <h4>My personal NixOS config</h4>
 <p>Feel free to take a look around</p>
-<img src="./lib/assets/sway-wezterm.png"></img>
+<img src="./assets/sway-wezterm.png"></img>
 </div>

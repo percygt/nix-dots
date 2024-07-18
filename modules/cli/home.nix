@@ -8,6 +8,7 @@
     ./ncmpcpp.nix
     ./tui.nix
     ./yazi
+    ./newsboat.nix
 
     ./common.nix
     ./bat.nix

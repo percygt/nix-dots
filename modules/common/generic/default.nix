@@ -1,4 +1,5 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   imports = [
     ./xremap.nix
     ./fonts.nix
@@ -6,6 +7,7 @@
     ./packages.nix
     ./nvd.nix
     ./overlays.nix
+    ./theme.nix
     ../common/nixpkgs/config.nix
   ];
   generic = {

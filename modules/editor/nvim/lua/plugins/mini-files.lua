@@ -1,9 +1,15 @@
 return {
 	"echasnovski/mini.files",
 	version = false,
-	keys = {
-		{ "<leader>f", "<cmd>lua require('mini.files').open()<cr>", desc = "Files", mode = { "n", "v" } },
-	},
+	keys = function()
+		local minifiles_open_buffer_path = function()
+			local path = vim.bo.buftype ~= "nofile" and vim.api.nvim_buf_get_name(0) or nil
+			require("mini.files").open(path)
+		end
+		return {
+			{ "<leader>f", minifiles_open_buffer_path, desc = "Files", mode = { "n", "v" } },
+		}
+	end,
 	opts = function()
 		local filter_hide = function(fs_entry)
 			return not vim.startswith(fs_entry.name, ".")
@@ -28,7 +34,6 @@ return {
 		}
 	end,
 	config = function(_, opts)
-		-- NOTE: MINI FILES
 		local mini_files = require("mini.files")
 		mini_files.setup(opts)
 		local show_dotfiles = false
@@ -50,8 +55,5 @@ return {
 				vim.keymap.set("n", ".", toggle_dotfiles, { buffer = buf_id })
 			end,
 		})
-		-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE", ctermbg = "NONE" })
-		-- vim.api.nvim_set_hl(0, "MiniFilesNormal", { bg = "NONE", ctermbg = "NONE" })
-		-- vim.api.nvim_set_hl(0, "MiniFilesBorder", { bg = "NONE", ctermbg = "NONE" })
 	end,
 }

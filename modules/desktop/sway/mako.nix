@@ -1,10 +1,10 @@
+{ configx, config, ... }:
+let
+  inherit (configx) fonts themes;
+  inherit (themes) iconTheme;
+  c = config.scheme.withHashtag;
+in
 {
-  libx,
-  config,
-  ...
-}: let
-  inherit (libx) colors fonts iconTheme;
-in {
   services = {
     mako = {
       enable = true;
@@ -21,10 +21,10 @@ in {
       padding = "15";
       width = 400;
       iconPath = "${config.xdg.dataHome}/icons/${iconTheme.name}";
-      backgroundColor = "#${colors.extra.obsidian}";
-      borderColor = "#${colors.extra.azure}";
-      progressColor = "over #${colors.highlight.background}";
-      textColor = "#${colors.default.foreground}";
+      backgroundColor = c.base01;
+      borderColor = c.base03;
+      progressColor = "over ${c.base04}";
+      textColor = c.base05;
     };
   };
 }

@@ -1,12 +1,14 @@
 {
   pkgs,
-  libx,
+  configx,
   lib,
   ...
-}: let
-  inherit (libx) fonts colors;
+}:
+let
+  inherit (configx) fonts colors;
   inherit (colors.conversions) hexToRGBString;
-in {
+in
+{
   console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
 
   services.kmscon = {

@@ -2,11 +2,12 @@
   lib,
   config,
   pkgs,
-  libx,
   ...
-}: let
-  inherit (libx) colors;
-in {
+}:
+let
+  c = config.scheme.withHashtag;
+in
+{
   options.shell.fish.enable = lib.mkOption {
     description = "Enable fish";
     default = true;
@@ -18,9 +19,9 @@ in {
       fzf = {
         enable = true;
         colors = {
-          "bg+" = "#${colors.extra.azure}";
-          bg = "#${colors.normal.black}";
-          preview-bg = "#${colors.default.background}";
+          "bg+" = c.base02;
+          bg = c.base01;
+          preview-bg = c.base00;
         };
         tmux = {
           enableShellIntegration = true;
@@ -34,9 +35,7 @@ in {
           "--border rounded"
           "--info=inline"
         ];
-        # CTRL-T - $FZF_CTRL_T_COMMAND
         fileWidgetCommand = "rg --files --hidden -g !.git";
-        # ALT-C - $FZF_ALT_C_COMMAND
         changeDirWidgetCommand = "fd --type directory --hidden --exclude .git";
       };
       fish = {
@@ -52,9 +51,7 @@ in {
           }
         ];
         interactiveShellInit =
-          /*
-          fish
-          */
+          # fish
           ''
             check_directory_for_new_repository
 
@@ -100,14 +97,10 @@ in {
           };
         };
         shellInit =
-          /*
-          fish
-          */
+          # fish
           ''
             # set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
             # bind --mode insert --sets-mode default jk repaint
-
-
 
             set -gx FZF_DEFAULT_OPTS "
               --border rounded
@@ -117,7 +110,7 @@ in {
               --bind=alt-j:preview-down
               --bind=alt-k:preview-up
               --preview-window=right,60%,,
-              --color bg:#${colors.normal.black},bg+:#${colors.extra.azure},preview-bg:#${colors.default.background}"
+              --color bg:${c.base02},bg+:#${c.base03},preview-bg:#${c.base00}"
 
             set -gx FZF_TMUX 1
             set -gx FZF_TMUX_OPTS "-p90%,75%"
@@ -134,39 +127,37 @@ in {
       "fish/themes/base16.theme" = {
         onChange = "${pkgs.fish}/bin/fish -c 'echo y | fish_config theme save base16'";
         text =
-          /*
-          fish
-          */
+          # fish
           ''
             fish_color_autosuggestion 808080
+            fish_color_normal white
+            fish_color_command blue
+            fish_color_param magenta
             fish_color_cancel --reverse
-            fish_color_command yellow
             fish_color_comment red
             fish_color_cwd green
             fish_color_cwd_root red
             fish_color_end green
-            fish_color_error brred
-            fish_color_escape brcyan
+            fish_color_error red
+            fish_color_escape cyan
             fish_color_history_current --bold
             fish_color_host normal
-            fish_color_host_remote
-            fish_color_keyword
-            fish_color_normal normal
-            fish_color_operator brcyan
-            fish_color_option
-            fish_color_param magenta
-            fish_color_quote yellow
-            fish_color_redirection 'cyan'  '--bold'
-            fish_color_search_match 'bryellow'  '--background=brblack'
-            fish_color_selection 'white'  '--bold'  '--background=brblack'
-            fish_color_status red
-            fish_color_user brgreen
-            fish_color_valid_path --underline
+            fish_color_host_remote blue
+            fish_color_keyword red
+            fish_color_operator cyan
+            fish_color_option cyan
+            fish_color_quote blue
+            fish_color_redirection 'cyan' '--bold'
+            fish_color_search_match 'green' '--background=brblack'
+            fish_color_selection 'white' '--bold' '--background=brblack'
+            fish_color_status blue
+            fish_color_user green
+            fish_color_valid_path 'blue' '--underline'
             fish_pager_color_background
             fish_pager_color_completion normal
-            fish_pager_color_description 'bryellow'  '--italics'
-            fish_pager_color_prefix 'normal'  '--bold'  '--underline'
-            fish_pager_color_progress 'brwhite'  '--background=cyan'
+            fish_pager_color_description 'yellow' '--italics'
+            fish_pager_color_prefix 'green' '--bold' '--underline'
+            fish_pager_color_progress 'brwhite' '--background=cyan'
             fish_pager_color_secondary_background
             fish_pager_color_secondary_completion
             fish_pager_color_secondary_description

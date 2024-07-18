@@ -17,6 +17,7 @@
       clang_format = {};
       shellharden = {};
       alejandra = {}; # [nix]
+      nixfmt = {}; # [nix]
       stylua = {};
       taplo = {}; # [toml]
       prettierd = {

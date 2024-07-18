@@ -1,6 +1,14 @@
-{ pkgs, config, libx, ... }:
-let inherit (libx) fonts cursorTheme iconTheme gtkTheme;
-in {
+{
+  pkgs,
+  config,
+  configx,
+  ...
+}:
+let
+  inherit (configx) fonts themes;
+  inherit (themes) cursorTheme iconTheme gtkTheme;
+in
+{
   gtk = {
     enable = true;
 
@@ -23,32 +31,31 @@ in {
 
     theme = {
       inherit (gtkTheme) name;
-      package = gtkTheme.package pkgs;
+      package = gtkTheme.package {
+        inherit pkgs;
+        bg = config.scheme.base00;
+        border = config.scheme.base01;
+        bg-dark = config.scheme.base11;
+      };
     };
 
-    gtk3.extraConfig = { "gtk-application-prefer-dark-theme" = 1; };
+    gtk3.extraConfig = {
+      "gtk-application-prefer-dark-theme" = 1;
+    };
   };
 
   xdg = {
     configFile = {
-      "gtk-4.0/assets".source =
-        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-      "gtk-4.0/gtk.css".source =
-        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-      "gtk-4.0/gtk-dark.css".source =
-        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
-      "gtk-3.0/assets".source =
-        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-3.0/assets";
-      "gtk-3.0/gtk.css".source =
-        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-3.0/gtk.css";
-      "gtk-3.0/gtk-dark.css".source =
-        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-3.0/gtk-dark.css";
+      "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+      "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+      "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+      "gtk-3.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-3.0/assets";
+      "gtk-3.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-3.0/gtk.css";
+      "gtk-3.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-3.0/gtk-dark.css";
     };
     dataFile = {
-      "themes/${config.gtk.theme.name}".source =
-        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
-      "icons/${config.gtk.iconTheme.name}".source =
-        "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}";
+      "themes/${config.gtk.theme.name}".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
+      "icons/${config.gtk.iconTheme.name}".source = "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}";
       "flatpak/overrides/global".text = ''
         [Context]
         filesystems=xdg-data/themes:ro;xdg-data/icons:ro;xdg-config/gtkrc:ro;xdg-config/gtkrc-2.0:ro;xdg-config/gtk-2.0:ro;xdg-config/gtk-3.0:ro;xdg-config/gtk-4.0:ro;/nix/store
@@ -69,8 +76,9 @@ in {
       GTK_THEME = config.gtk.theme.name;
       GTK_CURSOR = config.gtk.cursorTheme.name;
       XCURSOR_THEME = config.gtk.cursorTheme.name;
-      XCURSOR_SIZE = "${toString
-        (builtins.floor (libx.cursorTheme.size * libx.cursorTheme.x-scaling))}";
+      XCURSOR_SIZE = "${toString (
+        builtins.floor (themes.cursorTheme.size * themes.cursorTheme.x-scaling)
+      )}";
       GTK_ICON = config.gtk.iconTheme.name;
     };
   };

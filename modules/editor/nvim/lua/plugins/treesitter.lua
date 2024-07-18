@@ -2,10 +2,8 @@ return {
 	-- Universal language parser
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = "BufRead",
-		build = function()
-			vim.cmd("TSUpdate")
-		end,
+		event = { "BufReadPost", "BufNewFile" },
+		build = ":TSUpdate",
 		dependencies = {
 			{ "nvim-treesitter/nvim-treesitter-textobjects" },
 		},
@@ -16,8 +14,11 @@ return {
 			end
 
 			require("nvim-treesitter.configs").setup({
+				sync_install = false,
+				ignore_install = { "javascript" },
 				auto_install = true,
 				ensure_installed = {
+					"html",
 					"bash",
 					"fish",
 					"json",
@@ -42,7 +43,15 @@ return {
 					additional_vim_regex_highlighting = false,
 				},
 				-- autopairs = { enable = true },
-
+				incremental_selection = {
+					enable = true,
+					keymaps = {
+						init_selection = "<leader>vv",
+						node_incremental = "+",
+						scope_incremental = false,
+						node_decremental = "_",
+					},
+				},
 				textobjects = {
 					select = {
 						enable = true,

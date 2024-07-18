@@ -1,33 +1,41 @@
-{libx, ...}: let
-  inherit (libx) colors fonts;
-in {
+{
+  configx,
+  background,
+  config,
+  ...
+}:
+let
+  inherit (configx) fonts;
+  c = config.scheme.withHashtag;
+in
+{
   dconf.settings = {
     "org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
-      foreground-color = "#${colors.default.foreground}";
-      background-color = "#${colors.default.background}";
-      cursor-background-color = "#${colors.cursor.background}";
-      bold-color = "#${colors.bold}";
-      highlight-background-color = "#${colors.highlight.background}";
+      foreground-color = c.base05;
+      background-color = c.base00;
+      cursor-background-color = c.base07;
+      bold-color = c.base09;
+      highlight-background-color = c.base02;
       palette = [
-        "#${colors.normal.black}"
-        "#${colors.normal.red}"
-        "#${colors.normal.green}"
-        "#${colors.normal.yellow}"
-        "#${colors.normal.blue}"
-        "#${colors.normal.magenta}"
-        "#${colors.normal.cyan}"
-        "#${colors.normal.white}"
-        "#${colors.bright.black}"
-        "#${colors.bright.red}"
-        "#${colors.bright.green}"
-        "#${colors.bright.yellow}"
-        "#${colors.bright.blue}"
-        "#${colors.bright.magenta}"
-        "#${colors.bright.cyan}"
-        "#${colors.bright.white}"
+        c.base01 # black
+        c.base08 # red
+        c.base0B # green
+        c.base09 # yellow
+        c.base0D # blue
+        c.base0E # magenta
+        c.base0C # cyan
+        c.base06 # white
+        c.base02 # bright black
+        c.base12 # bright red
+        c.base14 # bright green
+        c.base13 # bright yellow
+        c.base16 # bright blue
+        c.base17 # bright magenta
+        c.base15 # bright cyan
+        c.base07 # bright white
       ];
       audible-bell = true;
-      background-transparency-percent = "${builtins.toString colors.alpha}";
+      background-transparency-percent = background.opacity;
       bold-color-same-as-fg = false;
       bold-is-bright = true;
       cursor-colors-set = true;

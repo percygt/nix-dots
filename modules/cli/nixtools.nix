@@ -8,7 +8,7 @@
   config = lib.mkIf config.cli.nixtools.home.enable {
     home.packages = with pkgs; [
       # alejandra
-      nixfmt
+      nixfmt-rfc-style
       deadnix
       statix
       nurl
