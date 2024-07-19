@@ -3,11 +3,9 @@
   lib,
   config,
   flakeDirectory,
-  configx,
   ...
 }:
 let
-  inherit (configx) colors;
   hmNvim = "${flakeDirectory}/modules/editor/nvim";
 in
 {
@@ -93,44 +91,6 @@ in
     };
     xdg = {
       configFile = {
-        "nvim/lua/config/colors.lua" = {
-          text =
-            #lua
-            ''
-              return {
-                bg0 = "#${colors.normal.black}",
-                bg1 = "#${colors.extra.abyss}",
-                bg2 = "#${colors.extra.midnight}",
-                bg3 = "#${colors.extra.navynight}",
-                bg_d = "#${colors.extra.obsidian}",
-
-                fg = "#${colors.default.foreground}",
-                bg = "#${colors.default.background}",
-                yellow = "#${colors.normal.yellow}",
-                green = "#${colors.normal.green}",
-                blue = "#${colors.normal.blue}",
-                purple = "#${colors.normal.magenta}",
-                cyan = "#${colors.normal.cyan}",
-                grey = "#${colors.extra.overlay1}",
-                dark_grey = "#${colors.extra.overlay0}",
-
-                obsidian = "#${colors.extra.obsidian}", -- [#030205]
-                abyss = "#${colors.extra.abyss}", -- [#120d22]
-                midnight = "#${colors.extra.midnight}", -- [#081028]
-                navynight = "#${colors.extra.navynight}", -- [#08103a]
-                periwinkle = "#${colors.extra.periwinkle}",
-                nocturne = "#${colors.extra.nocturne}", -- [#191970]
-                azure = "#${colors.extra.azure}", -- [#007FFF]
-                cream = "#${colors.extra.cream}", -- [#fffae5]
-                lavender = "#${colors.extra.lavender}", -- [#b4befe]
-                peach = "#${colors.extra.peach}", -- [#fab387]
-                rosewater = "#${colors.extra.rosewater}", -- [#f5e0dc]
-                sapphire = "#${colors.extra.sapphire}", -- [#74c7ec]
-                sky = "#${colors.extra.sky}", -- [#89dceb]
-                mauve = "#${colors.extra.mauve}", -- [#cba6f7]
-              }
-            '';
-        };
         "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${hmNvim}/lazy-lock.json";
         # Nixd LSP configuration
         "${flakeDirectory}/.nixd.json".text = builtins.toJSON {
@@ -139,25 +99,23 @@ in
             target.installable = ".#homeConfigurations.nixd.options";
           };
         };
-        "nvim/lua/config/base24.lua" =
+        "nvim/lua/config/colorscheme.lua" =
           let
-            base24 = pkgs.writeText "base24.json" (builtins.toJSON config.scheme.withHashtag);
+            colorschemeLua =
+              pkgs.runCommand "colorscheme.lua" { }
+                #bash
+                ''
+                  ${pkgs.yq-go}/bin/yq -o=lua 'del(.scheme) |
+                      del(.author) |
+                      del(.name) |
+                      del(.slug) |
+                      del(.system) |
+                      del(.variant) |
+                      .[] |= "#" + .' ${config.scheme} > $out
+                '';
           in
           {
-            text =
-              #lua
-              ''
-                local f = io.open(${base24}, "r")
-                if not f then
-                	return
-                end
-                local base24 = vim.json.decode(f:read("all*"))
-                f:close()
-                if base24 == nil then
-                	return
-                end
-                return base24
-              '';
+            text = builtins.readFile colorschemeLua;
           };
       };
       desktopEntries = {

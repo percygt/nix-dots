@@ -9,48 +9,48 @@ return {
 			"nvim-tree/nvim-web-devicons", -- optional dependency
 		},
 		opts = function()
-			-- local c = require("onedarkpro.helpers").get_colors()
+			local c = require("config.colorscheme")
 			return {
 				create_autocmd = false, -- prevent barbecue from updating itself automatically
 				attach_navic = false,
-				-- theme = {
-				-- 	normal = {
-				-- 		bg = c.none,
-				-- 		fg = c.grey,
-				-- 	},
-				-- 	ellipsis = { fg = c.grey }, -- Conceal's or Normal's fg
-				-- 	separator = { fg = c.blue }, -- Conceal's or Normal's fg
-				-- 	modified = { fg = c.green }, -- BufferVisibleMod's fg (a yellow color)
-				-- 	dirname = { fg = c.dark_grey },
-				-- 	basename = { fg = c.green },
-				-- 	context = {},
-				-- 	context_file = { fg = c.blue }, -- CmpItemKindFile's fg
-				-- 	context_module = { fg = c.orange }, -- CmpItemKindModule's fg
-				-- 	context_namespace = { fg = c.orange }, -- CmpItemKindModule's fg
-				-- 	context_package = { fg = c.orange }, -- CmpItemKindModule's fg
-				-- 	context_class = { fg = c.yellow }, -- CmpItemKindClass's fg
-				-- 	context_method = { fg = c.blue }, -- CmpItemKindMethod's fg
-				-- 	context_property = { fg = c.cyan }, -- CmpItemKindProperty's fg
-				-- 	context_field = { fg = c.purple }, -- CmpItemKindField's fg
-				-- 	context_constructor = { fg = c.blue }, -- CmpItemKindConstructor's fg
-				-- 	context_enum = { fg = c.purple }, -- CmpItemKindEnum's fg
-				-- 	context_interface = { fg = c.green }, -- CmpItemKindInterface's fg
-				-- 	context_function = { fg = c.blue }, -- CmpItemKindFunction's fg
-				-- 	context_variable = { fg = c.purple }, -- CmpItemKindVariable's fg
-				-- 	context_constant = { fg = c.orange }, -- CmpItemKindConstant's fg
-				-- 	context_string = { fg = c.green }, -- String's fg
-				-- 	context_number = { fg = c.orange }, -- Number's fg
-				-- 	context_boolean = { fg = c.orange }, -- Boolean's fg
-				-- 	context_array = { fg = c.purple }, -- CmpItemKindStruct's fg
-				-- 	context_object = { fg = c.purple }, -- CmpItemKindStruct's fg
-				-- 	context_key = { fg = c.purple }, -- CmpItemKindVariable's fg
-				-- 	context_null = { fg = c.red }, -- Special's fg
-				-- 	context_enum_member = { fg = c.yellow }, -- CmpItemKindEnumMember's fg
-				-- 	context_struct = { fg = c.purple }, -- CmpItemKindStruct's fg
-				-- 	context_event = { fg = c.yellow }, -- CmpItemKindEvent's fg
-				-- 	context_operator = { fg = c.red }, -- CmpItemKindOperator's fg
-				-- 	context_type_parameter = { fg = c.red }, -- CmpItemKindTypeParameter's fg
-				-- },
+				theme = {
+					normal = {
+						bg = "NONE",
+						fg = c.base04,
+					},
+					ellipsis = { fg = c.base04 }, -- Conceal's or Normal's fg
+					separator = { fg = c.base0D }, -- Conceal's or Normal's fg
+					modified = { fg = c.base0B }, -- BufferVisibleMod's fg (a base0A color)
+					dirname = { fg = c.base03 },
+					basename = { fg = c.base0B },
+					context = {},
+					context_file = { fg = c.base0D }, -- CmpItemKindFile's fg
+					context_module = { fg = c.base09 }, -- CmpItemKindModule's fg
+					context_namespace = { fg = c.base09 }, -- CmpItemKindModule's fg
+					context_package = { fg = c.base09 }, -- CmpItemKindModule's fg
+					context_class = { fg = c.base0A }, -- CmpItemKindClass's fg
+					context_method = { fg = c.base0D }, -- CmpItemKindMethod's fg
+					context_property = { fg = c.base0C }, -- CmpItemKindProperty's fg
+					context_field = { fg = c.base0E }, -- CmpItemKindField's fg
+					context_constructor = { fg = c.base0D }, -- CmpItemKindConstructor's fg
+					context_enum = { fg = c.base0E }, -- CmpItemKindEnum's fg
+					context_interface = { fg = c.base0B }, -- CmpItemKindInterface's fg
+					context_function = { fg = c.base0D }, -- CmpItemKindFunction's fg
+					context_variable = { fg = c.base0E }, -- CmpItemKindVariable's fg
+					context_constant = { fg = c.base09 }, -- CmpItemKindConstant's fg
+					context_string = { fg = c.base0B }, -- String's fg
+					context_number = { fg = c.base09 }, -- Number's fg
+					context_boolean = { fg = c.base09 }, -- Boolean's fg
+					context_array = { fg = c.base0E }, -- CmpItemKindStruct's fg
+					context_object = { fg = c.base0E }, -- CmpItemKindStruct's fg
+					context_key = { fg = c.base0E }, -- CmpItemKindVariable's fg
+					context_null = { fg = c.base08 }, -- Special's fg
+					context_enum_member = { fg = c.base0A }, -- CmpItemKindEnumMember's fg
+					context_struct = { fg = c.base0E }, -- CmpItemKindStruct's fg
+					context_event = { fg = c.base0A }, -- CmpItemKindEvent's fg
+					context_operator = { fg = c.base08 }, -- CmpItemKindOperator's fg
+					context_type_parameter = { fg = c.base08 }, -- CmpItemKindTypeParameter's fg
+				},
 			}
 		end,
 		config = function(_, opts)

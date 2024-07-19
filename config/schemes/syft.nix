@@ -15,15 +15,15 @@
   base0A = "f9e2af"; # [#f9e2af] butter      yellow
   base0B = "439448"; # [#439448] green       green
   base0C = "81c8be"; # [#81c8be] teal        cyan
-  base0D = "8caaee"; # [#8caaee] periwinkle  blue
+  base0D = "8caaee"; # [#8caaee] azure       blue
   base0E = "d279ff"; # [#d279ff] magenta     magenta
   base0F = "3f0a0a"; # [#3F0A0A] mahogany    brown
-  base10 = "120d22"; # [#120d22] abyss
+  base10 = "00081e"; # [#00081e] abyss
   base11 = "030205"; # [#030205] obsidian
   base12 = "e34234"; # [#e34234] vermilion
   base13 = "d9a145"; # [#d9a145] marigold
   base14 = "2ee874"; # [#2ee874] mintGreen
   base15 = "81ebe6"; # [#81ebe6] breeze
-  base16 = "00a3e0"; # [#00A3E0] azure       blue
+  base16 = "00a3e0"; # [#00A3E0] periwinkle  blue
   base17 = "ad26f6"; # [#ad26f6] amethyst
 }

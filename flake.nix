@@ -41,8 +41,6 @@
     xremap.inputs.nixpkgs.follows = "nixpkgs";
 
     nixd.url = "github:nix-community/nixd";
-    nix-colors.url = "github:misterio77/nix-colors";
-    base16.url = "github:SenchoPens/base16.nix";
     impermanence.url = "github:nix-community/impermanence";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     spicetify.url = "github:the-argus/spicetify-nix";
@@ -52,6 +50,13 @@
     };
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-colors.url = "github:misterio77/nix-colors";
+    base16.url = "github:SenchoPens/base16.nix";
+    tt-schemes = {
+      url = "github:tinted-theming/schemes";
+      flake = false;
+    };
 
     sikreto = {
       url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";

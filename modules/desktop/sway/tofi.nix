@@ -31,13 +31,13 @@ in
       font-variations = "wght ${fonts.interface.weight}"
       selection-color = ${c.base07}
       prompt-color =  ${c.base0D}
-      text-color = ${c.base03}
+      text-color = ${c.base04}
       background-color = ${c.base00}
       prompt-padding = 2
       anchor = top
       width = 0
       horizontal = true
-      font-size = 9
+      font-size = 10
       outline-width = 0
       border-width = 0
       min-input-width = 120

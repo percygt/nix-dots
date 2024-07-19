@@ -3,24 +3,21 @@ return {
 		"nvim-lualine/lualine.nvim",
 		event = { "BufReadPost", "BufNewFile" },
 		config = function()
-			local colors = require("onedarkpro.helpers").get_colors()
+			local c = require("config.colorscheme")
 
 			local customOneDark = {
 				inactive = {
-					a = { fg = colors.grey, bg = colors.midnight, gui = "italic" },
-					b = { fg = colors.grey, bg = colors.black },
-					c = { fg = colors.grey, bg = colors.black },
+					a = { fg = c.base03, bg = c.base01, gui = "italic" },
+					b = { bg = c.base00 },
+					c = { bg = c.base00 },
 				},
 				normal = {
-					a = { bg = colors.midnight, gui = "italic" },
-					b = { bg = colors.bg },
-					c = { bg = colors.bg },
+					a = { fg = c.base05, bg = c.base03, gui = "italic" },
+					b = { bg = c.base10 },
+					c = { bg = c.base10 },
 				},
-				visual = { a = { bg = colors.navynight, gui = "italic" } },
-				insert = { a = { bg = colors.azure, gui = "italic" } },
-				-- replace = { a = { fg = colors.black, bg = colors.sapphire, gui = "italic" } },
-				-- command = { a = { fg = colors.black, bg = colors.sky, gui = "italic" } },
-				-- terminal = { a = { fg = colors.black, bg = colors.mauve, gui = "italic" } },
+				visual = { a = { fg = c.base10, bg = c.base09, gui = "italic" } },
+				insert = { a = { fg = c.base10, bg = c.base16, gui = "italic" } },
 			}
 			-- LSP clients attached to buffer
 			local function clients_lsp()
@@ -33,13 +30,13 @@ return {
 				return table.concat(buf_client_names, "|")
 			end
 			-- color for lualine progress
-			vim.api.nvim_set_hl(0, "progressHl1", { fg = colors.red })
-			vim.api.nvim_set_hl(0, "progressHl2", { fg = colors.orange })
-			vim.api.nvim_set_hl(0, "progressHl3", { fg = colors.yellow })
-			vim.api.nvim_set_hl(0, "progressHl4", { fg = colors.green })
-			vim.api.nvim_set_hl(0, "progressHl5", { fg = colors.cyan })
-			vim.api.nvim_set_hl(0, "progressHl6", { fg = colors.blue })
-			vim.api.nvim_set_hl(0, "progressHl7", { fg = colors.purple })
+			vim.api.nvim_set_hl(0, "progressHl1", { fg = c.base06 })
+			vim.api.nvim_set_hl(0, "progressHl2", { fg = c.base09 })
+			vim.api.nvim_set_hl(0, "progressHl3", { fg = c.base0A })
+			vim.api.nvim_set_hl(0, "progressHl4", { fg = c.base0B })
+			vim.api.nvim_set_hl(0, "progressHl5", { fg = c.base0C })
+			vim.api.nvim_set_hl(0, "progressHl6", { fg = c.base0D })
+			vim.api.nvim_set_hl(0, "progressHl7", { fg = c.base0E })
 
 			local function is_active()
 				local ok, hydra = pcall(require, "hydra.statusline")
@@ -76,6 +73,9 @@ return {
 						end,
 					},
 					lualine_b = {
+						{ "harpoon2" },
+					},
+					lualine_c = {
 						{
 							"diagnostics",
 							sources = { "nvim_lsp" },
@@ -84,12 +84,12 @@ return {
 						{
 							require("noice").api.status.command.get,
 							cond = require("noice").api.status.command.has,
-							color = { fg = colors.lavender },
+							color = { fg = c.base07 },
 						},
 						{
 							require("noice").api.statusline.mode.get,
 							cond = require("noice").api.statusline.mode.has,
-							color = { fg = colors.peach },
+							color = { fg = c.base09 },
 						},
 						{
 							"selectioncount",
@@ -103,11 +103,8 @@ return {
 						-- multicursor status
 						{ get_name, cond = is_active },
 					},
-					lualine_c = {
-						{ "harpoon2" },
-					},
 					lualine_x = {
-						{ "diff", symbols = { added = "󰐙 ", modified = "󱨧 ", removed = "󰍷 " } },
+						{ "diff" },
 					},
 					lualine_y = {
 						clients_lsp,

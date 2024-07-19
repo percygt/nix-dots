@@ -21,6 +21,7 @@
                   pkgs.nixos-rebuild
                   pkgs.systemd
                   pkgs.mpv
+                  pkgs.libnotify
                 ];
                 text = ''
                   notify_success() {
@@ -95,6 +96,7 @@
                 pkgs.iputils
                 pkgs.nixos-rebuild
                 pkgs.git
+                pkgs.nix
               ];
               text = ''
                 flake_dir="${flakeDirectory}"
@@ -116,11 +118,14 @@
                 else
                   printf "Network is down, off-grid mode activated 🚫"
                 fi
-
                 if ! nixos-rebuild "''${flags[@]}" switch --flake "$flake_dir#"; then
                   stderr "Something went wrong 🤔❌"
                   exit 1
                 fi
+                echo "+++++CHANGES++++++"
+                # shellcheck disable=SC2046,SC2012
+                nix store diff-closures $(ls -dv /nix/var/nix/profiles/system-*-link/|tail -2)
+                echo "+++++CHANGES++++++"
                 printf "New NixOS generation created 🥳🌲"
               '';
             }

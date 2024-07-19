@@ -18,6 +18,7 @@
       nix-your-shell
       cachix
       json2nix
+      nix-melt
       nix-output-monitor
       nvd
       nix-search-cli

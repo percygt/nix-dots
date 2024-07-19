@@ -13,14 +13,9 @@ return {
 			layout = {
 				align = "center",
 			},
-			modes = {
-				n = true, -- Normal mode
-				i = false, -- Insert mode
-				x = false, -- Visual mode
-				s = false, -- Select mode
-				o = false, -- Operator pending mode
-				t = false, -- Terminal mode
-				c = false, -- Command mode
+			triggers = {
+				{ "<auto>", mode = "nixsotc" },
+				{ "a", mode = { "n", "v" } },
 			},
 			icons = {},
 			spec = {

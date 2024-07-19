@@ -36,7 +36,12 @@
   };
 
   system.stateVersion = stateVersion;
-
+  system.activationScripts.diff = ''
+    if [[ -e /run/current-system ]]; then
+      echo "+++++CHANGES++++++"
+      ${pkgs.nix}/bin/nix store diff-closures /run/current-system "$systemConfig"
+    fi
+  '';
   swapDevices = [ ];
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.enableRedistributableFirmware = true;

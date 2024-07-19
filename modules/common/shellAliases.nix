@@ -3,7 +3,7 @@
   home.shellAliases = {
     ll = "eza --group --header --group-directories-first --long --git --all --binary --icons";
     la = "ll -a";
-    ls = "eza --group-directories-first --all -1";
+    l = "eza --group-directories-first --all -1";
     shredf = "shred -uvn 10";
     tree = "eza --tree";
     cat = "bat -p";
@@ -22,24 +22,20 @@
     jcu = "journalctl --user -exf --unit";
     curl = "curlie";
     dc = "docker compose";
-    # nd = "nix develop";
     buildIsoMinimal = "nix build .#nixosConfigurations.iso-minimal.config.system.build.isoImage";
     buildIsoGraphical = "nix build .#nixosConfigurations.iso-graphical.config.system.build.isoImage";
     n2ne = "nvim $FLAKE_PATH/packages/node/packages.json";
     n2ni = "node2nix -i $FLAKE_PATH/packages/node/packages.json -e $FLAKE_PATH/packages/node/node-env.nix -o $FLAKE_PATH/packages/node/packages.nix -c $FLAKE_PATH/packages/node/default.nix";
-    tldrf = "tldr --list | fzf --preview=\"tldr {1} --color=always\" --preview-window=right,70% | xargs tldr";
     ts = "tailscale";
     tssh = "tailscale ssh";
     tst = "tailscale status";
     tsu = "sudo tailscale up --ssh --operator=$USER";
     tsd = "tailscale down";
-    cleanup-nix = "nh clean all --keep-since 10d --keep 3";
-    nfu = "nix flake update --accept-flake-config";
-    nsu = "nh os switch -u -- --accept-flake-config";
-    ns = "nh os switch -- --accept-flake-config";
-    ns_ = "systemctl start --user nixos-rebuild.service";
-    hs = "nh home switch ${flakeDirectory}";
-    nhs = "ns;hms";
+    cleanupnix = "nh clean all --keep-since 10d --keep 3";
+    swupnix = "nh os switch -u -- --accept-flake-config";
+    swnix = "nh os switch -- --accept-flake-config";
+    nrs_ = "systemctl start --user nixos-rebuild.service";
+    swhome = "nh home switch -- --accept-flake-config";
     swaytree = "swaymsg -t get_tree | nvim -R";
     swayinputs = "swaymsg -t get_inputs | nvim -R";
     swayoutputs = "swaymsg -t get_outputs | nvim -R";

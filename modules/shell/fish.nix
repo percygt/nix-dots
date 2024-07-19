@@ -55,7 +55,6 @@ in
           ''
             check_directory_for_new_repository
 
-
             set fish_greeting # Disable greeting
 
             bind \ee edit_command_buffer
@@ -110,7 +109,7 @@ in
               --bind=alt-j:preview-down
               --bind=alt-k:preview-up
               --preview-window=right,60%,,
-              --color bg:${c.base02},bg+:#${c.base03},preview-bg:#${c.base00}"
+              --color bg:${c.base02},bg+:${c.base03},preview-bg:${c.base00}"
 
             set -gx FZF_TMUX 1
             set -gx FZF_TMUX_OPTS "-p90%,75%"

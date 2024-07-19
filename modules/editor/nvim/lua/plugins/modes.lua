@@ -1,15 +1,15 @@
 return {
 	"mvllow/modes.nvim",
 	config = function()
+		local c = require("config.colorscheme")
 		require("modes").setup({
 			colors = {
 				bg = "", -- Optional bg param, defaults to Normal hl group
-				copy = "#f5c359",
-				delete = "#c75c6a",
-				-- insert = "",
-				visual = "#f5c359",
+				copy = c.base0B,
+				delete = c.base07,
+				insert = c.base0E,
+				visual = c.base0D,
 			},
-			-- line_opacity = 1,
 		})
 	end,
 }

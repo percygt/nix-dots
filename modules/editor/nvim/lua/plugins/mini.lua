@@ -8,8 +8,8 @@ return {
 			-- Module mappings. Use `''` (empty string) to disable one.
 			mappings = {
 				-- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
-				left = "<M-,>",
-				right = "<M-.>",
+				right = "<M-l>",
+				left = "<M-h>",
 				down = "<M-j>",
 				up = "<M-k>",
 

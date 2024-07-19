@@ -21,7 +21,6 @@ return {
 				lualine = {
 					transparent = true, -- lualine center bar transparency
 				},
-				colors = require("config.colors"),
 				highlights = {
 					["@lsp.type.variable"] = { fg = "$fg", fmt = "bold" },
 					["@variable"] = { fg = "$fg", fmt = "bold" },

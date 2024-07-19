@@ -123,7 +123,7 @@ return {
 		event = "BufRead",
 		opts = {
 			enable = true,
-			max_lines = 5,
+			max_lines = 3,
 			trim_scope = "outer",
 			zindex = 40,
 			mode = "cursor",
