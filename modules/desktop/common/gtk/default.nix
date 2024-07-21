@@ -5,8 +5,9 @@
   ...
 }:
 let
-  inherit (configx) fonts themes;
+  inherit (configx) themes;
   inherit (themes) cursorTheme iconTheme gtkTheme;
+  f = config.setFonts.interface;
 in
 {
   gtk = {
@@ -15,8 +16,8 @@ in
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
     font = {
-      inherit (fonts.interface) name size;
-      package = fonts.interface.package pkgs;
+      inherit (f) name size;
+      inherit (f) package;
     };
 
     cursorTheme = {
@@ -31,12 +32,13 @@ in
 
     theme = {
       inherit (gtkTheme) name;
-      package = gtkTheme.package {
-        inherit pkgs;
-        bg = config.scheme.base00;
-        border = config.scheme.base01;
-        bg-dark = config.scheme.base11;
-      };
+      package = gtkTheme.package pkgs;
+      # package = gtkTheme.package {
+      #   inherit pkgs;
+      #   bg = config.setTheme.colors.base00;
+      #   border = config.setTheme.colors.base01;
+      #   bg-dark = config.setTheme.colors.base11;
+      # };
     };
 
     gtk3.extraConfig = {

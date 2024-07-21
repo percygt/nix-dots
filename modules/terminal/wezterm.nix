@@ -1,6 +1,5 @@
 {
   pkgs,
-  configx,
   lib,
   config,
   isGeneric,
@@ -9,7 +8,6 @@
   ...
 }:
 let
-  inherit (configx) background fonts;
   window-title = "Wezterm";
   launch-tmux = pkgs.writers.writeBash "launch-tmux" ''
     if [ -d ${flakeDirectory} ]; then
@@ -26,7 +24,9 @@ let
       tmux new-session -As home
     fi
   '';
-  b = config.scheme.withHashtag;
+  t = config.setTheme;
+  f = config.setFonts.shell;
+  c = t.colors.withHashtag;
 in
 {
   options.terminal.wezterm.home.enable = lib.mkEnableOption "Enable wezterm";
@@ -38,31 +38,31 @@ in
       colorSchemes = {
         Syft = {
           ansi = [
-            b.base01
-            b.base08 # red
-            b.base0B # green
-            b.base09 # yellow
-            b.base0D # blue
-            b.base0E # magenta
-            b.base0C # cyan
-            b.base06
+            c.base01
+            c.base08 # red
+            c.base0B # green
+            c.base09 # yellow
+            c.base0D # blue
+            c.base0E # magenta
+            c.base0C # cyan
+            c.base06
           ];
           brights = [
-            b.base02
-            b.base12 # bright red
-            b.base14 # bright green
-            b.base13 # bright yellow
-            b.base16 # bright blue
-            b.base17 # bright magenta
-            b.base15 # bright cyan
-            b.base07
+            c.base02
+            c.base12 # bright red
+            c.base14 # bright green
+            c.base13 # bright yellow
+            c.base16 # bright blue
+            c.base17 # bright magenta
+            c.base15 # bright cyan
+            c.base07
           ];
-          foreground = b.base05;
-          background = b.base00;
-          cursor_bg = b.base05;
-          cursor_border = b.base05;
+          foreground = c.base05;
+          background = c.base00;
+          cursor_bg = c.base05;
+          cursor_border = c.base05;
           selection_fg = "none";
-          selection_bg = b.base02;
+          selection_bg = c.base02;
         };
       };
       extraConfig =
@@ -102,10 +102,11 @@ in
           end)
           return {
           	enable_wayland = true,
+            enable_kitty_graphics = true,
             check_for_updates = false,
           	color_scheme = "Syft",
-          	font = wezterm.font("${fonts.shell.name}", { weight = "DemiBold" }),
-          	font_size = tonumber("${builtins.toString fonts.shell.size}"),
+          	font = wezterm.font("${f.name}", { weight = "DemiBold" }),
+          	font_size = tonumber("${builtins.toString f.size}"),
             allow_square_glyphs_to_overflow_width = "Always",
             animation_fps = 30,
             cursor_blink_rate = 500,
@@ -129,7 +130,7 @@ in
                 target = 'CursorColor',
             },
           	window_decorations = "NONE",
-          	window_background_opacity = ${builtins.toString background.opacity},
+          	window_background_opacity = ${builtins.toString t.opacity},
           	text_background_opacity = 1,
           	keys = {
           		{ key = "0",      mods = "CTRL|SHIFT",  action = wezterm.action.ResetFontSize },

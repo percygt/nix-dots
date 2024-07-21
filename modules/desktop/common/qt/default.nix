@@ -14,6 +14,6 @@
       recursive = false;
       source = ./config/Kvantum;
     };
-    kdeglobals.source = ./config/kdeglobals;
+    # kdeglobals.source = ./config/kdeglobals;
   };
 }

@@ -1,6 +1,6 @@
 {
   imports = [
-    ./nvim
+    ./neovim
     ./vscode
     ./emacs
   ];

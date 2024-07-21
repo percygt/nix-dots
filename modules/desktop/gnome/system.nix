@@ -60,9 +60,9 @@ in
     pkgs.gnome.gnome-tweaks
     (gnomeShellTheme.package {
       inherit pkgs;
-      bg = config.scheme.base00;
-      border = config.scheme.base01;
-      bg-dark = config.scheme.base11;
+      bg = config.setTheme.colors.base00;
+      border = config.setTheme.colors.base01;
+      bg-dark = config.setTheme.colors.base11;
     })
     pkgs.phinger-cursors
   ];

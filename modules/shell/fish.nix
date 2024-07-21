@@ -5,7 +5,7 @@
   ...
 }:
 let
-  c = config.scheme.withHashtag;
+  c = config.setTheme.colors.withHashtag;
 in
 {
   options.shell.fish.enable = lib.mkOption {

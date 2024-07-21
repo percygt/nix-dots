@@ -2,13 +2,11 @@
   pkgs,
   lib,
   libx,
-  configx,
   config,
   ...
 }:
 let
   inherit (libx) toRasi mkLiteral sway;
-  inherit (configx) fonts;
   inherit (sway) viewRebuildLogCmd;
   daylight = pkgs.writeBabashkaScript {
     name = "daylight";
@@ -54,7 +52,7 @@ in
   programs.waybar = {
     enable = true;
     package = pkgs.stash.waybar;
-    style = toRasi (import ./theme.nix { inherit mkLiteral config fonts; }).theme;
+    style = toRasi (import ./theme.nix { inherit mkLiteral config; }).theme;
     settings = [
       (waybar_config // { output = "HDMI-A-1"; })
       (

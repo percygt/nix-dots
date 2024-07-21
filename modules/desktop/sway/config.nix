@@ -9,16 +9,15 @@
 let
   inherit (libx) sway;
   inherit (sway) mkAppsFloat;
-  inherit (configx) background fonts;
-  fnts = fonts.interface;
-  c = config.scheme.withHashtag;
+  inherit (configx) assets;
+  f = config.setFonts.interface;
+  c = config.setTheme.colors.withHashtag;
 in
 {
   config = rec {
     fonts = {
-      names = [ fnts.name ];
-      inherit (fnts) style;
-      inherit (fnts) size;
+      names = [ f.name ];
+      inherit (f) style size;
     };
     modifier = "Mod4";
     up = "k";
@@ -26,7 +25,7 @@ in
     left = "h";
     right = "l";
     terminal = "${pkgs.foot}/bin/foot";
-    output."*".bg = "${pkgs.fetchurl background.wallpaper} fill";
+    output."*".bg = "${pkgs.fetchurl assets.wallpaper} fill";
     gaps.inner = 4;
     inherit
       (import ./keybindings.nix {

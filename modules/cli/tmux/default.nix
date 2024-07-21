@@ -5,6 +5,9 @@
   flakeDirectory,
   ...
 }:
+let
+  c = config.setTheme.colors.withHashtag;
+in
 {
   options.cli.tmux.home.enable = lib.mkEnableOption "Enable tmux";
   config = lib.mkIf config.cli.tmux.home.enable {
@@ -55,6 +58,15 @@
     xdg.configFile = {
       "tmux/.tmux-env".text = ''
         TMUX_TMPDIR="${config.home.sessionVariables.TMUX_TMPDIR}"
+      '';
+      "tmux/variables.conf".text = ''
+        set -g @BORDER '${c.base02}'
+        set -g @BORDER_ACTIVE '${c.base0A}'
+        set -g @FG_PREFIX '${c.green}'
+        set -g @FG_PREFIX_ACTIVE '${c.magenta}'
+        set -g @FG_WINDOW_ACTIVE '${c.base16}'
+        set -g @FG_WINDOW_PREV '${c.base08}'
+        set -g @FG_STATUS '${c.base05}'
       '';
     };
   };

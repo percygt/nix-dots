@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   imports = [
     ./xremap.nix
@@ -16,4 +16,5 @@
     packages.enable = lib.mkDefault true;
     bluez-suspend.disable = lib.mkDefault true;
   };
+  home.packages = import ../packages.nix pkgs;
 }

@@ -1,8 +1,9 @@
 { configx, config, ... }:
 let
-  inherit (configx) fonts themes;
+  inherit (configx) themes;
   inherit (themes) iconTheme;
-  c = config.scheme.withHashtag;
+  f = config.setFonts.interface;
+  c = config.setTheme.colors.withHashtag;
 in
 {
   services = {
@@ -14,7 +15,7 @@ in
       ignoreTimeout = true;
       borderSize = 1;
       borderRadius = 5;
-      font = "${fonts.interface.name} ${toString fonts.interface.size}";
+      font = "${f.name} ${toString f.size}";
       icons = true;
       layer = "overlay";
       maxVisible = 3;

@@ -1,87 +1,103 @@
 { pkgs, ... }:
-{
-  extraLuaPackages = luaPkgs: with luaPkgs; [ jsregexp ];
-  extraPython3Packages =
-    pyPkgs: with pyPkgs; [
+with pkgs;
+[
+  # Essentials
+  # (lua5_1.withPackages (ps: with ps; [ luarocks ]))
+  (python3.withPackages (
+    ps: with ps; [
       python-lsp-server
       python-lsp-ruff
       # pylsp-mypy
-    ];
-  extraPackages = with pkgs; [
-    # Essentials
-    nodePackages.npm
-    nodePackages.neovim
-    tree-sitter
-    fswatch
-    gnumake
-    cmake
+      pip
+      pylatexenc
 
-    # Telescope dependencies
-    manix
-    ripgrep
-    fd
+    ]
+  ))
+  (fenix.complete.withComponents [
+    "cargo"
+    "clippy"
+    "rust-src"
+    "rustc"
+    "rustfmt"
+    "rust-analyzer"
+  ])
+  imagemagick
+  nodePackages.npm
+  nodePackages.neovim
+  vscode-extensions.vadimcn.vscode-lldb.adapter
+  tree-sitter
+  fswatch
+  gnumake
+  cmake
+  git
+  mercurial
 
-    # Lua
-    lua-language-server
-    stylua
+  # Telescope dependencies
+  manix
+  ripgrep
+  fd
 
-    # Nix
-    statix
-    # alejandra
-    nixfmt-rfc-style
-    nil
+  # Lua
+  lua-language-server
+  stylua
 
-    # C, C++
-    gcc
-    clang-tools
-    cppcheck
+  # Nix
+  statix
+  # alejandra
+  nixfmt-rfc-style
+  nil
+  nixd
 
-    # Shell scripting
-    shfmt
-    shellcheck
-    shellharden
+  # C, C++
+  gcc
+  clang-tools
+  cppcheck
 
-    # JavaScript
-    deno
-    prettierd
-    eslint_d
-    nodePackages.prettier
-    nodePackages.typescript-language-server
-    nodePackages."@astrojs/language-server"
-    # nodePackages.prettier-plugin-astro
-    nodePackages-extra.prettier-plugin-astro
+  # Shell scripting
+  shfmt
+  shellcheck
+  shellharden
 
-    # Go
-    go
-    gopls
-    golangci-lint
-    delve
-    gotools
-    go-tools
-    gofumpt
+  # JavaScript
+  deno
+  prettierd
+  eslint_d
+  nodePackages.prettier
+  # nodePackages.typescript-language-server
+  # nodePackages."@astrojs/language-server"
+  # nodePackages.prettier-plugin-astro
+  # nodePackages-extra.prettier-plugin-astro
 
-    #clj
-    clojure-lsp
-    leiningen
-    babashka
+  # Go
+  go
+  gopls
+  delve
+  golangci-lint
+  golines
+  gotools
+  gofumpt
 
-    #docker
-    hadolint
+  #clj
+  clojure-lsp
+  leiningen
+  babashka
 
-    #markdown
-    marksman
+  #docker
+  hadolint
 
-    # Additional
-    yamllint
-    bash-language-server
-    yaml-language-server
-    dockerfile-language-server-nodejs
-    vscode-langservers-extracted
-    markdownlint-cli
-    taplo-cli
-    codespell
-    gitlint
-    terraform-ls
-    actionlint
-  ];
-}
+  #markdown
+  marksman
+
+  # Additional
+  yamllint
+  bash-language-server
+  yaml-language-server
+  dockerfile-language-server-nodejs
+  vscode-langservers-extracted
+  markdownlint-cli
+  taplo-cli
+  codespell
+  gitlint
+  terraform-ls
+  actionlint
+]

@@ -20,11 +20,11 @@ rec {
           runHook preInstall
           # override colors
           # sed -i "s\window-radius: 12px\window-radius: 5px\g" ./src/sass/_variables.scss
-          sed -i "s\#0d0e11\#${bg-dark}\g" ./src/sass/_color-palette-nord.scss
-          sed -i "s\#3a4150\#${border}\g" ./src/sass/_color-palette-nord.scss
-          sed -i "s\#333a47\#${bg}\g" ./src/sass/_color-palette-nord.scss
-          sed -i "s\#242932\#${border}\g" ./src/sass/_color-palette-nord.scss
-          sed -i "s\#1e222a\#${bg-dark}\g" ./src/sass/_color-palette-nord.scss
+          sed -i "s/\$grey-900: #[0-9a-fA-F]\{6\};/\$grey-900: #${bg-dark};/g" ./src/sass/_color-palette-nord.scss
+          sed -i "s/\$grey-600: #[0-9a-fA-F]\{6\};/\$grey-600: #${border};/g" ./src/sass/_color-palette-nord.scss
+          sed -i "s/\$grey-650: #[0-9a-fA-F]\{6\};/\$grey-650: #${bg};/g" ./src/sass/_color-palette-nord.scss
+          sed -i "s/\$grey-700: #[0-9a-fA-F]\{6\};/\$grey-700: #${border};/g" ./src/sass/_color-palette-nord.scss
+          sed -i "s/\$grey-750: #[0-9a-fA-F]\{6\};/\$grey-750: #${bg-dark};/g" ./src/sass/_color-palette-nord.scss
           name= HOME="$TMPDIR" ./install.sh \
             --color dark \
             --tweaks rimless nord \
@@ -47,12 +47,14 @@ rec {
   };
 
   gtkTheme = {
-    name = "Colloid-Dark-Nord";
-    package = gtkPackage;
+    name = "Colloid-Dark-Catppuccin";
+    package = pkgs: pkgs.colloid-gtk-theme-catppuccin;
   };
 
   gnomeShellTheme = {
-    name = "Colloid-Dark-Nord";
-    package = gtkPackage;
+    name = "Colloid-Dark-Catppuccin";
+    # name = "Colloid-Dark-Nord";
+    # package = gtkPackage;
+    package = pkgs: pkgs.colloid-gtk-theme-catppuccin;
   };
 }

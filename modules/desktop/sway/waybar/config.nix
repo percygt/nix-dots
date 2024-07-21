@@ -6,7 +6,7 @@
   ...
 }:
 let
-  c = config.scheme.withHashtag;
+  c = config.setTheme.colors.withHashtag;
 in
 {
   position = "top";

@@ -1,12 +1,7 @@
-{
-  configx,
-  background,
-  config,
-  ...
-}:
+{ background, config, ... }:
 let
-  inherit (configx) fonts;
-  c = config.scheme.withHashtag;
+  f = config.setFonts.shell;
+  c = config.setTheme.colors.withHashtag;
 in
 {
   dconf.settings = {
@@ -42,7 +37,7 @@ in
       custom-command = "fish -i";
       default-size-columns = 200;
       default-size-rows = 50;
-      font = "${fonts.shell.name} ${builtins.toString fonts.shell.size}";
+      font = "${f.name} ${builtins.toString f.size}";
       highlight-colors-set = true;
       login-shell = true;
       scrollbar-policy = "never";

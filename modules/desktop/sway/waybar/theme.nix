@@ -1,24 +1,21 @@
-{
-  fonts,
-  mkLiteral,
-  config,
-  ...
-}:
+{ mkLiteral, config, ... }:
 let
-  c = config.scheme.withHashtag;
+  c = config.setTheme.colors.withHashtag;
+  f = config.setFonts.interface;
+  i = config.setFonts.icon;
 in
 {
   theme =
     let
       bg = mkLiteral "${c.base00}";
-      rubik = fonts.interface.name;
-      font_awesome = fonts.icon.name;
-      fsize = "${toString fonts.interface.size}px";
+      font = f.name;
+      iconfont = i.name;
+      fsize = "${toString f.size}px";
     in
     {
       "*" = {
         border = mkLiteral "none";
-        font-family = "${rubik}, ${font_awesome}";
+        font-family = "${font}, ${iconfont}";
         font-size = mkLiteral fsize;
         min-height = mkLiteral "0px";
       };

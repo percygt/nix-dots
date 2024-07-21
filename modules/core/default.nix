@@ -9,7 +9,6 @@
     ./graphics.nix
     ./net.nix
     ./ntp.nix
-    ./packages.nix
     ./systemd.nix
     ./zram.nix
     ./battery.nix

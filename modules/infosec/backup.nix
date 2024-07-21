@@ -9,7 +9,16 @@
 let
   backupMountPath = "/media/stash";
   configDir = ".config/borgmatic.d";
+  flagFile = "${homeDirectory}/${configDir}/last_run";
   cfg = config.infosec.backup.system;
+  beforeActions = pkgs.writeShellScriptBin "beforeActions" ''
+    if [ -f "${flagFile}" ] && grep -q "$(date +%F)" "${flagFile}"; then
+        ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo "${cfg.usbId}" | tee /sys/bus/usb/drivers/usb/unbind
+        exit 75
+    fi
+    ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo "${cfg.usbId}" | tee /sys/bus/usb/drivers/usb/bind || exit 75
+    sleep 60
+  '';
 in
 {
   options.infosec.backup.system = {
@@ -25,15 +34,46 @@ in
     environment.systemPackages = with pkgs; [ borgbackup ];
     environment.persistence."/persist".users.${username}.directories = [ configDir ];
     sops.secrets."borgmatic/encryption" = { };
-
+    home-manager.users.${username} =
+      { config, ... }:
+      {
+        sops.secrets."backup/key" = { };
+        services.udiskie.settings.device_config = [
+          {
+            id_uuid = "129829fa-acfb-4c09-815d-b450ebaa9262";
+            keyfile = config.sops.secrets."backup/key".path;
+          }
+        ];
+      };
     systemd = {
+      timers.poweroff_hdd = {
+        description = "Power-off backup hdd after automount";
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          Persistent = true;
+          OnBootSec = "1min";
+          RandomizedDelaySec = "5min";
+        };
+      };
+      services.poweroff_hdd = {
+        description = "Power-off backup hdd after automount";
+        after = [
+          "udisks2.service"
+          "udiskie.service"
+        ];
+        requires = [ "udisks2.service" ];
+        serviceConfig.Type = "oneshot";
+        preStart = "${pkgs.coreutils}/bin/sleep 30";
+        script = "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo '${cfg.usbId}' | tee /sys/bus/usb/drivers/usb/unbind";
+      };
       timers.borgmatic = lib.mkForce {
         description = "Run borgmatic backup";
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "daily";
           Persistent = true;
-          RandomizedDelaySec = "3h";
+          RandomizedDelaySec = "1h";
+          OnBootSec = "15min";
         };
       };
       services.borgmatic = {
@@ -95,13 +135,11 @@ in
         borgmatic_source_directory = "${homeDirectory}/${configDir}";
         encryption_passcommand = "cat ${config.sops.secrets."borgmatic/encryption".path}";
         keep_daily = 7;
-        before_everything = [
-          "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo '${cfg.usbId}' | tee /sys/bus/usb/drivers/usb/bind || exit 75"
-          "sleep 60"
-        ];
-        after_everything = [
+        before_actions = [ "${beforeActions}/bin/beforeActions" ];
+        after_actions = [
           "sync"
           "sleep 60"
+          "echo $(date +%F) > '${flagFile}'"
           "echo '${cfg.usbId}' | tee /sys/bus/usb/drivers/usb/unbind"
         ];
       };

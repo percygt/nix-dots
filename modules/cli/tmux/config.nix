@@ -20,6 +20,7 @@ in
     ''
       # Config before plugins
       # ---------------------
+      source ${config.xdg.configHome}/tmux/variables.conf
       source ${config.xdg.configHome}/tmux/beforePlugins.conf
 
       # ============================================= #

@@ -1,18 +1,54 @@
 {
   inputs,
-  configx,
+  lib,
   username,
+  config,
   ...
 }:
 let
-  scheme = configx.colors.scheme.syft;
+  defaultColorscheme = import ./colorschemes/syft.nix;
 in
-# scheme = "${inputs.tt-schemes}/base24/one-dark.yaml";
 {
   imports = [ inputs.base16.nixosModule ];
-  inherit scheme;
-  home-manager.users.${username} = {
-    imports = [ inputs.base16.homeManagerModule ];
-    inherit scheme;
+  options.setTheme = {
+    colorscheme = lib.mkOption {
+      description = "Current colorscheme";
+      type = lib.types.attrs;
+      default = defaultColorscheme;
+    };
+    colors = lib.mkOption {
+      description = "Current colors";
+      type = lib.types.anything;
+      default = config.scheme;
+    };
+    opacity = lib.mkOption {
+      description = "Background opacity";
+      type = lib.types.float;
+      default = 0.8;
+    };
+  };
+  config = {
+    scheme = defaultColorscheme;
+    home-manager.users.${username} =
+      { lib, ... }:
+      {
+        options.setTheme = {
+          colorscheme = lib.mkOption {
+            description = "Current colorscheme";
+            type = lib.types.attrs;
+            default = defaultColorscheme;
+          };
+          colors = lib.mkOption {
+            description = "Current colors";
+            type = lib.types.anything;
+            default = config.scheme;
+          };
+          opacity = lib.mkOption {
+            description = "Background opacity";
+            type = lib.types.float;
+            default = 0.8;
+          };
+        };
+      };
   };
 }

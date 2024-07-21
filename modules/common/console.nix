@@ -1,49 +1,56 @@
 {
   pkgs,
-  configx,
+  config,
   lib,
+  libx,
+  username,
   ...
 }:
 let
-  inherit (configx) fonts colors;
-  inherit (colors.conversions) hexToRGBString;
+  inherit (libx.colorConvert) hexToRGBString;
+  c = config.setTheme.colors;
+  f = config.setFonts.shell;
 in
 {
-  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  console = {
+    font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+    colors = c.toList;
+  };
 
   services.kmscon = {
     enable = true;
     hwRender = true;
+    autologinUser = username;
     fonts = [
       {
-        inherit (fonts.shell) name;
-        package = fonts.shell.package pkgs;
+        inherit (f) name;
+        package = f.package;
       }
     ];
     extraConfig = ''
-      font-size=${builtins.toString fonts.shell.size}
+      font-size=${builtins.toString f.size}
       xkb-layout=us
       xkb-options=compose:caps
       xkb-repeat-rate=25
       palette=custom
-      palette-black=${hexToRGBString ", " colors.normal.black}
-      palette-red=${hexToRGBString ", " colors.normal.red}
-      palette-green=${hexToRGBString ", " colors.normal.green}
-      palette-yellow=${hexToRGBString ", " colors.normal.yellow}
-      palette-blue=${hexToRGBString ", " colors.normal.blue}
-      palette-magenta=${hexToRGBString ", " colors.normal.magenta}
-      palette-cyan=${hexToRGBString ", " colors.normal.cyan}
-      palette-light-grey=${hexToRGBString ", " colors.extra.overlay2}
-      palette-dark-grey=${hexToRGBString ", " colors.extra.overlay0}
-      palette-light-red=${hexToRGBString ", " colors.bright.red}
-      palette-light-green=${hexToRGBString ", " colors.bright.green}
-      palette-light-yellow=${hexToRGBString ", " colors.bright.yellow}
-      palette-light-blue=${hexToRGBString ", " colors.bright.blue}
-      palette-light-magenta=${hexToRGBString ", " colors.bright.magenta}
-      palette-light-cyan=${hexToRGBString ", " colors.bright.cyan}
-      palette-white=${hexToRGBString ", " colors.default.foreground}
-      palette-foreground=${hexToRGBString ", " colors.default.foreground}
-      palette-background=${hexToRGBString ", " colors.default.background}
+      palette-black=${hexToRGBString ", " c.base01}
+      palette-red=${hexToRGBString ", " c.base08}
+      palette-green=${hexToRGBString ", " c.base0B}
+      palette-yellow=${hexToRGBString ", " c.base09}
+      palette-blue=${hexToRGBString ", " c.base0D}
+      palette-magenta=${hexToRGBString ", " c.base0C}
+      palette-cyan=${hexToRGBString ", " c.base06}
+      palette-light-grey=${hexToRGBString ", " c.base04}
+      palette-dark-grey=${hexToRGBString ", " c.base03}
+      palette-light-red=${hexToRGBString ", " c.base12}
+      palette-light-green=${hexToRGBString ", " c.base14}
+      palette-light-yellow=${hexToRGBString ", " c.base13}
+      palette-light-blue=${hexToRGBString ", " c.base16}
+      palette-light-magenta=${hexToRGBString ", " c.base17}
+      palette-light-cyan=${hexToRGBString ", " c.base15}
+      palette-white=${hexToRGBString ", " c.base05}
+      palette-foreground=${hexToRGBString ", " c.base05}
+      palette-background=${hexToRGBString ", " c.base00}
     '';
   };
 }

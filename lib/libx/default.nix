@@ -2,7 +2,7 @@
 let
   inherit (inputs.nixpkgs) lib;
 in
-rec {
+{
   inherit (import ../../packages/args.nix) clj;
   sway = import ./sway.nix { inherit lib; };
   toRasi = import ./toRasi.nix { inherit lib; };
@@ -10,5 +10,5 @@ rec {
     _type = "literal";
     inherit value;
   };
-
+  colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; };
 }

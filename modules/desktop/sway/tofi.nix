@@ -1,12 +1,7 @@
-{
-  pkgs,
-  config,
-  configx,
-  ...
-}:
+{ pkgs, config, ... }:
 let
-  inherit (configx) fonts;
-  c = config.scheme.withHashtag;
+  f = config.setFonts.interface;
+  c = config.setTheme.colors.withHashtag;
 in
 {
   home.packages = with pkgs; [ tofi ];
@@ -27,8 +22,7 @@ in
       ascii-input = true
 
       # STYLE OPTIONS
-      font = ${fonts.interface.name}
-      font-variations = "wght ${fonts.interface.weight}"
+      font = ${f.name}
       selection-color = ${c.base07}
       prompt-color =  ${c.base0D}
       text-color = ${c.base04}

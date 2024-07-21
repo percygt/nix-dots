@@ -1,4 +1,9 @@
-{ username, inputs, ... }:
+{
+  username,
+  lib,
+  inputs,
+  ...
+}:
 {
   imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
   services.flatpak = {
@@ -11,6 +16,12 @@
         onCalendar = "weekly"; # Default value
       };
     };
+    remotes = lib.mkOptionDefault [
+      {
+        name = "flathub-beta";
+        location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo";
+      }
+    ];
     packages = [
       "io.gitlab.librewolf-community"
       "so.libdb.dissent"
@@ -21,7 +32,6 @@
       "org.kde.kdenlive"
       "com.rafaelmardojai.SharePreview"
       "net.nokyan.Resources"
-      "io.github.flattool.Warehouse"
       "org.mozilla.Thunderbird"
       "com.github.huluti.Coulr"
       "com.github.muriloventuroso.pdftricks"
@@ -30,7 +40,6 @@
       "io.github.dvlv.boxbuddyrs"
       "io.github.shiftey.Desktop"
       "md.obsidian.Obsidian"
-      "org.gimp.GIMP"
       "org.gnome.Calculator"
       "org.gnome.Firmware"
       "org.gnome.Snapshot"
