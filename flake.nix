@@ -1,15 +1,5 @@
 {
   description = "PercyGT's nix config";
-  nixConfig = {
-    extra-substituters = [
-      "https://nix-community.cachix.org"
-      "https://percygtdev.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
-    ];
-  };
 
   inputs = {
     nix-stash.url = "github:percygt/nix-stash";
@@ -66,25 +56,22 @@
   outputs =
     { nixpkgs, self, ... }@inputs:
     let
-      inherit (self) outputs;
       defaultUser = "percygt";
       stateVersion = "24.05";
       bldr = import ./lib {
+        inherit (self) outputs;
         inherit
           self
           inputs
-          outputs
           defaultUser
           stateVersion
           ;
       };
     in
     {
-      packages = bldr.forEachSystem (
-        system: (import ./packages { pkgs = nixpkgs.legacyPackages.${system}; })
-      );
+      packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
 
-      formatter = bldr.forEachSystem (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
+      formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
 
       overlays = import ./overlays { inherit inputs; };
 

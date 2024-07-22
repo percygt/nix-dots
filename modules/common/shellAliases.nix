@@ -32,10 +32,10 @@
     tsu = "sudo tailscale up --ssh --operator=$USER";
     tsd = "tailscale down";
     cleanupnix = "nh clean all --keep-since 10d --keep 3";
-    swupnix = "nh os switch -u -- --accept-flake-config";
-    swnix = "nh os switch -- --accept-flake-config";
+    swupnix = "nh os switch -u";
+    swnix = "nh os switch";
     nrs_ = "systemctl start --user nixos-rebuild.service";
-    swhome = "nh home switch -- --accept-flake-config";
+    swhome = "nh home switch";
     swaytree = "swaymsg -t get_tree | nvim -R";
     swayinputs = "swaymsg -t get_inputs | nvim -R";
     swayoutputs = "swaymsg -t get_outputs | nvim -R";

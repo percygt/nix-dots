@@ -35,7 +35,6 @@
       chafa # cli graphics
       poppler # pdf rendering tool
       yaml2json
-      yt-dlp # download youtube videos
     ];
   };
 }

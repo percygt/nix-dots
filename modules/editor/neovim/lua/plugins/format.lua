@@ -62,9 +62,7 @@ return {
 				return { timeout_ms = 500, lsp_format = "fallback" }
 			end,
 			-- Set default options
-			default_format_opts = {
-				lsp_format = "fallback",
-			},
+			default_format_opts = { lsp_format = "fallback" },
 			formatters = {
 				injected = { -- Set the options field
 					options = {
@@ -73,6 +71,7 @@ return {
 						lang_to_formatters = opts.formatters,
 						lang_to_ext = {
 							bash = "sh",
+							lua = "lua",
 							c_sharp = "cs",
 							elixir = "exs",
 							javascript = "js",
@@ -82,7 +81,6 @@ return {
 							python = "py",
 							ruby = "rb",
 							rust = "rs",
-							teal = "tl",
 							typescript = "ts",
 						},
 					},

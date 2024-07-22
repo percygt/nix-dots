@@ -43,7 +43,6 @@
       lazysql
       podman-tui
       jqp
-      ytui-music
       gpg-tui
     ];
   };

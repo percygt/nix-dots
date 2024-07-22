@@ -44,12 +44,11 @@ in
       plugins = [
         pkgs.vimPlugins.lazy-nvim # All other plugins are managed by lazy-nvim
       ];
-      extraLuaPackages =
-        luaPkgs: with luaPkgs; [
-          jsregexp
-          magick
-        ];
-      extraPackages = import ./packages.nix { inherit pkgs; };
+      inherit (import ./packages.nix { inherit pkgs; })
+        extraLuaPackages
+        extraPython3Packages
+        extraPackages
+        ;
     };
     home = {
       activation = {
