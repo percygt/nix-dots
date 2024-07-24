@@ -4,6 +4,7 @@
   self,
   defaultUser,
   stateVersion,
+  nixConfig,
   ...
 }:
 {
@@ -75,8 +76,6 @@
     homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       # modules = [outputs.homeManagerModules.default];
-      extraSpecialArgs = mkArgs.args // {
-        nixosConfig = { };
-      };
+      extraSpecialArgs = mkArgs.args;
     };
 }

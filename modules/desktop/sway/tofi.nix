@@ -23,9 +23,10 @@ in
 
       # STYLE OPTIONS
       font = ${f.name}
-      selection-color = ${c.base07}
+      font-variations = "wght 700"
+      selection-color = ${c.base05}
       prompt-color =  ${c.base0D}
-      text-color = ${c.base04}
+      text-color = ${c.base03}
       background-color = ${c.base00}
       prompt-padding = 2
       anchor = top

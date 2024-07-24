@@ -46,17 +46,23 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  nix = {
-    # This will add each flake input as a registry
-    # To make nix3 commands consistent with your flake
-    registry = lib.mkForce (lib.mapAttrs (_: value: { flake = value; }) inputs);
-
-    # This will additionally add your inputs to the system's legacy channels
-    # Making legacy nix commands consistent as well, awesome!
-    nixPath = lib.mkForce (
-      lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry
-    );
-
-    optimise.automatic = true;
-  };
+  nix =
+    let
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    in
+    {
+      # Opinionated: make flake registry and nix path match flake inputs
+      registry = (lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs) // {
+        self.flake = inputs.self;
+        n.flake = inputs.nixpkgs;
+      };
+      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+      optimise.automatic = true;
+      # gc = {
+      #   automatic = true;
+      #   dates = "weekly";
+      #   # Keep the last 3 generations
+      #   options = "--delete-older-than +3";
+      # };
+    };
 }

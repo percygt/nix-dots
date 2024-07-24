@@ -7,16 +7,6 @@
 }:
 let
   cfg = config.setFonts;
-  addPackage =
-    pkg:
-    if (builtins.typeOf pkg == "string" && pkg == "nerdfont") then
-      [ cfg.nerdfontPackages ]
-    else
-      [ pkg ];
-  addPackages =
-    (addPackage cfg.shell.package)
-    ++ (addPackage cfg.interface.package)
-    ++ (addPackage cfg.icon.package);
   optionals =
     { fonttype, typeface }:
     lib.optionals (cfg."${fonttype}".typeface == typeface) [ cfg."${fonttype}".name ];
@@ -38,22 +28,7 @@ in
   fonts = {
     enableDefaultPackages = false;
     fontDir.enable = true;
-    packages =
-      (with pkgs; [
-        nerdfonts-fontconfig
-        inter
-        work-sans
-        source-serif
-        noto-fonts
-        noto-fonts-cjk
-        joypixels
-        noto-fonts-emoji
-        corefonts
-        vistafonts
-        ubuntu_font_family
-      ])
-      ++ cfg.extraFontPackages
-      ++ addPackages;
+    packages = import ./allFonts.nix { inherit pkgs config lib; };
     fontconfig = {
       antialias = true;
       defaultFonts = {

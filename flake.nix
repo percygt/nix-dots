@@ -1,5 +1,15 @@
 {
   description = "PercyGT's nix config";
+  nixConfig = {
+    extra-substituters = [
+      "https://percygtdev.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
 
   inputs = {
     nix-stash.url = "github:percygt/nix-stash";
@@ -54,12 +64,12 @@
     };
   };
   outputs =
-    { nixpkgs, self, ... }@inputs:
+    { self, ... }@inputs:
     let
       defaultUser = "percygt";
       stateVersion = "24.05";
       bldr = import ./lib {
-        inherit (self) outputs;
+        inherit (self) outputs nixConfig;
         inherit
           self
           inputs

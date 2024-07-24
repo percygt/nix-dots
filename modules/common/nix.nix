@@ -1,26 +1,40 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   nix = {
-    package = lib.mkDefault pkgs.nixVersions.git;
+    package = lib.mkForce pkgs.lix;
     settings = {
       experimental-features = [
         "nix-command"
         "flakes"
+        "ca-derivations"
       ];
-      auto-optimise-store = true;
+      use-xdg-base-directories = true;
+      builders-use-substitutes = true;
+      auto-optimise-store = lib.mkDefault true;
       warn-dirty = false;
-      max-jobs = "auto";
       trusted-users = [
         "@wheel"
         "root"
       ];
-      keep-derivations = true;
+      # Opinionated: disable global registry
+      flake-registry = "";
+      # Workaround for https://github.com/NixOS/nix/issues/9574
+      nix-path = "nixpkgs=flake:nixpkgs";
       keep-outputs = true;
-      substituters = [
+      # Do not create a bunch of nixbld users
+      auto-allocate-uids = true;
+      http-connections = 128;
+      max-substitution-jobs = 128;
+      extra-substituters = lib.mkAfter [
         "https://percygtdev.cachix.org"
         "https://nix-community.cachix.org"
       ];
-      trusted-public-keys = [
+      extra-trusted-public-keys = [
         "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];

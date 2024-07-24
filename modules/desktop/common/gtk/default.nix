@@ -1,12 +1,6 @@
-{
-  pkgs,
-  config,
-  configx,
-  ...
-}:
+{ config, ... }:
 let
-  inherit (configx) themes;
-  inherit (themes) cursorTheme iconTheme gtkTheme;
+  inherit (config.setTheme) cursorTheme iconTheme gtkTheme;
   f = config.setFonts.interface;
 in
 {
@@ -16,29 +10,19 @@ in
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
     font = {
-      inherit (f) name size;
-      inherit (f) package;
+      inherit (f) name size package;
     };
 
     cursorTheme = {
-      inherit (cursorTheme) name size;
-      package = cursorTheme.package pkgs;
+      inherit (cursorTheme) name size package;
     };
 
     iconTheme = {
-      inherit (iconTheme) name;
-      package = iconTheme.package pkgs;
+      inherit (iconTheme) name package;
     };
 
     theme = {
-      inherit (gtkTheme) name;
-      package = gtkTheme.package pkgs;
-      # package = gtkTheme.package {
-      #   inherit pkgs;
-      #   bg = config.setTheme.colors.base00;
-      #   border = config.setTheme.colors.base01;
-      #   bg-dark = config.setTheme.colors.base11;
-      # };
+      inherit (gtkTheme) name package;
     };
 
     gtk3.extraConfig = {
@@ -78,9 +62,7 @@ in
       GTK_THEME = config.gtk.theme.name;
       GTK_CURSOR = config.gtk.cursorTheme.name;
       XCURSOR_THEME = config.gtk.cursorTheme.name;
-      XCURSOR_SIZE = "${toString (
-        builtins.floor (themes.cursorTheme.size * themes.cursorTheme.x-scaling)
-      )}";
+      XCURSOR_SIZE = "${toString config.gtk.cursorTheme.size}";
       GTK_ICON = config.gtk.iconTheme.name;
     };
   };

@@ -1,13 +1,6 @@
-{ lib, config, ... }:
 {
-  options = {
-    generic.bluez-suspend = {
-      disable = lib.mkEnableOption "Disable bluez suspend";
-    };
-  };
-
-  config = lib.mkIf config.generic.bluez-suspend.disable {
-    xdg.configFile."wireplumber/bluetooth.lua.d/50-bluez-config.lua".text = ''
+  xdg.configFile."wireplumber/bluetooth.lua.d/50-bluez-config.lua".text = # lua
+    ''
       bluez_monitor.enabled = true
       bluez_monitor.properties = {
         ["with-logind"] = true,
@@ -34,5 +27,4 @@
         },
       }
     '';
-  };
 }

@@ -8,7 +8,7 @@
   options.core.autoupgrade = {
     enable = lib.mkOption {
       description = "Enable autoupgrade";
-      default = false;
+      default = true;
       type = lib.types.bool;
     };
   };
