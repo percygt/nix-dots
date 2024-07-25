@@ -2,8 +2,7 @@
   imports = [
     ./loupe.nix
     ./mpv.nix
-    # ./quickemu.nix
-    ./spicetify.nix
+    ./quickemu.nix
     ./zathura.nix
   ];
 }

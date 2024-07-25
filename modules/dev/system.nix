@@ -5,8 +5,9 @@
   ...
 }:
 {
-  config = lib.mkIf config.dev.system.enable {
-    environment.persistence = lib.mkIf config.dev.persist.enable {
+  imports = [ ./module.nix ];
+  config = lib.mkIf config.modules.dev.enable {
+    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${username} = {
           directories = [ ".config/gh" ];
@@ -15,7 +16,7 @@
     };
     home-manager.users.${username} = {
       imports = [ ./home.nix ];
-      dev.home.enable = lib.mkDefault true;
+      modules.dev.enable = lib.mkDefault true;
     };
   };
 }

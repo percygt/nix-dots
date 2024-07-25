@@ -1,35 +1,36 @@
-{ configx, ... }:
+{ config, ... }:
 let
-  inherit (configx) colors;
+  t = config.modules.theme;
+  c = t.colors.withHashtag;
 in
 {
   dconf.settings = {
     "com/github/amezin/ddterm" = {
-      background-opacity = colors.alpha;
-      foreground-color = "#${colors.default.foreground}";
-      background-color = "#${colors.default.background}";
-      cursor-foreground-color = "#${colors.cursor.foreground}";
-      cursor-background-color = "#${colors.cursor.background}";
-      bold-color = "#${colors.bold}";
-      highlight-foreground-color = "#${colors.highlight.foreground}";
-      highlight-background-color = "#${colors.highlight.background}";
+      background-opacity = t.opacity;
+      foreground-color = c.base05;
+      background-color = c.base00;
+      cursor-background-color = c.base07;
+      cursor-foreground-color = c.base00;
+      bold-color = c.base09;
+      highlight-background-color = c.base02;
+      highlight-foreground-color = c.base07;
       palette = [
-        "#${colors.normal.black}"
-        "#${colors.normal.red}"
-        "#${colors.normal.green}"
-        "#${colors.normal.yellow}"
-        "#${colors.normal.blue}"
-        "#${colors.normal.magenta}"
-        "#${colors.normal.cyan}"
-        "#${colors.normal.white}"
-        "#${colors.bright.black}"
-        "#${colors.bright.red}"
-        "#${colors.bright.green}"
-        "#${colors.bright.yellow}"
-        "#${colors.bright.blue}"
-        "#${colors.bright.magenta}"
-        "#${colors.bright.cyan}"
-        "#${colors.bright.white}"
+        c.base01 # black
+        c.base08 # red
+        c.base0B # green
+        c.base09 # yellow
+        c.base0D # blue
+        c.base0E # magenta
+        c.base0C # cyan
+        c.base06 # white
+        c.base02 # bright black
+        c.base12 # bright red
+        c.base14 # bright green
+        c.base13 # bright yellow
+        c.base16 # bright blue
+        c.base17 # bright magenta
+        c.base15 # bright cyan
+        c.base07 # bright white
       ];
       allow-hyperlink = true;
       bold-color-same-as-fg = false;

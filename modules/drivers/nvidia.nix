@@ -5,8 +5,8 @@
   ...
 }:
 {
-  options = {
-    drivers.nvidia = {
+  options.modules.drivers = {
+    nvidia = {
       prime.enable = lib.mkEnableOption "Enable nvidia-prime";
       bye = lib.mkOption {
         description = "Disable nvidia gpu";
@@ -17,7 +17,7 @@
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.drivers.nvidia.prime.enable {
+    (lib.mkIf config.modules.drivers.nvidia.prime.enable {
       boot.kernelParams = [
         "mem_sleep_default=deep"
         "nouveau.modeset=0"
@@ -78,7 +78,7 @@
         WLR_NO_HARDWARE_CURSORS = "1";
       };
     })
-    (lib.mkIf config.drivers.nvidia.bye {
+    (lib.mkIf config.modules.drivers.nvidia.bye {
       boot.extraModprobeConfig = ''
         blacklist nouveau
         options nouveau modeset=0

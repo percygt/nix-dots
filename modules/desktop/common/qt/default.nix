@@ -1,19 +1,24 @@
+{ config, ... }:
+let
+
+  cfg = config.modules.theme.qtTheme;
+in
 {
   qt = {
     enable = true;
     platformTheme.name = "gtk";
-    style.name = "kvantum";
+    style.name = cfg.name;
   };
 
   home.sessionVariables = {
-    QT_STYLE_OVERRIDE = "kvantum";
+    QT_STYLE_OVERRIDE = cfg.name;
   };
 
   xdg.configFile = {
     "Kvantum" = {
       recursive = false;
-      source = ./config/Kvantum;
+      source = "${cfg.package}/share/Kvantum";
     };
-    kdeglobals.source = ./config/kdeglobals;
+    kdeglobals.source = "${cfg.package}/share/kdeglobals";
   };
 }

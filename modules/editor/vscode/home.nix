@@ -13,8 +13,8 @@ let
 in
 {
   imports = [ inputs.vscode-server.homeModules.default ];
-  options.editor.vscode.home.enable = lib.mkEnableOption "Enable vscode home";
-  config = lib.mkIf config.editor.neovim.home.enable {
+  options.modules.editor.vscode.enable = lib.mkEnableOption "Enable vscode home";
+  config = lib.mkIf config.modules.editor.neovim.enable {
     home.shellAliases.code = "codium";
     services.vscode-server = {
       enable = true;
@@ -32,7 +32,7 @@ in
       enableUpdateCheck = true;
       mutableExtensionsDir = false;
       enableExtensionUpdateCheck = true;
-      extensions = inputs.nix-stash.vscodeExtensions."${pkgs.system}";
+      # extensions = inputs.nix-stash.vscodeExtensions."${pkgs.system}";
       userSettings = builtins.fromJSON (builtins.readFile ./config/settings.json);
       keybindings = builtins.fromJSON (builtins.readFile ./config/keybindings.json);
     };

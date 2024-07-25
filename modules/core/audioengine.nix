@@ -6,7 +6,7 @@
   ...
 }:
 {
-  options.core.audioengine = {
+  options.modules.core.audioengine = {
     enable = lib.mkOption {
       description = "Enable audioengine";
       default = true;
@@ -14,7 +14,7 @@
     };
   };
 
-  config = lib.mkIf config.core.audioengine.enable {
+  config = lib.mkIf config.modules.core.audioengine.enable {
     environment.persistence = {
       "/persist".users.${username}.directories = [ ".local/state/wireplumber" ];
       "/persist/system".directories = [ "/var/lib/alsa" ];

@@ -7,7 +7,7 @@
 {
   imports = [ ./ghq.nix ];
 
-  config = lib.mkIf config.dev.home.enable {
+  config = lib.mkIf config.modules.dev.enable {
     home.packages = [ pkgs.glab ];
     sops.secrets = {
       "git/glab-cli/config.yml" = {

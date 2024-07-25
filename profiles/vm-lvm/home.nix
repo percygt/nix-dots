@@ -31,7 +31,7 @@
     wezterm.enable = true;
   };
 
-  cli = {
+  modules.cli = {
     atuin.enable = true;
     direnv.enable = true;
     extra.enable = true;

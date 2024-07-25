@@ -8,14 +8,14 @@
 {
   imports = [
     "${self}/modules/cli/starship.nix"
-    "${self}/modules/editor/neovim/home.nix"
+    "${self}/modules/modules.editor.neovim.nix"
   ];
 
   programs.home-manager.enable = true;
 
-  editor.neovim.home.enable = true;
+  modules.editor.neovim.enable = true;
 
-  cli.starship.home.enable = true;
+  modules.cli.starship.enable = true;
 
   home = {
     inherit username stateVersion homeDirectory;

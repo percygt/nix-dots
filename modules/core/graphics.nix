@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  options.core.graphics = {
+  options.modules.core.graphics = {
     enable = lib.mkOption {
       description = "Enable graphics";
       default = true;
@@ -8,7 +8,7 @@
     };
   };
 
-  config = lib.mkIf config.core.graphics.enable {
+  config = lib.mkIf config.modules.core.graphics.enable {
     hardware.graphics = {
       enable = true;
       enable32Bit = true;

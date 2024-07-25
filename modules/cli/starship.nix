@@ -6,8 +6,8 @@ let
   };
 in
 {
-  options.cli.starship.home.enable = lib.mkEnableOption "Enable starship";
-  config = lib.mkIf config.cli.starship.home.enable {
+  options.modules.cli.starship.enable = lib.mkEnableOption "Enable starship";
+  config = lib.mkIf config.modules.cli.starship.enable {
     programs.starship = {
       enable = true;
       enableTransience = true;

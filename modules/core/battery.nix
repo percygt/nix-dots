@@ -8,10 +8,10 @@ let
   p = pkgs.writeScriptBin "charge-upto" ''
     echo ''${0:-100} > /sys/class/power_supply/BAT?/charge_control_end_threshold
   '';
-  cfg = config.core.battery;
+  cfg = config.modules.core.battery;
 in
 {
-  options.core.battery = {
+  options.modules.core.battery = {
     enable = lib.mkOption {
       description = "Enable battery optimization";
       default = true;

@@ -5,16 +5,16 @@
   ...
 }:
 let
-  c = config.setTheme.colors.withHashtag;
+  c = config.modules.theme.colors.withHashtag;
 in
 {
-  options.shell.fish.enable = lib.mkOption {
+  options.modules.shell.fish.enable = lib.mkOption {
     description = "Enable fish";
     default = true;
     type = lib.types.bool;
   };
 
-  config = lib.mkIf config.shell.fish.enable {
+  config = lib.mkIf config.modules.shell.fish.enable {
     programs = {
       fzf = {
         enable = true;

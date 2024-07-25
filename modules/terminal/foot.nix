@@ -1,13 +1,13 @@
 { lib, config, ... }:
 let
-  f = config.setFonts.shell;
-  t = config.setTheme;
+  f = config.modules.fonts.shell;
+  t = config.modules.theme;
   c = t.colors;
 in
 {
-  options.terminal.foot.home.enable = lib.mkEnableOption "Enable foot";
+  options.modules.terminal.foot.enable = lib.mkEnableOption "Enable foot";
 
-  config = lib.mkIf config.terminal.foot.home.enable {
+  config = lib.mkIf config.modules.terminal.foot.enable {
     programs.foot = {
       enable = true;
       server.enable = true;

@@ -8,7 +8,7 @@
   home-manager.users.${username} = {
     imports = [ ./home.nix ];
   };
-  environment.persistence = lib.mkIf config.core.ephemeral.enable {
+  environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {
       users.${username} = {
         directories = [ ".config/BraveSoftware/Brave-Browser" ];

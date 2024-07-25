@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  options.core.ntp = {
+  options.modules.core.ntp = {
     enable = lib.mkOption {
       description = "Enable ntp services";
       default = true;
@@ -8,7 +8,7 @@
     };
   };
 
-  config = lib.mkIf config.core.ntp.enable {
+  config = lib.mkIf config.modules.core.ntp.enable {
     services.chrony.enable = true;
     networking.timeServers = [
       "time.upd.edu.ph"

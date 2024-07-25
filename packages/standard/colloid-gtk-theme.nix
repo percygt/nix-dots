@@ -7,9 +7,11 @@
   jdupes,
   sassc,
   scheme ? "catppuccin",
-  border ? "081028",
-  bg ? "00051a",
-  bg-dark ? "030205",
+  border ? "6e738d",
+  bg ? "081028",
+  bg-dark ? "00051a",
+  bg-accent ? "00081e",
+  bg-black ? "030205",
 }:
 
 let
@@ -43,9 +45,10 @@ stdenvNoCC.mkDerivation rec {
     runHook preInstall
     sed -i "s/\$grey-900: #[0-9a-fA-F]\{6\};/\$grey-900: #${bg-dark};/g" ./src/sass/_color-palette-${scheme}.scss
     sed -i "s/\$grey-600: #[0-9a-fA-F]\{6\};/\$grey-600: #${border};/g" ./src/sass/_color-palette-${scheme}.scss
-    sed -i "s/\$grey-650: #[0-9a-fA-F]\{6\};/\$grey-650: #${bg};/g" ./src/sass/_color-palette-${scheme}.scss
-    sed -i "s/\$grey-700: #[0-9a-fA-F]\{6\};/\$grey-700: #${border};/g" ./src/sass/_color-palette-${scheme}.scss
-    sed -i "s/\$grey-750: #[0-9a-fA-F]\{6\};/\$grey-750: #${bg-dark};/g" ./src/sass/_color-palette-${scheme}.scss
+    sed -i "s/\$grey-650: #[0-9a-fA-F]\{6\};/\$grey-650: #${bg-accent};/g" ./src/sass/_color-palette-${scheme}.scss
+    sed -i "s/\$grey-700: #[0-9a-fA-F]\{6\};/\$grey-700: #${bg};/g" ./src/sass/_color-palette-${scheme}.scss
+    sed -i "s/\$grey-750: #[0-9a-fA-F]\{6\};/\$grey-750: #${bg-black};/g" ./src/sass/_color-palette-${scheme}.scss
+    # opinionated install
     name= HOME="$TMPDIR" ./install.sh \
           --color dark \
           --tweaks rimless ${scheme} \
@@ -59,6 +62,6 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://github.com/vinceliuice/Colloid-gtk-theme";
     license = licenses.gpl3Only;
     platforms = platforms.unix;
-    maintainers = [ maintainers.romildo ];
+    maintainers = [ ];
   };
 }

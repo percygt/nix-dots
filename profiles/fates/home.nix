@@ -8,9 +8,9 @@
   targets.genericLinux.enable = true;
 
   editor = {
-    neovim.home.enable = true;
-    vscode.home.enable = true;
-    emacs.home.enable = true;
+    neovim.enable = true;
+    vscode.enable = true;
+    emacs.enable = true;
   };
 
   generic = {
@@ -29,13 +29,13 @@
     foot.enable = true;
   };
 
-  infosec = {
+  modules.security = {
     pass.enable = true;
     keepass.enable = true;
     backup.enable = true;
   };
 
-  cli = {
+  modules.cli = {
     atuin.enable = true;
     direnv.enable = true;
     extra.enable = true;

@@ -43,7 +43,6 @@
     nixd.url = "github:nix-community/nixd";
     impermanence.url = "github:nix-community/impermanence";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    spicetify.url = "github:the-argus/spicetify-nix";
     fenix = {
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";

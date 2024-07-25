@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  options.core.firmware = {
+  options.modules.core.firmware = {
     enable = lib.mkOption {
       description = "Enable firmware services";
       default = true;
@@ -8,5 +8,5 @@
     };
   };
 
-  config = lib.mkIf config.core.firmware.enable { services.fwupd.enable = true; };
+  config = lib.mkIf config.modules.core.firmware.enable { services.fwupd.enable = true; };
 }

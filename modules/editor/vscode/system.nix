@@ -5,16 +5,9 @@
   ...
 }:
 {
-  options.editor = {
-    vscode.system.enable = lib.mkEnableOption "Enable vscode systemwide";
-    vscode.persist.enable = lib.mkOption {
-      description = "Enable vscode persist";
-      default = config.core.ephemeral.enable;
-      type = lib.types.bool;
-    };
-  };
-  config = lib.mkIf config.editor.vscode.system.enable {
-    environment.persistence = lib.mkIf config.editor.vscode.persist.enable {
+  options.modules.editor.vscode.enable = lib.mkEnableOption "Enable vscode systemwide";
+  config = lib.mkIf config.modules.editor.vscode.enable {
+    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${username} = {
           directories = [ ".vscode-oss" ];
@@ -23,7 +16,7 @@
     };
     home-manager.users.${username} = {
       imports = [ ./home.nix ];
-      editor.vscode.home.enable = lib.mkDefault true;
+      modules.editor.vscode.enable = lib.mkDefault true;
     };
   };
 }

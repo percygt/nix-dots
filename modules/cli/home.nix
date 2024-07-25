@@ -6,7 +6,6 @@
     ./starship
     ./aria.nix
     ./ncmpcpp.nix
-    ./tui.nix
     ./yazi
     ./newsboat.nix
 

@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  options.core.filesystem = {
+  options.modules.core.filesystem = {
     enable = lib.mkOption {
       description = "Enable filesystem services";
       default = true;
@@ -8,7 +8,7 @@
     };
   };
 
-  config = lib.mkIf config.core.filesystem.enable {
+  config = lib.mkIf config.modules.core.filesystem.enable {
     services = {
       btrfs.autoScrub = {
         enable = true;

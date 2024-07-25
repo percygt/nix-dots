@@ -5,8 +5,8 @@
   ...
 }:
 {
-  options = {
-    drivers.intel = {
+  options.modules.drivers = {
+    intel = {
       enable = lib.mkEnableOption "Enable intel gpu";
       gpu.driver = lib.mkOption {
         description = "Intel GPU driver to use";
@@ -19,10 +19,10 @@
     };
   };
 
-  config = lib.mkIf config.drivers.intel.enable {
-    boot.initrd.kernelModules = [ config.drivers.intel.gpu.driver ];
+  config = lib.mkIf config.modules.drivers.intel.enable {
+    boot.initrd.kernelModules = [ config.modules.drivers.intel.gpu.driver ];
     boot.kernelParams =
-      if (config.drivers.intel.gpu.driver == "xe") then
+      if (config.modules.drivers.intel.gpu.driver == "xe") then
         [
           "i915.force_probe=!9a49"
           "xe.force_probe=9a49"
@@ -38,24 +38,24 @@
       LIBVA_DRIVER_NAME = "iHD";
     };
 
-    hardware.graphics.extraPackages = with pkgs; [
+    hardware.graphics.extraPackages = [
       (
         if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11") then
-          vaapiIntel
+          pkgs.vaapiIntel
         else
-          intel-vaapi-driver
+          pkgs.intel-vaapi-driver
       )
-      intel-media-driver
+      pkgs.intel-media-driver
     ];
 
-    hardware.graphics.extraPackages32 = with pkgs.driversi686Linux; [
+    hardware.graphics.extraPackages32 = [
       (
         if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11") then
-          vaapiIntel
+          pkgs.driversi686Linux.vaapiIntel
         else
-          intel-vaapi-driver
+          pkgs.driversi686Linux.intel-vaapi-driver
       )
-      intel-media-driver
+      pkgs.driversi686Linux.intel-media-driver
     ];
   };
 }

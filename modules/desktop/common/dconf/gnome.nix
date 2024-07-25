@@ -1,7 +1,12 @@
-{ lib, configx, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
-  wallpaper = "file://${configx.wallpaper}";
-  inherit (configx.themes) gnomeShellTheme;
+  t = config.modules.theme;
+  wallpaper = "file://${pkgs.fetchUrl t.wallpaper}";
 in
 {
   dconf.settings = with lib.hm.gvariant; {

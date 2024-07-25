@@ -5,6 +5,7 @@
     ./go.nix
     ./common.nix
     ./jujutsu.nix
+    ./module.nix
   ];
-  options.dev.home.enable = lib.mkEnableOption "Enable devtools home";
+
 }

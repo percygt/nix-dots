@@ -1,7 +1,7 @@
 { config, lib, ... }:
 {
-  options.cli.newsboat.home.enable = lib.mkEnableOption "Enable newsboat";
-  config = lib.mkIf config.cli.newsboat.home.enable {
+  options.modules.cli.newsboat.enable = lib.mkEnableOption "Enable newsboat";
+  config = lib.mkIf config.modules.cli.newsboat.enable {
     programs.newsboat = {
       enable = true;
     };

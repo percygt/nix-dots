@@ -6,11 +6,11 @@
   ...
 }:
 let
-  c = config.setTheme.colors.withHashtag;
+  c = config.modules.theme.colors.withHashtag;
 in
 {
-  options.cli.tmux.home.enable = lib.mkEnableOption "Enable tmux";
-  config = lib.mkIf config.cli.tmux.home.enable {
+  options.modules.cli.tmux.enable = lib.mkEnableOption "Enable tmux";
+  config = lib.mkIf config.modules.cli.tmux.enable {
     programs.tmux = {
       enable = true;
       baseIndex = 1;

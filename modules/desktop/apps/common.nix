@@ -21,6 +21,7 @@
       obsidian
       logseq
       gnome-podcasts
+      lutris
     ];
   };
   programs = {
@@ -29,11 +30,12 @@
     file-roller.enable = true;
   };
   environment.systemPackages = with pkgs; [ cinnamon.nemo-with-extensions ];
-  environment.persistence = lib.mkIf config.core.ephemeral.enable {
+  environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {
       users.${username} = {
         directories = [
           ".local/share/Mumble"
+          ".local/share/lutris"
           ".config/Mumble"
           ".config/Logseq"
           ".local/cache/amberol"

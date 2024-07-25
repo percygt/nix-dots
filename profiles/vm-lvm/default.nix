@@ -17,7 +17,7 @@
     spice-vdagentd.enable = true;
   };
 
-  core.net.wpa.enable = true;
+  core.network.wpa.enable = true;
   # symlinks to enable "erase your darlings"
   environment.persistence = {
     "/persist" = {

@@ -1,8 +1,1 @@
-{
-  imports = [
-    ./bluetooth.nix
-    ./intel.nix
-    ./nvidia.nix
-    ./adb.nix
-  ];
-}
+{ isGeneric, ... }: if (!isGeneric) then { imports = [ ./system.nix ]; } else { }

@@ -1,6 +1,5 @@
 {
   pkgs,
-  configx,
   config,
   lib,
   libx,
@@ -9,9 +8,9 @@
 let
   inherit (libx) sway;
   inherit (sway) mkAppsFloat;
-  inherit (configx) assets;
-  f = config.setFonts.interface;
-  c = config.setTheme.colors.withHashtag;
+  f = config.modules.fonts.interface;
+  t = config.modules.theme.assets;
+  c = config.modules.theme.colors.withHashtag;
 in
 {
   config = rec {
@@ -25,7 +24,7 @@ in
     left = "h";
     right = "l";
     terminal = "${pkgs.foot}/bin/foot";
-    output."*".bg = "${pkgs.fetchurl assets.wallpaper} fill";
+    output."*".bg = "${pkgs.fetchurl t.wallpaper} fill";
     gaps.inner = 4;
     inherit
       (import ./keybindings.nix {
@@ -34,7 +33,6 @@ in
           pkgs
           libx
           lib
-          configx
           config
           up
           down

@@ -5,34 +5,32 @@
     ./disks.nix
   ];
 
-  drivers = {
-    adb.enable = true;
-    bluetooth.enable = true;
-    intel.enable = true;
-    intel.gpu.driver = "xe";
-    nvidia.bye = true;
-  };
-
-  cli.system.enable = true;
-  dev.system.enable = true;
-  terminal.system.enable = true;
-
-  editor = {
-    neovim.system.enable = true;
-    emacs.system.enable = true;
-    vscode.system.enable = true;
-  };
-
-  net = {
-    tailscale.system.enable = true;
-    syncthing.system.enable = true;
-  };
-
-  virt = {
-    docker.enable = true;
-    podman.enable = true;
-    kvm.enable = true;
-    vmvariant.enable = true;
+  modules = {
+    drivers = {
+      adb.enable = true;
+      bluetooth.enable = true;
+      intel.enable = true;
+      intel.gpu.driver = "xe";
+      nvidia.bye = true;
+    };
+    cli.enable = true;
+    dev.enable = true;
+    terminal.enable = true;
+    network = {
+      tailscale.enable = true;
+      syncthing.enable = true;
+    };
+    editor = {
+      neovim.enable = true;
+      emacs.enable = true;
+      vscode.enable = true;
+    };
+    virtualisation = {
+      docker.enable = true;
+      podman.enable = true;
+      kvm.enable = true;
+      vmvariant.enable = true;
+    };
   };
 
   boot = {

@@ -5,16 +5,9 @@
   ...
 }:
 {
-  options = {
-    cli.system.enable = lib.mkEnableOption "Enable cli systemwide";
-    cli.persist.enable = lib.mkOption {
-      description = "Enable cli persist";
-      default = config.core.ephemeral.enable;
-      type = lib.types.bool;
-    };
-  };
-  config = lib.mkIf config.cli.system.enable {
-    environment.persistence = lib.mkIf config.cli.persist.enable {
+  options.modules.cli.enable = lib.mkEnableOption "Enable all cli apps";
+  config = lib.mkIf config.modules.cli.enable {
+    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${username} = {
           directories = [
@@ -29,20 +22,19 @@
     };
     home-manager.users.${username} = {
       imports = [ ./home.nix ];
-      cli = {
-        atuin.home.enable = lib.mkDefault true;
-        direnv.home.enable = lib.mkDefault true;
-        extra.home.enable = lib.mkDefault true;
-        starship.home.enable = lib.mkDefault true;
-        aria.home.enable = lib.mkDefault true;
-        ncmpcpp.home.enable = lib.mkDefault true;
-        tui.home.enable = lib.mkDefault true;
-        yazi.home.enable = lib.mkDefault true;
-        common.home.enable = lib.mkDefault true;
-        bat.home.enable = lib.mkDefault true;
-        eza.home.enable = lib.mkDefault true;
-        tmux.home.enable = lib.mkDefault true;
-        nixtools.home.enable = lib.mkDefault true;
+      modules.cli = {
+        atuin.enable = lib.mkDefault true;
+        direnv.enable = lib.mkDefault true;
+        extra.enable = lib.mkDefault true;
+        starship.enable = lib.mkDefault true;
+        aria.enable = lib.mkDefault true;
+        ncmpcpp.enable = lib.mkDefault true;
+        yazi.enable = lib.mkDefault true;
+        common.enable = lib.mkDefault true;
+        bat.enable = lib.mkDefault true;
+        eza.enable = lib.mkDefault true;
+        tmux.enable = lib.mkDefault true;
+        nixtools.enable = lib.mkDefault true;
       };
     };
   };

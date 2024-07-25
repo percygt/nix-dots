@@ -25,7 +25,7 @@
       flake = flakeDirectory;
       clean = {
         enable = true;
-        extraArgs = "--keep-since 10d --keep 3";
+        extraArgs = "--keep-since 7d --keep 3";
       };
     };
   };
@@ -36,12 +36,6 @@
   };
 
   system.stateVersion = stateVersion;
-  system.activationScripts.diff = ''
-    if [[ -e /run/current-system ]]; then
-      echo "+++++CHANGES++++++"
-      ${pkgs.nix}/bin/nix store diff-closures /run/current-system "$systemConfig"
-    fi
-  '';
   swapDevices = [ ];
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.enableRedistributableFirmware = true;
@@ -58,11 +52,5 @@
       };
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
       optimise.automatic = true;
-      # gc = {
-      #   automatic = true;
-      #   dates = "weekly";
-      #   # Keep the last 3 generations
-      #   options = "--delete-older-than +3";
-      # };
     };
 }

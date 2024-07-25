@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  options.core.zram = {
+  options.modules.core.zram = {
     enable = lib.mkOption {
       description = "Enable zram";
       default = true;
@@ -8,7 +8,7 @@
     };
   };
 
-  config = lib.mkIf config.core.zram.enable {
+  config = lib.mkIf config.modules.core.zram.enable {
     # Balance lz4 latency/throughput
     boot.kernel.sysctl."vm.page-cluster" = 1;
 

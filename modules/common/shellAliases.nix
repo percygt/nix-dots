@@ -1,6 +1,6 @@
 { flakeDirectory, ... }:
 {
-  home.shellAliases = rec {
+  home.shellAliases = {
     ll = "eza --group --header --group-directories-first --long --git --all --binary --icons";
     la = "ll -a";
     l = "eza --group-directories-first --all -1";
@@ -31,22 +31,17 @@
     tst = "tailscale status";
     tsu = "sudo tailscale up --ssh --operator=$USER";
     tsd = "tailscale down";
-    cleanupnix = "nh clean all --keep-since 10d --keep 3";
-    swupnix = "nh os switch -u -- --accept-flake-config";
-    swnix = "nh os switch -- --accept-flake-config";
-    nrs_ = "systemctl start --user nixos-rebuild.service";
-    swhome = "nh home switch -- --accept-flake-config";
+    gcnix = "nh clean all --keep-since 7d --keep 3";
+    swup = "nh os switch -u -- --accept-flake-config";
+    sw = "nh os switch -- --accept-flake-config";
+    ns = "nom shell";
+    nd = "nom develop";
+    nrs = "systemctl start --user nixos-rebuild.service";
     swaytree = "swaymsg -t get_tree | nvim -R";
     swayinputs = "swaymsg -t get_inputs | nvim -R";
     swayoutputs = "swaymsg -t get_outputs | nvim -R";
     nix-repl-flake = "nix repl --expr \"(builtins.getFlake (toString ${flakeDirectory})).nixosConfigurations.$hostname\"";
-    ns = "nom shell";
-    nd = "nom develop";
     lsblk = "lsblk -o NAME,SIZE,TYPE,FSTYPE,FSVER,MOUNTPOINTS";
-    build = "nom build ${flakeDirectory}#nixosConfigurations.$(hostname).config.system.build.toplevel --out-link /tmp/nixos-configuration && nvd diff /run/current-system /tmp/nixos-configuration";
-    switch = "sudo nixos-rebuild switch --flake ${flakeDirectory}#$(hostname)";
-    rebuild = "${build} && sudo /tmp/nixos-configuration/bin/switch-to-configuration switch";
-    rebuild-offline = "${build} --offline && ${switch} --offline";
     tmp = "pushd $(mktemp -d)";
     cleanup-results = ''find . -type l -name "result*" -exec echo "unlinking {}" \; -exec unlink {} \;'';
     gc-nix = "nix-env --delete-generations +3 && nix store gc --verbose && nix store optimise --verbose";

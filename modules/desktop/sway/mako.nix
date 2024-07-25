@@ -1,9 +1,8 @@
-{ configx, config, ... }:
+{ config, ... }:
 let
-  inherit (configx) themes;
-  inherit (themes) iconTheme;
-  f = config.setFonts.interface;
-  c = config.setTheme.colors.withHashtag;
+  t = config.modules.theme.iconTheme;
+  f = config.modules.fonts.interface;
+  c = config.modules.theme.colors.withHashtag;
 in
 {
   services = {
@@ -21,7 +20,7 @@ in
       maxVisible = 3;
       padding = "15";
       width = 400;
-      iconPath = "${config.xdg.dataHome}/icons/${iconTheme.name}";
+      iconPath = "${config.xdg.dataHome}/icons/${t.name}";
       backgroundColor = c.base01;
       borderColor = c.base03;
       progressColor = "over ${c.base04}";

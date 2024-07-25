@@ -1,7 +1,7 @@
 { lib, config, ... }:
 {
-  options.cli.eza.home.enable = lib.mkEnableOption "Enables eza";
-  config = lib.mkIf config.cli.eza.home.enable {
+  options.modules.cli.eza.enable = lib.mkEnableOption "Enables eza";
+  config = lib.mkIf config.modules.cli.eza.enable {
     programs = {
       eza = {
         enable = true;

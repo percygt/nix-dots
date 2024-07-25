@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 let
-  f = config.setFonts.interface;
-  c = config.setTheme.colors.withHashtag;
+  f = config.modules.fonts.interface;
+  c = config.modules.theme.colors.withHashtag;
 in
 {
   home.packages = with pkgs; [ tofi ];

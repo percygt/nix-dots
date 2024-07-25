@@ -5,8 +5,8 @@
   ...
 }:
 {
-  options.cli.nixtools.home.enable = lib.mkEnableOption "Enable nix tools";
-  config = lib.mkIf config.cli.nixtools.home.enable {
+  options.modules.cli.nixtools.enable = lib.mkEnableOption "Enable nix tools";
+  config = lib.mkIf config.modules.cli.nixtools.enable {
     home.packages = with pkgs; [
       # alejandra
       nixfmt-rfc-style

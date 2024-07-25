@@ -6,7 +6,7 @@ rec {
   package = { pkgs }: pkgs.swayfx.override { inherit (pkgs) swayfx-unwrapped; };
 
   viewRebuildLogCmd = "foot --app-id=nixos_rebuild_log -- journalctl -efo cat -u nixos-rebuild.service";
-
+  # watch -c SYSTEMD_COLORS=1
   tofipass =
     { pkgs }:
     pkgs.writers.writeBash "tofipass" ''

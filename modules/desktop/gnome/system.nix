@@ -1,12 +1,11 @@
 {
-  configx,
   pkgs,
   username,
   config,
   ...
 }:
 let
-  inherit (configx.themes) gnomeShellTheme;
+  t = config.modules.theme.gnomeShellTheme;
 in
 {
   home-manager.users.${username} = import ./home.nix;
@@ -58,12 +57,7 @@ in
 
   environment.systemPackages = [
     pkgs.gnome.gnome-tweaks
-    (gnomeShellTheme.package {
-      inherit pkgs;
-      bg = config.setTheme.colors.base00;
-      border = config.setTheme.colors.base01;
-      bg-dark = config.setTheme.colors.base11;
-    })
+    t.package
     pkgs.phinger-cursors
   ];
 

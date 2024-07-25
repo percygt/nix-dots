@@ -8,8 +8,8 @@
 }:
 let
   inherit (libx.colorConvert) hexToRGBString;
-  c = config.setTheme.colors;
-  f = config.setFonts.shell;
+  c = config.modules.theme.colors;
+  f = config.modules.fonts.shell;
 in
 {
   console = {

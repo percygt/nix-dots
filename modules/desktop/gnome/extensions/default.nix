@@ -81,7 +81,7 @@ in
         # "vertical-workspaces@G-dH.github.com"
         "ddterm@amezin.github.com"
         "caffeine@patapon.info"
-        "pop-shell@system76.com"
+        "pop-shell76.com"
         "rounded-window-corners@yilozt"
         "trimmer@hedgie.tech"
         "pip-on-top@rafostar.github.com"

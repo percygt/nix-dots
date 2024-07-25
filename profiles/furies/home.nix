@@ -33,14 +33,14 @@
 
   dev.git.ghq.enable = true;
 
-  infosec = {
+  modules.security = {
     common.enable = true;
     pass.enable = true;
     keepass.enable = true;
     backup.enable = true;
   };
 
-  cli = {
+  modules.cli = {
     atuin.enable = true;
     direnv.enable = true;
     extra.enable = true;

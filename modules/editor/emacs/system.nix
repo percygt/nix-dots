@@ -7,7 +7,7 @@
   ...
 }:
 let
-  cfg = config.editor.emacs;
+  cfg = config.modules.editor.emacs;
 
   emacsConfig = pkgs.concatTextFile {
     name = "config.el";
@@ -29,15 +29,15 @@ let
   '';
 in
 {
-  options.editor = {
-    emacs.system.enable = lib.mkEnableOption "Enable emacs systemwide";
+  options.modules.editor = {
+    emacs.enable = lib.mkEnableOption "Enable emacs systemwide";
     emacs.package = lib.mkOption {
       description = "emacs package to use";
       default = pkgs.emacs-unstable-pgtk.override { withTreeSitter = true; };
       type = lib.types.package;
     };
   };
-  config = lib.mkIf config.editor.emacs.system.enable {
+  config = lib.mkIf config.modules.editor.emacs.enable {
     nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
     environment.systemPackages = [
       (pkgs.aspellWithDicts (
@@ -53,7 +53,7 @@ in
     #   package = emacsWithExtraPackages;
     #   startWithGraphical = true;
     # };
-    environment.persistence = lib.mkIf config.core.ephemeral.enable {
+    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${username} = {
           directories = [

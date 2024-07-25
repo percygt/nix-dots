@@ -25,10 +25,6 @@ rec {
 
   libx = import "${self}/lib/libx" { inherit inputs; };
 
-  configx = import "${self}/config" {
-    inherit inputs;
-    inherit (users) username;
-  };
   args = {
     inherit
       self
@@ -37,7 +33,6 @@ rec {
       homeDirectory
       profile
       libx
-      configx
       isGeneric
       desktop
       flakeDirectory

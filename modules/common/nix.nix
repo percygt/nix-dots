@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
+{ lib, pkgs, ... }:
 {
   nix = {
     package = lib.mkForce pkgs.lix;
@@ -12,6 +7,7 @@
         "nix-command"
         "flakes"
         "ca-derivations"
+        "auto-allocate-uids"
       ];
       use-xdg-base-directories = true;
       builders-use-substitutes = true;
@@ -28,8 +24,13 @@
       keep-outputs = true;
       # Do not create a bunch of nixbld users
       auto-allocate-uids = true;
+      max-jobs = "auto";
       http-connections = 128;
       max-substitution-jobs = 128;
+      trusted-substituters = [
+        "https://percygtdev.cachix.org"
+        "https://nix-community.cachix.org"
+      ];
       extra-substituters = lib.mkAfter [
         "https://percygtdev.cachix.org"
         "https://nix-community.cachix.org"

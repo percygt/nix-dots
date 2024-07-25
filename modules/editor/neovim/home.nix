@@ -9,8 +9,8 @@ let
   hmNvim = "${flakeDirectory}/modules/editor/neovim";
 in
 {
-  options.editor.neovim.home.enable = lib.mkEnableOption "Enable neovim home";
-  config = lib.mkIf config.editor.neovim.home.enable {
+  options.modules.editor.neovim.enable = lib.mkEnableOption "Enable neovim home";
+  config = lib.mkIf config.modules.editor.neovim.enable {
     home.shellAliases.v = "nvim";
     programs.neovim = {
       enable = true;
@@ -111,7 +111,7 @@ in
                       del(.slug) |
                       del(.system) |
                       del(.variant) |
-                      .[] |= "#" + .' ${config.setTheme.colors} > $out
+                      .[] |= "#" + .' ${config.modules.theme.colors} > $out
                 '';
           in
           {

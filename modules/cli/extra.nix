@@ -5,8 +5,8 @@
   ...
 }:
 {
-  options.cli.extra.home.enable = lib.mkEnableOption "Enable extra";
-  config = lib.mkIf config.cli.extra.home.enable {
+  options.modules.cli.extra.enable = lib.mkEnableOption "Enable extra";
+  config = lib.mkIf config.modules.cli.extra.enable {
     home.packages = with pkgs; [
       # dev
       bfg-repo-cleaner # Git history cleaner

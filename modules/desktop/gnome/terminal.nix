@@ -1,11 +1,13 @@
-{ background, config, ... }:
+{ config, ... }:
 let
-  f = config.setFonts.shell;
-  c = config.setTheme.colors.withHashtag;
+  f = config.modules.fonts.shell;
+  t = config.modules.theme;
+  c = t.colors.withHashtag;
 in
 {
   dconf.settings = {
     "org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
+      background-transparency-percent = t.opacity;
       foreground-color = c.base05;
       background-color = c.base00;
       cursor-background-color = c.base07;
@@ -30,7 +32,6 @@ in
         c.base07 # bright white
       ];
       audible-bell = true;
-      background-transparency-percent = background.opacity;
       bold-color-same-as-fg = false;
       bold-is-bright = true;
       cursor-colors-set = true;

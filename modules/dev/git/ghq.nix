@@ -15,7 +15,7 @@ let
   };
 in
 {
-  config = lib.mkIf config.dev.home.enable {
+  config = lib.mkIf config.modules.dev.enable {
     home.packages = with pkgs; [ ghq ];
     programs.git.extraConfig.ghq = {
       vcs = "git";

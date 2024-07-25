@@ -24,14 +24,14 @@ let
       tmux new-session -As home
     fi
   '';
-  t = config.setTheme;
-  f = config.setFonts.shell;
+  t = config.modules.theme;
+  f = config.modules.fonts.shell;
   c = t.colors.withHashtag;
 in
 {
-  options.terminal.wezterm.home.enable = lib.mkEnableOption "Enable wezterm";
+  options.modules.terminal.wezterm.enable = lib.mkEnableOption "Enable wezterm";
 
-  config = lib.mkIf config.terminal.wezterm.home.enable {
+  config = lib.mkIf config.modules.terminal.wezterm.enable {
     programs.wezterm = {
       enable = true;
       package = if isGeneric then pkgs.stash.wezterm_wrapped else pkgs.stash.wezterm_nightly;

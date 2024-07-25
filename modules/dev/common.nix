@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.dev.home.enable {
+  config = lib.mkIf config.modules.dev.enable {
     home.packages = with pkgs; [
       ghidra-bin
       gdb

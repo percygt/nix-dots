@@ -6,10 +6,10 @@
   ...
 }:
 {
-  options.editor.neovim.system.enable = lib.mkEnableOption "Enable neovim systemwide";
-  config = lib.mkIf config.editor.neovim.system.enable {
+  options.modules.editor.neovim.enable = lib.mkEnableOption "Enable modules.editor.neovimwide";
+  config = lib.mkIf config.modules.editor.neovim.enable {
     environment.systemPackages = with pkgs; [ neovim ];
-    environment.persistence = lib.mkIf config.core.ephemeral.enable {
+    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${username} = {
           directories = [
@@ -22,7 +22,7 @@
     };
     home-manager.users.${username} = {
       imports = [ ./home.nix ];
-      editor.neovim.home.enable = lib.mkDefault true;
+      modules.editor.neovim.enable = lib.mkDefault true;
     };
   };
 }

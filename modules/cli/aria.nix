@@ -16,8 +16,8 @@ let
   );
 in
 {
-  options.cli.aria.home.enable = lib.mkEnableOption "Enables aria";
-  config = lib.mkIf config.cli.aria.home.enable {
+  options.modules.cli.aria.enable = lib.mkEnableOption "Enables aria";
+  config = lib.mkIf config.modules.cli.aria.enable {
     home.packages = [ aria2p-tui ];
     programs.aria2 = {
       enable = true;

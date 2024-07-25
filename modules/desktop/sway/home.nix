@@ -2,7 +2,6 @@
   pkgs,
   libx,
   config,
-  configx,
   lib,
   isGeneric,
   ...
@@ -38,7 +37,6 @@
           pkgs
           config
           lib
-          configx
           libx
           isGeneric
           ;

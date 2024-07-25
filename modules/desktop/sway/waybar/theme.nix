@@ -1,8 +1,8 @@
 { mkLiteral, config, ... }:
 let
-  c = config.setTheme.colors.withHashtag;
-  f = config.setFonts.interface;
-  i = config.setFonts.icon;
+  c = config.modules.theme.colors.withHashtag;
+  f = config.modules.fonts.interface;
+  i = config.modules.fonts.icon;
 in
 {
   theme =

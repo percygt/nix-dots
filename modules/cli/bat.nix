@@ -5,8 +5,8 @@
   ...
 }:
 {
-  options.cli.bat.home.enable = lib.mkEnableOption "Enables bat";
-  config = lib.mkIf config.cli.bat.home.enable {
+  options.modules.cli.bat.enable = lib.mkEnableOption "Enables bat";
+  config = lib.mkIf config.modules.cli.bat.enable {
     programs = {
       bat = {
         enable = true;

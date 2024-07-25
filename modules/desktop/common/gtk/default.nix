@@ -1,7 +1,7 @@
 { config, ... }:
 let
-  inherit (config.setTheme) cursorTheme iconTheme gtkTheme;
-  f = config.setFonts.interface;
+  inherit (config.modules.theme) cursorTheme iconTheme gtkTheme;
+  f = config.modules.fonts.app;
 in
 {
   gtk = {
