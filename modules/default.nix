@@ -10,7 +10,7 @@
       map (dir: ./${dir}) (builtins.attrNames (removeAttrs (builtins.readDir ./.) [ "default.nix" ]))
     )
     ++ [ "${self}/profiles/${profile}" ]
-    ++ [ ../cfg ];
+    ++ [ "${self}/config" ];
 
-  home-manager.users.${username} = import ../cfg;
+  home-manager.users.${username} = import "${self}/config";
 }
