@@ -97,8 +97,16 @@
             nvd
             su
             nixos-rebuild
+            gnutar
+            gzip
+            nh
+            xz.bin
           ])
-          ++ [ config.nix.package.out ];
+          ++ [
+
+            config.programs.ssh.package
+            config.nix.package.out
+          ];
         serviceConfig = {
           Type = "exec";
           User = "root";
