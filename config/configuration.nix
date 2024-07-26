@@ -12,7 +12,7 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  environment.systemPackages = with pkgs; [ rippkgs ];
+  environment.systemPackages = (import ./packages.nix pkgs) ++ (with pkgs; [ rippkgs ]);
 
   programs = {
     command-not-found.enable = false;

@@ -11,4 +11,18 @@ in
     inherit value;
   };
   colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; };
+
+  importPaths =
+    rootDir:
+    builtins.filter (path: builtins.pathExists path) (
+      map (f: rootDir + "/${f}") (
+        builtins.attrNames (
+          removeAttrs (builtins.readDir rootDir) [
+            "default.nix"
+            "home.nix"
+            "system.nix"
+          ]
+        )
+      )
+    );
 }

@@ -4,7 +4,6 @@
   self,
   defaultUser,
   stateVersion,
-  nixConfig,
   ...
 }:
 {
@@ -44,7 +43,11 @@
         if isIso then
           [ "${self}/lib/bldr/iso/${profile}/configuration.nix" ]
         else
-          [ outputs.nixosModules.default ];
+          [
+            outputs.nixosModules.default
+            "${self}/profiles"
+            "${self}/config"
+          ];
       specialArgs = {
         inherit homeArgs;
       } // mkArgs.args;
@@ -75,7 +78,11 @@
     in
     homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      # modules = [outputs.homeManagerModules.default];
+      modules = [
+        outputs.nixosModules.default
+        "${self}/profiles"
+        "${self}/config"
+      ];
       extraSpecialArgs = mkArgs.args;
     };
 }

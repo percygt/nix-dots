@@ -1,0 +1,7 @@
+{ profile, ... }:
+{
+  imports = [
+    ./common
+    ./${profile}
+  ];
+}

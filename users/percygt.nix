@@ -1,13 +1,12 @@
 { pkgs, config, ... }:
 {
-  modules.shell.enable = true;
+  modules.shell.userDefaultShell = "fish";
 
   environment.sessionVariables.EDITOR = "vim";
 
   sops.secrets.userHashedPassword.neededForUsers = true;
 
   users = {
-    defaultUserShell = pkgs.fish;
     mutableUsers = false;
     users.percygt = {
       isNormalUser = true;

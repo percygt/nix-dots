@@ -8,10 +8,12 @@ let
   c = config.modules.theme.colors.withHashtag;
 in
 {
-  options.modules.shell.fish.enable = lib.mkOption {
-    description = "Enable fish";
-    default = true;
-    type = lib.types.bool;
+  options.modules.shell.fish = {
+    enable = lib.mkOption {
+      description = "Enable fish";
+      default = true;
+      type = lib.types.bool;
+    };
   };
 
   config = lib.mkIf config.modules.shell.fish.enable {
