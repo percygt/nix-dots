@@ -1,5 +1,6 @@
 {
   imports = [
+    ./autoupgrade.nix
     ./audioengine.nix
     ./boot.nix
     ./ephemeral.nix

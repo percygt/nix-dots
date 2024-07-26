@@ -7,10 +7,7 @@
   ...
 }:
 {
-  imports = [
-    ./tuigreet.nix
-    ./nixos-rebuild.nix
-  ];
+  imports = [ ./tuigreet.nix ];
   home-manager.users.${username} = import ./home.nix;
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {

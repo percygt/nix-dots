@@ -27,17 +27,17 @@
                 ];
                 text = ''
                   notify_success() {
-                    notify-send -i emblem-default "System" "NixOS rebuild successful"
+                    notify-send -i emblem-default "System Rebuild" "NixOS rebuild successful"
                     { mpv ${pkgs.success-alert} || true; } &
                     sleep 5 && kill -9 "$!"
                   }
                   notify_failure() {
-                    notify-send --urgency=critical -i emblem-error "System" "NixOS rebuild failed!"
+                    notify-send --urgency=critical -i emblem-error "System Rebuild" "NixOS rebuild failed!"
                     { mpv ${pkgs.failure-alert} || true; } &
                     sleep 5 && kill -9 "$!"
                   }
                   if systemctl start nixos-rebuild.service; then
-                    notify-send -i zen-icon "System" "NixOS rebuild switch started"
+                    notify-send -i zen-icon "System Rebuild" "NixOS rebuild switch started"
                     while systemctl -q is-active nixos-rebuild.service; do
                       sleep 1
                     done
