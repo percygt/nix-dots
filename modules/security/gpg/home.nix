@@ -12,6 +12,7 @@ in
   options.modules.security.gpg.enable = lib.mkEnableOption "Enable gpg";
 
   config = lib.mkIf config.modules.security.gpg.enable {
+    sops.secrets."gpg-pub" = { };
     programs = {
       gpg = {
         enable = true;
@@ -19,6 +20,12 @@ in
         mutableKeys = lib.mkDefault false;
         mutableTrust = lib.mkDefault false;
         scdaemonSettings.disable-ccid = true;
+        publicKeys = [
+          {
+            source = config.sops.secrets."gpg-pub".path;
+            trust = "ultimate";
+          }
+        ];
         settings = {
           fixed-list-mode = true;
           keyid-format = "0xlong";
@@ -75,7 +82,7 @@ in
             ${config.programs.gpg.package}/bin/gpg-connect-agent updatestartuptty /bye >/dev/null
           '';
     };
-    xdg.dataFile."${config.programs.gnupg.homedir}/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink ./sshcontrol;
+    xdg.dataFile."${config.programs.gpg.homedir}/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink ./sshcontrol;
     services.gpg-agent = {
       enableSshSupport = true;
       enableExtraSocket = true;

@@ -10,21 +10,16 @@
           host = "gitlab.com";
           identitiesOnly = true;
           identityFile = [ "~/.ssh/gpg-glab.pub" ];
-          extraOptions = {
-            PreferredAuthentications = "publickey";
-          };
+          extraOptions.PreferredAuthentications = "publickey";
         };
         github = {
           host = "github.com";
           identitiesOnly = true;
           identityFile = [ "~/.ssh/gpg-gh.pub" ];
-          extraOptions = {
-            PreferredAuthentications = "publickey";
-          };
+          extraOptions.PreferredAuthentications = "publickey";
         };
       };
     };
-    # services.ssh-agent.enable = lib.mkForce false;
     home.file = {
       ".ssh/gpg-gh.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIeVxOzpUCJIUOtSPh46JY0Sz7H37pgzDAKWEcQzVcjY AF4";
       ".ssh/gpg-glab.pub".text = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMySpo7UqnJPYVICF1gmVtgk5kLNbCvBuzYz8FMNl009 C14";
