@@ -33,6 +33,14 @@ return {
 	clangd = {},
 	nil_ls = {},
 	nixd = {
+		cmd = { "nixd" },
+		settings = {
+			nixd = {
+				formatting = {
+					command = { "nixpkgs-fmt" },
+				},
+			},
+		},
 		on_init = function(client, _)
 			client.server_capabilities.semanticTokensProvider = nil
 		end,

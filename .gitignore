@@ -6,7 +6,7 @@
 *.pem
 *.keyfile
 *.qcow2
-.nixd.json
+*.nixd.json
 result
 atuin
 key

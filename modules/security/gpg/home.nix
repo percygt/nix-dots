@@ -6,12 +6,21 @@
 }:
 let
   timeout = 432000;
+  gpgsshctl = pkgs.writeShellApplication {
+    name = "gpgsshctl";
+    runtimeInputs = with pkgs; [
+      openssh
+      gnupg
+    ];
+    text = builtins.readFile ./gpgsshcontrol.bash;
+  };
 in
 {
   imports = [ ./pass.nix ];
   options.modules.security.gpg.enable = lib.mkEnableOption "Enable gpg";
 
   config = lib.mkIf config.modules.security.gpg.enable {
+    home.packages = lib.mkAfter [ gpgsshctl ];
     services.gnome-keyring.components = [ "secrets" ];
     programs = {
       gpg = {

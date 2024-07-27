@@ -92,13 +92,6 @@ in
     xdg = {
       configFile = {
         "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${hmNvim}/lazy-lock.json";
-        # Nixd LSP configuration
-        "${flakeDirectory}/.nixd.json".text = builtins.toJSON {
-          options = {
-            enable = true;
-            target.installable = ".#homeConfigurations.nixd.options";
-          };
-        };
         "nvim/lua/config/colorscheme.lua" =
           let
             colorschemeLua =
