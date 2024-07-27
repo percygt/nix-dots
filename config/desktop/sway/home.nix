@@ -20,7 +20,6 @@
     ./tofi.nix
   ];
 
-  services.gnome-keyring.enable = true;
   wayland.windowManager.sway = {
     enable = true;
     package = libx.sway.package { inherit pkgs; };
