@@ -10,6 +10,13 @@
         --prefix LD_LIBRARY_PATH : "${prev.lib.makeLibraryPath [ prev.stdenv.cc.cc.lib ]}"
     '';
   });
+  gnome = prev.gnome.overrideScope (
+    gfinal: gprev: {
+      gnome-keyring = gprev.gnome-keyring.overrideAttrs (oldAttrs: {
+        configureFlags = oldAttrs.configureFlags or [ ] ++ [ "--disable-ssh-agent" ];
+      });
+    }
+  );
   foot = prev.foot.overrideAttrs (_: {
     src = prev.fetchFromGitea {
       domain = "codeberg.org";
@@ -19,17 +26,6 @@
       hash = "sha256-1NeBDIX4N602DI52nAwJ+mNikLimBncQl5KxEhycGxY=";
     };
   });
-  nerdfonts = prev.nerdfonts.override {
-    fonts = [
-      "VictorMono"
-      "JetBrainsMono"
-      "MartianMono"
-      "GeistMono"
-      "Monaspace"
-      "Iosevka"
-      "NerdFontsSymbolsOnly"
-    ];
-  };
   google-fonts =
     (prev.google-fonts.overrideAttrs (oldAttrs: {
       nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ prev.perl ];
@@ -37,9 +33,7 @@
         (oldAttrs.installPhase or "")
         + ''
           skip=("NotoColorEmoji")
-
           readarray -t fonts < <(find . -name '*.ttf' -exec basename '{}' \; | perl -pe 's/(.+?)[[.-].*/\1/g' | sort | uniq)
-
           for font in "''${fonts[@]}"; do
             [[ "_''${skip[*]}_" =~ _''${font}_ ]] && continue
             find . -name "''${font}*.ttf" -exec install -m 444 -Dt $dest '{}' +
@@ -50,8 +44,4 @@
         # Don't install fonts in the original `installPhase`
         fonts = [ "__NO_FONT__" ];
       };
-  catppuccin-papirus-folders = prev.catppuccin-papirus-folders.override {
-    flavor = "mocha";
-    accent = "lavender";
-  };
 }

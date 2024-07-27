@@ -1,6 +1,5 @@
 { config, ... }:
 let
-
   cfg = config.modules.theme.qtTheme;
 in
 {

@@ -56,7 +56,7 @@
   buildHome =
     {
       profile,
-      isGeneric ? false,
+      isGeneric ? true,
       desktop ? null,
       system ? "x86_64-linux",
       username ? defaultUser,

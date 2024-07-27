@@ -68,7 +68,7 @@
       defaultUser = "percygt";
       stateVersion = "24.05";
       bldr = import ./lib {
-        inherit (self) outputs nixConfig;
+        inherit (self) outputs;
         inherit
           self
           inputs
@@ -107,12 +107,10 @@
         "${defaultUser}@furies" = bldr.buildHome {
           profile = "furies";
           desktop = "sway";
-          isGeneric = true;
         };
         "${defaultUser}@fates" = bldr.buildHome {
           profile = "fates";
           desktop = "gnome";
-          isGeneric = true;
         };
       };
     };

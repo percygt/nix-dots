@@ -23,43 +23,45 @@ let
 in
 {
   imports = [ ./module.nix ];
-  home-manager.users.${username} = import ./module.nix;
-  nixpkgs.config.joypixels.acceptLicense = true;
-  fonts = {
-    enableDefaultPackages = false;
-    fontDir.enable = true;
-    packages = import ./allFonts.nix { inherit pkgs config lib; };
-    fontconfig = {
-      antialias = true;
-      defaultFonts = {
-        serif = setFontConfig "serif" ++ [
-          "Source Serif"
-          "Noto Serif"
-        ];
-        sansSerif = setFontConfig "sansSerif" ++ [
-          "Inter"
-          "Work Sans"
-          "Noto Sans"
-        ];
-        monospace = setFontConfig "monospace" ++ [
-          "Noto Sans Mono"
-          "JetBrainsMono Nerd Font"
-          "Symbols Nerd Font Mono"
-        ];
-        emoji = [
-          "Joypixels"
-          "Noto Color Emoji"
-        ];
-      };
-      enable = true;
-      hinting = {
-        autohint = false;
+  config = {
+    home-manager.users.${username} = import ./module.nix;
+    nixpkgs.config.joypixels.acceptLicense = true;
+    fonts = {
+      enableDefaultPackages = false;
+      fontDir.enable = true;
+      packages = import ./allFonts.nix { inherit pkgs config lib; };
+      fontconfig = {
+        antialias = true;
+        defaultFonts = {
+          serif = setFontConfig "serif" ++ [
+            "Source Serif"
+            "Noto Serif"
+          ];
+          sansSerif = setFontConfig "sansSerif" ++ [
+            "Inter"
+            "Work Sans"
+            "Noto Sans"
+          ];
+          monospace = setFontConfig "monospace" ++ [
+            "Noto Sans Mono"
+            "JetBrainsMono Nerd Font"
+            "Symbols Nerd Font Mono"
+          ];
+          emoji = [
+            "Joypixels"
+            "Noto Color Emoji"
+          ];
+        };
         enable = true;
-        style = "slight";
-      };
-      subpixel = {
-        rgba = "rgb";
-        lcdfilter = "light";
+        hinting = {
+          autohint = false;
+          enable = true;
+          style = "slight";
+        };
+        subpixel = {
+          rgba = "rgb";
+          lcdfilter = "light";
+        };
       };
     };
   };

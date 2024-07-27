@@ -21,7 +21,7 @@
 
     iconTheme = {
       name = "Papirus-Dark";
-      package = pkgs.catppuccin-papirus-folders;
+      package = pkgs.papirus-icon-theme;
     };
 
     qtTheme = {

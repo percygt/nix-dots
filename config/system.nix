@@ -21,7 +21,8 @@
       ./locale.nix
       ./nix.nix
       ./nixpkgs
-      ../users/${username}.nix
+      ./xremap.nix
+      ./users/${username}.nix
     ]
     ++ lib.optionals (desktop != null) [
       ./apps
