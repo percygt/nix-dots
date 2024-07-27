@@ -75,10 +75,7 @@ in
             ${config.programs.gpg.package}/bin/gpg-connect-agent updatestartuptty /bye >/dev/null
           '';
     };
-
-    # gnome-keyring is greedy and will override SSH_AUTH_SOCK where undesired
-    # services.gnome-keyring.enable = lib.mkDefault false;
-
+    xdg.dataFile."${config.programs.gnupg.homedir}/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink ./sshcontrol;
     services.gpg-agent = {
       enableSshSupport = true;
       enableExtraSocket = true;
@@ -87,10 +84,6 @@ in
       defaultCacheTtl = timeout;
       defaultCacheTtlSsh = timeout;
       enable = true;
-      sshKeys = [
-        "E7FC17A1A41AD93D71B6B5A9853A9AA3ECBFCB53"
-        "0F35FAA58C77270C1FC8CC77D2B107310955DD82"
-      ];
       pinentryPackage = if config.gtk.enable then pkgs.pinentry-gnome3 else pkgs.pinentry-curses;
       extraConfig = ''
         disable-scdaemon
