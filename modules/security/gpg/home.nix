@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  flakeDirectory,
   ...
 }:
 let
@@ -14,6 +15,7 @@ let
     ];
     text = builtins.readFile ./gpgsshcontrol.bash;
   };
+  hmGpg = "${flakeDirectory}/modules/security/gpg";
 in
 {
   imports = [ ./pass.nix ];
@@ -37,7 +39,7 @@ in
         ];
       };
     };
-    xdg.dataFile."${config.programs.gpg.homedir}/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink ./sshcontrol;
+    xdg.dataFile."${config.programs.gpg.homedir}/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink "${hmGpg}/sshcontrol";
     services.gpg-agent = {
       enableSshSupport = true;
       enableExtraSocket = true;
