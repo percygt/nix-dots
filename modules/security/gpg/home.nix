@@ -17,11 +17,59 @@ in
         enable = true;
         homedir = "${config.xdg.dataHome}/gnupg";
         mutableKeys = lib.mkDefault false;
+        mutableTrust = lib.mkDefault false;
+        scdaemonSettings.disable-ccid = true;
+        settings = {
+          fixed-list-mode = true;
+          keyid-format = "0xlong";
+          personal-digest-preferences = builtins.concatStringsSep " " [
+            "SHA512"
+            "SHA384"
+            "SHA256"
+          ];
+          personal-cipher-preferences = builtins.concatStringsSep " " [
+            "AES256"
+            "AES192"
+            "AES"
+          ];
+          default-preference-list = builtins.concatStringsSep " " [
+            "SHA512"
+            "SHA384"
+            "SHA256"
+            "AES256"
+            "AES192"
+            "AES"
+            "ZLIB"
+            "BZIP2"
+            "ZIP"
+            "Uncompressed"
+          ];
+          use-agent = true;
+          verify-options = "show-uid-validity";
+          list-options = "show-uid-validity";
+          cert-digest-algo = "SHA512";
+          throw-keyids = false;
+          no-emit-version = true;
+        };
       };
-      fish.shellInit = ''
-        gpg-connect-agent /bye
-        export SSH_AUTH_SOCK=$(${config.programs.gpg.package}/bin/gpgconf --list-dirs agent-ssh-socket)
-      '';
+      fish.shellInit = # fish
+        ''
+          set -e SSH_AGENT_PID
+          if test -z $gnupg_SSH_AUTH_SOCK_BY; or test $gnupg_SSH_AUTH_SOCK_BY -ne $fish_pid
+              set -gx SSH_AUTH_SOCK (${config.programs.gpg.package}/bin/gpgconf --list-dirs agent-ssh-socket)
+          end
+          set -gx GPG_TTY (tty)
+          ${config.programs.gpg.package}/bin/gpg-connect-agent updatestartuptty /bye >/dev/null
+        '';
+      bash.profileExtra = # bash
+        ''
+          unset SSH_AGENT_PID
+          if [ "''${gnupg_SSH_AUTH_SOCK_by: -0}" -ne $$ ]; then
+            export SSH_AUTH_SOCK="$(${config.programs.gpg.package}/bin/gpgconf --list-dirs agent-ssh-socket)"
+          fi
+          export GPG_TTY=$(tty)
+          ${config.programs.gpg.package}/bin/gpg-connect-agent updatestartuptty /bye >/dev/null
+        '';
     };
 
     # gnome-keyring is greedy and will override SSH_AUTH_SOCK where undesired

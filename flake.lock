@@ -1513,10 +1513,10 @@
     "sikreto": {
       "flake": false,
       "locked": {
-        "lastModified": 1716668340,
-        "narHash": "sha256-5Ia/CO45wl4SOmNF4YP2cmF0KGsc+KxjKBIhez6iV+o=",
+        "lastModified": 1721992658,
+        "narHash": "sha256-iTPHBUiWOfUufEwAG7flTYOj0ksfBZdtJgPvVHbPH+g=",
         "ref": "main",
-        "rev": "5a566a68f44ecd0462b3d0c736f8aa792914d072",
+        "rev": "ce4a27f2f88e8edf7eac1b67b408e6d08af1d082",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@gitlab.com/percygt/sikreto.git"

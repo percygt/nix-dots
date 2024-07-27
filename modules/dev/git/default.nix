@@ -29,6 +29,7 @@
       enable = true;
       userName = "Percy Timon";
       userEmail = "percygt.dev@gmail.com";
+      lfs.enable = true;
       extraConfig = {
         init.defaultBranch = "main";
         pull.rebase = false;
@@ -43,9 +44,9 @@
         branch.sort = "-committerdate";
         maintenance.auto = false;
         maintenance.strategy = "incremental";
-      };
-      lfs = {
-        enable = true;
+        submodule.recurse = "true";
+        url."ssh://git@".pushInsteadOf = "https://";
+        checkout.defaultRemote = "origin";
       };
 
       delta = import ./delta.nix;
