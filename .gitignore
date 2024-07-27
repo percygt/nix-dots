@@ -2,7 +2,6 @@
 *.iso
 *.dconf
 *.gpg
-*.pub
 *.asc
 *.pem
 *.keyfile

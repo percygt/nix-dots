@@ -10,13 +10,11 @@
         --prefix LD_LIBRARY_PATH : "${prev.lib.makeLibraryPath [ prev.stdenv.cc.cc.lib ]}"
     '';
   });
-  gnome = prev.gnome.overrideScope (
-    gfinal: gprev: {
-      gnome-keyring = gprev.gnome-keyring.overrideAttrs (oldAttrs: {
-        configureFlags = oldAttrs.configureFlags or [ ] ++ [ "--disable-ssh-agent" ];
-      });
-    }
-  );
+  gnome-keyring = prev.gnome-keyring.overrideAttrs (oldAttrs: {
+    configureFlags = prev.lib.lists.remove "--enable-ssh-agent" oldAttrs.configureFlags or [ ] ++ [
+      "--disable-ssh-agent"
+    ];
+  });
   foot = prev.foot.overrideAttrs (_: {
     src = prev.fetchFromGitea {
       domain = "codeberg.org";

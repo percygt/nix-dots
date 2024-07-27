@@ -16,7 +16,10 @@ sudo chmod -R 400 /mnt/persist/system/keys/data.keyfile
 
 sudo chown -R 1000:users /mnt/persist/home/"$TARGET_USER"
 cp /tmp/home-sops.keyfile /mnt/persist/home/"$TARGET_USER"/keys
+cp "$HOME/usb/.k/pgp/dev/public.asc" /mnt/persist/home/"$TARGET_USER"/keys
+
 chmod -R 700 /mnt/persist/home/"$TARGET_USER"/keys
 chmod -R 600 /mnt/persist/home/"$TARGET_USER"/keys/home-sops.keyfile
+chmod -R 600 /mnt/persist/home/"$TARGET_USER"/keys/public.asc
 
 sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd

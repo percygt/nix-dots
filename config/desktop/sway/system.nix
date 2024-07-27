@@ -60,16 +60,10 @@
   };
 
   services = {
-    udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
     dbus = {
       enable = true;
       implementation = "broker";
-      packages = with pkgs; [
-        gcr
-        gnome.gnome-settings-daemon
-        dconf
-        gnome-keyring
-      ];
+      packages = with pkgs; [ dconf ];
     };
     gnome = {
       gnome-settings-daemon.enable = true;
