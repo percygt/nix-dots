@@ -11,6 +11,7 @@ return {
 				cmp = true,
 				gitsigns = true,
 				treesitter = true,
+				treesitter_context = true,
 				notify = true,
 				noice = true,
 				dashboard = true,
@@ -18,6 +19,9 @@ return {
 				harpoon = true,
 				lsp_trouble = true,
 				fidget = true,
+				telescope = {
+					enabled = true,
+				},
 			},
 			styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
 				comments = { "italic" }, -- Change the style of comments
@@ -28,10 +32,14 @@ return {
 					return {
 						WinSeparator = { fg = c.base0D },
 						FloatBorder = { bg = "NONE", fg = c.base04 },
-						TreesitterContextBottom = { bg = "NONE", fg = c.base03 },
-						CursorLine = { bg = c.base01 },
-						CursorLineNr = { bg = c.base01, fg = c.base05, bold = true, italic = true },
+						TreesitterContext = { bg = "NONE", fg = c.base03 },
+						TreesitterContextLineNumberBottom = { fg = c.base05 },
+						TreesitterContextLineNumber = { fg = c.base05 },
 						LineNrNC = { fg = c.base03 },
+						CursorLine = { bg = c.base01 },
+						CursorLineNr = { bg = c.base01, fg = c.base06, italic = true, bold = true },
+						CursorLineSign = { bg = c.base01 },
+						CursorLineFold = { bg = c.base01 },
 						ColorColumn = { bg = c.base10 },
 						MatchParen = { fg = c.base0A, bg = "NONE", underline = true },
 

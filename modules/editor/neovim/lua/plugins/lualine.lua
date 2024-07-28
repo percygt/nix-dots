@@ -5,19 +5,19 @@ return {
 		config = function()
 			local c = require("config.colorscheme")
 
-			local customOneDark = {
+			local custom = {
 				inactive = {
 					a = { fg = c.base03, bg = c.base01, gui = "italic" },
 					b = { bg = c.base00 },
 					c = { bg = c.base00 },
 				},
 				normal = {
-					a = { fg = c.base05, bg = c.base03, gui = "italic" },
+					a = { fg = c.base05, bg = c.base01, gui = "italic" },
 					b = { bg = c.base10 },
 					c = { bg = c.base10 },
 				},
-				visual = { a = { fg = c.base10, bg = c.base09, gui = "italic" } },
-				insert = { a = { fg = c.base10, bg = c.base16, gui = "italic" } },
+				visual = { a = { fg = c.base10, bg = c.base16, gui = "italic" } },
+				insert = { a = { fg = c.base05, bg = c.base02, gui = "italic" } },
 			}
 			-- LSP clients attached to buffer
 			local function clients_lsp()
@@ -52,7 +52,7 @@ return {
 			end
 			require("lualine").setup({
 				options = {
-					theme = customOneDark,
+					theme = custom,
 					globalstatus = true,
 					icons_enabled = true,
 					component_separators = { left = "", right = "" },
