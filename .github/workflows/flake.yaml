@@ -24,7 +24,7 @@ jobs:
 
       - name: Update flake inputs
         run: |
-          nix flake update --accept-flake-config
+          nix flake update nix-stash --accept-flake-config
           git commit -m "Updated flake inputs" flake.lock || true
 
       - name: Push commit with updated inputs
