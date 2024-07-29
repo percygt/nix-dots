@@ -9,17 +9,17 @@
         gitlab = {
           host = "gitlab.com";
           identitiesOnly = true;
-          identityFile = [
-            "~/.ssh/id_ed25519_autoup"
-            "~/.ssh/gpg-glab.pub"
-          ];
-          # extraOptions.PreferredAuthentications = "publickey";
+          identityFile = [ "~/.ssh/gpg-glab.pub" ];
+        };
+        github_autoup = lib.hm.dag.entryBefore [ "github" ] {
+          host = "github.com";
+          identitiesOnly = true;
+          identityFile = [ "~/.ssh/id_ed25519_autoup" ];
         };
         github = {
           host = "github.com";
           identitiesOnly = true;
           identityFile = [ "~/.ssh/gpg-gh.pub" ];
-          extraOptions.PreferredAuthentications = "publickey";
         };
       };
     };
