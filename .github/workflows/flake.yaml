@@ -25,6 +25,22 @@ jobs:
       - name: Update flake inputs
         run: |
           nix flake update nix-stash --accept-flake-config
+          nix flake update swayfx-unwrapped
+          nix flake update neovim-nightly-overlay
+          nix flake update emacs-overlay
+          nix flake update home-manager
+          nix flake update disko
+          nix flake update sops-nix
+          nix flake update wayland-pipewire-idle-inhibit
+          nix flake update xremap
+          nix flake update nixd
+          nix flake update impermanence
+          nix flake update nix-flatpak
+          nix flake update fenix
+          nix flake update vscode-server
+          nix flake update nix-colors
+          nix flake update base16
+          nix flake update tt-schemes
           git commit -m "Updated flake inputs" flake.lock || true
 
       - name: Push commit with updated inputs
