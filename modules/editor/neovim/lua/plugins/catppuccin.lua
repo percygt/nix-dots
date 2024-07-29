@@ -32,9 +32,9 @@ return {
 					return {
 						WinSeparator = { fg = c.base0D },
 						FloatBorder = { bg = "NONE", fg = c.base04 },
-						TreesitterContext = { bg = "NONE", fg = c.base03 },
-						TreesitterContextLineNumberBottom = { fg = c.base05 },
-						TreesitterContextLineNumber = { fg = c.base05 },
+						TreesitterContext = { bg = "NONE", fg = c.base04 },
+						TreesitterContextLineNumberBottom = { fg = c.base04, underline = true },
+						TreesitterContextLineNumber = { fg = c.base04 },
 						LineNrNC = { fg = c.base03 },
 						CursorLine = { bg = c.base01 },
 						CursorLineNr = { bg = c.base01, fg = c.base06, italic = true, bold = true },

@@ -1,8 +1,7 @@
 return {
 	{
 		"lewis6991/gitsigns.nvim",
-		lazy = false,
-		event = "BufRead",
+		event = { "BufRead", "BufWritePre" },
     -- stylua: ignore
     keys = {
 			{ "<leader>g", "", desc = "+Git", mode = { "n", "v" } },
@@ -68,7 +67,16 @@ return {
 		event = "VeryLazy",
 		cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
 	},
-	"tpope/vim-fugitive",
-	"tpope/vim-rhubarb",
-	"mbbill/undotree",
+	{
+		"tpope/vim-fugitive",
+		event = "VeryLazy",
+	},
+	{
+		"tpope/vim-rhubarb",
+		event = "VeryLazy",
+	},
+	{
+		"mbbill/undotree",
+		event = "VeryLazy",
+	},
 }

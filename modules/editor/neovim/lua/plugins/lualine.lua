@@ -7,17 +7,17 @@ return {
 
 			local custom = {
 				inactive = {
-					a = { fg = c.base03, bg = c.base01, gui = "italic" },
+					a = { fg = c.base03, bg = c.base01 },
 					b = { bg = c.base00 },
 					c = { bg = c.base00 },
 				},
 				normal = {
-					a = { fg = c.base05, bg = c.base01, gui = "italic" },
+					a = { fg = c.base16, bg = c.base01 },
 					b = { bg = c.base10 },
 					c = { bg = c.base10 },
 				},
-				visual = { a = { fg = c.base10, bg = c.base16, gui = "italic" } },
-				insert = { a = { fg = c.base05, bg = c.base02, gui = "italic" } },
+				visual = { a = { fg = c.base10, bg = c.base16 } },
+				insert = { a = { fg = c.base05, bg = c.base02 } },
 			}
 			-- LSP clients attached to buffer
 			local function clients_lsp()
@@ -68,9 +68,7 @@ return {
 				},
 				sections = {
 					lualine_a = {
-						function()
-							return "nvim"
-						end,
+						{ "branch", icon = "" },
 					},
 					lualine_b = {
 						{ "harpoon2" },

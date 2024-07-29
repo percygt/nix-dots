@@ -1,7 +1,9 @@
 return {
 	-- Lua
+
 	{
 		"folke/zen-mode.nvim",
+		event = "VeryLazy",
 		opts = {
 			window = {
 				backdrop = 0.95,
@@ -39,6 +41,7 @@ return {
 	},
 	{
 		"folke/twilight.nvim",
+		event = "VeryLazy",
 		lazy = true,
 		keys = {
 			{ "<a-T>", "<cmd>Twilight<cr>", desc = "Twilight", silent = true },
@@ -46,6 +49,7 @@ return {
 	},
 	{
 		"levouh/tint.nvim",
+		event = "VeryLazy",
 		config = function()
 			-- Override some defaults
 			require("tint").setup({
@@ -67,7 +71,7 @@ return {
 	},
 	{
 		"tzachar/local-highlight.nvim",
-		lazy = true,
+		event = "VeryLazy",
 		config = function()
 			require("local-highlight").setup({
 				file_types = { "python", "cpp" }, -- If this is given only attach to this
@@ -85,6 +89,7 @@ return {
 	},
 	{
 		"christoomey/vim-tmux-navigator",
+		lazy = true,
 		cmd = {
 			"TmuxNavigateLeft",
 			"TmuxNavigateDown",
@@ -103,6 +108,7 @@ return {
 	{ "brenoprata10/nvim-highlight-colors", event = "BufReadPost", opts = { render = "virtual" } },
 	{
 		"stevearc/dressing.nvim",
+		lazy = true,
 		opts = {
 			input = {
 				default_prompt = "> ",
@@ -216,6 +222,7 @@ return {
 	-- Lua
 	{
 		"szw/vim-maximizer",
+		lazy = true,
 		keys = {
 			{ "<c-w>z", "<cmd>MaximizerToggle<cr>", desc = "Window maximizer toggle", mode = { "n", "v" } },
 		},

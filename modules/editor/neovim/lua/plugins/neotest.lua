@@ -7,51 +7,51 @@ return {
 		"nvim-neotest/neotest-go",
 	},
 	keys = {
-		{ "<leader>t", "", desc = "+Neotest", mode = { "n", "v" } },
+		{ "<leader>T", "", desc = "+Neotest", mode = { "n", "v" } },
 		{
-			"<leader>tt",
+			"<leader>Tt",
 			function()
 				require("neotest").run.run(vim.fn.expand("%"))
 			end,
 			desc = "Run File",
 		},
 		{
-			"<leader>tT",
+			"<leader>TT",
 			function()
 				require("neotest").run.run(vim.loop.cwd())
 			end,
 			desc = "Run All Test Files",
 		},
 		{
-			"<leader>tr",
+			"<leader>Tr",
 			function()
 				require("neotest").run.run()
 			end,
 			desc = "Run Nearest",
 		},
 		{
-			"<leader>ts",
+			"<leader>Ts",
 			function()
 				require("neotest").summary.toggle()
 			end,
 			desc = "Toggle Summary",
 		},
 		{
-			"<leader>to",
+			"<leader>To",
 			function()
 				require("neotest").output.open({ enter = true, auto_close = true })
 			end,
 			desc = "Show Output",
 		},
 		{
-			"<leader>tO",
+			"<leader>TO",
 			function()
 				require("neotest").output_panel.toggle()
 			end,
 			desc = "Toggle Output Panel",
 		},
 		{
-			"<leader>tS",
+			"<leader>TS",
 			function()
 				require("neotest").run.stop()
 			end,

@@ -7,12 +7,8 @@ return {
 		dependencies = {
 			{ "nvim-treesitter/nvim-treesitter-textobjects" },
 		},
-		keys = { "<leader>T", "<cmd>Inspect<cr>", desc = "Show highlighting groups and captures" },
+		keys = { { "<leader>ti", "<cmd>Inspect<cr>", desc = "Show highlighting groups and captures" } },
 		config = function()
-			if vim.gcc_bin_path ~= nil then
-				require("nvim-treesitter.install").compilers = { vim.g.gcc_bin_path }
-			end
-
 			require("nvim-treesitter.configs").setup({
 				sync_install = false,
 				ignore_install = { "javascript" },
@@ -113,16 +109,14 @@ return {
 			})
 		end,
 	},
-	-- {
-	-- 	"JoosepAlviste/nvim-ts-context-commentstring",
-	-- 	event = "BufRead",
-	-- },
 	-- -- Show sticky context for off-screen scope beginnings
 	{
 		"nvim-treesitter/nvim-treesitter-context",
 		event = "BufRead",
+		cmd = { "TSContextToggle" },
+		keys = { { "<leader>tt", "<cmd>TSContextToggle<cr>", desc = "Toggle treesitter context" } },
 		opts = {
-			enable = true,
+			enable = false,
 			max_lines = 5,
 			trim_scope = "outer",
 			zindex = 40,
@@ -131,96 +125,8 @@ return {
 		},
 	},
 	-- -- Playground treesitter utility
-	-- {
-	-- 	"nvim-treesitter/playground",
-	-- 	cmd = "TSPlaygroundToggle",
-	-- },
-	-- -- RON syntax plugin
-	-- {
-	-- 	"ron-rs/ron.vim",
-	-- 	ft = "ron",
-	-- },
-	-- -- Syntax-aware text objects and motions
-	-- {
-	-- 	"ziontee113/syntax-tree-surfer",
-	-- 	cmd = {
-	-- 		"STSSwapPrevVisual",
-	-- 		"STSSwapNextVisual",
-	-- 		"STSSelectPrevSiblingNode",
-	-- 		"STSSelectNextSiblingNode",
-	-- 		"STSSelectParentNode",
-	-- 		"STSSelectChildNode",
-	-- 		"STSSwapOrHold",
-	-- 		"STSSelectCurrentNode",
-	-- 	},
-	-- 	init = function()
-	-- 		local function dot_repeatable(op)
-	-- 			return function()
-	-- 				require("syntax-tree-surfer")
-	-- 				vim.opt.opfunc = op
-	-- 				return "g@l"
-	-- 			end
-	-- 		end
-	--
-	-- 		map({
-	-- 			["<M-Up>"] = { dot_repeatable("v:lua.STSSwapUpNormal_Dot"), "Swap node upwards", expr = true },
-	-- 			["<M-Down>"] = { dot_repeatable("v:lua.STSSwapDownNormal_Dot"), "Swap node downwards", expr = true },
-	-- 			["<M-Left>"] = {
-	-- 				dot_repeatable("v:lua.STSSwapCurrentNodePrevNormal_Dot"),
-	-- 				"Swap with previous node",
-	-- 				expr = true,
-	-- 			},
-	-- 			["<M-Right>"] = {
-	-- 				dot_repeatable("v:lua.STSSwapCurrentNodeNextNormal_Dot"),
-	-- 				"Swap with next node",
-	-- 				expr = true,
-	-- 			},
-	-- 			["gO"] = {
-	-- 				function()
-	-- 					require("syntax-tree-surfer").go_to_top_node_and_execute_commands(false, {
-	-- 						"normal! O",
-	-- 						"normal! O",
-	-- 						"startinsert",
-	-- 					})
-	-- 				end,
-	-- 				"Insert above top-level node",
-	-- 			},
-	-- 			["go"] = {
-	-- 				function()
-	-- 					require("syntax-tree-surfer").go_to_top_node_and_execute_commands(true, {
-	-- 						"normal! o",
-	-- 						"normal! o",
-	-- 						"startinsert",
-	-- 					})
-	-- 				end,
-	-- 				"Insert below top-level node",
-	-- 			},
-	-- 			["<leader>h"] = { "<CMD>STSSwapOrHold<CR>", "Hold or swap with held node" },
-	-- 			["<Cr>"] = { "<CMD>STSSelectCurrentNode<CR>", "Select current node" },
-	-- 		})
-	--
-	-- 		map({
-	-- 			["<M-Up>"] = { "<CMD>STSSwapPrevVisual<CR>", "Swap with previous node" },
-	-- 			["<M-Down>"] = { "<CMD>STSSwapNextVisual<CR>", "Swap with next node" },
-	-- 			["<M-Left>"] = { "<CMD>STSSwapPrevVisual<CR>", "Swap with previous node" },
-	-- 			["<M-Right>"] = { "<CMD>STSSwapNextVisual<CR>", "Swap with next node" },
-	-- 			["<C-Up>"] = { "<CMD>STSSelectPrevSiblingNode<CR>", "Select previous sibling" },
-	-- 			["<C-Down>"] = { "<CMD>STSSelectNextSiblingNode<CR>", "Select next sibling" },
-	-- 			["<C-Left>"] = { "<CMD>STSSelectPrevSiblingNode<CR>", "Select previous sibling" },
-	-- 			["<C-Right>"] = { "<CMD>STSSelectNextSiblingNode<CR>", "Select next sibling" },
-	-- 			["<Cr>"] = { "<CMD>STSSelectParentNode<CR>", "Select parent node" },
-	-- 			["<S-Cr>"] = { "<CMD>STSSelectChildNode<CR>", "Select child node" },
-	-- 			["<leader>h"] = { "<CMD>STSSwapOrHold<CR>", "Hold or swap with held node" },
-	-- 		}, { mode = "x" })
-	-- 	end,
-	-- 	config = true,
-	-- },
 	{
-		"folke/todo-comments.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		event = "VeryLazy",
-		opts = {
-			signs = false,
-		},
+		"nvim-treesitter/playground",
+		cmd = "TSPlaygroundToggle",
 	},
 }

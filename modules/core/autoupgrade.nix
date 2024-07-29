@@ -62,177 +62,96 @@ in
     };
   };
 
-  config = lib.mkMerge [
-    (lib.mkIf cfg.enable {
-      # Assert that system.autoUpgrade is not also enabled
-      assertions = [
-        {
-          assertion = !config.system.autoUpgrade.enable;
-          message = "The system.autoUpgrade option conflicts with this module.";
-        }
-      ];
+  config = lib.mkIf cfg.enable {
+    # Assert that system.autoUpgrade is not also enabled
+    assertions = [
+      {
+        assertion = !config.system.autoUpgrade.enable;
+        message = "The system.autoUpgrade option conflicts with this module.";
+      }
+    ];
 
-      # Pull and apply updates.
-      systemd.services.nixos-upgrade = {
-        serviceConfig = {
-          Type = "oneshot";
-          User = "root";
-        };
-        path = pathPkgs;
-        # Git diffing strategy courtesy of https://stackoverflow.com/a/40255467
-        script = ''
-          cd ${flakeDirectory}
-          # Check if there are changes from Git.
-          echo "Pulling latest version..."
-          sudo -u ${username} git fetch
-          sudo -u ${username} git diff --quiet --exit-code ${cfg.branches.local} ${cfg.branches.remoteName}/${cfg.branches.remote} || true
-          # If we have changes (git diff returns 1), pull changes and run the update
-          if [ $? -eq 1 ]; then
-            echo "Updates found, running nixos-rebuild..."
-            sudo -u ${username} git pull
-            nixos-rebuild switch --flake .
-          else
-            echo "No updates found. Exiting."
-          fi
-        '';
+    # Pull and apply updates.
+    systemd.services.nixos-upgrade = {
+      serviceConfig = {
+        Type = "oneshot";
+        User = "root";
       };
-      systemd.timers."nixos-upgrade" = {
-        wants = [ "network-online.target" ];
-        after = [ "network-online.target" ];
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = cfg.onCalendar;
-          Persistent = cfg.persistent;
-          Unit = "nixos-upgrade.service";
-        };
+      path = pathPkgs;
+      # Git diffing strategy courtesy of https://stackoverflow.com/a/40255467
+      script = ''
+        cd ${flakeDirectory}
+        # Check if there are changes from Git.
+        echo "Pulling latest version..."
+        sudo -u ${username} git fetch
+        sudo -u ${username} git diff --quiet --exit-code ${cfg.branches.local} ${cfg.branches.remoteName}/${cfg.branches.remote} || true
+        # If we have changes (git diff returns 1), pull changes and run the update
+        if [ $? -eq 1 ]; then
+          echo "Updates found, running nixos-rebuild..."
+          sudo -u ${username} git pull
+          nixos-rebuild switch --flake .
+        else
+          echo "No updates found. Exiting."
+        fi
+      '';
+    };
+    systemd.timers."nixos-upgrade" = {
+      wants = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = cfg.onCalendar;
+        Persistent = cfg.persistent;
+        Unit = "nixos-upgrade.service";
       };
-      home-manager.users.${username} =
-        { pkgs, ... }:
-        {
-          systemd.user.services = {
-            nixos-upgrade = {
-              Service = {
-                Type = "exec";
-                ExecStart = lib.getExe (
-                  pkgs.writeShellApplication {
-                    name = "nixos-upgrade-exec-start";
-                    runtimeInputs = [
-                      pkgs.coreutils-full
-                      pkgs.nixos-rebuild
-                      pkgs.systemd
-                      pkgs.mpv
-                      pkgs.libnotify
-                    ];
-                    text = ''
-                      notify_success() {
-                        notify-send -i emblem-default "System Autoupgrade" "NixOS autoupgrade successful"
-                        { mpv ${pkgs.success-alert} || true; } &
-                        sleep 5 && kill -9 "$!"
-                      }
-                      notify_failure() {
-                        notify-send --urgency=critical -i emblem-error "System Autoupgrade" "NixOS autoupgrade failed!"
-                        { mpv ${pkgs.failure-alert} || true; } &
-                        sleep 5 && kill -9 "$!"
-                      }
-                      if systemctl start nixos-upgrade.service; then
-                        notify-send -i zen-icon "System Autoupgrade" "NixOS autoupgrade started"
-                        while systemctl -q is-active nixos-upgrade.service; do
-                          sleep 1
-                        done
-                        if systemctl -q is-failed nixos-upgrade.service; then
-                          notify_failure
-                        else
-                          notify_success
-                        fi
-                      else
+    };
+    home-manager.users.${username} =
+      { pkgs, ... }:
+      {
+        systemd.user.services = {
+          nixos-upgrade = {
+            Service = {
+              Type = "exec";
+              ExecStart = lib.getExe (
+                pkgs.writeShellApplication {
+                  name = "nixos-upgrade-exec-start";
+                  runtimeInputs = [
+                    pkgs.coreutils-full
+                    pkgs.nixos-rebuild
+                    pkgs.systemd
+                    pkgs.mpv
+                    pkgs.libnotify
+                  ];
+                  text = ''
+                    notify_success() {
+                      notify-send -i emblem-default "System Autoupgrade" "NixOS autoupgrade successful"
+                      { mpv ${pkgs.success-alert} || true; } &
+                      sleep 5 && kill -9 "$!"
+                    }
+                    notify_failure() {
+                      notify-send --urgency=critical -i emblem-error "System Autoupgrade" "NixOS autoupgrade failed!"
+                      { mpv ${pkgs.failure-alert} || true; } &
+                      sleep 5 && kill -9 "$!"
+                    }
+                    if systemctl start nixos-upgrade.service; then
+                      notify-send -i zen-icon "System Autoupgrade" "NixOS autoupgrade started"
+                      while systemctl -q is-active nixos-upgrade.service; do
+                        sleep 1
+                      done
+                      if systemctl -q is-failed nixos-upgrade.service; then
                         notify_failure
+                      else
+                        notify_success
                       fi
-                    '';
-                  }
-                );
-              };
+                    else
+                      notify_failure
+                    fi
+                  '';
+                }
+              );
             };
           };
         };
-    })
-    (lib.mkIf cfg.pushUpdates {
-      # Automatically update Flake configuration for other hosts to use
-      systemd.services."nixos-upgrade-flake" = {
-        serviceConfig = {
-          Type = "oneshot";
-          User = username;
-        };
-        path = pathPkgs;
-        script = ''
-          set -eu
-          cd ${flakeDirectory}
-          # Make sure we're up-to-date
-          echo "Pulling the latest version..."
-          git pull
-          nix flake update --commit-lock-file
-          git push
-        '';
       };
-
-      systemd.timers."nixos-upgrade-flake" = {
-        wants = [ "network-online.target" ];
-        after = [ "network-online.target" ];
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = cfg.onCalendar;
-          Persistent = cfg.persistent;
-          Unit = "nixos-upgrade-flake.service";
-        };
-      };
-
-      home-manager.users.${username} =
-        { pkgs, ... }:
-        {
-          systemd.user.services = {
-            nixos-upgrade-flake = {
-              Service = {
-                Type = "exec";
-                ExecStart = lib.getExe (
-                  pkgs.writeShellApplication {
-                    name = "nixos-upgrade-flake-exec-start";
-                    runtimeInputs = [
-                      pkgs.coreutils-full
-                      pkgs.nixos-rebuild
-                      pkgs.systemd
-                      pkgs.mpv
-                      pkgs.libnotify
-                    ];
-                    text = ''
-                      notify_success() {
-                        notify-send -i emblem-default "Flake Autoupgrade" "NixOS flake autoupgrade successful"
-                        { mpv ${pkgs.success-alert} || true; } &
-                        sleep 5 && kill -9 "$!"
-                      }
-                      notify_failure() {
-                        notify-send --urgency=critical -i emblem-error "Flake Autoupgrade" "NixOS flake autoupgrade failed!"
-                        { mpv ${pkgs.failure-alert} || true; } &
-                        sleep 5 && kill -9 "$!"
-                      }
-                      if systemctl start nixos-upgrade.service; then
-                        notify-send -i zen-icon "Flake Autoupgrade" "NixOS flake autoupgrade started"
-                        while systemctl -q is-active nixos-upgrade.service; do
-                          sleep 1
-                        done
-                        if systemctl -q is-failed nixos-upgrade.service; then
-                          notify_failure
-                        else
-                          notify_success
-                        fi
-                      else
-                        notify_failure
-                      fi
-                    '';
-                  }
-                );
-              };
-            };
-          };
-        };
-    })
-  ];
+  };
 }

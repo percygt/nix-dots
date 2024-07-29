@@ -9,8 +9,11 @@
         gitlab = {
           host = "gitlab.com";
           identitiesOnly = true;
-          identityFile = [ "~/.ssh/gpg-glab.pub" ];
-          extraOptions.PreferredAuthentications = "publickey";
+          identityFile = [
+            "~/.ssh/id_ed25519_autoup"
+            "~/.ssh/gpg-glab.pub"
+          ];
+          # extraOptions.PreferredAuthentications = "publickey";
         };
         github = {
           host = "github.com";

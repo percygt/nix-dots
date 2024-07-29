@@ -2,7 +2,6 @@ return {
 	"nvim-pack/nvim-spectre",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	keys = {
-		{ "<leader>r", "", desc = "+Spectre", mode = { "n", "v" } },
 		{ "<leader>rt", "<cmd>lua require('spectre').toggle()<CR>", desc = "Toggle Spectre" },
 		{ "<leader>rw", "<cmd>lua require('spectre').toggle()<cr>", desc = "Search current word", mode = { "n" } },
 		{
