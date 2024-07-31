@@ -28,6 +28,7 @@ let
     ++ [
       config.programs.ssh.package
       config.nix.package.out
+      config.services.dbus.packages
     ];
 in
 {
