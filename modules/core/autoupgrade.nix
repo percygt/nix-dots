@@ -28,7 +28,6 @@ let
     ++ [
       config.programs.ssh.package
       config.nix.package.out
-      config.services.dbus.packages
     ];
 in
 {
@@ -82,7 +81,6 @@ in
         User = "root";
       };
       path = pathPkgs;
-      # Git diffing strategy courtesy of https://stackoverflow.com/a/40255467
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.
@@ -95,7 +93,7 @@ in
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
           echo "Updates found, running nixos-rebuild..."
           sudo -u ${username} git pull
-          sudo -u ${username} exec systemctl --user start nixos-rebuild
+          exec systemctl start nixos-rebuild
         else
           echo "No updates found. Exiting."
         fi
