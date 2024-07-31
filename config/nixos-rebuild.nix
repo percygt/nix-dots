@@ -11,48 +11,46 @@
   home-manager.users.${username} =
     { pkgs, ... }:
     {
-      systemd.user.services = {
-        nixos-rebuild = {
-          Service = {
-            Type = "exec";
-            ExecStart = lib.getExe (
-              pkgs.writeShellApplication {
-                name = "nixos-rebuild-exec-start";
-                runtimeInputs = [
-                  pkgs.coreutils-full
-                  pkgs.nixos-rebuild
-                  pkgs.systemd
-                  pkgs.mpv
-                  pkgs.libnotify
-                ];
-                text = ''
-                  notify_success() {
-                    notify-send -i emblem-default "System Rebuild" "NixOS rebuild successful"
-                    { mpv ${pkgs.success-alert} || true; } &
-                    sleep 5 && kill -9 "$!"
-                  }
-                  notify_failure() {
-                    notify-send --urgency=critical -i emblem-error "System Rebuild" "NixOS rebuild failed!"
-                    { mpv ${pkgs.failure-alert} || true; } &
-                    sleep 5 && kill -9 "$!"
-                  }
-                  if systemctl start nixos-rebuild.service; then
-                    notify-send -i zen-icon "System Rebuild" "NixOS rebuild switch started"
-                    while systemctl -q is-active nixos-rebuild.service; do
-                      sleep 1
-                    done
-                    if systemctl -q is-failed nixos-rebuild.service; then
-                      notify_failure
-                    else
-                      notify_success
-                    fi
-                  else
+      systemd.user.services.nixos-rebuild = {
+        Service = {
+          Type = "exec";
+          ExecStart = lib.getExe (
+            pkgs.writeShellApplication {
+              name = "nixos-rebuild-exec-start";
+              runtimeInputs = [
+                pkgs.coreutils-full
+                pkgs.nixos-rebuild
+                pkgs.systemd
+                pkgs.mpv
+                pkgs.libnotify
+              ];
+              text = ''
+                notify_success() {
+                  notify-send -i emblem-default "System Rebuild" "NixOS rebuild successful"
+                  { mpv ${pkgs.success-alert} || true; } &
+                  sleep 5 && kill -9 "$!"
+                }
+                notify_failure() {
+                  notify-send --urgency=critical -i emblem-error "System Rebuild" "NixOS rebuild failed!"
+                  { mpv ${pkgs.failure-alert} || true; } &
+                  sleep 5 && kill -9 "$!"
+                }
+                if systemctl start nixos-rebuild.service; then
+                  notify-send -i zen-icon "System Rebuild" "NixOS rebuild switch started"
+                  while systemctl -q is-active nixos-rebuild.service; do
+                    sleep 1
+                  done
+                  if systemctl -q is-failed nixos-rebuild.service; then
                     notify_failure
+                  else
+                    notify_success
                   fi
-                '';
-              }
-            );
-          };
+                else
+                  notify_failure
+                fi
+              '';
+            }
+          );
         };
       };
     };
@@ -86,52 +84,49 @@
       DefaultTimeoutStopSec=10
       DefaultTimeoutAbortSec=10
     '';
-    services = {
-      nixos-rebuild = {
-        restartIfChanged = false;
-        path =
-          (with pkgs; [
-            coreutils
-            git
-            nix-output-monitor
-            nvd
-            su
-            nixos-rebuild
-            gnutar
-            gzip
-            nh
-            xz.bin
-          ])
-          ++ [
-
-            config.programs.ssh.package
-            config.nix.package.out
-          ];
-        serviceConfig = {
-          Type = "exec";
-          User = "root";
-        };
-        script = ''
-          flake_dir="${flakeDirectory}"
-          stderr() { printf "%s\n" "$*" >&2; }
-           printf "                                                                                                 \n"
-           printf "   ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██████╗ ███████╗██████╗ ██╗   ██╗██╗██╗     ██████╗ \n"
-           printf "   ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██╔══██╗██╔════╝██╔══██╗██║   ██║██║██║     ██╔══██╗\n" 
-           printf "   ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║███████╗    ██████╔╝█████╗  ██████╔╝██║   ██║██║██║     ██║  ██║\n" 
-           printf "   ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║    ██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║██║     ██║  ██║\n" 
-           printf "   ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║    ██║  ██║███████╗██████╔╝╚██████╔╝██║███████╗██████╔╝\n" 
-           printf "   ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚══════╝╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ \n" 
-           printf "                                                                                                 \n"
-          if [ ! -d "$flake_dir" ] || [ ! -f "$flake_dir/flake.nix" ]; then
-            stderr "Flake directory: '$flake_dir' is not valid"
-            exit 1
-          fi
-          # Execute the commands
-          cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
-          cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
-          su - ${username} -c "$cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
-        '';
+    services.nixos-rebuild = {
+      restartIfChanged = false;
+      path =
+        (with pkgs; [
+          coreutils
+          git
+          nix-output-monitor
+          nvd
+          su
+          nixos-rebuild
+          gnutar
+          gzip
+          nh
+          xz.bin
+        ])
+        ++ [
+          config.programs.ssh.package
+          config.nix.package.out
+        ];
+      serviceConfig = {
+        Type = "exec";
+        User = "root";
       };
+      script = ''
+        flake_dir="${flakeDirectory}"
+        stderr() { printf "%s\n" "$*" >&2; }
+         printf "                                                                                                 \n"
+         printf "   ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██████╗ ███████╗██████╗ ██╗   ██╗██╗██╗     ██████╗ \n"
+         printf "   ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██╔══██╗██╔════╝██╔══██╗██║   ██║██║██║     ██╔══██╗\n" 
+         printf "   ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║███████╗    ██████╔╝█████╗  ██████╔╝██║   ██║██║██║     ██║  ██║\n" 
+         printf "   ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║    ██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║██║     ██║  ██║\n" 
+         printf "   ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║    ██║  ██║███████╗██████╔╝╚██████╔╝██║███████╗██████╔╝\n" 
+         printf "   ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚══════╝╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ \n" 
+         printf "                                                                                                 \n"
+        if [ ! -d "$flake_dir" ] || [ ! -f "$flake_dir/flake.nix" ]; then
+          stderr "Flake directory: '$flake_dir' is not valid"
+          exit 1
+        fi
+        # Execute the commands
+        cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
+        cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
+        su - ${username} -c "$cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
+      '';
     };
   };
 }

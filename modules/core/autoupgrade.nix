@@ -16,12 +16,14 @@ let
     (with pkgs; [
       coreutils
       git
+      nix-output-monitor
+      nvd
+      nixos-rebuild
       gnutar
       gzip
       nh
-      sudo
       xz.bin
-      nixos-rebuild
+      sudo
     ])
     ++ [
       config.programs.ssh.package
@@ -92,7 +94,7 @@ in
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
           echo "Updates found, running nixos-rebuild..."
           sudo -u ${username} git pull
-          systemctl start nixos-upgrade.service
+          sudo -u ${username} exec systemctl --user start nixos-rebuild
         else
           echo "No updates found. Exiting."
         fi
@@ -108,53 +110,5 @@ in
         Unit = "nixos-upgrade.service";
       };
     };
-    home-manager.users.${username} =
-      { pkgs, ... }:
-      {
-        systemd.user.services = {
-          nixos-upgrade = {
-            Service = {
-              Type = "exec";
-              ExecStart = lib.getExe (
-                pkgs.writeShellApplication {
-                  name = "nixos-upgrade-exec-start";
-                  runtimeInputs = [
-                    pkgs.coreutils-full
-                    pkgs.nixos-rebuild
-                    pkgs.systemd
-                    pkgs.mpv
-                    pkgs.libnotify
-                  ];
-                  text = ''
-                    notify_success() {
-                      notify-send -i emblem-default "System Autoupgrade" "NixOS autoupgrade successful"
-                      { mpv ${pkgs.success-alert} || true; } &
-                      sleep 5 && kill -9 "$!"
-                    }
-                    notify_failure() {
-                      notify-send --urgency=critical -i emblem-error "System Autoupgrade" "NixOS autoupgrade failed!"
-                      { mpv ${pkgs.failure-alert} || true; } &
-                      sleep 5 && kill -9 "$!"
-                    }
-                    if systemctl start nixos-upgrade.service; then
-                      notify-send -i zen-icon "System Autoupgrade" "NixOS autoupgrade started"
-                      while systemctl -q is-active nixos-upgrade.service; do
-                        sleep 1
-                      done
-                      if systemctl -q is-failed nixos-upgrade.service; then
-                        notify_failure
-                      else
-                        notify_success
-                      fi
-                    else
-                      notify_failure
-                    fi
-                  '';
-                }
-              );
-            };
-          };
-        };
-      };
   };
 }
