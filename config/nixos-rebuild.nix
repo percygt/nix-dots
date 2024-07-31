@@ -18,7 +18,7 @@
             pkgs.writeShellApplication {
               name = "nixos-rebuild-exec-start";
               runtimeInputs = [
-                pkgs.coreutils-full
+                pkgs.coreutils
                 pkgs.nixos-rebuild
                 pkgs.systemd
                 pkgs.mpv
@@ -79,11 +79,6 @@
       '';
   };
   systemd = {
-    extraConfig = ''
-      [Manager]
-      DefaultTimeoutStopSec=10
-      DefaultTimeoutAbortSec=10
-    '';
     services.nixos-rebuild = {
       restartIfChanged = false;
       path =

@@ -40,7 +40,6 @@
     };
     extraFontPackages = with pkgs; [
       (iosevka-bin.override { variant = "Aile"; })
-      (iosevka-bin.override { variant = "Etoile"; })
       emacs-all-the-icons-fonts
     ];
   };

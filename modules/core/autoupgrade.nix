@@ -16,12 +16,9 @@ let
     (with pkgs; [
       coreutils
       git
-      nix-output-monitor
-      nvd
       nixos-rebuild
       gnutar
       gzip
-      nh
       xz.bin
       sudo
     ])

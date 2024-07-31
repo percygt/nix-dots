@@ -39,17 +39,16 @@ in
         DOTS_DIR="$HOME/nix-dots";
 
         # my usb drive with gpg keys inside
-        MNT="/dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5"
-        LUKS="/dev/disk/by-uuid/c59596c4-62e3-4d00-a7e5-aea9d19ea3f9"
-
-        setCredentials "$MNT"
+        setCredentials "/dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5"
         cloneDots
+
         TARGET_USER=${targetUser}
         TARGET_HOST=$(find "$DOTS_DIR"/profiles/*/configuration.nix | cut -d'/' -f6 | gum choose)
+
         setSecrets "$TARGET_HOST"
         setDisks "$TARGET_HOST"
         startInstall "$TARGET_HOST" "$TARGET_USER"
-        postInstall "$TARGET_HOST" "$TARGET_USER" "$LUKS"
+        postInstall "$TARGET_HOST" "$TARGET_USER" "/dev/disk/by-uuid/c59596c4-62e3-4d00-a7e5-aea9d19ea3f9"
       '';
     })
   ];

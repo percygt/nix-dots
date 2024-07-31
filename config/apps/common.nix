@@ -18,7 +18,7 @@
       font-manager
       inkscape
       krita
-      obsidian
+      # obsidian
       logseq
       gnome-podcasts
       lutris
