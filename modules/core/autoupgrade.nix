@@ -5,7 +5,6 @@
   pkgs,
   username,
   flakeDirectory,
-  homeDirectory,
   ...
 }:
 
@@ -93,7 +92,7 @@ in
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
           echo "Updates found, running nixos-rebuild..."
           sudo -u ${username} git pull
-          nixos-rebuild switch --flake .
+          systemctl start nixos-upgrade.service
         else
           echo "No updates found. Exiting."
         fi
