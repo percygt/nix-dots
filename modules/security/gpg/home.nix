@@ -25,7 +25,7 @@ in
     programs = {
       gpg = {
         enable = true;
-        homedir = "${config.xdg.dataHome}/gnupg";
+        # homedir = "${config.xdg.dataHome}/gnupg";
         # mutableKeys = lib.mkDefault false;
         mutableTrust = lib.mkDefault false;
         scdaemonSettings.disable-ccid = true;

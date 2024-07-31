@@ -19,7 +19,7 @@ let
     if isGeneric then
       {
         gnupg = {
-          home = "${config.xdg.dataHome}/gnupg";
+          home = config.programs.gpg.homedir;
           sshKeyPaths = [ ];
         };
       }

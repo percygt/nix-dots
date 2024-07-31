@@ -13,7 +13,7 @@ in
     };
 
     environment.persistence = {
-      "/persist".directories = [ "/var/lib/containers" ];
+      "/persist/system".directories = [ "/var/lib/containers" ];
     };
   };
 }

@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  flakeDirectory,
   ...
 }:
 {
@@ -31,6 +32,7 @@
       userEmail = "percygt.dev@gmail.com";
       lfs.enable = true;
       extraConfig = {
+        core.editor = "nvim";
         init.defaultBranch = "main";
         pull.rebase = false;
         color.ui = true;
@@ -39,13 +41,17 @@
         fetch.prune = true;
         merge.conflictstyle = "diff3";
         push.autoSetupRemote = true;
-        rebase.autoStash = true;
+        push.default = "current";
+        rebase = {
+          autosquash = true;
+          updateRefs = true;
+        };
         rerere.enabled = true;
+        tag.sort = "version:refname";
         branch.sort = "-committerdate";
         maintenance.auto = false;
         maintenance.strategy = "incremental";
         submodule.recurse = "true";
-        url."ssh://git@".pushInsteadOf = "https://";
         checkout.defaultRemote = "origin";
       };
 
@@ -58,6 +64,7 @@
       signing = {
         signByDefault = true;
         key = "1F3DB564F0E44F81!";
+        gpgPath = "${config.programs.gpg.package}/bin/gpg";
       };
     };
   };
