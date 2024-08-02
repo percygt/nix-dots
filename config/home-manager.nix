@@ -11,6 +11,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = homeArgs // {
+      inherit homeArgs;
       nixosConfig = config;
     };
   };

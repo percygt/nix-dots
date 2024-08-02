@@ -2,15 +2,16 @@
   lib,
   config,
   inputs,
+  libx,
   ...
 }:
 let
-  # root_path = lib.concatMapStrings (x: "/" + x) config.modules.core.systemd.initrd.rootDeviceName;
-  # root_device = lib.concatStringsSep "-" config.systemd.rootDeviceName;
+  root_path = lib.concatMapStrings (x: "/" + x) config.modules.core.systemd.initrd.rootDeviceName;
+  root_device = "${lib.concatStringsSep "-" config.modules.core.systemd.initrd.rootDeviceName}.device";
   wipeScript = # bash
     ''
       mkdir /btrfs_tmp
-      mount /dev/root_vg/root /btrfs_tmp
+      mount ${root_path} /btrfs_tmp
       if [[ -e /btrfs_tmp/root ]]; then
           mkdir -p /btrfs_tmp/old_roots
           timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
@@ -37,11 +38,7 @@ in
 {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
   options.modules.core.ephemeral = {
-    enable = lib.mkOption {
-      description = "Enable ephemeral filesystem";
-      default = true;
-      type = lib.types.bool;
-    };
+    enable = libx.enableDefault "ephemeral";
   };
   config = lib.mkIf config.modules.core.ephemeral.enable {
     boot.initrd = {
@@ -50,8 +47,8 @@ in
       systemd.services.restore-root = lib.mkIf phase1Systemd {
         description = "Rollback btrfs rootfs";
         wantedBy = [ "initrd.target" ];
-        requires = [ config.modules.core.systemd.initrd.rootDevice ];
-        after = [ config.modules.core.systemd.initrd.rootDevice ];
+        requires = [ root_device ];
+        after = [ root_device ];
         before = [ "sysroot.mount" ];
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";

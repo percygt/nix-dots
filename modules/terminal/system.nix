@@ -3,16 +3,32 @@
   username,
   config,
   pkgs,
+  libx,
   ...
 }:
-{
-  options.modules.terminal.enable = lib.mkEnableOption "Enable terminals";
-  config = lib.mkIf config.modules.terminal.enable {
-    environment.systemPackages = with pkgs; [ foot ];
-    home-manager.users.${username} = {
-      imports = [ ./home.nix ];
-      modules.terminal.wezterm.enable = lib.mkDefault true;
-      modules.terminal.foot.enable = lib.mkDefault true;
+let
+  inherit (libx) enableDefault inheritModule;
+  cfg = config.modules.terminal;
+  inheritTerminal =
+    module:
+    inheritModule {
+      inherit module config;
+      name = "terminal";
     };
+in
+{
+  options.modules.terminal = {
+    foot.enable = enableDefault "foot";
+    wezterm.enable = enableDefault "wezterm";
+    rio.enable = enableDefault "rio";
   };
+  config = lib.mkMerge [
+    {
+      home-manager.users.${username} = import ./home.nix;
+      environment.systemPackages = with pkgs; [ foot ];
+    }
+    (inheritTerminal "foot")
+    (inheritTerminal "wezterm")
+    (inheritTerminal "rio")
+  ];
 }

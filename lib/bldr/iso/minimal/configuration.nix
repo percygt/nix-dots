@@ -13,8 +13,6 @@
     inputs.home-manager.nixosModules.home-manager
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-    "${self}/modules/core/packages.nix"
-    "${self}/modules/common"
     "${self}/lib/bldr/iso/installer.nix"
   ];
 
@@ -27,7 +25,7 @@
     useUserPackages = true;
   };
 
-  core.packages.enable = true;
+  environment.systemPackages = import "${self}/config/corePackages.nix" pkgs;
 
   nixpkgs.overlays = builtins.attrValues outputs.overlays;
 

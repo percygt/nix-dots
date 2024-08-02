@@ -7,7 +7,12 @@
 let
   fontModule = {
     name = with lib; mkOption { type = types.str; };
-    style = with lib; mkOption { type = types.str; };
+    style =
+      with lib;
+      mkOption {
+        type = with types; either (listOf str) str;
+        default = "Regular";
+      };
     typeface =
       with lib;
       mkOption {
@@ -21,7 +26,7 @@ let
         default = null;
       };
     package = lib.mkOption {
-      type = with lib; types.either (types.enum [ "nerdfont" ]) types.package;
+      type = with lib.types; either (enum [ "nerdfont" ]) package;
       default = config.modules.fonts.nerdfontPackages;
     };
     size =
@@ -41,10 +46,6 @@ in
     nerdfontPackages = lib.mkOption {
       type = lib.types.package;
       default = pkgs.nerdfonts;
-    };
-    extraFontPackages = lib.mkOption {
-      type = with lib.types; listOf path;
-      default = [ ];
     };
   };
 }

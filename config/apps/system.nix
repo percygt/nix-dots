@@ -2,7 +2,7 @@
 {
   imports = [
     ./flatpak.nix
-    ./common.nix
+    ./common
     ./brave
   ];
   home-manager.users.${username} = import ./home.nix;

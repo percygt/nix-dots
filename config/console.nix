@@ -21,12 +21,7 @@ in
     enable = true;
     hwRender = true;
     autologinUser = username;
-    fonts = [
-      {
-        inherit (f) name;
-        package = f.package;
-      }
-    ];
+    fonts = [ { inherit (f) name package; } ];
     extraConfig = ''
       font-size=${builtins.toString f.size}
       xkb-layout=us

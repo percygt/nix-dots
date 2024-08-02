@@ -18,5 +18,5 @@ pkgs: with pkgs; [
   usbutils
 
   unzip
-  unrar
+  unrar-free
 ]

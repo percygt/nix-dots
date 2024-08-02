@@ -3,6 +3,7 @@
   config,
   lib,
   flakeDirectory,
+  libx,
   ...
 }:
 let
@@ -19,7 +20,7 @@ let
 in
 {
   imports = [ ./pass.nix ];
-  options.modules.security.gpg.enable = lib.mkEnableOption "Enable gpg";
+  options.modules.security.gpg.enable = libx.enableDefault "gpg";
   config = lib.mkIf config.modules.security.gpg.enable {
     home.packages = lib.mkAfter [ gpgsshctl ];
     programs = {

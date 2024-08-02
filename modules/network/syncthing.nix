@@ -35,9 +35,7 @@ in
   options.modules.network.syncthing.enable = lib.mkEnableOption "Enable syncthing";
 
   config = lib.mkIf config.modules.network.syncthing.enable {
-    users = {
-      users.${username}.packages = [ pkgs.syncthing ];
-    };
+    users.users.${username}.packages = [ pkgs.syncthing ];
     sops.secrets = {
       "syncthing/cert.pem" = { };
       "syncthing/key.pem" = { };

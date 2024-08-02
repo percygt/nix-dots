@@ -1,1 +1,1 @@
-{ isGeneric, ... }: if (!isGeneric) then { imports = [ ./system.nix ]; } else { }
+{ libx, ... }: libx.importPaths.default ./.

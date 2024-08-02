@@ -1,7 +1,1 @@
-{
-  imports = [
-    ./foot.nix
-    ./wezterm.nix
-    ./rio.nix
-  ];
-}
+{ libx, ... }: libx.importPaths.all ./.

@@ -1,7 +1,1 @@
-{
-  imports = [
-    ./neovim
-    ./vscode
-    ./emacs
-  ];
-}
+{ libx, ... }: libx.importPaths.all ./.

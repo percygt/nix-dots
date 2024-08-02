@@ -73,6 +73,9 @@ in
     all-outputs = true;
     icon = true;
     icon-size = 12;
+    # rewrite = {
+    #   "(.*) - Mozilla Firefox" = "🌎 $1";
+    # };
   };
 
   "mpris" = {
@@ -286,6 +289,6 @@ in
     max-length = 12;
     interval = 2;
     exec = lib.getExe waybarRebuild;
-    on-click = "toggle-sway-window --id nixos_rebuild_log  -- ${viewRebuildLogCmd}";
+    on-click = "toggle-sway-window --id=system-software-update  -- ${viewRebuildLogCmd}";
   };
 }

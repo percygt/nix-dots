@@ -1,2 +1,7 @@
-{ isGeneric, ... }:
-if (!isGeneric) then { imports = [ ./system.nix ]; } else { imports = [ ./home.nix ]; }
+{ isGeneric, isIso, ... }:
+if isIso then
+  { imports = [ ./iso ]; }
+else if isGeneric then
+  { imports = [ ./generic ]; }
+else
+  { imports = [ ./system.nix ]; }

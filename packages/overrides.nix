@@ -1,5 +1,8 @@
-{ prev }:
+{ prev, inputs }:
 {
+  swayfx = prev.swayfx.override {
+    swayfx-unwrapped = inputs.swayfx-unwrapped.packages.${prev.system}.swayfx-unwrapped;
+  };
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
   borgmatic = prev.borgmatic.override { enableSystemd = false; };
   logseq = prev.logseq.overrideAttrs (oldAttrs: {

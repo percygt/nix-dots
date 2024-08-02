@@ -4,6 +4,7 @@
   config,
   lib,
   username,
+  libx,
   ...
 }:
 let
@@ -22,7 +23,7 @@ let
 in
 {
   options.modules.security.backup = {
-    enable = lib.mkEnableOption "Enable backups";
+    enable = libx.enableDefault "backup";
     usbId = lib.mkOption {
       description = "The bus and device id of the usb device e.g. 4-2 acquired from lsusb command 'Bus 004 Device 002'";
       default = "4-2";
@@ -31,20 +32,12 @@ in
   };
   # configured in home
   config = lib.mkIf cfg.enable {
+    home-manager.users.${username} = import ./home.nix;
     environment.systemPackages = with pkgs; [ borgbackup ];
-    environment.persistence."/persist".users.${username}.directories = [ configDir ];
+    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
+      "/persist".users.${username}.directories = [ configDir ];
+    };
     sops.secrets."borgmatic/encryption" = { };
-    home-manager.users.${username} =
-      { config, ... }:
-      {
-        sops.secrets."backup/key" = { };
-        services.udiskie.settings.device_config = [
-          {
-            id_uuid = "129829fa-acfb-4c09-815d-b450ebaa9262";
-            keyfile = config.sops.secrets."backup/key".path;
-          }
-        ];
-      };
     systemd = {
       timers.poweroff_hdd = {
         description = "Power-off backup hdd after automount";

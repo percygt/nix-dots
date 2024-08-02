@@ -1,4 +1,1 @@
-{ libx, ... }:
-{
-  imports = libx.importPaths ./.;
-}
+{ libx, ... }: libx.importPaths.all ./.

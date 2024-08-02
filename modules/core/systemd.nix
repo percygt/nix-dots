@@ -1,30 +1,29 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  libx,
+  ...
+}:
+let
+  cfg = config.modules.core.systemd;
+in
 {
   options.modules.core.systemd = {
-    enable = lib.mkOption {
-      description = "Enable systemd services";
-      default = true;
-      type = lib.types.bool;
-    };
+    enable = libx.enableDefault "systemd";
     initrd = {
       enable = lib.mkOption {
         description = "Enable systemd initrd";
-        default = true;
+        default = cfg.enable;
         type = lib.types.bool;
       };
       rootDeviceName = lib.mkOption {
-        description = "Declare root device before executing wipeScript e.g. /dev/root_vg/root -> ['dev' 'root_vg' 'root']";
+        description = "Declare root device name e.g. /dev/root_vg/root -> ['dev' 'root_vg' 'root']";
         default = [
           "dev"
           "root_vg"
           "root"
         ];
-        type = lib.types.lists;
-      };
-      rootDevice = lib.mkOption {
-        description = "Root device in initrd before executing wipeScript e.g. /dev/root_vg/root -> dev-root_vg-root.device";
-        default = "dev-root_vg-root.device";
-        type = lib.types.str;
+        type = with lib.types; listOf str;
       };
     };
   };

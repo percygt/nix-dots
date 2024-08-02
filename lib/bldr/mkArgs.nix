@@ -23,7 +23,10 @@ rec {
 
   flakeDirectory = "${homeDirectory}/data/nix-dots";
 
-  libx = import "${self}/lib/libx" { inherit inputs; };
+  libx = import "${self}/lib/libx" {
+    inherit inputs isGeneric isIso;
+    inherit (users) username;
+  };
 
   args = {
     inherit

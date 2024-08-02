@@ -5,6 +5,7 @@
   pkgs,
   username,
   flakeDirectory,
+  libx,
   ...
 }:
 
@@ -30,11 +31,7 @@ in
 {
   options.modules.core = {
     autoupgrade = {
-      enable = lib.mkOption {
-        description = "Enables automatic system updates.";
-        type = lib.types.bool;
-        default = true;
-      };
+      enable = libx.enableDefault "autoupgrade";
       branches = lib.mkOption {
         type = lib.types.attrs;
         description = "Which local and remote branches to compare.";

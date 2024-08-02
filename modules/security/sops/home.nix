@@ -5,6 +5,7 @@
   pkgs,
   username,
   isGeneric,
+  libx,
   ...
 }:
 let
@@ -28,7 +29,7 @@ let
 in
 {
   imports = [ inputs.sops-nix.homeManagerModules.sops ];
-  options.modules.security.sops.enable = lib.mkEnableOption "Enable sops";
+  options.modules.security.sops.enable = libx.enableDefault "sops";
 
   config = lib.mkIf config.modules.security.sops.enable {
     home.packages = [ pkgs.sops ];

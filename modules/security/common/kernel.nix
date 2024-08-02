@@ -1,9 +1,16 @@
 # security tweaks borrowed from @hlissner
 { lib, config, ... }:
+let
+  cfg = config.modules.security.common;
+in
 {
-  options.modules.security.kernel.enable = lib.mkEnableOption "Enable kernel";
+  options.modules.security.common.kernel.enable = lib.mkOption {
+    description = "Enable kernel";
+    type = lib.types.bool;
+    default = cfg.enable;
+  };
   # configured in home
-  config = lib.mkIf config.modules.security.kernel.enable {
+  config = lib.mkIf config.modules.security.common.kernel.enable {
     boot.kernel.sysctl = {
       # The Magic SysRq key is a key combo that allows users connected to the
       # system console of a Linux kernel to perform some low-level commands.

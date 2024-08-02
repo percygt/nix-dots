@@ -24,7 +24,7 @@
   programs = {
     sway = {
       enable = true;
-      package = libx.sway.package { inherit pkgs; };
+      package = pkgs.swayfx;
       wrapperFeatures.gtk = true;
     };
   };

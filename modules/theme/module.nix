@@ -3,10 +3,13 @@
   config,
   inputs,
   pkgs,
+  libx,
   ...
 }:
 {
   options.modules.theme = {
+    enable = libx.enableDefault "theme";
+
     assets = {
       wallpaper = lib.mkOption {
         description = "Current wallpaper";

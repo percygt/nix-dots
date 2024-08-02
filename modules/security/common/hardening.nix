@@ -5,8 +5,13 @@
   ...
 }:
 {
-  options.modules.security.hardening.enable = lib.mkEnableOption "Enable hardening";
-  config = lib.mkIf config.modules.security.hardening.enable {
+  options.modules.security.common.hardening.enable = lib.mkOption {
+    description = "Enable hardening";
+    type = lib.types.bool;
+    default = false;
+  };
+
+  config = lib.mkIf config.modules.security.common.hardening.enable {
     security = {
       protectKernelImage = false;
       tpm2 = {

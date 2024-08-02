@@ -1,7 +1,6 @@
 {
   modifier,
   pkgs,
-  libx,
   up,
   down,
   left,
@@ -9,9 +8,11 @@
   lib,
   terminal,
   config,
+  homeArgs,
   ...
 }:
 let
+  inherit (homeArgs) libx;
   mod = modifier;
   inherit (libx) sway;
   inherit (sway)
@@ -49,11 +50,12 @@ in
     ]
     // {
       "Ctrl+KP_Multiply" = "exec ${toggle-blur { inherit pkgs; }}";
-      "Ctrl+KP_Insert" = "exec ${lib.getExe pkgs.toggle-sway-window} --id nixos_rebuild_log -- ${viewRebuildLogCmd}";
+      "Ctrl+KP_Insert" = "exec ${lib.getExe pkgs.toggle-sway-window} --id system-software-update -- ${viewRebuildLogCmd}";
       "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
-      "${mod}+w" = "exec ${dropdown-terminal { inherit pkgs weztermPackage; }}";
-      "${mod}+Return" = "exec ${terminal}";
+      "${mod}+Shift+w" = "exec ${dropdown-terminal { inherit pkgs weztermPackage; }}";
+      "${mod}+w" = "exec ${lib.getExe pkgs.i3-quickterm} tmux";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
+      "${mod}+Return" = "exec ${terminal}";
       "${mod}+Shift+e" = "exec pkill tofi || ${power-menu { inherit pkgs; }}";
       "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";

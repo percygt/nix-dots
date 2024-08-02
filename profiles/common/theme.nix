@@ -1,6 +1,11 @@
-{ pkgs, ... }:
 {
-  modules.theme = {
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  modules.theme = lib.mkIf config.modules.theme.enable {
     assets = {
       wallpaper = {
         url = "https://images.unsplash.com/photo-1520264914976-a1ddb24d2114?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=michael-aleo-FDhds8oz8bA-unsplash.jpg";

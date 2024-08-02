@@ -2,10 +2,11 @@
   pkgs,
   config,
   lib,
-  libx,
+  homeArgs,
   ...
 }:
 let
+  inherit (homeArgs) libx;
   inherit (libx) sway;
   inherit (sway) mkAppsFloat;
   f = config.modules.fonts.interface;
@@ -31,7 +32,6 @@ in
         inherit
           modifier
           pkgs
-          libx
           lib
           config
           up
@@ -39,6 +39,7 @@ in
           left
           right
           terminal
+          homeArgs
           ;
       })
       keybindings

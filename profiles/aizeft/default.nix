@@ -13,9 +13,7 @@
       intel.gpu.driver = "xe";
       nvidia.bye = true;
     };
-    cli.enable = true;
     dev.enable = true;
-    terminal.enable = true;
     network = {
       tailscale.enable = true;
       syncthing.enable = true;

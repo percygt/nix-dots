@@ -26,4 +26,4 @@ let
     ubuntu_font_family
   ];
 in
-defaultPkgs ++ cfg.extraFontPackages ++ addPackages
+defaultPkgs ++ addPackages

@@ -3,6 +3,7 @@
   config,
   lib,
   username,
+  libx,
   ...
 }:
 let
@@ -10,8 +11,9 @@ let
 in
 {
   imports = [ inputs.sops-nix.nixosModules.sops ];
-  options.modules.security.sops.enable = lib.mkEnableOption "Enable sops";
+  options.modules.security.sops.enable = libx.enableDefault "sops";
   config = lib.mkIf config.modules.security.sops.enable {
+    home-manager.users.${username} = import ./home.nix;
     sops = {
       defaultSopsFile = "${secretsPath}/secrets-system.enc.yaml";
       validateSopsFiles = false;
@@ -20,11 +22,6 @@ in
         sshKeyPaths = [ ];
       };
       gnupg.sshKeyPaths = [ ];
-    };
-
-    home-manager.users.${username} = {
-      imports = [ ./home.nix ];
-      modules.security.ssh.enable = lib.mkDefault true;
     };
   };
 }

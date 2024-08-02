@@ -16,7 +16,7 @@
           "org.keepassxc.KeePassXC"
           "btop"
           "yazi"
-          "nixos_rebuild_log"
+          "system-software-update"
           "page.codeberg.Imaginer.Imaginer"
           "com.github.finefindus.eyedropper"
           "org.gnome.Nautilus"
@@ -50,6 +50,12 @@
         ];
       })
       ++ [
+        # {
+        #   command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
+        #   criteria = {
+        #     app_id = "foot";
+        #   };
+        # }
         {
           command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
           criteria = {

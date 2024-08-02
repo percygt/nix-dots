@@ -1,11 +1,12 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  libx,
+  ...
+}:
 {
   options.modules.core.filesystem = {
-    enable = lib.mkOption {
-      description = "Enable filesystem services";
-      default = true;
-      type = lib.types.bool;
-    };
+    enable = libx.enableDefault "filesystem";
   };
 
   config = lib.mkIf config.modules.core.filesystem.enable {

@@ -3,23 +3,16 @@
   lib,
   pkgs,
   username,
+  libx,
   ...
 }:
 {
-  options.modules.core.audioengine = {
-    enable = lib.mkOption {
-      description = "Enable audioengine";
-      default = true;
-      type = lib.types.bool;
-    };
-  };
-
+  options.modules.core.audioengine.enable = libx.enableDefault "audioengine";
   config = lib.mkIf config.modules.core.audioengine.enable {
     environment.persistence = {
       "/persist".users.${username}.directories = [ ".local/state/wireplumber" ];
       "/persist/system".directories = [ "/var/lib/alsa" ];
     };
-    # sound.enable = false;
     hardware.pulseaudio.enable = lib.mkForce false;
     security.rtkit.enable = true;
     services.pipewire = {

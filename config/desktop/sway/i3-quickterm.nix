@@ -1,4 +1,27 @@
 {
+  pkgs,
+  flakeDirectory,
+  homeDirectory,
+  ...
+}:
+let
+  launchTmux = pkgs.writers.writeBash "launchTmux" ''
+    if [ -d ${flakeDirectory} ]; then
+      tmux has-session -t nix-dots 2>/dev/null
+      if [ $? != 0 ]; then
+        tmux new-session -ds nix-dots -c "${flakeDirectory}"
+      fi
+      tmux new-session -As nix-dots
+    else
+      tmux has-session -t home 2>/dev/null
+      if [ $? != 0 ]; then
+        tmux new-session -ds home -c "${homeDirectory}"
+      fi
+      tmux new-session -As home
+    fi
+  '';
+in
+{
   xdg.configFile."i3-quickterm/config.json".text =
     # json
     ''
@@ -11,7 +34,8 @@
           "shells": {
               "js": "node",
               "python": "ipython3 --no-banner",
-              "shell": "{$SHELL}"
+              "shell": "{$SHELL}",
+              "tmux": "${launchTmux}"
           }
       }
     '';

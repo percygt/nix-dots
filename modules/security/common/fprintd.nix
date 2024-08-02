@@ -5,8 +5,12 @@
   ...
 }:
 {
-  options.modules.security.fprintd.enable = lib.mkEnableOption "Enable fprintd";
-  config = lib.mkIf config.modules.security.fprintd.enable {
+  options.modules.security.common.fprintd.enable = lib.mkOption {
+    description = "Enable hardening";
+    type = lib.types.bool;
+    default = false;
+  };
+  config = lib.mkIf config.modules.security.common.fprintd.enable {
     services.fprintd = {
       enable = true;
       package = pkgs.fprintd-tod;

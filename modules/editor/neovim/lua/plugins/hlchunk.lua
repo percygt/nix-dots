@@ -23,17 +23,17 @@ return {
 				max_file_size = 1024 * 1024,
 				error_sign = true,
 				-- animation related
-				duration = 50,
-				delay = 50,
+				duration = 100,
+				delay = 100,
 			},
 			indent = {
 				enable = true,
-				priority = 10,
+				priority = 1,
 				style = { c.base03 },
-				use_treesitter = false,
+				use_treesitter = true,
 				chars = { "│" },
 				ahead_lines = 5,
-				delay = 100,
+				delay = 0,
 			},
 		})
 	end,

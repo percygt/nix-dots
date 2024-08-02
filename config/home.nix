@@ -11,7 +11,7 @@
     ./shellAliases.nix
     ./sessionVariables.nix
     ./nixpkgs/overlay.nix
-  ] ++ lib.optionals isGeneric [ ./generic ];
+  ];
 
   programs.home-manager.enable = true;
 

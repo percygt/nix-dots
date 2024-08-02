@@ -1,5 +1,4 @@
 {
-  lib,
   config,
   inputs,
   desktop,
@@ -9,8 +8,8 @@
   imports = [ inputs.xremap.homeManagerModules.default ];
 
   services.xremap = {
-    withGnome = lib.mkIf (desktop == "gnome") true;
-    withWlroots = lib.mkIf (desktop == "sway") true;
+    withGnome = desktop == "gnome";
+    withWlroots = desktop == "sway";
     config.modmap = [
       {
         name = "Global";

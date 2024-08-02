@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  libx,
   ...
 }:
 let
@@ -12,11 +13,7 @@ let
 in
 {
   options.modules.core.battery = {
-    enable = lib.mkOption {
-      description = "Enable battery optimization";
-      default = true;
-      type = lib.types.bool;
-    };
+    enable = libx.enableDefault "battery";
     chargeUpto = lib.mkOption {
       description = "Maximum level of charge for your battery, as a percentage.";
       default = 80;
@@ -24,8 +21,8 @@ in
     };
     enableChargeUptoScript = lib.mkOption {
       description = "Whether to add charge-upto to environment.systemPackages. `charge-upto 75` temporarily sets the charge limit to 75%.";
-      default = true;
       type = lib.types.bool;
+      default = cfg.enable;
     };
   };
   config = lib.mkIf cfg.enable {

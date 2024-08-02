@@ -2,15 +2,12 @@
   config,
   lib,
   pkgs,
+  libx,
   ...
 }:
 {
   options.modules.core.boot = {
-    enable = lib.mkOption {
-      description = "Enable boot management";
-      default = true;
-      type = lib.types.bool;
-    };
+    enable = libx.enableDefault "boot";
   };
 
   config = lib.mkIf config.modules.core.boot.enable {

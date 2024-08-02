@@ -4,6 +4,7 @@
     ./xremap.nix
     ./bluez-suspend.nix
     ./nvd.nix
+    ../home.nix
     ../apps
     ../common
     ../desktop

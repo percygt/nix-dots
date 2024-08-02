@@ -1,41 +1,58 @@
 {
-  username,
   lib,
   config,
+  username,
+  libx,
   ...
 }:
+let
+  inherit (libx) enableDefault inheritModule;
+  inheritCli =
+    module:
+    inheritModule {
+      inherit module config;
+      name = "cli";
+    };
+in
 {
-  options.modules.cli.enable = lib.mkEnableOption "Enable all cli apps";
-  config = lib.mkIf config.modules.cli.enable {
-    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist" = {
-        users.${username} = {
-          directories = [
-            ".local/share/tmux/resurrect"
-            ".local/share/aria2"
-            ".local/share/atuin"
-            ".local/share/zoxide"
-            ".local/share/navi"
-          ];
-        };
-      };
-    };
-    home-manager.users.${username} = {
-      imports = [ ./home.nix ];
-      modules.cli = {
-        atuin.enable = lib.mkDefault true;
-        direnv.enable = lib.mkDefault true;
-        extra.enable = lib.mkDefault true;
-        starship.enable = lib.mkDefault true;
-        aria.enable = lib.mkDefault true;
-        ncmpcpp.enable = lib.mkDefault true;
-        yazi.enable = lib.mkDefault true;
-        common.enable = lib.mkDefault true;
-        bat.enable = lib.mkDefault true;
-        eza.enable = lib.mkDefault true;
-        tmux.enable = lib.mkDefault true;
-        nixtools.enable = lib.mkDefault true;
-      };
-    };
+  options.modules.cli = {
+    atuin.enable = enableDefault "atuin";
+    direnv.enable = enableDefault "direnv";
+    extra.enable = enableDefault "extra";
+    starship.enable = enableDefault "starship";
+    aria.enable = enableDefault "aria";
+    ncmpcpp.enable = enableDefault "ncmpcpp";
+    yazi.enable = enableDefault "yazi";
+    common.enable = enableDefault "common";
+    bat.enable = enableDefault "bat";
+    eza.enable = enableDefault "eza";
+    tmux.enable = enableDefault "tmux";
+    nixtools.enable = enableDefault "nixtools";
   };
+  config = lib.mkMerge [
+    {
+      home-manager.users.${username} = import ./home.nix;
+      environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
+        "/persist".users.${username}.directories = [
+          ".local/share/atuin"
+          ".local/share/aria2"
+          ".local/share/tmux/resurrect"
+          ".local/share/navi"
+          ".local/share/zoxide"
+        ];
+      };
+    }
+    (inheritCli "atuin")
+    (inheritCli "aria")
+    (inheritCli "tmux")
+    (inheritCli "common")
+    (inheritCli "direnv")
+    (inheritCli "extra")
+    (inheritCli "starship")
+    (inheritCli "ncmpcpp")
+    (inheritCli "yazi")
+    (inheritCli "bat")
+    (inheritCli "eza")
+    (inheritCli "nixtools")
+  ];
 }

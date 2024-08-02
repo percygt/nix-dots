@@ -4,6 +4,7 @@
   config,
   homeDirectory,
   desktop,
+  libx,
   ...
 }:
 let
@@ -11,7 +12,7 @@ let
 in
 {
   imports = [ ./keepfzf.nix ];
-  options.modules.security.keepass.enable = lib.mkEnableOption "Enable keepass";
+  options.modules.security.keepass.enable = libx.enableDefault "keepass";
 
   config = lib.mkIf config.modules.security.keepass.enable {
     home = {

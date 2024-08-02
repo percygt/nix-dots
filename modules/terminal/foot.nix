@@ -15,7 +15,10 @@ in
         main = {
           term = "xterm-256color";
           login-shell = "yes";
-          font = "${f.name}:style=${f.style}:size=${builtins.toString f.size}";
+          font = "${f.name}:style=${builtins.elemAt f.style 0}:size=${builtins.toString f.size}";
+          font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString f.size}";
+          font-italic = "${f.name}:style=${builtins.elemAt f.style 2}:size=${builtins.toString f.size}";
+          font-bold-italic = "${f.name}:style=${builtins.elemAt f.style 3}:size=${builtins.toString f.size}";
           line-height = 23;
           pad = "10x8";
         };
@@ -23,6 +26,7 @@ in
         cursor = {
           blink = "yes";
           style = "beam";
+          color = "${c.base01} ${c.base05}";
         };
 
         mouse.hide-when-typing = "yes";
@@ -31,6 +35,7 @@ in
           preferred = "server";
           color = "ff000000";
           size = 1;
+          border-width = 1;
           hide-when-maximized = "yes";
         };
 

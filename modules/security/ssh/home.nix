@@ -1,6 +1,11 @@
-{ lib, config, ... }:
 {
-  options.modules.security.ssh.enable = lib.mkEnableOption "Enable ssh";
+  libx,
+  lib,
+  config,
+  ...
+}:
+{
+  options.modules.security.ssh.enable = libx.enableDefault "ssh";
   config = lib.mkIf config.modules.security.ssh.enable {
     programs.ssh = {
       enable = true;

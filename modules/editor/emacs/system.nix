@@ -46,6 +46,8 @@ in
           en-computers
         ]
       ))
+      (pkgs.iosevka-bin.override { variant = "Aile"; })
+      pkgs.emacs-all-the-icons-fonts
       emacsWithExtraPackages
     ];
     # services.emacs = {

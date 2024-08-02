@@ -2,27 +2,24 @@
   lib,
   config,
   username,
+  libx,
   ...
 }:
 let
   wpa = config.modules.core.network.wpa.enable;
+  cfg = config.modules.core.network;
 in
 {
   options.modules.core.network = {
-    enable = lib.mkOption {
-      description = "Enable networking services";
-      default = true;
-      type = lib.types.bool;
-    };
-
+    enable = libx.enableDefault "network";
     wpa.enable = lib.mkOption {
       description = "Enable wpa";
-      default = true;
       type = lib.types.bool;
+      default = cfg.enable;
     };
   };
 
-  config = lib.mkIf config.modules.core.network.enable {
+  config = lib.mkIf cfg.enable {
     environment.persistence = {
       "/persist/system" = lib.mkIf (!wpa) { directories = [ "/etc/NetworkManager/system-connections" ]; };
     };

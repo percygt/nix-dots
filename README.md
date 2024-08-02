@@ -1,8 +1,10 @@
 <div align="center">
 <h1>
-    <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake-rainbow.svg" width="100" /> <br>
+    <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake-rainbow.svg" width="100" />
+    <br>
     Nix Dots
 </h1>
+<br>
 </h2><img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="500" />
 </p>
     <a href="https://github.com/percygt/nix-dots/stargazers">
@@ -16,5 +18,4 @@
     </a>
 </p>
 <h4>My personal NixOS config</h4>
-<p>Feel free to take a look around</p>
 </div>

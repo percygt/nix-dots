@@ -39,15 +39,11 @@
     in
     nixosSystem {
       inherit system;
-      modules =
-        if isIso then
-          [ "${self}/lib/bldr/iso/${profile}/configuration.nix" ]
-        else
-          [
-            outputs.nixosModules.default
-            "${self}/profiles"
-            "${self}/config"
-          ];
+      modules = [
+        "${self}/profiles"
+        "${self}/config"
+        outputs.nixosModules.default
+      ];
       specialArgs = {
         inherit homeArgs;
       } // mkArgs.args;

@@ -4,6 +4,7 @@
   config,
   lib,
   isGeneric,
+  homeArgs,
   ...
 }:
 {
@@ -22,7 +23,7 @@
 
   wayland.windowManager.sway = {
     enable = true;
-    package = libx.sway.package { inherit pkgs; };
+    package = pkgs.swayfx;
     swaynag.enable = true;
     systemd.enable = true;
     systemd.xdgAutostart = true;
@@ -36,8 +37,8 @@
           pkgs
           config
           lib
-          libx
           isGeneric
+          homeArgs
           ;
       })
       config
