@@ -3,7 +3,6 @@ let
   wsToKey = ws: builtins.substring 0 1 ws;
 in
 rec {
-  # package = { pkgs }: pkgs.swayfx.override { inherit (pkgs) swayfx-unwrapped; };
   viewRebuildLogCmd = "foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service";
   tofipass =
     { pkgs }:

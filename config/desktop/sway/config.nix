@@ -10,7 +10,7 @@ let
   inherit (libx) sway;
   inherit (sway) mkAppsFloat;
   f = config.modules.fonts.interface;
-  t = config.modules.theme.assets;
+  a = config.modules.theme.assets;
   c = config.modules.theme.colors.withHashtag;
 in
 {
@@ -25,7 +25,7 @@ in
     left = "h";
     right = "l";
     terminal = "${pkgs.foot}/bin/foot";
-    output."*".bg = "${pkgs.fetchurl t.wallpaper} fill";
+    output."*".bg = "${a.wallpaper} fill";
     gaps.inner = 4;
     inherit
       (import ./keybindings.nix {

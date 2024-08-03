@@ -13,11 +13,23 @@
     assets = {
       wallpaper = lib.mkOption {
         description = "Current wallpaper";
-        type = with lib.types; either attrs path;
+        type =
+          with lib.types;
+          oneOf [
+            attrs
+            path
+            package
+          ];
       };
       nix-logo = lib.mkOption {
         description = "Nix logo";
-        type = with lib.types; either attrs path;
+        type =
+          with lib.types;
+          oneOf [
+            attrs
+            path
+            package
+          ];
       };
     };
     colorscheme = lib.mkOption {

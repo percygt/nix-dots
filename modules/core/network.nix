@@ -29,9 +29,7 @@ in
           wireless.iwd.settings.Settings.AutoConnect = true;
           networkmanager = {
             enable = true;
-            wifi = {
-              backend = "iwd";
-            };
+            wifi.backend = "iwd";
             ensureProfiles = {
               environmentFiles = [ config.sops.secrets."wireless.env".path ];
               profiles = {
@@ -76,7 +74,7 @@ in
               };
             };
             # Imperative
-            allowAuxiliaryImperativeNetworks = true;
+            # allowAuxiliaryImperativeNetworks = true;
             userControlled = {
               enable = true;
               group = "network";

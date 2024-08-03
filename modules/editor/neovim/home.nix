@@ -6,7 +6,7 @@
   ...
 }:
 let
-  hmNvim = "${flakeDirectory}/modules/editor/neovim";
+  moduleNvim = "${flakeDirectory}/modules/editor/neovim";
 in
 {
   options.modules.editor.neovim.enable = lib.mkEnableOption "Enable neovim home";
@@ -52,17 +52,9 @@ in
     };
     home = {
       activation = {
-        linkNvim =
-          lib.hm.dag.entryAfter [ "linkGeneration" ]
-            # bash
-            ''
-              [ -e "${config.xdg.configHome}/nvim" ] || mkdir -p "${config.xdg.configHome}/nvim/lua/config"
-              [ -e "${config.xdg.configHome}/nvim/lua/config" ] && cp -rs ${hmNvim}/lua/config/. ${config.xdg.configHome}/nvim/lua/config/
-              [ -e "${config.xdg.configHome}/nvim/lua/plugins" ] || ln -s ${hmNvim}/lua/plugins ${config.xdg.configHome}/nvim/lua/plugins
-              [ -e "${config.xdg.configHome}/nvim/lua/utils" ] || ln -s ${hmNvim}/lua/utils ${config.xdg.configHome}/nvim/lua/utils
-              [ -e "${config.xdg.configHome}/nvim/spell" ] || ln -s ${hmNvim}/spell ${config.xdg.configHome}/nvim/spell
-              [ -e "${config.xdg.configHome}/nvim/ftdetect" ] || ln -s ${hmNvim}/ftdetect ${config.xdg.configHome}/nvim/ftdetect
-            '';
+        linkNvim = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+          [ -e "${config.xdg.configHome}/nvim/lua/config" ] && cp -rs ${moduleNvim}/lua/config/. ${config.xdg.configHome}/nvim/lua/config/
+        '';
         neovim =
           lib.hm.dag.entryAfter [ "linkGeneration" ]
             # bash
@@ -91,8 +83,12 @@ in
     };
     xdg = {
       configFile = {
-        "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${hmNvim}/lazy-lock.json";
-        "nvim/neoconf.json".source = config.lib.file.mkOutOfStoreSymlink "${hmNvim}/neoconf.json";
+        "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazy-lock.json";
+        "nvim/neoconf.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/neoconf.json";
+        "nvim/spell".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/spell";
+        "nvim/ftdetect".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/ftdetect";
+        "nvim/lua/plugins".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/plugins";
+        "nvim/lua/utils".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/utils";
         "nvim/lua/config/colorscheme.lua" =
           let
             colorschemeLua =
