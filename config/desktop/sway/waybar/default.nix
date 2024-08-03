@@ -22,11 +22,11 @@ let
     text = ''
       status="$(systemctl is-active nixos-rebuild.service || true)"
       if grep -q "inactive" <<< "$status"; then
-        printf '{ "text" : " : ","class":"success"}'
+        printf '{ "text" : "","class":"success"}'
       elif grep -q "active" <<< "$status"; then
-        printf '{ "text" : " : ","class":"ongoing"}'
+        printf '{ "text" : "","class":"ongoing"}'
       elif grep -q "failed" <<< "$status"; then
-        printf '{ "text" : " : ","class":"fail"}'
+        printf '{ "text" : "","class":"fail"}'
       fi
     '';
   };
