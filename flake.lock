@@ -157,11 +157,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1722618700,
-        "narHash": "sha256-mZYSMqXrAN0gT6+WPh6X7IBd1sRjkVCai21TDbU51Zg=",
+        "lastModified": 1722676249,
+        "narHash": "sha256-E8jHN1aWxNgR+NBCR6sfwKiT3RAigMxVH0vqyn6rEs0=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "ccf777d7dcaf160ea3a6125e33ab281963173ce7",
+        "rev": "e67c0cec68f7df91c79ab06b97e2cc24023665cf",
         "type": "github"
       },
       "original": {
@@ -676,11 +676,11 @@
     "foot_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1722602006,
-        "narHash": "sha256-afcW0GhCYC4zuOMg4//RpnLAnSeZkDs4ssKd676BBWk=",
+        "lastModified": 1722678157,
+        "narHash": "sha256-Ib86204HllHUh8p8eYH1HdYtcf5V2iyYr4e0WkdT7YE=",
         "ref": "refs/heads/master",
-        "rev": "62b0b65d4712abd9ecd21ec2fe684c87a868bcc1",
-        "revCount": 6353,
+        "rev": "b27841e1b590f91c9de21bb694909211421e5f96",
+        "revCount": 6356,
         "type": "git",
         "url": "https://codeberg.org/dnkl/foot"
       },
@@ -1133,6 +1133,43 @@
         "type": "github"
       }
     },
+    "keepmenu": {
+      "inputs": {
+        "nixpkgs": [
+          "nix-stash",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1720193052,
+        "narHash": "sha256-QufdabJX4ISUu+Pntj3sEp1jByRhozXUNTaIjTyXlQA=",
+        "owner": "percygt",
+        "repo": "keepmenu",
+        "rev": "6d41ce956a11259df935b34f82dc5b0c5e7fd2ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "percygt",
+        "repo": "keepmenu",
+        "type": "github"
+      }
+    },
+    "keepmenu_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720193052,
+        "narHash": "sha256-QufdabJX4ISUu+Pntj3sEp1jByRhozXUNTaIjTyXlQA=",
+        "owner": "percygt",
+        "repo": "keepmenu",
+        "rev": "6d41ce956a11259df935b34f82dc5b0c5e7fd2ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "percygt",
+        "repo": "keepmenu",
+        "type": "github"
+      }
+    },
     "libpng": {
       "flake": false,
       "locked": {
@@ -1190,11 +1227,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1722618800,
-        "narHash": "sha256-RP57a/NFk4uDnDWgTiDdJ+HteT8hTnkKz2dxd+kqL3M=",
+        "lastModified": 1722682023,
+        "narHash": "sha256-JKrHJEbszOZJvaiGqgcCfx6nqH9zEQBpjXp2SsXuYbA=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "0dfaa8c68db4cd0e7c0f500242f24932b3abdb85",
+        "rev": "1b9f21281243dd244641958887a685b15512a434",
         "type": "github"
       },
       "original": {
@@ -1222,11 +1259,11 @@
     "neovim-src_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1722556329,
-        "narHash": "sha256-biqiNshPEE3pndvrDQ2LqSe4YWi0PhHsAfhXGdoV+ic=",
+        "lastModified": 1722642172,
+        "narHash": "sha256-F8tpZK32Ipu0wWxyBFvBrNbVQoj9E9IXlyDNwrSn9PU=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "b782a37cf58b5ae5e47fd15fb2a5096639c64a23",
+        "rev": "383f6934720a203d093c762cbd5362092110f35f",
         "type": "github"
       },
       "original": {
@@ -1297,18 +1334,21 @@
       "inputs": {
         "emacs-overlay": "emacs-overlay_2",
         "foot": "foot_2",
+        "keepmenu": "keepmenu_2",
         "neovim-nightly-overlay": "neovim-nightly-overlay_2",
         "nixpkgs": "nixpkgs_2",
+        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable_2",
+        "pykeepass": "pykeepass",
         "scenefx": "scenefx_2",
         "swayfx-unwrapped": "swayfx-unwrapped_2"
       },
       "locked": {
-        "lastModified": 1722645962,
-        "narHash": "sha256-FmFUNpQBD4rXpUKNcMH9BL7T3gJMDBdgwfcOMjK089o=",
+        "lastModified": 1722715165,
+        "narHash": "sha256-BnZZsmUXMQT5F0S9Do4+5Prkj2AodL9wRtiYefN6DcA=",
         "owner": "percygt",
         "repo": "nix-sources",
-        "rev": "440edb6456dfd84b77e9d741d8473f390162b301",
+        "rev": "b471385e460588356cab1967d363e641dd2d85cf",
         "type": "github"
       },
       "original": {
@@ -1321,6 +1361,7 @@
       "inputs": {
         "flake-utils": "flake-utils_2",
         "fzf-url": "fzf-url",
+        "keepmenu": "keepmenu",
         "nix-sources": "nix-sources_2",
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixgl": "nixgl",
@@ -1342,11 +1383,11 @@
         "yazi": "yazi"
       },
       "locked": {
-        "lastModified": 1722654471,
-        "narHash": "sha256-MnFSLOBYjqgsbS3Fvj6v424VTSbK0xEYcBLrE3A7Cgk=",
+        "lastModified": 1722715475,
+        "narHash": "sha256-p7ReLAUujaute3H7LEfEl6Spaje/mhd0Gqz3Jk1geIM=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "b46ca8a80dae7bbdb2bf3db36469f391c60e94be",
+        "rev": "5703d74e57c14105062e01daf26eae69a5579e15",
         "type": "github"
       },
       "original": {
@@ -1500,6 +1541,22 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/5daf0514482af3f97abaefc78a6606365c9108e2.tar.gz"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1722714655,
+        "narHash": "sha256-MzmG5O5gFUoxwnSVIFx2kOxPUyQOBvJcjcMu76IJc0o=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "8e414257f25f28fe93753932173219eacc298801",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1722372011,
@@ -1534,11 +1591,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1722415718,
-        "narHash": "sha256-5US0/pgxbMksF92k1+eOa8arJTJiPvsdZj9Dl+vJkM4=",
+        "lastModified": 1722640603,
+        "narHash": "sha256-TcXjLVNd3VeH1qKPH335Tc4RbFDbZQX+d7rqnDUoRaY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c3392ad349a5227f4a3464dce87bcc5046692fce",
+        "rev": "81610abc161d4021b29199aa464d6a1a521e0cc9",
         "type": "github"
       },
       "original": {
@@ -1657,6 +1714,22 @@
         "owner": "nixos",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "pykeepass": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1722364710,
+        "narHash": "sha256-SYPYEE1e0sFMjaFcZpapHS0bDc+XfYeWWlQIZC8Aj2E=",
+        "owner": "libkeepass",
+        "repo": "pykeepass",
+        "rev": "321c653877f0d49c05e34a90a47b861a97b58446",
+        "type": "github"
+      },
+      "original": {
+        "owner": "libkeepass",
+        "repo": "pykeepass",
         "type": "github"
       }
     },
@@ -2169,11 +2242,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1721631968,
-        "narHash": "sha256-BwBRNmGv2nX1nEhitOKyoOvmk+G6WoBaBHAlKYy5Edg=",
+        "lastModified": 1722665445,
+        "narHash": "sha256-XsOORWLtCrjDPkqZIjO5UPj1muQv6DPRCxZBOn/q0AQ=",
         "owner": "Alexays",
         "repo": "Waybar",
-        "rev": "003dd3a9a260a212648b6ab4a70f058c6437d40d",
+        "rev": "9d15c666b2ec3b4286b4054bc7ad59881e5dd56d",
         "type": "github"
       },
       "original": {
