@@ -18,10 +18,7 @@ in
     programs = {
       password-store = {
         enable = true;
-        package = pkgs.pass.withExtensions (exts: [
-          exts.pass-otp
-          exts.pass-import
-        ]);
+        package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
         settings = {
           inherit PASSWORD_STORE_DIR;
         };

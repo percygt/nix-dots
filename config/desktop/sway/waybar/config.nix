@@ -288,6 +288,8 @@ in
     format = "{}";
     max-length = 12;
     interval = 2;
+    signal = 12;
+    return-type = "json";
     exec = lib.getExe waybarRebuild;
     on-click = "toggle-sway-window --id=system-software-update  -- ${viewRebuildLogCmd}";
   };

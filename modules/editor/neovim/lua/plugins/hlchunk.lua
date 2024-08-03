@@ -1,9 +1,8 @@
 return {
 	"shellRaining/hlchunk.nvim",
-	event = { "BufReadPre", "BufNewFile" },
-	config = function()
+	opts = function()
 		local c = require("config.colorscheme")
-		require("hlchunk").setup({
+		return {
 			chunk = {
 				enable = true,
 				priority = 15,
@@ -30,11 +29,11 @@ return {
 				enable = true,
 				priority = 1,
 				style = { c.base03 },
-				use_treesitter = true,
-				chars = { "│" },
+				chars = {
+					"│",
+				},
 				ahead_lines = 5,
-				delay = 0,
 			},
-		})
+		}
 	end,
 }

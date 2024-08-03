@@ -12,13 +12,13 @@
   };
 
   inputs = {
+    nix-sources.url = "github:percygt/nix-sources";
     nix-stash.url = "github:percygt/nix-stash";
-    nixpkgs.follows = "nix-stash/nixpkgs";
-    nixpkgs-stable.follows = "nix-stash/nixpkgs-stable";
+    nixpkgs.follows = "nix-sources/nixpkgs";
+    nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
 
-    swayfx-unwrapped.follows = "nix-stash/nix-sources/swayfx-unwrapped";
-    neovim-nightly-overlay.follows = "nix-stash/nix-sources/neovim-nightly-overlay";
-    emacs-overlay.follows = "nix-stash/nix-sources/emacs-overlay";
+    neovim-nightly-overlay.follows = "nix-sources/neovim-nightly-overlay";
+    emacs-overlay.follows = "nix-sources/emacs-overlay";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

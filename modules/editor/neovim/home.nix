@@ -92,6 +92,7 @@ in
     xdg = {
       configFile = {
         "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${hmNvim}/lazy-lock.json";
+        "nvim/neoconf.json".source = config.lib.file.mkOutOfStoreSymlink "${hmNvim}/neoconf.json";
         "nvim/lua/config/colorscheme.lua" =
           let
             colorschemeLua =

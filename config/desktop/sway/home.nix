@@ -1,6 +1,5 @@
 {
   pkgs,
-  libx,
   config,
   lib,
   isGeneric,

@@ -1,8 +1,9 @@
 { prev, inputs }:
 {
   swayfx = prev.swayfx.override {
-    swayfx-unwrapped = inputs.swayfx-unwrapped.packages.${prev.system}.swayfx-unwrapped;
+    inherit (inputs.nix-sources.packages.${prev.system}) swayfx-unwrapped;
   };
+
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
   borgmatic = prev.borgmatic.override { enableSystemd = false; };
   logseq = prev.logseq.overrideAttrs (oldAttrs: {
@@ -17,15 +18,6 @@
     configureFlags = prev.lib.lists.remove "--enable-ssh-agent" oldAttrs.configureFlags or [ ] ++ [
       "--disable-ssh-agent"
     ];
-  });
-  foot = prev.foot.overrideAttrs (_: {
-    src = prev.fetchFromGitea {
-      domain = "codeberg.org";
-      owner = "dnkl";
-      repo = "foot";
-      rev = "1136108c9780eae9fae252a1bca5089f19fcd57d";
-      hash = "sha256-1NeBDIX4N602DI52nAwJ+mNikLimBncQl5KxEhycGxY=";
-    };
   });
   google-fonts =
     (prev.google-fonts.overrideAttrs (oldAttrs: {

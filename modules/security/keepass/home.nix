@@ -17,13 +17,15 @@ in
   config = lib.mkIf config.modules.security.keepass.enable {
     home = {
       packages =
-        with pkgs;
-        [ keepassxc ]
-        ++ lib.optionals (desktop == "sway") [
-          stash.keepmenu
-          ydotool
-          wl-clipboard
-        ];
+        (with pkgs; [ keepassxc ])
+        ++ lib.optionals (desktop == "sway") (
+          with pkgs;
+          [
+            # keepmenu
+            ydotool
+            wl-clipboard
+          ]
+        );
       sessionVariables.KPDB = kmk0;
       file."${config.xdg.cacheHome}/keepassxc/keepassxc.ini".text = lib.generators.toINI { } {
         General.LastActiveDatabase = kmk0;
@@ -38,20 +40,14 @@ in
           };
           dmenu_passphrase = {
             obscure = "True";
-            title_path = 25;
+            obscure_color = "#555555";
           };
           database = {
             database_1 = kmk0;
             pw_cache_period_min = 10;
-            terminal = "${pkgs.foot}/bin/foot";
-            editor = "${lib.getExe config.programs.neovim.package}";
-            type_library = "${pkgs.ydotool}/bin/ydotool";
-          };
-          password_chars = {
-            "punc min" = "!@#$%%";
-          };
-          password_char_presets = {
-            "Minimal Punc" = "upper lower digits \"punc min\"";
+            terminal = lib.getExe config.programs.foot.package;
+            editor = lib.getExe config.programs.neovim.package;
+            type_library = lib.getExe pkgs.ydotool;
           };
         };
       }

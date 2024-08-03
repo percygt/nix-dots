@@ -20,7 +20,7 @@
       # encryption
 
       # LLM
-      ollama
+      # ollama
 
       # utils
       zoxide
