@@ -11,24 +11,24 @@ in
 {
   options.modules.cli.tmux.enable = lib.mkEnableOption "Enable tmux";
   config = lib.mkIf config.modules.cli.tmux.enable {
-    systemd.user.services.tmux = {
-      Unit = {
-        Description = "tmux server";
-      };
-      # creates the [Service] section
-      # based on the emacs systemd service
-      # does not source uses a login shell so does not load ~/.zshrc in case this is needed
-      # just add -l(E.g bash -cl "...").
-      Service = {
-        Type = "forking";
-        Restart = "always";
-        ExecStart = "${pkgs.bash}/bin/bash -c 'source ${config.system.build.setEnvironment} ; exec ${config.programs.tmux.package}/bin/tmux start-server'";
-        ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
-      };
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
-    };
+    # systemd.user.services.tmux = {
+    #   Unit = {
+    #     Description = "tmux server";
+    #   };
+    #   # creates the [Service] section
+    #   # based on the emacs systemd service
+    #   # does not source uses a login shell so does not load ~/.zshrc in case this is needed
+    #   # just add -l(E.g bash -cl "...").
+    #   Service = {
+    #     Type = "forking";
+    #     Restart = "always";
+    #     ExecStart = "${pkgs.bash}/bin/bash -c 'source ${config.system.build.setEnvironment} ; exec ${config.programs.tmux.package}/bin/tmux start-server'";
+    #     ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
+    #   };
+    #   Install = {
+    #     WantedBy = [ "default.target" ];
+    #   };
+    # };
     programs.tmux = {
       enable = true;
       baseIndex = 1;
