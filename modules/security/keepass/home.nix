@@ -21,7 +21,7 @@ in
         ++ lib.optionals (desktop == "sway") (
           with pkgs;
           [
-            # keepmenu
+            keepmenu
             ydotool
             wl-clipboard
           ]
@@ -35,7 +35,7 @@ in
       lib.optionalAttrs (desktop == "sway") {
         "keepmenu/config.ini".text = lib.generators.toINI { } {
           dmenu = {
-            dmenu_command = "${lib.getExe pkgs.tofi} --prompt-text=\"Keepmenu: \"";
+            dmenu_command = "tofi";
             pinentry = "${lib.getExe pkgs.pinentry-gnome3}";
           };
           dmenu_passphrase = {
@@ -45,9 +45,9 @@ in
           database = {
             database_1 = kmk0;
             pw_cache_period_min = 10;
-            terminal = lib.getExe config.programs.foot.package;
-            editor = lib.getExe config.programs.neovim.package;
-            type_library = lib.getExe pkgs.ydotool;
+            terminal = "${lib.getExe config.programs.foot.package}";
+            editor = "${lib.getExe config.programs.neovim.package}";
+            type_library = "${lib.getExe pkgs.ydotool}";
           };
         };
       }

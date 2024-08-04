@@ -1,10 +1,4 @@
-{
-  lib,
-  waybarRebuild,
-  viewRebuildLogCmd,
-  config,
-  ...
-}:
+{ config, ... }:
 let
   c = config.modules.theme.colors.withHashtag;
 in
@@ -103,7 +97,7 @@ in
       "▅"
       "▆"
       "▇"
-      "<span color='${c.base08}'>█</span>"
+      "<span color='red'>█</span>"
     ];
   };
 
@@ -290,7 +284,7 @@ in
     interval = 2;
     signal = 12;
     return-type = "json";
-    exec = lib.getExe waybarRebuild;
-    on-click = "toggle-sway-window --id=system-software-update  -- ${viewRebuildLogCmd}";
+    exec = "waybar-rebuild-exec";
+    on-click = "toggle-sway-window --id=system-software-update  -- foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service";
   };
 }

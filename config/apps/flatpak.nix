@@ -23,6 +23,9 @@
       }
     ];
     packages = [
+      "org.kde.digikam"
+      "io.gitlab.adhami3310.Converter"
+      "net.fasterland.converseen"
       "io.gitlab.librewolf-community"
       "so.libdb.dissent"
       "org.freedesktop.Bustle"

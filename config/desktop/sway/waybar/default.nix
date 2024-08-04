@@ -6,12 +6,7 @@
   ...
 }:
 let
-  inherit (libx) toRasi mkLiteral sway;
-  inherit (sway) viewRebuildLogCmd;
-  daylight = pkgs.writeBabashkaScript {
-    name = "daylight";
-    text = libx.clj.daylight;
-  };
+  inherit (libx) toRasi mkLiteral;
   waybarRebuild = pkgs.writeShellApplication {
     name = "waybar-rebuild-exec";
     runtimeInputs = [
@@ -30,28 +25,32 @@ let
       fi
     '';
   };
-  waybar_config = import ./config.nix {
-    inherit
-      lib
-      config
-      daylight
-      waybarRebuild
-      viewRebuildLogCmd
-      ;
-  };
+  extraPackages =
+    [ waybarRebuild ]
+    ++ (with pkgs; [
+      coreutils-full
+      systemd
+      toggle-service
+      toggle-sway-window
+      foot
+    ]);
+  waybarWithExtraBin =
+    pkgs.runCommand "waybar"
+      {
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        meta.mainProgram = "waybar";
+      }
+      ''
+        makeWrapper ${pkgs.stash.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
+      '';
+  waybar_config = import ./config.nix { inherit lib config; };
 in
 {
-  # needed for mpris
   services.playerctld.enable = true;
-  # add binary path to waybar systemd environment
-  home.packages = with pkgs; [
-    toggle-service
-    toggle-sway-window
-  ];
 
   programs.waybar = {
     enable = true;
-    package = pkgs.stash.waybar;
+    package = waybarWithExtraBin;
     style = toRasi (import ./theme.nix { inherit mkLiteral config; }).theme;
     settings = [
       (waybar_config // { output = "HDMI-A-1"; })

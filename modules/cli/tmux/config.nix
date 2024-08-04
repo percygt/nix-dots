@@ -73,12 +73,6 @@ in
       run-shell ${pkgs.tmuxPlugins.yank}/share/tmux-plugins/yank/yank.tmux
 
 
-      # tmuxplugin-tmux-fzf
-      # ---------------------
-
-      run-shell ${pkgs.tmuxPlugins.tmux-fzf}/share/tmux-plugins/tmux-fzf/main.tmux
-
-
       # tmuxplugin-resurrect
       # ---------------------
       set -g @resurrect-processes '"~nvim"'
@@ -92,9 +86,9 @@ in
       # tmuxplugin-continuum
       # ---------------------
       set -g @continuum-restore 'on'
-      set -g @continuum-boot 'on'
+      # set -g @continuum-boot 'on'
       set -g @continuum-save-interval '10'
-      set -g @continuum-systemd-start-cmd 'start-server'
+      # set -g @continuum-systemd-start-cmd 'start-server'
 
       run-shell ${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/continuum.tmux
 
