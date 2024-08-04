@@ -23,9 +23,10 @@
       }
     ];
     packages = [
+      "com.github.PintaProject.Pinta"
+      "org.gnome.Shotwell"
+      "com.github.taiko2k.avvie"
       "org.kde.digikam"
-      "io.gitlab.adhami3310.Converter"
-      "net.fasterland.converseen"
       "io.gitlab.librewolf-community"
       "so.libdb.dissent"
       "org.freedesktop.Bustle"

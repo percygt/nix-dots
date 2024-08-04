@@ -1,5 +1,6 @@
 {
   imports = [
+    ./printer.nix
     ./bluetooth.nix
     ./intel.nix
     ./nvidia.nix

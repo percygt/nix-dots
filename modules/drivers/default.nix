@@ -1,1 +1,1 @@
-{ libx, ... }: libx.importPaths.default ./.
+{ libx, ... }: libx.importPaths.all ./.
