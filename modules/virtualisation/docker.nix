@@ -1,10 +1,12 @@
 {
   pkgs,
-  username,
   lib,
   config,
   ...
 }:
+let
+  g = config._general;
+in
 {
   # Enable the Docker service
   options.modules.virtualisation.docker.enable = lib.mkEnableOption "Enable docker";
@@ -18,7 +20,7 @@
     };
 
     # Give access to the user
-    users.users.${username}.extraGroups = [ "docker" ];
+    users.users.${g.username}.extraGroups = [ "docker" ];
 
     # Include other utilities
     environment.systemPackages = with pkgs; [ docker-compose ];

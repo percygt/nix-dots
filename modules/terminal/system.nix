@@ -1,14 +1,13 @@
 {
   lib,
-  username,
   config,
   pkgs,
   libx,
   ...
 }:
 let
+  g = config._general;
   inherit (libx) enableDefault inheritModule;
-  cfg = config.modules.terminal;
   inheritTerminal =
     module:
     inheritModule {
@@ -24,7 +23,7 @@ in
   };
   config = lib.mkMerge [
     {
-      home-manager.users.${username} = import ./home.nix;
+      home-manager.users.${g.username} = import ./home.nix;
       environment.systemPackages = with pkgs; [ foot ];
     }
     (inheritTerminal "foot")

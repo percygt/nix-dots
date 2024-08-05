@@ -2,7 +2,6 @@
   inputs,
   isGeneric,
   isIso,
-  username,
 }:
 let
   lib = if isGeneric then inputs.home-manager.lib else inputs.nixpkgs.lib;
@@ -24,7 +23,7 @@ in
       name,
     }:
     lib.mkIf config.modules."${name}"."${module}".enable {
-      home-manager.users.${username}.modules."${name}"."${module}".enable = true;
+      home-manager.users.${config._general.username}.modules."${name}"."${module}".enable = true;
     };
   enableDefault =
     n:

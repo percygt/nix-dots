@@ -1,16 +1,16 @@
 {
   profile,
   lib,
-  stateVersion,
   modulesPath,
-  flakeDirectory,
   config,
   inputs,
   pkgs,
-  username,
   desktop,
   ...
 }:
+let
+  g = config._general;
+in
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix") ]
@@ -22,7 +22,7 @@
       ./nix.nix
       ./nixpkgs
       ./xremap.nix
-      ./users/${username}.nix
+      ./user.nix
     ]
     ++ lib.optionals (desktop != null) [
       ./apps
@@ -30,7 +30,7 @@
       ./desktop
     ];
 
-  home-manager.users.${username} = import ./home.nix;
+  home-manager.users.${g.username} = import ./home.nix;
 
   environment.systemPackages = (import ./corePackages.nix pkgs) ++ (with pkgs; [ rippkgs ]);
 
@@ -42,7 +42,7 @@
     };
     nh = {
       enable = true;
-      flake = flakeDirectory;
+      flake = g.flakeDirectory;
       clean = {
         enable = true;
         extraArgs = "--keep-since 7d --keep 3";
@@ -55,7 +55,7 @@
     useDHCP = lib.mkDefault true;
   };
 
-  system.stateVersion = stateVersion;
+  system.stateVersion = g.stateVersion;
   swapDevices = [ ];
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.enableRedistributableFirmware = true;

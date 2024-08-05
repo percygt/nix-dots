@@ -1,16 +1,14 @@
+{ config, lib, ... }:
+let
+  g = config._general;
+in
 {
-  username,
-  config,
-  lib,
-  ...
-}:
-{
-  home-manager.users.${username} = {
+  home-manager.users.${g.username} = {
     imports = [ ./home.nix ];
   };
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {
-      users.${username} = {
+      users.${g.username} = {
         directories = [ ".config/BraveSoftware/Brave-Browser" ];
       };
     };

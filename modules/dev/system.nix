@@ -1,20 +1,18 @@
-{
-  config,
-  lib,
-  username,
-  ...
-}:
+{ config, lib, ... }:
+let
+  g = config._general;
+in
 {
   imports = [ ./module.nix ];
   config = lib.mkIf config.modules.dev.enable {
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
-        users.${username} = {
+        users.${g.username} = {
           directories = [ ".config/gh" ];
         };
       };
     };
-    home-manager.users.${username} = {
+    home-manager.users.${g.username} = {
       imports = [ ./home.nix ];
       modules.dev.enable = lib.mkDefault true;
     };

@@ -1,14 +1,15 @@
 {
   pkgs,
   lib,
-  flakeDirectory,
   config,
-  username,
   profile,
   ...
 }:
+let
+  g = config._general;
+in
 {
-  home-manager.users.${username} =
+  home-manager.users.${g.username} =
     { pkgs, ... }:
     {
       systemd.user.services.nixos-rebuild = {
@@ -103,7 +104,7 @@
         User = "root";
       };
       script = ''
-        flake_dir="${flakeDirectory}"
+        flake_dir="${g.flakeDirectory}"
         stderr() { printf "%s\n" "$*" >&2; }
          printf "                                                                                                 \n"
          printf "   ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██████╗ ███████╗██████╗ ██╗   ██╗██╗██╗     ██████╗ \n"
@@ -120,7 +121,7 @@
         # Execute the commands
         cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
         cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
-        su - ${username} -c "$cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
+        su - ${g.username} -c "$cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
       '';
     };
   };

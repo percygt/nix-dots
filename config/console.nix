@@ -3,11 +3,11 @@
   config,
   lib,
   libx,
-  username,
   ...
 }:
 let
   inherit (libx.colorConvert) hexToRGBString;
+  g = config._general;
   c = config.modules.theme.colors;
   f = config.modules.fonts.shell;
 in
@@ -20,7 +20,7 @@ in
   services.kmscon = {
     enable = true;
     hwRender = true;
-    autologinUser = username;
+    autologinUser = g.username;
     fonts = [ { inherit (f) name package; } ];
     extraConfig = ''
       font-size=${builtins.toString f.size}

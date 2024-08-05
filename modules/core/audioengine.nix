@@ -2,15 +2,17 @@
   config,
   lib,
   pkgs,
-  username,
   libx,
   ...
 }:
+let
+  g = config._general;
+in
 {
   options.modules.core.audioengine.enable = libx.enableDefault "audioengine";
   config = lib.mkIf config.modules.core.audioengine.enable {
     environment.persistence = {
-      "/persist".users.${username}.directories = [ ".local/state/wireplumber" ];
+      "/persist".users.${g.username}.directories = [ ".local/state/wireplumber" ];
       "/persist/system".directories = [ "/var/lib/alsa" ];
     };
     hardware.pulseaudio.enable = lib.mkForce false;

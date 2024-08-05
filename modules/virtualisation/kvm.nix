@@ -1,10 +1,12 @@
 {
   pkgs,
-  username,
   lib,
   config,
   ...
 }:
+let
+  g = config._general;
+in
 {
   options.modules.virtualisation.kvm.enable = lib.mkEnableOption "Enable kvm";
   config = lib.mkIf config.modules.virtualisation.kvm.enable {
@@ -29,7 +31,7 @@
       "iommu=pt"
     ];
     users = {
-      users.${username}.extraGroups = [
+      users.${g.username}.extraGroups = [
         "qemu"
         "kvm"
       ];

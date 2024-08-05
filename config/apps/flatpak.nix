@@ -1,9 +1,12 @@
 {
-  username,
   lib,
   inputs,
+  config,
   ...
 }:
+let
+  g = config._general;
+in
 {
   imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
   services.flatpak = {
@@ -55,7 +58,7 @@
     ];
   };
   fileSystems."/var/lib/flatpak".options = [ "exec" ];
-  home-manager.users.${username} = {
+  home-manager.users.${g.username} = {
     xdg.dataFile = {
       "flatpak/overrides/global".text = ''
         [Context]
@@ -65,7 +68,7 @@
   };
   environment.persistence = {
     "/persist/system".directories = [ "/var/lib/flatpak" ];
-    "/persist".users.${username}.directories = [
+    "/persist".users.${g.username}.directories = [
       ".var/app/org.telegram.desktop"
       ".var/app/info.febvre.Komikku"
     ];

@@ -3,15 +3,14 @@
   config,
   lib,
   pkgs,
-  username,
-  flakeDirectory,
   libx,
   ...
 }:
 
 let
+  g = config._general;
   cfg = config.modules.core.autoupgrade;
-
+  inherit (config._general) flakeDirectory;
   # List of packages to include in each service's $PATH
   pathPkgs =
     (with pkgs; [
@@ -79,14 +78,14 @@ in
         cd ${flakeDirectory}
         # Check if there are changes from Git.
         echo "Pulling latest version..."
-        sudo -u ${username} git fetch
+        sudo -u ${g.username} git fetch
         # Get the current local commit hash and the latest remote commit hash
-        LOCAL_HASH=$(sudo -u ${username} git rev-parse HEAD)
-        REMOTE_HASH=$(sudo -u ${username} git rev-parse @{u})
+        LOCAL_HASH=$(sudo -u ${g.username} git rev-parse HEAD)
+        REMOTE_HASH=$(sudo -u ${g.username} git rev-parse @{u})
 
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
           echo "Updates found, running nixos-rebuild..."
-          sudo -u ${username} git pull
+          sudo -u ${g.username} git pull
           exec systemctl start nixos-rebuild
         else
           echo "No updates found. Exiting."

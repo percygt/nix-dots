@@ -2,13 +2,12 @@
   pkgs,
   lib,
   config,
-  homeDirectory,
   desktop,
   libx,
   ...
 }:
 let
-  kmk0 = "${homeDirectory}/data/config/keeps/m0.kdbx";
+  kpdb = config._general.keepassdb;
 in
 {
   imports = [ ./keepfzf.nix ];
@@ -26,9 +25,9 @@ in
             wl-clipboard
           ]
         );
-      sessionVariables.KPDB = kmk0;
+      sessionVariables.KPDB = kpdb;
       file."${config.xdg.cacheHome}/keepassxc/keepassxc.ini".text = lib.generators.toINI { } {
-        General.LastActiveDatabase = kmk0;
+        General.LastActiveDatabase = kpdb;
       };
     };
     xdg.configFile =
@@ -43,7 +42,7 @@ in
             obscure_color = "#555555";
           };
           database = {
-            database_1 = kmk0;
+            database_1 = kpdb;
             pw_cache_period_min = 10;
             terminal = "${lib.getExe config.programs.foot.package}";
             editor = "${lib.getExe config.programs.neovim.package}";

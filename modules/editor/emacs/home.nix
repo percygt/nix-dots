@@ -1,9 +1,7 @@
-{
-  flakeDirectory,
-  lib,
-  config,
-  ...
-}:
+{ lib, config, ... }:
+let
+  inherit (config._general) flakeDirectory;
+in
 {
   xdg.desktopEntries = {
     emacs = {

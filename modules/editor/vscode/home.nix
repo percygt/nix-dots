@@ -3,12 +3,11 @@
   config,
   lib,
   inputs,
-  flakeDirectory,
-  homeDirectory,
   ...
 }:
 let
-  moduleVscode = "${flakeDirectory}/modules/editor/vscode/config";
+  g = config._general;
+  moduleVscode = "${g.flakeDirectory}/modules/editor/vscode/config";
 in
 {
   imports = [ inputs.vscode-server.homeModules.default ];
@@ -18,7 +17,7 @@ in
     services.vscode-server = {
       enable = true;
       enableFHS = false;
-      installPath = "${homeDirectory}/.vscode-oss";
+      installPath = "${g.homeDirectory}/.vscode-oss";
     };
     programs.vscode = {
       enable = true;

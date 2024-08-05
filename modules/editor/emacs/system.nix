@@ -3,10 +3,10 @@
   inputs,
   lib,
   config,
-  username,
   ...
 }:
 let
+  g = config._general;
   cfg = config.modules.editor.emacs;
 
   emacsConfig = pkgs.concatTextFile {
@@ -57,7 +57,7 @@ in
     # };
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
-        users.${username} = {
+        users.${g.username} = {
           directories = [
             ".local/share/emacs"
             ".local/cache/emacs"
@@ -65,7 +65,7 @@ in
         };
       };
     };
-    home-manager.users.${username} = {
+    home-manager.users.${g.username} = {
       imports = [ ./home.nix ];
       services.emacs = {
         enable = true;

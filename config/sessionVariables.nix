@@ -1,4 +1,7 @@
-{ flakeDirectory, ... }:
+{ config, ... }:
+let
+  inherit (config._general) flakeDirectory;
+in
 {
   home.sessionVariables = {
     FLAKE = flakeDirectory;

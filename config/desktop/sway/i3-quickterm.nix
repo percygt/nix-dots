@@ -1,21 +1,17 @@
-{
-  pkgs,
-  flakeDirectory,
-  homeDirectory,
-  ...
-}:
+{ pkgs, config, ... }:
 let
+  g = config._general;
   launchTmux = pkgs.writers.writeBash "launchTmux" ''
-    if [ -d ${flakeDirectory} ]; then
+    if [ -d ${g.flakeDirectory} ]; then
       tmux has-session -t nix-dots 2>/dev/null
       if [ $? != 0 ]; then
-        tmux new-session -ds nix-dots -c "${flakeDirectory}"
+        tmux new-session -ds nix-dots -c "${g.flakeDirectory}"
       fi
       tmux new-session -As nix-dots
     else
       tmux has-session -t home 2>/dev/null
       if [ $? != 0 ]; then
-        tmux new-session -ds home -c "${homeDirectory}"
+        tmux new-session -ds home -c "${g.homeDirectory}"
       fi
       tmux new-session -As home
     fi

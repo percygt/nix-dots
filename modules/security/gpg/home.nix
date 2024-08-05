@@ -2,11 +2,11 @@
   pkgs,
   config,
   lib,
-  flakeDirectory,
   libx,
   ...
 }:
 let
+  inherit (config._general) flakeDirectory;
   timeout = 432000;
   gpgsshctl = pkgs.writeShellApplication {
     name = "gpgsshctl";
@@ -16,7 +16,7 @@ let
     ];
     text = builtins.readFile ./gpgsshcontrol.bash;
   };
-  hmGpg = "${flakeDirectory}/modules/security/gpg";
+  moduleGpg = "${flakeDirectory}/modules/security/gpg";
 in
 {
   imports = [ ./pass.nix ];
@@ -26,8 +26,6 @@ in
     programs = {
       gpg = {
         enable = true;
-        # homedir = "${config.xdg.dataHome}/gnupg";
-        # mutableKeys = lib.mkDefault false;
         mutableTrust = lib.mkDefault false;
         scdaemonSettings.disable-ccid = true;
         publicKeys = [
@@ -38,7 +36,7 @@ in
         ];
       };
     };
-    xdg.dataFile."${config.programs.gpg.homedir}/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink "${hmGpg}/sshcontrol";
+    xdg.dataFile."${config.programs.gpg.homedir}/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink "${moduleGpg}/sshcontrol";
     services.gpg-agent = {
       enable = true;
       enableSshSupport = true;

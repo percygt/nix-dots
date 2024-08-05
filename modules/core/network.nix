@@ -1,11 +1,11 @@
 {
   lib,
   config,
-  username,
   libx,
   ...
 }:
 let
+  g = config._general;
   wpa = config.modules.core.network.wpa.enable;
   cfg = config.modules.core.network;
 in
@@ -92,7 +92,7 @@ in
     };
 
     users.groups.network = lib.mkIf wpa { };
-    users.users.${username}.extraGroups = [ "network" ];
+    users.users.${g.username}.extraGroups = [ "network" ];
 
     systemd = {
       services.wpa_supplicant = {

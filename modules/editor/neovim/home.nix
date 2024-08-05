@@ -2,10 +2,10 @@
   pkgs,
   lib,
   config,
-  flakeDirectory,
   ...
 }:
 let
+  inherit (config._general) flakeDirectory;
   moduleNvim = "${flakeDirectory}/modules/editor/neovim";
 in
 {

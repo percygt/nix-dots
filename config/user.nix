@@ -1,14 +1,13 @@
 { pkgs, config, ... }:
+let
+  g = config._general;
+in
 {
-  modules.shell.userDefaultShell = "fish";
-
-  environment.sessionVariables.EDITOR = "vim";
-
   sops.secrets.userHashedPassword.neededForUsers = true;
 
   users = {
     mutableUsers = false;
-    users.percygt = {
+    users.${g.username} = {
       isNormalUser = true;
       hashedPasswordFile = config.sops.secrets.userHashedPassword.path;
       packages = [ pkgs.home-manager ];

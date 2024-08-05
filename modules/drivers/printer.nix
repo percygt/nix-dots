@@ -2,23 +2,33 @@
   config,
   lib,
   pkgs,
-  username,
   ...
 }:
+let
+  g = config._general;
+in
 {
   options.modules.drivers.printer.enable = lib.mkEnableOption "Enable printers";
   config = lib.mkIf config.modules.drivers.printer.enable {
-    services.printing = {
-      enable = true;
-      drivers = [ pkgs.epson-201401w ];
+    programs.system-config-printer.enable = true;
+    services = {
+      udev.packages = [ pkgs.utsushi ];
+      system-config-printer.enable = true;
+      printing = {
+        enable = true;
+        drivers = [ pkgs.epson-201401w ];
+      };
     };
-    hardware.sane.enable = true; # enables support for SANE scanners
-    hardware.sane.extraBackends = [
-      pkgs.epkowa
-      pkgs.utsushi
-    ];
-    services.udev.packages = [ pkgs.utsushi ];
-    users.users.${username}.extraGroups = [
+    hardware = {
+      sane = {
+        enable = true; # enables support for SANE scanners
+        extraBackends = [
+          pkgs.epkowa
+          pkgs.utsushi
+        ];
+      };
+    };
+    users.users.${g.username}.extraGroups = [
       "scanner"
       "lp"
     ];

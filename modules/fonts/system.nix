@@ -1,11 +1,11 @@
 {
   lib,
   config,
-  username,
   pkgs,
   ...
 }:
 let
+  g = config._general;
   cfg = config.modules.fonts;
   optionals =
     { fonttype, typeface }:
@@ -24,7 +24,7 @@ in
 {
   imports = [ ./module.nix ];
   config = {
-    home-manager.users.${username} = import ./module.nix;
+    home-manager.users.${g.username} = import ./module.nix;
     nixpkgs.config.joypixels.acceptLicense = true;
     fonts = {
       enableDefaultPackages = false;

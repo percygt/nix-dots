@@ -1,11 +1,12 @@
 {
-  username,
-  stateVersion,
-  homeDirectory,
+  config,
   isGeneric,
   lib,
   ...
 }:
+let
+  g = config._general;
+in
 {
   imports = [
     ./shellAliases.nix
@@ -18,11 +19,11 @@
   systemd.user.startServices = "sd-switch";
 
   home = {
-    inherit username stateVersion homeDirectory;
+    inherit (g) username stateVersion homeDirectory;
     activation = lib.optionalAttrs (!isGeneric) {
       rmUselessDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        rm -rf ${homeDirectory}/.nix-defexpr
-        rm -rf ${homeDirectory}/.nix-profile
+        rm -rf ${g.homeDirectory}/.nix-defexpr
+        rm -rf ${g.homeDirectory}/.nix-profile
       '';
     };
   };

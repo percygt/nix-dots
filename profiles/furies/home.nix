@@ -1,9 +1,7 @@
-{
-  config,
-  pkgs,
-  flakeDirectory,
-  ...
-}:
+{ config, pkgs, ... }:
+let
+  g = config._general;
+in
 {
   targets.genericLinux.enable = true;
   desktop = {
@@ -58,7 +56,7 @@
     ];
     shellAliases = {
       mkVM = "qemu-system-x86_64 -enable-kvm -m 2G -boot menu=on -drive file=vm.img -cpu=host -vga virtio -display sdl,gl=on -cdrom";
-      hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
+      hms = "home-manager switch --flake ${g.flakeDirectory}#$hostname";
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
     };
     sessionVariables = {
@@ -70,10 +68,10 @@
     enable = true;
     extraOptions = [
       "-gui-address=furies.atlas-qilin.ts.net:8384"
-      "-home=${config.home.homeDirectory}/data/syncthing"
+      "-home=${g.homeDirectory}/data/syncthing"
     ];
   };
-  xdg.systemDirs.data = [ "${config.home.homeDirectory}/.nix-profile/share/applications" ];
+  xdg.systemDirs.data = [ "${g.homeDirectory}/.nix-profile/share/applications" ];
   dconf.settings = {
     "org/gnome/shell/extensions/fedora-update" = {
       # update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- ${pkgs.fish}/bin/fish -c \"sudo dnf check-update --refresh & sudo dnf upgrade -y; echo Done - Press enter to exit; read _\" ";

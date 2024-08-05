@@ -1,10 +1,11 @@
 {
   pkgs,
-  targetUser,
   lib,
+  config,
   ...
 }:
 let
+  g = config._general;
   mkPathList = dir: builtins.attrNames (builtins.readDir dir);
   mkBashScriptsFromList =
     scripts:
@@ -42,7 +43,7 @@ in
         setCredentials "/dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5"
         cloneDots
 
-        TARGET_USER=${targetUser}
+        TARGET_USER=${g.username}
         TARGET_HOST=$(find "$DOTS_DIR"/profiles/*/configuration.nix | cut -d'/' -f6 | gum choose)
 
         setSecrets "$TARGET_HOST"

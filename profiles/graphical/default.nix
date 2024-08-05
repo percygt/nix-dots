@@ -1,4 +1,7 @@
-{ inputs, username, ... }:
+{ inputs, config, ... }:
+let
+  g = config._general;
+in
 {
   imports = [
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
@@ -9,5 +12,5 @@
     cli.starship.enable = true;
   };
 
-  home-manager.users.${username} = import ./home.nix;
+  home-manager.users.${g.username} = import ./home.nix;
 }

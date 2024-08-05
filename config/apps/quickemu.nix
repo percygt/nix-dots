@@ -23,7 +23,7 @@
     };
     desktopEntries."quickemu-win10" = {
       name = "Windows 10";
-      exec = "${pkgs.quickemu}/bin/quickemu --vm ${config.home.homeDirectory}/windows/windows-10.conf --display spice";
+      exec = "${pkgs.quickemu}/bin/quickemu --vm ${config._general.homeDirectory}/windows/windows-10.conf --display spice";
       terminal = false;
       icon = "qemu";
       type = "Application";

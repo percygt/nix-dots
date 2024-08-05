@@ -1,17 +1,18 @@
 {
   pkgs,
-  libx,
-  username,
   config,
   lib,
   ...
 }:
+let
+  g = config._general;
+in
 {
   imports = [ ./tuigreet.nix ];
-  home-manager.users.${username} = import ./home.nix;
+  home-manager.users.${g.username} = import ./home.nix;
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {
-      users.${username} = {
+      users.${g.username} = {
         directories = [
           ".local/share/keyrings"
           ".config/goa-1.0"
@@ -30,7 +31,7 @@
   };
 
   # Make sure to start the home-manager activation before I log in.
-  systemd.services."home-manager-${username}" = {
+  systemd.services."home-manager-${g.username}" = {
     before = [ "display-manager.service" ];
     wantedBy = [ "multi-user.target" ];
   };

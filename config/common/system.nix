@@ -1,5 +1,8 @@
-{ username, ... }:
+{ config, ... }:
+let
+  g = config._general;
+in
 {
   imports = [ ./dconf ];
-  home-manager.users.${username} = import ./home.nix;
+  home-manager.users.${g.username} = import ./home.nix;
 }

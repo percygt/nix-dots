@@ -1,13 +1,11 @@
-{
-  flakeDirectory,
-  inputs,
-  username,
-  ...
-}:
+{ inputs, config, ... }:
+let
+  g = config._general;
+in
 {
   imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
 
-  home.persistence."/persist/home/${username}" = {
+  home.persistence."/persist/home/${g.username}" = {
     directories = [
       ".local/share/nix"
       ".local/share/atuin"
@@ -42,7 +40,7 @@
 
   home = {
     shellAliases = {
-      hms = "home-manager switch --flake ${flakeDirectory}#$hostname";
+      hms = "home-manager switch --flake ${g.flakeDirectory}#$hostname";
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
     };
     sessionVariables = {

@@ -2,9 +2,11 @@
   config,
   pkgs,
   lib,
-  flakeDirectory,
   ...
 }:
+let
+  inherit (config._general) flakeDirectory;
+in
 {
   imports = [ ./ghq.nix ];
 

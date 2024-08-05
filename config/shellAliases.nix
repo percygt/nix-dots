@@ -1,4 +1,7 @@
-{ flakeDirectory, ... }:
+{ config, ... }:
+let
+  inherit (config._general) flakeDirectory;
+in
 {
   home.shellAliases = {
     ll = "eza --group --header --group-directories-first --long --git --all --binary --icons";

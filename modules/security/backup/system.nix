@@ -1,16 +1,15 @@
 {
-  homeDirectory,
   pkgs,
   config,
   lib,
-  username,
   libx,
   ...
 }:
 let
+  g = config._general;
   backupMountPath = "/media/stash";
   configDir = ".config/borgmatic.d";
-  flagFile = "${homeDirectory}/${configDir}/last_run";
+  flagFile = "${g.homeDirectory}/${configDir}/last_run";
   cfg = config.modules.security.backup;
   beforeActions = pkgs.writeShellScriptBin "beforeActions" ''
     if [ -f "${flagFile}" ] && grep -q "$(date +%F)" "${flagFile}"; then
@@ -32,10 +31,10 @@ in
   };
   # configured in home
   config = lib.mkIf cfg.enable {
-    home-manager.users.${username} = import ./home.nix;
+    home-manager.users.${g.username} = import ./home.nix;
     environment.systemPackages = with pkgs; [ borgbackup ];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist".users.${username}.directories = [ configDir ];
+      "/persist".users.${g.username}.directories = [ configDir ];
     };
     sops.secrets."borgmatic/encryption" = { };
     systemd = {
@@ -116,16 +115,16 @@ in
             path = "${backupMountPath}/backup/data";
           }
         ];
-        source_directories = [ "${homeDirectory}/data" ];
+        source_directories = [ "${g.homeDirectory}/data" ];
         exclude_caches = true;
         exclude_patterns = [
           "*.img"
           "*.iso"
           "*.qcow"
-          "${homeDirectory}/data/.Trash-*"
+          "${g.homeDirectory}/data/.Trash-*"
         ];
         exclude_if_present = [ ".nobackup" ];
-        borgmatic_source_directory = "${homeDirectory}/${configDir}";
+        borgmatic_source_directory = "${g.homeDirectory}/${configDir}";
         encryption_passcommand = "cat ${config.sops.secrets."borgmatic/encryption".path}";
         keep_daily = 7;
         before_actions = [ "${beforeActions}/bin/beforeActions" ];

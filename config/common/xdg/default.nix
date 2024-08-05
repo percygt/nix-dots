@@ -1,69 +1,64 @@
-{
-  lib,
-  config,
-  flakeDirectory,
-  ...
-}:
+{ lib, config, ... }:
 let
-  inherit ((import ./file-associations.nix)) associations;
+  g = config._general;
 in
 {
   xdg = {
     enable = true;
     mimeApps = {
       enable = true;
-      defaultApplications = associations;
+      defaultApplications = import ./file-associations.nix;
     };
-    configHome = config.home.homeDirectory + "/.config";
-    cacheHome = config.home.homeDirectory + "/.local/cache";
-    dataHome = config.home.homeDirectory + "/.local/share";
-    stateHome = config.home.homeDirectory + "/.local/state";
+    configHome = g.homeDirectory + "/.config";
+    cacheHome = g.homeDirectory + "/.local/cache";
+    dataHome = g.homeDirectory + "/.local/share";
+    stateHome = g.homeDirectory + "/.local/state";
     userDirs = {
       enable = true;
       createDirectories = lib.mkDefault true;
 
-      download = config.home.homeDirectory + "/downloads";
-      pictures = config.home.homeDirectory + "/pictures";
-      music = config.home.homeDirectory + "/music";
+      download = g.homeDirectory + "/downloads";
+      pictures = g.homeDirectory + "/pictures";
+      music = g.homeDirectory + "/music";
 
-      documents = config.home.homeDirectory;
-      desktop = config.home.homeDirectory;
-      publicShare = config.home.homeDirectory;
-      templates = config.home.homeDirectory;
-      videos = config.home.homeDirectory;
+      documents = g.homeDirectory;
+      desktop = g.homeDirectory;
+      publicShare = g.homeDirectory;
+      templates = g.homeDirectory;
+      videos = g.homeDirectory;
 
       extraConfig = {
-        XDG_SCREENSHOTS_DIR = "${config.home.homeDirectory}/pictures/screenshots";
+        XDG_SCREENSHOTS_DIR = "${g.homeDirectory}/pictures/screenshots";
       };
     };
   };
 
   gtk.gtk3 = {
     bookmarks = [
-      "file:///${flakeDirectory}"
-      "file://${config.home.homeDirectory}/data"
-      "file://${config.home.homeDirectory}/windows"
-      "file://${config.home.homeDirectory}/data/codebox"
-      "file://${config.home.homeDirectory}/data/git-repo"
-      "file://${config.home.homeDirectory}/.local/share"
-      "file://${config.home.homeDirectory}/.config"
-      "file://${config.home.homeDirectory}/data/playground"
+      "file:///${g.flakeDirectory}"
+      "file://${g.homeDirectory}/data"
+      "file://${g.homeDirectory}/windows"
+      "file://${g.homeDirectory}/data/codebox"
+      "file://${g.homeDirectory}/data/git-repo"
+      "file://${g.homeDirectory}/.local/share"
+      "file://${g.homeDirectory}/.config"
+      "file://${g.homeDirectory}/data/playground"
     ];
   };
 
   home.activation = {
     linkXdgDirs = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      if [ ! -e "${config.home.homeDirectory}/pictures/.not_empty" ] && [ -e "${config.home.homeDirectory}/data" ]; then
-          rm -rf "${config.home.homeDirectory}/pictures"
-          ln -s "${config.home.homeDirectory}/data/home/pictures" "${config.home.homeDirectory}/pictures"
+      if [ ! -e "${g.homeDirectory}/pictures/.not_empty" ] && [ -e "${g.homeDirectory}/data" ]; then
+          rm -rf "${g.homeDirectory}/pictures"
+          ln -s "${g.homeDirectory}/data/home/pictures" "${g.homeDirectory}/pictures"
       fi
-      if [ ! -e "${config.home.homeDirectory}/downloads/.not_empty" ] && [ -e "${config.home.homeDirectory}/data" ]; then
-          rm -rf "${config.home.homeDirectory}/downloads"
-          ln -s "${config.home.homeDirectory}/data/home/downloads" "${config.home.homeDirectory}/downloads"
+      if [ ! -e "${g.homeDirectory}/downloads/.not_empty" ] && [ -e "${g.homeDirectory}/data" ]; then
+          rm -rf "${g.homeDirectory}/downloads"
+          ln -s "${g.homeDirectory}/data/home/downloads" "${g.homeDirectory}/downloads"
       fi
-      if [ ! -e "${config.home.homeDirectory}/music/.not_empty" ] && [ -e "${config.home.homeDirectory}/data" ]; then
-          rm -rf "${config.home.homeDirectory}/music"
-          ln -s "${config.home.homeDirectory}/data/home/music" "${config.home.homeDirectory}/music"
+      if [ ! -e "${g.homeDirectory}/music/.not_empty" ] && [ -e "${g.homeDirectory}/data" ]; then
+          rm -rf "${g.homeDirectory}/music"
+          ln -s "${g.homeDirectory}/data/home/music" "${g.homeDirectory}/music"
       fi
     '';
   };

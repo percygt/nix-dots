@@ -3,9 +3,11 @@
   lib,
   inputs,
   config,
-  username,
   ...
 }:
+let
+  g = config._general;
+in
 {
   imports = [
     ./disks.nix
@@ -22,7 +24,7 @@
   environment.persistence = {
     "/persist" = {
       hideMounts = true;
-      users.${username} = {
+      users.${g.username} = {
         directories = [
           {
             directory = ".ssh";

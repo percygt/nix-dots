@@ -1,13 +1,12 @@
 {
-  username,
   config,
   lib,
   pkgs,
-  homeDirectory,
   profile,
   ...
 }:
 let
+  g = config._general;
   staggeredMonth = {
     type = "staggered";
     cleanupIntervalS = 86400; # Once every day
@@ -35,7 +34,7 @@ in
   options.modules.network.syncthing.enable = lib.mkEnableOption "Enable syncthing";
 
   config = lib.mkIf config.modules.network.syncthing.enable {
-    users.users.${username}.packages = [ pkgs.syncthing ];
+    users.users.${g.username}.packages = [ pkgs.syncthing ];
     sops.secrets = {
       "syncthing/cert.pem" = { };
       "syncthing/key.pem" = { };
@@ -43,17 +42,17 @@ in
     };
     services.syncthing = {
       enable = true;
-      user = username;
+      user = g.username;
       openDefaultPorts = true;
       guiAddress = "${profile}.atlas-qilin.ts.net:8384";
-      dataDir = "${homeDirectory}/data";
-      configDir = "${homeDirectory}/data/config/syncthing";
+      dataDir = "${g.homeDirectory}/data";
+      configDir = "${g.homeDirectory}/data/config/syncthing";
       cert = config.sops.secrets."syncthing/cert.pem".path;
       key = config.sops.secrets."syncthing/key.pem".path;
 
       settings = rec {
         gui = {
-          user = username;
+          user = g.username;
           theme = "black";
         };
         devices.phone.id = "NMI66EH-U5GFS4R-VV32KKU-34FNTLC-CEB6KXO-A6L3E37-KZOC24S-P3PPDQQ";

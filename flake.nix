@@ -65,16 +65,9 @@
   outputs =
     { self, ... }@inputs:
     let
-      defaultUser = "percygt";
-      stateVersion = "24.05";
       bldr = import ./lib {
         inherit (self) outputs;
-        inherit
-          self
-          inputs
-          defaultUser
-          stateVersion
-          ;
+        inherit self inputs;
       };
     in
     {
@@ -104,11 +97,11 @@
       };
 
       homeConfigurations = {
-        "${defaultUser}@furies" = bldr.buildHome {
+        "furies" = bldr.buildHome {
           profile = "furies";
           desktop = "sway";
         };
-        "${defaultUser}@fates" = bldr.buildHome {
+        "fates" = bldr.buildHome {
           profile = "fates";
           desktop = "gnome";
         };

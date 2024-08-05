@@ -2,10 +2,16 @@
   inputs,
   outputs,
   self,
-  defaultUser,
-  stateVersion,
   ...
 }:
+let
+  modules = [
+    "${self}/profiles"
+    "${self}/config"
+    (builtins.toString inputs.sikreto)
+    outputs.nixosModules.default
+  ];
+in
 {
   forAllSystems =
     function:
@@ -13,13 +19,13 @@
       "x86_64-linux"
       "aarch64-linux"
     ] (system: function inputs.nixpkgs.legacyPackages.${system});
+
   buildSystem =
     {
       profile,
       isIso ? false,
       desktop ? null,
       system ? "x86_64-linux",
-      username ? defaultUser,
     }:
     let
       inherit (inputs.nixpkgs.lib) nixosSystem;
@@ -28,9 +34,7 @@
           inputs
           outputs
           self
-          username
           desktop
-          stateVersion
           profile
           isIso
           ;
@@ -38,12 +42,7 @@
       homeArgs = mkArgs.args;
     in
     nixosSystem {
-      inherit system;
-      modules = [
-        "${self}/profiles"
-        "${self}/config"
-        outputs.nixosModules.default
-      ];
+      inherit system modules;
       specialArgs = {
         inherit homeArgs;
       } // mkArgs.args;
@@ -55,7 +54,6 @@
       isGeneric ? true,
       desktop ? null,
       system ? "x86_64-linux",
-      username ? defaultUser,
     }:
     let
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
@@ -64,9 +62,7 @@
           inputs
           outputs
           self
-          username
           desktop
-          stateVersion
           profile
           isGeneric
           ;
@@ -74,11 +70,7 @@
     in
     homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      modules = [
-        outputs.nixosModules.default
-        "${self}/profiles"
-        "${self}/config"
-      ];
+      inherit modules;
       extraSpecialArgs = mkArgs.args;
     };
 }

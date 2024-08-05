@@ -2,10 +2,12 @@
   pkgs,
   lib,
   config,
-  username,
   libx,
   ...
 }:
+let
+  g = config._general;
+in
 {
   imports = [
     ./kernel.nix
@@ -14,7 +16,7 @@
   ];
   options.modules.security.common.enable = libx.enableDefault "common";
   config = lib.mkIf config.modules.security.common.enable {
-    home-manager.users.${username} = import ./home.nix;
+    home-manager.users.${g.username} = import ./home.nix;
     environment.systemPackages = with pkgs; [
       age
       sops

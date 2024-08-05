@@ -2,9 +2,11 @@
   lib,
   config,
   pkgs,
-  username,
   ...
 }:
+let
+  g = config._general;
+in
 {
   options.modules.network.tailscale.enable = lib.mkEnableOption "Enable tailscale";
 
@@ -15,7 +17,7 @@
       allowedUDPPorts = [ config.services.tailscale.port ];
       checkReversePath = "loose";
     };
-    users.users.${username}.packages = [ pkgs.tailscale ];
+    users.users.${g.username}.packages = [ pkgs.tailscale ];
     # inter-machine VPN
     services.tailscale = {
       enable = true;

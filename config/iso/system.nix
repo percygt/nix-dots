@@ -2,7 +2,6 @@
   pkgs,
   lib,
   inputs,
-  username,
   ...
 }:
 {
@@ -16,7 +15,7 @@
 
   isoImage.squashfsCompression = "gzip -Xcompression-level 1";
 
-  home-manager.users.${username} = import ./home.nix;
+  home-manager.users.nixos = import ./home.nix;
 
   environment.systemPackages = import ../corePackages.nix pkgs;
 
