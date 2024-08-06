@@ -57,7 +57,7 @@
       flake = false;
     };
 
-    sikreto = {
+    general = {
       url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
       flake = false;
     };
@@ -97,11 +97,11 @@
       };
 
       homeConfigurations = {
-        "furies" = bldr.buildHome {
+        furies = bldr.buildHome {
           profile = "furies";
           desktop = "sway";
         };
-        "fates" = bldr.buildHome {
+        fates = bldr.buildHome {
           profile = "fates";
           desktop = "gnome";
         };

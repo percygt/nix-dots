@@ -738,6 +738,24 @@
         "type": "github"
       }
     },
+    "general": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1722894764,
+        "narHash": "sha256-5QJYHAIrzoHd0Zm8rjieHCqlSOGUsa7kGDUjnLusgOg=",
+        "ref": "main",
+        "rev": "f52fce6e060dc317cc3dfeabe6d8599609b943d0",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
+      }
+    },
     "git-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -1793,6 +1811,7 @@
           "emacs-overlay"
         ],
         "fenix": "fenix",
+        "general": "general",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "neovim-nightly-overlay": [
@@ -1812,7 +1831,6 @@
           "nix-sources",
           "nixpkgs-stable"
         ],
-        "sikreto": "sikreto",
         "sops-nix": "sops-nix",
         "tt-schemes": "tt-schemes",
         "vscode-server": "vscode-server",
@@ -1928,24 +1946,6 @@
         "owner": "wlrfx",
         "repo": "scenefx",
         "type": "github"
-      }
-    },
-    "sikreto": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1722884354,
-        "narHash": "sha256-mRQmsiq7W9j/2I/rC9Y04ew8BgOK8sdXWFcKMaj+Onc=",
-        "ref": "main",
-        "rev": "d7bb024d25182637ad6be7f32c2861d1ac2638cb",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
-      },
-      "original": {
-        "ref": "main",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
       }
     },
     "sops-nix": {

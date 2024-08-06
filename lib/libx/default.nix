@@ -34,6 +34,13 @@ in
     };
 
   importPaths = {
+    moduleDefault =
+      rootDir:
+      if isGeneric then
+        (if (builtins.pathExists (rootDir + /home.nix)) then [ (rootDir + /home.nix) ] else [ ])
+      else
+        (if (builtins.pathExists (rootDir + /system.nix)) then [ (rootDir + /system.nix) ] else [ ]);
+
     default =
       rootDir:
       if isGeneric then

@@ -7,7 +7,6 @@
 }:
 let
   g = config._general;
-  secretsPath = builtins.toString inputs.sikreto;
 in
 {
   imports = [ inputs.sops-nix.nixosModules.sops ];
@@ -15,10 +14,10 @@ in
   config = lib.mkIf config.modules.security.sops.enable {
     home-manager.users.${g.username} = import ./home.nix;
     sops = {
-      defaultSopsFile = "${secretsPath}/secrets-system.enc.yaml";
+      defaultSopsFile = g.systemSopsFile;
       validateSopsFiles = false;
       age = {
-        keyFile = "/persist/system/keys/system-sops.keyfile";
+        keyFile = g.systemKeyfile;
         sshKeyPaths = [ ];
       };
       gnupg.sshKeyPaths = [ ];

@@ -3,7 +3,7 @@
 ## Enable or disable sshcontrol for a specific key or all keys when the SSH
 ## agent is controlled by GPG
 
-SSHCONTROL_FILE=${SSHCONTROL_FILE:-~/.local/share/gnupg/sshcontrol}
+SSHCONTROL_FILE=${SSHCONTROL_FILE:-~/.gnupg/sshcontrol}
 
 command="${1:-}"
 identity_file="${2:-}"

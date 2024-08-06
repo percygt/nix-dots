@@ -68,7 +68,7 @@ in
     enable = true;
     extraOptions = [
       "-gui-address=furies.atlas-qilin.ts.net:8384"
-      "-home=${g.homeDirectory}/data/syncthing"
+      "-home=${g.dataDirectory}/syncthing"
     ];
   };
   xdg.systemDirs.data = [ "${g.homeDirectory}/.nix-profile/share/applications" ];

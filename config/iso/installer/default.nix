@@ -37,14 +37,17 @@ in
         	exit 1
         fi
 
-        DOTS_DIR="$HOME/nix-dots";
+        export DOTS_DIR="$HOME/nix-dots";
+        export FLAKE=${g.flakeDirectory}
+        export SECRETS=${g.secretsDirectory}
+        export DATA=${g.dataDirectory}
+        export WINDOWS=${g.windowsDirectory}
+        export TARGET_USER=${g.username}
+        export TARGET_HOST=$(find "$DOTS_DIR"/profiles/*/configuration.nix | cut -d'/' -f6 | gum choose)
 
         # my usb drive with gpg keys inside
         setCredentials "/dev/disk/by-uuid/cbba3a5a-81e5-4146-8895-641602b712a5"
         cloneDots
-
-        TARGET_USER=${g.username}
-        TARGET_HOST=$(find "$DOTS_DIR"/profiles/*/configuration.nix | cut -d'/' -f6 | gum choose)
 
         setSecrets "$TARGET_HOST"
         setDisks "$TARGET_HOST"

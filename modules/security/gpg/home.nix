@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (config._general) flakeDirectory;
+  g = config._general;
   timeout = 432000;
   gpgsshctl = pkgs.writeShellApplication {
     name = "gpgsshctl";
@@ -16,7 +16,7 @@ let
     ];
     text = builtins.readFile ./gpgsshcontrol.bash;
   };
-  moduleGpg = "${flakeDirectory}/modules/security/gpg";
+  moduleGpg = "${g.flakeDirectory}/modules/security/gpg";
 in
 {
   imports = [ ./pass.nix ];
@@ -30,7 +30,7 @@ in
         scdaemonSettings.disable-ccid = true;
         publicKeys = [
           {
-            source = /persist/home/percygt/keys/public.asc;
+            source = g.gpg.publicKeyfile;
             trust = "ultimate";
           }
         ];

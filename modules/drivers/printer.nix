@@ -10,6 +10,7 @@ in
 {
   options.modules.drivers.printer.enable = lib.mkEnableOption "Enable printers";
   config = lib.mkIf config.modules.drivers.printer.enable {
+    # hardware.printers.ensurePrinters = [ g.localPrinter ];
     programs.system-config-printer.enable = true;
     services = {
       udev.packages = [ pkgs.utsushi ];
@@ -21,7 +22,7 @@ in
     };
     hardware = {
       sane = {
-        enable = true; # enables support for SANE scanners
+        enable = true;
         extraBackends = [
           pkgs.epkowa
           pkgs.utsushi

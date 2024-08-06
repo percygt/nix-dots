@@ -8,7 +8,7 @@ let
   modules = [
     "${self}/profiles"
     "${self}/config"
-    (builtins.toString inputs.sikreto)
+    (builtins.toString inputs.general)
     outputs.nixosModules.default
   ];
 in

@@ -12,7 +12,7 @@ let
   glab_ssh_repo = "ssh://git@gitlab.com/percygt/";
   codebox = {
     vcs = "git";
-    root = "${g.homeDirectory}/data/codebox";
+    root = "${g.dataDirectory}/codebox";
   };
 in
 {
@@ -20,7 +20,7 @@ in
     home.packages = with pkgs; [ ghq ];
     programs.git.extraConfig.ghq = {
       vcs = "git";
-      root = "${g.homeDirectory}/data/git-repo";
+      root = "${g.dataDirectory}/git-repo";
       ${glab_ssh_repo} = codebox;
       ${gh_ssh_repo} = codebox;
       ${glab_http_repo} = codebox;

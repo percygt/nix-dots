@@ -46,7 +46,7 @@ in
       openDefaultPorts = true;
       guiAddress = "${profile}.atlas-qilin.ts.net:8384";
       dataDir = "${g.homeDirectory}/data";
-      configDir = "${g.homeDirectory}/data/config/syncthing";
+      configDir = g.syncthingDirectory;
       cert = config.sops.secrets."syncthing/cert.pem".path;
       key = config.sops.secrets."syncthing/key.pem".path;
 

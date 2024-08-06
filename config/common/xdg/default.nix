@@ -38,11 +38,11 @@ in
       "file:///${g.flakeDirectory}"
       "file://${g.homeDirectory}/data"
       "file://${g.homeDirectory}/windows"
-      "file://${g.homeDirectory}/data/codebox"
-      "file://${g.homeDirectory}/data/git-repo"
+      "file://${g.dataDirectory}/codebox"
+      "file://${g.dataDirectory}/git-repo"
       "file://${g.homeDirectory}/.local/share"
       "file://${g.homeDirectory}/.config"
-      "file://${g.homeDirectory}/data/playground"
+      "file://${g.dataDirectory}/playground"
     ];
   };
 
@@ -50,15 +50,15 @@ in
     linkXdgDirs = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       if [ ! -e "${g.homeDirectory}/pictures/.not_empty" ] && [ -e "${g.homeDirectory}/data" ]; then
           rm -rf "${g.homeDirectory}/pictures"
-          ln -s "${g.homeDirectory}/data/home/pictures" "${g.homeDirectory}/pictures"
+          ln -s "${g.dataDirectory}/home/pictures" "${g.homeDirectory}/pictures"
       fi
       if [ ! -e "${g.homeDirectory}/downloads/.not_empty" ] && [ -e "${g.homeDirectory}/data" ]; then
           rm -rf "${g.homeDirectory}/downloads"
-          ln -s "${g.homeDirectory}/data/home/downloads" "${g.homeDirectory}/downloads"
+          ln -s "${g.dataDirectory}/home/downloads" "${g.homeDirectory}/downloads"
       fi
       if [ ! -e "${g.homeDirectory}/music/.not_empty" ] && [ -e "${g.homeDirectory}/data" ]; then
           rm -rf "${g.homeDirectory}/music"
-          ln -s "${g.homeDirectory}/data/home/music" "${g.homeDirectory}/music"
+          ln -s "${g.dataDirectory}/home/music" "${g.homeDirectory}/music"
       fi
     '';
   };

@@ -5,8 +5,9 @@
   ...
 }:
 let
+  g = config._general;
   cfg = config.modules.security.gpg;
-  PASSWORD_STORE_DIR = "${config._general.homeDirectory}/data/config/pass";
+  PASSWORD_STORE_DIR = g.gpg.passDir;
 in
 {
   options.modules.security.gpg.pass.enable = lib.mkOption {

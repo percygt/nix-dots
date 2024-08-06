@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (config._general) flakeDirectory;
+  g = config._general;
 in
 {
   imports = [ ./ghq.nix ];
@@ -36,7 +36,7 @@ in
       extraConfig = {
         core.editor = "nvim";
         init.defaultBranch = "main";
-        safe.directory = "${flakeDirectory}/.git";
+        safe.directory = g.flakeDirectory;
         pull.rebase = false;
         color.ui = true;
         column.ui = "auto";
@@ -66,7 +66,7 @@ in
 
       signing = {
         signByDefault = true;
-        key = "1F3DB564F0E44F81!";
+        key = g.gpg.signingKey;
         gpgPath = "${config.programs.gpg.package}/bin/gpg";
       };
     };

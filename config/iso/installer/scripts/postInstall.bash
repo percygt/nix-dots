@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 set -euo pipefail
 TARGET_HOST=$1
 TARGET_USER=$2

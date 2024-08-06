@@ -7,27 +7,23 @@
 }:
 let
   g = config._general;
-  backupMountPath = "/media/stash";
+  bak = g.backupMount;
+  backupMountPath = bak.path;
   configDir = ".config/borgmatic.d";
   flagFile = "${g.homeDirectory}/${configDir}/last_run";
   cfg = config.modules.security.backup;
   beforeActions = pkgs.writeShellScriptBin "beforeActions" ''
     if [ -f "${flagFile}" ] && grep -q "$(date +%F)" "${flagFile}"; then
-        ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo "${cfg.usbId}" | tee /sys/bus/usb/drivers/usb/unbind
+        ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/unbind
         exit 75
     fi
-    ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo "${cfg.usbId}" | tee /sys/bus/usb/drivers/usb/bind || exit 75
+    ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/bind || exit 75
     sleep 60
   '';
 in
 {
   options.modules.security.backup = {
     enable = libx.enableDefault "backup";
-    usbId = lib.mkOption {
-      description = "The bus and device id of the usb device e.g. 4-2 acquired from lsusb command 'Bus 004 Device 002'";
-      default = "4-2";
-      type = lib.types.str;
-    };
   };
   # configured in home
   config = lib.mkIf cfg.enable {
@@ -56,7 +52,7 @@ in
         requires = [ "udisks2.service" ];
         serviceConfig.Type = "oneshot";
         preStart = "${pkgs.coreutils}/bin/sleep 30";
-        script = "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo '${cfg.usbId}' | tee /sys/bus/usb/drivers/usb/unbind";
+        script = "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind";
       };
       timers.borgmatic = lib.mkForce {
         description = "Run borgmatic backup";
@@ -121,7 +117,7 @@ in
           "*.img"
           "*.iso"
           "*.qcow"
-          "${g.homeDirectory}/data/.Trash-*"
+          "${g.dataDirectory}/.Trash-*"
         ];
         exclude_if_present = [ ".nobackup" ];
         borgmatic_source_directory = "${g.homeDirectory}/${configDir}";
@@ -132,7 +128,7 @@ in
           "sync"
           "sleep 60"
           "echo $(date +%F) > '${flagFile}'"
-          "echo '${cfg.usbId}' | tee /sys/bus/usb/drivers/usb/unbind"
+          "echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind"
         ];
       };
     };
