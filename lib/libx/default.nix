@@ -33,28 +33,18 @@ in
       default = !isIso;
     };
 
-  importPaths = {
+  importPaths = rec {
     moduleDefault =
       rootDir:
       if isGeneric then
         (if (builtins.pathExists (rootDir + /home.nix)) then [ (rootDir + /home.nix) ] else [ ])
       else
         (if (builtins.pathExists (rootDir + /system.nix)) then [ (rootDir + /system.nix) ] else [ ]);
+    default = rootDir: { imports = moduleDefault rootDir; };
 
-    default =
+    moduleAll =
       rootDir:
-      if isGeneric then
-        {
-          imports = if (builtins.pathExists (rootDir + /home.nix)) then [ (rootDir + /home.nix) ] else [ ];
-        }
-      else
-        {
-          imports =
-            if (builtins.pathExists (rootDir + /system.nix)) then [ (rootDir + /system.nix) ] else [ ];
-        };
-
-    all = rootDir: {
-      imports = builtins.filter (path: builtins.pathExists path) (
+      builtins.filter (path: builtins.pathExists path) (
         map (f: rootDir + "/${f}") (
           builtins.attrNames (
             removeAttrs (builtins.readDir rootDir) [
@@ -65,7 +55,7 @@ in
           )
         )
       );
-    };
+    all = rootDir: { imports = moduleAll rootDir; };
   };
 
 }

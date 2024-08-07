@@ -8,7 +8,6 @@ let
   modules = [
     "${self}/profiles"
     "${self}/config"
-    (builtins.toString inputs.general)
     outputs.nixosModules.default
   ];
 in
