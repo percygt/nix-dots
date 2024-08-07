@@ -14,7 +14,6 @@ in
     in
     {
       "*" = {
-        border = mkLiteral "none";
         font-family = "${font}, ${iconfont}";
         font-size = mkLiteral fsize;
         min-height = mkLiteral "0px";
@@ -84,6 +83,9 @@ in
         padding = mkLiteral "0px 5px";
       };
 
+      # "#custom-rebuild.success" = {
+      #   color = mkLiteral "${c.green}";
+      # };
       "#custom-rebuild.ongoing" = {
         color = mkLiteral "${c.base0A}";
       };

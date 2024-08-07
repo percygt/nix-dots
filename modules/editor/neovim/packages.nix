@@ -65,10 +65,8 @@
     prettierd
     eslint_d
     nodePackages.prettier
-    # nodePackages.typescript-language-server
-    # nodePackages."@astrojs/language-server"
-    # nodePackages.prettier-plugin-astro
-    # nodePackages-extra.prettier-plugin-astro
+    nodePackages.typescript-language-server
+    nodePackages."@astrojs/language-server"
 
     # Go
     go

@@ -1,6 +1,1 @@
-{
-  imports = [
-    ./fonts.nix
-    ./theme.nix
-  ];
-}
+{ libx, ... }: libx.importPaths.all ./.

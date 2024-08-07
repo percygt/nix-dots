@@ -1,5 +1,5 @@
 {
-  extraConfig = ''
+  wayland.windowManager.sway.extraConfig = ''
     shadows enable
     blur_radius 3
     blur_passes 3

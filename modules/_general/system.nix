@@ -4,5 +4,5 @@ let
 in
 {
   imports = [ ./module.nix ];
-  config.home-manager.users.${g.username} = import ./module.nix;
+  config.home-manager.users.${g.username} = import ./home.nix;
 }

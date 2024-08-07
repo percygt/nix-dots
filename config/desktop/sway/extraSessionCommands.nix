@@ -1,5 +1,5 @@
 {
-  extraSessionCommands =
+  wayland.windowManager.sway.extraSessionCommands =
     # bash
     ''
       export SDL_VIDEODRIVER=wayland

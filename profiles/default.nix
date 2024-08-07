@@ -1,7 +1,7 @@
-{ profile, ... }:
+{ profile, isIso, ... }:
 {
   imports = [
     ./common
-    ./${profile}
+    (if isIso then ./isos/${profile} else ./systems/${profile})
   ];
 }

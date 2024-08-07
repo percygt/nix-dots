@@ -1,7 +1,3 @@
-{ config, ... }:
-let
-  c = config.modules.theme.colors.withHashtag;
-in
 {
   position = "top";
   exclusive = true;
@@ -67,9 +63,6 @@ in
     all-outputs = true;
     icon = true;
     icon-size = 12;
-    # rewrite = {
-    #   "(.*) - Mozilla Firefox" = "🌎 $1";
-    # };
   };
 
   "mpris" = {

@@ -1,6 +1,9 @@
-{ mkAppsFloat }:
+{ libx, ... }:
+let
+  inherit (libx.sway) mkAppsFloat;
+in
 {
-  window = {
+  wayland.windowManager.sway.config.window = {
     titlebar = false;
     border = 1;
     commands =

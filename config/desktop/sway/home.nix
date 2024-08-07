@@ -18,6 +18,10 @@
     ./swaylock.nix
     ./swappy.nix
     ./tofi.nix
+    ./config.nix
+    ./extraConfig.nix
+    ./extraSessionCommands.nix
+    ./keybindings.nix
   ];
 
   wayland.windowManager.sway = {
@@ -28,19 +32,5 @@
     systemd.xdgAutostart = true;
     wrapperFeatures.gtk = true;
     checkConfig = false;
-    inherit (import ./extraConfig.nix) extraConfig;
-    inherit (import ./extraSessionCommands.nix) extraSessionCommands;
-    inherit
-      (import ./config.nix {
-        inherit
-          pkgs
-          config
-          lib
-          isGeneric
-          homeArgs
-          ;
-      })
-      config
-      ;
   };
 }

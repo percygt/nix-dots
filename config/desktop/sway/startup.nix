@@ -1,5 +1,5 @@
 {
-  startup = [
+  wayland.windowManager.sway.config.startup = [
     {
       command = "systemctl --user restart kanshi";
       always = true;

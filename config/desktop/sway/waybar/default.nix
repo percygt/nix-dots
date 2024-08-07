@@ -43,7 +43,7 @@ let
       ''
         makeWrapper ${pkgs.stash.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
       '';
-  waybar_config = import ./config.nix { inherit lib config; };
+  waybar_config = import ./config.nix;
 in
 {
   services.playerctld.enable = true;

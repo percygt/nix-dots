@@ -5,7 +5,7 @@
   profile,
   isGeneric ? false,
   desktop ? null,
-  isIso ? false,
+  isIso,
 }:
 rec {
 

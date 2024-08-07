@@ -1,19 +1,13 @@
 {
-  modifier,
   pkgs,
-  up,
-  down,
-  left,
-  right,
   lib,
-  terminal,
   config,
-  homeArgs,
+  libx,
   ...
 }:
 let
-  inherit (homeArgs) libx;
-  mod = modifier;
+  cfg = config.wayland.windowManager.sway.config;
+  mod = cfg.modifier;
   inherit (libx) sway;
   inherit (sway)
     viewRebuildLogCmd
@@ -27,9 +21,9 @@ let
   weztermPackage = config.programs.wezterm.package;
 in
 {
-  keybindings =
+  wayland.windowManager.sway.config.keybindings =
     mkDirectionKeys mod {
-      inherit
+      inherit (cfg)
         up
         down
         left
@@ -55,7 +49,7 @@ in
       "${mod}+Shift+w" = "exec ${dropdown-terminal { inherit pkgs weztermPackage; }}";
       "${mod}+w" = "exec ${lib.getExe pkgs.i3-quickterm} tmux";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
-      "${mod}+Return" = "exec ${terminal}";
+      "${mod}+Return" = "exec ${cfg.terminal}";
       "${mod}+Shift+e" = "exec pkill tofi || ${power-menu { inherit pkgs; }}";
       "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";

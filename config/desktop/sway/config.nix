@@ -2,19 +2,15 @@
   pkgs,
   config,
   lib,
-  homeArgs,
   ...
 }:
 let
-  inherit (homeArgs) libx;
-  inherit (libx) sway;
-  inherit (sway) mkAppsFloat;
   f = config.modules.fonts.interface;
   a = config.modules.theme.assets;
   c = config.modules.theme.colors.withHashtag;
 in
 {
-  config = rec {
+  wayland.windowManager.sway.config = rec {
     fonts = {
       names = [ f.name ];
       inherit (f) style size;
@@ -27,25 +23,8 @@ in
     terminal = "${pkgs.foot}/bin/foot";
     output."*".bg = "${a.wallpaper} fill";
     gaps.inner = 4;
-    inherit
-      (import ./keybindings.nix {
-        inherit
-          modifier
-          pkgs
-          lib
-          config
-          up
-          down
-          left
-          right
-          terminal
-          homeArgs
-          ;
-      })
-      keybindings
-      ;
-    inherit (import ./startup.nix) startup;
-    inherit (import ./window.nix { inherit mkAppsFloat; }) window;
+    # inherit (import ./startup.nix) startup;
+    # inherit (import ./window.nix { inherit mkAppsFloat; }) window;
     input = {
       "type:keyboard".xkb_layout = "us";
       "type:pointer".accel_profile = "adaptive";
