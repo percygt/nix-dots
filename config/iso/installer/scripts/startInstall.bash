@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-TARGET_HOST=$1
-TARGET_USER=$2
-
-dots_dir="$HOME/nix-dots"
 
 [ -d /mnt/persist/system/keys ] || sudo mkdir -p /mnt/persist/system/keys
 [ -d /mnt/persist/home/"$TARGET_USER"/keys ] || sudo mkdir -p /mnt/persist/home/"$TARGET_USER"/keys
@@ -22,4 +18,4 @@ chmod -R 700 /mnt/persist/home/"$TARGET_USER"/keys
 chmod -R 600 /mnt/persist/home/"$TARGET_USER"/keys/home-sops.keyfile
 chmod -R 600 /mnt/persist/home/"$TARGET_USER"/keys/public.asc
 
-sudo nixos-install --flake "$dots_dir#$TARGET_HOST" --no-root-passwd
+sudo nixos-install --flake "$DOTS_DIR#$TARGET_HOST" --no-root-passwd

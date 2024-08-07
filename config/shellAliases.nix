@@ -27,8 +27,8 @@ in
     dc = "docker compose";
     buildIsoMinimal = "nix build .#nixosConfigurations.iso-minimal.config.system.build.isoImage";
     buildIsoGraphical = "nix build .#nixosConfigurations.iso-graphical.config.system.build.isoImage";
-    n2ne = "nvim $FLAKE_PATH/packages/node/packages.json";
-    n2ni = "node2nix -i $FLAKE_PATH/packages/node/packages.json -e $FLAKE_PATH/packages/node/node-env.nix -o $FLAKE_PATH/packages/node/packages.nix -c $FLAKE_PATH/packages/node/default.nix";
+    n2ne = "nvim $FLAKE/packages/node/packages.json";
+    n2ni = "node2nix -i $FLAKE/packages/node/packages.json -e $FLAKE/packages/node/node-env.nix -o $FLAKE/packages/node/packages.nix -c $FLAKE/packages/node/default.nix";
     ts = "tailscale";
     tssh = "tailscale ssh";
     tst = "tailscale status";

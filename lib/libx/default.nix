@@ -40,7 +40,6 @@ in
         (if (builtins.pathExists (rootDir + /home.nix)) then [ (rootDir + /home.nix) ] else [ ])
       else
         (if (builtins.pathExists (rootDir + /system.nix)) then [ (rootDir + /system.nix) ] else [ ]);
-    default = rootDir: { imports = moduleDefault rootDir; };
 
     moduleAll =
       rootDir:
@@ -55,6 +54,8 @@ in
           )
         )
       );
+
+    default = rootDir: { imports = moduleDefault rootDir; };
     all = rootDir: { imports = moduleAll rootDir; };
   };
 

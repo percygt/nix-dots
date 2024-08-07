@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
-dots_dir="$HOME/nix-dots"
-sec_dir="$HOME/sikreto"
 
-if [ ! -d "$dots_dir/.git" ]; then
-	git clone git@gitlab.com:percygt/nix-dots.git "$dots_dir"
+if [ ! -d "$DOTS_DIR/.git" ]; then
+  git clone git@gitlab.com:percygt/nix-dots.git "$DOTS_DIR"
 fi
 sleep 1
-if [ ! -d "$sec_dir/.git" ]; then
-	git clone git@gitlab.com:percygt/sikreto.git "$sec_dir"
+if [ ! -d "$SEC_DIR/.git" ]; then
+  git clone git@gitlab.com:percygt/sikreto.git "$SEC_DIR"
 fi
