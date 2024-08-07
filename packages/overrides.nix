@@ -19,6 +19,27 @@
       "--disable-ssh-agent"
     ];
   });
+  waybar = prev.waybar.override {
+    cavaSupport = false;
+    evdevSupport = true;
+    experimentalPatches = false;
+    hyprlandSupport = false;
+    inputSupport = false;
+    jackSupport = false;
+    mpdSupport = false;
+    mprisSupport = false;
+    nlSupport = true;
+    pulseSupport = true;
+    rfkillSupport = false;
+    runTests = false;
+    sndioSupport = false;
+    swaySupport = true;
+    traySupport = true;
+    udevSupport = false;
+    upowerSupport = false;
+    wireplumberSupport = false;
+    withMediaPlayer = false;
+  };
   google-fonts =
     (prev.google-fonts.overrideAttrs (oldAttrs: {
       nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ prev.perl ];

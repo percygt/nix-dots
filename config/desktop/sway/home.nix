@@ -1,11 +1,4 @@
-{
-  pkgs,
-  config,
-  lib,
-  isGeneric,
-  homeArgs,
-  ...
-}:
+{ pkgs, ... }:
 {
   imports = [
     ./waybar
@@ -21,7 +14,6 @@
     ./config.nix
     ./extraConfig.nix
     ./extraSessionCommands.nix
-    ./keybindings.nix
   ];
 
   wayland.windowManager.sway = {

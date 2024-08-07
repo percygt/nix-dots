@@ -10,6 +10,11 @@ let
   c = config.modules.theme.colors.withHashtag;
 in
 {
+  imports = [
+    ./startup.nix
+    ./window.nix
+    ./keybindings.nix
+  ];
   wayland.windowManager.sway.config = rec {
     fonts = {
       names = [ f.name ];
@@ -23,8 +28,6 @@ in
     terminal = "${pkgs.foot}/bin/foot";
     output."*".bg = "${a.wallpaper} fill";
     gaps.inner = 4;
-    # inherit (import ./startup.nix) startup;
-    # inherit (import ./window.nix { inherit mkAppsFloat; }) window;
     input = {
       "type:keyboard".xkb_layout = "us";
       "type:pointer".accel_profile = "adaptive";
