@@ -1,3 +1,75 @@
+@import url("./nix.css");
+tooltip {
+  background: @background;
+  color: @text-light;
+  border-radius: 5px;
+  border: 2px solid @background;
+}
+
+window#waybar {
+  background: @background;
+  color: @text-light;
+  border-radius: 0px;
+  /* border: ; */
+}
+
+window#waybar.fullscreen {
+  border-bottom: 2px solid @background;
+}
+
+#workspaces {
+  margin: 0px 6px;
+  padding: 0px;
+  /* border-radius: 5px; */
+  /* background: @background; */
+}
+
+button {
+  border-color: @transparent;
+  background: @transparent;
+  border: 2px solid @transparent;
+  padding: 0px;
+  margin: 0px;
+}
+
+#workspaces button {
+  margin: 0px;
+  padding: 0px;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+}
+
+#workspaces button label {
+  /* border-radius: 5px; */
+  border: 2px solid @transparent;
+  padding: 1px 3px;
+  margin: 2px 2px;
+  color: @text-light;
+  font-weight: 500;
+}
+
+#workspaces button.visible label {
+  background: @blue;
+  border-bottom: 1px solid @blue;
+  color: @background;
+  font-weight: 900;
+}
+
+.modules-center {
+  padding: 0px 7px 0px 0px;
+}
+
+.modules-left {
+  padding: 0px 7px 0px 0px;
+}
+
+.modules-right {
+  padding: 0px 7px 0px 0px;
+}
+
 #battery.charging {
   color: #439448;
 }
@@ -23,7 +95,6 @@
   padding: 0px 5px;
 }
 
-#custom-daylight,
 #clock {
   font-weight: 400;
   padding: 0px 5px;
@@ -79,53 +150,7 @@
   color: #292538;
 }
 
-#workspaces {
-  margin: 0px;
-  padding-left: 7px;
-}
-
-#workspaces button {
-  border-radius: 5px;
-  color: #292538;
-  margin: 0px;
-  padding: 0px;
-}
-
-#workspaces button.focused,
-#workspaces button.active {
-  color: #71e3d1;
-  font-weight: 500;
-}
-
-#workspaces button:hover {
-  color: #71e3d1;
-}
-
-* {
-  border: none;
-  font-family: "Geist, Font Awesome 6 Free";
-  font-size: 14px;
-  min-height: 0px;
-}
-
-.modules-center {
-  padding: 0px 7px 0px 0px;
-}
-
-.modules-left {
-  padding: 0px 7px 0px 0px;
-}
-
-.modules-right {
-  padding: 0px 7px 0px 0px;
-}
-
 label.module {
   margin: 0px;
   padding: 0px;
-}
-
-window#waybar {
-  background-color: #00051a;
-  color: #71e3d1;
 }

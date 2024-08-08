@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     wpa_supplicant_gui
-    mako
+    # mako
     swayidle
     swaylock-effects
     playerctl

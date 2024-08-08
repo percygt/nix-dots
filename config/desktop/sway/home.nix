@@ -2,7 +2,8 @@
 {
   imports = [
     ./waybar
-    ./mako.nix
+    ./swaync
+    # ./mako.nix
     ./services.nix
     ./i3-quickterm.nix
     ./kanshi.nix

@@ -1,12 +1,10 @@
 {
   pkgs,
   lib,
-  libx,
   config,
   ...
 }:
 let
-  inherit (libx) toRasi mkLiteral;
   waybarRebuild = pkgs.writeShellApplication {
     name = "waybar-rebuild-exec";
     runtimeInputs = [
@@ -17,11 +15,11 @@ let
     text = ''
       status="$(systemctl is-active nixos-rebuild.service || true)"
       if grep -q "inactive" <<< "$status"; then
-        printf '{ "text" : "","class":"success"}'
+        printf '{ "text" : " ","class":"success"}'
       elif grep -q "active" <<< "$status"; then
-        printf '{ "text" : "","class":"ongoing"}'
+        printf '{ "text" : " ","class":"ongoing"}'
       elif grep -q "failed" <<< "$status"; then
-        printf '{ "text" : "","class":"fail"}'
+        printf '{ "text" : " ","class":"fail"}'
       fi
     '';
   };
@@ -32,6 +30,7 @@ let
       systemd
       toggle-service
       toggle-sway-window
+      swaynotificationcenter
       foot
     ]);
   waybarWithExtraBin =
@@ -43,25 +42,52 @@ let
       ''
         makeWrapper ${pkgs.stash.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
       '';
-  waybar_config = import ./config.nix;
+  inherit (config._general) flakeDirectory;
+  moduleWaybar = "${flakeDirectory}/config/desktop/sway/waybar";
+  c = config.modules.theme.colors.withHashtag;
+  f = config.modules.fonts.interface;
+  i = config.modules.fonts.icon;
 in
 {
   services.playerctld.enable = true;
+  home.packages = [ waybarWithExtraBin ];
 
-  programs.waybar = {
-    enable = true;
-    package = waybarWithExtraBin;
-    style = toRasi (import ./theme.nix { inherit mkLiteral config; }).theme;
-    settings = [
-      (waybar_config // { output = "HDMI-A-1"; })
-      (
-        waybar_config
-        // {
-          ipc = true;
-          id = "bar-1";
-          output = "eDP-1";
+  xdg.configFile = {
+    "waybar/config" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/config.json";
+      onChange = ''
+        ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
+      '';
+    };
+    "waybar/style.css" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/style.css";
+      onChange = ''
+        ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
+      '';
+    };
+    "waybar/nix.css".text =
+      # css
+      ''
+        @define-color bg0 ${c.base00};
+        @define-color bg1 ${c.base01};
+        @define-color bg2 ${c.base02};
+        @define-color background ${c.base00};
+        @define-color grey ${c.base03};
+        @define-color border ${c.base05};
+        @define-color text-dark ${c.base00};
+        @define-color text-light ${c.base07};
+        @define-color green ${c.base0B};
+        @define-color blue ${c.base0D};
+        @define-color red ${c.base08};
+        @define-color purple ${c.base0E};
+        @define-color orange ${c.base0F};
+        @define-color transparent rgba(0,0,0,0);
+        * {
+          font-family: '${f.name}, ${i.name}';
+          font-size: ${toString f.size}px;
+          font-weight: 600;
+          min-height: 0px;
         }
-      )
-    ];
+      '';
   };
 }

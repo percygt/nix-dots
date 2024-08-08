@@ -2,9 +2,9 @@
   position = "top";
   exclusive = true;
   layer = "top";
-  margin-top = 5;
-  margin-left = 5;
-  margin-right = 5;
+  margin-top = 0;
+  margin-left = 0;
+  margin-right = 0;
   height = 25;
   spacing = 5;
   passthrough = false;
@@ -182,25 +182,10 @@
     format-plugged = "<span size='medium'></span>";
   };
 
-  "clock#date" = {
-    format = "{:%m.%d.%y}";
-    tooltip-format = ''
-      <big>{:%Y %B}</big>
-      <tt><small>{calendar}</small></tt>'';
-    interval = 3600;
-    max-length = 7;
-  };
-
-  "clock#icon" = {
-    format = "<span font='9' rise='-4444'> </span>";
-  };
-
-  "clock#time" = {
-    format = "{:%I:%M:%S}";
-    tooltip-format = ''
-      <big>{:%Y %B}</big>
-      <tt><small>{calendar}</small></tt>'';
-    interval = 1;
+  "clock" = {
+    format = "{:%I:%M  :%Y-%m-%d}";
+    tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+    interval = 60;
     min-length = 7;
   };
 

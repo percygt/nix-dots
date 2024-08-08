@@ -53,7 +53,7 @@ in
       "${mod}+Shift+e" = "exec pkill tofi || ${power-menu { inherit pkgs; }}";
       "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
-      "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --app-id=btop btop";
+      "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --title=SystemMonitor --app-id=btop btop";
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
       "${mod}+e" = "exec ${lib.getExe pkgs.toggle-sway-window} --id emacs --width 100 --height 100 -- emacs";

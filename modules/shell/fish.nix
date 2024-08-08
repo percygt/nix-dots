@@ -4,9 +4,6 @@
   pkgs,
   ...
 }:
-let
-  c = config.modules.theme.colors.withHashtag;
-in
 {
   options.modules.shell.fish = {
     enable = lib.mkOption {
@@ -20,11 +17,6 @@ in
     programs = {
       fzf = {
         enable = true;
-        colors = {
-          "bg+" = c.base02;
-          bg = c.base01;
-          preview-bg = c.base00;
-        };
         tmux = {
           enableShellIntegration = true;
           shellIntegrationOptions = [
@@ -110,8 +102,7 @@ in
               --bind=ctrl-k:up
               --bind=alt-j:preview-down
               --bind=alt-k:preview-up
-              --preview-window=right,60%,,
-              --color bg:${c.base02},bg+:${c.base03},preview-bg:${c.base00}"
+              --preview-window=right,60%,,"
 
             set -gx FZF_TMUX 1
             set -gx FZF_TMUX_OPTS "-p90%,75%"

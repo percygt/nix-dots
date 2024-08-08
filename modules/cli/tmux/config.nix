@@ -30,13 +30,6 @@ in
       run-shell ${pkgs.tmuxPlugins.tmux-thumbs}/share/tmux-plugins/tmux-thumbs/tmux-thumbs.tmux
 
 
-      # tmuxplugin-fzf-url
-      # ---------------------
-      set -g @fzf-url-fzf-options '-h 50% --multi -0 --no-preview'
-
-      run-shell ${pkgs.tmuxPlugins.fzf-url}/share/tmux-plugins/fzf-url/fzf-url.tmux
-
-
       # tmuxplugin-better-mouse-mode
       # ---------------------
 
@@ -63,7 +56,7 @@ in
 
       # tmuxplugin-resurrect
       # ---------------------
-      set -g @resurrect-processes '"~nvim"'
+      # set -g @resurrect-processes '"~nvim"'
       set -g @resurrect-capture-pane-contents 'on'
       set -g @resurrect-dir '${resurrectDirPath}'
       set -g @resurrect-hook-post-save-all 'sed -i -E "s|(pane.*nvim\s*:)[^;]+;.*\s([^ ]+)$|\1nvim|" "${resurrectDirPath}/last"'
