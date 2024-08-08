@@ -11,6 +11,13 @@
       "assist.emitMustUse": true,
       "procMacro.enable": true
     },
+    "cssls": {
+      "css": {
+        "lint": {
+          "unknownAtRules": "ignore"
+        }
+      }
+    },
     "jsonls": {
       "json": {
         "format": {

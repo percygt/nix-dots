@@ -13,8 +13,9 @@
       size = 14.0;
     };
     interface = {
-      name = "0xProto Nerd Font";
-      typeface = "monospace";
+      name = "Geist";
+      typeface = "sansSerif";
+      package = pkgs.geist-font;
       size = 14.0;
     };
     app = {

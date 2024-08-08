@@ -20,6 +20,8 @@
     ];
   });
   waybar = prev.waybar.override {
+    experimentalPatches = true;
+    swaySupport = true;
     cavaSupport = false;
     hyprlandSupport = false;
   };

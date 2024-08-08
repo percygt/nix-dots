@@ -9,6 +9,7 @@ let
   moduleNvim = "${flakeDirectory}/modules/editor/neovim";
 in
 {
+  imports = [ ./packages.nix ];
   options.modules.editor.neovim.enable = lib.mkEnableOption "Enable neovim home";
   config = lib.mkIf config.modules.editor.neovim.enable {
     home.shellAliases.v = "nvim";
@@ -44,11 +45,11 @@ in
       plugins = [
         pkgs.vimPlugins.lazy-nvim # All other plugins are managed by lazy-nvim
       ];
-      inherit (import ./packages.nix { inherit pkgs; })
-        extraLuaPackages
-        extraPython3Packages
-        extraPackages
-        ;
+      # inherit (import ./packages.nix { inherit pkgs; })
+      #   extraLuaPackages
+      #   extraPython3Packages
+      #   extraPackages
+      #   ;
     };
     home = {
       activation = {

@@ -40,22 +40,31 @@ in
         @define-color bg2 ${c.base02};
         @define-color gr0 ${c.base03};
         @define-color gr1 ${c.base04};
+
+        @define-color bg ${c.base00};
+        @define-color bg-lighter ${c.base11};
+        @define-color bg-darker ${c.base12};
+        @define-color bg-alt ${c.base01};
+        @define-color bg-hover-alt ${c.base02};
         @define-color grey ${c.base03};
-        @define-color border ${c.base05};
-        @define-color text-dark ${c.base00};
-        @define-color text-light ${c.base07};
+        @define-color grey-alt ${c.base04};
+        @define-color border ${c.base03};
+        @define-color text-dark ${c.base01};
+        @define-color text-light ${c.base05};
         @define-color green ${c.base0B};
         @define-color blue ${c.base0D};
         @define-color red ${c.base08};
         @define-color purple ${c.base0E};
         @define-color orange ${c.base0F};
         @define-color transparent rgba(0,0,0,0);
+        @define-color bg-hover rgba(255, 255, 255, 0.1);
+        @define-color bg-focus rgba(255, 255, 255, 0.1);
+        @define-color bg-close rgba(255, 255, 255, 0.1);
+        @define-color bg-close-hover rgba(255, 255, 255, 0.15);
 
         * {
           font-family: '${f.name}, ${i.name}';
           font-size: ${toString f.size}px;
-          transition: 100ms;
-          box-shadow: unset;
         }
       '';
   };

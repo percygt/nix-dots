@@ -1,4 +1,10 @@
 @import url("./nix.css");
+
+* {
+  font-weight: 600;
+  min-height: 0px;
+}
+
 tooltip {
   background: @bg0;
   color: @text-light;
