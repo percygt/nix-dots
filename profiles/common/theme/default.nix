@@ -35,12 +35,12 @@
     };
 
     gtkTheme = {
-      name = "Colloid-Dark-Catppuccin";
+      name = "Colloid-Dark-Compact-Catppuccin";
       package = pkgs.colloid-gtk-theme-catppuccin;
     };
 
     gnomeShellTheme = {
-      name = "Colloid-Dark-Catppuccin";
+      name = "Colloid-Dark-Compact-Catppuccin";
       package = pkgs.colloid-gtk-theme-catppuccin;
     };
   };

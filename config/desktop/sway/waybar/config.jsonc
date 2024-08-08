@@ -1,5 +1,16 @@
+// -*- mode: jsonc -*-
 [
   {
+    "exclusive": true,
+    "fixed-center": true,
+    "gtk-layer-shell": true,
+    "height": 30,
+    "layer": "top",
+    "passthrough": false,
+    "position": "top",
+    "output": "!eDP-1",
+    "spacing": 5,
+
     "modules-center": [
       "clock",
       "custom/notification"
@@ -56,7 +67,7 @@
       }
     },
     "clock": {
-      "format": "{:%H:%M - %d %a}",
+      "format": "{0:%I:%M} | {0:%d.%a}",
       "interval": 3600,
       "tooltip-format": "<tt><small>{calendar}</small></tt>"
     },
@@ -78,14 +89,14 @@
       "tooltip": false,
       "format": "{icon}",
       "format-icons": {
-        "notification": "<span foreground='red'><sup></sup></span>",
-        "none": "",
+        "notification": " <span foreground='red'><sup></sup></span>",
+        "none": " ",
         "dnd-notification": "<span foreground='red'><sup></sup></span>",
-        "dnd-none": "",
-        "inhibited-notification": "<span foreground='red'><sup></sup></span>",
-        "inhibited-none": "",
-        "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
-        "dnd-inhibited-none": ""
+        "dnd-none": " ",
+        "inhibited-notification": " <span foreground='red'><sup></sup></span>",
+        "inhibited-none": " ",
+        "dnd-inhibited-notification": " <span foreground='red'><sup></sup></span>",
+        "dnd-inhibited-none": " "
       },
       "return-type": "json",
       "exec-if": "which swaync-client",
@@ -135,8 +146,6 @@
       "signal": 8,
       "tooltip": false
     },
-    "exclusive": true,
-    "fixed-center": true,
     "group/group-power": {
       "drawer": {
         "children-class": "group-power",
@@ -152,8 +161,6 @@
       ],
       "orientation": "inherit"
     },
-    "gtk-layer-shell": true,
-    "height": 25,
     "idle_inhibitor": {
       "format": "{icon}",
       "format-icons": {
@@ -161,9 +168,8 @@
         "deactivated": "󱙱"
       }
     },
-    "layer": "top",
     "memory": {
-      "format": "󰆼 {percentage}%     󰿡  {swapPercentage}%",
+      "format": "󰆼 {percentage}% 󰿡 {swapPercentage}%",
       "interval": 30,
       "on-click": "toggle-sway-window --id btop -- foot --app-id=btop btop",
       "tooltip": true,
@@ -195,9 +201,6 @@
       "on-click": "toggle-sway-window --id wpa_gui -- wpa_gui",
       "tooltip-format": "{ifname} / {essid} ({signalStrength}%) / {ipaddr}"
     },
-    "output": "HDMI-A-1",
-    "passthrough": false,
-    "position": "top",
     "pulseaudio#source": {
       "format": "{format_source}",
       "format-source": "",
@@ -206,7 +209,6 @@
       "on-click": "pamixer --default-source -t",
       "tooltip-format": "{source_volume}% / {desc}"
     },
-    "spacing": 5,
     "sway/mode": {
       "format": "<span style=\"italic\">{}</span>"
     },
@@ -269,6 +271,7 @@
       "tooltip-format": "{source_volume}% / {desc}"
     }
   },
+  // config2
   {
     "backlight": {
       "format": "{icon}",

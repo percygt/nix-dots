@@ -38,6 +38,8 @@ in
         @define-color bg0 ${c.base00};
         @define-color bg1 ${c.base01};
         @define-color bg2 ${c.base02};
+        @define-color gr0 ${c.base03};
+        @define-color gr1 ${c.base04};
         @define-color grey ${c.base03};
         @define-color border ${c.base05};
         @define-color text-dark ${c.base00};

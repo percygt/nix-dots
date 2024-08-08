@@ -27,7 +27,8 @@ let
     [ waybarRebuild ]
     ++ (with pkgs; [
       coreutils-full
-      systemd
+      gnugrep
+      systemdMinimal
       toggle-service
       toggle-sway-window
       swaynotificationcenter
@@ -53,8 +54,8 @@ in
   home.packages = [ waybarWithExtraBin ];
 
   xdg.configFile = {
-    "waybar/config" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/config.json";
+    "waybar/config.jsonc" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/config.jsonc";
       onChange = ''
         ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
       '';
@@ -71,10 +72,11 @@ in
         @define-color bg0 ${c.base00};
         @define-color bg1 ${c.base01};
         @define-color bg2 ${c.base02};
-        @define-color background ${c.base00};
+        @define-color gr0 ${c.base03};
+        @define-color gr1 ${c.base04};
         @define-color grey ${c.base03};
         @define-color border ${c.base05};
-        @define-color text-dark ${c.base00};
+        @define-color text-dark ${c.base01};
         @define-color text-light ${c.base07};
         @define-color green ${c.base0B};
         @define-color blue ${c.base0D};

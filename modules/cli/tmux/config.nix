@@ -1,6 +1,13 @@
 { pkgs, config }:
 let
   resurrectDirPath = "${config.xdg.dataHome}/tmux/resurrect";
+  resurrectPostSave = pkgs.writers.writeBash "resurrectPostSave" ''
+    sed -i -E "s|(pane.*nvim\s*:)[^;]+;.*\s([^ ]+)$|\1nvim|" "$1"
+    sed -ie "s|:bash .*/tmp/nix-shell-.*/rc|:nix-shell|g" "$1"
+    sed -i "s| $HOME| ~|g" "$1"
+    sed -i 's|fish	:\[fish\] <defunct>|fish	:|g' "$1"
+    sed -i ':a;N;$!ba;s|\[fish\] <defunct>\n||g' "$1"
+  '';
 in
 {
   extraConfig =
@@ -56,10 +63,9 @@ in
 
       # tmuxplugin-resurrect
       # ---------------------
-      # set -g @resurrect-processes '"~nvim"'
       set -g @resurrect-capture-pane-contents 'on'
       set -g @resurrect-dir '${resurrectDirPath}'
-      set -g @resurrect-hook-post-save-all 'sed -i -E "s|(pane.*nvim\s*:)[^;]+;.*\s([^ ]+)$|\1nvim|" "${resurrectDirPath}/last"'
+      set -g @resurrect-hook-post-save-all '${resurrectPostSave} "${resurrectDirPath}/last"'
 
       run-shell ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/resurrect.tmux
 

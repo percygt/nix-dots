@@ -15,10 +15,14 @@ in
       "/persist" = {
         users.${g.username} = {
           directories = [
+            ".local/share/nvim/lazy"
+            ".local/share/nvim/harpoon"
+            ".local/share/nvim/sessions"
+            ".local/share/nvim/undodir"
             ".local/share/nvim"
-            ".local/cache/nvim"
             ".local/state/nvim"
           ];
+          files = [ ".local/share/nvim/telescope_history" ];
         };
       };
     };

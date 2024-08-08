@@ -1,5 +1,4 @@
 return {
-  -- Universal language parser
   {
     "nvim-treesitter/nvim-treesitter",
     event = { "BufReadPost", "BufNewFile" },
@@ -9,7 +8,9 @@ return {
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
     },
-    keys = { { "<leader>ti", "<cmd>Inspect<cr>", desc = "Show highlighting groups and captures" } },
+    keys = {
+      { "<leader>ti", "<cmd>Inspect<cr>", desc = "Show highlighting groups and captures" },
+    },
     config = function()
       if vim.gcc_bin_path ~= nil then
         require("nvim-treesitter.install").compilers = { vim.g.gcc_bin_path }
@@ -17,7 +18,7 @@ return {
       ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
         sync_install = false,
-        ignore_install = { "javascript" },
+        -- ignore_install = { "javascript" },
         auto_install = true,
         ensure_installed = {
           "html",

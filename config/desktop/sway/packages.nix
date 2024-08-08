@@ -26,5 +26,6 @@
     wl-screenrec
     libnotify
     adwaita-icon-theme
+    tmux
   ];
 }

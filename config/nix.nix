@@ -25,8 +25,8 @@
       # Do not create a bunch of nixbld users
       auto-allocate-uids = true;
       max-jobs = "auto";
-      http-connections = 128;
-      max-substitution-jobs = 128;
+      # http-connections = 128;
+      # max-substitution-jobs = 128;
       trusted-substituters = [
         "https://percygtdev.cachix.org"
         "https://nix-community.cachix.org"
