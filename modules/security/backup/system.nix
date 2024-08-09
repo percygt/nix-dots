@@ -45,10 +45,7 @@ in
       };
       services.poweroff_hdd = {
         description = "Power-off backup hdd after automount";
-        after = [
-          "udisks2.service"
-          "udiskie.service"
-        ];
+        after = [ "udisks2.service" ];
         requires = [ "udisks2.service" ];
         serviceConfig.Type = "oneshot";
         preStart = "${pkgs.coreutils}/bin/sleep 30";

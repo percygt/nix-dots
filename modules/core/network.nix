@@ -26,6 +26,7 @@ in
     networking =
       if (!wpa) then
         {
+          systemd.services.NetworkManager-wait-online.wantedBy = lib.mkForce [ ]; # Normally ["network-online.target"]
           wireless.iwd.settings.Settings.AutoConnect = true;
           networkmanager = {
             enable = true;
@@ -99,7 +100,6 @@ in
         preStart = lib.mkIf wpa "touch /etc/wpa_supplicant.conf";
         serviceConfig.TimeoutSec = "10";
       };
-      services.NetworkManager-wait-online.wantedBy = lib.mkForce [ ]; # Normally ["network-online.target"]
       targets.network-online.wantedBy = lib.mkForce [ ]; # Normally ["multi-user.target"]
     };
   };

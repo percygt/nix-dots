@@ -43,21 +43,12 @@ in
   xdg.configFile = {
     "swaync/config.json" = lib.mkForce {
       source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/config.json";
-      onChange = ''
-        ${swayncWithExtraPackages}/bin/swaync-client -R | true
-      '';
     };
     "swaync/style.css" = {
       source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/style.css";
-      onChange = ''
-        ${swayncWithExtraPackages}/bin/swaync-client -rs | true
-      '';
     };
     "swaync/configSchema.json" = {
       source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/configSchema.json";
-      onChange = ''
-        ${swayncWithExtraPackages}/bin/swaync-client -R | true
-      '';
     };
     "swaync/nix.css".text =
       # css
