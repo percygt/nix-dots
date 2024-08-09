@@ -16,8 +16,8 @@ in
       screenshots = true;
       clock = true;
       effect-vignette = "0.5:0.5";
-      timestr = "󰥔 %Hh %Mm %Ss";
-      datestr = "󰃭 %b-%d-%Y";
+      timestr = "%Hh %Mm %Ss";
+      datestr = "%b-%d-%Y";
       indicator = true;
       indicator-radius = 200;
       indicator-thickness = 30;
@@ -37,6 +37,6 @@ in
 
   systemd.user.services.swaylock = {
     Unit.Description = "Lock screen";
-    Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock";
+    Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config";
   };
 }

@@ -13,9 +13,9 @@
       size = 14.0;
     };
     interface = {
-      name = "Geist";
+      name = "Iosevka Aile";
       typeface = "sansSerif";
-      package = pkgs.geist-font;
+      package = pkgs.iosevka-bin.override { variant = "Aile"; };
       size = 14.0;
     };
     app = {
@@ -34,7 +34,6 @@
         "VictorMono"
         "JetBrainsMono"
         "Iosevka"
-        "0xProto"
         "NerdFontsSymbolsOnly"
       ];
     };

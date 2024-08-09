@@ -43,6 +43,10 @@ in
     interface = fontModule;
     app = fontModule;
     icon = fontModule;
+    extraFonts = lib.mkOption {
+      type = with lib.types; listOf package;
+      default = [ ];
+    };
     nerdfontPackages = lib.mkOption {
       type = lib.types.package;
       default = pkgs.nerdfonts;

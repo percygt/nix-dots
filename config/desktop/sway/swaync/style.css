@@ -1,9 +1,5 @@
-@define-color bg-hover rgba(255, 255, 255, 0.1);
-@define-color bg-focus rgba(255, 255, 255, 0.1);
-@define-color noti-close-bg rgba(255, 255, 255, 0.1);
-@define-color noti-close-bg-hover rgba(255, 255, 255, 0.15);
-
 @import url("./nix.css");
+
 * {
   color: @text-light;
 }
@@ -18,7 +14,7 @@
 }
 
 .notification {
-  border: 1px solid @bg2;
+  border: 1px solid @bg-alt;
   border-radius: 4px;
   margin: 6px 12px;
   box-shadow: none;
@@ -44,7 +40,7 @@
 }
 
 .close-button {
-  background: @noti-close-bg;
+  background: @bg-close;
   color: white;
   text-shadow: none;
   padding: 0;
@@ -59,7 +55,7 @@
 
 .close-button:hover {
   box-shadow: none;
-  background: @noti-close-bg-hover;
+  background: @bg-close-hover;
   transition: all 0.15s ease-in-out;
   border: none;
 }
@@ -69,15 +65,15 @@
   padding: 4px;
   margin: 0;
   box-shadow: none;
-  background: @bg0;
-  border: 1px solid @gr0;
+  background: @bg-lighter;
+  border: 1px solid @grey;
   color: white;
 }
 
 .notification-default-action:hover,
 .notification-action:hover {
   -gtk-icon-effect: none;
-  background: @bg1;
+  background: @bg-alt;
 }
 
 .notification-default-action {
@@ -103,7 +99,7 @@
 
 .notification-action:last-child {
   border-bottom-right-radius: 4px;
-  border-right: 1px solid @gr0;
+  border-right: 1px solid @grey;
 }
 
 .image {
@@ -147,9 +143,10 @@
 }
 
 .control-center {
-  background-color: @bg1;
-  border-radius: 6px;
-  border: 1px solid @gr1;
+  background-color: @bg-alt;
+  border-left: 1px solid @grey-alt;
+  border-radius: 0px;
+  margin: 0px;
 }
 
 .control-center-list {
@@ -177,8 +174,8 @@
   font-size: initial;
   color: white;
   text-shadow: none;
-  background: @bg0;
-  border: 1px solid @gr0;
+  background: @bg-lighter;
+  border: 1px solid @grey;
   box-shadow: none;
   border-radius: 4px;
 }
@@ -196,13 +193,13 @@
 .widget-dnd > switch {
   font-size: initial;
   border-radius: 4px;
-  background: @bg0;
-  border: 1px solid @gr0;
+  background: @bg-lighter;
+  border: 1px solid @grey;
   box-shadow: none;
 }
 
 .widget-dnd > switch:checked {
-  background: @gr1;
+  background: @grey-alt;
 }
 
 .widget-dnd > switch slider {
@@ -241,7 +238,7 @@
 /* Volume and Brightness Widget*/
 
 .widget-volume {
-  background-color: @bg0;
+  background-color: @bg-lighter;
   padding: 4px 4px 4px 20px;
   margin: 0px 8px 8px 8px;
   border-radius: 4px;
@@ -249,7 +246,7 @@
 }
 
 .widget-backlight {
-  background-color: @bg0;
+  background-color: @bg-lighter;
   padding: 8px 8px 4px 8px;
   margin: 8px 8px 0px 8px;
   border-top-left-radius: 12px;
@@ -263,15 +260,15 @@
 }
 
 .widget-menubar > box {
-  padding: 8px 0px 4px;
-  margin: 0px 8px;
+  padding: 8px 4px;
+  margin: 8px;
   border-radius: 4px 4px 0px 0px;
-  background-color: @bg0;
+  background-color: @bg-lighter;
 }
 
 .widget-menubar > box > .menu-button-bar > button {
-  border: 1px solid @gr0;
-  background: @bg0;
+  border: 1px solid @grey;
+  background: @bg-lighter;
   border-radius: 4px;
   margin: 4px 12px;
 }
@@ -280,12 +277,12 @@
   padding: 0px 8px 8px;
   margin: 0px 8px 8px;
   border-radius: 0px 0px 4px 4px;
-  background-color: @bg0;
+  background-color: @bg-lighter;
   font-size: 14px;
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button {
-  background: @bg0;
+  background: @bg-lighter;
   border-radius: 4px;
 }
 
@@ -307,7 +304,7 @@
   background: transparent;
   padding: 2px 0px;
   margin: 5px 70px 3px;
-  border: 1px solid @gr0;
+  border: 1px solid @grey;
 }
 
 .screenshot-buttons > button:hover,

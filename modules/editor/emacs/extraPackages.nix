@@ -1,6 +1,7 @@
 { pkgs }:
 with pkgs;
 [
+  (iosevka-bin.override { variant = "Aile"; })
   (aspellWithDicts (
     dicts: with dicts; [
       en

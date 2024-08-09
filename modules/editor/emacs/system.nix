@@ -58,10 +58,7 @@ in
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {
-          directories = [
-            ".local/share/emacs"
-            ".local/cache/emacs"
-          ];
+          directories = [ ".local/share/emacs" ];
         };
       };
     };

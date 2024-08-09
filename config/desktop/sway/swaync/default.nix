@@ -1,51 +1,71 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   inherit (config._general) flakeDirectory;
-  swayncPkg = pkgs.swaynotificationcenter;
   moduleSwaync = "${flakeDirectory}/config/desktop/sway/swaync";
   c = config.modules.theme.colors.withHashtag;
-  f = config.modules.fonts.interface;
+  f = config.modules.fonts.app;
   i = config.modules.fonts.icon;
+  extraPackages = with pkgs; [
+    coreutils-full
+    systemd
+    toggle-service
+    toggle-sway-window
+    nixos-rebuild
+    wlsunset
+    foot
+    grim
+    slurp
+    swappy
+    swayfx
+  ];
+  swayncWithExtraPackages =
+    pkgs.runCommand "swaync"
+      {
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        meta.mainProgram = "swaync";
+      }
+      ''
+        makeWrapper ${pkgs.swaynotificationcenter}/bin/swaync $out/bin/swaync --prefix PATH : ${lib.makeBinPath extraPackages}
+        makeWrapper ${pkgs.swaynotificationcenter}/bin/swaync-client $out/bin/swaync-client --prefix PATH : ${lib.makeBinPath extraPackages}
+      '';
 in
 {
-  home.packages = [
-    swayncPkg
-    pkgs.at-spi2-core
-  ];
+  services.swaync = {
+    enable = true;
+    package = swayncWithExtraPackages;
+  };
 
   xdg.configFile = {
-    "swaync/config.json" = {
+    "swaync/config.json" = lib.mkForce {
       source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/config.json";
       onChange = ''
-        ${pkgs.procps}/bin/pkill -u $USER -USR2 .swaync-wrapped || true
+        ${swayncWithExtraPackages}/bin/swaync-client -R | true
       '';
     };
     "swaync/style.css" = {
       source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/style.css";
       onChange = ''
-        ${pkgs.procps}/bin/pkill -u $USER -USR2 .swaync-wrapped || true
+        ${swayncWithExtraPackages}/bin/swaync-client -rs | true
       '';
     };
     "swaync/configSchema.json" = {
       source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/configSchema.json";
       onChange = ''
-        ${pkgs.procps}/bin/pkill -u $USER -USR2 .swaync-wrapped || true
+        ${swayncWithExtraPackages}/bin/swaync-client -R | true
       '';
     };
     "swaync/nix.css".text =
       # css
       ''
-        @define-color bg0 ${c.base00};
-        @define-color bg1 ${c.base01};
-        @define-color bg2 ${c.base02};
-        @define-color gr0 ${c.base03};
-        @define-color gr1 ${c.base04};
-
         @define-color bg ${c.base00};
-        @define-color bg-lighter ${c.base11};
-        @define-color bg-darker ${c.base12};
-        @define-color bg-alt ${c.base01};
-        @define-color bg-hover-alt ${c.base02};
+        @define-color bg-lighter ${c.base10};
+        @define-color bg-darker ${c.base11};
+        @define-color bg-alt ${c.base02};
         @define-color grey ${c.base03};
         @define-color grey-alt ${c.base04};
         @define-color border ${c.base03};
@@ -67,24 +87,5 @@ in
           font-size: ${toString f.size}px;
         }
       '';
-  };
-
-  systemd.user.services.swaync = {
-    Unit = {
-      Description = "Swaync notification daemon";
-      Documentation = "https://github.com/ErikReider/SwayNotificationCenter";
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session-pre.target" ];
-      ConditionEnvironment = "WAYLAND_DISPLAY";
-    };
-
-    Service = {
-      Type = "dbus";
-      BusName = "org.freedesktop.Notifications";
-      ExecStart = "${swayncPkg}/bin/swaync";
-      Restart = "on-failure";
-    };
-
-    Install.WantedBy = [ "graphical-session.target" ];
   };
 }

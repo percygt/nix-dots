@@ -5,7 +5,7 @@
   ...
 }:
 let
-  waybarRebuild = pkgs.writeShellApplication {
+  nixosRebuild = pkgs.writeShellApplication {
     name = "waybar-rebuild-exec";
     runtimeInputs = [
       pkgs.coreutils-full
@@ -15,19 +15,18 @@ let
     text = ''
       status="$(systemctl is-active nixos-rebuild.service || true)"
       if grep -q "inactive" <<< "$status"; then
-        printf '{ "text" : " ","class":"success"}'
+        printf '{ "text" : "\ueb6d ","class":"success"}'
       elif grep -q "active" <<< "$status"; then
-        printf '{ "text" : " ","class":"ongoing"}'
+        printf '{ "text" : "\ueb6d ","class":"ongoing"}'
       elif grep -q "failed" <<< "$status"; then
-        printf '{ "text" : " ","class":"fail"}'
+        printf '{ "text" : "\ueb6d ","class":"fail"}'
       fi
     '';
   };
   extraPackages =
-    [ waybarRebuild ]
+    [ nixosRebuild ]
     ++ (with pkgs; [
       coreutils-full
-      gnugrep
       systemd
       toggle-service
       toggle-sway-window
@@ -36,7 +35,7 @@ let
       wlsunset
       foot
     ]);
-  waybarWithExtraBin =
+  waybarWithExtraPackages =
     pkgs.runCommand "waybar"
       {
         nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -53,8 +52,10 @@ let
 in
 {
   services.playerctld.enable = true;
-  home.packages = [ waybarWithExtraBin ];
-
+  programs.waybar = {
+    enable = true;
+    package = waybarWithExtraPackages;
+  };
   xdg.configFile = {
     "waybar/config.jsonc" = {
       source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/config.jsonc";
@@ -71,17 +72,10 @@ in
     "waybar/nix.css".text =
       # css
       ''
-        @define-color bg0 ${c.base00};
-        @define-color bg1 ${c.base01};
-        @define-color bg2 ${c.base02};
-        @define-color gr0 ${c.base03};
-        @define-color gr1 ${c.base04};
-
         @define-color bg ${c.base00};
-        @define-color bg-lighter ${c.base11};
-        @define-color bg-darker ${c.base12};
-        @define-color bg-alt ${c.base01};
-        @define-color bg-hover-alt ${c.base02};
+        @define-color bg-lighter ${c.base10};
+        @define-color bg-darker ${c.base11};
+        @define-color bg-alt ${c.base02};
         @define-color grey ${c.base03};
         @define-color grey-alt ${c.base04};
         @define-color border ${c.base03};

@@ -16,7 +16,6 @@ in
           ".local/share/lutris"
           ".config/Mumble"
           ".config/Logseq"
-          ".local/cache/amberol"
         ];
       };
     };

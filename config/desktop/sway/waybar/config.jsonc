@@ -9,11 +9,11 @@
     "passthrough": false,
     "position": "top",
     "output": "!eDP-1",
-    "spacing": 5,
+    "spacing": 2,
 
     "modules-center": [
       "clock",
-      "custom/notification"
+      "custom/rebuild"
     ],
     "modules-left": [
       "sway/workspaces",
@@ -26,26 +26,13 @@
       "memory",
       "temperature",
       "wireplumber",
-      "custom/rebuild",
       "pulseaudio#source",
       "idle_inhibitor",
       "custom/wlsunset",
-      "backlight",
       "network",
       "battery",
-      "group/group-power"
+      "custom/menu"
     ],
-    "backlight": {
-      "format": "{icon}",
-      "format-icons": [
-        "󰃞",
-        "󰃟",
-        "󰃠"
-      ],
-      "on-scroll-down": "brightnessctl set 5%-",
-      "on-scroll-up": "brightnessctl set +5%",
-      "tooltip": false
-    },
     "battery": {
       "format": "{icon} {capacity}%",
       "format-alt": "{icon} {time}",
@@ -72,31 +59,28 @@
       "tooltip-format": "<tt><small>{calendar}</small></tt>"
     },
     "cpu": {
-      "format": "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
-      "format-icons": [
-        "▁",
-        "▂",
-        "▃",
-        "▄",
-        "▅",
-        "▆",
-        "▇",
-        "<span color='red'>█</span>"
-      ],
-      "interval": 1
+      "format": "{usage:3}%",
+      "align": 0,
+      "interval": 1,
+      "states": {
+        "critical": 80,
+        "high": 50,
+        "medium": 5,
+        "low": 0
+      }
     },
-    "custom/notification": {
+    "custom/menu": {
       "tooltip": false,
       "format": "{icon}",
       "format-icons": {
-        "notification": " <span foreground='red'><sup></sup></span>",
-        "none": " ",
-        "dnd-notification": "<span foreground='red'><sup></sup></span>",
-        "dnd-none": " ",
-        "inhibited-notification": " <span foreground='red'><sup></sup></span>",
-        "inhibited-none": " ",
-        "dnd-inhibited-notification": " <span foreground='red'><sup></sup></span>",
-        "dnd-inhibited-none": " "
+        "notification": "<span foreground='red'><sup></sup></span> ",
+        "none": " ",
+        "dnd-notification": "<span foreground='red'><sup></sup></span> ",
+        "dnd-none": "󱋭 ",
+        "inhibited-notification": "<span foreground='red'><sup></sup></span> ",
+        "inhibited-none": " ",
+        "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>󱋭 ",
+        "dnd-inhibited-none": "󱋭 "
       },
       "return-type": "json",
       "exec-if": "which swaync-client",
@@ -105,39 +89,14 @@
       "on-click-right": "swaync-client -d -sw",
       "escape": true
     },
-    "custom/lock": {
-      "format": "<small>󰷛</small>",
-      "on-click": "swaymsg exec swaylock",
-      "tooltip": false
-    },
-    "custom/logout": {
-      "format": "",
-      "on-click": "swaymsg exit",
-      "tooltip": false
-    },
-    "custom/power": {
-      "format": "⏻",
-      "on-click": "swaync-client -t -sw",
-      "tooltip": false
-    },
-    "custom/reboot": {
-      "format": "󰜉",
-      "on-click": "systemctl reboot",
-      "tooltip": false
-    },
     "custom/rebuild": {
-      "exec": "waybar-rebuild-exec",
       "format": "{}",
       "interval": 2,
+      "exec": "waybar-rebuild-exec",
       "max-length": 12,
       "on-click": "toggle-sway-window --id=system-software-update  -- foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service",
       "return-type": "json",
       "signal": 12
-    },
-    "custom/suspend": {
-      "format": "󰪓",
-      "on-click": "systemctl suspend",
-      "tooltip": false
     },
     "custom/wlsunset": {
       "exec": "if systemctl --user --quiet is-active wlsunset.service; then echo '󰖔'; else echo '󰃚'; fi",
@@ -145,21 +104,6 @@
       "on-click": "toggle-service wlsunset; pkill -SIGRTMIN+8 waybar",
       "signal": 8,
       "tooltip": false
-    },
-    "group/group-power": {
-      "drawer": {
-        "children-class": "group-power",
-        "transition-duration": 500,
-        "transition-left-to-right": false
-      },
-      "modules": [
-        "custom/power",
-        "custom/suspend",
-        "custom/logout",
-        "custom/lock",
-        "custom/reboot"
-      ],
-      "orientation": "inherit"
     },
     "idle_inhibitor": {
       "format": "{icon}",
@@ -169,7 +113,7 @@
       }
     },
     "memory": {
-      "format": "󰆼 {percentage}% 󰿡 {swapPercentage}%",
+      "format": "󰆼{percentage:3}%  󰯎{swapPercentage:3}%",
       "interval": 30,
       "on-click": "toggle-sway-window --id btop -- foot --app-id=btop btop",
       "tooltip": true,
@@ -182,14 +126,14 @@
         "title",
         "album"
       ],
-      "format": "<span font='9' rise='-4444'>{player_icon} {dynamic}</span>",
-      "format-paused": "<span font='10' rise='-4444'>{status_icon} {dynamic}</span>",
+      "format": "<span font='9'>{player_icon}</span> <span>{dynamic}</span>",
+      "format-paused": "<span font='9'>{status_icon}</span> <span>{dynamic}</span>",
       "max-length": 100,
       "player-icons": {
-        "default": " "
+        "default": " "
       },
       "status-icons": {
-        "paused": " "
+        "paused": "󰏤 "
       }
     },
     "network": {
@@ -202,9 +146,9 @@
       "tooltip-format": "{ifname} / {essid} ({signalStrength}%) / {ipaddr}"
     },
     "pulseaudio#source": {
-      "format": "{format_source}",
+      "format": "<span font='9'>{format_source}</span>",
       "format-source": "",
-      "format-source-muted": "",
+      "format-source-muted": "<span font='9'> </span>",
       "min-length": 2,
       "on-click": "pamixer --default-source -t",
       "tooltip-format": "{source_volume}% / {desc}"
@@ -214,7 +158,7 @@
     },
     "sway/window": {
       "all-outputs": true,
-      "format": "<span font='9' rise='-4444'>{}</span>",
+      "format": "{}",
       "icon": true,
       "icon-size": 12
     },
@@ -255,7 +199,7 @@
       "spacing": 5
     },
     "wireplumber": {
-      "format": "{icon}  {volume}% {node_name}",
+      "format": "<span font='9'>{icon}</span>{volume:3}% {node_name}",
       "format-icons": {
         "default": [
           "",
@@ -308,21 +252,17 @@
       "format": "{:%m.%d}",
       "interval": 3600,
       "tooltip-format": "<tt><small>{calendar}</small></tt>",
-      "max-length": 7
+      "max-length": 12
     },
     "cpu": {
-      "format": "{icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}",
-      "format-icons": [
-        "▁",
-        "▂",
-        "▃",
-        "▄",
-        "▅",
-        "▆",
-        "▇",
-        "<span color='red'>█</span>"
-      ],
-      "interval": 1
+      "format": "{usage:5}%  ",
+      "interval": 1,
+      "states": {
+        "critical": 80,
+        "high": 50,
+        "medium": 5,
+        "low": 0
+      }
     },
     "custom/lock": {
       "format": "<small>󰷛</small>",
@@ -352,11 +292,6 @@
       "on-click": "toggle-sway-window --id=system-software-update  -- foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service",
       "return-type": "json",
       "signal": 12
-    },
-    "custom/suspend": {
-      "format": "󰪓",
-      "on-click": "systemctl suspend",
-      "tooltip": false
     },
     "custom/wlsunset": {
       "exec": "if systemctl --user --quiet is-active wlsunset.service; then echo '󰖔'; else echo '󰃚'; fi",
@@ -434,7 +369,7 @@
         "title",
         "album"
       ],
-      "format": "<span font='9' rise='-4444'>{player_icon} {dynamic}</span>",
+      "format": "<span font='10'>{player_icon} {dynamic}</span>",
       "format-paused": "<span font='10' rise='-4444'>{status_icon} {dynamic}</span>",
       "max-length": 100,
       "player-icons": {
@@ -457,7 +392,7 @@
     "passthrough": false,
     "position": "top",
     "pulseaudio#source": {
-      "format": "{format_source}",
+      "format": "<span font='9'>{format_source}</span>",
       "format-source": "",
       "format-source-muted": "",
       "min-length": 2,

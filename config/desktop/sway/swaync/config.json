@@ -35,9 +35,9 @@
     }
   },
   "widgets": [
-    "label",
-    "menubar",
+    "menubar#label",
     "buttons-grid",
+    "backlight",
     "volume",
     "mpris",
     "title",
@@ -55,26 +55,20 @@
     },
     "label": {
       "max-lines": 1,
-      "text": "Controll Center"
+      "text": "Control Center"
     },
     "mpris": {
       "image-size": 96,
-      "image-radius": 6
+      "image-radius": 12
     },
     "backlight": {
-      "label": "",
-      "device": "intel_backlight",
+      "label": " 󰃠",
       "min": 10
-    },
-    "backlight#KB": {
-      "label": " ",
-      "device": "asus::kbd_backlight",
-      "subsystem": "leds"
     },
     "volume": {
       "label": ""
     },
-    "menubar": {
+    "menubar#label": {
       "menu#power-buttons": {
         "label": "",
         "position": "right",
@@ -85,77 +79,15 @@
           },
           {
             "label": "   Lock",
-            "command": "swaylock.sh"
+            "command": "swaymsg exec swaylock"
           },
           {
             "label": "   Logout",
-            "command": "loginctl terminate-session ${XDG_SESSION_ID-}"
+            "command": "swaymsg exit"
           },
           {
             "label": "   Shut down",
             "command": "systemctl poweroff"
-          }
-        ]
-      },
-      "menu#powermode-buttons": {
-        "label": "",
-        "position": "right",
-        "actions": [
-          {
-            "label": "Performance",
-            "command": "powerprofilesctl set performance"
-          },
-          {
-            "label": "Balanced",
-            "command": "powerprofilesctl set balanced"
-          },
-          {
-            "label": "Power-saver",
-            "command": "powerprofilesctl set power-saver"
-          }
-        ]
-      },
-      "menu#screenshot-buttons": {
-        "label": "",
-        "position": "left",
-        "actions": [
-          {
-            "label": "   Entire screen",
-            "command": "swaync-client -cp && sleep 1 && hyprshot -m output"
-          },
-          {
-            "label": "   Select a region",
-            "command": "swaync-client -cp && sleep 1 && hyprshot -m region"
-          },
-          {
-            "label": "   Open screenshot menu",
-            "command": "swaync-client -cp && rofi-screenshot"
-          },
-          {
-            "label": "   Open screenshot folder",
-            "command": "exo-open $HYPRSHOT_DIR"
-          }
-        ]
-      },
-      "menu#screencast-buttons": {
-        "label": "",
-        "position": "left",
-        "actions": [
-          {
-            "label": "   Entire screen",
-            "command": "swaync-client -cp && sleep 1 && recording.sh toggle fullscreen"
-          },
-          {
-            "label": "   Select a region",
-            "command": "swaync-client -cp && sleep 1 && recording.sh toggle region"
-          },
-          {
-            "label": "   Stop",
-            "command": "swaync-client -cp && recording.sh stop"
-          },
-          {
-            "label": "   Open screencast folder",
-            "command": "$XDG_VIDEOS_DIR/Screencasts"
           }
         ]
       }
@@ -163,36 +95,12 @@
     "buttons-grid": {
       "actions": [
         {
-          "label": "",
-          "command": "nm-connection-editor"
+          "label": "直",
+          "command": "~/.config/rofi/rofi-wifi-menu.sh"
         },
         {
           "label": "",
-          "command": "blueman"
-        },
-        {
-          "label": "",
-          "command": "nwg-look"
-        },
-        {
-          "label": "",
-          "command": "exo-open ~/ConfigHub"
-        },
-        {
-          "label": "",
-          "command": "ymuse"
-        },
-        {
-          "label": "",
-          "command": "orage"
-        },
-        {
-          "label": "",
-          "command": "pamac-manager"
-        },
-        {
-          "label": "",
-          "command": "firefox"
+          "command": "~/.config/rofi/rofi-bluetooth"
         }
       ]
     }
