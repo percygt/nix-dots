@@ -12,10 +12,10 @@
     "spacing": 2,
 
     "modules-center": [
-      "clock",
-      "custom/rebuild"
+      "clock"
     ],
     "modules-left": [
+      "custom/rebuild",
       "sway/workspaces",
       "sway/window"
     ],
@@ -54,8 +54,8 @@
       }
     },
     "clock": {
-      "format": "{0:%I:%M} | {0:%d.%a}",
-      "interval": 3600,
+      "format": " {0:%d.%a} {0:%I:%M}",
+      "interval": 60,
       "tooltip-format": "<tt><small>{calendar}</small></tt>"
     },
     "cpu": {

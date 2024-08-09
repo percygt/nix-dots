@@ -84,7 +84,6 @@ in
 
         * {
           font-family: '${f.name}, ${i.name}';
-          font-size: ${toString f.size}px;
         }
       '';
   };

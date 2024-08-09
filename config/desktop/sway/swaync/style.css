@@ -4,30 +4,34 @@
   color: @text-light;
 }
 
+.control-center {
+  background-color: @bg;
+  border-left: 1px solid @grey;
+  padding: 0px;
+  border-radius: 0px;
+  margin: 0px;
+}
+
+.control-center-list {
+  background: transparent;
+}
+
 .notification-row {
   outline: none;
 }
 
 .notification-row:focus,
 .notification-row:hover {
-  background: @bg-focus;
+  background: @bg-darker;
 }
 
 .notification {
   border: 1px solid @bg-alt;
   border-radius: 4px;
-  margin: 6px 12px;
+  margin: 2px;
   box-shadow: none;
   padding: 0;
 }
-
-/* Uncomment to enable specific urgency colors */
-/* .low {
-  background: yellow;
-}
-.normal {
-  background: green;
-} */
 
 .critical {
   border: 1px solid @red;
@@ -35,13 +39,13 @@
 
 .notification-content {
   background: transparent;
-  padding: 6px;
+  padding: 4px;
   border-radius: 4px;
 }
 
 .close-button {
   background: @bg-close;
-  color: white;
+  color: @text-light;
   text-shadow: none;
   padding: 0;
   border-radius: 100%;
@@ -62,18 +66,18 @@
 
 .notification-default-action,
 .notification-action {
-  padding: 4px;
+  padding: 2px;
   margin: 0;
   box-shadow: none;
-  background: @bg-lighter;
+  background: @bg-alt;
   border: 1px solid @grey;
-  color: white;
+  color: @text-light;
 }
 
 .notification-default-action:hover,
 .notification-action:hover {
   -gtk-icon-effect: none;
-  background: @bg-alt;
+  background: @bg-darker;
 }
 
 .notification-default-action {
@@ -91,136 +95,126 @@
   border-top: none;
   border-right: none;
 }
-
 /* add bottom border radius to eliminate clipping */
 .notification-action:first-child {
   border-bottom-left-radius: 4px;
 }
-
 .notification-action:last-child {
   border-bottom-right-radius: 4px;
   border-right: 1px solid @grey;
 }
 
-.image {
-}
-
 .body-image {
   margin-top: 6px;
-  background-color: white;
+  background-color: @bg-dark;
   border-radius: 6px;
 }
 
+.inline-reply {
+  margin-top: 8px;
+}
+
+.inline-reply-entry {
+  background: @bg-darker;
+  color: @text-light;
+  caret-color: @text-light;
+  border: 1px solid @grey;
+  border-radius: 5px;
+}
+
+.inline-reply-button {
+  margin-left: 4px;
+  background: @bg;
+  border: 1px solid @grey;
+  border-radius: 5px;
+  color: @text-light;
+}
+
+.inline-reply-button:disabled {
+  background: initial;
+  color: @grey-alt;
+  border: 1px solid transparent;
+}
+
+.inline-reply-button:hover {
+  background: @bg-hover;
+}
+
+.image {
+  border-radius: 0px;
+  margin-right: 10px;
+}
+
 .summary {
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 700;
   background: transparent;
-  color: white;
   text-shadow: none;
 }
 
 .time {
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 12px;
+  font-weight: 700;
   background: transparent;
-  color: white;
   text-shadow: none;
   margin-right: 18px;
 }
 
 .body {
-  font-size: 12px;
   font-weight: normal;
   background: transparent;
-  color: white;
-  text-shadow: none;
-}
-
-/* The "Notifications" and "Do Not Disturb" text widget */
-.top-action-title {
-  color: white;
-  text-shadow: none;
-}
-
-.control-center {
-  background-color: @bg-alt;
-  border-left: 1px solid @grey-alt;
+  color: @text-light;
+  /* text-shadow: none; */
   border-radius: 0px;
+  padding: 0px;
   margin: 0px;
-}
-
-.control-center-list {
-  background: transparent;
 }
 
 .floating-notifications {
   background: transparent;
 }
-
 /* Window behind control center and on all other monitors */
 .blank-window {
   background: transparent;
 }
 
 /*** Widgets ***/
+/* title widget */
 
-/* Title widget */
 .widget-title {
-  margin: 8px;
-  font-size: 16px;
+  padding: 16px;
+  margin: unset;
 }
 
-.widget-title > button {
-  font-size: initial;
-  color: white;
-  text-shadow: none;
-  background: @bg-lighter;
-  border: 1px solid @grey;
-  box-shadow: none;
-  border-radius: 4px;
+.widget-title label {
+  margin-left: 8px;
+  font-size: 20px;
 }
 
-.widget-title > button:hover {
-  background: @bg-hover;
+.widget-title button {
+  border: unset;
+  background-color: unset;
+  color: @grey-alt;
+  /* border-radius: 1.159rem; */
+  /* -gtk-outline-radius: 1.159rem; */
+  padding: 8px 8px;
+  margin-right: 8px;
 }
 
-/* DND widget */
-.widget-dnd {
-  margin: 8px;
-  font-size: 1.1rem;
+.widget-title button label {
+  font-size: 12px;
+  margin-right: 8px;
 }
 
-.widget-dnd > switch {
-  font-size: initial;
-  border-radius: 4px;
-  background: @bg-lighter;
-  border: 1px solid @grey;
-  box-shadow: none;
+.widget-title button:hover {
+  color: @grey-alt;
 }
 
-.widget-dnd > switch:checked {
-  background: @grey-alt;
-}
-
-.widget-dnd > switch slider {
-  background: @bg-hover;
-  border-radius: 4px;
-}
-
-/* Label widget */
-.widget-label {
-  margin: 4px 8px 8px;
-}
-
-.widget-label > label {
-  font-size: 16px;
+.widget-title button:active {
+  color: @grey-alt;
 }
 
 /* Mpris widget */
-.widget-mpris {
-  /* The parent to all players */
-}
-
 .widget-mpris-player {
   padding: 8px;
   margin: 8px;
@@ -237,79 +231,52 @@
 
 /* Volume and Brightness Widget*/
 
-.widget-volume {
-  background-color: @bg-lighter;
-  padding: 4px 4px 4px 20px;
-  margin: 0px 8px 8px 8px;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
 .widget-backlight {
-  background-color: @bg-lighter;
-  padding: 8px 8px 4px 8px;
+  background-color: @bg-alt;
+  padding: 8px 16px 16px 16px;
+  margin: 0px 8px 8px 8px;
+  border-radius: 0px 0px 15px 15px;
+}
+
+.widget-volume {
+  background-color: @bg-alt;
+  padding: 16px 8px 8px 16px;
   margin: 8px 8px 0px 8px;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-.KB {
-  padding: 4px 8px 4px 8px;
-  margin: 0px 8px 0px 8px;
-  border-radius: 0;
-}
-
-.widget-menubar > box {
-  padding: 8px 4px;
-  margin: 8px;
-  border-radius: 4px 4px 0px 0px;
-  background-color: @bg-lighter;
-}
-
-.widget-menubar > box > .menu-button-bar > button {
-  border: 1px solid @grey;
-  background: @bg-lighter;
-  border-radius: 4px;
-  margin: 4px 12px;
+  border-radius: 15px 15px 0px 0px;
 }
 
 .widget-buttons-grid {
-  padding: 0px 8px 8px;
-  margin: 0px 8px 8px;
-  border-radius: 0px 0px 4px 4px;
-  background-color: @bg-lighter;
-  font-size: 14px;
+  color: @blue;
+  background-color: @transparent;
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button {
-  background: @bg-lighter;
-  border-radius: 4px;
+  background: @bg-hover;
+  border: 1px solid @grey;
+  margin: 0px 6px;
+  padding: 5px 10px;
+  font-size: 20px;
+  border-radius: 20px;
+  /* margin: 4px; */
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:hover {
-  background: @bg-hover;
+  background: @bg-darker;
 }
 
-.screenshot-buttons,
-.screencast-buttons,
-.powermode-buttons,
-.power-buttons {
-  border-radius: 4px;
+.topbar-buttons {
+  padding: 8px;
+  margin: 8px;
+  font-size: 25px;
+  border: none;
+  border-radius: 15px;
+  background-color: @bg-alt;
 }
-
-.screenshot-buttons > button,
-.screencast-buttons > button,
-.powermode-buttons > button,
-.power-buttons > button {
-  background: transparent;
-  padding: 2px 0px;
-  margin: 5px 70px 3px;
-  border: 1px solid @grey;
+.topbar-buttons > button {
+  padding: 6px 30px;
+  background: @bg-alt;
+  border-radius: 8px;
 }
-
-.screenshot-buttons > button:hover,
-.screencast-buttons > button:hover,
-.powermode-buttons > button:hover,
-.power-buttons > button:hover {
-  background: @bg-hover;
+.topbar-buttons > button:hover {
+  background: @bghover;
 }

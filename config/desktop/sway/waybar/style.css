@@ -16,6 +16,7 @@ window#waybar {
   background: @bg-lighter;
   color: @text-light;
   border-radius: 0px;
+  border-bottom: 1px solid @grey;
 }
 
 window#waybar.fullscreen {
@@ -25,8 +26,6 @@ window#waybar.fullscreen {
 #workspaces {
   margin: 0px;
   padding: 0px;
-  /* border-radius: 5px; */
-  /* background: @bg-lighter; */
 }
 
 button {
