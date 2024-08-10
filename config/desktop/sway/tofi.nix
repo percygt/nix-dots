@@ -26,8 +26,8 @@ in
       font-variations = "wght 700"
       selection-color = ${c.base05}
       prompt-color =  ${c.base0D}
-      text-color = ${c.base03}
-      background-color = ${c.base00}
+      text-color = ${c.base04}
+      background-color = ${c.base10}
       prompt-padding = 2
       anchor = top
       width = 0
@@ -37,11 +37,11 @@ in
       border-width = 0
       min-input-width = 120
       result-spacing = 10
-      corner-radius = 12
-      height = 25
-      margin-top = 5
-      margin-left = 5
-      margin-right = 5
+      corner-radius = 0
+      height = 30
+      margin-top = 0
+      margin-left = 0
+      margin-right = 0
       margin-bottom = 0
       padding-top = 0
       padding-bottom = 0

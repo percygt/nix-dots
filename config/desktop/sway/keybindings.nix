@@ -46,6 +46,7 @@ in
       "Ctrl+KP_Multiply" = "exec ${toggle-blur { inherit pkgs; }}";
       "Ctrl+KP_Insert" = "exec ${lib.getExe pkgs.toggle-sway-window} --id system-software-update -- ${viewRebuildLogCmd}";
       "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
+      "${mod}+Space" = "exec swaync-client -t -sw";
       "${mod}+Shift+w" = "exec ${dropdown-terminal { inherit pkgs weztermPackage; }}";
       "${mod}+w" = "exec ${lib.getExe pkgs.i3-quickterm} tmux";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
@@ -84,13 +85,12 @@ in
       "${mod}+Shift+Minus" = "split h";
       "${mod}+Shift+Backslash" = "split v";
       "${mod}+Shift+Space" = "floating toggle";
-      "${mod}+Space" = "focus mode_toggle";
       "${mod}+Shift+r" = "reload";
 
       "Ctrl+Alt+l" = "workspace next";
       "Ctrl+Alt+h" = "workspace prev";
 
-      Print = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";
+      "Ctrl+Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";
 
       # Backlight:
       XF86MonBrightnessUp = "exec brightnessctl set 5%+";

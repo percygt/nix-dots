@@ -39,6 +39,7 @@ button {
 #workspaces button {
   margin: 0px;
   padding: 0px;
+  border: unset;
 }
 
 #workspaces button:hover {
@@ -47,30 +48,26 @@ button {
 }
 
 #workspaces button label {
-  padding: 1px;
-  margin: 0px;
-  color: @grey-alt;
-  font-weight: 500;
+  color: @grey;
+  font-weight: 400;
 }
 
 #workspaces button.visible label {
-  background: @bg-alt;
-  /* border-top: 1px solid @blue; */
+  border-top: 1px solid @blue;
   color: @text-light;
   font-weight: 900;
 }
 
-#custom-menu,
-#custom-rebuild {
-  color: @blue;
-  padding: 0px 10px;
-}
-
 #custom-menu {
   border-radius: 2px 0px 0px 2px;
+  /* padding-left: 7px; */
 }
 
 #custom-rebuild {
+  font-size: 16px;
+  padding-left: 7px;
+  padding-right: 5px;
+  color: @purple;
   border-radius: 0px 2px 2px 0px;
 }
 

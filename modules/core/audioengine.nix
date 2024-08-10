@@ -58,25 +58,14 @@ in
           ]
         '')
         (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/50-bluez.conf" ''
-          monitor.bluez.rules = [
-            {
-              matches = [
-                {
-                  ## This matches all bluetooth devices.
-                  device.name = "~bluez_card.*"
-                }
-              ]
-              actions = {
-                update-props = {
-                  bluez5.auto-connect = [ a2dp_sink  a2dp_source ]
-                }
-              }
-            }
-          ]
           monitor.bluez.properties = {
+            bluez5.auto-connect = [ a2dp_sink  a2dp_source ]
+            bluez5.roles = [ a2dp_sink a2dp_source ]
             bluez5.enable-hw-volume = false
-            bluez5.headset-roles = [ ]
-            bluez5.hfphsp-backend = "none"
+          }
+
+          wireplumber.settings = {
+            bluetooth.autoswitch-to-headset-profile = false
           }
         '')
       ];

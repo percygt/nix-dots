@@ -1,7 +1,7 @@
 {
   wayland.windowManager.sway.config.startup = [
     {
-      command = "systemctl --user restart kanshi";
+      command = "systemctl --user start kanshi";
       always = true;
     }
     { command = "systemctl --user start wlsunset.service"; }

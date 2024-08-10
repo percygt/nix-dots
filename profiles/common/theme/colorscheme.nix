@@ -18,7 +18,7 @@
   base0D = "8caaee"; # [#8caaee] azure       blue
   base0E = "d279ff"; # [#d279ff] magenta     magenta
   base0F = "3f0a0a"; # [#3F0A0A] mahogany    brown
-  base10 = "00081e"; # [#00081e] abyss
+  base10 = "041026"; # [#041026] abyss
   base11 = "030205"; # [#030205] obsidian
   base12 = "e34234"; # [#e34234] vermilion
   base13 = "d9a145"; # [#d9a145] marigold

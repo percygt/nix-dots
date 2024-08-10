@@ -14,7 +14,7 @@ in
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${g.username}.directories = [
         {
-          directory = ".gnupg/private-keys-v1.d";
+          directory = ".gnupg";
           mode = "0700";
         }
       ];

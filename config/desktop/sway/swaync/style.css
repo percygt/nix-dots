@@ -1,56 +1,68 @@
 @import url("./nix.css");
 
-* {
-  color: @text-light;
-}
-
 .control-center {
   background-color: @bg;
-  border-left: 1px solid @grey;
+  border-left: 1px solid @border;
   padding: 0px;
-  border-radius: 0px;
+  border-radius: 16px 0px 0px 16px;
   margin: 0px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.7),
+    0 2px 6px 2px rgba(0, 0, 0, 0.3);
 }
 
 .control-center-list {
   background: transparent;
 }
+.control-center .notification-row:focus,
+.control-center .notification-row:hover {
+  opacity: 1;
+  background: @bg-darker;
+}
 
 .notification-row {
   outline: none;
+  margin: 0px;
+  padding: 0px;
 }
 
 .notification-row:focus,
 .notification-row:hover {
-  background: @bg-darker;
+  background: @bg-hover;
 }
 
 .notification {
-  border: 1px solid @bg-alt;
-  border-radius: 4px;
-  margin: 2px;
-  box-shadow: none;
+  background: @bg;
+  border: 1px solid @border;
+  border-radius: 6px;
+  margin: 3px -2px 3px 0px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.7),
+    0 2px 6px 2px rgba(0, 0, 0, 0.3);
   padding: 0;
 }
 
 .critical {
-  border: 1px solid @red;
+  background: @orange;
+  padding: 2px;
+  border-radius: 6px;
 }
 
 .notification-content {
   background: transparent;
-  padding: 4px;
-  border-radius: 4px;
+  padding: 6px;
+  border-radius: 6px;
 }
 
 .close-button {
   background: @bg-close;
-  color: @text-light;
   text-shadow: none;
   padding: 0;
   border-radius: 100%;
   margin-top: 10px;
-  margin-right: 16px;
+  margin-right: 5px;
   box-shadow: none;
   border: none;
   min-width: 24px;
@@ -66,22 +78,22 @@
 
 .notification-default-action,
 .notification-action {
-  padding: 2px;
+  padding: 4px;
   margin: 0;
   box-shadow: none;
   background: @bg-alt;
-  border: 1px solid @grey;
-  color: @text-light;
+  border: 1px solid @border;
+  /* color: @text-light; */
 }
 
 .notification-default-action:hover,
 .notification-action:hover {
   -gtk-icon-effect: none;
-  background: @bg-darker;
+  background: @bg-hover;
 }
 
 .notification-default-action {
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 /* When alternative actions are visible */
@@ -95,13 +107,15 @@
   border-top: none;
   border-right: none;
 }
+
 /* add bottom border radius to eliminate clipping */
 .notification-action:first-child {
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 10px;
 }
+
 .notification-action:last-child {
-  border-bottom-right-radius: 4px;
-  border-right: 1px solid @grey;
+  border-bottom-right-radius: 10px;
+  border-right: 1px solid @border;
 }
 
 .body-image {
@@ -116,16 +130,16 @@
 
 .inline-reply-entry {
   background: @bg-darker;
-  color: @text-light;
+  /* color: @text-light; */
   caret-color: @text-light;
-  border: 1px solid @grey;
+  border: 1px solid @border;
   border-radius: 5px;
 }
 
 .inline-reply-button {
   margin-left: 4px;
   background: @bg;
-  border: 1px solid @grey;
+  border: 1px solid @border;
   border-radius: 5px;
   color: @text-light;
 }
@@ -182,37 +196,33 @@
 
 .widget-title {
   padding: 16px;
-  margin: unset;
 }
 
 .widget-title label {
-  margin-left: 15px;
+  margin-left: 5px;
   font-size: 16px;
+  font-weight: 600;
 }
 
 .widget-title button {
   border: unset;
   background-color: unset;
   color: @grey-alt;
-  border-radius: 1.159rem;
-  -gtk-outline-radius: 1.159rem;
-  padding: 8px 8px;
-  margin-right: 15px;
 }
 
 .widget-title button label {
   font-size: 14px;
-  margin-right: 8px;
+  font-weight: 400;
+  margin-right: 5px;
 }
 
 .widget-title button:hover {
-  background: @grey-alt;
+  color: @text-light;
 }
 
 .widget-title button:active {
-  background: @grey-alt;
+  color: @text-light;
 }
-
 /* Mpris widget */
 .widget-mpris {
   color: @text-light;
@@ -250,10 +260,15 @@
 }
 
 .widget-volume {
+  border-top: 1px solid @border;
   background-color: @bg-alt;
   padding: 16px 8px 8px 16px;
-  margin: 15px 15px 0px 15px;
+  margin: 10px 15px 0px 15px;
   border-radius: 15px 15px 0px 0px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.7),
+    0 2px 6px 2px rgba(0, 0, 0, 0.3);
 }
 
 .widget-buttons-grid {
@@ -263,7 +278,7 @@
 
 .widget-buttons-grid > flowbox > flowboxchild > button {
   background: @bg-hover;
-  border: 1px solid @grey;
+  border: 1px solid @border;
   margin: 0px 6px;
   padding: 5px 10px;
   font-size: 20px;
@@ -276,19 +291,25 @@
 }
 
 .topbar-buttons {
-  padding: 8px;
-  margin: 15px 15px 10px;
+  padding: 5px;
+  margin: 15px 10px 10px;
   font-size: 25px;
-  border-radius: 15px;
-  background-color: @bg-alt;
+  background-color: @transparent;
 }
+
 .topbar-buttons > button {
-  margin: 0 6px;
-  padding: 6px 30px;
+  margin: 0 5px;
+  padding: 8px 20px;
+  color: @blue;
   background: @bg-alt;
-  border: 1px @transparent;
-  border-radius: 8px;
+  border-top: 1px solid @grey;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.7),
+    0 2px 6px 2px rgba(0, 0, 0, 0.3);
 }
 .topbar-buttons > button:hover {
-  background: @bg-hover;
+  background: @purple;
+  color: @text-dark;
 }

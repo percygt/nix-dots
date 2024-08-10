@@ -9,7 +9,6 @@
     corner_radius 12
     default_dim_inactive 0.3
     scratchpad_minimize enable
-    # layer_effects "waybar" corner_radius 12
     bindgesture swipe:4:right workspace prev
     bindgesture swipe:4:left workspace next
     bindgesture swipe:3:right focus left
