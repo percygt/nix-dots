@@ -36,7 +36,7 @@ in
       extraConfig = {
         core.editor = "nvim";
         init.defaultBranch = "main";
-        safe.directory = g.flakeDirectory;
+        safe.directory = "${g.flakeDirectory}/.git";
         pull.rebase = false;
         color.ui = true;
         column.ui = "auto";
