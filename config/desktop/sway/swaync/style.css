@@ -164,7 +164,6 @@
   font-weight: normal;
   background: transparent;
   color: @text-light;
-  /* text-shadow: none; */
   border-radius: 0px;
   padding: 0px;
   margin: 0px;
@@ -187,41 +186,53 @@
 }
 
 .widget-title label {
-  margin-left: 8px;
-  font-size: 20px;
+  margin-left: 15px;
+  font-size: 16px;
 }
 
 .widget-title button {
   border: unset;
   background-color: unset;
   color: @grey-alt;
-  /* border-radius: 1.159rem; */
-  /* -gtk-outline-radius: 1.159rem; */
+  border-radius: 1.159rem;
+  -gtk-outline-radius: 1.159rem;
   padding: 8px 8px;
-  margin-right: 8px;
+  margin-right: 15px;
 }
 
 .widget-title button label {
-  font-size: 12px;
+  font-size: 14px;
   margin-right: 8px;
 }
 
 .widget-title button:hover {
-  color: @grey-alt;
+  background: @grey-alt;
 }
 
 .widget-title button:active {
-  color: @grey-alt;
+  background: @grey-alt;
 }
 
 /* Mpris widget */
+.widget-mpris {
+  color: @text-light;
+  background: @transparent;
+  padding: 0px;
+  margin: 5px 10px 5px 10px;
+  border-radius: 5px;
+}
+
+.widget-mpris > box > button {
+  border-radius: 5px;
+}
+
 .widget-mpris-player {
-  padding: 8px;
-  margin: 8px;
+  padding: 5px 10px;
+  margin: 10px;
 }
 
 .widget-mpris-title {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.25rem;
 }
 
@@ -234,14 +245,14 @@
 .widget-backlight {
   background-color: @bg-alt;
   padding: 8px 16px 16px 16px;
-  margin: 0px 8px 8px 8px;
+  margin: 0px 15px 15px 15px;
   border-radius: 0px 0px 15px 15px;
 }
 
 .widget-volume {
   background-color: @bg-alt;
   padding: 16px 8px 8px 16px;
-  margin: 8px 8px 0px 8px;
+  margin: 15px 15px 0px 15px;
   border-radius: 15px 15px 0px 0px;
 }
 
@@ -266,17 +277,18 @@
 
 .topbar-buttons {
   padding: 8px;
-  margin: 8px;
+  margin: 15px 15px 10px;
   font-size: 25px;
-  border: none;
   border-radius: 15px;
   background-color: @bg-alt;
 }
 .topbar-buttons > button {
+  margin: 0 6px;
   padding: 6px 30px;
   background: @bg-alt;
+  border: 1px @transparent;
   border-radius: 8px;
 }
 .topbar-buttons > button:hover {
-  background: @bghover;
+  background: @bg-hover;
 }

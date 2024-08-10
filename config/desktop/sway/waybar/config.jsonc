@@ -27,8 +27,8 @@
       "temperature",
       "wireplumber",
       "pulseaudio#source",
-      "idle_inhibitor",
       "custom/wlsunset",
+      "idle_inhibitor",
       "network",
       "battery",
       "custom/menu"
@@ -46,11 +46,11 @@
         "",
         ""
       ],
-      "format-plugged": "<span size='medium'></span>",
+      "format-plugged": "󰟧",
       "states": {
         "critical": 10,
-        "good": 95,
-        "warning": 20
+        "warning": 20,
+        "good": 95
       }
     },
     "clock": {
@@ -73,14 +73,14 @@
       "tooltip": false,
       "format": "{icon}",
       "format-icons": {
-        "notification": "<span foreground='red'><sup></sup></span> ",
-        "none": " ",
-        "dnd-notification": "<span foreground='red'><sup></sup></span> ",
-        "dnd-none": "󱋭 ",
-        "inhibited-notification": "<span foreground='red'><sup></sup></span> ",
-        "inhibited-none": " ",
-        "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>󱋭 ",
-        "dnd-inhibited-none": "󱋭 "
+        "notification": " 󰍜<span foreground='red'><sup></sup></span> ",
+        "none": " 󰍜 ",
+        "dnd-notification": " 󰍜<span foreground='red'><sup></sup></span> ",
+        "dnd-none": " 󱋭 ",
+        "inhibited-notification": " 󰍜<span foreground='red'><sup></sup></span> ",
+        "inhibited-none": " 󰍜 ",
+        "dnd-inhibited-notification": "󱋭 <span foreground='red'><sup></sup></span> ",
+        "dnd-inhibited-none": " 󱋭 "
       },
       "return-type": "json",
       "exec-if": "which swaync-client",
@@ -99,7 +99,7 @@
       "signal": 12
     },
     "custom/wlsunset": {
-      "exec": "if systemctl --user --quiet is-active wlsunset.service; then echo '󰖔'; else echo '󰃚'; fi",
+      "exec": "if systemctl --user --quiet is-active wlsunset.service; then echo 󰥹; else echo 󰃚; fi",
       "format": "{}",
       "on-click": "toggle-service wlsunset; pkill -SIGRTMIN+8 waybar",
       "signal": 8,
@@ -130,10 +130,10 @@
       "format-paused": "<span font='9'>{status_icon}</span> <span>{dynamic}</span>",
       "max-length": 100,
       "player-icons": {
-        "default": " "
+        "default": "󰏤 "
       },
       "status-icons": {
-        "paused": "󰏤 "
+        "paused": " "
       }
     },
     "network": {
@@ -146,10 +146,9 @@
       "tooltip-format": "{ifname} / {essid} ({signalStrength}%) / {ipaddr}"
     },
     "pulseaudio#source": {
-      "format": "<span font='9'>{format_source}</span>",
+      "format": "<span font='9'> {format_source}</span>",
       "format-source": "",
-      "format-source-muted": "<span font='9'> </span>",
-      "min-length": 2,
+      "format-source-muted": "",
       "on-click": "pamixer --default-source -t",
       "tooltip-format": "{source_volume}% / {desc}"
     },
@@ -217,17 +216,40 @@
   },
   // config2
   {
-    "backlight": {
-      "format": "{icon}",
-      "format-icons": [
-        "󰃞",
-        "󰃟",
-        "󰃠"
-      ],
-      "on-scroll-down": "brightnessctl set 5%-",
-      "on-scroll-up": "brightnessctl set +5%",
-      "tooltip": false
-    },
+    "ipc": true,
+    "id": "bar-1",
+    "output": "eDP-1",
+    "exclusive": true,
+    "fixed-center": true,
+    "gtk-layer-shell": true,
+    "height": 30,
+    "layer": "top",
+    "passthrough": false,
+    "position": "top",
+    "spacing": 2,
+
+    "modules-center": [
+      "clock"
+    ],
+    "modules-left": [
+      "custom/rebuild",
+      "sway/workspaces",
+      "sway/window"
+    ],
+    "modules-right": [
+      "mpris",
+      "tray",
+      "cpu",
+      "memory",
+      "temperature",
+      "wireplumber",
+      "pulseaudio#source",
+      "custom/wlsunset",
+      "idle_inhibitor",
+      "network",
+      "battery",
+      "custom/menu"
+    ],
     "battery": {
       "format": "{icon} {capacity}%",
       "format-alt": "{icon} {time}",
@@ -241,21 +263,21 @@
         "",
         ""
       ],
-      "format-plugged": "<span size='medium'></span>",
+      "format-plugged": "󰟧",
       "states": {
         "critical": 10,
-        "good": 95,
-        "warning": 20
+        "warning": 20,
+        "good": 95
       }
     },
     "clock": {
-      "format": "{:%m.%d}",
-      "interval": 3600,
-      "tooltip-format": "<tt><small>{calendar}</small></tt>",
-      "max-length": 12
+      "format": " {0:%d.%a} {0:%I:%M}",
+      "interval": 60,
+      "tooltip-format": "<tt><small>{calendar}</small></tt>"
     },
     "cpu": {
-      "format": "{usage:5}%  ",
+      "format": "{usage:3}%",
+      "align": 0,
       "interval": 1,
       "states": {
         "critical": 80,
@@ -264,62 +286,42 @@
         "low": 0
       }
     },
-    "custom/lock": {
-      "format": "<small>󰷛</small>",
-      "on-click": "swaymsg exec swaylock",
-      "tooltip": false
-    },
-    "custom/logout": {
-      "format": "",
-      "on-click": "swaymsg exit",
-      "tooltip": false
-    },
-    "custom/power": {
-      "format": "⏻",
-      "on-click": "systemctl poweroff",
-      "tooltip": false
-    },
-    "custom/reboot": {
-      "format": "󰜉",
-      "on-click": "systemctl reboot",
-      "tooltip": false
+    "custom/menu": {
+      "tooltip": false,
+      "format": "{icon}",
+      "format-icons": {
+        "notification": " 󰍜<span foreground='red'><sup></sup></span> ",
+        "none": " 󰍜 ",
+        "dnd-notification": " 󰍜<span foreground='red'><sup></sup></span> ",
+        "dnd-none": " 󱋭 ",
+        "inhibited-notification": " 󰍜<span foreground='red'><sup></sup></span> ",
+        "inhibited-none": " 󰍜 ",
+        "dnd-inhibited-notification": "󱋭 <span foreground='red'><sup></sup></span> ",
+        "dnd-inhibited-none": " 󱋭 "
+      },
+      "return-type": "json",
+      "exec-if": "which swaync-client",
+      "exec": "swaync-client -swb",
+      "on-click": "swaync-client -t -sw",
+      "on-click-right": "swaync-client -d -sw",
+      "escape": true
     },
     "custom/rebuild": {
-      "exec": "waybar-rebuild-exec",
       "format": "{}",
       "interval": 2,
+      "exec": "waybar-rebuild-exec",
       "max-length": 12,
       "on-click": "toggle-sway-window --id=system-software-update  -- foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service",
       "return-type": "json",
       "signal": 12
     },
     "custom/wlsunset": {
-      "exec": "if systemctl --user --quiet is-active wlsunset.service; then echo '󰖔'; else echo '󰃚'; fi",
+      "exec": "if systemctl --user --quiet is-active wlsunset.service; then echo 󰥹; else echo 󰃚; fi",
       "format": "{}",
       "on-click": "toggle-service wlsunset; pkill -SIGRTMIN+8 waybar",
       "signal": 8,
       "tooltip": false
     },
-    "exclusive": true,
-    "fixed-center": true,
-    "group/group-power": {
-      "drawer": {
-        "children-class": "group-power",
-        "transition-duration": 500,
-        "transition-left-to-right": false
-      },
-      "modules": [
-        "custom/power",
-        "custom/suspend",
-        "custom/logout",
-        "custom/lock",
-        "custom/reboot"
-      ],
-      "orientation": "inherit"
-    },
-    "gtk-layer-shell": true,
-    "height": 25,
-    "id": "bar-1",
     "idle_inhibitor": {
       "format": "{icon}",
       "format-icons": {
@@ -327,41 +329,13 @@
         "deactivated": "󱙱"
       }
     },
-    "ipc": true,
-    "layer": "top",
-    "margin-left": 5,
-    "margin-right": 5,
-    "margin-top": 5,
     "memory": {
-      "format": "󰆼 {percentage}%     󰿡  {swapPercentage}%",
+      "format": "󰆼{percentage:3}%  󰯎{swapPercentage:3}%",
       "interval": 30,
       "on-click": "toggle-sway-window --id btop -- foot --app-id=btop btop",
       "tooltip": true,
       "tooltip-format": "{used:0.1f}G/{total:0.1f}G | {swapUsed:0.1f}G/{swapTotal:0.1f}G"
     },
-    "modules-center": [
-      "clock"
-    ],
-    "modules-left": [
-      "sway/workspaces",
-      "sway/window"
-    ],
-    "modules-right": [
-      "mpris",
-      "tray",
-      "cpu",
-      "memory",
-      "temperature",
-      "wireplumber",
-      "custom/rebuild",
-      "pulseaudio#source",
-      "idle_inhibitor",
-      "custom/wlsunset",
-      "backlight",
-      "network",
-      "battery",
-      "group/group-power"
-    ],
     "mpris": {
       "dynamic-len": 45,
       "dynamic-order": [
@@ -369,14 +343,14 @@
         "title",
         "album"
       ],
-      "format": "<span font='10'>{player_icon} {dynamic}</span>",
-      "format-paused": "<span font='10' rise='-4444'>{status_icon} {dynamic}</span>",
+      "format": "<span font='9'>{player_icon}</span> <span>{dynamic}</span>",
+      "format-paused": "<span font='9'>{status_icon}</span> <span>{dynamic}</span>",
       "max-length": 100,
       "player-icons": {
-        "default": " "
+        "default": "󰏤 "
       },
       "status-icons": {
-        "paused": " "
+        "paused": " "
       }
     },
     "network": {
@@ -388,24 +362,19 @@
       "on-click": "toggle-sway-window --id wpa_gui -- wpa_gui",
       "tooltip-format": "{ifname} / {essid} ({signalStrength}%) / {ipaddr}"
     },
-    "output": "eDP-1",
-    "passthrough": false,
-    "position": "top",
     "pulseaudio#source": {
-      "format": "<span font='9'>{format_source}</span>",
+      "format": "<span font='9'> {format_source}</span>",
       "format-source": "",
       "format-source-muted": "",
-      "min-length": 2,
       "on-click": "pamixer --default-source -t",
       "tooltip-format": "{source_volume}% / {desc}"
     },
-    "spacing": 5,
     "sway/mode": {
       "format": "<span style=\"italic\">{}</span>"
     },
     "sway/window": {
       "all-outputs": true,
-      "format": "<span font='9' rise='-4444'>{}</span>",
+      "format": "{}",
       "icon": true,
       "icon-size": 12
     },
@@ -446,7 +415,7 @@
       "spacing": 5
     },
     "wireplumber": {
-      "format": "{icon}  {volume}% {node_name}",
+      "format": "<span font='9'>{icon}</span>{volume:3}% {node_name}",
       "format-icons": {
         "default": [
           "",

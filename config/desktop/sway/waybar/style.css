@@ -60,12 +60,26 @@ button {
   font-weight: 900;
 }
 
-.modules-right,
-.modules-left,
-.modules-center {
-  padding: 0px;
-  margin: 0px 5px;
+#custom-menu,
+#custom-rebuild {
+  color: @blue;
+  padding: 0px 10px;
 }
+
+#custom-menu {
+  border-radius: 2px 0px 0px 2px;
+}
+
+#custom-rebuild {
+  border-radius: 0px 2px 2px 0px;
+}
+
+/* .modules-right, */
+/* .modules-left, */
+/* .modules-center { */
+/*   padding: 0px; */
+/*   margin: 0px 5px; */
+/* } */
 
 #cpu.critical {
   color: @red;
@@ -93,13 +107,11 @@ button {
 
 #cpu,
 #tray,
-#custom-wlsunset,
-#custom-rebuild,
+#custom-menu,
 #bluetooth,
 #temperature,
 #memory,
 #window,
-#pulseaudio,
 #wireplumber {
   padding: 0px 5px;
 }
@@ -129,7 +141,7 @@ button {
 }
 
 #pulseaudio.source-muted {
-  color: @grey;
+  color: @grey-alt;
 }
 
 #temperature.critical {
@@ -137,7 +149,7 @@ button {
 }
 
 #wireplumber.muted {
-  color: @grey;
+  color: @grey-alt;
 }
 
 label.module {
