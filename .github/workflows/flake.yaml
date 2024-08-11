@@ -5,7 +5,8 @@ name: Update flake
   push:
   pull_request:
   schedule:
-    - cron: 0 6 * * *
+    # 06:00AM PHT everyday except Mon and Fri
+    - cron: 0 22 * * 1,2,3,5,6
   workflow_dispatch:
 
 jobs:
