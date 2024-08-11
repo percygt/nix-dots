@@ -20,10 +20,7 @@ in
       {
         timeout = 15 * 60;
         command = "${swaymsg} 'output * power off'";
-        resumeCommand = ''
-          ${swaymsg} "output * power on"
-          ${systemctl} --user restart kanshi
-        '';
+        resumeCommand = "${swaymsg} 'output * power on'";
       }
       {
         timeout = 30 * 60;
