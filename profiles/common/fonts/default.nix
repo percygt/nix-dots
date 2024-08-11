@@ -29,6 +29,10 @@
       package = pkgs.font-awesome;
       size = 12.0;
     };
+    extraFonts = with pkgs; [
+      (iosevka-bin.override { variant = "Aile"; })
+      emacs-all-the-icons-fonts
+    ];
     nerdfontPackages = pkgs.nerdfonts.override {
       fonts = [
         "VictorMono"

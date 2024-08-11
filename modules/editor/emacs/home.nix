@@ -1,6 +1,7 @@
-{ lib, config, ... }:
+{ config, ... }:
 let
   inherit (config._general) flakeDirectory;
+  moduleEmacs = "${flakeDirectory}/modules/editor/emacs";
 in
 {
   xdg.desktopEntries = {
@@ -39,14 +40,11 @@ in
       ];
     };
   };
-  home = {
-    activation = {
-      linkEmacsConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-        [ -e "${config.xdg.configHome}/emacs" ] || mkdir "${config.xdg.configHome}/emacs"
-        [ -e "${config.xdg.configHome}/emacs/init.el" ] || ln -s "${flakeDirectory}/modules/editor/emacs/init.el" "${config.xdg.configHome}/emacs/init.el"
-        [ -e "${config.xdg.configHome}/emacs/early-init.el" ] || ln -s "${flakeDirectory}/modules/editor/emacs/early-init.el" "${config.xdg.configHome}/emacs/early-init.el"
-        [ -e "${config.xdg.configHome}/emacs/config" ] || ln -s "${flakeDirectory}/modules/editor/emacs/config" "${config.xdg.configHome}/emacs/config"
-      '';
+  xdg = {
+    configFile = {
+      "emacs/config".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/config";
+      "emacs/early-init.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/early-init.el";
+      "emacs/init.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/init.el";
     };
   };
 }

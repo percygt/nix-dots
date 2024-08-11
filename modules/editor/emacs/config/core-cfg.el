@@ -30,23 +30,18 @@
   :ensure nil
   :demand
   :hook
-  (after-init . setup-fonts)
-  (emacs-lisp-mode . setup-victor-mono)
+  (after-init . setup-default-fonts)
   :preface
   (defun font-installed-p (font-name)
     "Check if a font with FONT-NAME is available."
     (find-font (font-spec :name font-name)))
-  (defun setup-victor-mono ()
-    (when (font-installed-p "VictorMono Nerd Font")
-      (dolist (face '(default fixed-pitch))
-        (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150))))
   (defun setup-default-fonts ()
     (set-fontset-font "fontset-default" nil (font-spec :family "Noto Color Emoji"))
     (when (font-installed-p "Iosevka Aile")
-      (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150))
-    (when (font-installed-p "MonaspiceNe Nerd Font Propo")
+      (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150 :weight 'medium))
+    (when (font-installed-p "VictorMono Nerd Font")
       (dolist (face '(default fixed-pitch))
-        (set-face-attribute `,face nil :font "MonaspiceNe Nerd Font Propo" :height 130))))
+        (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
   (provide 'font))
 
 (use-package display-line-numbers

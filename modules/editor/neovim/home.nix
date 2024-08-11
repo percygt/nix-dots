@@ -45,42 +45,11 @@ in
       plugins = [
         pkgs.vimPlugins.lazy-nvim # All other plugins are managed by lazy-nvim
       ];
-      # inherit (import ./packages.nix { inherit pkgs; })
-      #   extraLuaPackages
-      #   extraPython3Packages
-      #   extraPackages
-      #   ;
     };
     home = {
-      activation = {
-        linkNvim = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-          [ -e "${config.xdg.configHome}/nvim/lua/config" ] && cp -rs ${moduleNvim}/lua/config/. ${config.xdg.configHome}/nvim/lua/config/
-        '';
-        #   neovim =
-        #     lib.hm.dag.entryAfter [ "linkGeneration" ]
-        #       # bash
-        #       ''
-        #         LOCK_FILE=$(readlink -f ~/.config/nvim/lazy-lock.json)
-        #         echo $LOCK_FILE
-        #         [ ! -f "$LOCK_FILE" ] && echo "No lock file found, skipping" && exit 0
-        #
-        #         STATE_DIR=~/.local/state/nix/
-        #         STATE_FILE=$STATE_DIR/lazy-lock-checksum
-        #
-        #         [ ! -d $STATE_DIR ] && mkdir -p $STATE_DIR
-        #         [ ! -f $STATE_FILE ] && touch $STATE_FILE
-        #
-        #         HASH=$(nix-hash --flat $LOCK_FILE)
-        #
-        #         if [ "$(cat $STATE_FILE)" != "$HASH" ]; then
-        #           echo "Syncing neovim plugins"
-        #           $DRY_RUN_CMD ${config.programs.neovim.finalPackage}/bin/nvim --headless "+Lazy! restore" +qa
-        #           $DRY_RUN_CMD echo $HASH >$STATE_FILE
-        #         else
-        #           $VERBOSE_ECHO "Neovim plugins already synced, skipping"
-        #         fi
-        #       '';
-      };
+      activation.linkNvim = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        [ -e "${config.xdg.configHome}/nvim/lua/config" ] && cp -rs ${moduleNvim}/lua/config/. ${config.xdg.configHome}/nvim/lua/config/
+      '';
     };
     xdg = {
       configFile = {

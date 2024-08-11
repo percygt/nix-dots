@@ -1,6 +1,26 @@
 ;;; ui-cfg.el --- UI setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+(use-package dashboard
+  :after nerd-icons
+  :custom
+  (dashboard-items '((recents  .  5)
+		     (projects .  5)
+		     (agenda   . 10)))
+  (dashboard-set-footer nil)
+  (dashboard-set-init-info t)
+  (dashboard-center-content t)
+  (dashboard-set-file-icons t)
+  (dashboard-set-heading-icons t)
+  (dashboard-startup-banner 'logo)
+  (dashboard-projects-backend 'project-el)
+  :config
+  (dashboard-setup-startup-hook)
+  (evil-set-initial-state 'dashboard-mode 'normal)
+  (setq initial-buffer-choice (lambda ()
+				(get-buffer-create "*dashboard*")
+				(dashboard-refresh-buffer))))
+
 (use-package doom-themes
   :demand
   :config
@@ -30,7 +50,7 @@
   (centaur-tabs-adjust-buffer-order t)
   (centaur-tabs-adjust-buffer-order 'left)
   :config
-  (centaur-tabs-change-fonts (face-attribute 'variable-pitch :font) 120)
+  ;; (centaur-tabs-change-fonts (face-attribute 'variable-pitch :font) 130)
   (centaur-tabs-enable-buffer-reordering)
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t))
@@ -73,26 +93,6 @@
 (use-package hide-mode-line
   :defer
   :hook (org-mode . hide-mode-line-mode))
-
-(use-package dashboard
-  :after nerd-icons
-  :custom
-  (dashboard-items '((recents  .  5)
-		     (projects .  5)
-		     (agenda   . 10)))
-  (dashboard-set-footer nil)
-  (dashboard-set-init-info t)
-  (dashboard-center-content t)
-  (dashboard-set-file-icons t)
-  (dashboard-set-heading-icons t)
-  (dashboard-startup-banner 'logo)
-  (dashboard-projects-backend 'project-el)
-  :config
-  (dashboard-setup-startup-hook)
-  (evil-set-initial-state 'dashboard-mode 'normal)
-  (setq initial-buffer-choice (lambda ()
-				(get-buffer-create "*dashboard*")
-				(dashboard-refresh-buffer))))
 
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)

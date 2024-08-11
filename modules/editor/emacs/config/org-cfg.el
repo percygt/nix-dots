@@ -139,7 +139,7 @@
       (push template org-structure-template-alist))))
 
 
-(use-package org-timeblock)
+;; (use-package org-timeblock)
 
 (use-package org-super-agenda)
 

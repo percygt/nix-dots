@@ -32,7 +32,7 @@ in
       anchor = top
       width = 0
       horizontal = true
-      font-size = 10
+      font-size = 14
       outline-width = 0
       border-width = 0
       min-input-width = 120
@@ -43,7 +43,7 @@ in
       margin-left = 0
       margin-right = 0
       margin-bottom = 0
-      padding-top = 0
+      padding-top = 5
       padding-bottom = 0
       padding-left = 10
       padding-right = 10

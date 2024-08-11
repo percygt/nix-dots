@@ -34,10 +34,16 @@
     };
     home.packages = with pkgs; [
       # tui
-      nvtopPackages.full
+      fx # Terminal JSON viewer
+      htmlq # Like jq, but for HTML
+      tabiew # CSV viewer
+      serpl # Simple terminal UI for search and replace, ala VS Code
+      sshs # Terminal user interface for SSH.
+      atac # based on well-known clients such as Postman, Insomnia
       termscp # file transfer and explorer, with support for SCP/SFTP/FTP/S3
-      # visidata # interactive multitool for tabular data
+      visidata # interactive multitool for tabular data
       wtf # personal information dashboard
+      termshark
       bluetuith
       lazydocker
       lazysql
