@@ -25,9 +25,8 @@ jobs:
       - name: Update flake inputs
         run: |
           nix flake update nix-stash --accept-flake-config
+          nix flake update nix-sources --accept-flake-config
           nix flake update swayfx-unwrapped
-          nix flake update neovim-nightly-overlay
-          nix flake update emacs-overlay
           nix flake update home-manager
           nix flake update disko
           nix flake update sops-nix
