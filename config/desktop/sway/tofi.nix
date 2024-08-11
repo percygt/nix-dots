@@ -32,7 +32,7 @@ in
       anchor = top
       width = 0
       horizontal = true
-      font-size = 14
+      font-size = 12
       outline-width = 0
       border-width = 0
       min-input-width = 120

@@ -73,7 +73,8 @@
         eslint_d
         nodePackages.prettier
         nodePackages.typescript-language-server
-        nodePackages."@astrojs/language-server"
+        astro-language-server
+        # nodePackages."@astrojs/language-server"
 
         # Go
         go

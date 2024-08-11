@@ -15,7 +15,8 @@ in
     wpa.enable = lib.mkOption {
       description = "Enable wpa";
       type = lib.types.bool;
-      default = cfg.enable;
+      # default = cfg.enable;
+      default = false;
     };
   };
 
@@ -26,7 +27,6 @@ in
     networking =
       if (!wpa) then
         {
-          systemd.services.NetworkManager-wait-online.wantedBy = lib.mkForce [ ]; # Normally ["network-online.target"]
           wireless.iwd.settings.Settings.AutoConnect = true;
           networkmanager = {
             enable = true;
@@ -95,12 +95,18 @@ in
     users.groups.network = lib.mkIf wpa { };
     users.users.${g.username}.extraGroups = [ "network" ];
 
-    systemd = {
-      services.wpa_supplicant = {
-        preStart = lib.mkIf wpa "touch /etc/wpa_supplicant.conf";
-        serviceConfig.TimeoutSec = "10";
-      };
-      targets.network-online.wantedBy = lib.mkForce [ ]; # Normally ["multi-user.target"]
-    };
+    systemd =
+      if (!wpa) then
+        {
+          services.NetworkManager-wait-online.wantedBy = lib.mkForce [ ]; # Normally ["network-online.target"]
+          targets.network-online.wantedBy = lib.mkForce [ ]; # Normally ["multi-user.target"]
+        }
+      else
+        {
+          services.wpa_supplicant = {
+            preStart = lib.mkIf wpa "touch /etc/wpa_supplicant.conf";
+            serviceConfig.TimeoutSec = "10";
+          };
+        };
   };
 }

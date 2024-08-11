@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   libx,
   ...
 }:
@@ -32,6 +33,17 @@ in
   config = lib.mkMerge [
     {
       home-manager.users.${g.username} = import ./home.nix;
+      systemd.user.services.tmux = {
+        enable = true;
+        description = "tmux server";
+        serviceConfig = {
+          Type = "forking";
+          Restart = "always";
+          ExecStart = "${pkgs.bash}/bin/bash -c 'source ${config.system.build.setEnvironment} ; exec ${pkgs.tmux}/bin/tmux start-server'";
+          ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
+        };
+        wantedBy = [ "default.target" ];
+      };
       environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
         "/persist".users.${g.username}.directories = [
           ".local/share/atuin"
