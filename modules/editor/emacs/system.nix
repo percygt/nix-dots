@@ -20,7 +20,7 @@ in
     };
   };
   config = lib.mkIf config.modules.editor.emacs.enable {
-    nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
+    # nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
     environment.systemPackages = [
       (pkgs.aspellWithDicts (
         dicts: with dicts; [
