@@ -10,7 +10,7 @@ in
 {
   options.modules.editor.neovim.enable = lib.mkEnableOption "Enable modules.editor.neovimwide";
   config = lib.mkIf config.modules.editor.neovim.enable {
-    environment.systemPackages = with pkgs; [ neovim ];
+    environment.systemPackages = with pkgs; [ neovim-unstable ];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {
