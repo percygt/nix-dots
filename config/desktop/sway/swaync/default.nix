@@ -5,8 +5,8 @@
   ...
 }:
 let
-  inherit (config._general) flakeDirectory;
-  moduleSwaync = "${flakeDirectory}/config/desktop/sway/swaync";
+  g = config._general;
+  moduleSwaync = "${g.flakeDirectory}/config/desktop/sway/swaync";
   c = config.modules.theme.colors.withHashtag;
   f = config.modules.fonts.app;
   i = config.modules.fonts.icon;
@@ -21,7 +21,7 @@ let
     grim
     slurp
     swappy
-    swayfx
+    g.desktop.sway.package
   ];
   swayncWithExtraPackages =
     pkgs.runCommand "swaync"
