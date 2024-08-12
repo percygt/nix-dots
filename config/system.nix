@@ -25,6 +25,7 @@ in
       ./user.nix
       ./dev
       ./cli
+      ./shell
     ]
     ++ lib.optionals (desktop != null) [
       ./apps

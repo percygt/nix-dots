@@ -1,6 +1,5 @@
 pkgs: with pkgs; [
   curl
-  aria2
   wget
   lshw
 

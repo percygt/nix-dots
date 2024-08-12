@@ -8,6 +8,7 @@
     ../apps
     ../cli
     ../dev
+    ../shell
     ../common
     ../desktop
     ../nixpkgs/config.nix
