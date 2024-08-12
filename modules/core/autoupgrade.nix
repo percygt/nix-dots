@@ -14,18 +14,17 @@ let
   # List of packages to include in each service's $PATH
   pathPkgs =
     (with pkgs; [
-      coreutils
+      coreutils-full
       git
       nixos-rebuild
       gnutar
       gzip
       xz.bin
       sudo
+      gnupg
+      openssh
     ])
-    ++ [
-      config.programs.ssh.package
-      config.nix.package.out
-    ];
+    ++ [ config.nix.package.out ];
 in
 {
   options.modules.core = {
@@ -77,7 +76,7 @@ in
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.
-        GIT_STATUS="$(git status --branch --porcelain)"
+        GIT_STATUS="$(sudo -u ${g.username} git status --branch --porcelain)"
         sudo -u ${g.username} git add .
         if [ "$GIT_STATUS" == "## main...origin/main" ]; then
           echo "nothing to commit..."
