@@ -61,8 +61,14 @@
       shellInit =
         # fish
         ''
-          # set GHQ_SELECTOR_OPTS --bind "alt-c:execute(code {} &> /dev/tty)"
-          # bind --mode insert --sets-mode default jk repaint
+          function starship_transient_prompt_func
+             starship module character
+          end
+
+          # Change previous prompts right side
+          function starship_transient_rprompt_func
+            starship module time
+          end
 
           set -gx FZF_DEFAULT_OPTS "
             --border rounded

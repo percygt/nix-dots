@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, ... }:
 let
   lang = icon: color: {
     symbol = icon;
@@ -6,24 +6,6 @@ let
   };
 in
 {
-  programs.fish = lib.mkIf config.modules.shell.fish.enable {
-    shellInit =
-      # fish
-      ''
-        # Change previous prompts left side
-        function starship_transient_prompt_func
-           starship module character
-        end
-
-        # Change previous prompts right side
-        function starship_transient_rprompt_func
-          starship module time
-        end
-        # # Start starship
-        # starship init fish | source
-        # enable_transience
-      '';
-  };
   programs.starship = {
     enable = true;
     enableTransience = true;

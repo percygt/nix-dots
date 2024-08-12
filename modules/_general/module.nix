@@ -13,12 +13,10 @@
         default = pkgs.swayfx;
       };
     };
-    defaultShell = {
-      package = lib.mkOption {
-        description = "Default shell package";
-        type = lib.types.package;
-        default = pkgs.fish;
-      };
+    defaultShell = lib.mkOption {
+      description = "Default shell";
+      type = lib.types.str;
+      default = "fish";
     };
     username = lib.mkOption {
       description = "Username";
