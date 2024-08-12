@@ -1,12 +1,15 @@
 {
   programs.git.ignores = [
+    ".aws"
+    ".envrc"
+    ".lsp.lua"
+    ".neoconf.json"
+    ".vim"
     "*~"
     "*.DS_Store"
     "*.swp"
     "*result*"
-    ".direnv"
     "node_modules"
-    ".aws"
     ".direnv"
     ".venv"
     ".yarn"
