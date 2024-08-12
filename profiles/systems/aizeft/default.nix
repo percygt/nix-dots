@@ -15,6 +15,7 @@
       nvidia.bye = true;
     };
     dev.enable = true;
+    cli.enable = true;
     network = {
       tailscale.enable = true;
       syncthing.enable = true;

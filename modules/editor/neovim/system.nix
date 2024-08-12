@@ -1,16 +1,12 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ lib, config, ... }:
 let
   g = config._general;
+  cfg = config.modules.editor.neovim;
 in
 {
-  options.modules.editor.neovim.enable = lib.mkEnableOption "Enable modules.editor.neovimwide";
-  config = lib.mkIf config.modules.editor.neovim.enable {
-    environment.systemPackages = with pkgs; [ neovim-unstable ];
+  imports = [ ./module.nix ];
+  config = lib.mkIf cfg.enable {
+    environment.systemPackages = [ cfg.package ];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {

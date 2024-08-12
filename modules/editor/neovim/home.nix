@@ -7,16 +7,19 @@
 let
   inherit (config._general) flakeDirectory;
   moduleNvim = "${flakeDirectory}/modules/editor/neovim";
+  cfg = config.modules.editor.neovim;
 in
 {
-  imports = [ ./packages.nix ];
-  options.modules.editor.neovim.enable = lib.mkEnableOption "Enable neovim home";
-  config = lib.mkIf config.modules.editor.neovim.enable {
+  imports = [
+    ./module.nix
+    ./packages.nix
+  ];
+  config = lib.mkIf cfg.enable {
     home.shellAliases.v = "nvim";
     programs.neovim = {
       enable = true;
+      inherit (cfg) package;
       defaultEditor = true;
-      package = pkgs.neovim-unstable;
       vimdiffAlias = true;
       vimAlias = true;
       viAlias = true;

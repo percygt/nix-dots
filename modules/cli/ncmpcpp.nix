@@ -1,7 +1,6 @@
 { config, lib, ... }:
 {
-  options.modules.cli.ncmpcpp.enable = lib.mkEnableOption "Enables ncmpcpp";
-  config = lib.mkIf config.modules.cli.ncmpcpp.enable {
+  config = lib.mkIf config.modules.cli.enable {
     programs.ncmpcpp = {
       enable = true;
       settings = {

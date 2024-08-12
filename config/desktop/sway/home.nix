@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   imports = [
     ./waybar
@@ -18,9 +17,8 @@
 
   wayland.windowManager.sway = {
     enable = true;
-    package = pkgs.swayfx;
+    package = null;
     swaynag.enable = true;
-    systemd.enable = true;
     systemd.xdgAutostart = true;
     wrapperFeatures.gtk = true;
     checkConfig = false;

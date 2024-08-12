@@ -1,0 +1,24 @@
+{
+  programs.git.ignores = [
+    "*~"
+    "*.DS_Store"
+    "*.swp"
+    "*result*"
+    ".direnv"
+    "node_modules"
+    ".aws"
+    ".direnv"
+    ".venv"
+    ".yarn"
+    ".yarnrc"
+    "Session.vim"
+    "target"
+    "tmp"
+    "typings"
+    "**__pycache__**"
+    "logs"
+    "*.env"
+    "venv"
+    ".vscode"
+  ];
+}

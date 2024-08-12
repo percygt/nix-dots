@@ -6,6 +6,8 @@
     ./nvd.nix
     ../home.nix
     ../apps
+    ../cli
+    ../dev
     ../common
     ../desktop
     ../nixpkgs/config.nix

@@ -21,7 +21,6 @@
           pylatexenc
         ];
       extraPackages = with pkgs; [
-        # Essentials
         (fenix.complete.withComponents [
           "cargo"
           "clippy"
@@ -30,6 +29,8 @@
           "rustfmt"
           "rust-analyzer"
         ])
+        nodejs
+        yarn
         imagemagick
         nodePackages.npm
         nodePackages.neovim
@@ -72,9 +73,8 @@
         prettierd
         eslint_d
         nodePackages.prettier
-        nodePackages.typescript-language-server
+        typescript-language-server
         astro-language-server
-        # nodePackages."@astrojs/language-server"
 
         # Go
         go

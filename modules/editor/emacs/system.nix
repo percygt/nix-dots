@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   lib,
   config,
   ...
@@ -11,16 +10,8 @@ let
 in
 #
 {
-  options.modules.editor = {
-    emacs.enable = lib.mkEnableOption "Enable emacs systemwide";
-    emacs.package = lib.mkOption {
-      description = "emacs package to use";
-      default = pkgs.emacs-unstable;
-      type = lib.types.package;
-    };
-  };
-  config = lib.mkIf config.modules.editor.emacs.enable {
-    # nixpkgs.overlays = [ inputs.emacs-overlay.overlays.default ];
+  imports = [ ./module.nix ];
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = [
       (pkgs.aspellWithDicts (
         dicts: with dicts; [

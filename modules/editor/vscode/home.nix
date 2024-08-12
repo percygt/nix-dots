@@ -12,32 +12,36 @@ in
 {
   imports = [ inputs.vscode-server.homeModules.default ];
   options.modules.editor.vscode.enable = lib.mkEnableOption "Enable vscode home";
-  config = lib.mkIf config.modules.editor.neovim.enable {
-    home.shellAliases.code = "codium";
+  config = lib.mkIf config.modules.editor.vscode.enable {
+    home.shellAliases.code = "code";
     services.vscode-server = {
       enable = true;
-      enableFHS = false;
-      installPath = "${g.homeDirectory}/.vscode-oss";
+      enableFHS = true;
+      installPath = "${g.homeDirectory}/.vscode";
     };
     programs.vscode = {
       enable = true;
-      package = pkgs.vscodium.fhsWithPackages (
+      package = pkgs.vscode.fhsWithPackages (
         ps: with ps; [
           rustup
           zlib
+          cmake
+          clang
+          fish
         ]
       );
       enableUpdateCheck = true;
       mutableExtensionsDir = false;
       enableExtensionUpdateCheck = true;
-      # extensions = inputs.nix-stash.vscodeExtensions."${pkgs.system}";
-      # userSettings = builtins.fromJSON (builtins.readFile ./config/settings.json);
-      # keybindings = builtins.fromJSON (builtins.readFile ./config/keybindings.json);
     };
     xdg = {
       configFile = {
-        "VSCodium/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleVscode}/settings.json";
-        "VSCodium/User/keybindings.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleVscode}/keybindings.json";
+        "Code/User/settings.json".source = lib.mkForce (
+          config.lib.file.mkOutOfStoreSymlink "${moduleVscode}/settings.json"
+        );
+        "Code/User/keybindings.json".source = lib.mkForce (
+          config.lib.file.mkOutOfStoreSymlink "${moduleVscode}/keybindings.json"
+        );
       };
     };
   };

@@ -1,12 +1,14 @@
 {
-  pkgs,
   lib,
   config,
+  pkgs,
   ...
 }:
 {
-  options.modules.cli.common.enable = lib.mkEnableOption "Enable common cli tools";
-  config = lib.mkIf config.modules.cli.common.enable {
+  config = lib.mkIf config.modules.cli.enable {
+    programs.newsboat = {
+      enable = true;
+    };
     programs = {
       btop = {
         enable = true;
@@ -14,21 +16,6 @@
           color_theme = "tokyo-night";
           theme_background = false;
           vim_keys = true;
-        };
-      };
-      lazygit = {
-        enable = true;
-        settings = {
-          gui = {
-            nerdFontsVersion = "3";
-            theme = {
-              activeBorderColor = [
-                "yellow"
-                "bold"
-              ];
-              inactiveBorderColor = [ "cyan" ];
-            };
-          };
         };
       };
     };
@@ -45,9 +32,6 @@
       wtf # personal information dashboard
       termshark
       bluetuith
-      lazydocker
-      lazysql
-      podman-tui
       jqp
       gpg-tui
       tailscale
@@ -65,23 +49,25 @@
       ddgr # Search DuckDuckGo from the terminal
       buku # Private cmdline bookmark manager
       mutt # A small but very powerful text-based mail client
-      navi # An interactive cheatsheet tool for the command-line and application launchers
       bandwhich # A CLI utility for displaying current network utilization
       scc # A very fast accurate code counter with complexity calculations and COCOMO estimates written in pure Go
-      git
-      dust
-      dua # Tool to conveniently learn about the disk usage of directories
-      duf # Disk Usage/Free Utility
-      yq-go # portable command-line YAML, JSON and XML processor
-      fd
-      curlie
-      p7zip
-      jq
-      aria2
-      gping # Ping, but with a graph
-      xcp # An extended cp
-      dogdns # Command-line DNS client
-      dive # A tool for exploring each layer in a docker image
+
+      # network
+      socat # multipurpose relay
+      croc # encrypted file transfers between two computers
+
+      # LLM
+      # ollama
+
+      # utils
+      glow # Render markdown on the CLI
+      timg # terminal image viewer
+      grc # Generic Colouriser
+      xh # for sending HTTP requests
+      trash-cli # Command Line Interface to FreeDesktop.org Trash
+      clipboard-jh # the clipboard manager
+      chafa # cli graphics
+      poppler # pdf rendering tool
     ];
   };
 }

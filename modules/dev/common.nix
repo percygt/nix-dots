@@ -9,6 +9,7 @@
     home.packages = with pkgs; [
       ghidra-bin
       gdb
+      bfg-repo-cleaner # Git history cleaner
     ];
   };
 }

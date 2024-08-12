@@ -23,6 +23,8 @@ in
       ./nixpkgs
       ./xremap.nix
       ./user.nix
+      ./dev
+      ./cli
     ]
     ++ lib.optionals (desktop != null) [
       ./apps

@@ -25,7 +25,7 @@ in
   programs = {
     sway = {
       enable = true;
-      package = pkgs.swayfx;
+      inherit (g.desktop.sway) package;
       wrapperFeatures.gtk = true;
     };
   };
