@@ -57,18 +57,8 @@ in
     package = waybarWithExtraPackages;
   };
   xdg.configFile = {
-    "waybar/config.jsonc" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/config.jsonc";
-      onChange = ''
-        ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
-      '';
-    };
-    "waybar/style.css" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/style.css";
-      onChange = ''
-        ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
-      '';
-    };
+    "waybar/config.jsonc".source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/config.jsonc";
+    "waybar/style.css".source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/style.css";
     "waybar/nix.css".text =
       # css
       ''

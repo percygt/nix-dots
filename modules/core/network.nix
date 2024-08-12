@@ -20,13 +20,51 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    environment.persistence = {
-      "/persist/system" = lib.mkIf (!wpa) { directories = [ "/etc/NetworkManager/system-connections" ]; };
-    };
-    networking =
-      if (!wpa) then
-        {
+  config = lib.mkIf cfg.enable (
+    lib.mkMerge [
+      { sops.secrets."wireless.env".neededForUsers = true; }
+      (lib.mkIf wpa {
+        users.groups.network = { };
+        users.users.${g.username}.extraGroups = [ "network" ];
+        services.avahi.enable = lib.mkForce false;
+        systemd.services.wpa_supplicant = {
+          preStart = lib.mkIf wpa "touch /etc/wpa_supplicant.conf";
+          serviceConfig.TimeoutSec = "10";
+        };
+        networking = {
+          networkmanager.enable = lib.mkForce false;
+          wireless = {
+            enable = true;
+            fallbackToWPA2 = false;
+            environmentFile = config.sops.secrets."wireless.env".path;
+            networks = {
+              "@home_ssid@" = {
+                psk = "@home_psk@";
+              };
+            };
+            # Imperative
+            allowAuxiliaryImperativeNetworks = true;
+            userControlled = {
+              enable = true;
+              group = "network";
+            };
+            extraConfig = ''
+              update_config=1
+            '';
+          };
+        };
+      })
+      (lib.mkIf (!wpa) {
+        systemd = {
+          services.NetworkManager-wait-online.wantedBy = lib.mkForce [ ]; # Normally ["network-online.target"]
+          targets.network-online.wantedBy = lib.mkForce [ ]; # Normally ["multi-user.target"]
+        };
+        environment.persistence = {
+          "/persist/system" = {
+            directories = [ "/etc/NetworkManager/system-connections" ];
+          };
+        };
+        networking = {
           wireless.iwd.settings.Settings.AutoConnect = true;
           networkmanager = {
             enable = true;
@@ -61,52 +99,8 @@ in
               };
             };
           };
-        }
-      else
-        {
-          networkmanager.enable = lib.mkForce false;
-          wireless = {
-            enable = true;
-            fallbackToWPA2 = false;
-            environmentFile = config.sops.secrets."wireless.env".path;
-            networks = {
-              "@home_ssid@" = {
-                psk = "@home_psk@";
-              };
-            };
-            # Imperative
-            # allowAuxiliaryImperativeNetworks = true;
-            userControlled = {
-              enable = true;
-              group = "network";
-            };
-            extraConfig = ''
-              update_config=1
-            '';
-          };
         };
-
-    services.avahi = lib.mkIf wpa { enable = lib.mkForce false; };
-
-    sops.secrets."wireless.env" = {
-      neededForUsers = true;
-    };
-
-    users.groups.network = lib.mkIf wpa { };
-    users.users.${g.username}.extraGroups = [ "network" ];
-
-    systemd =
-      if (!wpa) then
-        {
-          services.NetworkManager-wait-online.wantedBy = lib.mkForce [ ]; # Normally ["network-online.target"]
-          targets.network-online.wantedBy = lib.mkForce [ ]; # Normally ["multi-user.target"]
-        }
-      else
-        {
-          services.wpa_supplicant = {
-            preStart = lib.mkIf wpa "touch /etc/wpa_supplicant.conf";
-            serviceConfig.TimeoutSec = "10";
-          };
-        };
-  };
+      })
+    ]
+  );
 }

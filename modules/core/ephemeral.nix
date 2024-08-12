@@ -6,6 +6,7 @@
   ...
 }:
 let
+  g = config._general;
   root_path = lib.concatMapStrings (x: "/" + x) config.modules.core.systemd.initrd.rootDeviceName;
   root_device = "${lib.concatStringsSep "-" config.modules.core.systemd.initrd.rootDeviceName}.device";
   wipeScript = # bash
@@ -57,6 +58,9 @@ in
     };
     fileSystems."/persist".neededForBoot = true;
     environment.persistence = {
+      "/persist".users.${g.username} = {
+        directories = [ ".local/share/nix" ];
+      };
       "/persist/system" = {
         hideMounts = true;
         directories = [

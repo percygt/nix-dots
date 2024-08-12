@@ -343,14 +343,14 @@
         "title",
         "album"
       ],
-      "format": "<span font='9'>{player_icon}</span> <span>{dynamic}</span>",
-      "format-paused": "<span font='9'>{status_icon}</span> <span>{dynamic}</span>",
+      "format": "<span font='9'>{player_icon}</span>  <span>{dynamic}</span>",
+      "format-paused": "<span font='9'>{status_icon}</span>  <span>{dynamic}</span>",
       "max-length": 100,
       "player-icons": {
-        "default": "󰏤 "
+        "default": "  󰏤"
       },
       "status-icons": {
-        "paused": " "
+        "paused": ""
       }
     },
     "network": {
