@@ -36,7 +36,7 @@ in
         ];
       };
     };
-    xdg.dataFile."${config.programs.gpg.homedir}/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink "${moduleGpg}/sshcontrol";
+    home.file.".gnupg/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink "${moduleGpg}/sshcontrol";
     services.gpg-agent = {
       enable = true;
       enableSshSupport = true;
