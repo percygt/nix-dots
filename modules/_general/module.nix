@@ -8,9 +8,16 @@
   options._general = {
     desktop = {
       sway.package = lib.mkOption {
-        description = "sway pakage to use";
+        description = "Sway pakage";
         type = lib.types.package;
         default = pkgs.swayfx;
+      };
+    };
+    defaultShell = {
+      package = lib.mkOption {
+        description = "Default shell package";
+        type = lib.types.package;
+        default = pkgs.fish;
       };
     };
     username = lib.mkOption {
