@@ -76,22 +76,22 @@ in
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.
-        GIT_STATUS="$(sudo -u ${g.username} git status --branch --porcelain)"
-        sudo -u ${g.username} git add .
+        GIT_STATUS="$(/run/wrappers/bin/sudo -u ${g.username} git status --branch --porcelain)"
+        /run/wrappers/bin/sudo -u ${g.username} git add .
         if [ "$GIT_STATUS" == "## main...origin/main" ]; then
           echo "nothing to commit..."
         else
-          sudo -u ${g.username} git commit -m"󰏕 auto-upgrade"
+          /run/wrappers/bin/sudo -u ${g.username} git commit -m"󰏕 auto-upgrade"
         fi
         echo "Pulling latest version..."
-        sudo -u ${g.username} git fetch
+        /run/wrappers/bin/sudo -u ${g.username} git fetch
         # Get the current local commit hash and the latest remote commit hash
-        LOCAL_HASH=$(sudo -u ${g.username} git rev-parse HEAD)
-        REMOTE_HASH=$(sudo -u ${g.username} git rev-parse @{u})
+        LOCAL_HASH=$(/run/wrappers/bin/sudo -u ${g.username} git rev-parse HEAD)
+        REMOTE_HASH=$(/run/wrappers/bin/sudo -u ${g.username} git rev-parse @{u})
 
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
           echo "Updates found, running nixos-rebuild..."
-          sudo -u ${g.username} git pull
+          /run/wrappers/bin/sudo -u ${g.username} git pull
           exec systemctl start nixos-rebuild
         else
           echo "No updates found. Exiting."
