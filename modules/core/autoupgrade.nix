@@ -77,6 +77,13 @@ in
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.
+        GIT_STATUS="$(git status --branch --porcelain)"
+        sudo -u ${g.username} git add .
+        if [ "$GIT_STATUS" == "## main...origin/main" ]; then
+          echo "nothing to commit..."
+        else
+          sudo -u ${g.username} git commit -m"󰏕 auto-upgrade"
+        fi
         echo "Pulling latest version..."
         sudo -u ${g.username} git fetch
         # Get the current local commit hash and the latest remote commit hash
