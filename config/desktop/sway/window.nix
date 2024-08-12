@@ -19,6 +19,7 @@ in
           "org.keepassxc.KeePassXC"
           "btop"
           "yazi"
+          "backup"
           "system-software-update"
           "page.codeberg.Imaginer.Imaginer"
           "com.github.finefindus.eyedropper"

@@ -30,11 +30,20 @@ in
       run-shell ${pkgs.tmuxPlugins.tmuxinoicer}/share/tmux-plugins/tmuxinoicer/tmuxinoicer.tmux
 
 
-      # tmuxplugin-tmux-thumbs
+      # tmuxplugin-tmuxinoicer
       # ---------------------
-      set -g @thumbs-command 'tmux set-buffer -- {} && tmux display-message "Copied {}" && printf %s {} | xclip -i -selection clipboard'
+      set -g @tmuxinoicer-find-base "${config.home.homeDirectory}/data:1:4,${config.home.homeDirectory}:1:1"
+      set -g @tmuxinoicer-extras "find"
+      unbind 0
+      set -g @tmuxinoicer-bind "0"
 
-      run-shell ${pkgs.tmuxPlugins.tmux-thumbs}/share/tmux-plugins/tmux-thumbs/tmux-thumbs.tmux
+      run-shell ${pkgs.tmuxPlugins.tmuxinoicer}/share/tmux-plugins/tmuxinoicer/tmuxinoicer.tmux
+
+
+      # tmuxplugin-tmux-floax
+      # ---------------------
+      set -g @floax-bind '-n M-0'
+      run-shell ${pkgs.tmuxPlugins.tmux-floax}/share/tmux-plugins/tmux-floax/floax.tmux
 
 
       # tmuxplugin-better-mouse-mode

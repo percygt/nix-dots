@@ -95,6 +95,7 @@
       "exec": "waybar-rebuild-exec",
       "max-length": 12,
       "on-click": "toggle-sway-window --id=system-software-update  -- foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service",
+      "on-click-right": "toggle-sway-window --id=backup  -- foot --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service",
       "return-type": "json",
       "signal": 12
     },

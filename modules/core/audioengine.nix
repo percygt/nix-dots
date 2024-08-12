@@ -61,12 +61,11 @@ in
           monitor.bluez.properties = {
             bluez5.auto-connect = [ a2dp_sink  a2dp_source ]
             bluez5.roles = [ a2dp_sink a2dp_source ]
+            bluez5.headset-roles = [ ]
+            bluez5.hfphsp-backend = "none"
             bluez5.enable-hw-volume = false
           }
 
-          wireplumber.settings = {
-            bluetooth.autoswitch-to-headset-profile = false
-          }
         '')
       ];
     };

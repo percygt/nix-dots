@@ -11,6 +11,7 @@ let
   inherit (libx) sway;
   inherit (sway)
     viewRebuildLogCmd
+    viewBackupLogCmd
     mkWorkspaceKeys
     mkDirectionKeys
     tofipass
@@ -45,6 +46,7 @@ in
     // {
       "Ctrl+KP_Multiply" = "exec ${toggle-blur { inherit pkgs; }}";
       "Ctrl+KP_Insert" = "exec ${lib.getExe pkgs.toggle-sway-window} --id system-software-update -- ${viewRebuildLogCmd}";
+      "Ctrl+KP_Delete" = "exec ${lib.getExe pkgs.toggle-sway-window} --id backup -- ${viewBackupLogCmd}";
       "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
       "${mod}+Space" = "exec swaync-client -t -sw";
       "${mod}+Shift+w" = "exec ${dropdown-terminal { inherit pkgs weztermPackage; }}";

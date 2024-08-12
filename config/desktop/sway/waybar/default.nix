@@ -13,13 +13,16 @@ let
       pkgs.gnugrep
     ];
     text = ''
-      status="$(systemctl is-active nixos-rebuild.service || true)"
-      if grep -q "inactive" <<< "$status"; then
+      rebuild_status="$(systemctl is-active nixos-rebuild.service || true)"
+      backup_status="$(systemctl is-active borgmatic.service || true)"
+      if grep -q "failed" <<< "$backup_status"; then
+        printf '{ "text" : "\udb84\udc4c ","class":"fail"}'
+      elif grep -q "inactive" <<< "$rebuild_status"; then
         printf '{ "text" : "\uf313 ","class":"success"}'
-      elif grep -q "active" <<< "$status"; then
-        printf '{ "text" : "\uf313 ","class":"ongoing"}'
-      elif grep -q "failed" <<< "$status"; then
-        printf '{ "text" : "\uf313 ","class":"fail"}'
+      elif grep -q "active" <<< "$rebuild_status"; then
+        printf '{ "text" : "\udb84\udc64 ","class":"ongoing"}'
+      elif grep -q "failed" <<< "$rebuild_status"; then
+        printf '{ "text" : "\udb84\udf62 ","class":"fail"}'
       fi
     '';
   };

@@ -4,6 +4,7 @@ let
 in
 rec {
   viewRebuildLogCmd = "foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service";
+  viewBackupLogCmd = "foot --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service";
   tofipass =
     { pkgs }:
     pkgs.writers.writeBash "tofipass" ''
