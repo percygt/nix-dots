@@ -18,6 +18,7 @@ in
         "video"
         "wheel"
         "input"
+        "git"
       ];
     };
   };

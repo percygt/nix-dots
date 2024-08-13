@@ -55,7 +55,7 @@ in
     systemd.services.nixos-upgrade = {
       serviceConfig = {
         Type = "oneshot";
-        User = "root";
+        User = g.username;
       };
       environment =
         config.nix.envVars
@@ -67,23 +67,20 @@ in
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.
-        /run/wrappers/bin/sudo -u ${g.username} git fetch
+        git fetch
         echo "Pulling latest version..."
 
-        GIT_STATUS="$(/run/wrappers/bin/sudo -u ${g.username} git status --branch --porcelain)"
-        if [ "$GIT_STATUS" == "## main...origin/main" ]; then
-          echo "nothing to commit..."
-        else
-          /run/wrappers/bin/sudo -u ${g.username} git add .
-          /run/wrappers/bin/sudo -u ${g.username} git commit -m"󰏕 auto-upgrade"
+        if ! [[ $(git status) =~ "working tree clean" ]]; then
+          git add .
+          git commit -m "auto commit"
         fi
         # Get the current local commit hash and the latest remote commit hash
-        LOCAL_HASH=$(/run/wrappers/bin/sudo -u ${g.username} git rev-parse HEAD)
-        REMOTE_HASH=$(/run/wrappers/bin/sudo -u ${g.username} git rev-parse @{u})
+        LOCAL_HASH=$(git rev-parse HEAD)
+        REMOTE_HASH=$(git rev-parse @{u})
 
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
           echo "Updates found, running nixos-rebuild..."
-          /run/wrappers/bin/sudo -u ${g.username} git pull
+          git pull
           exec systemctl start nixos-rebuild
         else
           echo "No updates found. Exiting."
