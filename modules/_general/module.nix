@@ -52,8 +52,8 @@
         default = pkgs.borgmatic;
       };
     };
-    corePackages = lib.mkOption {
-      description = "Default shell";
+    envPackages = lib.mkOption {
+      description = "Environment packages";
       type = with lib.types; listOf package;
       default =
         let
@@ -64,23 +64,43 @@
         [
           config.nix.package.out
           s.sops.package
+          s.gpg.package
+          s.ssh.package
+          d.git.package
+          systemd
+          nixos-rebuild
+          gnugrep
+          coreutils
+          nix-output-monitor
+          nvd
+          su
+          mpv
+          libnotify
+          gnutar
+          gzip
+          nh
+          xz.bin
+        ];
+    };
+    corePackages = lib.mkOption {
+      description = "Core Packages";
+      type = with lib.types; listOf package;
+      default =
+        let
+          s = config._general.security;
+          d = config._general.dev;
+        in
+        with pkgs;
+        [
+          s.sops.package
           s.keepass.package
           s.gpg.package
           s.ssh.package
           d.git.package
-          coreutils
-          systemd
-          mpv
-          libnotify
-          dconf
-          direnv
-          home-manager
+          age
           curl
           wget
           lshw
-          nixos-rebuild
-          sudo
-
           file
           killall
           nfs-utils
@@ -92,9 +112,6 @@
           cryptsetup
           procps
           usbutils
-
-          gnutar
-          xz.bin
           unzip
           gzip
           unrar-free

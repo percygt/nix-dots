@@ -10,19 +10,18 @@ let
   c = config.modules.theme.colors.withHashtag;
   f = config.modules.fonts.app;
   i = config.modules.fonts.icon;
-  extraPackages = with pkgs; [
-    coreutils-full
-    systemd
-    toggle-service
-    toggle-sway-window
-    nixos-rebuild
-    wlsunset
-    foot
-    grim
-    slurp
-    swappy
-    g.desktop.sway.package
-  ];
+  extraPackages =
+    g.envPackages
+    ++ (with pkgs; [
+      toggle-service
+      toggle-sway-window
+      wlsunset
+      foot
+      grim
+      slurp
+      swappy
+      g.desktop.sway.package
+    ]);
   swayncWithExtraPackages =
     pkgs.runCommand "swaync"
       {

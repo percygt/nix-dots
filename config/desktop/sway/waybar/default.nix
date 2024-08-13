@@ -5,13 +5,10 @@
   ...
 }:
 let
+  g = config._general;
   nixosRebuild = pkgs.writeShellApplication {
     name = "waybar-rebuild-exec";
-    runtimeInputs = [
-      pkgs.coreutils-full
-      pkgs.systemd
-      pkgs.gnugrep
-    ];
+    runtimeInputs = g.envPackages;
     text = ''
       rebuild_status="$(systemctl is-active nixos-rebuild.service || true)"
       backup_status="$(systemctl is-active borgmatic.service || true)"
@@ -28,13 +25,11 @@ let
   };
   extraPackages =
     [ nixosRebuild ]
+    ++ g.envPackages
     ++ (with pkgs; [
-      coreutils-full
-      systemd
       toggle-service
       toggle-sway-window
       swaynotificationcenter
-      nixos-rebuild
       wlsunset
       foot
     ]);

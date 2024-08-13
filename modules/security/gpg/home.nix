@@ -10,7 +10,7 @@ let
   timeout = 432000;
   gpgsshctl = pkgs.writeShellApplication {
     name = "gpgsshctl";
-    runtimeInputs = g.corePackages;
+    runtimeInputs = g.envPackages;
     text = builtins.readFile ./gpgsshcontrol.bash;
   };
   moduleGpg = "${g.flakeDirectory}/modules/security/gpg";

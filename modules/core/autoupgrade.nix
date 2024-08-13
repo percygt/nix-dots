@@ -60,7 +60,7 @@ in
       environment = {
         inherit (config.environment.sessionVariables) SSH_AUTH_SOCK;
       };
-      path = g.corePackages;
+      path = g.envPackages;
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.

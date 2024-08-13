@@ -17,7 +17,7 @@ in
           ExecStart = lib.getExe (
             pkgs.writeShellApplication {
               name = "nixos-rebuild-exec-start";
-              runtimeInputs = g.corePackages;
+              runtimeInputs = g.envPackages;
               text = ''
                 notify_success() {
                   notify-send -i emblem-default "System Rebuild" "NixOS rebuild successful"
@@ -75,7 +75,7 @@ in
   systemd = {
     services.nixos-rebuild = {
       restartIfChanged = false;
-      path = g.corePackages;
+      path = g.envPackages;
       environment =
         config.nix.envVars
         // config.networking.proxy.envVars
@@ -104,7 +104,7 @@ in
         # Execute the commands
         cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
         cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
-        /run/wrappers/bin/sudo -u ${g.username} "$cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
+        su - ${g.username} -c "$cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
       '';
     };
   };
