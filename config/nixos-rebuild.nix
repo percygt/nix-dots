@@ -86,27 +86,31 @@ in
         Type = "exec";
         User = "root";
       };
-      script = ''
-        flake_dir="${g.flakeDirectory}"
-        stderr() { printf "%s\n" "$*" >&2; }
-         printf "                                                                                                 \n"
-         printf "   ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██████╗ ███████╗██████╗ ██╗   ██╗██╗██╗     ██████╗ \n"
-         printf "   ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██╔══██╗██╔════╝██╔══██╗██║   ██║██║██║     ██╔══██╗\n" 
-         printf "   ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║███████╗    ██████╔╝█████╗  ██████╔╝██║   ██║██║██║     ██║  ██║\n" 
-         printf "   ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║    ██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║██║     ██║  ██║\n" 
-         printf "   ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║    ██║  ██║███████╗██████╔╝╚██████╔╝██║███████╗██████╔╝\n" 
-         printf "   ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚══════╝╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ \n" 
-         printf "                                                                                                 \n"
-        if [ ! -d "$flake_dir" ] || [ ! -f "$flake_dir/flake.nix" ]; then
-          stderr "Flake directory: '$flake_dir' is not valid"
-          exit 1
-        fi
-        # Execute the commands
-        cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
-        cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
-        git_safe="git -c safe.directory ${g.flakeDirectory}/.git"
-        su - ${g.username} -c "$git_safe && $cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
-      '';
+      script = # bash
+        ''
+          flake_dir="${g.flakeDirectory}"
+          stderr() { printf "%s\n" "$*" >&2; }
+           printf "                                                                                                 \n"
+           printf "   ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██████╗ ███████╗██████╗ ██╗   ██╗██╗██╗     ██████╗ \n"
+           printf "   ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██╔══██╗██╔════╝██╔══██╗██║   ██║██║██║     ██╔══██╗\n" 
+           printf "   ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║███████╗    ██████╔╝█████╗  ██████╔╝██║   ██║██║██║     ██║  ██║\n" 
+           printf "   ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║    ██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║██║     ██║  ██║\n" 
+           printf "   ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║    ██║  ██║███████╗██████╔╝╚██████╔╝██║███████╗██████╔╝\n" 
+           printf "   ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚══════╝╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ \n" 
+           printf "                                                                                                 \n"
+          if [ ! -d "$flake_dir" ] || [ ! -f "$flake_dir/flake.nix" ]; then
+            stderr "Flake directory: '$flake_dir' is not valid"
+            exit 1
+          fi
+          # Execute the commands
+          cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
+          cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
+          # Related to nixos-rebuild error: https://discourse.nixos.org/t/nixos-rebuild-switch-fails-under-flakes-and-doas-with-git-warning-about-dubious-ownership/46069/8
+          su - ${g.username} -c "$cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --use-remote-sudo --accept-flake-config || exit 1
+           printf "                                                                                                 \n"
+           printf "  ===============================================================================================\n"
+           printf "                                                                                                 \n"
+        '';
     };
   };
 }
