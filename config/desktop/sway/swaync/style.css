@@ -4,7 +4,7 @@
   background-color: @bg;
   border-left: 1px solid @border;
   padding: 0px;
-  border-radius: 16px 0px 0px 16px;
+  border-radius: 10px 0px 0px 10px;
   margin: 0px;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.3),
@@ -256,7 +256,7 @@
   background-color: @bg-alt;
   padding: 8px 16px 16px 16px;
   margin: 0px 15px 15px 15px;
-  border-radius: 0px 0px 15px 15px;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .widget-volume {
@@ -264,7 +264,7 @@
   background-color: @bg-alt;
   padding: 16px 8px 8px 16px;
   margin: 10px 15px 0px 15px;
-  border-radius: 15px 15px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.3),
     0 1px 3px 1px rgba(0, 0, 0, 0.7),
@@ -281,8 +281,8 @@
   border: 1px solid @border;
   margin: 0px 6px;
   padding: 5px 10px;
-  font-size: 20px;
-  border-radius: 20px;
+  font-size: 16px;
+  border-radius: 16px;
   /* margin: 4px; */
 }
 
@@ -293,7 +293,7 @@
 .topbar-buttons {
   padding: 5px;
   margin: 15px 10px 10px;
-  font-size: 25px;
+  font-size: 18px;
   background-color: @transparent;
 }
 
@@ -303,7 +303,7 @@
   color: @blue;
   background: @bg-alt;
   border-top: 1px solid @grey;
-  border-radius: 10px;
+  border-radius: 30px;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.3),
     0 1px 3px 1px rgba(0, 0, 0, 0.7),

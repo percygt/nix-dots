@@ -12,6 +12,7 @@ in
 {
   imports = [ ./module.nix ];
   config = lib.mkIf cfg.enable {
+    home-manager.users.${g.username} = import ./home.nix;
     environment.systemPackages = [
       (pkgs.aspellWithDicts (
         dicts: with dicts; [
@@ -31,9 +32,6 @@ in
           directories = [ ".local/share/emacs" ];
         };
       };
-    };
-    home-manager.users.${g.username} = {
-      imports = [ ./home.nix ];
     };
   };
 }

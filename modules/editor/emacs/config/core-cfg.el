@@ -131,7 +131,7 @@
 (use-package undo-fu)
 (use-package undo-fu-session
   :custom
-  (undo-fu-session-directory (concat user-emacs-data-directory "undo-fu-session"))
+  (undo-fu-session-directory (concat user-emacs-data-directory "/undo-fu-session"))
   (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
   :config
   (undo-fu-session-global-mode))

@@ -57,6 +57,12 @@ in
         Type = "oneshot";
         User = "root";
       };
+      environment =
+        config.nix.envVars
+        // {
+          inherit (config.environment.sessionVariables) NIX_PATH;
+        }
+        // config.networking.proxy.envVars;
       path = g.corePackages;
       script = ''
         cd ${flakeDirectory}

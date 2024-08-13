@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ config, ... }:
+let
+  g = config._general;
+in
 {
   imports = [
     ./xremap.nix
@@ -14,5 +17,5 @@
     ../nixpkgs/config.nix
     ../nix.nix
   ];
-  home.packages = import ../corePackages.nix pkgs;
+  home.packages = g.corePackages;
 }

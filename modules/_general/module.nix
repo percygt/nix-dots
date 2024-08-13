@@ -8,7 +8,7 @@
   options._general = {
     desktop = {
       sway.package = lib.mkOption {
-        description = "Sway pakage";
+        description = "Sway package";
         type = lib.types.package;
         default = pkgs.swayfx;
       };
@@ -18,29 +18,36 @@
       type = lib.types.str;
       default = "fish";
     };
+    dev = {
+      git.package = lib.mkOption {
+        description = "Git package";
+        type = lib.types.package;
+        default = pkgs.git;
+      };
+    };
     security = {
       gpg.package = lib.mkOption {
-        description = "Gpg pakage";
+        description = "Gpg package";
         type = lib.types.package;
         default = pkgs.gnupg;
       };
       ssh.package = lib.mkOption {
-        description = "Ssh pakage";
+        description = "Ssh package";
         type = lib.types.package;
         default = pkgs.openssh;
       };
       sops.package = lib.mkOption {
-        description = "Sops pakage";
+        description = "Sops package";
         type = lib.types.package;
         default = pkgs.sops;
       };
       keepass.package = lib.mkOption {
-        description = "Keepass pakage";
+        description = "Keepass package";
         type = lib.types.package;
         default = pkgs.keepassxc;
       };
       borgmatic.package = lib.mkOption {
-        description = "Borgmatic pakage";
+        description = "Borgmatic package";
         type = lib.types.package;
         default = pkgs.borgmatic;
       };
@@ -51,35 +58,30 @@
       default =
         let
           s = config._general.security;
+          d = config._general.dev;
         in
         with pkgs;
         [
+          config.nix.package.out
           s.sops.package
           s.keepass.package
           s.gpg.package
           s.ssh.package
+          d.git.package
+          coreutils
           systemd
           mpv
           libnotify
-          bash
           dconf
           direnv
-          git
-          gnutar
           home-manager
-          nh
           curl
           wget
           lshw
-          coreutils-full
           nixos-rebuild
-          gnutar
-          gzip
-          xz.bin
           sudo
 
           file
-          git
           killall
           nfs-utils
           ntfs3g
@@ -91,6 +93,8 @@
           procps
           usbutils
 
+          gnutar
+          xz.bin
           unzip
           gzip
           unrar-free
@@ -104,13 +108,13 @@
     };
     homeDirectory = lib.mkOption {
       description = "Home directory";
-      default = "/home/${config._general.username}";
       type = lib.types.str;
+      default = "/home/${config._general.username}";
     };
     stateVersion = lib.mkOption {
       description = "State version";
-      default = "23.05";
       type = lib.types.str;
+      default = "23.05";
     };
   };
 }

@@ -51,7 +51,7 @@ in
     sops.secrets."backup/key" = { };
     services.udiskie.settings.device_config = [
       {
-        id_uuid = g.borgmatic.mountUuid;
+        id_uuid = g.security.borgmatic.mountUuid;
         keyfile = config.sops.secrets."backup/key".path;
       }
     ];

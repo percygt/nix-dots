@@ -18,13 +18,7 @@ in
           ExecStart = lib.getExe (
             pkgs.writeShellApplication {
               name = "nixos-rebuild-exec-start";
-              runtimeInputs = [
-                pkgs.coreutils
-                pkgs.nixos-rebuild
-                pkgs.systemd
-                pkgs.mpv
-                pkgs.libnotify
-              ];
+              runtimeInputs = g.corePackages;
               text = ''
                 notify_success() {
                   notify-send -i emblem-default "System Rebuild" "NixOS rebuild successful"
