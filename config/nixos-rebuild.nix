@@ -88,6 +88,9 @@ in
       };
       script = # bash
         ''
+          printf "                                                                                                 \n"
+          printf "  ===============================================================================================\n"
+          printf "                                                                                                 \n"
           flake_dir="${g.flakeDirectory}"
           stderr() { printf "%s\n" "$*" >&2; }
           printf "                                                                                                 \n"
@@ -106,9 +109,6 @@ in
           cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
           cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
           su - ${g.username} -c "$cmd_build && $cmd_nvd" && /tmp/nixos-configuration/bin/switch-to-configuration switch || exit 1
-          printf "                                                                                                 \n"
-          printf "  ===============================================================================================\n"
-          printf "                                                                                                 \n"
         '';
     };
   };
