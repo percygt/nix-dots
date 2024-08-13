@@ -4,7 +4,6 @@
   modulesPath,
   config,
   inputs,
-  pkgs,
   desktop,
   ...
 }:
@@ -35,7 +34,7 @@ in
 
   home-manager.users.${g.username} = import ./home.nix;
 
-  environment.systemPackages = (import ./corePackages.nix pkgs) ++ (with pkgs; [ rippkgs ]);
+  environment.systemPackages = g.corePackages;
 
   programs = {
     command-not-found.enable = false;

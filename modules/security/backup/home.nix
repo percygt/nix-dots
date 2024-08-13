@@ -17,13 +17,7 @@ in
         ExecStart = lib.getExe (
           pkgs.writeShellApplication {
             name = "borgmatic-exec-start";
-            runtimeInputs = [
-              pkgs.coreutils
-              pkgs.nixos-rebuild
-              pkgs.systemd
-              pkgs.mpv
-              pkgs.libnotify
-            ];
+            runtimeInputs = g.corePackages;
             text = ''
               notify_success() {
                 notify-send -i emblem-default "Daily Backup" "Backup successful"
@@ -57,7 +51,7 @@ in
     sops.secrets."backup/key" = { };
     services.udiskie.settings.device_config = [
       {
-        id_uuid = g.backupMount.uuid;
+        id_uuid = g.borgmatic.mountUuid;
         keyfile = config.sops.secrets."backup/key".path;
       }
     ];

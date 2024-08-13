@@ -57,8 +57,8 @@ in
 
     signing = {
       signByDefault = true;
-      key = g.gpg.signingKey;
-      gpgPath = "${config.programs.gpg.package}/bin/gpg";
+      key = g.security.gpg.signingKey;
+      gpgPath = "${g.security.gpg.package}/bin/gpg";
     };
   };
 }

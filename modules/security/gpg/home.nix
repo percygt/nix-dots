@@ -10,10 +10,7 @@ let
   timeout = 432000;
   gpgsshctl = pkgs.writeShellApplication {
     name = "gpgsshctl";
-    runtimeInputs = with pkgs; [
-      openssh
-      gnupg
-    ];
+    runtimeInputs = g.corePackages;
     text = builtins.readFile ./gpgsshcontrol.bash;
   };
   moduleGpg = "${g.flakeDirectory}/modules/security/gpg";
@@ -26,11 +23,12 @@ in
     programs = {
       gpg = {
         enable = true;
+        inherit (g.security.gpg) package;
         mutableTrust = lib.mkDefault false;
         scdaemonSettings.disable-ccid = true;
         publicKeys = [
           {
-            source = g.gpg.publicKeyfile;
+            source = g.security.gpg.publicKeyfile;
             trust = "ultimate";
           }
         ];

@@ -7,7 +7,8 @@
   ...
 }:
 let
-  kpdb = config._general.keepassdb;
+  g = config._general;
+  kpdb = g.security.keepass.db;
 in
 {
   imports = [ ./keepfzf.nix ];
@@ -16,7 +17,7 @@ in
   config = lib.mkIf config.modules.security.keepass.enable {
     home = {
       packages =
-        (with pkgs; [ keepassxc ])
+        [ g.security.keepass.package ]
         ++ lib.optionals (desktop == "sway") (
           with pkgs;
           [

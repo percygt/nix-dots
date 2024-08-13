@@ -2,7 +2,6 @@
 {
   config,
   lib,
-  pkgs,
   libx,
   ...
 }:
@@ -11,20 +10,6 @@ let
   g = config._general;
   cfg = config.modules.core.autoupgrade;
   inherit (config._general) flakeDirectory;
-  # List of packages to include in each service's $PATH
-  pathPkgs =
-    (with pkgs; [
-      coreutils-full
-      git
-      nixos-rebuild
-      gnutar
-      gzip
-      xz.bin
-      sudo
-      gnupg
-      openssh
-    ])
-    ++ [ config.nix.package.out ];
 in
 {
   options.modules.core = {
@@ -72,19 +57,20 @@ in
         Type = "oneshot";
         User = "root";
       };
-      path = pathPkgs;
+      path = g.corePackages;
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.
+        /run/wrappers/bin/sudo -u ${g.username} git fetch
+        echo "Pulling latest version..."
+
         GIT_STATUS="$(/run/wrappers/bin/sudo -u ${g.username} git status --branch --porcelain)"
-        /run/wrappers/bin/sudo -u ${g.username} git add .
         if [ "$GIT_STATUS" == "## main...origin/main" ]; then
           echo "nothing to commit..."
         else
+          /run/wrappers/bin/sudo -u ${g.username} git add .
           /run/wrappers/bin/sudo -u ${g.username} git commit -m"󰏕 auto-upgrade"
         fi
-        echo "Pulling latest version..."
-        /run/wrappers/bin/sudo -u ${g.username} git fetch
         # Get the current local commit hash and the latest remote commit hash
         LOCAL_HASH=$(/run/wrappers/bin/sudo -u ${g.username} git rev-parse HEAD)
         REMOTE_HASH=$(/run/wrappers/bin/sudo -u ${g.username} git rev-parse @{u})

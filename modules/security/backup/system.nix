@@ -7,8 +7,8 @@
 }:
 let
   g = config._general;
-  bak = g.backupMount;
-  backupMountPath = bak.path;
+  bak = g.security.borgmatic;
+  backupMountPath = bak.mountPath;
   configDir = ".config/borgmatic.d";
   flagFile = "${g.homeDirectory}/${configDir}/last_run";
   cfg = config.modules.security.backup;
@@ -95,7 +95,7 @@ in
           Restart = "no";
           LogRateLimitIntervalSec = 0;
           ExecStartPre = "${pkgs.coreutils}/bin/sleep 1m";
-          ExecStart = "systemd-inhibit --who=\"borgmatic\" --what=\"sleep:shutdown\" --why=\"Prevent interrupting scheduled backup\" ${pkgs.borgmatic}/bin/borgmatic --verbosity -2 --syslog-verbosity 1";
+          ExecStart = "systemd-inhibit --who=\"borgmatic\" --what=\"sleep:shutdown\" --why=\"Prevent interrupting scheduled backup\" ${g.security.borgmatic.package}/bin/borgmatic --verbosity -2 --syslog-verbosity 1";
         };
       };
     };

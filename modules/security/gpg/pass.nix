@@ -7,7 +7,7 @@
 let
   g = config._general;
   cfg = config.modules.security.gpg;
-  PASSWORD_STORE_DIR = g.gpg.passDir;
+  PASSWORD_STORE_DIR = g.security.gpg.passDir;
 in
 {
   options.modules.security.gpg.pass.enable = lib.mkOption {
