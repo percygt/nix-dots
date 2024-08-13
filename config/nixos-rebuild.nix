@@ -76,23 +76,13 @@ in
   systemd = {
     services.nixos-rebuild = {
       restartIfChanged = false;
-      path =
-        (with pkgs; [
-          coreutils
-          git
-          nix-output-monitor
-          nvd
-          su
-          nixos-rebuild
-          gnutar
-          gzip
-          nh
-          xz.bin
-        ])
-        ++ [
-          config.programs.ssh.package
-          config.nix.package.out
-        ];
+      path = g.corePackages;
+      environment =
+        config.nix.envVars
+        // config.networking.proxy.envVars
+        // {
+          inherit (config.environment.sessionVariables) NIX_PATH SSH_AUTH_SOCK;
+        };
       serviceConfig = {
         Type = "exec";
         User = "root";

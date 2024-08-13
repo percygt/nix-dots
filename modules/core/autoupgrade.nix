@@ -57,17 +57,13 @@ in
         Type = "oneshot";
         User = g.username;
       };
-      environment =
-        config.nix.envVars
-        // {
-          inherit (config.environment.sessionVariables) NIX_PATH SSH_AUTH_SOCK;
-        }
-        // config.networking.proxy.envVars;
+      environment = {
+        inherit (config.environment.sessionVariables) SSH_AUTH_SOCK;
+      };
       path = g.corePackages;
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.
-        echo $SSH_AUTH_SOCK
         git fetch
         echo "Pulling latest version..."
 
