@@ -32,6 +32,7 @@ in
   config = lib.mkIf config.modules.editor.emacs.enable {
     home-manager.users.${g.username} = import ./home.nix;
     environment.systemPackages = [
+      emacsWithExtraPackages
       (pkgs.aspellWithDicts (
         dicts: with dicts; [
           en
@@ -39,11 +40,11 @@ in
         ]
       ))
     ];
-    services.emacs = {
-      enable = true;
-      package = emacsWithExtraPackages;
-      startWithGraphical = true;
-    };
+    # services.emacs = {
+    #   enable = true;
+    #   package = emacsWithExtraPackages;
+    #   startWithGraphical = true;
+    # };
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {
