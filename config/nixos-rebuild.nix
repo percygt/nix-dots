@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   profile,
@@ -105,7 +104,7 @@ in
         # Execute the commands
         cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
         cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
-        su - ${g.username} -c "$cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
+        /run/wrappers/bin/sudo -u ${g.username} "$cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
       '';
     };
   };
