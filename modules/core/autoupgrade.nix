@@ -60,13 +60,14 @@ in
       environment =
         config.nix.envVars
         // {
-          inherit (config.environment.sessionVariables) NIX_PATH;
+          inherit (config.environment.sessionVariables) NIX_PATH SSH_AUTH_SOCK;
         }
         // config.networking.proxy.envVars;
       path = g.corePackages;
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.
+        echo $SSH_AUTH_SOCK
         git fetch
         echo "Pulling latest version..."
 
