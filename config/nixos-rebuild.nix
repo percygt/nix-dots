@@ -102,9 +102,9 @@ in
           exit 1
         fi
         # Execute the commands
-        git_safe="git config --global --add safe.directory ${g.flakeDirectory}/.git"
         cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
         cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
+        git_safe="git -c safe.directory ${g.flakeDirectory}/.git"
         su - ${g.username} -c "$git_safe && $cmd_build && $cmd_nvd" && nixos-rebuild switch --flake $flake_dir#${profile} --accept-flake-config || exit 1
       '';
     };
