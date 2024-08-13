@@ -59,7 +59,7 @@ in
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --title=SystemMonitor --app-id=btop btop";
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
-      "${mod}+e" = "exec ${lib.getExe pkgs.toggle-sway-window} --id emacs --width 100 --height 100 -- emacseditor";
+      "${mod}+e" = "exec ${lib.getExe pkgs.toggle-sway-window} --id emacs --width 100 --height 100 -- emacs";
       "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"brave-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
@@ -70,8 +70,6 @@ in
       "${mod}+Tab" = "workspace back_and_forth";
       "${mod}+Backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
       "${mod}+Delete" = "exec swaylock";
-      #FIXME:
-      "${mod}+Shift+v" = "exec ${lib.getExe pkgs.cycle-pulse-sink}";
 
       XF86Calculator = "exec ${lib.getExe pkgs.toggle-sway-window} --id qalculate-gtk -- qalculate-gtk";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";

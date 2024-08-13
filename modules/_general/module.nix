@@ -13,11 +13,6 @@
         default = pkgs.swayfx;
       };
     };
-    defaultShell = lib.mkOption {
-      description = "Default shell";
-      type = lib.types.str;
-      default = "fish";
-    };
     dev = {
       git.package = lib.mkOption {
         description = "Git package";
@@ -62,6 +57,7 @@
         in
         with pkgs;
         [
+          config.programs.fish.package
           config.nix.package.out
           s.sops.package
           s.gpg.package

@@ -18,11 +18,6 @@
   };
   # babashka script source: https://github.com/stelcodes/nixos-config/commit/95d8734bad6162157f92f77951215c0aaa6b71d2
   writeBabashkaScript = pkgs.callPackage ./clj/writeBabashkaScript.nix { };
-  cycle-pulse-sink = pkgs.writeBabashkaScript {
-    name = "cycle-pulse-sink";
-    text = builtins.readFile ./clj/cycle-pulse-sink.clj;
-    runtimeInputs = [ pkgs.pulseaudioFull ];
-  };
   cycle-sway-output = pkgs.writeBabashkaScript {
     name = "cycle-sway-output";
     text = builtins.readFile ./clj/cycle-sway-output.clj;
@@ -34,12 +29,6 @@
   toggle-sway-window = pkgs.writeBabashkaScript {
     name = "toggle-sway-window";
     text = builtins.readFile ./clj/toggle-sway-window.clj;
-  };
-
-  nodePackages-extra = import ./node rec {
-    inherit pkgs;
-    inherit (pkgs) system;
-    nodejs = pkgs.nodejs_20;
   };
 
   json2nix = pkgs.writeScriptBin "json2nix" ''

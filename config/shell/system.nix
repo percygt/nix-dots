@@ -6,7 +6,6 @@
 }:
 let
   g = config._general;
-  defaultShell = g.defaultShell;
 in
 {
   home-manager.users.${g.username} = import ./home.nix;
@@ -17,9 +16,9 @@ in
       };
     };
   };
-  programs.${defaultShell}.enable = true;
-  users.users.${g.username}.shell = pkgs.${defaultShell};
-  users.defaultUserShell = pkgs.${defaultShell};
+  programs.fish.enable = true;
+  users.users.${g.username}.shell = pkgs.fish;
+  users.defaultUserShell = pkgs.fish;
   environment.shells = with pkgs; [
     fish
     bash

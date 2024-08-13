@@ -7,7 +7,7 @@
 }:
 let
   g = config._general;
-  moduleVscode = "${g.flakeDirectory}/modules/editor/vscode/config";
+  moduleVscode = "${g.flakeDirectory}/modules/editor/vscode";
 in
 {
   imports = [ inputs.vscode-server.homeModules.default ];

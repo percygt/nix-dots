@@ -7,11 +7,29 @@
 let
   g = config._general;
   cfg = config.modules.editor.emacs;
+  #
+  # emacsConfig = pkgs.concatTextFile {
+  #   name = "config.el";
+  #   files = map (dir: ./config/${dir}) (builtins.attrNames (builtins.readDir ./config));
+  # };
+
+  extraPackages = import ./extraPackages.nix { inherit pkgs; };
+
+  # emacs = pkgs.emacsWithPackagesFromUsePackage {
+  #   inherit (cfg) package;
+  #   alwaysEnsure = true;
+  #   config = builtins.readFile emacsConfig;
+  #   extraEmacsPackages = epkgs: [ epkgs.treesit-grammars.with-all-grammars ] ++ extraPackages;
+  # };
+
+  emacsWithExtraPackages = pkgs.runCommand "emacs" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
+    makeWrapper ${cfg.package}/bin/emacsclient $out/bin/emacsclient --prefix PATH : ${lib.makeBinPath extraPackages}
+    makeWrapper ${cfg.package}/bin/emacs $out/bin/emacs --prefix PATH : ${lib.makeBinPath extraPackages}
+  '';
 in
-#
 {
   imports = [ ./module.nix ];
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.modules.editor.emacs.enable {
     home-manager.users.${g.username} = import ./home.nix;
     environment.systemPackages = [
       (pkgs.aspellWithDicts (
@@ -23,13 +41,16 @@ in
     ];
     services.emacs = {
       enable = true;
-      inherit (cfg) package;
+      package = emacsWithExtraPackages;
       startWithGraphical = true;
     };
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {
-          directories = [ ".local/share/emacs" ];
+          directories = [
+            ".local/cache/emacs"
+            ".local/share/emacs"
+          ];
         };
       };
     };
