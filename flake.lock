@@ -1770,6 +1770,10 @@
       "inputs": {
         "base16": "base16",
         "disko": "disko",
+        "emacs-overlay": [
+          "nix-sources",
+          "emacs-overlay"
+        ],
         "fenix": "fenix",
         "general": "general",
         "home-manager": "home-manager",
