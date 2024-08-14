@@ -81,11 +81,21 @@
   (org-roam-directory notes-directory)
   (org-roam-dailies-directory "journals/")
   (org-roam-file-exclude-regexp "\\.git/.*\\|logseq/.*$")
-  (org-roam-capture-templates '(("d" "default" plain
-				 "%?"
-				 ;; Accomodates for the fact that Logseq uses the "pages" directory
-				 :target (file+head "pages/${slug}.org" "#+title: ${title}\n")
-				 :unnarrowed t)))
+  (org-roam-capture-templates
+   '(("d" "default" plain "%?" :immediate-finish t
+      :if-new (file+head "${slug}.org"
+			 "#+TITLE: ${title}\n#+hugo_lastmod: Time-stamp: <>\n\n")
+      :unnarrowed t)
+     ("t" "temp" plain "%?"
+      :if-new(file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+			"#+TITLE: ${title}\n#+hugo_lastmod: Time-stamp: <>\n\n")
+      :immediate-finish t
+      :unnarrowed t)
+     ("p" "private" plain "%?"
+      :if-new (file+head "${slug}-private.org"
+			 "#+TITLE: ${title}\n")
+      :immediate-finish t
+      :unnarrowed t)))
   (org-roam-dailies-capture-templates '(("d" "default" entry
 					 "* %?"
 					 :target (file+head "%<%Y-%m-%d>.org"
