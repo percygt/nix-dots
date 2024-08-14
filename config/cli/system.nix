@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   g = config._general;
 in
@@ -10,5 +15,16 @@ in
       ".local/share/navi"
       ".local/share/zoxide"
     ];
+  };
+  systemd.user.services.tmux = {
+    enable = true;
+    description = "tmux server";
+    serviceConfig = {
+      Type = "forking";
+      Restart = "always";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'source ${config.system.build.setEnvironment} ; exec ${pkgs.tmux}/bin/tmux start-server'";
+      ExecStop = "${pkgs.tmux}/bin/tmux kill-server";
+    };
+    wantedBy = [ "default.target" ];
   };
 }
