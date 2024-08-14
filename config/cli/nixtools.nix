@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     # alejandra
+    devenv
     nixfmt-rfc-style
     deadnix
     statix
