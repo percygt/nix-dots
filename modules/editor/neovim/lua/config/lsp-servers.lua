@@ -5,23 +5,7 @@ return {
     arg = { "server" },
     filetypes = { "terraform", "tf", "terraform-vars" },
   },
-  pylsp = {
-    plugins = {
-      ruff = {
-        enabled = true,
-        extendSelect = { "I" },
-      },
-      -- pylsp_mypy = {
-      -- 	enabled = true,
-      -- 	report_progress = true,
-      -- 	live_mode = false,
-      -- },
-      jedi_completion = { fuzzy = true },
-      black = { enabled = false },
-      pyls_isort = { enabled = false },
-      pylint = { enabled = false },
-    },
-  },
+  pylsp = {},
   clojure_lsp = {},
   clangd = {},
   nil_ls = {},

@@ -6,7 +6,7 @@ in
 {
   imports = [ ./module.nix ];
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [ cfg.package ];
+    # environment.systemPackages = [ cfg.package ];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {

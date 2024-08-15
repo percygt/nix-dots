@@ -12,14 +12,6 @@
           jsregexp
           magick
         ];
-      extraPython3Packages =
-        pyPkgs: with pyPkgs; [
-          python-lsp-server
-          python-lsp-ruff
-          # pylsp-mypy
-          pip
-          pylatexenc
-        ];
       extraPackages = with pkgs; [
         (fenix.complete.withComponents [
           "cargo"
@@ -29,10 +21,20 @@
           "rustfmt"
           "rust-analyzer"
         ])
+        (python3.withPackages (
+          ps: with ps; [
+            python-lsp-server
+            python-lsp-ruff
+            # pylsp-mypy
+            pip
+            pylatexenc
+          ]
+        ))
         nodejs
         yarn
         imagemagick
         nodePackages.npm
+        nodePackages.pnpm
         nodePackages.neovim
         vscode-extensions.vadimcn.vscode-lldb.adapter
         tree-sitter

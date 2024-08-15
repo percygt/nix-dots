@@ -63,10 +63,11 @@
           s.gpg.package
           s.ssh.package
           d.git.package
+          iputils
+          procps
           systemd
           nixos-rebuild
           gnugrep
-          coreutils
           nix-output-monitor
           nvd
           su
