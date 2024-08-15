@@ -30,7 +30,6 @@ in
       set -g @resurrect-capture-pane-contents 'on'
       set -g @resurrect-dir '${resurrectDirPath}'
       set -g @resurrect-hook-post-save-all '${resurrectPostSave} "${resurrectDirPath}/last"'
-
       run-shell ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/resurrect.tmux
 
 
@@ -43,49 +42,43 @@ in
       set -g @tmuxinoicer-extras "find"
       unbind 0
       set -g @tmuxinoicer-bind "0"
-
       run-shell ${pkgs.tmuxPlugins.tmuxinoicer}/share/tmux-plugins/tmuxinoicer/tmuxinoicer.tmux
 
 
       # ---------------------
       # tmuxplugin-tmux-floax
       # ---------------------
-
       set -g @floax-bind '-n M-0'
       run-shell ${pkgs.tmuxPlugins.tmux-floax}/share/tmux-plugins/tmux-floax/floax.tmux
 
       # ---------------------
       # tmuxplugin-vim-tmux-navigator
       # ---------------------
-
       run-shell ${pkgs.tmuxPlugins.vim-tmux-navigator}/share/tmux-plugins/vim-tmux-navigator/vim-tmux-navigator.tmux
 
 
       # ---------------------
       # tmuxplugin-better-mouse-mode
       # ---------------------
-
       run-shell ${pkgs.tmuxPlugins.better-mouse-mode}/share/tmux-plugins/better-mouse-mode/scroll_copy_mode.tmux
 
 
       # ---------------------
       # tmuxplugin-yank
       # ---------------------
-
       run-shell ${pkgs.tmuxPlugins.yank}/share/tmux-plugins/yank/yank.tmux
 
 
+      # ---------------------
       # tmuxplugin-tmux-thumbs
       # ---------------------
-      set -g @thumbs-command 'tmux set-buffer -- {} && tmux display-message "Copied {}" && printf %s {} | xclip -i -selection clipboard'
-
       run-shell ${pkgs.tmuxPlugins.tmux-thumbs}/share/tmux-plugins/tmux-thumbs/tmux-thumbs.tmux
 
 
       # ---------------------
       # tmuxplugin-extrakto
       # ---------------------
-
+      set -g @extrakto_clip_tool 'wl-copy'
       run-shell ${pkgs.tmuxPlugins.extrakto}/share/tmux-plugins/extrakto/extrakto.tmux
 
       # ---------------------
@@ -95,7 +88,6 @@ in
       # set -g @continuum-boot 'on'
       set -g @continuum-save-interval '10'
       # set -g @continuum-systemd-start-cmd 'start-server'
-
       run-shell ${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum/continuum.tmux
 
 
