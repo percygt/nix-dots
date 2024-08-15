@@ -9,7 +9,7 @@ in
     baseIndex = 1;
     shell = "${pkgs.fish}/bin/fish";
     keyMode = "vi";
-    sensibleOnTop = false;
+    sensibleOnTop = true;
     terminal = "tmux-256color";
     aggressiveResize = true;
     mouse = true;
