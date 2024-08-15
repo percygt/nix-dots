@@ -65,6 +65,7 @@
           d.git.package
           iputils
           procps
+          coreutils
           systemd
           nixos-rebuild
           gnugrep
