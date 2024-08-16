@@ -1295,11 +1295,11 @@
         "yaml2nix": "yaml2nix"
       },
       "locked": {
-        "lastModified": 1723605914,
-        "narHash": "sha256-9qf/7ln61TDdn1XOZkf6WmnvGiyqbUbz5m+FgBRi4Ew=",
+        "lastModified": 1723824566,
+        "narHash": "sha256-iWqWsEZrHwuOa7HlNxroHkYfoHkePPrHr3lfucz0aZc=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "4ee2a3a941ee55fa2c4c46cb5e51eb4646467c29",
+        "rev": "d6b34dcbb4696a8e591f7f68dada27a265309d96",
         "type": "github"
       },
       "original": {
@@ -1318,11 +1318,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1723599057,
-        "narHash": "sha256-cyeB0BdxpNsUyMpNNIN6B/pYiynRZ6fd35mSrd8vqrk=",
+        "lastModified": 1723771785,
+        "narHash": "sha256-zEpAVIz2XaHnkS+2vIZ4Vg4QCzvet5sx1JeRPKyw01Y=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "a7fe9a8a727575753663a84a583aeccbe28a42f4",
+        "rev": "c1fba83fc62263d2ce08e6b85e9fbc8359da0ab9",
         "type": "github"
       },
       "original": {
@@ -1734,11 +1734,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1723602049,
-        "narHash": "sha256-Z/noCSn9WPkv7O77dWKLcBxe4Ub4bWyNzsL5JhjaQfw=",
+        "lastModified": 1723774846,
+        "narHash": "sha256-m53hVat6XXiKooV1oUDEMnPcdNKqSn/kAW+g8juSq84=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "ea0bf33a11a26a62c60123c49d96011da396602c",
+        "rev": "519f4892641bc04a6ac7c2d260cc68356f9ae90f",
         "type": "github"
       },
       "original": {
