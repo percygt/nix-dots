@@ -1,10 +1,6 @@
-{
-  inputs,
-  outputs,
-  self,
-  ...
-}:
+{ inputs, self, ... }:
 let
+  inherit (self) outputs;
   modules = [
     "${self}/profiles"
     "${self}/config"
