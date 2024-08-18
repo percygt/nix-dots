@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    nemo-with-extensions
     wpa_supplicant_gui
     swayidle
     swaylock-effects

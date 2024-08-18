@@ -20,7 +20,6 @@ in
       virtiofsd
       qemu
       kmod
-      quickemu
       pciutils
     ];
 

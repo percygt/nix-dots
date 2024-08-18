@@ -67,6 +67,7 @@ in
       "${mod}+k" = "exec pkill tofi || keepmenu -C | xargs swaymsg exec --";
       "${mod}+Shift+k" = "exec pkill tofi || ${tofipass { inherit pkgs; }}";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
+      "${mod}+Shift+f" = "exec nemo ~";
       "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
       "${mod}+Tab" = "workspace back_and_forth";
       "${mod}+Backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
