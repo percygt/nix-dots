@@ -7,7 +7,6 @@
 *.keyfile
 *.qcow2
 *.nixd.json
-*neoconf*
 result
 atuin
 key
@@ -17,3 +16,4 @@ key
 test
 .clj-kondo
 .lsp
+.neoconf.json

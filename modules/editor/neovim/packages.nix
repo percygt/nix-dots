@@ -103,7 +103,7 @@
         bash-language-server
         yaml-language-server
         dockerfile-language-server-nodejs
-        vscode-langservers-extracted
+        pkgs.stash.vscode-langservers-extracted
         markdownlint-cli
         taplo-cli
         codespell
