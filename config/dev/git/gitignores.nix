@@ -3,7 +3,7 @@
     ".aws"
     ".envrc"
     ".lsp.lua"
-    ".neoconf.json"
+    "**/*.neoconf.json"
     ".vim"
     "*~"
     "*.DS_Store"
