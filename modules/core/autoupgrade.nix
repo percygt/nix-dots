@@ -25,7 +25,7 @@ in
         };
       };
       onCalendar = lib.mkOption {
-        default = "Sun,Tue,Wed,Thu,Sat *-*-* 6:15:00";
+        default = "Sun,Tue,Wed,Thu,Sat *-*-* 6:30:00";
         type = lib.types.str;
         description = "How frequently to run updates. See systemd.timer(5) and systemd.time(7) for configuration details.";
       };
