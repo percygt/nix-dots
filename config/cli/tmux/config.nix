@@ -4,6 +4,7 @@ let
   resurrectPostSave = pkgs.writers.writeBash "resurrectPostSave" ''
     sed -i -E "s|(pane.*nvim\s*:)[^;]+;.*\s([^ ]+)$|\1nvim|" "$1"
     sed -ie "s|:bash .*/tmp/nix-shell-.*/rc|:nix-shell|g" "$1"
+    sed -ie "s|\ rtp.*vim-pack-dir||g" "$1"
     sed -i "s| $HOME| ~|g" "$1"
     sed -i 's|fish	:\[fish\] <defunct>|fish	:|g' "$1"
     sed -i ':a;N;$!ba;s|\[fish\] <defunct>\n||g' "$1"
@@ -28,6 +29,9 @@ in
       # tmuxplugin-resurrect
       # ---------------------
       set -g @resurrect-capture-pane-contents 'on'
+      set -g @resurrect-strategy-vim 'session'
+      set -g @resurrect-strategy-nvim 'session'
+      set -g @resurrect-processes 'vim nvim cat less more tail watch lazygit'
       set -g @resurrect-dir '${resurrectDirPath}'
       set -g @resurrect-hook-post-save-all '${resurrectPostSave} "${resurrectDirPath}/last"'
       run-shell ${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect/resurrect.tmux
@@ -55,24 +59,6 @@ in
       # tmuxplugin-vim-tmux-navigator
       # ---------------------
       run-shell ${pkgs.tmuxPlugins.vim-tmux-navigator}/share/tmux-plugins/vim-tmux-navigator/vim-tmux-navigator.tmux
-
-
-      # ---------------------
-      # tmuxplugin-better-mouse-mode
-      # ---------------------
-      run-shell ${pkgs.tmuxPlugins.better-mouse-mode}/share/tmux-plugins/better-mouse-mode/scroll_copy_mode.tmux
-
-
-      # ---------------------
-      # tmuxplugin-yank
-      # ---------------------
-      run-shell ${pkgs.tmuxPlugins.yank}/share/tmux-plugins/yank/yank.tmux
-
-
-      # ---------------------
-      # tmuxplugin-tmux-thumbs
-      # ---------------------
-      run-shell ${pkgs.tmuxPlugins.tmux-thumbs}/share/tmux-plugins/tmux-thumbs/tmux-thumbs.tmux
 
 
       # ---------------------

@@ -28,7 +28,7 @@
       sshs # Terminal user interface for SSH.
       atac # based on well-known clients such as Postman, Insomnia
       termscp # file transfer and explorer, with support for SCP/SFTP/FTP/S3
-      pkgs.stash.visidata # interactive multitool for tabular data #NOTE:dependency libolm tagged as insecure package
+      pkgs.stable.visidata # interactive multitool for tabular data #NOTE:dependency libolm tagged as insecure package
       wtf # personal information dashboard
       termshark
       bluetuith

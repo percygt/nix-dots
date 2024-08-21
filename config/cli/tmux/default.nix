@@ -21,7 +21,7 @@ in
     inherit
       (import ./config.nix {
         inherit config;
-        pkgs = pkgs.stash;
+        pkgs = pkgs.stable;
       })
       extraConfig
       ;

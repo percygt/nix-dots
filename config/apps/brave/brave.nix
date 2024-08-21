@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   programs.chromium = {
-    package = pkgs.stash.brave;
+    package = pkgs.stable.brave;
     enable = true;
     extensions = [
       { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
