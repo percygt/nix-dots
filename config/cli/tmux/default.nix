@@ -4,6 +4,7 @@ let
   c = config.modules.theme.colors.withHashtag;
 in
 {
+  imports = [ ./extraConfig.nix ];
   programs.tmux = {
     enable = true;
     baseIndex = 1;
@@ -18,13 +19,6 @@ in
     prefix = "C-a";
     escapeTime = 0;
     historyLimit = 1000000;
-    inherit
-      (import ./config.nix {
-        inherit config;
-        pkgs = pkgs.stable;
-      })
-      extraConfig
-      ;
   };
   home = {
     shellAliases.home = "tmux new -As home";

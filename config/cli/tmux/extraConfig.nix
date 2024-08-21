@@ -1,4 +1,4 @@
-{ pkgs, config }:
+{ config, ... }:
 let
   resurrectDirPath = "${config.xdg.dataHome}/tmux/resurrect";
   resurrectPostSave = pkgs.writers.writeBash "resurrectPostSave" ''
@@ -9,9 +9,10 @@ let
     sed -i 's|fish	:\[fish\] <defunct>|fish	:|g' "$1"
     sed -i ':a;N;$!ba;s|\[fish\] <defunct>\n||g' "$1"
   '';
+  pkgs = pkgs.stable;
 in
 {
-  extraConfig =
+  programs.tmux.extraConfig =
     # tmux
     ''
       # ---------------------
