@@ -16,11 +16,59 @@ in
   programs.chromium = {
     enable = true; # only enables polices to be put in etc, doesn't install chromium
     extensions = [
-      "cjpalhdlnbpafiamejdnhcphjbkeiagm"
-      "dbepggeogbaibhgnhhndojpepiihcmeb"
+      "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+      "dbepggeogbaibhgnhhndojpepiihcmeb" # xoom redirector
+      "eimadpbcbfnmbkopoojfekhnkhdbieeh" # dark reader
+      "kbfnbcaeplbcioakkpcpgfkobkghlhen" # grammarly
+      "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
     ];
+    initialPrefs = {
+      "https_only_mode_auto_enabled" = true;
+      "privacy_guide" = {
+        "viewed" = true;
+      };
+      "safebrowsing" = {
+        "enabled" = false;
+        "enhanced" = false;
+      };
+      "autofill" = {
+        "credit_card_enabled" = false;
+        # "profile_enabled" = false;
+      };
+      "search" = {
+        "suggest_enabled" = false;
+      };
+      "browser" = {
+        "clear_data" = {
+          "cache" = false;
+          "browsing_data" = false;
+          "cookies" = false;
+          "cookies_basic" = false;
+          "download_history" = true;
+          "form_data" = true;
+          "time_period" = 4;
+          "time_period_basic" = 4;
+        };
+        "has_seen_welcome_page" = true;
+        "theme" = {
+          "follows_system_colors" = true;
+        };
+      };
+      "enable_do_not_track" = true;
+      "https_only_mode_enabled" = true;
+      "intl"."selected_languages" = "en-PH,en-US";
+      "payments"."can_make_payment_enabled" = false;
+    };
     extraOpts = {
+      BrowserSignin = 0;
+      PasswordManagerEnabled = false;
       ShowHomeButton = true;
+      CloudReportingEnabled = false;
+      SafeBrowsingEnabled = false;
+      ReportSafeBrowsingData = false;
+      AllowDinosaurEasterEgg = false;
+      AllowOutdatedPlugins = true;
+      AlwaysOpenPdfExternally = true;
       AdvancedProtectionAllowed = false;
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
@@ -28,7 +76,6 @@ in
       BatterySaverModeAvailability = 2;
       BlockThirdPartyCookies = true;
       BrowserNetworkTimeQueriesEnabled = false;
-      BrowserSignin = 0;
       DefaultBrowserSettingEnabled = false;
       DefaultClipboardSetting = 2;
       DefaultFileSystemReadGuardSetting = 2;
