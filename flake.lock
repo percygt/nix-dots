@@ -1295,11 +1295,11 @@
         "yaml2nix": "yaml2nix"
       },
       "locked": {
-        "lastModified": 1724256612,
-        "narHash": "sha256-xjgk/SloX4ciuJMD6iBh8zeDCdylBaCRW9IFLPzP/Q8=",
+        "lastModified": 1724259215,
+        "narHash": "sha256-+r5mOZu84O6ZaC0OuKb06ntMliRchGvaiX9Of9eELL0=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "da2a235aac347aa1f000eec11eddc95e42f63068",
+        "rev": "74a71b7e22b923c006932cb8cfd22a0deea7b791",
         "type": "github"
       },
       "original": {
