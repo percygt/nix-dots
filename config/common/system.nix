@@ -3,6 +3,9 @@ let
   g = config._general;
 in
 {
-  imports = [ ./dconf ];
+  imports = [
+    ./dconf
+    ./ydotool.nix
+  ];
   home-manager.users.${g.username} = import ./home.nix;
 }

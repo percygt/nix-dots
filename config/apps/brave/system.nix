@@ -13,12 +13,12 @@ in
   };
   programs.chromium = {
     enable = true; # only enables polices to be put in etc, doesn't install chromium
-    # extensions = [
-    #   "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-    #   "dbepggeogbaibhgnhhndojpepiihcmeb" # xoom redirector
-    #   "kbfnbcaeplbcioakkpcpgfkobkghlhen" # grammarly
-    #   "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
-    # ];
+    extensions = [
+      "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+      "dbepggeogbaibhgnhhndojpepiihcmeb" # xoom redirector
+      "kbfnbcaeplbcioakkpcpgfkobkghlhen" # grammarly
+      "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
+    ];
     initialPrefs = {
       "https_only_mode_auto_enabled" = true;
       "privacy_guide" = {

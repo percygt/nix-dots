@@ -11,16 +11,16 @@ in
   programs.chromium = {
     enable = true;
     package = pinned-brave;
-    # extensions = [
-    #   { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
-    #   { id = "ocabkmapohekeifbkoelpmppmfbcibna"; } # xoom redirector
-    #   { id = "kbfnbcaeplbcioakkpcpgfkobkghlhen"; } # grammarly
-    #   { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # vimium
-    # ];
+    extensions = [
+      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
+      { id = "ocabkmapohekeifbkoelpmppmfbcibna"; } # xoom redirector
+      { id = "kbfnbcaeplbcioakkpcpgfkobkghlhen"; } # grammarly
+      { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # vimium
+    ];
     commandLineArgs = [
       "--ozone-platform=wayland"
-      "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer,WaylandWindowDecorations"
-      "--ozone-platform-hint=auto"
+      "--enable-features=UseOzonePlatform,WebRTCPipeWireCapturer,WaylandWindowDecorations,MiddleClickAutoscroll,WebUIDarkMode"
+      "--disable-features=WebRtcAllowInputVolumeAdjustment"
     ];
   };
 }

@@ -26,6 +26,7 @@ in
       }
     ];
     packages = [
+      "engineer.atlas.Nyxt"
       "io.github.jorchube.monitorets"
       "com.github.PintaProject.Pinta"
       "org.gnome.Shotwell"
