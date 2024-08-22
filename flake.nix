@@ -78,6 +78,8 @@
 
     base16.url = "github:SenchoPens/base16.nix";
 
+    nur.url = "github:nix-community/NUR";
+
     tt-schemes.url = "github:tinted-theming/schemes";
     tt-schemes.flake = false;
 

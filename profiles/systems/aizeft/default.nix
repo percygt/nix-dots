@@ -10,9 +10,10 @@
       adb.enable = true;
       bluetooth.enable = true;
       intel.enable = true;
-      printer.enable = true;
       intel.gpu.driver = "xe";
-      nvidia.bye = true;
+      nvidia.prime.enable = true;
+      # nvidia.bye = true;
+      printer.enable = true;
     };
     dev.enable = true;
     cli.enable = true;

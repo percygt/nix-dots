@@ -1770,6 +1770,21 @@
         "type": "github"
       }
     },
+    "nur": {
+      "locked": {
+        "lastModified": 1724348704,
+        "narHash": "sha256-h8HB+4AiVZAe3ie6zYOmJco7QkKRPC7iHfChsoSOHm4=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "bf3ebc298e0a5091f4f41cb45f38b31cac050e62",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
     "pykeepass": {
       "flake": false,
       "locked": {
@@ -1827,6 +1842,7 @@
           "nix-sources",
           "nixpkgs-stable"
         ],
+        "nur": "nur",
         "sops-nix": "sops-nix",
         "tt-schemes": "tt-schemes",
         "vscode-server": "vscode-server",
