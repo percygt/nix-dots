@@ -9,16 +9,22 @@ let
 in
 {
   imports = [ ./tuigreet.nix ];
+  # Classical NixOS setup
   home-manager.users.${g.username} = import ./home.nix;
-  environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-    "/persist" = {
-      users.${g.username} = {
-        directories = [
-          ".local/share/keyrings"
-          ".config/goa-1.0"
-          ".local/cache/nix-index"
-        ];
-        files = [ ".local/state/tofi-drun-history" ];
+  environment = {
+    sessionVariables = {
+      XDG_CURRENT_DESKTOP = "sway";
+    };
+    persistence = lib.mkIf config.modules.core.ephemeral.enable {
+      "/persist" = {
+        users.${g.username} = {
+          directories = [
+            ".local/share/keyrings"
+            ".config/goa-1.0"
+            ".local/cache/nix-index"
+          ];
+          files = [ ".local/state/tofi-drun-history" ];
+        };
       };
     };
   };

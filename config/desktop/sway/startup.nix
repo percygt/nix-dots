@@ -1,6 +1,5 @@
 {
   wayland.windowManager.sway.config.startup = [
-    { command = "swaymsg bar bar-1 mode dock"; }
     {
       command = "systemctl --user restart kanshi";
       always = true;

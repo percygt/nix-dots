@@ -14,7 +14,9 @@
     ./extraConfig.nix
     ./extraSessionCommands.nix
   ];
-
+  home.sessionVariables = {
+    XDG_CURRENT_DESKTOP = "sway";
+  };
   wayland.windowManager.sway = {
     enable = true;
     package = null;

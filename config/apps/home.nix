@@ -4,6 +4,5 @@
     ./mpv.nix
     ./quickemu.nix
     ./zathura.nix
-    ./librewolf.nix
   ];
 }

@@ -14,7 +14,7 @@ in
   home-manager.users.${g.username} = import ./home.nix;
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-beta;
+    # package = pkgs.firefox-nightly;
     # https://mozilla.github.io/policy-templates/
     # Apparently Mozilla doesn't let you set the default search engine using policies anymore >:c
     policies = {
