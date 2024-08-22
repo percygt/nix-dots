@@ -26,11 +26,10 @@ in
       }
     ];
     packages = [
+      "io.github.jorchube.monitorets"
       "com.github.PintaProject.Pinta"
       "org.gnome.Shotwell"
-      "com.github.taiko2k.avvie"
       "org.kde.digikam"
-      "io.gitlab.librewolf-community"
       "so.libdb.dissent"
       "org.freedesktop.Bustle"
       "io.github.bytezz.IPLookup"
@@ -38,7 +37,6 @@ in
       "com.obsproject.Studio"
       "org.kde.kdenlive"
       "com.rafaelmardojai.SharePreview"
-      "net.nokyan.Resources"
       "org.mozilla.Thunderbird"
       "com.github.huluti.Coulr"
       "com.github.muriloventuroso.pdftricks"

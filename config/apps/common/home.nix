@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    mission-center
     chromium
     qalculate-gtk
     audacity

@@ -1,6 +1,5 @@
 {
   description = "PercyGT's nix config";
-
   outputs =
     { self, ... }@inputs:
     let
