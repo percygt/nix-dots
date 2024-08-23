@@ -1,14 +1,19 @@
-{ config, lib, ... }:
-let
-  inherit (builtins) stringLength substring;
-  inherit (lib) mkOption mkEnableOption;
-  inherit (lib.attrsets) mapAttrs filterAttrs;
-  inherit (lib.strings) concatStringsSep toUpper;
-in
 {
-  options.programs.chromium.webapps = mkOption {
-    default = { };
+  config,
+  lib,
+  ...
+}:
+with lib;
+let
+  supportedBrowsers = [
+    "chromium"
+    "google-chrome"
+    "brave"
+    "vivaldi"
+  ];
 
+  webappModule = mkOption {
+    default = { };
     type =
       with lib.types;
       attrsOf (submodule {
@@ -77,38 +82,54 @@ in
           };
         };
       });
-
     description = "Websites to create special site-specific Brave instances for.";
   };
 
-  config = {
-    xdg.desktopEntries = mapAttrs (name: cfg: {
-      inherit (cfg) prefersNonDefaultGPU;
+  webappConfig =
+    browser:
+    let
+      inherit (builtins) stringLength substring;
+      inherit (lib.attrsets) mapAttrs filterAttrs;
+      inherit (lib.strings) concatStringsSep toUpper;
+      mainCfg = config.programs.${browser};
+    in
+    {
+      xdg.desktopEntries = mapAttrs (name: cfg: {
+        inherit (cfg) prefersNonDefaultGPU;
+        name =
+          if cfg.name == null then
+            (toUpper (substring 0 1 name)) + (substring 1 (stringLength name) name)
+          else
+            cfg.name;
 
-      name =
-        if cfg.name == null then
-          (toUpper (substring 0 1 name)) + (substring 1 (stringLength name) name)
-        else
-          cfg.name;
+        startupNotify = true;
+        terminal = false;
+        type = "Application";
 
-      startupNotify = true;
-      terminal = false;
-      type = "Application";
+        exec = concatStringsSep " " (
+          [
+            "${lib.getExe mainCfg.package}"
+            "--app=${cfg.url}"
+            "--profile-directory=WebApp-${name}"
+          ]
+          ++ mainCfg.commandLineArgs
+          ++ [ "%U" ]
+        );
 
-      exec = concatStringsSep " " (
-        [
-          "${lib.getExe config.programs.chromium.package}"
-          "--app=${cfg.url}"
-          "--profile-directory=WebApp-${name}"
-        ]
-        ++ cfg.commandLineArgs
-        ++ [ "%U" ]
-      );
-
-      settings = {
-        X-MultipleArgs = "false"; # Consider enabling, don't know what this does
-        StartupWMClass = "WebApp-${name}";
-      };
-    }) (filterAttrs (_: webapp: webapp.enable) config.programs.chromium.webapps);
+        settings = {
+          # X-MultipleArgs = "false"; # Consider enabling, don't know what this does
+          StartupWMClass = "WebApp-${name}";
+        };
+      }) (filterAttrs (_: webapp: webapp.enable) mainCfg.webapps);
+    };
+in
+{
+  options.programs = {
+    chromium.webapps = webappModule;
+    google-chrome.webapps = webappModule;
+    brave.webapps = webappModule;
+    vivaldi.webapps = webappModule;
   };
+
+  config = mkMerge (map webappConfig supportedBrowsers);
 }

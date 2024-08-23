@@ -6,8 +6,7 @@ in
   imports = [
     ./flatpak.nix
     ./common
-    ./firefox
-    ./brave
+    ./browsers
   ];
   home-manager.users.${g.username} = import ./home.nix;
 }

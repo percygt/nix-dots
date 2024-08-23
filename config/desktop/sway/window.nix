@@ -27,7 +27,7 @@ in
           "io.github.dvlv.boxbuddyrs"
           "com.github.johnfactotum.Foliate"
           "brave-chatgpt.com__-WebApp-ai"
-          "brave-app.zoom.us__wc-WebApp-zoom"
+          "chromium-app.zoom.us__wc-WebApp-zoom"
           "io.bassi.Amberol"
           "qalculate-gtk"
           "info.mumble.Mumble"

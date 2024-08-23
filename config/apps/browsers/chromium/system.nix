@@ -7,18 +7,16 @@ in
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {
       users.${g.username} = {
-        directories = [ ".config/BraveSoftware/Brave-Browser" ];
+        directories = [
+          ".config/BraveSoftware/Brave-Browser"
+          ".config/chromium"
+          ".mozilla"
+        ];
       };
     };
   };
   programs.chromium = {
     enable = true; # only enables polices to be put in etc, doesn't install chromium
-    extensions = [
-      "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-      "dbepggeogbaibhgnhhndojpepiihcmeb" # xoom redirector
-      "kbfnbcaeplbcioakkpcpgfkobkghlhen" # grammarly
-      "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
-    ];
     initialPrefs = {
       "https_only_mode_auto_enabled" = true;
       "privacy_guide" = {
@@ -30,11 +28,8 @@ in
       };
       "autofill" = {
         "credit_card_enabled" = false;
-        # "profile_enabled" = false;
       };
-      "search" = {
-        "suggest_enabled" = false;
-      };
+      "search"."suggest_enabled" = false;
       "browser" = {
         "clear_data" = {
           "cache" = false;
@@ -52,7 +47,6 @@ in
         };
       };
       "enable_do_not_track" = true;
-      "https_only_mode_enabled" = true;
       "intl"."selected_languages" = "en-PH,en-US";
       "payments"."can_make_payment_enabled" = false;
     };
