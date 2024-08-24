@@ -9,7 +9,7 @@ in
       users.${g.username} = {
         directories = [
           ".config/BraveSoftware/Brave-Browser"
-          ".config/chromium"
+          # ".config/chromium"
           ".mozilla"
         ];
       };

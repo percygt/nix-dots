@@ -1,1 +1,6 @@
-{ libx, ... }: libx.importPaths.all ./.
+{
+  imports = [
+    ./chromium
+    ./firefox
+  ];
+}

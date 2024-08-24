@@ -3,15 +3,14 @@
   lib,
   ...
 }:
-with lib;
 let
+  inherit (lib) mkOption mkEnableOption;
   supportedBrowsers = [
     "chromium"
     "google-chrome"
     "brave"
     "vivaldi"
   ];
-
   webappModule = mkOption {
     default = { };
     type =
@@ -91,7 +90,6 @@ let
       inherit (builtins) stringLength substring;
       inherit (lib.attrsets) mapAttrs filterAttrs;
       inherit (lib.strings) concatStringsSep toUpper;
-      mainCfg = config.programs.${browser};
     in
     {
       xdg.desktopEntries = mapAttrs (name: cfg: {
@@ -108,19 +106,19 @@ let
 
         exec = concatStringsSep " " (
           [
-            "${lib.getExe mainCfg.package}"
+            "${lib.getExe config.programs.${browser}.package}"
             "--app=${cfg.url}"
             "--profile-directory=WebApp-${name}"
           ]
-          ++ mainCfg.commandLineArgs
+          ++ config.programs.${browser}.commandLineArgs
           ++ [ "%U" ]
         );
 
         settings = {
-          # X-MultipleArgs = "false"; # Consider enabling, don't know what this does
+          X-MultipleArgs = "false"; # Consider enabling, don't know what this does
           StartupWMClass = "WebApp-${name}";
         };
-      }) (filterAttrs (_: webapp: webapp.enable) mainCfg.webapps);
+      }) (filterAttrs (_: webapp: webapp.enable) config.programs.${browser}.webapps);
     };
 in
 {
@@ -131,5 +129,5 @@ in
     vivaldi.webapps = webappModule;
   };
 
-  config = mkMerge (map webappConfig supportedBrowsers);
+  config = lib.mkMerge (map webappConfig supportedBrowsers);
 }
