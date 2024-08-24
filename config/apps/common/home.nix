@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     mission-center
     qalculate-gtk
+    shotwell
     audacity
     amberol
     foliate

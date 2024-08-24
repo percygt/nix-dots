@@ -10,7 +10,7 @@
       sway.package = lib.mkOption {
         description = "Sway package";
         type = lib.types.package;
-        default = pkgs.swayfx;
+        default = pkgs.swayfx-git;
       };
     };
     dev = {

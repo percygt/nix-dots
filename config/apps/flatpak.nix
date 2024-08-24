@@ -26,10 +26,11 @@ in
       }
     ];
     packages = [
+      "io.github.zen_browser.zen"
       "engineer.atlas.Nyxt"
       "io.github.jorchube.monitorets"
       "com.github.PintaProject.Pinta"
-      "org.gnome.Shotwell"
+      # "org.gnome.Shotwell"
       "org.kde.digikam"
       "so.libdb.dissent"
       "org.freedesktop.Bustle"
@@ -52,7 +53,6 @@ in
       "org.libreoffice.LibreOffice"
       "org.telegram.desktop"
       "page.codeberg.Imaginer.Imaginer"
-      "rest.insomnia.Insomnia"
       "info.febvre.Komikku"
     ];
   };
@@ -70,6 +70,8 @@ in
     "/persist".users.${g.username}.directories = [
       ".var/app/org.telegram.desktop"
       ".var/app/info.febvre.Komikku"
+      ".var/app/com.github.PintaProject.Pinta"
+      ".var/app/io.github.zen_browser.zen"
     ];
   };
 }
