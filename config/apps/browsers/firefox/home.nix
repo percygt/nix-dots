@@ -1,1 +1,5 @@
-{ libx, ... }: libx.importPaths.all ./.
+{
+  imports = [
+    ./firefox.nix
+  ];
+}

@@ -48,36 +48,6 @@ in
         EmailTracking = true;
         Exceptions = [ ];
       };
-      # ExtensionSettings = {
-      #   "uBlock0@raymondhill.net" = {
-      #     installation_mode = "force_installed";
-      #     install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-      #   };
-      #   "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
-      #     installation_mode = "force_installed";
-      #     install_url = "https://addons.mozilla.org/firefox/downloads/latest/vimium-ff/latest.xpi";
-      #   };
-      #   "jid1-MnnxcxisBPnSXQ@jetpack" = {
-      #     installation_mode = "force_installed";
-      #     install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
-      #   };
-      #   # "@testpilot-containers" = {
-      #   #   installation_mode = "force_installed";
-      #   #   install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
-      #   # };
-      #   "uMatrix@raymondhill.net" = {
-      #     installation_mode = "force_installed";
-      #     install_url = "https://addons.mozilla.org/firefox/downloads/latest/umatrix/latest.xpi";
-      #   };
-      #   "{74145f27-f039-47ce-a470-a662b129930a}" = {
-      #     installation_mode = "force_installed";
-      #     install_url = "https://addons.mozilla.org/firefox/downloads/latest/clearurls/latest.xpi";
-      #   };
-      #   "extension@tabliss.io" = {
-      #     install_url = "https://addons.mozilla.org/firefox/downloads/file/3940751/tabliss-2.6.0.xpi";
-      #     installation_mode = "force_installed";
-      #   };
-      # };
       HardwareAcceleration = true;
       ManagedBookmarks = [
         { toplevel_name = "NixOS"; }

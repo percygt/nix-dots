@@ -10,7 +10,6 @@ in
         directories = [
           ".config/BraveSoftware/Brave-Browser"
           # ".config/chromium"
-          ".mozilla"
         ];
       };
     };
