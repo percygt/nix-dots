@@ -95,6 +95,8 @@
           s.gpg.package
           s.ssh.package
           d.git.package
+          psmisc
+          lsof
           age
           curl
           wget

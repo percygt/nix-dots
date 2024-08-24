@@ -335,7 +335,7 @@
     "editor.formatOnSave": true
   },
   "[nix]": {
-    "editor.defaultFormatter": "kamadorueda.alejandra",
+    "editor.defaultFormatter": "brettm12345.nixfmt-vscode",
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.formatOnType": false
@@ -360,7 +360,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  "alejandra.program": "alejandra",
   "editor.accessibilitySupport": "off",
   "editor.bracketPairColorization.enabled": true,
   "editor.codeActionsOnSave": {
@@ -591,12 +590,7 @@
   "liveServer.settings.donotShowInfoMsg": true,
   "liveServer.settings.donotVerifyTags": true,
   "nix.enableLanguageServer": true,
-  "nix.formatterPath": [
-    "nix",
-    "fmt",
-    "--",
-    "-"
-  ],
+  "nix.formatterPath": "nixfmt",
   "nix.serverPath": "nil",
   "search.actionsPosition": "auto",
   "search.exclude": {
@@ -643,9 +637,11 @@
     "tree.indentGuidesStroke": "#B69B0A"
   },
   "workbench.editor.enablePreview": true,
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.list.smoothScrolling": true,
   "workbench.tree.indent": 16,
   "workbench.tree.renderIndentGuides": "always",
-  "workbench.colorTheme": "KastorCode Dark Purple Theme"
+  "workbench.colorTheme": "KastorCode Dark Purple Theme",
+  "editor.fontSize": 16,
+  "workbench.preferredDarkColorTheme": "KastorCode Dark Purple Theme"
 }

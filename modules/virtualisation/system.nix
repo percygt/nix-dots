@@ -4,5 +4,7 @@
     ./docker.nix
     ./podman.nix
     ./vmvariant.nix
+    ./distrobox.nix
+
   ];
 }

@@ -13,7 +13,6 @@ in
   imports = [ inputs.vscode-server.homeModules.default ];
   options.modules.editor.vscode.enable = lib.mkEnableOption "Enable vscode home";
   config = lib.mkIf config.modules.editor.vscode.enable {
-    home.shellAliases.code = "code";
     services.vscode-server = {
       enable = true;
       enableFHS = true;
@@ -25,9 +24,15 @@ in
         ps: with ps; [
           rustup
           zlib
+          openssl.dev
+          pkg-config
+          zlib
           cmake
           clang
           fish
+          nil
+          nixd
+          nixfmt-rfc-style
         ]
       );
       enableUpdateCheck = true;

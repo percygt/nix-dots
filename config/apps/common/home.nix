@@ -10,6 +10,7 @@
     mumble
     gimp
     font-manager
+    pinta
     inkscape
     krita
     # obsidian
