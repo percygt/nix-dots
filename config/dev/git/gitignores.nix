@@ -2,6 +2,7 @@
   programs.git.ignores = [
     ".aws"
     ".envrc"
+    ".devenv"
     ".lsp.lua"
     "**/*.neoconf.json"
     ".vim"
