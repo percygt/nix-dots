@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs }:
 {
   nix-sources = inputs.nix-sources.overlays.default;
   nix-stash = inputs.nix-stash.overlays.default;
