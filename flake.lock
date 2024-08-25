@@ -2383,11 +2383,11 @@
     "tt-schemes": {
       "flake": false,
       "locked": {
-        "lastModified": 1724334173,
-        "narHash": "sha256-7TgpQx6JP3t/aSJW+yv5gEXceCIw8qTnhCAT3LtfmeY=",
+        "lastModified": 1724543831,
+        "narHash": "sha256-J+L9wYgl6WkD4YB2gKPkdYjLrgR4stdamVXEGR3pa6o=",
         "owner": "tinted-theming",
         "repo": "schemes",
-        "rev": "43ba59b50b9cd49ddc67f9aab82826f9007ee4e6",
+        "rev": "98c7fe35c00926b0af2eb6831d6039bc8de9cc34",
         "type": "github"
       },
       "original": {
