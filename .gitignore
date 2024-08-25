@@ -6,7 +6,7 @@
 *.pem
 *.keyfile
 *.qcow2
-**/.neoconf.json
+.neoconf.json
 result
 atuin
 key
