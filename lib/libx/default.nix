@@ -7,7 +7,6 @@ let
   lib = if isGeneric then inputs.home-manager.lib else inputs.nixpkgs.lib;
 in
 {
-  inherit (import ../../packages/args.nix) clj;
   sway = import ./sway.nix { inherit lib; };
   toRasi = import ./toRasi.nix { inherit lib; };
   mkLiteral = value: {

@@ -1,9 +1,5 @@
-{ prev, inputs }:
+{ prev }:
 {
-  # swayfx = prev.swayfx.override {
-  #   inherit (inputs.nix-sources.packages.${prev.system}) swayfx-unwrapped;
-  # };
-
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
   borgmatic = prev.borgmatic.override { enableSystemd = false; };
   logseq = prev.logseq.overrideAttrs (oldAttrs: {
