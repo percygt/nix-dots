@@ -31,15 +31,7 @@ in
   imports = [ ./module.nix ];
   config = lib.mkIf config.modules.editor.emacs.enable {
     home-manager.users.${g.username} = import ./home.nix;
-    environment.systemPackages = [
-      emacsWithExtraPackages
-      (pkgs.aspellWithDicts (
-        dicts: with dicts; [
-          en
-          en-computers
-        ]
-      ))
-    ];
+    environment.systemPackages = [ emacsWithExtraPackages ];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {

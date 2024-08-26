@@ -103,6 +103,13 @@ button {
 }
 
 #cpu,
+#bluetooth,
+#temperature,
+#memory {
+  min-width: 40px;
+}
+
+#cpu,
 #tray,
 #custom-menu,
 #bluetooth,

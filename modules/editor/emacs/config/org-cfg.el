@@ -2,6 +2,45 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package org-roam
+  :config
+  (org-roam-setup)
+  :custom
+  (org-roam-directory notes-directory)
+  (org-roam-dailies-directory "journals/")
+  (org-roam-file-exclude-regexp "\\.git/.*\\|logseq/.*$")
+  (org-roam-capture-templates
+        '(("m" "main" plain
+           "%?"
+           :if-new (file+head "main/${slug}.org"
+                              "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+          ("r" "reference" plain "%?"
+           :if-new
+           (file+head "reference/${title}.org" "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+          ("a" "article" plain "%?"
+           :if-new
+           (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
+           :immediate-finish t
+           :unnarrowed t)))
+  (org-roam-dailies-capture-templates '(("d" "default" entry
+					 "* %?"
+					 :target (file+head "%<%Y-%m-%d>.org"
+							    "#+title: %<%Y-%m-%d>\n"))))
+  (org-roam-mode-sections '(org-roam-backlinks-section
+                            org-roam-reflinks-section
+                            org-roam-unlinked-references-section))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+	 ("C-c n f" . org-roam-node-find)
+	 ("C-c n g" . org-roam-graph)
+	 ("C-c n i" . org-roam-node-insert)
+	 ("C-c n c" . org-roam-capture)
+	 ;; Dailies
+	 ("C-c n j" . org-roam-dailies-capture-today)))
+
 (use-package org
   :ensure nil
   :preface
@@ -75,41 +114,6 @@
            (org-modern-variable-pitch t))
   :commands (org-modern-mode org-modern-agenda)
   :init (global-org-modern-mode))
-
-(use-package org-roam
-  :custom
-  (org-roam-directory notes-directory)
-  (org-roam-dailies-directory "journals/")
-  (org-roam-file-exclude-regexp "\\.git/.*\\|logseq/.*$")
-  (org-roam-capture-templates
-   '(("d" "default" plain "%?" :immediate-finish t
-      :if-new (file+head "${slug}.org"
-			 "#+TITLE: ${title}\n#+hugo_lastmod: Time-stamp: <>\n\n")
-      :unnarrowed t)
-     ("t" "temp" plain "%?"
-      :if-new(file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-			"#+TITLE: ${title}\n#+hugo_lastmod: Time-stamp: <>\n\n")
-      :immediate-finish t
-      :unnarrowed t)
-     ("p" "private" plain "%?"
-      :if-new (file+head "${slug}-private.org"
-			 "#+TITLE: ${title}\n")
-      :immediate-finish t
-      :unnarrowed t)))
-  (org-roam-dailies-capture-templates '(("d" "default" entry
-					 "* %?"
-					 :target (file+head "%<%Y-%m-%d>.org"
-							    "#+title: %<%Y-%m-%d>\n"))))
-  (org-roam-mode-sections '(org-roam-backlinks-section
-                            org-roam-reflinks-section
-                            org-roam-unlinked-references-section))
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-	 ("C-c n f" . org-roam-node-find)
-	 ("C-c n g" . org-roam-graph)
-	 ("C-c n i" . org-roam-node-insert)
-	 ("C-c n c" . org-roam-capture)
-	 ;; Dailies
-	 ("C-c n j" . org-roam-dailies-capture-today)))
 
 (use-package org-brain
   :custom
