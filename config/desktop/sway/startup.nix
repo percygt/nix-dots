@@ -4,7 +4,7 @@
       command = "systemctl --user restart kanshi";
       always = true;
     }
-    { command = "systemctl --user start wlsunset.service"; }
+    { command = "systemctl --user start wlsunset"; }
     { command = "autotiling"; }
     { command = "foot --server"; }
     {

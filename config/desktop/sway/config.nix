@@ -101,7 +101,9 @@ in
       {
         id = "bar-1";
         command = "true";
-        position = "bottom";
+        mode = "hide";
+        hiddenState = "hide";
+        position = "top";
       }
     ];
     workspaceOutputAssign = [

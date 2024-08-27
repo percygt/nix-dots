@@ -12,7 +12,7 @@ in
       hashedPasswordFile = config.sops.secrets.userHashedPassword.path;
       packages = [ pkgs.home-manager ];
       extraGroups = [
-        "audio"
+        config.users.groups.ydotool.name
         "storage"
         "users"
         "video"
