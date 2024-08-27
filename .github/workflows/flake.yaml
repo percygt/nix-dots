@@ -27,20 +27,19 @@ jobs:
         run: |
           nix flake update nix-stash --accept-flake-config
           nix flake update nix-sources --accept-flake-config
-          nix flake update swayfx-unwrapped
-          nix flake update home-manager
-          nix flake update disko
-          nix flake update sops-nix
-          nix flake update wayland-pipewire-idle-inhibit
-          nix flake update xremap
-          nix flake update nixd
-          nix flake update impermanence
-          nix flake update nix-flatpak
-          nix flake update fenix
-          nix flake update vscode-server
-          nix flake update nix-colors
-          nix flake update base16
-          nix flake update tt-schemes
+          nix flake update home-manager --accept-flake-config
+          nix flake update disko --accept-flake-config
+          nix flake update xremap --accept-flake-config
+          nix flake update nixd --accept-flake-config
+          nix flake update impermanence --accept-flake-config
+          nix flake update nix-flatpak --accept-flake-config
+          nix flake update fenix --accept-flake-config
+          nix flake update sops-nix --accept-flake-config
+          nix flake update wayland-pipewire-idle-inhibit --accept-flake-config
+          nix flake update vscode-server --accept-flake-config
+          nix flake update base16 --accept-flake-config
+          nix flake update nur --accept-flake-config
+          nix flake update tt-schemes --accept-flake-config
           git commit -m "Updated flake inputs" flake.lock || true
 
       - name: Push commit with updated inputs

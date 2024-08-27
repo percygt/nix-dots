@@ -74,8 +74,6 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-colors.url = "github:misterio77/nix-colors";
-
     base16.url = "github:SenchoPens/base16.nix";
 
     nur.url = "github:nix-community/NUR";
