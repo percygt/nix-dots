@@ -8,18 +8,17 @@ in
   options.modules.terminal.foot.enable = lib.mkEnableOption "Enable foot";
 
   config = lib.mkIf config.modules.terminal.foot.enable {
-    # systemd.user.services.foot = {
-    #   Service.Execstart = lib.mkForce "${lib.getExe config.programs.foot.package} --server=/run/user/%U/foot-server.sock";
-    # };
+    systemd.user.services.foot = {
+      Service.Execstart = lib.mkForce "${lib.getExe config.programs.foot.package} --server=/run/user/%U/foot-server.sock";
+    };
     programs.foot = {
       enable = true;
-      server.enable = false;
+      server.enable = true;
       settings = {
         main = {
           term = "foot";
           login-shell = "no";
           shell = lib.getExe config.programs.fish.package;
-          dpi-aware = "yes";
           font = "${f.name}:style=${builtins.elemAt f.style 0}:size=${builtins.toString f.size}";
           font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString f.size}";
           font-italic = "${f.name}:style=${builtins.elemAt f.style 2}:size=${builtins.toString f.size}";
