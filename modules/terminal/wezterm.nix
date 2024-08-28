@@ -33,7 +33,7 @@ in
   config = lib.mkIf config.modules.terminal.wezterm.enable {
     programs.wezterm = {
       enable = true;
-      package = if isGeneric then pkgs.stable.wezterm_wrapped else pkgs.wezterm;
+      package = if isGeneric then pkgs.wezterm_wrapped else pkgs.wezterm_nightly;
       colorSchemes = {
         Syft = {
           ansi = [
