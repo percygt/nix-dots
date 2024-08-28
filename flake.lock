@@ -1553,11 +1553,11 @@
         "yaml2nix": "yaml2nix"
       },
       "locked": {
-        "lastModified": 1724853779,
-        "narHash": "sha256-we6R34lgdQ41gP9rWSQhGhhi9/43R8yR8cqn5jVa9/4=",
+        "lastModified": 1724856323,
+        "narHash": "sha256-hq2aXiiieQuSsTrtaB6QF7RrZcdMzBtmYW4GEsU3qYM=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "edb2991097f72aa49f56a2e83d323c42381d379c",
+        "rev": "e6d01061fafb727d871e50bd148f625b5cd8d9f7",
         "type": "github"
       },
       "original": {
@@ -2429,11 +2429,11 @@
     "tt-schemes": {
       "flake": false,
       "locked": {
-        "lastModified": 1724695374,
-        "narHash": "sha256-r0mHdIreBmEFCoW5lVwFdVMb9MG6pa0vvcO91fOwKg4=",
+        "lastModified": 1724855699,
+        "narHash": "sha256-spz4qmUaejGLB6k/RKc7k+unbNogedwdQv5yBoL3ThA=",
         "owner": "tinted-theming",
         "repo": "schemes",
-        "rev": "b287eeabc4f1f63980dbd6f7c6b8593638c0b941",
+        "rev": "43294f13504020b879723fa7a00a0abd39b18cc3",
         "type": "github"
       },
       "original": {
