@@ -88,7 +88,6 @@ in
       "${modifier}+Shift+r" = "mode default";
     };
 
-    # focus.wrapping = "workspace";
     focus.newWindow = "urgent";
     defaultWorkspace = "0-home";
     bars = [

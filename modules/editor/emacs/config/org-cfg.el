@@ -13,7 +13,7 @@
         '(("m" "main" plain
            "%?"
            :if-new (file+head "main/${slug}.org"
-                              "#+title: ${title}\n")
+                              "#+title: ${title}\n#+date: %u\n#+lastmod: \n\n")
            :immediate-finish t
            :unnarrowed t)
           ("r" "reference" plain "%?"
