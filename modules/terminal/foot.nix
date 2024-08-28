@@ -8,13 +8,18 @@ in
   options.modules.terminal.foot.enable = lib.mkEnableOption "Enable foot";
 
   config = lib.mkIf config.modules.terminal.foot.enable {
+    # systemd.user.services.foot = {
+    #   Service.Execstart = lib.mkForce "${lib.getExe config.programs.foot.package} --server=/run/user/%U/foot-server.sock";
+    # };
     programs.foot = {
       enable = true;
-      server.enable = true;
+      server.enable = false;
       settings = {
         main = {
-          term = "xterm-256color";
-          login-shell = "yes";
+          term = "foot";
+          login-shell = "no";
+          shell = lib.getExe config.programs.fish.package;
+          dpi-aware = "yes";
           font = "${f.name}:style=${builtins.elemAt f.style 0}:size=${builtins.toString f.size}";
           font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString f.size}";
           font-italic = "${f.name}:style=${builtins.elemAt f.style 2}:size=${builtins.toString f.size}";
@@ -22,11 +27,23 @@ in
           line-height = 23;
           pad = "10x8";
         };
+        url = {
+          launch = "xdg-open $\{url}";
+          label-letters = "sadfjklewcmpgh";
+          osc8-underline = "url-mode";
+          protocols = "http, https, ftp, ftps, file, gemini, gopher";
+          uri-characters = ''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.,~:;/?#@!$&%*+="'()[]'';
+        };
 
         cursor = {
           blink = "yes";
           style = "beam";
           color = "${c.base01} ${c.base05}";
+        };
+
+        key-bindings = {
+          prompt-prev = "Control+Shift+z";
+          prompt-next = "Control+Shift+x";
         };
 
         mouse.hide-when-typing = "yes";

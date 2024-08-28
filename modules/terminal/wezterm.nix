@@ -113,7 +113,7 @@ in
             warn_about_missing_glyphs = false,
             enable_scroll_bar = false,
             enable_tab_bar = false,
-            front_end="OpenGL",
+            front_end="WebGpu",
           	disable_default_key_bindings = true,
           	window_close_confirmation = "NeverPrompt",
             line_height = 1.2,

@@ -8,10 +8,6 @@
           name = "fzf";
           inherit (fzf-fish) src;
         }
-        {
-          name = "bass";
-          inherit (bass) src;
-        }
       ];
       interactiveShellInit =
         # fish

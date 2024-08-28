@@ -24,7 +24,7 @@ return {
         { "Q", hidden = true },
         { "<leader>m", icon = "󱡅" },
         { "<leader>0", icon = "" },
-        { "<leader>i", icon = "" },
+        { "<leader>o", icon = "" },
         { "<leader>f", icon = "" },
         { "<leader>l", "<cmd>Lazy<cr>", icon = "󰒲" },
         { "<leader>p", [["_dP]], mode = "x" },

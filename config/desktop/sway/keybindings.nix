@@ -50,11 +50,11 @@ in
       "Ctrl+KP_Delete" = "exec ${lib.getExe pkgs.toggle-sway-window} --id backup -- ${viewBackupLogCmd}";
       "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
       "${mod}+Space" = "exec swaync-client -t -sw";
+      "${mod}+Alt+Space" = "exec pkill tofi || ${power-menu { inherit pkgs; }}";
       "${mod}+Shift+w" = "exec ${dropdown-terminal { inherit pkgs weztermPackage; }}";
       "${mod}+w" = "exec ${lib.getExe pkgs.i3-quickterm} tmux";
       "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
       "${mod}+Return" = "exec ${cfg.terminal}";
-      "${mod}+Shift+e" = "exec pkill tofi || ${power-menu { inherit pkgs; }}";
       "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --title=SystemMonitor --app-id=btop btop";

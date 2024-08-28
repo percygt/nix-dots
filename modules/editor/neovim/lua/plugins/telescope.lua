@@ -18,7 +18,7 @@ return {
     -- stylua: ignjre
     keys = {
       { "<leader>0", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-      { "<leader>i", "<c-6>", desc = "Switch buffer" },
+      { "<leader>o", "<c-6>", desc = "Switch buffer" },
       { "<leader>s", "", desc = "+Search", mode = { "n", "v" } },
       { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Opened files" },
       { "<leader>sf", "<cmd>Telescope find_files<cr>", desc = "Files" },

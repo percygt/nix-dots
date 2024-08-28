@@ -5,8 +5,8 @@
   ...
 }:
 let
-  f = config.modules.fonts.interface;
   a = config.modules.theme.assets;
+  f = config.modules.fonts.interface;
   c = config.modules.theme.colors.withHashtag;
 in
 {
