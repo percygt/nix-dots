@@ -8,12 +8,8 @@ in
   options.modules.terminal.foot.enable = lib.mkEnableOption "Enable foot";
 
   config = lib.mkIf config.modules.terminal.foot.enable {
-    systemd.user.services.foot = {
-      Service.Execstart = lib.mkForce "${lib.getExe config.programs.foot.package} --server=/run/user/%U/foot-server.sock";
-    };
     programs.foot = {
       enable = true;
-      server.enable = true;
       settings = {
         main = {
           term = "foot";

@@ -28,6 +28,5 @@ in
     }
     (inheritTerminal "foot")
     (inheritTerminal "wezterm")
-    (inheritTerminal "rio")
   ];
 }

@@ -3,12 +3,10 @@
     enable = true;
     commandLineArgs = [
       "--ozone-platform=wayland"
-      "--enable-features=WebRTCPipeWireCapturer,VaapiVideoDecodeLinuxGL,VaapiVideoEncoder,CanvasOopRasterization"
+      "--enable-features=WebRTCPipeWireCapturer,VaapiVideoEncoder,VaapiIgnoreDriverChecks,Vulkan,DefaultANGLEVulkan,VulkanFromANGLE"
       "--ignore-gpu-blocklist"
-      "--enable-webrtc-hw-decoding"
-      "--enable-webrtc-hw-encoding"
       "--use-gl=angle"
-      "--use-angle=gl"
+      "--use-angle=vulkan"
     ];
   };
 }
