@@ -1,5 +1,6 @@
 { prev }:
 {
+  brave = prev.brave.override { vulkanSupport = true; };
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
   borgmatic = prev.borgmatic.override { enableSystemd = false; };
   logseq = prev.logseq.overrideAttrs (oldAttrs: {

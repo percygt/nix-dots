@@ -20,19 +20,26 @@
   };
 
   config = lib.mkIf config.modules.drivers.intel.enable {
-    boot.initrd.kernelModules = [ config.modules.drivers.intel.gpu.driver ];
-    boot.kernelParams =
-      if (config.modules.drivers.intel.gpu.driver == "xe") then
-        [
-          "i915.force_probe=!9a49"
-          "xe.force_probe=9a49"
-        ]
-      else if (config.hardware.intelgpu.driver == "i915") then
-        [ "i915.enable_guc=3" ]
-      else
-        [ ];
-
-    environment.systemPackages = with pkgs; [ glxinfo ];
+    boot = {
+      initrd.kernelModules = [ config.modules.drivers.intel.gpu.driver ];
+      extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
+      kernelParams =
+        if (config.modules.drivers.intel.gpu.driver == "xe") then
+          [
+            "acpi_call"
+            "i915.force_probe=!9a49"
+            "xe.force_probe=9a49"
+          ]
+        else if (config.hardware.intelgpu.driver == "i915") then
+          [ "i915.enable_guc=3" ]
+        else
+          [ ];
+    };
+    services.xserver.videoDrivers = lib.mkDefault [ "intel" ];
+    environment.systemPackages = with pkgs; [
+      glxinfo
+      intel-gpu-tools
+    ];
     environment.variables = {
       VDPAU_DRIVER = lib.mkIf config.hardware.graphics.enable (lib.mkDefault "va_gl");
       LIBVA_DRIVER_NAME = "iHD";

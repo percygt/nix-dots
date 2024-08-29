@@ -7,10 +7,12 @@
     ];
     commandLineArgs = [
       "--ozone-platform=wayland"
-      "--enable-features=WebRTCPipeWireCapturer,VaapiVideoEncoder,VaapiIgnoreDriverChecks,Vulkan,DefaultANGLEVulkan,VulkanFromANGLE"
+      "--enable-features=WebRTCPipeWireCapturer,VaapiVideoDecodeLinuxGL,CanvasOopRasterization"
       "--ignore-gpu-blocklist"
+      # "--enable-webrtc-hw-decoding"
+      # "--enable-webrtc-hw-encoding"
       "--use-gl=angle"
-      "--use-angle=vulkan"
+      "--use-angle=gl"
       # "--disable-features=WebRtcAllowInputVolumeAdjustment"
     ];
   };
