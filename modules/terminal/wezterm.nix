@@ -6,23 +6,7 @@
   ...
 }:
 let
-  g = config._general;
   window-title = "Wezterm";
-  launch-tmux = pkgs.writers.writeBash "launch-tmux" ''
-    if [ -d ${g.flakeDirectory} ]; then
-      tmux has-session -t nix-dots 2>/dev/null
-      if [ $? != 0 ]; then
-        tmux new-session -ds nix-dots -c "${g.flakeDirectory}"
-      fi
-      tmux new-session -As nix-dots
-    else
-      tmux has-session -t home 2>/dev/null
-      if [ $? != 0 ]; then
-        tmux new-session -ds home -c "${g.homeDirectory}"
-      fi
-      tmux new-session -As home
-    fi
-  '';
   t = config.modules.theme;
   f = config.modules.fonts.shell;
   c = t.colors.withHashtag;
@@ -143,7 +127,7 @@ in
           		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
           	},
             default_gui_startup_args = {'start', '--always-new-process'},
-          	default_prog = { '${launch-tmux}' }
+          	default_prog = { '${lib.getExe pkgs.tmux-launch-session}' }
           }
         '';
     };

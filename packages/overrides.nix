@@ -1,13 +1,12 @@
 { prev }:
 {
-  brave = prev.brave.override { vulkanSupport = true; };
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
   borgmatic = prev.borgmatic.override { enableSystemd = false; };
   logseq = prev.logseq.overrideAttrs (oldAttrs: {
     postFixup = ''
       makeWrapper ${prev.electron}/bin/electron $out/bin/${oldAttrs.pname} \
         --add-flags $out/share/${oldAttrs.pname}/resources/app \
-        --add-flags "--use-gl=desktop" \
+        --add-flags "--use-gl=angle" \
         --prefix LD_LIBRARY_PATH : "${prev.lib.makeLibraryPath [ prev.stdenv.cc.cc.lib ]}"
     '';
   });

@@ -6,6 +6,11 @@
   emacs = inputs.emacs-overlay.overlay;
   fenex = inputs.fenix.overlays.default;
   nur = inputs.nur.overlay;
-  packageOverlays = final: _: import ../packages/overlays.nix { pkgs = final; };
   packageOverrides = _: prev: import ../packages/overrides.nix { inherit prev; };
+  packageOverlays =
+    final: _:
+    import ../packages/overlays.nix {
+      inherit inputs;
+      pkgs = final;
+    };
 }

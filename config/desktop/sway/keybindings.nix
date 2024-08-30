@@ -3,24 +3,21 @@
   lib,
   config,
   libx,
+  isGeneric,
   ...
 }:
 let
   g = config._general;
   cfg = config.wayland.windowManager.sway.config;
   mod = cfg.modifier;
+  wez-ddterm = if isGeneric then pkgs.wez-wrapped-ddterm else pkgs.wez-nightly-ddterm;
   inherit (libx) sway;
   inherit (sway)
     viewRebuildLogCmd
     viewBackupLogCmd
     mkWorkspaceKeys
     mkDirectionKeys
-    tofipass
-    toggle-blur
-    dropdown-terminal
-    power-menu
     ;
-  weztermPackage = config.programs.wezterm.package;
 in
 {
   wayland.windowManager.sway.config.keybindings =
@@ -45,16 +42,15 @@ in
       "10"
     ]
     // {
-      "Ctrl+KP_Multiply" = "exec ${toggle-blur { inherit pkgs; }}";
       "Ctrl+KP_Insert" = "exec ${lib.getExe pkgs.toggle-sway-window} --id system-software-update -- ${viewRebuildLogCmd}";
       "Ctrl+KP_Delete" = "exec ${lib.getExe pkgs.toggle-sway-window} --id backup -- ${viewBackupLogCmd}";
       "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
       "${mod}+Space" = "exec swaync-client -t -sw";
-      "${mod}+Alt+Space" = "exec pkill tofi || ${power-menu { inherit pkgs; }}";
-      "${mod}+Shift+w" = "exec ${dropdown-terminal { inherit pkgs weztermPackage; }}";
-      "${mod}+w" = "exec ${lib.getExe pkgs.i3-quickterm} tmux";
-      "${mod}+Shift+return" = "exec ${lib.getExe pkgs.i3-quickterm} shell";
-      "${mod}+Return" = "exec ${cfg.terminal}";
+      "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
+      "${mod}+Shift+w" = "exec ${lib.getExe wez-ddterm}";
+      "${mod}+w" = "exec ${lib.getExe pkgs.foot-ddterm}";
+      "${mod}+Shift+return" = "exec ${lib.getExe config.programs.wezterm.package}";
+      "${mod}+Return" = "exec ${lib.getExe pkgs.foot}";
       "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --title=SystemMonitor --app-id=btop btop";
@@ -65,7 +61,7 @@ in
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
       "${mod}+k" = "exec pkill tofi || keepmenu -C | xargs swaymsg exec --";
-      "${mod}+Shift+k" = "exec pkill tofi || ${tofipass { inherit pkgs; }}";
+      "${mod}+Shift+k" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
       "${mod}+Shift+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id nemo -- nemo ~";
       "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";

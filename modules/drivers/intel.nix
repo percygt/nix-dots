@@ -7,9 +7,9 @@
 {
   options.modules.drivers = {
     intel = {
-      enable = lib.mkEnableOption "Enable intel gpu";
+      enable = lib.mkEnableOption "Enable intel graphics";
       gpu.driver = lib.mkOption {
-        description = "Intel GPU driver to use";
+        description = "Intel graphics driver to use";
         type = lib.types.enum [
           "i915"
           "xe"
@@ -22,15 +22,13 @@
   config = lib.mkIf config.modules.drivers.intel.enable {
     boot = {
       initrd.kernelModules = [ config.modules.drivers.intel.gpu.driver ];
-      extraModulePackages = with config.boot.kernelPackages; [ acpi_call ];
       kernelParams =
         if (config.modules.drivers.intel.gpu.driver == "xe") then
           [
-            "acpi_call"
             "i915.force_probe=!9a49"
             "xe.force_probe=9a49"
           ]
-        else if (config.hardware.intelgpu.driver == "i915") then
+        else if (config.modules.drivers.intel.gpu.driver == "i915") then
           [ "i915.enable_guc=3" ]
         else
           [ ];

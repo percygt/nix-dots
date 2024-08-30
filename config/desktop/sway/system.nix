@@ -9,11 +9,11 @@ let
 in
 {
   imports = [ ./tuigreet.nix ];
-  # Classical NixOS setup
   home-manager.users.${g.username} = import ./home.nix;
   environment = {
     sessionVariables = {
       XDG_CURRENT_DESKTOP = "sway";
+      NIXOS_OZONE_WL = "1";
     };
     persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {

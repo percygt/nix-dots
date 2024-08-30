@@ -1,4 +1,7 @@
-{ pkgs }:
+{ pkgs, inputs }:
+let
+  inherit (inputs.nixpkgs) lib;
+in
 (import ./derivations.nix { inherit pkgs; })
 // {
   success-alert = pkgs.fetchurl {
@@ -30,6 +33,172 @@
     name = "toggle-sway-window";
     text = builtins.readFile ./clj/toggle-sway-window.clj;
   };
+
+  tofi-pass =
+    pkgs.writers.writeBashBin "tofi-pass"
+      {
+        makeWrapperArgs = [
+          "--prefix"
+          "PATH"
+          ":"
+          "${lib.makeBinPath [
+            pkgs.tofi
+            pkgs.pass
+          ]}"
+        ];
+      }
+      #bash
+      ''
+        shopt -s nullglob globstar
+        dmenu="tofi --prompt-text='Passmenu: '"
+        prefix=''${PASSWORD_STORE_DIR- ~/.password-store}
+        password_files=( "$prefix"/**/*.gpg )
+        password_files=( "''${password_files[@]#"$prefix"/}" )
+        password_files=( "''${password_files[@]%.gpg}" )
+        password=$(printf '%s\n' "''${password_files[@]}" | "$dmenu" "$@")
+        [[ -n $password ]] || exit
+        pass show -c "$password" 2>/dev/null
+      '';
+
+  tofi-power-menu =
+    pkgs.writers.writeBashBin "tofipowermenu"
+      {
+        makeWrapperArgs = [
+          "--prefix"
+          "PATH"
+          ":"
+          "${lib.makeBinPath [
+            pkgs.tofi
+            pkgs.systemd
+          ]}"
+        ];
+      }
+      #bash
+      ''
+        case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | tofi --prompt-text="Power Menu: ") in
+        "Power Off")
+          systemctl poweroff
+          ;;
+        "Restart")
+          systemctl reboot
+          ;;
+        "Suspend")
+          systemctl suspend
+          ;;
+        "Lock")
+          swaylock
+          ;;
+        "Log Out")
+          swaymsg exit
+          ;;
+        esac
+      '';
+  tmux-launch-session =
+    pkgs.writers.writeBashBin "tmuxLaunchSession"
+      {
+        makeWrapperArgs = [
+          "--prefix"
+          "PATH"
+          ":"
+          "${lib.makeBinPath [
+            pkgs.tmux
+          ]}"
+        ];
+      }
+      #bash
+      ''
+        if [ -d $FLAKE ]; then
+          tmux has-session -t nix-dots 2>/dev/null
+          if [ $? != 0 ]; then
+            tmux new-session -ds nix-dots -c "$FLAKE"
+          fi
+          tmux new-session -As nix-dots
+        else
+          tmux has-session -t home 2>/dev/null
+          if [ $? != 0 ]; then
+            tmux new-session -ds home -c "$HOME"
+          fi
+          tmux new-session -As home
+        fi
+      '';
+  wez-wrapped-ddterm =
+    pkgs.writers.writeBashBin "wezddterm"
+      {
+        makeWrapperArgs = [
+          "--prefix"
+          "PATH"
+          ":"
+          "${lib.makeBinPath [
+            pkgs.tmux-launch-session
+            pkgs.wezterm_wrapped
+          ]}"
+        ];
+      }
+      #bash
+      ''
+        TERM_PIDFILE="/tmp/wez-ddterm"
+        TERM_PID="$(<"$TERM_PIDFILE")"
+        if swaymsg "[ pid=$TERM_PID ] scratchpad show"
+        then
+            swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
+        else
+            echo "$$" > "$TERM_PIDFILE"
+            swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
+            exec wezterm
+        fi
+      '';
+  wez-nightly-ddterm =
+    pkgs.writers.writeBashBin "wezddterm"
+      {
+        makeWrapperArgs = [
+          "--prefix"
+          "PATH"
+          ":"
+          "${lib.makeBinPath [
+            pkgs.tmux-launch-session
+            pkgs.wezterm_nightly
+          ]}"
+        ];
+      }
+      #bash
+      ''
+        TERM_PIDFILE="/tmp/wez-ddterm"
+        TERM_PID="$(<"$TERM_PIDFILE")"
+        if swaymsg "[ pid=$TERM_PID ] scratchpad show"
+        then
+            swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
+        else
+            echo "$$" > "$TERM_PIDFILE"
+            swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
+            exec wezterm
+        fi
+      '';
+  foot-ddterm =
+    pkgs.writers.writeBashBin "footddterm"
+      {
+        makeWrapperArgs = [
+          "--prefix"
+          "PATH"
+          ":"
+          "${lib.makeBinPath [
+            pkgs.tmux-launch-session
+            pkgs.foot
+          ]}"
+        ];
+      }
+      #bash
+      ''
+        TERM_PIDFILE="/tmp/foot-ddterm"
+        TERM_PID="$(<"$TERM_PIDFILE")"
+        if swaymsg "[ pid=$TERM_PID ] scratchpad show"
+        then
+            swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
+        else
+            echo "$$" > "$TERM_PIDFILE"
+            swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
+            exec foot tmuxLaunchSession
+        fi
+      '';
 
   json2nix = pkgs.writeScriptBin "json2nix" ''
     ${pkgs.python3}/bin/python ${

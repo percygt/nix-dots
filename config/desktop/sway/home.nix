@@ -3,7 +3,6 @@
     ./waybar
     ./swaync
     ./services.nix
-    ./i3-quickterm.nix
     ./kanshi.nix
     ./packages.nix
     ./swayidle.nix
@@ -16,6 +15,7 @@
   ];
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "sway";
+    NIXOS_OZONE_WL = "1";
   };
   wayland.windowManager.sway = {
     enable = true;

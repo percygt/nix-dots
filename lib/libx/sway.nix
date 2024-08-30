@@ -5,33 +5,6 @@ in
 rec {
   viewRebuildLogCmd = "foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service";
   viewBackupLogCmd = "foot --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service";
-  tofipass =
-    { pkgs }:
-    pkgs.writers.writeBash "tofipass" ''
-      shopt -s nullglob globstar
-      dmenu="${pkgs.tofi}/bin/tofi  --prompt-text='Passmenu: '"
-      prefix=''${PASSWORD_STORE_DIR- ~/.password-store}
-      password_files=( "$prefix"/**/*.gpg )
-      password_files=( "''${password_files[@]#"$prefix"/}" )
-      password_files=( "''${password_files[@]%.gpg}" )
-      password=$(printf '%s\n' "''${password_files[@]}" | "$dmenu" "$@")
-      [[ -n $password ]] || exit
-      pass show -c "$password" 2>/dev/null
-    '';
-  dropdown-terminal =
-    { pkgs, weztermPackage }:
-    pkgs.writers.writeBash "dropdown_terminal" ''
-      TERM_PIDFILE="/tmp/wezterm-dropdown"
-      TERM_PID="$(<"$TERM_PIDFILE")"
-      if swaymsg "[ pid=$TERM_PID ] scratchpad show"
-      then
-          swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
-      else
-          echo "$$" > "$TERM_PIDFILE"
-          swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
-          exec "${weztermPackage}/bin/wezterm";
-      fi
-    '';
   toggle-blur =
     { pkgs }:
     pkgs.writers.writeBash "toggle-blur" ''
@@ -45,27 +18,6 @@ rec {
           swaymsg "blur $BLUR_STATUS"
           echo $((1 - BLUR_STATUS)) > "$BLUR_STATUS_FILE"
       fi
-    '';
-  power-menu =
-    { pkgs }:
-    pkgs.writers.writeBash "power-menu" ''
-      case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | ${pkgs.tofi}/bin/tofi  --prompt-text="Power Menu: ") in
-      "Power Off")
-        systemctl poweroff
-        ;;
-      "Restart")
-        systemctl reboot
-        ;;
-      "Suspend")
-        systemctl suspend
-        ;;
-      "Lock")
-        swaylock
-        ;;
-      "Log Out")
-        swaymsg exit
-        ;;
-      esac
     '';
   mkWorkspaceKeys =
     mod: workspaces:
