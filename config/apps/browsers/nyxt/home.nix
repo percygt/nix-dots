@@ -4,7 +4,9 @@ let
   nxytConfigDir = "${flakeDirectory}/config/apps/browsers/nyxt";
 in
 {
-  home.packages = [ pkgs.nyxt ];
+  home.packages = [
+    pkgs.stable.nyxt
+  ];
   xdg = {
     configFile."nyxt/config.lisp".source = config.lib.file.mkOutOfStoreSymlink "${nxytConfigDir}/config.lisp";
     dataFile."nyxt/bookmarks.lisp".source = config.lib.file.mkOutOfStoreSymlink "${nxytConfigDir}/bookmarks.lisp";

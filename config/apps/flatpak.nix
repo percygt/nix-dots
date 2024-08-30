@@ -27,7 +27,7 @@ in
     ];
     packages = [
       "io.github.zen_browser.zen"
-      "engineer.atlas.Nyxt"
+      # "engineer.atlas.Nyxt"
       "io.github.jorchube.monitorets"
       # "com.github.PintaProject.Pinta"
       # "org.gnome.Shotwell"
