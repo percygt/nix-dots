@@ -1,11 +1,45 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.modules.editor.emacs;
+
+  emacsConfig = pkgs.concatTextFile {
+    name = "config.el";
+    files = map (dir: ./config/${dir}) (builtins.attrNames (builtins.readDir ./config));
+  };
+
+  extraPackages = import ./extraPackages.nix { inherit pkgs; };
+
+  emacs = pkgs.emacsWithPackagesFromUsePackage {
+    inherit (cfg) package;
+    alwaysEnsure = true;
+    config = builtins.readFile emacsConfig;
+    extraEmacsPackages = epkgs: [ epkgs.treesit-grammars.with-all-grammars ] ++ extraPackages;
+  };
+
+  emacsWithExtraPackages = pkgs.runCommand "emacs" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
+    makeWrapper ${emacs}/bin/emacsclient $out/bin/emacsclient --prefix PATH : ${lib.makeBinPath extraPackages}
+    makeWrapper ${emacs}/bin/emacs $out/bin/emacs --prefix PATH : ${lib.makeBinPath extraPackages}
+  '';
+in
 {
   options.modules.editor = {
-    emacs.enable = lib.mkEnableOption "Enable emacs systemwide";
-    emacs.package = lib.mkOption {
-      description = "emacs package to use";
-      default = pkgs.emacs-unstable-pgtk;
-      type = lib.types.package;
+    emacs = {
+      enable = lib.mkEnableOption "Enable emacs systemwide";
+      package = lib.mkOption {
+        description = "emacs package to use";
+        default = pkgs.emacs-unstable-pgtk;
+        type = lib.types.package;
+      };
+      finalPackage = lib.mkOption {
+        description = "emacs finalpackage to use";
+        default = emacsWithExtraPackages;
+        type = lib.types.package;
+      };
     };
   };
 }

@@ -5,14 +5,18 @@
   :ensure nil
   :custom ((dired-listing-switches "-agho --group-directories-first"))
   :config
-  (evil-define-key 'normal dired-mode-map
+  (evil-collection-define-key 'normal 'dired-mode-map
+    " " 'nil)
+  (evil-define-key '(normal visual emacs) dired-mode-map
     "L" nil
     "H" nil
     "D" nil
     "r" 'dired-do-rename
     "R" 'dired-do-redisplay
     "y" 'dired-do-copy
-    "d" 'dired-do-delete))
+    "d" 'dired-do-delete
+    )
+  )
 
 (use-package dired-single
   :after dired

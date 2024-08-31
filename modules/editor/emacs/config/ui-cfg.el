@@ -26,6 +26,7 @@
   :config
   (load-theme 'doom-moonlight t)
   (doom-themes-visual-bell-config)
+  (doom-themes-neotree-config)
   (doom-themes-org-config))
 
 (use-package doom-modeline

@@ -5,27 +5,31 @@
 (use-package org-roam
   :config
   (org-roam-setup)
+  :init
+  (setq org-roam-v2-ack t)
   :custom
   (org-roam-directory notes-directory)
   (org-roam-dailies-directory "journals/")
   (org-roam-file-exclude-regexp "\\.git/.*\\|logseq/.*$")
   (org-roam-capture-templates
-        '(("m" "main" plain
-           "%?"
-           :if-new (file+head "main/${slug}.org"
-                              "#+title: ${title}\n#+date: %u\n#+lastmod: \n\n")
-           :immediate-finish t
-           :unnarrowed t)
-          ("r" "reference" plain "%?"
-           :if-new
-           (file+head "reference/${title}.org" "#+title: ${title}\n")
-           :immediate-finish t
-           :unnarrowed t)
-          ("a" "article" plain "%?"
-           :if-new
-           (file+head "articles/${title}.org" "#+title: ${title}\n#+filetags: :article:\n")
-           :immediate-finish t
-           :unnarrowed t)))
+   `(("s" "standard" plain "%?"
+      :if-new
+      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+		 "#+title: ${title}\n#+filetags: \n\n ")
+      :unnarrowed t)
+     ("d" "definition" plain
+      "%?"
+      :if-new
+      (file+head "${slug}.org" "#+title: ${title}\n#+filetags: definition \n\n* Definition\n\n\n* Examples\n")
+      :unnarrowed t)
+     ("r" "ref" plain "%?"
+      :if-new
+      (file+head "${citekey}.org" "#+title: ${slug}: ${title}\n\n#+filetags: reference ${keywords} \n\n* ${title}\n\n\n* Summary\n\n\n* Rough note space\n")
+      :unnarrowed t)
+     ("p" "person" plain "%?"
+      :if-new
+      (file+head "${slug}.org" "%^{relation|some guy|family|friend|colleague}p %^{birthday}p %^{address}p#+title:${slug}\n#+filetags: :person: \n"
+		 :unnarrowed t))))
   (org-roam-dailies-capture-templates '(("d" "default" entry
 					 "* %?"
 					 :target (file+head "%<%Y-%m-%d>.org"
@@ -33,13 +37,14 @@
   (org-roam-mode-sections '(org-roam-backlinks-section
                             org-roam-reflinks-section
                             org-roam-unlinked-references-section))
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-	 ("C-c n f" . org-roam-node-find)
-	 ("C-c n g" . org-roam-graph)
-	 ("C-c n i" . org-roam-node-insert)
-	 ("C-c n c" . org-roam-capture)
+  :bind (:map evil-normal-state-map
+  ("<leader>ob" . org-roam-buffer-toggle)
+	 ("<leader>of" . org-roam-node-find)
+	 ("<leader>og" . org-roam-graph)
+	 ("<leader>oi" . org-roam-node-insert)
+	 ("<leader>oc" . org-roam-capture)
 	 ;; Dailies
-	 ("C-c n j" . org-roam-dailies-capture-today)))
+	 ("<leader>od" . org-roam-dailies-capture-today)))
 
 (use-package org
   :ensure nil

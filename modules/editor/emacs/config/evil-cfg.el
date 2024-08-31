@@ -36,6 +36,7 @@
 	  ("C-e" . evil-end-of-line)
 	  ("C-b" . evil-beginning-of-line)
 	  ("ESCAPE" . keyboard-escape-quit)
+	  ("WW" . save-buffer)
 	  ("<leader>f" . find-file)
 	  :map evil-insert-state-map
 	  ("C-k" . nil)

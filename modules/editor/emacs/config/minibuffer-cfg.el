@@ -16,6 +16,13 @@
     :map minibuffer-local-isearch-map
     ("ESCAPE" . minibuffer-keyboard-quit)))
 
+;; just for looks
+(use-package vertico-posframe
+  :custom
+  (vertico-posframe-parameters
+   '((left-fringe . 8)
+     (right-fringe . 8))))
+
 (use-package vertico
   :init (vertico-mode)
   :custom

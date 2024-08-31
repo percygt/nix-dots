@@ -37,6 +37,7 @@
       package-native-compile t ;; native compile packages
       comp-deferred-compilation nil
       native-comp-async-report-warnings-errors nil ; Stop showing compilation warnings on startup
+      pop-up-windows nil
       native-comp-jit-compilation nil)
 
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.

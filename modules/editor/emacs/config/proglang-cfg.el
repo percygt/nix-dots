@@ -32,7 +32,7 @@
   :hook ((python-ts-mode . eglot-ensure)))
 
 (use-package cc-mode
-  :bind (:map c--ts-mode-map
+  :bind (:map c-ts-mode-map
               ("C-c C-f" . c-ts-format-buffer))
   :ensure nil
   :hook ((c-ts-mode . eglot-ensure)
