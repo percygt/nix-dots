@@ -46,20 +46,22 @@
 
 ;; ad blocking
 (define-configuration web-buffer
-    ((default-modes
-      (pushnew 'nyxt/mode/blocker:blocker-mode %slot-value%)
-      )))
+  ((default-modes (pushnew 'nyxt/mode/blocker:blocker-mode %slot-value%))))
 
-;; Emacs keybindings
-(define-configuration buffer
-    ((default-modes
-      (pushnew 'nyxt/mode/emacs:emacs-mode %slot-value%))))
+(define-configuration input-buffer
+  ((default-modes (pushnew 'nyxt/mode/vi:vi-normal-mode %slot-value%))))
+
+(define-configuration prompt-buffer
+  ((default-modes (pushnew 'nyxt/mode/vi:vi-insert-mode %slot-value%))))
+
+(define-configuration web-buffer
+  ((default-modes (pushnew 'nyxt/mode/vi:vi-normal-mode %slot-value%))))
 
 ;; Nyxt browser with Catppuccin Mocha theme
 (defvar *my-dark-theme*
   (make-instance 'theme:theme
-                           :font-family "Aileron"
-                           :monospace-font-family "JetBrains Mono"
+                           :font-family "Iosevka Aile"
+                           :monospace-font-family "VictorMono NFP"
                            :dark-p t
                            :background-color- "rgb(49, 50, 68)"
                            :background-color "rgb(36, 39, 58)"
