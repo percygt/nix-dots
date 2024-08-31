@@ -44,10 +44,10 @@ in
           };
           database = {
             database_1 = kpdb;
-            pw_cache_period_min = 10;
-            terminal = "${lib.getExe config.programs.foot.package}";
-            editor = "${lib.getExe config.programs.neovim.package}";
-            type_library = "${lib.getExe pkgs.ydotool}";
+            pw_cache_period_min = 360;
+            terminal = "foot";
+            editor = "nvim";
+            type_library = "ydotool";
           };
         };
       }

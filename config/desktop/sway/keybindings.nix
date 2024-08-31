@@ -60,7 +60,7 @@ in
       "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
-      "${mod}+k" = "exec pkill tofi || keepmenu -C | xargs swaymsg exec --";
+      "${mod}+k" = "exec pkill tofi || keepmenu | xargs swaymsg exec --";
       "${mod}+Shift+k" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
       "${mod}+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id yazi -- foot --app-id=yazi fish -c yazi ~";
       "${mod}+Shift+f" = "exec ${lib.getExe pkgs.toggle-sway-window} --id nemo -- nemo ~";
