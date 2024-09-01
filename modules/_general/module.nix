@@ -64,8 +64,9 @@
           s.ssh.package
           d.git.package
           iputils
-          procps
           coreutils
+          findutils
+          procps
           systemd
           nixos-rebuild
           gnugrep
@@ -76,7 +77,6 @@
           libnotify
           gnutar
           gzip
-          nh
           xz.bin
         ];
     };

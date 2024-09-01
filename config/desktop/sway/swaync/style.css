@@ -110,11 +110,11 @@
 
 /* add bottom border radius to eliminate clipping */
 .notification-action:first-child {
-  border-bottom-left-radius: 10px;
+  border-bottom-left-radius: 6px;
 }
 
 .notification-action:last-child {
-  border-bottom-right-radius: 10px;
+  border-bottom-right-radius: 6px;
   border-right: 1px solid @border;
 }
 
@@ -133,14 +133,14 @@
   /* color: @text-light; */
   caret-color: @text-light;
   border: 1px solid @border;
-  border-radius: 5px;
+  border-radius: 6px;
 }
 
 .inline-reply-button {
   margin-left: 4px;
   background: @bg;
   border: 1px solid @border;
-  border-radius: 5px;
+  border-radius: 6px;
   color: @text-light;
 }
 
@@ -229,11 +229,11 @@
   background: @transparent;
   padding: 0px;
   margin: 5px 10px 5px 10px;
-  border-radius: 5px;
+  border-radius: 6px;
 }
 
 .widget-mpris > box > button {
-  border-radius: 5px;
+  border-radius: 6px;
 }
 
 .widget-mpris-player {
