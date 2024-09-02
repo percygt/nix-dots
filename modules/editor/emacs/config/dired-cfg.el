@@ -5,8 +5,6 @@
   :ensure nil
   :custom ((dired-listing-switches "-agho --group-directories-first"))
   :config
-  (evil-collection-define-key 'normal 'dired-mode-map
-    " " 'nil)
   (evil-define-key '(normal visual emacs) dired-mode-map
     "L" nil
     "H" nil
@@ -31,17 +29,12 @@
 
 (use-package dired-open
   :config
-  ;; Doesn't work as expected!
-  ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
   (setq dired-open-extensions '(("png" . "feh")
                                 ("mkv" . "mpv"))))
 
 (use-package dired-hide-dotfiles
-  :hook (dired-mode . dired-hide-dotfiles-mode)
-  :config
-  (evil-collection-define-key 'normal 'dired-mode-map
-    "." 'dired-hide-dotfiles-mode))
+  :hook (dired-mode . dired-hide-dotfiles-mode))
 
 
-(provide 'dired-cfg)
+  (provide 'dired-cfg)
 ;;; dired-cfg.el ends here

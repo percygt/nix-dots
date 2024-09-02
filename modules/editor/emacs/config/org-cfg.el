@@ -34,7 +34,8 @@
       :if-new
       (file+head
        "${citekey}.org"
-       "#+title: ${slug}: ${title}\n\n#+filetags: reference ${keywords} \n\n* ${title}\n\n\n* Summary\n\n\n* Rough note space\n")
+       "#+title: ${slug}: ${title}\n\n
+        #+filetags: reference ${keywords} \n\n* ${title}\n\n\n* Summary\n\n\n* Rough note space\n")
       :unnarrowed t)
      ("p" "person" plain "%?"
       :if-new
@@ -52,13 +53,13 @@
                             org-roam-reflinks-section
                             org-roam-unlinked-references-section))
   :bind (:map evil-normal-state-map
-	      ("<leader>ob" . org-roam-buffer-toggle)
-	      ("<leader>of" . org-roam-node-find)
-	      ("<leader>og" . org-roam-graph)
-	      ("<leader>oi" . org-roam-node-insert)
-	      ("<leader>oc" . org-roam-capture)
+	      ;; ("<leader>ob" . org-roam-buffer-toggle)
+	      ;; ("<leader>of" . org-roam-node-find)
+	      ;; ("<leader>og" . org-roam-graph)
+	      ("<leader>l" . org-roam-node-insert)
+	      ("<leader>c" . org-roam-capture)
 	      ;; Dailies
-	      ("<leader>od" . org-roam-dailies-capture-today)))
+	      ("<leader>d" . org-roam-dailies-capture-today)))
 
 (use-package org
   :ensure nil
@@ -114,23 +115,35 @@
   (org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1.0))))
   (org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
-;; (use-package evil-org
-;;   :after (org)
-;;   :hook (org-mode . evil-org-mode)
-;;   :config
-;;   (evil-org-set-key-theme '(textobjects navigation calendar additional shift operators))
-;;   (require 'evil-org-agenda)
-;;   (evil-org-agenda-set-keys))
+(use-package evil-org
+  :diminish evil-org-mode
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda () (evil-org-set-key-theme))))
+(require 'evil-org-agenda)
+(evil-org-agenda-set-keys)
+
 
 (use-package org-modern
   :ensure t
   :hook ((org-mode                 . org-modern-mode)
          (org-agenda-finalize-hook . org-modern-agenda))
-  :custom ((org-modern-todo t)
-           (org-modern-table nil)
-           (org-modern-variable-pitch t))
+  :custom ((org-modern-table nil)
+	   (org-modern-list'((?+ . "✦") (?- . "‣") (?* . "◉")))
+	   (org-modern-variable-pitch t))
   :commands (org-modern-mode org-modern-agenda)
   :init (global-org-modern-mode))
+
+(use-package org-appear
+  :commands (org-appear-mode)
+  :hook (org-mode . org-appear-mode)
+  :init
+  (setq org-hide-emphasis-markers t		;; A default setting that needs to be t for org-appear
+        org-appear-autoemphasis t		;; Enable org-appear on emphasis (bold, italics, etc)
+        org-appear-autolinks nil		;; Don't enable on links
+        org-appear-autosubmarkers t))	;; Enable on subscript and superscript
 
 (use-package org-brain
   :custom
@@ -145,11 +158,11 @@
     (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
   :config
   (bind-key "C-c b" 'org-brain-prefix-map org-mode-map))
-  ;; (setq org-id-track-globally t)
-  ;; (add-hook 'before-save-hook #'org-brain-ensure-ids-in-buffer)
-  ;; (push '("b" "Brain" plain (function org-brain-goto-end)
-  ;;         "* %i%?" :empty-lines 1)
-  ;;       org-capture-templates)
+;; (setq org-id-track-globally t)
+;; (add-hook 'before-save-hook #'org-brain-ensure-ids-in-buffer)
+;; (push '("b" "Brain" plain (function org-brain-goto-end)
+;;         "* %i%?" :empty-lines 1)
+;;       org-capture-templates)
 
 ;; Allows you to edit entries directly from org-brain-visualize
 ;; (use-package polymode
@@ -170,7 +183,7 @@
       (push template org-structure-template-alist))))
 
 
-;; (use-package org-timeblock)
+(use-package org-timeblock)
 
 ;; (use-package org-super-agenda)
 

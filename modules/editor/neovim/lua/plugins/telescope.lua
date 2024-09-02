@@ -71,7 +71,7 @@ return {
           file_ignore_patterns = { "node_modules", "package-lock.json" },
           initial_mode = "insert",
           select_strategy = "reset",
-          sorting_strategy = "ascending",
+          -- sorting_strategy = "ascending",
           color_devicons = true,
           set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
           layout_config = {

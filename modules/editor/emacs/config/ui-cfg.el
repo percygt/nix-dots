@@ -31,14 +31,18 @@
 
 (use-package doom-modeline
   :demand
-  :hook (after-init . doom-modeline-mode))
+  :hook
+  (org-agenda-mode . centaur-tabs-local-mode)
+  (after-init . doom-modeline-mode))
 
 (use-package centaur-tabs
   :demand
+  :init
+  (setq centaur-tabs-enable-key-bindings t)
   :bind ( :map evil-normal-state-map
           ("D" . centaur-tabs--kill-this-buffer-dont-ask)
-          ("L" . centaur-tabs-forward)
-          ("H" . centaur-tabs-backward))
+          ("g l" . centaur-tabs-forward)
+          ("g h" . centaur-tabs-backward))
   :custom
   ;; (centaur-tabs-height 32)
   (centaur-tabs-set-icons t)
@@ -50,11 +54,54 @@
   (centaur-tabs-style "bar")
   (centaur-tabs-adjust-buffer-order t)
   (centaur-tabs-adjust-buffer-order 'left)
+  (x-underline-at-descent-line t)
+  (centaur-tabs-left-edge-margin nil)
   :config
-  ;; (centaur-tabs-change-fonts (face-attribute 'variable-pitch :font) 130)
+  (centaur-tabs-change-fonts (face-attribute 'variable-pitch :font) 130)
   (centaur-tabs-enable-buffer-reordering)
   (centaur-tabs-headline-match)
-  (centaur-tabs-mode t))
+  (centaur-tabs-mode t)
+  (setq uniquify-separator "/")
+  (setq uniquify-buffer-name-style 'forward)
+  (defun centaur-tabs-buffer-groups ()
+    "`centaur-tabs-buffer-groups' control buffers' group rules.
+     Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
+     All buffer name start with * will group to \"Emacs\".
+     Other buffer group by `centaur-tabs-get-group-name' with project name."
+    (list
+     (cond
+      ((or (string-equal "*" (substring (buffer-name) 0 1))
+           (memq major-mode '(magit-process-mode
+                              magit-status-mode
+                              magit-diff-mode
+                              magit-log-mode
+                              magit-file-mode
+                              magit-blob-mode
+                              magit-blame-mode
+                              )))
+       "Emacs")
+      ((derived-mode-p 'prog-mode)
+       "Editing")
+      ((derived-mode-p 'dired-mode)
+       "Dired")
+      ((memq major-mode '(helpful-mode
+                          help-mode))
+       "Help")
+      ((memq major-mode '(org-mode
+                          org-agenda-clockreport-mode
+                          org-src-mode
+                          org-agenda-mode
+                          org-beamer-mode
+                          org-indent-mode
+                          org-bullets-mode
+                          org-cdlatex-mode
+                          org-agenda-log-mode
+                          diary-mode))
+       "OrgMode")
+      (t
+       (centaur-tabs-get-group-name (current-buffer))))))
+  )
+
 
 (use-package nerd-icons
   :custom (nerd-icons-font-family "JetBrainsMono Nerd Font"))

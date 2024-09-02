@@ -1,8 +1,12 @@
 ;;; evil-cfg.el --- Evil Mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
 (use-package evil
   :preface
+  (defun switch-to-recent-buffer ()
+    (interactive)
+    (switch-to-buffer (other-buffer (current-buffer))))
   (defun evil-insert-jk-for-normal-mode ()
     (interactive)
     (insert "j")
@@ -17,7 +21,7 @@
   (setq evil-emacs-state-cursor  '("white" box))
   (setq evil-normal-state-cursor '("cyan" box))
   (setq evil-visual-state-cursor '("pale goldenrod" box))
-  (setq evil-insert-state-cursor '("yellow" bar))
+  (setq evil-insert-state-cursor '("sky blue" bar))
   :custom
   (evil-want-fine-undo           t)
   (evil-respect-visual-line-mode t)
@@ -34,12 +38,15 @@
           term-mode) . evil-emacs-state-mode)
   :bind ( :map evil-normal-state-map
 	  ("C-e" . evil-end-of-line)
+	  ("C-e" . evil-end-of-line)
 	  ("C-b" . evil-beginning-of-line)
 	  ("ESCAPE" . keyboard-escape-quit)
 	  ("WW" . save-buffer)
 	  ("<leader>f" . find-file)
+	  ("<leader>o" . switch-to-recent-buffer)
 	  :map evil-insert-state-map
 	  ("C-k" . nil)
+	  ("M-k" . nil)
 	  ("j" . evil-insert-jk-for-normal-mode)
 	  :map evil-visual-state-map
 	  ("ESCAPE" . keyboard-quit))
@@ -55,6 +62,9 @@
 (use-package evil-collection
   :after evil
   :config
+  (evil-collection-define-key 'normal 'dired-mode-map
+    ("." 'dired-hide-dotfiles-mode)
+    (" " 'nil))
   (evil-collection-init))
 
 (use-package evil-commentary
@@ -64,7 +74,7 @@
 
 (use-package avy
   :bind (:map evil-normal-state-map
-        ("M-s" . avy-goto-char)))
+              ("M-s" . avy-goto-char)))
 
 (use-package move-text
   :bind (:map evil-normal-state-map

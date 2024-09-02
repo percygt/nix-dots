@@ -85,9 +85,9 @@
       (kill-buffer "*scratch*")))
 (add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)
 
-;; ;; Removes *messages* from the buffer.
-;; (setq-default message-log-max nil)
-;; (kill-buffer "*Messages*")
+;; Removes *messages* from the buffer.
+(setq-default message-log-max nil)
+(kill-buffer "*Messages*")
 (unless (or (daemonp) noninteractive)
   ;; Emacs really shouldn't be displaying anything until it has fully started
   ;; up. This saves a bit of time.

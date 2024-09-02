@@ -7,6 +7,9 @@
   :preface
   (defun indicate-buffer-boundaries-left ()
     (setq indicate-buffer-boundaries 'left))
+  :init
+  (set-language-environment "UTF-8")
+  (set-default-coding-systems 'utf-8-unix)
   :custom
   (delete-by-moving-to-trash        t)
   (visible-bell                     t)

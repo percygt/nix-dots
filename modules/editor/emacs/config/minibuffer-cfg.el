@@ -68,7 +68,7 @@
   :bind
   ("<leader>sf" . consult-find)
   ("<leader>sg" . consult-ripgrep)
-  ("<leader>sb" . consult-buffer)
+  ("<leader>0" . consult-buffer)
   ("<leader>sl" . consult-line)
   ("<leader>so" . consult-outline))
 

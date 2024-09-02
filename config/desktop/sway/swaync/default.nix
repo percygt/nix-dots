@@ -40,15 +40,10 @@ in
   };
 
   xdg.configFile = {
-    "swaync/config.json" = lib.mkForce {
-      source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/config.json";
-    };
-    "swaync/style.css" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/style.css";
-    };
-    "swaync/configSchema.json" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/configSchema.json";
-    };
+    "swaync/config.json".source = lib.mkForce (
+      config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/config.json"
+    );
+    "swaync/style.css".source = config.lib.file.mkOutOfStoreSymlink "${moduleSwaync}/style.css";
     "swaync/nix.css".text =
       # css
       ''

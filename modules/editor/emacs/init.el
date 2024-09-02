@@ -4,10 +4,12 @@
 
 (require 'package)
 (setq package-user-dir (expand-file-name  "var/packages/" user-emacs-data-directory))
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") )
+(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") )
 
 (package-initialize)
+
 (unless package-archive-contents
   (package-refresh-contents))
 

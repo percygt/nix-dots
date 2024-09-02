@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/ErikReider/SwayNotificationCenter/main/src/configSchema.json",
+  "$schema": "https://raw.githubusercontent.com/ErikReider/SwayNotificationCenter/aef8fd7c56d020afc62026f20e72f8e41133ccc5/src/configSchema.json",
   "positionX": "right",
   "positionY": "top",
   "control-center-margin-top": 0,

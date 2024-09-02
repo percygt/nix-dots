@@ -80,9 +80,16 @@
           embark-keymap-alist)))
 
 (use-package which-key
-  :config
+  :init
   (which-key-mode)
-  (which-key-define-key-recursively global-map [escape] 'ignore))
+  (which-key-setup-minibuffer)
+  (which-key-define-key-recursively global-map [escape] 'ignore)
+  :config
+  (setq which-key-idle-delay 0.3)
+  (setq which-key-prefix-prefix "◉ ")
+  (setq which-key-sort-order 'which-key-key-order-alpha
+        which-key-min-display-lines 3
+        which-key-max-display-columns nil))
 
 (use-package ibuffer
   :ensure nil
