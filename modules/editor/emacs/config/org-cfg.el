@@ -14,37 +14,51 @@
   (org-roam-capture-templates
    `(("s" "standard" plain "%?"
       :if-new
-      (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-		 "#+title: ${title}\n#+filetags: \n\n ")
+      (file+head
+       "%<%Y%m%d_%H%M%S>_${slug}.org"
+       "#+title: ${title}\n
+        #+date: %<%Y-%m-%d>\n
+        #+filetags: \n\n "
+       )
       :unnarrowed t)
-     ("d" "definition" plain
-      "%?"
+     ("d" "definition" plain "%?"
       :if-new
-      (file+head "${slug}.org" "#+title: ${title}\n#+filetags: definition \n\n* Definition\n\n\n* Examples\n")
+      (file+head
+       "${slug}.org"
+       "#+title: ${title}\n
+        #+filetags: definition \n\n
+        * Definition\n\n\n
+        * Examples\n")
       :unnarrowed t)
      ("r" "ref" plain "%?"
       :if-new
-      (file+head "${citekey}.org" "#+title: ${slug}: ${title}\n\n#+filetags: reference ${keywords} \n\n* ${title}\n\n\n* Summary\n\n\n* Rough note space\n")
+      (file+head
+       "${citekey}.org"
+       "#+title: ${slug}: ${title}\n\n#+filetags: reference ${keywords} \n\n* ${title}\n\n\n* Summary\n\n\n* Rough note space\n")
       :unnarrowed t)
      ("p" "person" plain "%?"
       :if-new
-      (file+head "${slug}.org" "%^{relation|some guy|family|friend|colleague}p %^{birthday}p %^{address}p#+title:${slug}\n#+filetags: :person: \n"
-		 :unnarrowed t))))
-  (org-roam-dailies-capture-templates '(("d" "default" entry
-					 "* %?"
-					 :target (file+head "%<%Y-%m-%d>.org"
-							    "#+title: %<%Y-%m-%d>\n"))))
+      (file+head
+       "${slug}.org"
+       "%^{relation|some guy|family|friend|colleague}p %^{birthday}p %^{address}p#+title:${slug}\n#+filetags: :person: \n"
+       :unnarrowed t))))
+  (org-roam-dailies-capture-templates
+   '(("d" "default" entry
+      "* %?"
+      :target (file+head
+	       "%<%Y-%m-%d>.org"
+	       "#+title: %<%Y-%m-%d>\n"))))
   (org-roam-mode-sections '(org-roam-backlinks-section
                             org-roam-reflinks-section
                             org-roam-unlinked-references-section))
   :bind (:map evil-normal-state-map
-  ("<leader>ob" . org-roam-buffer-toggle)
-	 ("<leader>of" . org-roam-node-find)
-	 ("<leader>og" . org-roam-graph)
-	 ("<leader>oi" . org-roam-node-insert)
-	 ("<leader>oc" . org-roam-capture)
-	 ;; Dailies
-	 ("<leader>od" . org-roam-dailies-capture-today)))
+	      ("<leader>ob" . org-roam-buffer-toggle)
+	      ("<leader>of" . org-roam-node-find)
+	      ("<leader>og" . org-roam-graph)
+	      ("<leader>oi" . org-roam-node-insert)
+	      ("<leader>oc" . org-roam-capture)
+	      ;; Dailies
+	      ("<leader>od" . org-roam-dailies-capture-today)))
 
 (use-package org
   :ensure nil
@@ -72,15 +86,14 @@
   (org-hide-block-startup nil)
   (org-src-tab-acts-natively t)
   (org-src-preserve-indentation nil)
-  (org-startup-folded t)
+  (org-startup-folded nil)
   (org-cycle-separator-lines 2)
   (org-hide-leading-stars t)
   (org-highlight-latex-and-related '(native))
   (org-goto-auto-isearch nil)
   (org-log-done 'time)
   (org-log-into-drawer t)
-  (org-todo-keywords '((sequence "TODO(t)" "IDEA(i)" "DOING(n!)" "STRT(s!)" "HOLD(h!)" "|" "DONE(d!)" "KILL(k!)")
-		       (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")))
+  (org-todo-keywords '((sequence "TODO(t)" "IDEA(i)" "DOING(n!)" "START(s!)" "HOLD(h!)" "|" "DONE(d!)" "KILL(k!)")))
   :custom-face
   (outline-1 ((t (:height 1.2))))
   (outline-2 ((t (:height 1.1))))
@@ -101,14 +114,13 @@
   (org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1.0))))
   (org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
-
-(use-package evil-org
-  :after (org)
-  :hook (org-mode . evil-org-mode)
-  :config
-  (evil-org-set-key-theme '(textobjects navigation calendar additional shift operators))
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+;; (use-package evil-org
+;;   :after (org)
+;;   :hook (org-mode . evil-org-mode)
+;;   :config
+;;   (evil-org-set-key-theme '(textobjects navigation calendar additional shift operators))
+;;   (require 'evil-org-agenda)
+;;   (evil-org-agenda-set-keys))
 
 (use-package org-modern
   :ensure t
@@ -160,11 +172,11 @@
 
 ;; (use-package org-timeblock)
 
-(use-package org-super-agenda)
+;; (use-package org-super-agenda)
 
-(use-package org-transclusion :after org)
+;; (use-package org-transclusion :after org)
 
-(use-package org-ql)
+;; (use-package org-ql)
 
 
 (provide 'org-cfg)

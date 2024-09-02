@@ -18,6 +18,8 @@
 
 ;; just for looks
 (use-package vertico-posframe
+  :config
+  (vertico-posframe-mode 1)
   :custom
   (vertico-posframe-parameters
    '((left-fringe . 8)
