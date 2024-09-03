@@ -1,3 +1,5 @@
+
+
 ;;; early-init.el --- early in the morning -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
@@ -35,10 +37,20 @@
       inhibit-startup-screen t ;; Don't show the welcome splash screen.
       indent-tabs-mode nil ;; Always indent with spaces
       package-native-compile t ;; native compile packages
+      idle-update-delay 1.0
       comp-deferred-compilation nil
-      native-comp-async-report-warnings-errors nil ; Stop showing compilation warnings on startup
-      pop-up-windows nil
-      native-comp-jit-compilation nil)
+      native-comp-async-report-warnings-errors 'silent ; Stop showing compilation warnings on startup
+      ;; pop-up-windows nil
+      highlight-nonselected-windows nil
+      fast-but-imprecise-scrolling t
+      inhibit-compacting-font-caches t)
+
+;; Disabling bidi (bidirectional editing stuff)
+(setq-default bidi-display-reordering 'left-to-right 
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)  ; emacs 27 only - disables bidirectional parenthesis
+
+(setq-default cursor-in-non-selected-windows nil)
 
 ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
 (push '(menu-bar-lines . 0) default-frame-alist)
@@ -53,6 +65,7 @@
 (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
 (global-subword-mode 1)
 (set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8-unix)
 (when (featurep 'ns)
   (push '(ns-transparent-titlebar . t) default-frame-alist))
 (setq frame-title-format

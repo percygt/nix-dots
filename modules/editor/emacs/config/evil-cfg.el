@@ -17,7 +17,8 @@
             (evil-normal-state))
 	(push event unread-command-events))))
   :init
-  (setq evil-want-keybinding     nil)
+  (setq evil-want-keybinding      nil)
+  (setq evil-want-integration     t)
   (setq evil-emacs-state-cursor  '("white" box))
   (setq evil-normal-state-cursor '("cyan" box))
   (setq evil-visual-state-cursor '("pale goldenrod" box))
@@ -36,23 +37,24 @@
           eshell-mode
           git-rebase-mode
           term-mode) . evil-emacs-state-mode)
-  :bind ( :map evil-normal-state-map
-	  ("C-e" . evil-end-of-line)
-	  ("C-e" . evil-end-of-line)
-	  ("C-b" . evil-beginning-of-line)
-	  ("ESCAPE" . keyboard-escape-quit)
-	  ("WW" . save-buffer)
-	  ("<leader>f" . find-file)
-	  ("<leader>o" . switch-to-recent-buffer)
-	  :map evil-insert-state-map
-	  ("C-k" . nil)
-	  ("M-k" . nil)
-	  ("j" . evil-insert-jk-for-normal-mode)
-	  :map evil-visual-state-map
-	  ("ESCAPE" . keyboard-quit))
+  :evil-bind ((:map (evil-normal-state-map)
+		    ("SPC" . leader-map)
+		    ("C-e" . evil-end-of-line)
+		    ("C-e" . evil-end-of-line)
+		    ("C-b" . evil-beginning-of-line)
+		    ("ESCAPE" . keyboard-escape-quit)
+		    ("WW" . save-buffer))
+	      (:map (evil-insert-state-map)
+		    ("j"   . evil-insert-jk-for-normal-mode))
+	      (:map (evil-visual-state-map)
+		    ("SPC" . leader-map)
+		    ("ESCAPE" . keyboard-quit))
+              ;; The *Warnings* buffer loads in normal mode, and I want to be able to quit
+              ;; it easily
+              (:map (special-mode-map . normal)
+                    ("q" . quit-window)))
   :config
   (evil-mode 1)
-  (evil-set-leader 'normal (kbd "SPC"))
   (evil-set-initial-state 'messages-buffer-mode 'normal))
 
 (use-package evil-surround
@@ -62,9 +64,6 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-define-key 'normal 'dired-mode-map
-    ("." 'dired-hide-dotfiles-mode)
-    (" " 'nil))
   (evil-collection-init))
 
 (use-package evil-commentary

@@ -1,15 +1,77 @@
 ;;; core-cfg.el --- Org Mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+(use-package use-package
+  :custom
+  (use-package-verbose t)
+  (use-package-minimum-reported-time 0.001)
+
+  :config
+  (add-to-list 'use-package-keywords :evil-bind t)
+
+  (defun use-package-normalize/:evil-bind (name keyword args)
+    "Custom use-keyword :evil-bind. I use this to provide something similar to ':bind',
+but with additional two features that I miss from the default implementation:
+
+1. Integration with 'evil-define-key', so I can extend the keymap declaration
+   to specify one or more evil states that the binding should apply to.
+
+2. The ability to detect keymaps that aren't defined as prefix commands. This
+   allows me to define a binding to a keymap variable, eg. maybe I want '<leader>h'
+   to trigger 'help-map'. This fails using the default ':bind', meaning that I
+   have to fall back to calling 'bind-key' manually if I want to assign a
+   prefix.
+
+The expected form is slightly different to 'bind':
+
+((:map (KEYMAP . STATE) (KEY . FUNC) (KEY . FUNC) ...)
+ (:map (KEYMAP . STATE) (KEY . FUNC) (KEY . FUNC) ...) ...)
+
+STATE is the evil state. It can be nil or omitted entirely. If given, it should be an
+argument suitable for passing to 'evil-define-key' -- meaning a symbol like 'normal', or
+a list like '(normal insert)'."
+    (setq args (car args))
+    (unless (listp args)
+      (use-package-error ":evil-bind expects ((:map (MAP . STATE) (KEY . FUNC) ..) ..)"))
+    (dolist (def args args)
+      (unless (and (eq (car def) :map)
+                   (consp (cdr def))
+                   (listp (cddr def)))
+        (use-package-error ":evil-bind expects ((:map (MAP . STATE) (KEY . FUNC) ..) ..)"))))
+
+  (defun use-package-handler/:evil-bind (name _keyword args rest state)
+    "Handler for ':evil-bind' use-package extension. See 'use-package-normalize/:evil-bind' for full docs."
+    (let ((body (use-package-process-keywords name rest
+                  (use-package-plist-delete state :evil-bind))))
+      (use-package-concat
+       `((with-eval-after-load ',name
+           ,@(mapcan
+              (lambda (entry)
+                (let ((keymap (car (cadr entry)))
+                      (state (cdr (cadr entry)))
+                      (bindings (cddr entry)))
+                  (mapcar
+                   (lambda (binding)
+                     (let ((key (car binding))
+                           (val (if (and (boundp (cdr binding)) (keymapp (symbol-value (cdr binding))))
+                                    ;; Keymaps need to be vars without quotes
+                                    (cdr binding)
+                                  ;; But functions need to be quoted symbols
+                                  `(quote ,(cdr binding)))))
+                       ;; When state is provided, use evil-define-key. Otherwise fall back to bind-key.
+                       (if state
+                           `(evil-define-key ',state ,keymap (kbd ,key) ,val)
+                         `(bind-key ,key ,val ,keymap))))
+                   bindings)))
+              args)))
+       body))))
+;; Vanilla config
 (use-package emacs
   :ensure nil
   :demand
   :preface
   (defun indicate-buffer-boundaries-left ()
     (setq indicate-buffer-boundaries 'left))
-  :init
-  (set-language-environment "UTF-8")
-  (set-default-coding-systems 'utf-8-unix)
   :custom
   (delete-by-moving-to-trash        t)
   (visible-bell                     t)
@@ -25,7 +87,73 @@
   (user-emacs-directory             user-emacs-data-directory)
   (read-extended-command-predicate  #'command-completion-default-include-p)
   :hook ((prog-mode . display-fill-column-indicator-mode)
-         ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
+         ((prog-mode text-mode) . indicate-buffer-boundaries-left))
+  :evil-bind ((:map (global-map)
+		    ("C-<SPC>" . leader-map))
+	      (:map (leader-map)
+		    ("f" . find-file)
+		    ("o" . switch-to-recent-buffer))))
+
+(use-package emacs
+  :ensure nil
+  :after (evil)
+  :init
+  (defvar splitscreen/mode-map (make-sparse-keymap))
+  (define-prefix-command 'splitscreen/prefix)
+  (define-key splitscreen/mode-map (kbd "C-w") 'splitscreen/prefix)
+
+  (defun splitscreen/window-left () (interactive) (evil-window-left 1))
+  (defun splitscreen/window-right () (interactive) (evil-window-right 1))
+  (defun splitscreen/window-up () (interactive) (evil-window-up 1))
+  (defun splitscreen/window-down () (interactive) (evil-window-down 1))
+
+  (defun splitscreen/increase-width () (interactive) (evil-window-increase-width 10))
+  (defun splitscreen/decrease-width () (interactive) (evil-window-decrease-width 10))
+  (defun splitscreen/increase-height () (interactive) (evil-window-increase-height 10))
+  (defun splitscreen/decrease-height () (interactive) (evil-window-decrease-height 10))
+
+  ;; We override these. Just declare them as part of the splitscreen map, not
+  ;; evil-window-map.
+  (define-key evil-window-map (kbd "h") nil)
+  (define-key evil-window-map (kbd "j") nil)
+  (define-key evil-window-map (kbd "k") nil)
+  (define-key evil-window-map (kbd "l") nil)
+  (define-key evil-window-map (kbd "n") nil)
+  (define-key evil-window-map (kbd "p") nil)
+  (define-key evil-window-map (kbd "c") nil)
+  (define-key evil-window-map (kbd "C-h") nil)
+  (define-key evil-window-map (kbd "C-j") nil)
+  (define-key evil-window-map (kbd "C-k") nil)
+  (define-key evil-window-map (kbd "C-l") nil)
+  (define-key evil-window-map (kbd "l") nil)
+  (define-key evil-window-map (kbd "o") nil)
+  (define-key evil-window-map (kbd "x") nil)
+
+  (define-key splitscreen/prefix (kbd "h") 'splitscreen/window-left)
+  (define-key splitscreen/prefix (kbd "j") 'splitscreen/window-down)
+  (define-key splitscreen/prefix (kbd "k") 'splitscreen/window-up)
+  (define-key splitscreen/prefix (kbd "l") 'splitscreen/window-right)
+
+  (define-key splitscreen/prefix (kbd "C-h") 'splitscreen/decrease-width)
+  (define-key splitscreen/prefix (kbd "C-j") 'splitscreen/decrease-height)
+  (define-key splitscreen/prefix (kbd "C-k") 'splitscreen/increase-height)
+  (define-key splitscreen/prefix (kbd "C-l") 'splitscreen/increase-width)
+  (define-key splitscreen/prefix (kbd "s-h") 'splitscreen/decrease-width)
+  (define-key splitscreen/prefix (kbd "s-j") 'splitscreen/decrease-height)
+  (define-key splitscreen/prefix (kbd "s-k") 'splitscreen/increase-height)
+  (define-key splitscreen/prefix (kbd "s-l") 'splitscreen/increase-width)
+
+  (define-key splitscreen/prefix (kbd "%") 'split-window-right)
+  (define-key splitscreen/prefix (kbd "\"") 'split-window-below)
+  (define-key splitscreen/prefix (kbd "x") 'delete-window)
+  (define-key splitscreen/prefix (kbd "SPC") 'balance-windows)
+
+  (define-minor-mode splitscreen-mode
+    "Provides tmux-like bindings for managing windows and buffers.
+                 See https://github.com/mattduck/splitscreen"
+    :init-value 1 ; enable by default
+    :global 1
+    :keymap splitscreen/mode-map))
 
 (use-package diminish :after use-package) ;; if you use :diminish
 

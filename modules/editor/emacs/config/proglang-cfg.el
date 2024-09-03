@@ -79,8 +79,8 @@
   :hook ((clojure-ts-mode . clj-refactor-mode)
          (clojure-ts-mode . cider-mode)))
 
-(use-package direnv
-  :config (direnv-mode))
+;; (use-package direnv
+;;   :config (direnv-mode))
 
 (provide 'proglang-cfg)
 ;;; proglang-cfg.el ends here

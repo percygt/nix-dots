@@ -65,12 +65,12 @@
 (use-package embark-consult )
 
 (use-package consult
-  :bind
-  ("<leader>sf" . consult-find)
-  ("<leader>sg" . consult-ripgrep)
-  ("<leader>0" . consult-buffer)
-  ("<leader>sl" . consult-line)
-  ("<leader>so" . consult-outline))
+  :evil-bind ((:map (leader-map)
+		    ("sf" . consult-find)
+		    ("sg" . consult-ripgrep)
+		    ("0"  . consult-buffer)
+		    ("sl" . consult-line)
+		    ("so" . consult-outline))))
 
 (use-package embark
   :bind (("C-." . embark-act)
