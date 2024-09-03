@@ -17,5 +17,5 @@ in
     ../nixpkgs/config.nix
     ../nix.nix
   ];
-  home.packages = g.corePackages;
+  home.packages = g.system.corePackages;
 }

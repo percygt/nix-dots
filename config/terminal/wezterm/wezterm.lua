@@ -78,6 +78,7 @@ return {
 		{ key = "F11", mods = "NONE", action = wezterm.action.ToggleFullScreen },
 		{ key = "F12", mods = "NONE", action = wezterm.action.ActivateCommandPalette },
 	},
+	default_ssh_auth_sock = string.format("%s/gnupg/S.gpg-agent.ssh", os.getenv("XDG_RUNTIME_DIR")),
 	default_gui_startup_args = { "start", "--always-new-process" },
 	default_prog = nix.default_prog,
 }

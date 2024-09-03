@@ -10,16 +10,24 @@ let
   timeout = 432000;
   gpgsshctl = pkgs.writeShellApplication {
     name = "gpgsshctl";
-    runtimeInputs = g.envPackages;
+    runtimeInputs = g.system.envPackages;
     text = builtins.readFile ./gpgsshcontrol.bash;
   };
   moduleGpg = "${g.flakeDirectory}/modules/security/gpg";
+  cfg = config.modules.security.gpg;
 in
 {
-  imports = [ ./pass.nix ];
+  imports = [
+    ./module.nix
+    ./pass.nix
+  ];
   options.modules.security.gpg.enable = libx.enableDefault "gpg";
   config = lib.mkIf config.modules.security.gpg.enable {
-    home.packages = lib.mkAfter [ gpgsshctl ];
+    home = {
+      packages = lib.mkAfter [ gpgsshctl ];
+      file.".gnupg/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink "${moduleGpg}/sshcontrol";
+      sessionVariables.SSH_AUTH_SOCK = lib.mkIf cfg.sshSupport.enable "${builtins.getEnv "XDG_RUNTIME_DIR"}/gnupg/S.gpg-agent.ssh";
+    };
     programs = {
       gpg = {
         enable = true;
@@ -34,10 +42,9 @@ in
         ];
       };
     };
-    home.file.".gnupg/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink "${moduleGpg}/sshcontrol";
     services.gpg-agent = {
       enable = true;
-      enableSshSupport = true;
+      enableSshSupport = cfg.sshSupport.enable;
       enableExtraSocket = true;
       enableScDaemon = false;
       maxCacheTtl = timeout;

@@ -11,7 +11,7 @@ let
   f = config.modules.fonts.app;
   i = config.modules.fonts.icon;
   extraPackages =
-    g.envPackages
+    g.system.envPackages
     ++ (with pkgs; [
       toggle-service
       toggle-sway-window

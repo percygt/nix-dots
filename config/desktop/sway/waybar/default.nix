@@ -8,7 +8,7 @@ let
   g = config._general;
   nixosRebuild = pkgs.writeShellApplication {
     name = "waybar-rebuild-exec";
-    runtimeInputs = g.envPackages;
+    runtimeInputs = g.system.envPackages;
     text = ''
       rebuild_status="$(systemctl is-active nixos-rebuild.service || true)"
       backup_status="$(systemctl is-active borgmatic.service || true)"
@@ -25,7 +25,7 @@ let
   };
   extraPackages =
     [ nixosRebuild ]
-    ++ g.envPackages
+    ++ g.system.envPackages
     ++ (with pkgs; [
       toggle-service
       toggle-sway-window

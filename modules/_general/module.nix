@@ -47,75 +47,80 @@
         default = pkgs.borgmatic;
       };
     };
-    envPackages = lib.mkOption {
-      description = "Environment packages";
-      type = with lib.types; listOf package;
-      default =
-        let
-          s = config._general.security;
-          d = config._general.dev;
-        in
-        with pkgs;
-        [
-          config.programs.fish.package
-          config.nix.package.out
-          s.sops.package
-          s.gpg.package
-          s.ssh.package
-          d.git.package
-          iputils
-          coreutils
-          findutils
-          procps
-          systemd
-          nixos-rebuild
-          gnugrep
-          nix-output-monitor
-          nvd
-          su
-          mpv
-          libnotify
-          gnutar
-          gzip
-          xz.bin
-        ];
-    };
-    corePackages = lib.mkOption {
-      description = "Core Packages";
-      type = with lib.types; listOf package;
-      default =
-        let
-          s = config._general.security;
-          d = config._general.dev;
-        in
-        with pkgs;
-        [
-          s.sops.package
-          s.keepass.package
-          s.gpg.package
-          s.ssh.package
-          d.git.package
-          psmisc
-          lsof
-          age
-          curl
-          wget
-          lshw
-          file
-          killall
-          nfs-utils
-          ntfs3g
-          pciutils
-          rsync
-          tree
-          traceroute
-          cryptsetup
-          procps
-          usbutils
-          unzip
-          gzip
-          unrar-free
-        ];
+    system = {
+      envPackages = lib.mkOption {
+        description = "Environment packages";
+        type = with lib.types; listOf package;
+        default =
+          let
+            s = config._general.security;
+            d = config._general.dev;
+          in
+          with pkgs;
+          [
+            config.programs.fish.package
+            config.nix.package.out
+            s.sops.package
+            s.gpg.package
+            s.ssh.package
+            d.git.package
+            iputils
+            coreutils
+            findutils
+            procps
+            systemd
+            nixos-rebuild
+            gnugrep
+            nix-output-monitor
+            nvd
+            su
+            mpv
+            libnotify
+            gnutar
+            gzip
+            xz.bin
+          ];
+      };
+      corePackages = lib.mkOption {
+        description = "Core Packages";
+        type = with lib.types; listOf package;
+        default =
+          let
+            s = config._general.security;
+            d = config._general.dev;
+          in
+          with pkgs;
+          [
+            s.sops.package
+            s.keepass.package
+            s.gpg.package
+            s.ssh.package
+            d.git.package
+            nfs-utils
+            iputils
+            coreutils
+            findutils
+            pciutils
+            usbutils
+            ntfs3g
+            psmisc
+            lsof
+            age
+            curl
+            wget
+            lshw
+            file
+            killall
+            rsync
+            tree
+            traceroute
+            cryptsetup
+            procps
+            unzip
+            gzip
+            unrar-free
+          ];
+      };
     };
 
     username = lib.mkOption {

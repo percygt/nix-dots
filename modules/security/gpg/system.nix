@@ -1,16 +1,16 @@
 {
   lib,
   config,
-  libx,
   ...
 }:
 let
   g = config._general;
+  cfg = config.modules.security.gpg;
 in
 {
-  options.modules.security.gpg.enable = libx.enableDefault "gpg";
+  imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.gpg.enable {
-    environment.sessionVariables.SSH_AUTH_SOCK = "/run/user/1000/gnupg/S.gpg-agent.ssh";
+    environment.sessionVariables.SSH_AUTH_SOCK = lib.mkIf cfg.sshSupport.enable "${builtins.getEnv "XDG_RUNTIME_DIR"}/gnupg/S.gpg-agent.ssh";
     home-manager.users.${g.username} = import ./home.nix;
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${g.username}.directories = [

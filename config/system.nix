@@ -35,7 +35,7 @@ in
 
   home-manager.users.${g.username} = import ./home.nix;
 
-  environment.systemPackages = g.corePackages;
+  environment.systemPackages = g.system.corePackages;
 
   programs = {
     command-not-found.enable = false;

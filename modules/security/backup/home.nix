@@ -17,7 +17,7 @@ in
         ExecStart = lib.getExe (
           pkgs.writeShellApplication {
             name = "borgmatic-exec-start";
-            runtimeInputs = g.envPackages;
+            runtimeInputs = g.system.envPackages;
             text = ''
               notify_success() {
                 notify-send -i emblem-default "Daily Backup" "Backup successful"

@@ -17,7 +17,7 @@ in
           ExecStart = lib.getExe (
             pkgs.writeShellApplication {
               name = "nixos-rebuild-exec-start";
-              runtimeInputs = g.envPackages;
+              runtimeInputs = g.system.envPackages;
               text = ''
                 notify_success() {
                   notify-send -i emblem-default "System Rebuild" "NixOS rebuild successful"
@@ -75,7 +75,7 @@ in
   systemd = {
     services.nixos-rebuild = {
       restartIfChanged = false;
-      path = g.envPackages;
+      path = g.system.envPackages;
       environment =
         config.nix.envVars
         // config.networking.proxy.envVars
@@ -90,7 +90,7 @@ in
         ''
           flake_dir="${g.flakeDirectory}"
           stderr() { printf "%s\n" "$*" >&2; }
-          rrintf "                                                                                                 \n"
+          printf "                                                                                                 \n"
           printf "                                                                                                 \n"
           printf "   ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██████╗ ███████╗██████╗ ██╗   ██╗██╗██╗     ██████╗ \n"
           printf "   ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██╔══██╗██╔════╝██╔══██╗██║   ██║██║██║     ██╔══██╗\n" 

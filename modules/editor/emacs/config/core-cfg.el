@@ -127,6 +127,8 @@ a list like '(normal insert)'."
   (define-key evil-window-map (kbd "C-l") nil)
   (define-key evil-window-map (kbd "l") nil)
   (define-key evil-window-map (kbd "o") nil)
+  (define-key evil-window-map (kbd "v") nil)
+  (define-key evil-window-map (kbd "s") nil)
   (define-key evil-window-map (kbd "x") nil)
 
   (define-key splitscreen/prefix (kbd "h") 'splitscreen/window-left)
@@ -143,8 +145,8 @@ a list like '(normal insert)'."
   (define-key splitscreen/prefix (kbd "s-k") 'splitscreen/increase-height)
   (define-key splitscreen/prefix (kbd "s-l") 'splitscreen/increase-width)
 
-  (define-key splitscreen/prefix (kbd "%") 'split-window-right)
-  (define-key splitscreen/prefix (kbd "\"") 'split-window-below)
+  (define-key splitscreen/prefix (kbd "v") 'split-window-right)
+  (define-key splitscreen/prefix (kbd "s") 'split-window-below)
   (define-key splitscreen/prefix (kbd "x") 'delete-window)
   (define-key splitscreen/prefix (kbd "SPC") 'balance-windows)
 
