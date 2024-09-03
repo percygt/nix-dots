@@ -57,8 +57,9 @@ in
       "${mod}+m" = "exec ${lib.getExe pkgs.toggle-sway-window} --id btop -- foot --title=SystemMonitor --app-id=btop btop";
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
-      "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p emacsconfigddterm -c '${config.modules.editor.emacs.package}/bin/emacs ${g.dataDirectory}/notes'";
-      "${mod}+Shift+e" = "exec ${lib.getExe pkgs.ddapp} -p notesddterm -c '${config.modules.editor.emacs.package}/bin/emacs ${g.flakeDirectory}/modules/editor/emacs'";
+      # TODO: decide on what dropdown/window-toggle script to use. Maybe rewrite ddapp in babashka
+      "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p  notesddterm -c '${config.modules.editor.emacs.package}/bin/emacs ${g.dataDirectory}/notes'";
+      "Ctrl+Alt+l+e" = "exec ${lib.getExe pkgs.ddapp} -p emacsconfigddterm -c '${config.modules.editor.emacs.package}/bin/emacs ${g.flakeDirectory}/modules/editor/emacs'";
       "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";
@@ -103,13 +104,13 @@ in
       XF86AudioMicMute = "exec pamixer --default-source -t";
 
       # Move window to scratchpad:
-      # "${mod}+Shift+Plus" = "move scratchpad";
+      "${mod}+Shift+Plus" = "move scratchpad";
 
       # Show scratchpad window and cycle through them:
-      # "${mod}+Plus" = "scratchpad show";
+      "${mod}+Plus" = "scratchpad show";
 
       # Enter other modes:
-      # "${mod}+r" = "mode resize";
-      # "${mod}+Shift+p" = "mode passthrough";
+      "${mod}+r" = "mode resize";
+      "${mod}+Shift+p" = "mode passthrough";
     };
 }
