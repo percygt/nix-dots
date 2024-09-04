@@ -10,12 +10,19 @@ in
 {
   options.modules.security.gpg = {
     enable = libx.enableDefault "gpg";
-    sshSupport.enable = lib.mkOption {
-      description = "Enable ssh support";
-      type = lib.types.bool;
-      default = cfg.enable;
+    sshSupport = {
+      enable = lib.mkOption {
+        description = "Enable ssh support";
+        type = lib.types.bool;
+        default = cfg.enable;
+      };
+      authSock = lib.mkOption {
+        description = "Enable ssh support";
+        type = lib.types.str;
+        default = "${builtins.getEnv "XDG_RUNTIME_DIR"}/gnupg/S.gpg-agent.ssh";
+      };
     };
-    gpg.pass.enable = lib.mkOption {
+    pass.enable = lib.mkOption {
       description = "Enable password manager support";
       type = lib.types.bool;
       default = cfg.enable;

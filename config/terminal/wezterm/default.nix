@@ -11,6 +11,11 @@ let
   inherit (config._general) flakeDirectory;
   c = t.colors.withHashtag;
   moduleWezterm = "${flakeDirectory}/config/terminal/wezterm";
+  sshAuthSock =
+    if config.services.gpg-agent.enableSshSupport then
+      config.modules.security.gpg.sshSupport.authSock
+    else
+      "${builtins.getEnv "XDG_RUNTIME_DIR"}/keyring/ssh";
 in
 {
   xdg.configFile = {
@@ -24,7 +29,8 @@ in
         return {
           font = wezterm.font("${f.name}", { weight = "DemiBold" }),
           font_size = tonumber("${builtins.toString f.size}"),
-        	default_prog = { '${lib.getExe pkgs.tmux-launch-session}' }
+          default_prog = { '${lib.getExe pkgs.tmux-launch-session}' }
+          default_ssh_auth_sock = '${sshAuthSock}',
         }
       '';
   };
