@@ -4,8 +4,6 @@
     nemo-with-extensions
     wpa_supplicant_gui
     swayidle
-    swaylock-effects
-    playerctl
     brightnessctl
     autotiling
     wlsunset
@@ -20,11 +18,9 @@
     ydotool
     xdg-utils
     xwayland
-    rofimoji
     desktop-file-utils
     wl-screenrec
     libnotify
     adwaita-icon-theme
-    tmux
   ];
 }

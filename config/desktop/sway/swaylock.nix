@@ -7,7 +7,9 @@ in
 {
   programs.swaylock = {
     enable = true;
-    package = pkgs.swaylock-effects;
+    package = pkgs.swaylock-effects.overrideAttrs (oldAttrs: {
+      depsBuildBuild = [ pkgs.pkg-config ];
+    });
     settings = {
       font = f.name;
       image = "${a.wallpaper}";

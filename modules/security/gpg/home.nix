@@ -24,7 +24,7 @@ in
     home = {
       packages = lib.mkAfter [ gpgsshctl ];
       file.".gnupg/sshcontrol".source = config.lib.file.mkOutOfStoreSymlink "${moduleGpg}/sshcontrol";
-      sessionVariables.SSH_AUTH_SOCK = lib.mkIf lib.mkIf cfg.sshSupport.enable cfg.sshSupport.authSock;
+      sessionVariables.SSH_AUTH_SOCK = lib.mkIf cfg.sshSupport.enable cfg.sshSupport.authSock;
     };
     programs = {
       gpg = {

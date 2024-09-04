@@ -1,9 +1,5 @@
 {
-  lib,
-  desktop,
-  self,
   outputs,
-  inputs,
   ...
 }:
 {

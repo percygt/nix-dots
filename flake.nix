@@ -42,6 +42,7 @@
     nix-stash.url = "github:percygt/nix-stash";
     nixpkgs.follows = "nix-sources/nixpkgs";
     nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
+    nixpkgs-master.follows = "nix-sources/nixpkgs-master";
     emacs-overlay.follows = "nix-sources/emacs-overlay";
 
     home-manager.url = "github:nix-community/home-manager";
