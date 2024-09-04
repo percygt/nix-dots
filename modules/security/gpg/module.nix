@@ -19,7 +19,7 @@ in
       authSock = lib.mkOption {
         description = "Enable ssh support";
         type = lib.types.str;
-        default = "${builtins.getEnv "XDG_RUNTIME_DIR"}/gnupg/S.gpg-agent.ssh";
+        default = "/run/user/1000/gnupg/S.gpg-agent.ssh";
       };
     };
     pass.enable = lib.mkOption {

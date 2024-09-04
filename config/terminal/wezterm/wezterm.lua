@@ -65,7 +65,7 @@ return {
 		target = "CursorColor",
 	},
 	window_decorations = "NONE",
-	window_background_opacity = 0.850000,
+	window_background_opacity = nix.window_background_opacity,
 	text_background_opacity = 1,
 	keys = {
 		{ key = "0", mods = "CTRL|SHIFT", action = wezterm.action.ResetFontSize },
@@ -78,7 +78,7 @@ return {
 		{ key = "F11", mods = "NONE", action = wezterm.action.ToggleFullScreen },
 		{ key = "F12", mods = "NONE", action = wezterm.action.ActivateCommandPalette },
 	},
-	default_ssh_auth_sock = string.format("%s/gnupg/S.gpg-agent.ssh", os.getenv("XDG_RUNTIME_DIR")),
+	default_ssh_auth_sock = nix.default_ssh_auth_sock,
 	default_gui_startup_args = { "start", "--always-new-process" },
 	default_prog = nix.default_prog,
 }

@@ -15,7 +15,7 @@ let
     if config.services.gpg-agent.enableSshSupport then
       config.modules.security.gpg.sshSupport.authSock
     else
-      "${builtins.getEnv "XDG_RUNTIME_DIR"}/keyring/ssh";
+      "/run/user/1000/keyring/ssh";
 in
 {
   xdg.configFile = {
@@ -29,8 +29,9 @@ in
         return {
           font = wezterm.font("${f.name}", { weight = "DemiBold" }),
           font_size = tonumber("${builtins.toString f.size}"),
-          default_prog = { '${lib.getExe pkgs.tmux-launch-session}' }
+          default_prog = { '${lib.getExe pkgs.tmux-launch-session}' },
           default_ssh_auth_sock = '${sshAuthSock}',
+          window_background_opacity = tonumber("${builtins.toString t.opacity}"),
         }
       '';
   };
