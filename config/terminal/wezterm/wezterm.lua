@@ -79,6 +79,12 @@ return {
 		{ key = "F12", mods = "NONE", action = wezterm.action.ActivateCommandPalette },
 	},
 	default_ssh_auth_sock = nix.default_ssh_auth_sock,
+	mux_enable_ssh_agent = false,
+	mux_env_remove = {
+		-- "SSH_AUTH_SOCK", don't remove
+		"SSH_CLIENT",
+		"SSH_CONNECTION",
+	},
 	default_gui_startup_args = { "start", "--always-new-process" },
 	default_prog = nix.default_prog,
 }
