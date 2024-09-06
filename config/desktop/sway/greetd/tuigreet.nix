@@ -13,18 +13,15 @@ in
   services.greetd = {
     enable = true;
     settings = {
-      default_session = {
-        command = ''
-          ${pkgs.greetd.tuigreet}/bin/tuigreet \
-          --time \
-          --asterisks \
-          --sessions ${xSessions}:${wlSessions} \
-          --remember \
-          --remember-user-session
-          --cmd sway ${lib.optionalString unsupported-gpu "--unsupported-gpu"}
-        '';
-        user = "greeter";
-      };
+      default_session.command = ''
+        ${pkgs.greetd.tuigreet}/bin/tuigreet \
+        --time \
+        --asterisks \
+        --sessions ${xSessions}:${wlSessions} \
+        --remember \
+        --remember-user-session
+        --cmd 'sway ${lib.optionalString unsupported-gpu "--unsupported-gpu"}'
+      '';
     };
   };
 
@@ -40,6 +37,7 @@ in
     etc."greetd/environments".text = ''
       sway
       fish
+      bash
     '';
   };
 

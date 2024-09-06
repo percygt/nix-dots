@@ -94,16 +94,8 @@ in
           };
         }
         {
-          command = ''floating enable, move position center'';
-          criteria = {
-            title = "";
-            app_id = "nemo";
-          };
-        }
-        {
           command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
           criteria = {
-            title = ".*\S.*";
             app_id = "nemo";
           };
         }

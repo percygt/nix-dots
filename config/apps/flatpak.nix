@@ -65,7 +65,7 @@ in
       '';
     };
   };
-  environment.persistence = {
+  environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist/system".directories = [ "/var/lib/flatpak" ];
     "/persist".users.${g.username}.directories = [
       ".var/app/org.telegram.desktop"

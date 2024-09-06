@@ -7,19 +7,20 @@ return {
   end,
   keys = {
     {
+      "<a-F>",
+    "<cmd>FormatToggle<cr>",
+      desc = "Format Toggle",
+    },
+    {
       "<a-f>",
-      function()
-        require("conform").format({ async = true })
-      end,
+      "<cmd>Format<cr>",
       desc = "Format",
-      silent = true,
     },
   },
   opts = function()
     local prettier = { "prettierd", "prettier", stop_after_first = true }
     return {
       formatters = {
-        -- nix = { "alejandra" },
         nix = { "nixfmt" },
         javascript = { "deno_fmt" },
         typescript = { "deno_fmt" },
@@ -105,22 +106,28 @@ return {
         },
       },
     }
-    vim.api.nvim_create_user_command("FormatDisable", function(args)
+    vim.api.nvim_create_user_command("FormatToggle", function(args)
+      local function show_notification(message, level)
+        vim.notify(message, level, { title = "Conform.nvim" })
+      end
       if args.bang then
-        -- FormatDisable! will disable formatting just for this buffer
-        vim.b.disable_autoformat = true
+        vim.b.disable_autoformat = not vim.b.disable_autoformat
+        if vim.b.disable_autoformat then
+          show_notification("Autoformat-on-save disabled for this buffer", 2)
+        else
+          show_notification("Autoformat-on-save enabled for this buffer", 2)
+        end
       else
-        vim.g.disable_autoformat = true
+        vim.g.disable_autoformat = not vim.g.disable_autoformat
+        if vim.g.disable_autoformat then
+          show_notification("Autoformat-on-save disabled globally", 2)
+        else
+          show_notification("Autoformat-on-save enabled globally", 2)
+        end
       end
     end, {
-      desc = "Disable autoformat-on-save",
+      desc = "Toggle autoformat-on-save",
       bang = true,
-    })
-    vim.api.nvim_create_user_command("FormatEnable", function()
-      vim.b.disable_autoformat = false
-      vim.g.disable_autoformat = false
-    end, {
-      desc = "Re-enable autoformat-on-save",
     })
     vim.api.nvim_create_user_command("Format", function(args)
       local range = nil
@@ -132,6 +139,7 @@ return {
         }
       end
       require("conform").format({ async = true, lsp_format = "fallback", range = range })
+      vim.notify("Your buffer has been formatted successfully!", 2, { title = "Conform.nvim" })
     end, { range = true })
   end,
 }

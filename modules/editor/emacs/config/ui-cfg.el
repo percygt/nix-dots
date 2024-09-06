@@ -118,12 +118,16 @@
   :config (beacon-mode 1))
 
 (use-package solaire-mode
-  :hook (after-init . solaire-global-mode))
+  :hook (after-init . solaire-global-mode)
+  :config
+  (push '(treemacs-window-background-face . solaire-default-face) solaire-mode-remap-alist)
+  (push '(treemacs-hl-line-face . solaire-hl-line-face) solaire-mode-remap-alist))
 
 (use-package golden-ratio
   :hook (after-init . golden-ratio-mode)
   :custom
-  (golden-ratio-auto-scale t))
+  (golden-ratio-auto-scale t)
+  (golden-ratio-exclude-modes '(treemacs-mode occur-mode)))
 
 (use-package keycast
   :defer

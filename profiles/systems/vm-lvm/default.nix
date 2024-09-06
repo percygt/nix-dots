@@ -21,7 +21,7 @@ in
 
   core.network.wpa.enable = true;
   # symlinks to enable "erase your darlings"
-  environment.persistence = {
+  environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {
       hideMounts = true;
       users.${g.username} = {

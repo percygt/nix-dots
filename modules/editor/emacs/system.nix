@@ -14,7 +14,7 @@ in
       imports = [ ./home.nix ];
       modules.editor.emacs.enable = lib.mkDefault true;
     };
-    environment.systemPackages = [ cfg.package ];
+    environment.systemPackages = [ cfg.finalPackage ];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {

@@ -48,9 +48,9 @@ in
       "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
       "${mod}+Space" = "exec swaync-client -t -sw";
       "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
-      "${mod}+Shift+w" = "exec ${lib.getExe wez-ddterm}";
+      "Ctrl+Alt+w" = "exec ${lib.getExe wez-ddterm}";
       "${mod}+w" = "exec ${lib.getExe pkgs.foot-ddterm}";
-      "${mod}+Shift+return" = "exec ${lib.getExe config.programs.wezterm.package}";
+      "Ctrl+Alt+return" = "exec ${lib.getExe config.programs.wezterm.package}";
       "${mod}+Return" = "exec ${lib.getExe pkgs.foot}";
       "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
@@ -58,8 +58,8 @@ in
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
       # TODO: decide on what dropdown/window-toggle script to use. Maybe rewrite ddapp in babashka
-      "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p  notesddterm -c '${config.modules.editor.emacs.package}/bin/emacs ${g.dataDirectory}/notes'";
-      "Ctrl+Alt+l+e" = "exec ${lib.getExe pkgs.ddapp} -p emacsconfigddterm -c '${config.modules.editor.emacs.package}/bin/emacs ${g.flakeDirectory}/modules/editor/emacs'";
+      "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p  notesddterm -c '${config.modules.editor.emacs.finalPackage}/bin/emacs ${g.dataDirectory}/notes'";
+      "${mod}+Shift+e" = "exec ${lib.getExe pkgs.ddapp} -p emacsconfigddterm -c '${config.modules.editor.emacs.finalPackage}/bin/emacs ${g.flakeDirectory}/modules/editor/emacs'";
       "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";

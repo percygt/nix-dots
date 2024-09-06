@@ -57,7 +57,7 @@ in
       };
     };
     fileSystems."/persist".neededForBoot = true;
-    environment.persistence = {
+    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${g.username} = {
         directories = [ ".local/share/nix" ];
       };

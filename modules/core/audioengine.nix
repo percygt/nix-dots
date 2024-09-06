@@ -11,7 +11,7 @@ in
 {
   options.modules.core.audioengine.enable = libx.enableDefault "audioengine";
   config = lib.mkIf config.modules.core.audioengine.enable {
-    environment.persistence = {
+    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${g.username}.directories = [ ".local/state/wireplumber" ];
     };
     hardware.pulseaudio.enable = lib.mkForce false;

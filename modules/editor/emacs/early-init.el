@@ -21,6 +21,7 @@
 
 
 (add-to-list 'load-path (expand-file-name "config/" user-emacs-config-directory))
+(add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory))
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
@@ -46,7 +47,7 @@
       inhibit-compacting-font-caches t)
 
 ;; Disabling bidi (bidirectional editing stuff)
-(setq-default bidi-display-reordering 'left-to-right 
+(setq-default bidi-display-reordering 'left-to-right
               bidi-paragraph-direction 'left-to-right)
 (setq bidi-inhibit-bpa t)  ; emacs 27 only - disables bidirectional parenthesis
 

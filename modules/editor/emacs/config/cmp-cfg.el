@@ -91,9 +91,6 @@
         which-key-min-display-lines 3
         which-key-max-display-columns nil))
 
-(use-package ibuffer
-  :ensure nil
-  :bind ("C-x C-b" . ibuffer))
 
 (use-package nerd-icons-ibuffer
   :after (nerd-icons ibuffer)

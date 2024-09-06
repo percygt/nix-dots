@@ -8,7 +8,7 @@ let
   g = config._general;
 in
 {
-  imports = [ ./tuigreet.nix ];
+  imports = [ ./greetd/regreet.nix ];
   home-manager.users.${g.username} = import ./home.nix;
   environment = {
     sessionVariables = {

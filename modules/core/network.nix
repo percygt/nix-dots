@@ -58,7 +58,7 @@ in
           services.NetworkManager-wait-online.wantedBy = lib.mkForce [ ]; # Normally ["network-online.target"]
           targets.network-online.wantedBy = lib.mkForce [ ]; # Normally ["multi-user.target"]
         };
-        environment.persistence = {
+        environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
           "/persist/system" = {
             directories = [ "/etc/NetworkManager/system-connections" ];
           };
