@@ -18,19 +18,22 @@ let
     inherit (cfg) package;
     alwaysEnsure = true;
     config = builtins.readFile emacsConfig;
-    extraEmacsPackages = epkgs: [ epkgs.treesit-grammars.with-all-grammars ] ++ extraPackages;
-    override = eself: esuper: {
-      nursery = eself.trivialBuild {
-        pname = "nursery";
-        version = "2024-09-07-git";
-        src = pkgs.fetchFromGitHub {
-          owner = "chrisbarrett";
-          repo = "nursery";
-          rev = "00a169c75b934a2eb42ea8620e8eebf34577d4ca";
-          hash = "sha256-x+/TTSdHzQ+GKHV6jgvoQrwZCH4cZQfQGKDIBzFbJRw=";
-        };
-      };
-    };
+    extraEmacsPackages =
+      epkgs:
+      with epkgs;
+      [
+        treesit-grammars.with-all-grammars
+        dash
+        s
+        f
+        ht
+        ts
+        async
+        org-drill
+        pcre2el
+        ts
+      ]
+      ++ extraPackages;
   };
 
   emacsWithExtraPackages = pkgs.runCommand "emacs" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''

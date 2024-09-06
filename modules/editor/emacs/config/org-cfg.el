@@ -126,7 +126,9 @@
 (require 'evil-org-agenda)
 (evil-org-agenda-set-keys)
 
+
 (use-package org-roam-review
+  :ensure nil
   :commands (org-roam-review
              org-roam-review-list-by-maturity
              org-roam-review-list-recently-added)
@@ -152,21 +154,26 @@
   )
 
 (use-package org-roam-search
+  :ensure nil
   :commands (org-roam-search))
 
 (use-package org-roam-links
+  :ensure nil
   :commands (org-roam-links))
 
 (use-package org-roam-dblocks
+  :ensure nil
   :hook (org-mode . org-roam-dblocks-autoupdate-mode))
 
 (use-package org-roam-rewrite
+  :ensure nil
   :commands (org-roam-rewrite-rename
              org-roam-rewrite-remove
              org-roam-rewrite-inline
              org-roam-rewrite-extract))
 
 (use-package org-roam-slipbox
+  :ensure nil
   :after org-roam
   :demand t
   :config
@@ -174,6 +181,7 @@
   (org-roam-slipbox-tag-mode +1))
 
 (use-package org-modern
+  :ensure t
   :hook ((org-mode                 . org-modern-mode)
          (org-agenda-finalize-hook . org-modern-agenda))
   :custom ((org-modern-table nil)
