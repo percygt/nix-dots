@@ -12,7 +12,8 @@
     "spacing": 2,
 
     "modules-center": [
-      "clock"
+      "clock",
+      "custom/pomo"
     ],
     "modules-left": [
       "custom/rebuild",
@@ -33,6 +34,13 @@
       "battery",
       "custom/menu"
     ],
+    "custom/pomo": {
+      "format": "{} 󱎫",
+      "exec": "pomo clock",
+      "interval": 1,
+      "on-click": "pomo pause",
+      "on-click-right": "pomo stop"
+    },
     "battery": {
       "format": "{icon} {capacity}%",
       "format-alt": "{icon} {time}",

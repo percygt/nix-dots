@@ -17,7 +17,6 @@ in
             url = "https://github.com/chrisbarrett/nursery";
             rev = "00a169c75b934a2eb42ea8620e8eebf34577d4ca";
           };
-          recursive = true;
         };
       };
       configFile = {

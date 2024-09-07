@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   loginctl = "${pkgs.systemd}/bin/loginctl";
   swaymsg = "${config._general.desktop.sway.package}/bin/swaymsg";
@@ -10,6 +15,23 @@ in
     systemdTarget = "graphical-session.target";
 
     events = [
+      {
+        event = "after-resume";
+        command = lib.getExe (
+          pkgs.writeShellApplication {
+            name = "swayidle-after-resume";
+            runtimeInputs = [
+              pkgs.coreutils
+              pkgs.sway
+              pkgs.pomo
+            ];
+            text = ''
+              if [ -f "$HOME/.local/share/pomo" ]; then pomo start || true; fi
+              ${pkgs.sway}/bin/swaymsg 'output * power on'
+            '';
+          }
+        );
+      }
       {
         event = "lock";
         command = "${systemctl} --user start swaylock";

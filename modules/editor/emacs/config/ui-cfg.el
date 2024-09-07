@@ -49,7 +49,7 @@
   (centaur-tabs-show-new-tab-button t)
   (centaur-tabs-set-modified-marker t)
   (centaur-tabs-show-navigation-buttons t)
-  (centaur-tabs-set-bar 'left)
+  (centaur-tabs-set-bar 'over)
   (centaur-tabs-show-count nil)
   (centaur-tabs-style "bar")
   (centaur-tabs-adjust-buffer-order t)

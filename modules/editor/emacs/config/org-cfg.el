@@ -53,14 +53,14 @@
   (org-roam-mode-sections '(org-roam-backlinks-section
                             org-roam-reflinks-section
                             org-roam-unlinked-references-section))
-  :bind (:map evil-normal-state-map
-	      ;; ("<leader>ob" . org-roam-buffer-toggle)
-	      ;; ("<leader>of" . org-roam-node-find)
-	      ;; ("<leader>og" . org-roam-graph)
-	      ("<leader>l" . org-roam-node-insert)
-	      ("<leader>c" . org-roam-capture)
-	      ;; Dailies
-	      ("<leader>d" . org-roam-dailies-capture-today)))
+  :evil-bind ((:map (leader-map)
+		    ;; ("<leader>ob" . org-roam-buffer-toggle)
+		    ;; ("<leader>of" . org-roam-node-find)
+		    ;; ("<leader>og" . org-roam-graph)
+		    ("l" . org-roam-node-insert)
+		    ("c" . org-roam-capture)
+		    ;; Dailies
+		    ("d" . org-roam-dailies-capture-today))))
 
 (use-package org
   :ensure nil
@@ -116,50 +116,50 @@
   (org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1.0))))
   (org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
-(use-package evil-org
-  :diminish evil-org-mode
-  :after org
-  :config
-  (add-hook 'org-mode-hook 'evil-org-mode)
-  (add-hook 'evil-org-mode-hook
-            (lambda () (evil-org-set-key-theme))))
-(require 'evil-org-agenda)
-(evil-org-agenda-set-keys)
+	    (use-package evil-org
+	      :diminish evil-org-mode
+	      :after org
+	      :config
+	      (add-hook 'org-mode-hook 'evil-org-mode)
+	      (add-hook 'evil-org-mode-hook
+			(lambda () (evil-org-set-key-theme))))
+	    (require 'evil-org-agenda)
+	    (evil-org-agenda-set-keys)
 
 
-(use-package org-roam-review
-  :ensure nil
-  :commands (org-roam-review
-             org-roam-review-list-by-maturity
-             org-roam-review-list-recently-added)
+	    (use-package org-roam-review
+	      :ensure nil
+	      :commands (org-roam-review
+			 org-roam-review-list-by-maturity
+			 org-roam-review-list-recently-added)
 
-  ;; ;; Optional - tag all newly-created notes as seedlings.
-  ;; :hook (org-roam-capture-new-node . org-roam-review-set-seedling)
+	      ;; ;; Optional - tag all newly-created notes as seedlings.
+	      ;; :hook (org-roam-capture-new-node . org-roam-review-set-seedling)
 
-  ;; ;; Optional - keybindings for applying Evergreen note properties.
-  ;; :general
-  ;; (:keymaps 'org-mode-map
-  ;; "C-c r r" '(org-roam-review-accept :wk "accept")
-  ;; "C-c r u" '(org-roam-review-bury :wk "bury")
-  ;; "C-c r x" '(org-roam-review-set-excluded :wk "set excluded")
-  ;; "C-c r b" '(org-roam-review-set-budding :wk "set budding")
-  ;; "C-c r s" '(org-roam-review-set-seedling :wk "set seedling")
-  ;; "C-c r e" '(org-roam-review-set-evergreen :wk "set evergreen"))
+	      ;; ;; Optional - keybindings for applying Evergreen note properties.
+	      ;; :general
+	      ;; (:keymaps 'org-mode-map
+	      ;; "C-c r r" '(org-roam-review-accept :wk "accept")
+	      ;; "C-c r u" '(org-roam-review-bury :wk "bury")
+	      ;; "C-c r x" '(org-roam-review-set-excluded :wk "set excluded")
+	      ;; "C-c r b" '(org-roam-review-set-budding :wk "set budding")
+	      ;; "C-c r s" '(org-roam-review-set-seedling :wk "set seedling")
+	      ;; "C-c r e" '(org-roam-review-set-evergreen :wk "set evergreen"))
 
-  ;; ;; Optional - bindings for evil-mode compatability.
-  ;; :general
-  ;; (:states '(normal) :keymaps 'org-roam-review-mode-map
-  ;; "TAB" 'magit-section-cycle
-  ;; "g r" 'org-roam-review-refresh)
-  )
+	      ;; ;; Optional - bindings for evil-mode compatability.
+	      ;; :general
+	      ;; (:states '(normal) :keymaps 'org-roam-review-mode-map
+	      ;; "TAB" 'magit-section-cycle
+	      ;; "g r" 'org-roam-review-refresh)
+	      )
 
-(use-package org-roam-search
-  :ensure nil
-  :commands (org-roam-search))
+	    (use-package org-roam-search
+	      :ensure nil
+	      :commands (org-roam-search))
 
-(use-package org-roam-links
-  :ensure nil
-  :commands (org-roam-links))
+	    (use-package org-roam-links
+	      :ensure nil
+	      :commands (org-roam-links))
 
 (use-package org-roam-dblocks
   :ensure nil

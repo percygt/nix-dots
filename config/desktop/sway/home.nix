@@ -1,5 +1,6 @@
 {
   imports = [
+    ./pomo.nix
     ./waybar
     ./swaync
     ./services.nix

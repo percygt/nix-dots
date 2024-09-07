@@ -12,8 +12,8 @@
         sha256 = "1dwy2619vmgca430m0vsq50289bwqi5nc5m0c02bri5phdmfxj6i";
       };
       nix-logo = pkgs.fetchurl {
-        url = "https://github.com/NixOS/nixos-artwork/blob/master/logo/nix-snowflake-rainbow.svg";
-        sha256 = "1maj73n7dc1nz4n92z78qhwsksldgvga6f20rv9vwrkwifb4g4zw";
+        url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/raw/branch/master/png/gruvbox-light-rainbow-square.png";
+        sha256 = "1b7n1kskxzbk1w81pi78brwyjwkavyqs4hqa579xri8k3rx2r0fw";
       };
     };
     colorscheme = import ./colorscheme.nix;

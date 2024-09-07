@@ -15,6 +15,10 @@ in
       modules.editor.emacs.enable = lib.mkDefault true;
     };
     environment.systemPackages = [ cfg.finalPackage ];
+    # services.emacs = {
+    #   enable = true;
+    #   package = cfg.finalPackage;
+    # };
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {

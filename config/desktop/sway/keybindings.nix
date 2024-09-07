@@ -19,6 +19,8 @@ let
     mkDirectionKeys
     ;
 in
+# emacsPkg = config.modules.editor.emacs.finalPackage;
+# emacsClient = "${emacsPkg}/bin/emacsclient -a ${emacsPkg}/bin/emacs -c";
 {
   home.packages = [ pkgs.ddapp ];
   wayland.windowManager.sway.config.keybindings =
@@ -58,8 +60,10 @@ in
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
       # TODO: decide on what dropdown/window-toggle script to use. Maybe rewrite ddapp in babashka
-      "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p  notesddterm -c '${config.modules.editor.emacs.finalPackage}/bin/emacs ${g.dataDirectory}/notes'";
+      "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p notesddterm -c '${config.modules.editor.emacs.finalPackage}/bin/emacs ${g.dataDirectory}/notes/home.org'";
       "${mod}+Shift+e" = "exec ${lib.getExe pkgs.ddapp} -p emacsconfigddterm -c '${config.modules.editor.emacs.finalPackage}/bin/emacs ${g.flakeDirectory}/modules/editor/emacs'";
+      # "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p notesddterm -c '${emacsClient} ${g.dataDirectory}/notes/home.org'";
+      # "${mod}+Shift+e" = "exec ${lib.getExe pkgs.ddapp} -p emacsconfigddterm -c '${emacsClient} ${g.flakeDirectory}/modules/editor/emacs'";
       "${mod}+Shift+i" = "exec ${lib.getExe pkgs.toggle-sway-window} --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec ${lib.getExe pkgs.toggle-sway-window} --id gnome-disks -- gnome-disks";
       "${mod}+b" = "exec ${lib.getExe pkgs.toggle-sway-window} --id .blueman-manager-wrapped -- blueman-manager";

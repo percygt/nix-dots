@@ -164,18 +164,24 @@ a list like '(normal insert)'."
   :ensure nil
   :demand
   :hook
-  (after-init . setup-default-fonts)
+  (server-after-make-frame-hook . setup-default-fonts)
   :preface
   (defun font-installed-p (font-name)
     "Check if a font with FONT-NAME is available."
     (find-font (font-spec :name font-name)))
   (defun setup-default-fonts ()
-    (set-fontset-font "fontset-default" nil (font-spec :family "Noto Color Emoji"))
+    (message "Setting faces!")
     (when (font-installed-p "Iosevka Aile")
       (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150 :weight 'medium))
     (when (font-installed-p "VictorMono Nerd Font")
       (dolist (face '(default fixed-pitch))
-        (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
+	(set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+		(lambda (frame)
+                  (with-selected-frame frame
+                    (setup-default-fonts))))
+    (setup-default-fonts))
   (provide 'font))
 
 (use-package display-line-numbers

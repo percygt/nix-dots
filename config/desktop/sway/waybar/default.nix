@@ -32,6 +32,7 @@ let
       swaynotificationcenter
       wlsunset
       foot
+      pomo
     ]);
   waybarWithExtraPackages =
     pkgs.runCommand "waybar"
