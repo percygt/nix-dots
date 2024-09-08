@@ -19,11 +19,13 @@ let
     alwaysEnsure = true;
     config = builtins.readFile emacsConfig;
     extraEmacsPackages =
-      epkgs:
-      with epkgs;
-      [
+      epkgs: with epkgs; [
+        # required stuff
         treesit-grammars.with-all-grammars
         dash
+        emacsql
+        emacsql-sqlite
+        magit-section
         s
         f
         ht
@@ -32,8 +34,7 @@ let
         org-drill
         pcre2el
         ts
-      ]
-      ++ extraPackages;
+      ];
   };
 
   emacsWithExtraPackages = pkgs.runCommand "emacs" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''

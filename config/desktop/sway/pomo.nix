@@ -23,8 +23,7 @@
     '';
     source = pkgs.writeShellScript "pomo-cfg" ''
       # This file gets sourced by pomo.sh at startup
-      # I'm only caring about linux atm
-      function lock_screen {
+      lock_screen() {
         if ${pkgs.procps}/bin/pgrep sway 2>&1 > /dev/null; then
           echo "Sway detected"
           # Only lock if pomo is still running
@@ -34,18 +33,18 @@
         fi
       }
 
-      function custom_notify {
+      custom_notify() {
           # send_msg is defined in the pomo.sh source
           block_type=$1
           if [[ $block_type -eq 0 ]]; then
               echo "End of work period"
-              send_msg 'End of a work period. Locking Screen!'
+              send_msg -i kronometer 'Pomodoro' 'End of a work period. Locking Screen!'
               ${pkgs.playerctl}/bin/playerctl --all-players pause
               ${pkgs.mpv}/bin/mpv ${pkgs.pomo-alert} || sleep 10
               lock_screen &
           elif [[ $block_type -eq 1 ]]; then
               echo "End of break period"
-              send_msg 'End of a break period. Time for work!'
+              send_msg -i kronometer 'Pomodoro' 'End of a break period. Time for work!'
               ${pkgs.mpv}/bin/mpv ${pkgs.pomo-alert}
           else
               echo "Unknown block type"

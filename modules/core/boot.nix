@@ -14,6 +14,10 @@
     boot = {
       kernelPackages = pkgs.linuxPackages_latest;
       tmp.cleanOnBoot = true;
+      # kernel.sysctl = {
+      #   "net.ipv4.ip_forward" = 1;
+      #   "net.ipv6.conf.all.forwarding" = 1;
+      # };
 
       loader = {
         timeout = 0;
@@ -24,11 +28,14 @@
           editor = false;
         };
       };
-
       plymouth = {
         enable = true;
-        theme = "catppuccin-macchiato";
-        themePackages = [ (pkgs.catppuccin-plymouth.override { variant = "macchiato"; }) ];
+        theme = "pixels";
+        themePackages = with pkgs; [
+          (adi1090x-plymouth-themes.override {
+            selected_themes = [ "pixels" ];
+          })
+        ];
       };
 
       consoleLogLevel = 0;

@@ -13,14 +13,6 @@
           magick
         ];
       extraPackages = with pkgs; [
-        (fenix.complete.withComponents [
-          "cargo"
-          "clippy"
-          "rust-src"
-          "rustc"
-          "rustfmt"
-          "rust-analyzer"
-        ])
         (python3.withPackages (
           ps: with ps; [
             python-lsp-server
@@ -59,6 +51,13 @@
         nixfmt-rfc-style
         nil
         nixd
+
+        # rust
+        cargo
+        clippy
+        rustc
+        rustfmt
+        rust-analyzer
 
         # C, C++
         gcc

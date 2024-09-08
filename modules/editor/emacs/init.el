@@ -20,7 +20,9 @@
 ;;
 (require 'use-package)
 
+(require 'package-cfg)
 (require 'core-cfg)
+(require 'common-cfg)
 (require 'evil-cfg)
 (require 'ui-cfg)
 (require 'filetree-cfg)
@@ -34,6 +36,7 @@
 (require 'shell-cfg)
 (require 'spell-cfg)
 (require 'org-cfg)
+(require 'nursery-cfg)
 
 (provide 'init)
 ;;; init.el ends here

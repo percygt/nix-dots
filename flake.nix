@@ -60,9 +60,6 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    fenix.url = "github:nix-community/fenix";
-    fenix.inputs.nixpkgs.follows = "nixpkgs";
-
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs = {
       nixpkgs.follows = "nixpkgs";

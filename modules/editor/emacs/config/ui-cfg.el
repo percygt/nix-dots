@@ -104,7 +104,7 @@
 
 
 (use-package nerd-icons
-  :custom (nerd-icons-font-family "JetBrainsMono Nerd Font"))
+  :custom (nerd-icons-font-family "VictorMono Nerd Font"))
 
 (use-package nerd-icons-dired
   :hook (dired-mode . nerd-icons-dired-mode))
