@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-
 (use-package org-roam
   :config
   (org-roam-setup)

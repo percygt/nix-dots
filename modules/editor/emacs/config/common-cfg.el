@@ -9,5 +9,9 @@
 		    ("np" . mc/mark-previous-like-this)
 		    ("na" . mc/mark-all-like-this))))
 
+(use-package aggressive-indent
+  :hook ((emacs-lisp-mode . aggressive-indent-mode)
+         (cc-ts-mode . aggressive-indent-mode)))
+
 (provide 'common-cfg)
 ;;; common-cfg.el ends here

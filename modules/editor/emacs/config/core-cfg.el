@@ -196,9 +196,6 @@
   (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
   (recentf-mode))
 
-(use-package aggressive-indent
-  :hook ((emacs-lisp-mode . aggressive-indent-mode)
-         (cc-ts-mode . aggressive-indent-mode)))
 
 (use-package eldoc
   :ensure nil
