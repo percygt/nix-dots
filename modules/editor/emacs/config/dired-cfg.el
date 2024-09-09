@@ -1,4 +1,3 @@
-
 ;;; dired-cfg.el --- Org Mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:

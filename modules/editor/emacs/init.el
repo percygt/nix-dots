@@ -36,6 +36,7 @@
 (require 'shell-cfg)
 (require 'spell-cfg)
 (require 'org-cfg)
+(require 'roam-cfg)
 (require 'nursery-cfg)
 
 (provide 'init)

@@ -1,52 +1,6 @@
 ;;; org-cfg.el --- Org Mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
-(use-package org-roam
-  :config
-  (org-roam-setup)
-  :init
-  (setq org-roam-v2-ack t)
-  :custom
-  (org-roam-directory notes-directory)
-  (org-roam-dailies-directory "journals/")
-  (org-roam-file-exclude-regexp "\\.git/.*\\|logseq/.*$")
-  (org-roam-capture-templates
-   `(("s" "standard" plain "%?"
-      :if-new
-      (file+head
-       "%<%Y%m%d_%H%M%S>_${slug}.org"
-       "#+title: ${title}\n#+date: %<%Y-%m-%d>\n#+filetags: \n\n")
-      :unnarrowed t)
-     ("r" "ref" plain "%?"
-      :if-new
-      (file+head
-       "${citekey}.org"
-       "#+title: ${slug}: ${title}\n#+filetags: reference ${keywords} \n\n* ${title}\n\n\n* Summary\n\n\n* Rough note space\n")
-      :unnarrowed t)
-     ("p" "person" plain "%?"
-      :if-new
-      (file+head
-       "${slug}.org"
-       "%^{relation|some guy|family|friend|colleague}p %^{birthday}p %^{address}p#+title:${slug}\n#+filetags: :person: \n"
-       :unnarrowed t))))
-  (org-roam-dailies-capture-templates
-   '(("d" "default" entry
-      "* %?"
-      :target (file+datetree
-	       "%<%Y-%m-%d>.org" week))))
-  (org-roam-mode-sections '(org-roam-backlinks-section
-                            org-roam-reflinks-section
-                            org-roam-unlinked-references-section))
-  :evil-bind ((:map (leader-map)
-		    ("nb" . org-roam-buffer-toggle)
-		    ("nf" . org-roam-node-find)
-		    ("ng" . org-roam-graph)
-		    ("nl" . org-roam-node-insert)
-		    ("nc" . org-roam-capture)
-		    ;; Dailies
-		    ("nd" . org-roam-dailies-capture-today))))
-
 (use-package org
   :ensure nil
   :preface

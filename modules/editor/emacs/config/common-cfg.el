@@ -5,8 +5,8 @@
 (use-package multiple-cursors
   :after (evil)
   :evil-bind ((:map (leader-map)
-		    ("nn" . mc/mark-next-like-this)
-		    ("np" . mc/mark-previous-like-this)
+		    ("nn" . mc/mark-next-word-like-this)
+		    ("np" . mc/mark-previous-word-like-this)
 		    ("na" . mc/mark-all-like-this))))
 
 (use-package aggressive-indent

@@ -28,6 +28,7 @@
 		    ("C-<SPC>" . leader-map))
 	      (:map (leader-map)
 		    ("f" . find-file)
+		    ("l" . load-file)
 		    ("d" . dired)
 		    ("o" . switch-to-recent-buffer))))
 
