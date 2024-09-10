@@ -15,7 +15,7 @@
   :custom
   (org-startup-indented t)
   (org-hide-emphasis-markers t)
-  (org-ellipsis "")
+  (org-ellipsis " ")
   (org-hide-emphasis-markers t)
   (org-pretty-entities t)
   (org-special-ctrl-a/e '(t . nil))

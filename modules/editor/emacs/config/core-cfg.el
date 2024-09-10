@@ -151,8 +151,8 @@
   (when (file-exists-p customfile) (load customfile))
   :custom
   (backup-directory-alist           `(("\\`/tmp/" . nil)
-                                    ("\\`/dev/shm/" . nil)
-                                    ("." . ,backup-dir)))
+                                      ("\\`/dev/shm/" . nil)
+                                      (".*" . ,backup-dir)))
   (auto-save-file-name-transforms   `((".*" ,auto-save-dir t)))
   (custom-file                      customfile)
   (auto-save-no-message             t)
