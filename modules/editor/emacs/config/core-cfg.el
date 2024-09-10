@@ -150,6 +150,8 @@
   (unless (file-exists-p backup-dir) (make-directory backup-dir t))
   (when (file-exists-p customfile) (load customfile))
   :custom
+  (create-lockfiles                 nil)
+  (make-backup-files                nil)
   (backup-directory-alist           `(("\\`/tmp/" . nil)
                                       ("\\`/dev/shm/" . nil)
                                       (".*" . ,backup-dir)))

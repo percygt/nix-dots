@@ -13,6 +13,19 @@
   :hook
   (org-mode . org-mode-setup)
   :custom
+  (org-capture-templates
+   '(("t" "todo" entry (file+headline "todo.org" "Inbox")
+      "* [ ] %?\n%i\n%a"
+      :prepend t)
+     ("d" "deadline" entry (file+headline "todo.org" "Inbox")
+      "* [ ] %?\nDEADLINE: <%(org-read-date)>\n\n%i\n%a"
+      :prepend t)
+     ("s" "schedule" entry (file+headline "todo.org" "Inbox")
+      "* [ ] %?\nSCHEDULED: <%(org-read-date)>\n\n%i\n%a"
+      :prepend t)
+     ("c" "check out later" entry (file+headline "todo.org" "Check out later")
+      "* [ ] %?\n%i\n%a"
+      :prepend t)))
   (org-startup-indented t)
   (org-hide-emphasis-markers t)
   (org-ellipsis " ")
@@ -84,19 +97,19 @@
         org-appear-autolinks nil		;; Don't enable on links
         org-appear-autosubmarkers t))	;; Enable on subscript and superscript
 
-(use-package org-brain
-  :custom
-  (org-brain-path notes-directory)
-  (org-brain-visualize-default-choices 'all)
-  (org-brain-title-max-length 12)
-  (org-brain-include-file-entries nil)
-  (org-brain-file-entries-use-title nil)
-  ;; For Evil users
-  :init
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
-  :config
-  (bind-key "C-c b" 'org-brain-prefix-map org-mode-map))
+;; (use-package org-brain
+;;   :custom
+;;   (org-brain-path notes-directory)
+;;   (org-brain-visualize-default-choices 'all)
+;;   (org-brain-title-max-length 12)
+;;   (org-brain-include-file-entries nil)
+;;   (org-brain-file-entries-use-title nil)
+;;   ;; For Evil users
+;;   :init
+;;   (with-eval-after-load 'evil
+;;     (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
+;;   :config
+;;   (bind-key "C-c b" 'org-brain-prefix-map org-mode-map))
 ;; (setq org-id-track-globally t)
 ;; (add-hook 'before-save-hook #'org-brain-ensure-ids-in-buffer)
 ;; (push '("b" "Brain" plain (function org-brain-goto-end)
@@ -110,19 +123,19 @@
 
 
 ;;;; Templates
-(use-package org-tempo
-  :ensure nil
-  :after org
-  :config
-  (let ((templates '(("sh"  . "src sh")
-                     ("el"  . "src emacs-lisp")
-                     ("vim" . "src vim")
-                     ("cpp" . "src C++ :includes <iostream> :namespaces std"))))
-    (dolist (template templates)
-      (push template org-structure-template-alist))))
+;; (use-package org-tempo
+;;   :ensure nil
+;;   :after org
+;;   :config
+;;   (let ((templates '(("sh"  . "src sh")
+;;                      ("el"  . "src emacs-lisp")
+;;                      ("vim" . "src vim")
+;;                      ("cpp" . "src C++ :includes <iostream> :namespaces std"))))
+;;     (dolist (template templates)
+;;       (push template org-structure-template-alist))))
 
 
-(use-package org-timeblock)
+;; (use-package org-timeblock)
 
 ;; (use-package org-super-agenda)
 
