@@ -116,14 +116,20 @@ Referece: `auto-save-visited-mode'"
   (org-roam-mode-sections '(org-roam-backlinks-section
 			    org-roam-reflinks-section
 			    org-roam-unlinked-references-section))
-  :evil-bind ((:map (leader-map)
-		    ("eb" . org-roam-buffer-toggle)
-		    ("ef" . org-roam-node-find)
-		    ("eg" . org-roam-graph)
-		    ("el" . org-roam-node-insert)
-		    ("ec" . org-roam-capture)
-		    ;; Dailies
-		    ("ed" . org-roam-dailies-capture-today))))
+  :general
+  (global-definer
+    "w" '(nil :which-key "Writer")
+    "wb" 'org-roam-buffer-toggle
+    "wf" 'org-roam-node-find
+    "wg" 'org-roam-graph
+    "wc" 'org-roam-capture
+    "wd" 'org-roam-dailies-capture-today
+    )
+  (global-definer
+    :keymaps '(org-mode-map)
+    "wi" 'org-roam-node-insert)
+  )
+
 (use-package org-roam-timestamps
   :after org-roam
   :config (org-roam-timestamps-mode))

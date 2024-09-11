@@ -12,20 +12,20 @@
   :hook (org-roam-capture-new-node . org-roam-review-set-seedling)
 
   ;; Optional - keybindings for applying Evergreen note properties.
-  ;; :general
-  ;; (:keymaps 'org-mode-map
-  ;; 	    "C-c r r" '(org-roam-review-accept :wk "accept")
-  ;; 	    "C-c r u" '(org-roam-review-bury :wk "bury")
-  ;; 	    "C-c r x" '(org-roam-review-set-excluded :wk "set excluded")
-  ;; 	    "C-c r b" '(org-roam-review-set-budding :wk "set budding")
-  ;; 	    "C-c r s" '(org-roam-review-set-seedling :wk "set seedling")
-  ;; 	    "C-c r e" '(org-roam-review-set-evergreen :wk "set evergreen"))
+  :general
+  (:keymaps 'org-mode-map
+	    "C-c r r" '(org-roam-review-accept :wk "accept")
+	    "C-c r u" '(org-roam-review-bury :wk "bury")
+	    "C-c r x" '(org-roam-review-set-excluded :wk "set excluded")
+	    "C-c r b" '(org-roam-review-set-budding :wk "set budding")
+	    "C-c r s" '(org-roam-review-set-seedling :wk "set seedling")
+	    "C-c r e" '(org-roam-review-set-evergreen :wk "set evergreen"))
 
   ;; ;; Optional - bindings for evil-mode compatability.
-  ;; :general
-  ;; (:states '(normal) :keymaps 'org-roam-review-mode-map
-  ;; 	   "TAB" 'magit-section-cycle
-  ;; 	   "g r" 'org-roam-review-refresh)
+  :general
+  (:states '(normal) :keymaps 'org-roam-review-mode-map
+	   "TAB" 'magit-section-cycle
+	   "g r" 'org-roam-review-refresh)
   )
 
 (use-package org-roam-search

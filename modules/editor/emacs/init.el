@@ -22,7 +22,7 @@
 
 (require 'package-cfg)
 (require 'core-cfg)
-;; (require 'general-cfg)
+(require 'general-cfg)
 (require 'common-cfg)
 (require 'evil-cfg)
 (require 'ui-cfg)

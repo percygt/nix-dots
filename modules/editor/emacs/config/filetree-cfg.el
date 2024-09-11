@@ -1,4 +1,5 @@
 (use-package treemacs
+  :after (evil)
   :custom
   (treemacs-is-never-other-window t)
   :hook

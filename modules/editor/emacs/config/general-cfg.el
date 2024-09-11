@@ -5,6 +5,10 @@
 (use-package general
   :demand t
   :after evil
+  :preface
+  (defun switch-to-recent-buffer ()
+    (interactive)
+    (switch-to-buffer (other-buffer (current-buffer))))
   :config
   (general-override-mode)
   (general-auto-unbind-keys)
@@ -27,16 +31,16 @@
     "d" 'dired
     "o" 'switch-to-recent-buffer)
 
-  ;; (general-create-definer global-leader
-  ;;   :keymaps 'override
-  ;;   :states '(insert normal hybrid motion visual operator)
-  ;;   :prefix "SPC m"
-  ;;   :non-normal-prefix "C-SPC m"
-  ;;   "" '( :ignore t
-  ;; 	  :which-key
-  ;; 	  (lambda (arg)
-  ;; 	    (cons (cadr (split-string (car arg) " "))
-  ;; 		  (replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
+  (general-create-definer global-leader
+    :keymaps 'override
+    :states '(insert normal hybrid motion visual operator)
+    :prefix "SPC m"
+    :non-normal-prefix "C-SPC m"
+    "" '( :ignore t
+  	  :which-key
+  	  (lambda (arg)
+  	    (cons (cadr (split-string (car arg) " "))
+  		  (replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
   )
 
 

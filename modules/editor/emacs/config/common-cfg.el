@@ -3,7 +3,6 @@
 ;;; Code:
 
 (use-package multiple-cursors
-  :after (evil)
   (global-definer
         "n" '(nil :which-key "Multicursor")
 		    "nn" 'mc/mark-next-word-like-this
