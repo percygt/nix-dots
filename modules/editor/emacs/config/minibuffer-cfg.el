@@ -66,12 +66,14 @@
 (use-package embark-consult )
 
 (use-package consult
-  :evil-bind ((:map (leader-map)
-		    ("sf" . consult-find)
-		    ("sg" . consult-ripgrep)
-		    ("0"  . consult-buffer)
-		    ("sl" . consult-line)
-		    ("so" . consult-outline))))
+  :general
+  (global-definer
+    "s" '(nil :which-key "Consult")
+    "sf" 'consult-find
+    "sg" 'consult-ripgrep
+    "0"  'consult-buffer
+    "sl" 'consult-line
+    "so" 'consult-outline))
 
 (use-package embark
   :bind (("C-." . embark-act)

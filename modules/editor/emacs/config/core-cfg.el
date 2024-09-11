@@ -23,14 +23,7 @@
   (user-emacs-directory             user-emacs-data-directory)
   (read-extended-command-predicate  #'command-completion-default-include-p)
   :hook ((prog-mode . display-fill-column-indicator-mode)
-         ((prog-mode text-mode) . indicate-buffer-boundaries-left))
-  :evil-bind ((:map (global-map)
-		    ("C-<SPC>" . leader-map))
-	      (:map (leader-map)
-		    ("f" . find-file)
-		    ("l" . load-file)
-		    ("d" . dired)
-		    ("o" . switch-to-recent-buffer))))
+         ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
 
 (use-package emacs
   :ensure nil

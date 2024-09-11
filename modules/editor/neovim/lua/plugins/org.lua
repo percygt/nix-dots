@@ -1,29 +1,33 @@
+local org_dir = "~/data/notes"
 return {
   {
     "chipsenkbeil/org-roam.nvim",
-    enabled = false,
+    -- enabled = false,
+    event = "VeryLazy",
+    ft = { "org" },
     dependencies = {
       "nvim-orgmode/orgmode",
     },
     config = function()
       require("org-roam").setup({
-        directory = "~/data/notes/journals",
+        directory = org_dir,
       })
     end,
   },
   {
     "akinsho/org-bullets.nvim",
-    enabled = false,
-    dependencies = { "nvim-orgmode/orgmode" },
+    -- enabled = false,
+    event = "VeryLazy",
+    ft = { "org" },
     config = function()
       require("org-bullets").setup()
     end,
   },
   {
     "nvim-orgmode/orgmode",
-    enabled = false,
+    -- enabled = false,
     event = "VeryLazy",
-    dependencies = { "dhruvasagar/vim-table-mode" },
+    dependencies = { "dhruvasagar/vim-table-mode", "nvim-orgmode/orgmode" },
     ft = { "org" },
     init = function()
       vim.opt.conceallevel = 2
@@ -39,13 +43,7 @@ return {
     config = function()
       -- Setup orgmode
       require("orgmode").setup({
-        org_agenda_files = "~/data/notes/**/*",
-        -- mappings = {
-        --   global = {
-        --     org_agenda = { "oA", "<Leader>Oa" },
-        --     org_capture = { "oC", "<Leader>Oc" },
-        --   },
-        -- },
+        org_agenda_files = org_dir .. "/**/*",
       })
 
       local cmp = require("cmp")

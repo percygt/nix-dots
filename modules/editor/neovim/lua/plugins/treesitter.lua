@@ -24,7 +24,7 @@ return {
         ignore_install = { "org" },
         indent = {
           enable = true,
-          disable = { "python", "yaml" }, -- Yaml and Python indents are unusable
+          disable = { "python", "yaml", "org" }, -- Yaml and Python indents are unusable
         },
         highlight = {
           enable = true,

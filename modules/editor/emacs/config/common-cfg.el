@@ -4,10 +4,12 @@
 
 (use-package multiple-cursors
   :after (evil)
-  :evil-bind ((:map (leader-map)
-		    ("nn" . mc/mark-next-word-like-this)
-		    ("np" . mc/mark-previous-word-like-this)
-		    ("na" . mc/mark-all-like-this))))
+  (global-definer
+        "n" '(nil :which-key "Multicursor")
+		    "nn" 'mc/mark-next-word-like-this
+		    "np" 'mc/mark-previous-word-like-this
+		    "na" 'mc/mark-all-like-this
+    ))
 
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode . aggressive-indent-mode)

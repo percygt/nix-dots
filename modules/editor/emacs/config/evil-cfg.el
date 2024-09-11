@@ -4,9 +4,6 @@
 
 (use-package evil
   :preface
-  (defun switch-to-recent-buffer ()
-    (interactive)
-    (switch-to-buffer (other-buffer (current-buffer))))
   (defun evil-insert-jk-for-normal-mode ()
     (interactive)
     (insert "j")
@@ -37,22 +34,18 @@
           eshell-mode
           git-rebase-mode
           term-mode) . evil-emacs-state-mode)
-  :evil-bind ((:map (evil-normal-state-map)
-		    ("SPC" . leader-map)
-		    ("C-e" . evil-end-of-line)
-		    ("C-e" . evil-end-of-line)
-		    ("C-b" . evil-beginning-of-line)
-		    ("ESCAPE" . keyboard-escape-quit)
-		    ("WW" . save-buffer))
-	      (:map (evil-insert-state-map)
-		    ("j"   . evil-insert-jk-for-normal-mode))
-	      (:map (evil-visual-state-map)
-		    ("SPC" . leader-map)
-		    ("ESCAPE" . keyboard-quit))
-              ;; The *Warnings* buffer loads in normal mode, and I want to be able to quit
-              ;; it easily
-              (:map (special-mode-map . normal)
-                    ("q" . quit-window)))
+  :bind ( :map evil-normal-state-map
+	  ("C-e" . evil-end-of-line)
+	  ("C-e" . evil-end-of-line)
+	  ("C-b" . evil-beginning-of-line)
+	  ("ESCAPE" . keyboard-escape-quit)
+	  ("WW" . save-buffer)
+	  :map evil-insert-state-map
+	  ("j"   . evil-insert-jk-for-normal-mode)
+	  :map evil-visual-state-map
+	  ("ESCAPE" . keyboard-quit)
+	  :map special-mode-map
+	  ("q" . quit-window))
   :config
   (evil-mode 1)
   (evil-set-initial-state 'messages-buffer-mode 'normal))

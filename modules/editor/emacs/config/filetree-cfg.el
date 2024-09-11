@@ -3,8 +3,11 @@
   (treemacs-is-never-other-window t)
   :hook
   (treemacs-mode . treemacs-project-follow-mode)
-  :evil-bind ((:map (leader-map)
-		    ("tt" . treemacs)
-		    ("tf" . treemacs-find-file))))
+  :general
+  (global-definer
+        "t" '(nil :which-key "Treemacs")
+		    "tt" 'treemacs
+		    "tf" 'treemacs-find-file
+    ))
 
 (provide 'filetree-cfg)
