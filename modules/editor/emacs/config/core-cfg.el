@@ -9,6 +9,9 @@
   (defun indicate-buffer-boundaries-left ()
     (setq indicate-buffer-boundaries 'left))
   :custom
+  (fast-but-imprecise-scrolling     t)
+  (indent-tabs-mode                 nil) ;; Always indent with spaces
+  (tab-width                        4) ;; Set tab-size to 4 spaces
   (delete-by-moving-to-trash        t)
   (visible-bell                     t)
   (x-stretch-cursor                 t)
@@ -18,7 +21,7 @@
   (confirm-kill-processes           nil)
   (visible-bell                     nil)
   (fill-column                      100)
-  (tab-always-indent                'complete)
+  ;; (tab-always-indent                'complete)
   (initial-major-mode               'fundamental-mode)
   (user-emacs-directory             user-emacs-data-directory)
   (read-extended-command-predicate  #'command-completion-default-include-p)
@@ -94,7 +97,7 @@
   :ensure nil
   :demand
   :hook
-  (server-after-make-frame-hook . setup-default-fonts)
+  (server-after-make-frame . setup-default-fonts)
   :preface
   (defun font-installed-p (font-name)
     "Check if a font with FONT-NAME is available."
@@ -105,10 +108,10 @@
       (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150 :weight 'medium))
     (when (font-installed-p "VictorMono Nerd Font")
       (dolist (face '(default fixed-pitch))
-	(set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
+	    (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
   (if (daemonp)
       (add-hook 'after-make-frame-functions
-		(lambda (frame)
+		        (lambda (frame)
                   (with-selected-frame frame
                     (setup-default-fonts))))
     (setup-default-fonts))

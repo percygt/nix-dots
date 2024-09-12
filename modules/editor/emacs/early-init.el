@@ -1,5 +1,3 @@
-
-
 ;;; early-init.el --- early in the morning -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
@@ -23,28 +21,29 @@
 (add-to-list 'load-path (expand-file-name "config/" user-emacs-config-directory))
 (add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory))
 
-;; Defer garbage collection further back in the startup process
+;; from doom early-init
 (setq gc-cons-threshold most-positive-fixnum)
-
 (setq load-prefer-newer noninteractive)
+(when (getenv-internal "DEBUG")
+  (setq init-file-debug t
+        debug-on-error t))
 
 ;; In Emacs 27+, package initialization occurs before `user-init-file' is
 ;; loaded, but after `early-init-file'. We want to keep from loading at startup.
 (setq package-enable-at-startup nil)
 
 ;; Set some variables.
-(setq tab-width 4 ;; Set tab-size to 4 spaces
-      initial-scratch-message nil
-      inhibit-startup-screen t ;; Don't show the welcome splash screen.
-      indent-tabs-mode nil ;; Always indent with spaces
-      package-native-compile t ;; native compile packages
-      idle-update-delay 1.0
-      comp-deferred-compilation nil
-      native-comp-async-report-warnings-errors 'silent ; Stop showing compilation warnings on startup
-      ;; pop-up-windows nil
-      highlight-nonselected-windows nil
-      fast-but-imprecise-scrolling t
-      inhibit-compacting-font-caches t)
+(setq
+ initial-scratch-message nil
+ inhibit-startup-screen t ;; Don't show the welcome splash screen.
+ package-native-compile t ;; native compile packages
+ idle-update-delay 1.0
+ comp-deferred-compilation nil
+ native-comp-async-report-warnings-errors nil ; Stop showing compilation warnings on startup
+ ;; pop-up-windows nil
+ highlight-nonselected-windows nil
+ inhibit-compacting-font-caches t
+ )
 
 ;; Disabling bidi (bidirectional editing stuff)
 (setq-default bidi-display-reordering 'left-to-right
@@ -102,6 +101,7 @@
 ;; Removes *messages* from the buffer.
 (setq-default message-log-max nil)
 (kill-buffer "*Messages*")
+
 (unless (or (daemonp) noninteractive)
   ;; Emacs really shouldn't be displaying anything until it has fully started
   ;; up. This saves a bit of time.

@@ -3,7 +3,7 @@
   nix-sources = inputs.nix-sources.overlays.default;
   nix-stash = inputs.nix-stash.overlays.default;
   nixd = inputs.nixd.overlays.default;
-  emacs = inputs.emacs-overlay.overlay;
+  emacs = inputs.emacs-overlay.overlays.emacs;
   nur = inputs.nur.overlay;
   packageOverrides = _: prev: import ../packages/overrides.nix { inherit prev; };
   packageOverlays =

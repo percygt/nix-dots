@@ -30,7 +30,7 @@ let
         f
         ht
         ts
-        async
+        # async
         org-drill
         pcre2el
         ts
