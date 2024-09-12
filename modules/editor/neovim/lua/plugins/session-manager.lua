@@ -13,12 +13,11 @@ return {
     local config = require("session_manager.config")
     local home = os.getenv("HOME")
     require("session_manager").setup({
-      autoload_mode = config.AutoloadMode.CurrentDir,
+      autoload_mode = { config.AutoloadMode.CurrentDir, config.AutoloadMode.GitSession },
       autosave_last_session = true,
+      autosave_ignore_not_normal = false,
       autosave_ignore_dirs = {
         home .. "/downloads",
-        home .. "/.config",
-        home .. "/.local",
       },
     })
   end,

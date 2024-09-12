@@ -14,8 +14,9 @@ in
             ".local/share/nvim/lazy"
             ".local/share/nvim/harpoon"
             ".local/share/nvim/sessions"
+            ".local/share/nvim/org-roam.nvim"
             ".local/share/nvim/undodir"
-            ".local/share/nvim"
+            ".local/share/nvim/mason"
             ".local/cache/nvim"
             ".local/state/nvim"
           ];

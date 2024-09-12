@@ -13,28 +13,28 @@ let
   };
 
   extraPackages = import ./extraPackages.nix { inherit pkgs; };
-
+  extraEmacsPackages =
+    epkgs: with epkgs; [
+      # required stuff
+      treesit-grammars.with-all-grammars
+      dash
+      emacsql
+      emacsql-sqlite
+      magit-section
+      s
+      f
+      ht
+      ts
+      async
+      org-drill
+      pcre2el
+      ts
+    ];
   emacs = pkgs.emacsWithPackagesFromUsePackage {
     inherit (cfg) package;
+    inherit extraEmacsPackages;
     alwaysEnsure = true;
     config = builtins.readFile emacsConfig;
-    extraEmacsPackages =
-      epkgs: with epkgs; [
-        # required stuff
-        treesit-grammars.with-all-grammars
-        dash
-        emacsql
-        emacsql-sqlite
-        magit-section
-        s
-        f
-        ht
-        ts
-        # async
-        org-drill
-        pcre2el
-        ts
-      ];
   };
 
   emacsWithExtraPackages = pkgs.runCommand "emacs" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
@@ -53,7 +53,7 @@ in
       enable = lib.mkEnableOption "Enable emacs systemwide";
       package = lib.mkOption {
         description = "emacs package to use";
-        default = pkgs.emacs-unstable-pgtk;
+        default = pkgs.emacs29-pgtk;
         type = lib.types.package;
       };
       finalPackage = lib.mkOption {

@@ -36,7 +36,7 @@
 (setq
  initial-scratch-message nil
  inhibit-startup-screen t ;; Don't show the welcome splash screen.
- package-native-compile t ;; native compile packages
+ ;; package-native-compile t ;; native compile packages
  idle-update-delay 1.0
  comp-deferred-compilation nil
  native-comp-async-report-warnings-errors nil ; Stop showing compilation warnings on startup
