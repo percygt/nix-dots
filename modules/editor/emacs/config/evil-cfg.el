@@ -64,9 +64,9 @@
   :config
   (evil-commentary-mode))
 
-(use-package avy
-  :bind (:map evil-normal-state-map
-              ("M-s" . avy-goto-char)))
+;; (use-package avy
+;;   :bind (:map evil-normal-state-map
+;;               ("M-s" . avy-goto-char)))
 
 (use-package move-text
   :bind (:map evil-normal-state-map

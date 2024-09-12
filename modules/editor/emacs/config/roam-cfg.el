@@ -118,7 +118,7 @@ Referece: `auto-save-visited-mode'"
 			    org-roam-unlinked-references-section))
   :general
   (global-definer
-    "w" '(nil :which-key "Writer")
+    "w"  '(nil :wk "Writer")
     "wb" 'org-roam-buffer-toggle
     "wf" 'org-roam-node-find
     "wg" 'org-roam-graph

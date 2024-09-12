@@ -4,7 +4,7 @@
 
 (use-package multiple-cursors
   (global-definer
-        "n" '(nil :which-key "Multicursor")
+        "n" '(nil :wk "Multicursor")
 		    "nn" 'mc/mark-next-word-like-this
 		    "np" 'mc/mark-previous-word-like-this
 		    "na" 'mc/mark-all-like-this

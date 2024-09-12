@@ -68,7 +68,7 @@
 (use-package consult
   :general
   (global-definer
-    "s" '(nil :which-key "Consult")
+    "s" '(nil :wk "Consult")
     "sf" 'consult-find
     "sg" 'consult-ripgrep
     "0"  'consult-buffer
