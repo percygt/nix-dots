@@ -18,9 +18,7 @@
     };
   };
   xdg.configFile."pomo.cfg" = {
-    onChange = ''
-      ${pkgs.systemd}/bin/systemctl --user restart pomo-notify.service
-    '';
+    onChange = ''${pkgs.systemd}/bin/systemctl --user restart pomo-notify.service'';
     source = pkgs.writeShellScript "pomo-cfg" ''
       # This file gets sourced by pomo.sh at startup
       lock_screen() {

@@ -74,17 +74,17 @@
   :config
   (add-hook 'org-mode-hook 'evil-org-mode)
   (add-hook 'evil-org-mode-hook
-	    (lambda () (evil-org-set-key-theme))))
-(require 'evil-org-agenda)
-(evil-org-agenda-set-keys)
+	        (lambda () (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 (use-package org-modern
   :ensure t
   :hook ((org-mode                 . org-modern-mode)
          (org-agenda-finalize-hook . org-modern-agenda))
   :custom ((org-modern-table nil)
-	   (org-modern-list'((?+ . "✦") (?- . "‣") (?* . "◉")))
-	   (org-modern-variable-pitch t))
+	       (org-modern-list'((?+ . "✦") (?- . "‣") (?* . "◉")))
+	       (org-modern-variable-pitch t))
   :commands (org-modern-mode org-modern-agenda)
   :init (global-org-modern-mode))
 

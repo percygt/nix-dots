@@ -5,12 +5,14 @@
 (use-package org-roam-review
   :ensure nil
   :commands (org-roam-review
-	     org-roam-review-list-by-maturity
-	     org-roam-review-list-recently-added)
+	         org-roam-review-list-by-maturity
+	         org-roam-review-list-recently-added)
   ;; Optional - tag all newly-created notes as seedlings.
   :hook (org-roam-capture-new-node . org-roam-review-set-seedling)
   ;; Optional - keybindings for applying Evergreen note properties.
   :general
+  (global-definer
+    "r"  '(org-roam-review :wk "Review"))
   (global-definer
     :keymaps 'org-mode-map
     "e"  '(nil :wk "Evergreen")
@@ -23,9 +25,12 @@
   ;; ;; Optional - bindings for evil-mode compatability.
   :general
   (:states '(normal) :keymaps 'org-roam-review-mode-map
-	   "TAB" 'magit-section-cycle
-	   "g r" 'org-roam-review-refresh)
+	       "TAB" 'magit-section-cycle
+	       "g r" 'org-roam-review-refresh)
   )
+(use-package org-format
+  :ensure nil
+  :hook (org-mode . org-format-on-save-mode))
 
 (use-package org-roam-search
   :ensure nil
@@ -46,13 +51,13 @@
              org-roam-rewrite-inline
              org-roam-rewrite-extract))
 
-;; (use-package org-roam-slipbox
-;;   :ensure nil
-;;   :after org-roam
-;;   :demand t
-;;   :config
-;;   (org-roam-slipbox-buffer-identification-mode +1)
-;;   (org-roam-slipbox-tag-mode +1))
+(use-package org-roam-slipbox
+  :ensure nil
+  :after org-roam
+  :demand t
+  :config
+  (org-roam-slipbox-buffer-identification-mode +1)
+  (org-roam-slipbox-tag-mode +1))
 
 (provide 'nursery-cfg)
 ;;; nursery-cfg.el ends here

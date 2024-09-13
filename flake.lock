@@ -1952,6 +1952,10 @@
       "inputs": {
         "base16": "base16",
         "disko": "disko",
+        "emacs-overlay": [
+          "nix-sources",
+          "emacs-overlay"
+        ],
         "general": "general",
         "home-manager": "home-manager",
         "impermanence": "impermanence",

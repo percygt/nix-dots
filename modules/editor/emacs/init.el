@@ -1,7 +1,6 @@
 ;;; init.el --- Init config -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-;; (define-prefix-command 'leader-map)
 ;; (require 'package)
 ;; (setq package-user-dir (expand-file-name  "var/packages/" user-emacs-data-directory))
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -20,7 +19,7 @@
 ;;
 (require 'use-package)
 
-(require 'package-cfg)
+;; (require 'package-cfg)
 (require 'core-cfg)
 (require 'general-cfg)
 (require 'common-cfg)

@@ -6,12 +6,10 @@
 }:
 let
   cfg = config.modules.editor.emacs;
-
   emacsConfig = pkgs.concatTextFile {
     name = "config.el";
     files = map (dir: ./config/${dir}) (builtins.attrNames (builtins.readDir ./config));
   };
-
   extraPackages = import ./extraPackages.nix { inherit pkgs; };
   extraEmacsPackages =
     epkgs: with epkgs; [
