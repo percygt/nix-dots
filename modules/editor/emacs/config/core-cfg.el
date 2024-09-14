@@ -20,8 +20,11 @@
   (column-number-mode               t)
   (confirm-kill-processes           nil)
   (visible-bell                     nil)
+  (display-buffer-alist             '((".*" (display-buffer-reuse-mode-window
+                                             display-buffer-reuse-window
+                                             display-buffer-same-window))))
   (fill-column                      100)
-  ;; (tab-always-indent                'complete)
+  ;; pop-up-windows nil
   (initial-major-mode               'fundamental-mode)
   (user-emacs-directory             user-emacs-data-directory)
   (read-extended-command-predicate  #'command-completion-default-include-p)

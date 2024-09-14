@@ -40,7 +40,6 @@
  idle-update-delay 1.0
  comp-deferred-compilation nil
  native-comp-async-report-warnings-errors nil ; Stop showing compilation warnings on startup
- ;; pop-up-windows nil
  highlight-nonselected-windows nil
  inhibit-compacting-font-caches t
  )

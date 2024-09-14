@@ -51,6 +51,20 @@
              org-roam-rewrite-inline
              org-roam-rewrite-extract))
 
+(use-package org-capture-detect
+  :ensure nil
+  :after org-roam)
+
+(use-package org-roam-links
+  :ensure nil
+  :after org-roam
+  :demand t)
+
+(use-package org-roam-lazy-previews
+  :ensure nil
+  :after org-roam
+  :demand t)
+
 (use-package org-roam-slipbox
   :ensure nil
   :after org-roam

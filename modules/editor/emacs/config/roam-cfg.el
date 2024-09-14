@@ -19,35 +19,35 @@
     "Return a list of file names in the specified directory DIR, excluding directories."
     (let ((files (directory-files dir t)))
       (cl-remove-if (lambda (file)
-		      (or (file-directory-p file) ; Ignore directories
-			  (string-match-p "\\`\\." (file-name-nondirectory file)))) ; Ignore '.' and '..'
-		    files)))
+		              (or (file-directory-p file) ; Ignore directories
+			              (string-match-p "\\`\\." (file-name-nondirectory file)))) ; Ignore '.' and '..'
+		            files)))
   (defun get-next-file-number (dir)
     "Return the next available file number based on the first two digits in file names in DIR."
     (let ((files (get-files-in-directory dir)) ; Get the list of files
-	  (max-number -1)) ; Initialize the max number
+	      (max-number -1)) ; Initialize the max number
       ;; Iterate through each file
       (dolist (file files)
-	(let* ((file-name (file-name-nondirectory file)) ; Get just the file name
-	       (number (and (string-match "\\`\\([0-9][0-9]\\)-" file-name) ; Extract digits
-			    (string-to-number (match-string 1 file-name)))))
-	  (when number
-	    (setq max-number (max max-number number))))) ; Update max number if necessary
+	    (let* ((file-name (file-name-nondirectory file)) ; Get just the file name
+	           (number (and (string-match "\\`\\([0-9][0-9]\\)-" file-name) ; Extract digits
+			                (string-to-number (match-string 1 file-name)))))
+	      (when number
+	        (setq max-number (max max-number number))))) ; Update max number if necessary
       (format "%02d" (1+ max-number))))
   :config
   (org-roam-setup)
   (cl-defmethod org-roam-node-directories ((node org-roam-node))
     (if-let ((dirs (file-name-directory (file-relative-name (org-roam-node-file node) org-roam-directory))))
-	(format "(%s)" (car (split-string dirs "/")))
+	    (format "(%s)" (car (split-string dirs "/")))
       ""))
 
   (cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
     (let* ((count (caar (org-roam-db-query
-			 [:select (funcall count source)
-				  :from links
-				  :where (= dest $s1)
-				  :and (= type "id")]
-			 (org-roam-node-id node)))))
+			             [:select (funcall count source)
+				                  :from links
+				                  :where (= dest $s1)
+				                  :and (= type "id")]
+			             (org-roam-node-id node)))))
       (format "[%d]" count)))
   (cl-defmethod org-roam-node-hierarchy ((node org-roam-node))
     (let ((level (org-roam-node-level node)))
@@ -69,10 +69,22 @@ Referece: `auto-save-visited-mode'"
     :global t
     (when auto-org-roam-db-sync--timer (cancel-timer auto-org-roam-db-sync--timer))
     (setq auto-org-roam-db-sync--timer
-	  (when auto-org-roam-db-sync-mode
-	    (run-with-idle-timer
-	     auto-org-roam-db-sync--timer-interval :repeat
-	     #'org-roam-db-sync))))
+	      (when auto-org-roam-db-sync-mode
+	        (run-with-idle-timer
+	         auto-org-roam-db-sync--timer-interval :repeat
+	         #'org-roam-db-sync))))
+  (add-to-list 'display-buffer-alist
+               '(("\\*org-roam\\*"
+                  (display-buffer-in-direction)
+                  (direction . left)
+                  (window-width . 0.33)
+                  (window-height . fit-window-to-buffer))
+                 ("\\*org-roam-search\\*"
+                  (display-buffer-in-direction)
+                  (direction . below)
+                  (window-height . 0.33)
+                  (window-width . fit-window-to-buffer))
+                 ))
   :custom
   (org-roam-node-display-template
    (concat "${hierarchy:*} " (propertize "${tags:20}" 'face 'org-tag))
@@ -112,10 +124,10 @@ Referece: `auto-save-visited-mode'"
    '(("d" "default" entry
       "* %?"
       :target (file+datetree
-	       "%<%Y-%m-%d>.org" week))))
+	           "%<%Y-%m-%d>.org" week))))
   (org-roam-mode-sections '(org-roam-backlinks-section
-			    org-roam-reflinks-section
-			    org-roam-unlinked-references-section))
+			                org-roam-reflinks-section
+			                org-roam-unlinked-references-section))
   :general
   (global-definer
     "w"  '(nil :wk "Writer")
@@ -127,8 +139,7 @@ Referece: `auto-save-visited-mode'"
     )
   (global-definer
     :keymaps '(org-mode-map)
-    "wi" 'org-roam-node-insert)
-  )
+    "wi" 'org-roam-node-insert))
 
 (use-package org-roam-timestamps
   :after org-roam
