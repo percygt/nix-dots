@@ -64,7 +64,7 @@
     ((node org-roam-node)) (capitalize (org-roam-node-title node)))
   (define-minor-mode auto-org-roam-db-sync-mode
     "Toggle automatic `org-roam-db-sync' when Emacs is idle.
-Referece: `auto-save-visited-mode'"
+     Referece: `auto-save-visited-mode'"
     :group 'org-roam
     :global t
     (when auto-org-roam-db-sync--timer (cancel-timer auto-org-roam-db-sync--timer))
@@ -74,17 +74,17 @@ Referece: `auto-save-visited-mode'"
 	         auto-org-roam-db-sync--timer-interval :repeat
 	         #'org-roam-db-sync))))
   (add-to-list 'display-buffer-alist
-               '(("\\*org-roam\\*"
-                  (display-buffer-in-direction)
-                  (direction . left)
-                  (window-width . 0.33)
-                  (window-height . fit-window-to-buffer))
-                 ("\\*org-roam-search\\*"
-                  (display-buffer-in-direction)
-                  (direction . below)
-                  (window-height . 0.33)
-                  (window-width . fit-window-to-buffer))
-                 ))
+               '("\\*org-roam\\*"
+                 (display-buffer-in-direction)
+                 (direction . left)
+                 (window-width . 0.33)
+                 (window-height . fit-window-to-buffer))
+               )
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam-review\\*"
+                 (
+	              display-buffer-full-frame
+                  )))
   :custom
   (org-roam-node-display-template
    (concat "${hierarchy:*} " (propertize "${tags:20}" 'face 'org-tag))

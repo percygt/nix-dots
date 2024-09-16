@@ -29,7 +29,7 @@
     "f" 'find-file
     "l" 'load-file
     "d" 'dired
-    "o" 'switch-to-recent-buffer)
+    "p" 'switch-to-recent-buffer)
 
   (general-create-definer global-leader
     :keymaps 'override

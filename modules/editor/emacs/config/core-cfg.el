@@ -20,9 +20,6 @@
   (column-number-mode               t)
   (confirm-kill-processes           nil)
   (visible-bell                     nil)
-  (display-buffer-alist             '((".*" (display-buffer-reuse-mode-window
-                                             display-buffer-reuse-window
-                                             display-buffer-same-window))))
   (fill-column                      100)
   ;; pop-up-windows nil
   (initial-major-mode               'fundamental-mode)
@@ -138,9 +135,9 @@
   :ensure nil
   :demand
   :preface
-  (defvar backup-dir (no-littering-expand-var-file-name "backup")
+  (defvar backup-dir (no-littering-expand-var-file-name "backup/")
     "Directory to store backups.")
-  (defvar auto-save-dir (no-littering-expand-var-file-name "auto-save")
+  (defvar auto-save-dir (no-littering-expand-var-file-name "auto-save/")
     "Directory to store auto-save files.")
   (defvar customfile (no-littering-expand-etc-file-name "custom.el")
     "Custom file")
