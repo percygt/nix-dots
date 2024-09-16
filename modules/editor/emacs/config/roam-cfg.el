@@ -15,6 +15,12 @@
   :preface
   (defvar auto-org-roam-db-sync--timer nil)
   (defvar auto-org-roam-db-sync--timer-interval 5)
+  ;; Define the function
+  (defun org-follow-link-other-window ()
+    "Open the link at point in another window."
+    (interactive)
+    (let ((org-link-frame-setup '((file . other-window))))
+      (org-open-at-point)))
   (defun get-files-in-directory (dir)
     "Return a list of file names in the specified directory DIR, excluding directories."
     (let ((files (directory-files dir t)))
@@ -75,16 +81,7 @@
 	         #'org-roam-db-sync))))
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
-                 (display-buffer-in-direction)
-                 (direction . left)
-                 (window-width . 0.33)
-                 (window-height . fit-window-to-buffer))
-               )
-  (add-to-list 'display-buffer-alist
-               '("\\*org-roam-review\\*"
-                 (
-	              display-buffer-full-frame
-                  )))
+                 (display-buffer-full-frame)))
   :custom
   (org-roam-node-display-template
    (concat "${hierarchy:*} " (propertize "${tags:20}" 'face 'org-tag))
@@ -139,7 +136,9 @@
     )
   (global-definer
     :keymaps '(org-mode-map)
-    "wi" 'org-roam-node-insert))
+    "wi" 'org-roam-node-insert
+    "<return>" 'org-follow-link-other-window)
+  )
 
 (use-package org-roam-timestamps
   :after org-roam

@@ -4,6 +4,10 @@
 
 (use-package org-roam-review
   :ensure nil
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam-review\\*"
+                 (display-buffer-full-frame)))
   :commands (org-roam-review
 	         org-roam-review-list-by-maturity
 	         org-roam-review-list-recently-added)
@@ -38,6 +42,14 @@
 
 (use-package org-roam-links
   :ensure nil
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam-links\\*"
+                 (display-buffer-full-frame)))
+  :general
+  (global-definer
+    :keymaps '(org-mode-map)
+    "wl" 'org-roam-links)
   :commands (org-roam-links))
 
 (use-package org-roam-dblocks

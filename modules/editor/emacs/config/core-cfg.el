@@ -21,7 +21,6 @@
   (confirm-kill-processes           nil)
   (visible-bell                     nil)
   (fill-column                      100)
-  ;; pop-up-windows nil
   (initial-major-mode               'fundamental-mode)
   (user-emacs-directory             user-emacs-data-directory)
   (read-extended-command-predicate  #'command-completion-default-include-p)

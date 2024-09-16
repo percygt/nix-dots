@@ -6,6 +6,18 @@
 }:
 let
   g = config._general;
+  toggleIdleSleepBlock = pkgs.writeShellApplication {
+    name = "toggle-idle-sleep-block";
+    runtimeInputs = [ pkgs.coreutils ];
+    text = ''
+      BLOCKFILE="$HOME/.local/share/idle-sleep-block"
+      if test -f "$BLOCKFILE"; then
+        rm "$BLOCKFILE"
+      else
+        touch "$BLOCKFILE"
+      fi
+    '';
+  };
   nixosRebuild = pkgs.writeShellApplication {
     name = "waybar-rebuild-exec";
     runtimeInputs = g.system.envPackages;
@@ -24,7 +36,10 @@ let
     '';
   };
   extraPackages =
-    [ nixosRebuild ]
+    [
+      nixosRebuild
+      toggleIdleSleepBlock
+    ]
     ++ g.system.envPackages
     ++ (with pkgs; [
       toggle-service

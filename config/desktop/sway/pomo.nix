@@ -25,9 +25,9 @@
         if ${pkgs.procps}/bin/pgrep sway 2>&1 > /dev/null; then
           echo "Sway detected"
           # Only lock if pomo is still running
-          test -f "$HOME/.local/share/pomo" && "${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config"
+          test -f $XDG_DATA_HOME/pomo && "${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config"
           # Only restart pomo if pomo is still running
-          test -f "$HOME/.local/share/pomo" && ${pkgs.pomo}/bin/pomo start
+          test -f $XDG_DATA_HOME/pomo && ${pkgs.pomo}/bin/pomo start
         fi
       }
 
@@ -36,13 +36,13 @@
           block_type=$1
           if [[ $block_type -eq 0 ]]; then
               echo "End of work period"
-              send_msg -i kronometer 'Pomodoro' 'End of a work period. Locking Screen!'
+              notify-send -i kronometer 'Pomodoro' 'End of a work period. Locking Screen!'
               ${pkgs.playerctl}/bin/playerctl --all-players pause
               ${pkgs.mpv}/bin/mpv ${pkgs.pomo-alert} || sleep 10
               lock_screen &
           elif [[ $block_type -eq 1 ]]; then
               echo "End of break period"
-              send_msg -i kronometer 'Pomodoro' 'End of a break period. Time for work!'
+              notify-send -i kronometer 'Pomodoro' 'End of a break period. Time for work!'
               ${pkgs.mpv}/bin/mpv ${pkgs.pomo-alert}
           else
               echo "Unknown block type"

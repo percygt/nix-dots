@@ -5,15 +5,11 @@
   :ensure nil
   :config
   (add-to-list 'display-buffer-alist
-               '((derived-mode . org-mode)
-                 (
-	              display-buffer-full-frame
-                  )))
+               '("^\\*CAPTURE$\\*"
+                 (display-buffer-full-frame)))
   (add-to-list 'display-buffer-alist
                '("\\*Org Select\\*"
-                 (
-	              display-buffer-full-frame
-                  )))
+                 (display-buffer-full-frame)))
   :preface
   (defun org-mode-setup ()
     (org-indent-mode)
