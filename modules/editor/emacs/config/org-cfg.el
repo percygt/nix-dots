@@ -5,7 +5,7 @@
   :ensure nil
   :config
   (add-to-list 'display-buffer-alist
-               '("^\\*CAPTURE$\\*"
+               '((derived-mode . org-mode)
                  (display-buffer-full-frame)))
   (add-to-list 'display-buffer-alist
                '("\\*Org Select\\*"
@@ -57,7 +57,6 @@
   (org-log-done 'time)
   (org-log-into-drawer t)
   (org-todo-keywords '((type "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c@)")))
-  (org-checkbox-hierarchical-statistics t)
   (org-checkbox-hierarchical-statistics t)
   (org-enforce-todo-dependencies t)
   (org-hierarchical-todo-statistics nil)

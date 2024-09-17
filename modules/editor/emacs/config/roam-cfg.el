@@ -17,10 +17,16 @@
   (defvar auto-org-roam-db-sync--timer-interval 5)
   ;; Define the function
   (defun org-follow-link-other-window ()
-    "Open the link at point in another window."
+    "Force the link at point to open in another window."
     (interactive)
-    (let ((org-link-frame-setup '((file . other-window))))
+    (let ((org-link-frame-setup
+           (cons '(file .
+                        (lambda ()
+                          (when-let* ((buf (find-file-noselect filename)))
+                            (display-buffer-in-direction buf '((direction . rightmost))))))
+                 org-link-frame-setup)))
       (org-open-at-point)))
+
   (defun get-files-in-directory (dir)
     "Return a list of file names in the specified directory DIR, excluding directories."
     (let ((files (directory-files dir t)))
@@ -137,7 +143,9 @@
   (global-definer
     :keymaps '(org-mode-map)
     "wi" 'org-roam-node-insert
-    "<return>" 'org-follow-link-other-window)
+    "<return>" (general-predicate-dispatch 'org-follow-link-other-window
+                 (org-at-table-p) 'org-table-copy-down)
+    )
   )
 
 (use-package org-roam-timestamps

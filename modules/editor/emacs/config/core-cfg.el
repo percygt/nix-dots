@@ -10,7 +10,6 @@
     (setq indicate-buffer-boundaries 'left))
   :custom
   (fast-but-imprecise-scrolling     t)
-  (indent-tabs-mode                 nil) ;; Always indent with spaces
   (tab-width                        4) ;; Set tab-size to 4 spaces
   (delete-by-moving-to-trash        t)
   (visible-bell                     t)
@@ -18,12 +17,14 @@
   (mouse-yank-at-point              t)
   (use-short-answers                t)
   (column-number-mode               t)
+  (indent-tabs-mode                 nil) ;; Always indent with spaces
+  (even-window-sizes                nil)
   (confirm-kill-processes           nil)
   (visible-bell                     nil)
   (fill-column                      100)
   (initial-major-mode               'fundamental-mode)
   (user-emacs-directory             user-emacs-data-directory)
-  (read-extended-command-predicate  #'command-completion-default-include-p)
+  ;; (read-extended-command-predicate  #'command-completion-default-include-p)
   :hook ((prog-mode . display-fill-column-indicator-mode)
          ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
 

@@ -69,7 +69,7 @@
   :general
   (global-definer
     "s" '(nil :wk "Consult")
-    "sf" 'consult-find
+    "sf" 'consult-fd
     "sg" 'consult-ripgrep
     "0"  'consult-buffer
     "sl" 'consult-line

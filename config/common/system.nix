@@ -6,6 +6,7 @@ in
   imports = [
     ./dconf
     ./ydotool.nix
+    # ./blocky.nix
   ];
   home-manager.users.${g.username} = import ./home.nix;
 }

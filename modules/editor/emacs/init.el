@@ -69,6 +69,7 @@
 (require 'core-cfg)
 (require 'general-cfg)
 (require 'common-cfg)
+(require 'latex-cfg)
 (require 'evil-cfg)
 (require 'ui-cfg)
 (require 'filetree-cfg)

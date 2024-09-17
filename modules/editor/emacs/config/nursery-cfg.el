@@ -30,8 +30,8 @@
   :general
   (:states '(normal) :keymaps 'org-roam-review-mode-map
 	       "TAB" 'magit-section-cycle
-	       "g r" 'org-roam-review-refresh)
-  )
+	       "g r" 'org-roam-review-refresh))
+
 (use-package org-format
   :ensure nil
   :hook (org-mode . org-format-on-save-mode))

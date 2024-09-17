@@ -1,6 +1,30 @@
 { pkgs }:
 with pkgs;
 [
+  (texlive.combine {
+    inherit (pkgs.texlive)
+      dvisvgm
+      dvipng # for preview and export as html
+      wrapfig
+      amsmath
+      ulem
+      hyperref
+      capt-of
+      scheme-minimal
+      latex-bin
+      latexmk
+      tools
+      pgf
+      epstopdf-pkg
+      nicematrix
+      infwarerr
+      grfext
+      kvdefinekeys
+      kvsetkeys
+      kvoptions
+      ltxcmds
+      ;
+  })
   (aspellWithDicts (
     dicts: with dicts; [
       en

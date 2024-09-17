@@ -38,7 +38,7 @@
   :demand
   :hook
   (org-agenda-mode . centaur-tabs-local-mode)
-  ;; (org-mode . centaur-tabs-local-mode)
+  (org-mode . centaur-tabs-local-mode)
   :init
   (setq centaur-tabs-enable-key-bindings t)
   :bind ( :map evil-normal-state-map
