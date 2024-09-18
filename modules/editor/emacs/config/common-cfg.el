@@ -3,6 +3,7 @@
 ;;; Code:
 
 (use-package multiple-cursors
+  :general
   (global-definer
     "n" '(nil :wk "Multicursor")
 	"nn" 'mc/mark-next-word-like-this

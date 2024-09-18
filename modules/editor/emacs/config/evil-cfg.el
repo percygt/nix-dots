@@ -12,7 +12,7 @@
           (progn
             (backward-delete-char 1)
             (evil-normal-state))
-	(push event unread-command-events))))
+	    (push event unread-command-events))))
   :init
   (setq evil-want-keybinding      nil)
   (setq evil-want-integration     t)
@@ -35,22 +35,22 @@
           git-rebase-mode
           term-mode) . evil-emacs-state-mode)
   :bind ( :map evil-normal-state-map
-	  ("C-e" . evil-end-of-line)
-	  ("C-e" . evil-end-of-line)
-	  ("C-b" . evil-beginning-of-line)
-	  ("ESCAPE" . keyboard-escape-quit)
-	  ("WW" . save-buffer)
-	  :map evil-insert-state-map
-	  ("j"   . evil-insert-jk-for-normal-mode)
-	  :map evil-visual-state-map
-	  ("ESCAPE" . keyboard-quit)
-	  :map special-mode-map
-	  ("q" . quit-window))
+	      ("C-e" . evil-end-of-line)
+	      ("C-b" . evil-beginning-of-line)
+	      ("ESCAPE" . keyboard-escape-quit)
+	      ("WW" . save-buffer)
+	      :map evil-insert-state-map
+	      ("j"   . evil-insert-jk-for-normal-mode)
+	      :map evil-visual-state-map
+	      ("ESCAPE" . keyboard-quit)
+	      :map special-mode-map
+	      ("q" . quit-window))
   :config
   (evil-mode 1)
   (evil-set-initial-state 'messages-buffer-mode 'normal))
 
 (use-package evil-surround
+  :after evil
   :config
   (global-evil-surround-mode 1))
 
@@ -64,14 +64,14 @@
   :config
   (evil-commentary-mode))
 
-;; (use-package avy
-;;   :bind (:map evil-normal-state-map
-;;               ("M-s" . avy-goto-char)))
+(use-package avy
+  :bind (:map evil-normal-state-map
+              ("M-s" . avy-goto-char)))
 
 (use-package move-text
   :bind (:map evil-normal-state-map
-	      ("M-k" . move-text-up)
-	      ("M-j" . move-text-down))
+              ("M-k" . move-text-up)
+	          ("M-j" . move-text-down))
   :config
   (move-text-default-bindings))
 

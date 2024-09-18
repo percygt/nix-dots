@@ -17,6 +17,11 @@
     :states '(insert normal hybrid motion visual operator emacs)
     :prefix "SPC"
     :global-prefix "C-SPC")
+  (general-create-definer local-definer
+    :keymaps 'override
+    :states '(insert normal hybrid motion visual operator emacs)
+    :prefix ","
+    :global-prefix "C-,")
 
   (general-create-definer normal-definer
     :keymaps 'override
@@ -37,10 +42,10 @@
     :prefix "SPC m"
     :non-normal-prefix "C-SPC m"
     "" '( :ignore t
-  	  :which-key
-  	  (lambda (arg)
-  	    (cons (cadr (split-string (car arg) " "))
-  		  (replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
+  	      :which-key
+  	      (lambda (arg)
+  	        (cons (cadr (split-string (car arg) " "))
+  		          (replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
   )
 
 

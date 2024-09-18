@@ -70,6 +70,7 @@
 (require 'general-cfg)
 (require 'common-cfg)
 (require 'latex-cfg)
+(require 'agenda-cfg)
 (require 'evil-cfg)
 (require 'ui-cfg)
 (require 'filetree-cfg)

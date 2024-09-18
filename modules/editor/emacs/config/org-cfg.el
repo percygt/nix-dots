@@ -5,7 +5,7 @@
   :ensure nil
   :config
   (add-to-list 'display-buffer-alist
-               '((derived-mode . org-mode)
+               '((derived-mode . org-capture-mode)
                  (display-buffer-full-frame)))
   (add-to-list 'display-buffer-alist
                '("\\*Org Select\\*"
@@ -33,12 +33,12 @@
      ("c" "check out later" entry (file+headline "todo.org" "Check out later")
       "* [ ] %?\n%i\n%a"
       :prepend t)))
+  (org-highlight-latex-and-related '(native)) ;; Highlight inline LaTeX
   (org-startup-indented t)
   (org-hide-emphasis-markers t)
   (org-list-indent-offset 1)
   (org-cycle-separator-lines 1)
   (org-ellipsis " ")
-  (org-hide-emphasis-markers t)
   (org-pretty-entities t)
   (org-special-ctrl-a/e '(t . nil))
   (org-special-ctrl-k t)
@@ -49,15 +49,19 @@
   (org-hide-block-startup nil)
   (org-src-tab-acts-natively t)
   (org-src-preserve-indentation nil)
-  (org-startup-folded 'showall)
+  (org-startup-folded 'showeverything)
+  (org-image-actual-width 300)
   (org-cycle-separator-lines 2)
   (org-hide-leading-stars t)
   (org-highlight-latex-and-related '(native))
   (org-goto-auto-isearch nil)
   (org-log-done 'time)
   (org-log-into-drawer t)
+  (org-link-frame-setup '((file . find-file)));; Opens links to other org file in same frame (rather than splitting)
+  (org-catch-invisible-edits 'show-and-error) ;; 'smart
   (org-todo-keywords '((type "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c@)")))
   (org-checkbox-hierarchical-statistics t)
+  (org-list-demote-modify-bullet '(("+" . "*") ("*" . "-") ("-" . "+")))
   (org-enforce-todo-dependencies t)
   (org-hierarchical-todo-statistics nil)
   (org-use-property-inheritance t)
@@ -79,7 +83,17 @@
   (org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
   (org-table ((t (:inherit fixed-pitch))))
   (org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1.0))))
-  (org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+  (org-tags-column -1)
+  (org-verbatim ((t (:inherit (shadow fixed-pitch)))))
+  (org-lowest-priority ?F)  ;; Gives us priorities A through F
+  (org-default-priority ?E) ;; If an item has no priority, it is considered [#E].
+  (org-priority-faces
+      '((65 . "red2")
+        (66 . "Gold1")
+        (67 . "Goldenrod2")
+        (68 . "PaleTurquoise3")
+        (69 . "DarkSlateGray4")
+        (70 . "PaleTurquoise4"))))
 
 (use-package evil-org
   :diminish evil-org-mode
@@ -110,6 +124,11 @@
         org-appear-autolinks nil		;; Don't enable on links
         org-appear-autosubmarkers t))	;; Enable on subscript and superscript
 
+(use-package org-ql
+  :defer t
+  :general
+  (:states '(normal) :keymaps 'org-ql-view-map
+           "q" 'kill-buffer-and-window))
 ;; (use-package org-brain
 ;;   :custom
 ;;   (org-brain-path notes-directory)
@@ -149,8 +168,6 @@
 
 
 ;; (use-package org-timeblock)
-
-;; (use-package org-super-agenda)
 
 ;; (use-package org-transclusion :after org)
 

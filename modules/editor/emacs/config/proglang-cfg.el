@@ -15,10 +15,25 @@
 (use-package auto-rename-tag
   :defer t
   :hook (web-mode . auto-rename-tag-mode))
-
-(use-package elisp-mode
+(use-package emacs-lisp-mode
   :ensure nil
-  :diminish "EL")
+  :general
+  (local-definer
+   :keymaps 'emacs-lisp-mode-map
+   "e" '(nil :which-key "eval")
+   "es" '(eval-last-sexp :which-key "eval-sexp")
+   "er" '(eval-region :which-key "eval-region")
+   "eb" '(eval-buffer :which-key "eval-buffer")
+
+   "g" '(counsel-imenu :which-key "imenu")
+   "c" '(check-parens :which-key "check parens")
+   "I" '(indent-region :which-key "indent-region")
+
+   "b" '(nil :which-key "org src")
+   "bc" 'org-edit-src-abort
+   "bb" 'org-edit-src-exit
+   )
+  )
 (use-package buttercup :defer t)
 (use-package package-lint :defer t)
 (use-package elisp-lint :defer t)
