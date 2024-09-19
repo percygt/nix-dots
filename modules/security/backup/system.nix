@@ -48,7 +48,7 @@ in
         after = [ "udisks2.service" ];
         requires = [ "udisks2.service" ];
         serviceConfig.Type = "oneshot";
-        preStart = "${pkgs.coreutils}/bin/sleep 30";
+        preStart = "${pkgs.coreutils-full}/bin/sleep 30";
         script = "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind";
       };
       timers.borgmatic = lib.mkForce {
@@ -94,7 +94,7 @@ in
           IOWeight = 100;
           Restart = "no";
           LogRateLimitIntervalSec = 0;
-          ExecStartPre = "${pkgs.coreutils}/bin/sleep 1m";
+          ExecStartPre = "${pkgs.coreutils-full}/bin/sleep 1m";
           ExecStart = "systemd-inhibit --who=\"borgmatic\" --what=\"sleep:shutdown\" --why=\"Prevent interrupting scheduled backup\" ${g.security.borgmatic.package}/bin/borgmatic --verbosity -2 --syslog-verbosity 1";
         };
       };

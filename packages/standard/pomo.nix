@@ -3,7 +3,7 @@
   lib,
   fetchFromGitHub,
   makeWrapper,
-  coreutils,
+  coreutils-full,
   libnotify,
 }:
 
@@ -35,7 +35,7 @@ stdenv.mkDerivation {
   postFixup = ''
     wrapProgram $out/bin/pomo --prefix PATH : ${
       lib.makeBinPath [
-        coreutils
+        coreutils-full
         libnotify
       ]
     }

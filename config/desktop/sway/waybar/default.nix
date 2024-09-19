@@ -8,7 +8,7 @@ let
   g = config._general;
   toggleIdleSleepBlock = pkgs.writeShellApplication {
     name = "toggle-idle-sleep-block";
-    runtimeInputs = [ pkgs.coreutils ];
+    runtimeInputs = [ pkgs.coreutils-full ];
     text = ''
       BLOCKFILE="$HOME/.local/share/idle-sleep-block"
       if test -f "$BLOCKFILE"; then

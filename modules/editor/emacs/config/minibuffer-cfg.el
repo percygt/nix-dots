@@ -17,15 +17,15 @@
     :map minibuffer-local-isearch-map
     ("ESCAPE" . minibuffer-keyboard-quit)))
 
-;; just for looks
-(use-package vertico-posframe
-  :config
-  (vertico-posframe-mode 1)
-  :custom
-  (vertico-posframe-parameters
-   '((left-fringe . 8)
-     (right-fringe . 8))))
-
+;; ;; just for looks
+;; (use-package vertico-posframe
+;;   :config
+;;   (vertico-posframe-mode 1)
+;;   :custom
+;;   (vertico-posframe-parameters
+;;    '((left-fringe . 8)
+;;      (right-fringe . 8))))
+;;
 (use-package vertico
   :init (vertico-mode)
   :custom
@@ -34,7 +34,6 @@
               ("C-j" . vertico-next)
               ("TAB" . vertico-insert)
               ([tab] . vertico-insert)
-              ;; ("ESCAPE" . minibuffer-force-complete-and-exit)
               ("C-k" . vertico-previous)))
 
 ;;; Configure directory extension.

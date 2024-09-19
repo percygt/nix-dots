@@ -17,5 +17,5 @@
       ];
     };
   };
-  systemd.user.services.udiskie.Service.ExecStartPre = "${pkgs.coreutils}/bin/sleep 15";
+  systemd.user.services.udiskie.Service.ExecStartPre = "${pkgs.coreutils-full}/bin/sleep 15";
 }

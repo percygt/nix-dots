@@ -14,7 +14,7 @@
   (setq pdf-view-continuous nil) ;; Makes it so scrolling down to the bottom/top of a page doesn't switch to the next page
   (setq pdf-view-midnight-colors '("#ffffff" . "#121212" )) ;; I use midnight mode as dark mode, dark mode doesn't seem to work
   :general
-  (general-define-key :states 'motion :keymaps 'pdf-view-mode-map
+  (:states 'motion :keymaps 'pdf-view-mode-map
                       "j" 'pdf-view-next-page
                       "k" 'pdf-view-previous-page
 
@@ -41,9 +41,9 @@
                       "Q" 'kill-this-buffer
                       "g" 'revert-buffer
 
-                      "C-s" 'isearch-forward
-                      )
+                      "C-s" 'isearch-forward)
   )
+
 (use-package popper
   :bind (("C-`"   . popper-toggle-latest)
          ("M-`"   . popper-cycle)

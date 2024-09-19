@@ -176,7 +176,7 @@ in
           "PATH"
           ":"
           "${lib.makeBinPath [
-            pkgs.wezterm_nightly
+            pkgs.wezterm
           ]}"
         ];
       }

@@ -25,7 +25,7 @@
         if ${pkgs.procps}/bin/pgrep sway 2>&1 > /dev/null; then
           echo "Sway detected"
           # Only lock if pomo is still running
-          test -f $XDG_DATA_HOME/pomo && "${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config"
+          test -f $XDG_DATA_HOME/pomo && ${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config
           # Only restart pomo if pomo is still running
           test -f $XDG_DATA_HOME/pomo && ${pkgs.pomo}/bin/pomo start
         fi

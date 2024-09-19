@@ -65,7 +65,7 @@
             s.ssh.package
             d.git.package
             iputils
-            coreutils
+            coreutils-full
             findutils
             procps
             systemd
@@ -98,7 +98,7 @@
             d.git.package
             nfs-utils
             iputils
-            coreutils
+            coreutils-full
             findutils
             pciutils
             usbutils
