@@ -4,13 +4,9 @@
 (use-package org-agenda
   :ensure nil
   :custom
-  ;; custom time stamp format. I don't use this.
   (org-time-stamp-custom-formats '("<%A, %B %d, %Y" . "<%m/%d/%y %a %I:%M %p>"))
-
   (org-agenda-restore-windows-after-quit t)
-
   (org-agenda-window-setup 'current-window)
-
   ;; Only show upcoming deadlines for the next X days. By default it shows
   ;; 14 days into the future, which seems excessive.
   (org-deadline-warning-days 3)
@@ -20,35 +16,24 @@
   (org-agenda-skip-scheduled-if-done t)
   ;; If something is scheduled, don't tell me it is due soon
   (org-agenda-skip-deadline-prewarning-if-scheduled t)
-
   ;; use AM-PM and not 24-hour time
   (org-agenda-timegrid-use-ampm t)
-
   ;; A new day is 3am (I work late into the night)
   ;; (setq org-extend-today-until 3)
-
   ;; (setq org-agenda-time-grid '((daily today require-timed)
   ;;                              (1000 1100 1200 1300 1400 1500 1600 1700 1800 1900 2000 2100 2200)
   ;;                              "        " "----------------"))
-
   (org-agenda-time-grid nil)
-
   ;; (setq org-agenda-span 'day)
-
   (org-agenda-block-separator ?-)
   ;; (setq org-agenda-current-time-string "<----------------- Now")
-
   ;; ;; (setq org-agenda-block-separator nil)
-
   ;; (setq org-agenda-scheduled-leaders '("Plan | " "Sched.%2dx: ") ; ⇛
   ;;       org-agenda-deadline-leaders '("Due: " "(in %1d d.) " "Due %1d d. ago: "))
-
   ;; (setq org-agenda-prefix-format '((agenda . "  %-6:T %t%s")
   ;;                                  (todo . "  %-6:T %t%s")
   ;;                                  (tags . " %i %-12:c")
   ;;                                  (search . " %i %-12:c")))
-
-;;;;; more true to defaults
 
   (org-agenda-prefix-format '((agenda . " %-12:T%?-12t% s")
                               (todo . " %i %-12:c")

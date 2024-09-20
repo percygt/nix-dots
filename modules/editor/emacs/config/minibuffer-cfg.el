@@ -1,4 +1,3 @@
-
 ;;; minibuffer-cfg.el --- Org Mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
@@ -17,7 +16,6 @@
     :map minibuffer-local-isearch-map
     ("ESCAPE" . minibuffer-keyboard-quit)))
 
-;; ;; just for looks
 ;; (use-package vertico-posframe
 ;;   :config
 ;;   (vertico-posframe-mode 1)
@@ -25,7 +23,7 @@
 ;;   (vertico-posframe-parameters
 ;;    '((left-fringe . 8)
 ;;      (right-fringe . 8))))
-;;
+
 (use-package vertico
   :init (vertico-mode)
   :custom

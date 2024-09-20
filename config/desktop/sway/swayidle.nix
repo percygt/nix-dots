@@ -1,19 +1,18 @@
 {
   pkgs,
-  config,
   lib,
+  config,
   ...
 }:
 let
-  swaymsg = "${config._general.desktop.sway.package}/bin/swaymsg";
   systemctl = "${pkgs.systemd}/bin/systemctl";
+  g = config._general;
 in
 {
-
   systemd.user.services.swayidle.Service.ExecStop = lib.getExe (
     pkgs.writeShellApplication {
       name = "swayidle-cleanup";
-      runtimeInputs = [ pkgs.coreutils ];
+      runtimeInputs = [ pkgs.coreutils-full ];
       text = ''
         BLOCKFILE="$HOME/.local/share/idle-sleep-block"
         if test -f "$BLOCKFILE"; then
@@ -33,12 +32,12 @@ in
             pkgs.writeShellApplication {
               runtimeInputs = [
                 pkgs.coreutils-full
-                pkgs.sway
-                pkgs.swaylock
+                g.desktop.sway.package
+                config.programs.swaylock.package
               ];
               name = "swayidle-before-sleep";
               text = ''
-                swaylock --daemonize
+                swaylock --daemonize -C ${config.xdg.configHome}/swaylock/config;
                 swaymsg 'output * power off'
               '';
             }
@@ -51,7 +50,7 @@ in
               name = "swayidle-after-resume";
               runtimeInputs = [
                 pkgs.coreutils-full
-                pkgs.sway
+                g.desktop.sway.package
                 pkgs.pomo
               ];
               text = ''
@@ -76,15 +75,12 @@ in
                 pkgs.playerctl
                 pkgs.gnugrep
                 pkgs.acpi
-                pkgs.swaylock
+                g.desktop.sway.package
               ];
               text = ''
                 set -x
                 if test -f "$HOME/.local/share/idle-sleep-block"; then
                   echo "Restarting service because of idle-sleep-block file"
-                  systemctl --restart swayidle.service
-                elif acpi --ac-adapter | grep -q "on-line"; then
-                  echo "Restarting service because laptop is plugged in"
                   systemctl --restart swayidle.service
                 else
                   echo "Idle timeout reached. Night night."

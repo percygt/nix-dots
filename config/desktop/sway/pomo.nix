@@ -26,8 +26,10 @@
           echo "Sway detected"
           # Only lock if pomo is still running
           test -f $XDG_DATA_HOME/pomo && ${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config
+          echo 'swaylock'
           # Only restart pomo if pomo is still running
           test -f $XDG_DATA_HOME/pomo && ${pkgs.pomo}/bin/pomo start
+          echo 'pomo start'
         fi
       }
 
@@ -50,8 +52,8 @@
           fi
       }
       POMO_MSG_CALLBACK="custom_notify"
-      POMO_WORK_TIME=30
-      POMO_BREAK_TIME=5
+      POMO_WORK_TIME=2
+      POMO_BREAK_TIME=2
     '';
   };
 }
