@@ -7,6 +7,8 @@
 let
   t = config.modules.theme;
   f = config.modules.fonts.interface;
+  g = config._general;
+  swayPkg = g.desktop.sway.package;
   homeCfgs = config.home-manager.users;
   unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;
   xSessions = "${config.services.displayManager.sessionData.desktops}/share/xsessions";
@@ -16,13 +18,13 @@ let
 
   sway-kiosk =
     command:
-    "${lib.getExe pkgs.sway} ${lib.optionalString unsupported-gpu "--unsupported-gpu"} --config ${pkgs.writeText "kiosk.config" ''
+    "${lib.getExe swayPkg} ${lib.optionalString unsupported-gpu "--unsupported-gpu"} --config ${pkgs.writeText "kiosk.config" ''
       output * bg #000000 solid_color
       xwayland disable
       input "type:touchpad" {
         tap enabled
       }
-      exec '${vars} ${command}; ${pkgs.sway}/bin/swaymsg exit'
+      exec '${vars} ${command}; ${swayPkg}/bin/swaymsg exit'
     ''}";
 in
 {

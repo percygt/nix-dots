@@ -75,6 +75,7 @@ in
                 pkgs.playerctl
                 pkgs.gnugrep
                 pkgs.acpi
+                config.programs.swaylock.package
                 g.desktop.sway.package
               ];
               text = ''

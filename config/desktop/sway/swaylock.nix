@@ -36,9 +36,8 @@ in
       fade-in = 0.2;
     };
   };
-
-  systemd.user.services.swaylock = {
-    Unit.Description = "Lock screen";
-    Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config";
-  };
+  #
+  # systemd.user.services.swaylock = {
+  #   Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config";
+  # };
 }
