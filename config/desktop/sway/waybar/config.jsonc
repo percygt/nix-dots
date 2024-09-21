@@ -37,14 +37,14 @@
     ],
     "custom/idlesleep": {
       "format": "{}",
-      "exec": "if test -f $XDG_DATA_HOME/idle-sleep-block; then echo '🐝'; else echo '🕸️'; fi",
+      "exec": "if test -f $XDG_DATA_HOME/idle-sleep-block; then echo '󰒲'; else echo '󰒳'; fi",
       "max-length": 5,
       "interval": 1,
       "signal": 8,
       "on-click": "toggle-idle-sleep-block; pkill -SIGRTMIN+8 waybar"
     },
     "custom/pomo": {
-      "format": "{} 󱎫",
+      "format": "{} ",
       "exec": "pomo clock",
       "interval": 1,
       "on-click": "pomo pause",

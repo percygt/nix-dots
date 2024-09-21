@@ -24,7 +24,7 @@
   (fill-column                      100)
   (initial-major-mode               'fundamental-mode)
   (user-emacs-directory             user-emacs-data-directory)
-  ;; (read-extended-command-predicate  #'command-completion-default-include-p)
+  (read-extended-command-predicate  #'command-completion-default-include-p)
   :hook ((prog-mode . display-fill-column-indicator-mode)
          ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
 

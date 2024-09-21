@@ -4,7 +4,6 @@
 
 (use-package general
   :demand t
-  :after evil
   :preface
   (defun switch-to-recent-buffer ()
     (interactive)
@@ -22,11 +21,9 @@
     :states '(insert normal hybrid motion visual operator emacs)
     :prefix ","
     :global-prefix "C-,")
-
   (general-create-definer normal-definer
     :keymaps 'override
     :states '(normal))
-
   (global-definer
     "!" 'shell-command
     ":" 'eval-expression
@@ -47,7 +44,6 @@
   	        (cons (cadr (split-string (car arg) " "))
   		          (replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
   )
-
 
 (provide 'general-cfg)
 ;;; general-cfg.el ends here

@@ -5,7 +5,7 @@
   :ensure nil
   :config
   (add-to-list 'display-buffer-alist
-               '((derived-mode . org-capture-mode)
+               '("^\\*Capture\\*$"
                  (display-buffer-full-frame)))
   (add-to-list 'display-buffer-alist
                '("\\*Org Select\\*"
@@ -35,6 +35,7 @@
       :prepend t)))
   (org-highlight-latex-and-related '(native)) ;; Highlight inline LaTeX
   (org-startup-indented t)
+  (org-return-follows-link  t)
   (org-hide-emphasis-markers t)
   (org-list-indent-offset 1)
   (org-cycle-separator-lines 1)
@@ -53,7 +54,6 @@
   (org-image-actual-width 300)
   (org-cycle-separator-lines 2)
   (org-hide-leading-stars t)
-  (org-highlight-latex-and-related '(native))
   (org-goto-auto-isearch nil)
   (org-log-done 'time)
   (org-log-into-drawer t)
@@ -88,12 +88,12 @@
   (org-lowest-priority ?F)  ;; Gives us priorities A through F
   (org-default-priority ?E) ;; If an item has no priority, it is considered [#E].
   (org-priority-faces
-      '((65 . "red2")
-        (66 . "Gold1")
-        (67 . "Goldenrod2")
-        (68 . "PaleTurquoise3")
-        (69 . "DarkSlateGray4")
-        (70 . "PaleTurquoise4"))))
+   '((65 . "red2")
+     (66 . "Gold1")
+     (67 . "Goldenrod2")
+     (68 . "PaleTurquoise3")
+     (69 . "DarkSlateGray4")
+     (70 . "PaleTurquoise4"))))
 
 (use-package evil-org
   :diminish evil-org-mode
@@ -107,7 +107,7 @@
 
 (use-package org-modern
   :ensure t
-  :hook ((org-mode                 . org-modern-mode)
+  :hook ((org-mode . org-modern-mode)
          (org-agenda-finalize-hook . org-modern-agenda))
   :custom ((org-modern-table nil)
 	       (org-modern-list'((?+ . "✦") (?- . "‣") (?* . "◉")))
@@ -129,6 +129,7 @@
   :general
   (:states '(normal) :keymaps 'org-ql-view-map
            "q" 'kill-buffer-and-window))
+
 ;; (use-package org-brain
 ;;   :custom
 ;;   (org-brain-path notes-directory)
@@ -149,9 +150,31 @@
 ;;       org-capture-templates)
 
 ;; Allows you to edit entries directly from org-brain-visualize
-;; (use-package polymode
-;;   :config
-;;   (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
+(use-package polymode
+  :general
+  (local-definer
+    :states '(normal visual)
+    :keymaps 'polymode-mode-map
+    "j" 'polymode-next-chunk
+    "k" 'polymode-previous-chunk
+    "i" 'polymode-insert-new-chunk
+    "u" 'polymode-insert-new-chunk-code-only
+    "U" 'polymode-insert-new-chunk-output-only
+    "p" 'polymode-insert-new-plot
+    "o" 'polymode-insert-yaml
+    "d" 'polymode-kill-chunk
+    "e" 'polymode-export
+    "E" 'polymode-set-exporter
+    "w" 'polymode-weave
+    "W" 'polymode-set-weaver
+    "$" 'polymode-show-process-buffer
+    "n" 'polymode-eval-region-or-chunk
+    "," 'polymode-eval-region-or-chunk
+    "N" 'polymode-eval-buffer
+    "1" 'polymode-eval-buffer-from-beg-to-point
+    "0" 'polymode-eval-buffer-from-point-to-end)
+  :config
+  (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
 
 
 ;;;; Templates
@@ -167,12 +190,9 @@
 ;;       (push template org-structure-template-alist))))
 
 
-;; (use-package org-timeblock)
+(use-package org-timeblock)
 
-;; (use-package org-transclusion :after org)
-
-;; (use-package org-ql)
-
+(use-package org-transclusion :after org)
 
 (provide 'org-cfg)
 ;;; org-cfg.el ends here

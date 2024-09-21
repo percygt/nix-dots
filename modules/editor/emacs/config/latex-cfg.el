@@ -68,7 +68,6 @@
     "l"  '(nil :wk "Latex")
     "la" '(TeX-command-run-all :which-key "TeX run all")
     "lc" '(TeX-command-master :which-key "TeX-command-master")
-    "lc" '(TeX-command-master :which-key "TeX-command-master")
     "le" '(LaTeX-environment :which-key "Insert environment")
     "ls" '(LaTeX-section :which-key "Insert section")
     "lm" '(TeX-insert-macro :which-key "Insert macro"))

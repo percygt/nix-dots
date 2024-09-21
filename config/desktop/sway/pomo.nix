@@ -72,8 +72,8 @@ in
       SWAYSOCK=$XDG_RUNTIME_DIR/sway-ipc.$(id -u).$(pgrep -x sway).sock
       WAYLAND_DISPLAY=wayland-1
       POMO_MSG_CALLBACK="custom_notify"
-      POMO_WORK_TIME=1
-      POMO_BREAK_TIME=1
+      POMO_WORK_TIME=30
+      POMO_BREAK_TIME=5
     '';
   };
 }

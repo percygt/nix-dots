@@ -24,6 +24,6 @@
     swaynag.enable = true;
     systemd.xdgAutostart = true;
     wrapperFeatures.gtk = true;
-    # checkConfig = false;
+    checkConfig = false;
   };
 }

@@ -1,6 +1,7 @@
 ;;; dired-cfg.el --- Org Mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
 (use-package dired
   :ensure nil
   :custom ((dired-listing-switches "-agho --group-directories-first"))
@@ -16,7 +17,7 @@
     "d" 'dired-do-delete))
 
 (use-package dired-single
-  :after (evil dired)
+  :after dired
   :general
   (normal-definer
     :keymaps '(dired-mode-map)
@@ -24,24 +25,21 @@
     "h" 'dired-single-up-directory))
 
 (use-package diredfl
+  :after dired
   :hook (dired-mode . diredfl-global-mode))
 
-
 (use-package dired-open
-  :config
-  ;; Doesn't work as expected!
-  ;;(add-to-list 'dired-open-functions #'dired-open-xdg t)
-  (setq dired-open-extensions '(("png" . "feh")
-                                ("mkv" . "mpv"))))
+  :after dired
+  :custom
+  (dired-open-extensions '(("png" . "feh")
+                           ("mkv" . "mpv"))))
 
 (use-package dired-hide-dotfiles
-  :after (evil dired)
   :general
   (normal-definer
     :keymaps '(dired-mode-map)
     "SPC" 'nil
     "."   'dired-hide-dotfiles-mode))
-
 
 (provide 'dired-cfg)
 ;;; dired-cfg.el ends here

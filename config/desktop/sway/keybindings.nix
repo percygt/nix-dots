@@ -60,7 +60,7 @@ in
       "${mod}+v" = "exec ${lib.getExe pkgs.toggle-sway-window} --id pavucontrol -- pavucontrol";
       "${mod}+n" = "exec ${lib.getExe pkgs.toggle-sway-window} --id wpa_gui -- wpa_gui";
       # TODO: decide on what dropdown/window-toggle script to use. Maybe rewrite ddapp in babashka
-      "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p notesddterm -c '${config.modules.editor.emacs.finalPackage}/bin/emacs ${g.dataDirectory}/notes/home.org'";
+      "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p notesddterm -c '${config.modules.editor.emacs.finalPackage}/bin/emacs ${g.dataDirectory}/notes/00-HOME.org'";
       "${mod}+Shift+e" = "exec ${lib.getExe pkgs.ddapp} -p emacsconfigddterm -c '${config.modules.editor.emacs.finalPackage}/bin/emacs ${g.flakeDirectory}/modules/editor/emacs'";
       # "${mod}+e" = "exec ${lib.getExe pkgs.ddapp} -p notesddterm -c '${emacsClient} ${g.dataDirectory}/notes/home.org'";
       # "${mod}+Shift+e" = "exec ${lib.getExe pkgs.ddapp} -p emacsconfigddterm -c '${emacsClient} ${g.flakeDirectory}/modules/editor/emacs'";

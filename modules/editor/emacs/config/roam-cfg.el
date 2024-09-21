@@ -3,11 +3,13 @@
 ;;; Code:
 
 ;; (use-package md-roam
+;;   :ensure nil
 ;;   :after org-roam
 ;;   :custom
 ;;   (md-roam-file-extension "md")
 ;;   :config
 ;;   (md-roam-mode 1))
+
 (use-package org-roam
   :after (evil org marginalia)
   :init
@@ -15,7 +17,6 @@
   :preface
   (defvar auto-org-roam-db-sync--timer nil)
   (defvar auto-org-roam-db-sync--timer-interval 5)
-  ;; Define the function
   (defun org-follow-link-other-window ()
     "Force the link at point to open in another window."
     (interactive)
@@ -26,7 +27,6 @@
                             (display-buffer-in-direction buf '((direction . rightmost))))))
                  org-link-frame-setup)))
       (org-open-at-point)))
-
   (defun get-files-in-directory (dir)
     "Return a list of file names in the specified directory DIR, excluding directories."
     (let ((files (directory-files dir t)))
@@ -52,7 +52,6 @@
     (if-let ((dirs (file-name-directory (file-relative-name (org-roam-node-file node) org-roam-directory))))
 	    (format "(%s)" (car (split-string dirs "/")))
       ""))
-
   (cl-defmethod org-roam-node-backlinkscount ((node org-roam-node))
     (let* ((count (caar (org-roam-db-query
 			             [:select (funcall count source)
@@ -67,9 +66,6 @@
        (when (> level 0) (concat (org-roam-node-file-title node) " > "))
        (when (> level 1) (concat (string-join (org-roam-node-olp node) " > ") " > "))
        (org-roam-node-title node))))
-  (cl-defmethod org-roam-node-keywords ((node org-roam-node))
-    "Return the currently set category for the NODE."
-    (cdr (assoc-string "KEYWORDS" (org-roam-node-properties node))))
   (cl-defmethod org-roam-node-numbered-slug
     ((node org-roam-node)) (upcase (concat (get-next-file-number notes-directory) "-" (org-roam-node-slug node))))
   (cl-defmethod org-roam-node-capitalized-title
@@ -85,6 +81,7 @@
 	        (run-with-idle-timer
 	         auto-org-roam-db-sync--timer-interval :repeat
 	         #'org-roam-db-sync))))
+
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
                  (display-buffer-full-frame)))
@@ -138,14 +135,13 @@
     "wf" 'org-roam-node-find
     "wg" 'org-roam-graph
     "wc" 'org-roam-capture
-    "wd" 'org-roam-dailies-capture-today
-    )
+    "wd" 'org-roam-dailies-capture-today)
   (global-definer
     :keymaps '(org-mode-map)
     "wi" 'org-roam-node-insert
-    "<return>" (general-predicate-dispatch 'org-follow-link-other-window
-                 (org-at-table-p) 'org-table-copy-down)
-    )
+    ;; "<return>" (general-predicate-dispatch 'org-follow-link-other-window
+    ;;              (org-at-table-p) 'org-table-copy-down)
+    ;; )
   )
 
 (use-package org-roam-timestamps

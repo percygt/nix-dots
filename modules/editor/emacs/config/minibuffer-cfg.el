@@ -16,14 +16,6 @@
     :map minibuffer-local-isearch-map
     ("ESCAPE" . minibuffer-keyboard-quit)))
 
-;; (use-package vertico-posframe
-;;   :config
-;;   (vertico-posframe-mode 1)
-;;   :custom
-;;   (vertico-posframe-parameters
-;;    '((left-fringe . 8)
-;;      (right-fringe . 8))))
-
 (use-package vertico
   :init (vertico-mode)
   :custom
@@ -34,7 +26,6 @@
               ([tab] . vertico-insert)
               ("C-k" . vertico-previous)))
 
-;;; Configure directory extension.
 (use-package vertico-directory
   :after vertico
   :ensure nil
@@ -49,7 +40,6 @@
   :config
   (marginalia-mode 1))
 
-;;; `Orderless'.
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
@@ -58,8 +48,6 @@
                                    (eglot (styles orderless))))
   (orderless-component-separator #'orderless-escapable-split-on-space))
 
-;; The `embark-consult' package is glue code to tie together `embark'
-;; and `consult'.
 (use-package embark-consult )
 
 (use-package consult
