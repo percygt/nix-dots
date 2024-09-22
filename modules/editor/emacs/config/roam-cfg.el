@@ -2,13 +2,14 @@
 ;;; Commentary:
 ;;; Code:
 
-;; (use-package md-roam
-;;   :ensure nil
-;;   :after org-roam
-;;   :custom
-;;   (md-roam-file-extension "md")
-;;   :config
-;;   (md-roam-mode 1))
+(use-package md-roam
+  :ensure nil
+  :after org-roam
+  :load-path (expand-file-name "var/packages/md-roam-2024-09-21" user-emacs-data-directory))
+  :custom
+  (md-roam-file-extension "md")
+  :config
+  (md-roam-mode 1))
 
 (use-package org-roam
   :after (evil org marginalia)
@@ -141,7 +142,7 @@
     "wi" 'org-roam-node-insert
     ;; "<return>" (general-predicate-dispatch 'org-follow-link-other-window
     ;;              (org-at-table-p) 'org-table-copy-down)
-    ;; )
+    )
   )
 
 (use-package org-roam-timestamps

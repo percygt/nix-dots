@@ -19,7 +19,8 @@
 
 
 (add-to-list 'load-path (expand-file-name "config/" user-emacs-config-directory))
-(add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory))
+;; (add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory))
+;; (add-to-list 'load-path (expand-file-name "var/packages/md-roam-2024-09-22" user-emacs-data-directory))
 
 ;; from doom early-init
 (setq gc-cons-threshold most-positive-fixnum)
@@ -36,7 +37,6 @@
 (setq
  initial-scratch-message nil
  inhibit-startup-screen t ;; Don't show the welcome splash screen.
- ;; package-native-compile t ;; native compile packages
  idle-update-delay 1.0
  comp-deferred-compilation nil
  native-comp-async-report-warnings-errors nil ; Stop showing compilation warnings on startup

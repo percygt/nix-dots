@@ -149,45 +149,45 @@
 ;;         "* %i%?" :empty-lines 1)
 ;;       org-capture-templates)
 
-;; Allows you to edit entries directly from org-brain-visualize
-(use-package polymode
-  :general
-  (local-definer
-    :states '(normal visual)
-    :keymaps 'polymode-mode-map
-    "j" 'polymode-next-chunk
-    "k" 'polymode-previous-chunk
-    "i" 'polymode-insert-new-chunk
-    "u" 'polymode-insert-new-chunk-code-only
-    "U" 'polymode-insert-new-chunk-output-only
-    "p" 'polymode-insert-new-plot
-    "o" 'polymode-insert-yaml
-    "d" 'polymode-kill-chunk
-    "e" 'polymode-export
-    "E" 'polymode-set-exporter
-    "w" 'polymode-weave
-    "W" 'polymode-set-weaver
-    "$" 'polymode-show-process-buffer
-    "n" 'polymode-eval-region-or-chunk
-    "," 'polymode-eval-region-or-chunk
-    "N" 'polymode-eval-buffer
-    "1" 'polymode-eval-buffer-from-beg-to-point
-    "0" 'polymode-eval-buffer-from-point-to-end)
-  :config
-  (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
-
-
-;;;; Templates
-;; (use-package org-tempo
-;;   :ensure nil
-;;   :after org
+;; ;; allows you to edit entries directly from org-brain-visualize
+;; (use-package polymode
+;;   :general
+;;   (local-definer
+;;     :states '(normal visual)
+;;     :keymaps 'polymode-mode-map
+;;     "j" 'polymode-next-chunk
+;;     "k" 'polymode-previous-chunk
+;;     "i" 'polymode-insert-new-chunk
+;;     "u" 'polymode-insert-new-chunk-code-only
+;;     "U" 'polymode-insert-new-chunk-output-only
+;;     "p" 'polymode-insert-new-plot
+;;     "o" 'polymode-insert-yaml
+;;     "d" 'polymode-kill-chunk
+;;     "e" 'polymode-export
+;;     "E" 'polymode-set-exporter
+;;     "w" 'polymode-weave
+;;     "W" 'polymode-set-weaver
+;;     "$" 'polymode-show-process-buffer
+;;     "n" 'polymode-eval-region-or-chunk
+;;     "," 'polymode-eval-region-or-chunk
+;;     "N" 'polymode-eval-buffer
+;;     "1" 'polymode-eval-buffer-from-beg-to-point
+;;     "0" 'polymode-eval-buffer-from-point-to-end)
 ;;   :config
-;;   (let ((templates '(("sh"  . "src sh")
-;;                      ("el"  . "src emacs-lisp")
-;;                      ("vim" . "src vim")
-;;                      ("cpp" . "src C++ :includes <iostream> :namespaces std"))))
-;;     (dolist (template templates)
-;;       (push template org-structure-template-alist))))
+;;   (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
+
+
+;; Templates
+(use-package org-tempo
+  :ensure nil
+  :after org
+  :config
+  (let ((templates '(("sh"  . "src sh")
+                     ("el"  . "src emacs-lisp")
+                     ("vim" . "src vim")
+                     ("cpp" . "src C++ :includes <iostream> :namespaces std"))))
+    (dolist (template templates)
+      (push template org-structure-template-alist))))
 
 
 (use-package org-timeblock)
