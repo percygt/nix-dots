@@ -108,7 +108,7 @@
       (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150 :weight 'medium))
     (when (font-installed-p "VictorMono Nerd Font")
       (dolist (face '(default fixed-pitch))
-	    (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
+	      (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
   (if (daemonp)
       (add-hook 'after-make-frame-functions
 		        (lambda (frame)

@@ -35,7 +35,7 @@
       :prepend t)))
   (org-highlight-latex-and-related '(native)) ;; Highlight inline LaTeX
   (org-startup-indented t)
-  (org-return-follows-link  t)
+  (org-return-follows-link t)
   (org-hide-emphasis-markers t)
   (org-list-indent-offset 1)
   (org-cycle-separator-lines 1)

@@ -14,10 +14,12 @@ in
       imports = [ ./home.nix ];
       modules.editor.emacs.enable = lib.mkDefault true;
     };
-    environment.systemPackages = [ cfg.finalPackage ];
-    # services.emacs = {
-    #   package = cfg.finalPackage;
-    # };
+    # environment.systemPackages = [ cfg.finalPackage ];
+    services.emacs = {
+      enable = true;
+      package = cfg.finalPackage;
+      startWithGraphical = true;
+    };
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {
         users.${g.username} = {

@@ -2,11 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package nursery
-  :ensure nil
-  :init
-  (add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory))
-  )
+;; (use-package nursery
+;;   :ensure nil
+;;   :init
+;;   (add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory)))
 
 (use-package org-roam-review
   :ensure nil

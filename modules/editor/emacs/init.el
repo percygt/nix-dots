@@ -6,9 +6,8 @@
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") )
 ;; (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") )
-
 (package-initialize)
-
+(setq package-archives nil)
 ;; (unless package-archive-contents
 ;;   (package-refresh-contents))
 ;;
