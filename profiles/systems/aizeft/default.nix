@@ -26,6 +26,9 @@
       emacs.enable = true;
       vscode.enable = true;
     };
+    pentesting = {
+      wireless.enable = true;
+    };
     virtualisation = {
       docker.enable = true;
       podman.enable = true;

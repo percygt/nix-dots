@@ -63,6 +63,12 @@ in
         {
           command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
           criteria = {
+            title = "^Media viewer$";
+          };
+        }
+        {
+          command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
+          criteria = {
             class = "Emacs";
           };
         }
@@ -126,7 +132,7 @@ in
           };
         }
         {
-          command = ''floating enable, resize set width 15ppt height 15ppt, move position 85ppt 85ppt, sticky on'';
+          command = ''floating enable, resize set width 20ppt height 20ppt, move position 85ppt 85ppt, sticky on'';
           criteria = {
             title = "^Picture in picture$";
           };

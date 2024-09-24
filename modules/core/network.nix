@@ -34,11 +34,10 @@ in
           networkmanager.enable = lib.mkForce false;
           wireless = {
             enable = true;
-            fallbackToWPA2 = false;
             secretsFile = config.sops.secrets."wireless.env".path;
             networks = {
               "ext:home_ssid" = {
-                pskRaw = "ext:home_psk";
+                psk = "ext:home_psk";
               };
             };
             # environmentFile = config.sops.secrets."wireless.env".path;
