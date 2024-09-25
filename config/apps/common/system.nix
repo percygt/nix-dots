@@ -21,8 +21,15 @@ in
     };
   };
   home-manager.users.${g.username} = import ./home.nix;
-  environment.systemPackages = with pkgs; [ nemo-with-extensions ];
+  environment.systemPackages = with pkgs; [
+    protonvpn-gui
+    nemo-with-extensions
+  ];
   programs = {
+    nm-applet = {
+      enable = true;
+      indicator = true;
+    };
     seahorse.enable = true;
     gnome-disks.enable = true;
     file-roller.enable = true;

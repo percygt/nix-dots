@@ -31,9 +31,9 @@ let
   };
 in
 {
-  options.modules.network.syncthing.enable = lib.mkEnableOption "Enable syncthing";
+  options.modules.networking.syncthing.enable = lib.mkEnableOption "Enable syncthing";
 
-  config = lib.mkIf config.modules.network.syncthing.enable {
+  config = lib.mkIf config.modules.networking.syncthing.enable {
     users.users.${g.username}.packages = [ pkgs.syncthing ];
     sops.secrets = {
       "syncthing/cert.pem" = { };

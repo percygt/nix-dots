@@ -8,9 +8,9 @@ let
   g = config._general;
 in
 {
-  options.modules.network.tailscale.enable = lib.mkEnableOption "Enable tailscale";
+  options.modules.networking.tailscale.enable = lib.mkEnableOption "Enable tailscale";
 
-  config = lib.mkIf config.modules.network.tailscale.enable {
+  config = lib.mkIf config.modules.networking.tailscale.enable {
     networking.firewall = {
       trustedInterfaces = [ "tailscale0" ];
       # required to connect to Tailscale exit nodes

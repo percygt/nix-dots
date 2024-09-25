@@ -35,17 +35,13 @@ in
           wireless = {
             enable = true;
             secretsFile = config.sops.secrets."wireless.env".path;
+            fallbackToWPA2 = false;
             networks = {
-              "ext:home_ssid" = {
-                psk = "ext:home_psk";
+              "${g.network.wifi}" = {
+                hidden = true;
+                pskRaw = "ext:home_psk";
               };
             };
-            # environmentFile = config.sops.secrets."wireless.env".path;
-            # networks = {
-            #   "@home_ssid@" = {
-            #     psk = "@home_psk@";
-            #   };
-            # };
             # Imperative
             allowAuxiliaryImperativeNetworks = true;
             userControlled = {
@@ -76,20 +72,19 @@ in
             ensureProfiles = {
               environmentFiles = [ config.sops.secrets."wireless.env".path ];
               profiles = {
-                "@home_ssid@" = {
+                "${g.network.wifi}" = {
                   connection = {
-                    id = "@home_ssid@";
-                    uuid = "@home_uuid@";
+                    id = "home-wifi";
                     type = "wifi";
                   };
                   wifi = {
                     mode = "infrastructure";
-                    ssid = "@home_ssid@";
+                    ssid = "${g.network.wifi}";
                   };
                   wifi-security = {
                     auth-alg = "open";
                     key-mgmt = "wpa-psk";
-                    psk = "@home_psk@";
+                    psk = "$home_psk";
                   };
                   ipv4 = {
                     method = "auto";

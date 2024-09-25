@@ -17,17 +17,20 @@
     };
     dev.enable = true;
     cli.enable = true;
-    network = {
-      tailscale.enable = true;
-      syncthing.enable = true;
-    };
     editor = {
       neovim.enable = true;
       emacs.enable = true;
       vscode.enable = true;
     };
+    networking = {
+      # vpn.enable = true;
+      tailscale.enable = true;
+      syncthing.enable = true;
+    };
     pentesting = {
       wireless.enable = true;
+      proxies.enable = true;
+      traffic.enable = true;
     };
     virtualisation = {
       docker.enable = true;

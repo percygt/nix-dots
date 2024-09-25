@@ -1,8 +1,8 @@
 { lib, config, ... }:
 {
-  options.modules.network.avahi.enable = lib.mkEnableOption "Enable avahi";
+  options.modules.networking.avahi.enable = lib.mkEnableOption "Enable avahi";
 
-  config = lib.mkIf config.modules.network.avahi.enable {
+  config = lib.mkIf config.modules.networking.avahi.enable {
     # network discovery, mDNS
     services.avahi = {
       enable = true;
