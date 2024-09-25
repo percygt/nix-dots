@@ -6,9 +6,9 @@
   :general
   (global-definer
     "n" '(nil :wk "Multicursor")
-	"nn" 'mc/mark-next-word-like-this
-	"np" 'mc/mark-previous-word-like-this
-	"na" 'mc/mark-all-like-this
+    "nn" 'mc/mark-next-word-like-this
+    "np" 'mc/mark-previous-word-like-this
+    "na" 'mc/mark-all-like-this
     ))
 
 (use-package aggressive-indent

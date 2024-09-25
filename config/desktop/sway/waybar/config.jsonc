@@ -31,7 +31,7 @@
       "pulseaudio#source",
       "custom/wlsunset",
       "idle_inhibitor",
-      "network",
+      // "network",
       "battery",
       "custom/menu"
     ],
@@ -154,15 +154,15 @@
         "paused": " "
       }
     },
-    "network": {
-      "format-disconnected": "󰲛",
-      "format-ethernet": "󰈀",
-      "format-linked": "󰈀 (No IP)",
-      "format-wifi": "",
-      "max-length": 15,
-      "on-click": "toggle-sway-window --id wpa_gui -- wpa_gui",
-      "tooltip-format": "{ifname} / {essid} ({signalStrength}%) / {ipaddr}"
-    },
+    // "network": {
+    //   "format-disconnected": "󰲛",
+    //   "format-ethernet": "󰈀",
+    //   "format-linked": "󰈀 (No IP)",
+    //   "format-wifi": "",
+    //   "max-length": 15,
+    //   // "on-click": "toggle-sway-window --id wpa_gui -- wpa_gui",
+    //   "tooltip-format": "{ifname} / {essid} ({signalStrength}%) / {ipaddr}"
+    // },
     "pulseaudio#source": {
       "format": "<span font='9'> {format_source}</span>",
       "format-source": "",

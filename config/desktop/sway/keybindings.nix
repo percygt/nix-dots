@@ -19,7 +19,7 @@ let
     mkDirectionKeys
     ;
   emacsPkg = config.modules.editor.emacs.finalPackage;
-  emacsClient = "${emacsPkg}/bin/emacsclient -a ${emacsPkg}/bin/emacs -c";
+  emacsClient = "${emacsPkg}/bin/emacsclient -a emacs -c";
 in
 {
   home.packages = [ pkgs.ddapp ];

@@ -48,6 +48,7 @@ let
       wlsunset
       foot
       pomo
+      networkmanagerapplet
     ]);
   waybarWithExtraPackages =
     pkgs.runCommand "waybar"

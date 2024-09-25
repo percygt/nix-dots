@@ -66,12 +66,12 @@ in
             title = "^Media viewer$";
           };
         }
-        {
-          command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
-          criteria = {
-            class = "Emacs";
-          };
-        }
+        # {
+        #   command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
+        #   criteria = {
+        #     class = "Emacs";
+        #   };
+        # }
         {
           command = ''floating enable, resize set width 40ppt height 100ppt, move position 60ppt 0ppt'';
           criteria = {

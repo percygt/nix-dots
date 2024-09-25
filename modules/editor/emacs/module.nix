@@ -43,6 +43,13 @@ let
     # ln -vs ${emacs}/share/info $out/share/info
     # ln -vs ${emacs}/share/man $out/share/man
   '';
+  editorScript = pkgs.writeShellScriptBin "emacseditor" ''
+    if [ -z "$1" ]; then
+      exec ${cfg.finalPackage}/bin/emacsclient --create-frame --alternate-editor ${cfg.finalPackage}/bin/emacs
+    else
+      exec ${cfg.finalPackage}/bin/emacsclient --alternate-editor ${cfg.finalPackage}/bin/emacs "$@"
+    fi
+  '';
 in
 {
   options.modules.editor = {
@@ -50,7 +57,12 @@ in
       enable = lib.mkEnableOption "Enable emacs systemwide";
       package = lib.mkOption {
         description = "Emacs package to use";
-        default = pkgs.emacs29-pgtk;
+        default = pkgs.emacs-unstable;
+        type = lib.types.package;
+      };
+      editorScript = lib.mkOption {
+        description = "Editor Script";
+        default = editorScript;
         type = lib.types.package;
       };
       finalPackage = lib.mkOption {

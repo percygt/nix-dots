@@ -15,7 +15,7 @@ in
     wpa.enable = lib.mkOption {
       description = "Enable wpa";
       type = lib.types.bool;
-      default = cfg.enable;
+      default = false;
     };
   };
 
@@ -59,6 +59,10 @@ in
           services.NetworkManager-wait-online.wantedBy = lib.mkForce [ ]; # Normally ["network-online.target"]
           targets.network-online.wantedBy = lib.mkForce [ ]; # Normally ["multi-user.target"]
         };
+        programs.nm-applet = {
+          enable = true;
+          indicator = true;
+        };
         environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
           "/persist/system" = {
             directories = [ "/etc/NetworkManager/system-connections" ];
@@ -69,34 +73,6 @@ in
           networkmanager = {
             enable = true;
             wifi.backend = "iwd";
-            ensureProfiles = {
-              environmentFiles = [ config.sops.secrets."wireless.env".path ];
-              profiles = {
-                "${g.network.wifi}" = {
-                  connection = {
-                    id = "home-wifi";
-                    type = "wifi";
-                  };
-                  wifi = {
-                    mode = "infrastructure";
-                    ssid = "${g.network.wifi}";
-                  };
-                  wifi-security = {
-                    auth-alg = "open";
-                    key-mgmt = "wpa-psk";
-                    psk = "$home_psk";
-                  };
-                  ipv4 = {
-                    method = "auto";
-                  };
-                  ipv6 = {
-                    addr-gen-mode = "default";
-                    method = "auto";
-                  };
-                  proxy = { };
-                };
-              };
-            };
           };
         };
       })

@@ -26,10 +26,6 @@ in
     nemo-with-extensions
   ];
   programs = {
-    nm-applet = {
-      enable = true;
-      indicator = true;
-    };
     seahorse.enable = true;
     gnome-disks.enable = true;
     file-roller.enable = true;
