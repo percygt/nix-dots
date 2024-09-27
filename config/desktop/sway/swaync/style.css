@@ -24,7 +24,7 @@
 .notification-row {
   outline: none;
   margin: 0px;
-  padding: 0px;
+  padding: 5px 0;
 }
 
 .notification-row:focus,
@@ -41,7 +41,6 @@
     0 0 0 1px rgba(0, 0, 0, 0.3),
     0 1px 3px 1px rgba(0, 0, 0, 0.7),
     0 2px 6px 2px rgba(0, 0, 0, 0.3);
-  padding: 0;
 }
 
 .critical {
@@ -78,8 +77,7 @@
 
 .notification-default-action,
 .notification-action {
-  padding: 4px;
-  margin: 0;
+  padding: 0px;
   box-shadow: none;
   background: @bg-alt;
   border: 1px solid @border;

@@ -56,8 +56,7 @@
 
     nixd.url = "github:nix-community/nixd";
 
-    impermanence.url = "github:nix-community/impermanence/63f4d0443e32b0dd7189001ee1894066765d18a5";
-    # impermanence.url = "github:nix-community/impermanence";
+    impermanence.url = "github:nix-community/impermanence";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 

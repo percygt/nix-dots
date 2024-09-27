@@ -6,12 +6,24 @@
 let
   inherit (config._general) flakeDirectory;
   moduleEmacs = "${flakeDirectory}/modules/editor/emacs";
+  cfg = config.modules.editor.emacs;
 in
 {
   imports = [ ./module.nix ];
   config = lib.mkIf config.modules.editor.emacs.enable {
+    home.packages = [
+      cfg.finalPackage
+      cfg.editorScript
+    ];
     xdg = {
       dataFile = {
+        "emacs/var/packages/yequake-2024-09-27" = {
+          source = builtins.fetchGit {
+            url = "https://github.com/alphapapa/yequake";
+            rev = "0771266fc8ae643a3ab71e62b4c955169f5388ed";
+            shallow = true;
+          };
+        };
         "emacs/var/packages/md-roam-2024-09-21" = {
           source = builtins.fetchGit {
             url = "https://github.com/nobiot/md-roam";

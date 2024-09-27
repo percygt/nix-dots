@@ -22,7 +22,6 @@ in
   };
   home-manager.users.${g.username} = import ./home.nix;
   environment.systemPackages = with pkgs; [
-    protonvpn-gui
     nemo-with-extensions
   ];
   programs = {

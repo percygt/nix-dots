@@ -10,6 +10,7 @@
   (add-to-list 'display-buffer-alist
                '("\\*Org Select\\*"
                  (display-buffer-full-frame)))
+
   :preface
   (defun org-mode-setup ()
     (org-indent-mode)
@@ -65,6 +66,16 @@
   (org-enforce-todo-dependencies t)
   (org-hierarchical-todo-statistics nil)
   (org-use-property-inheritance t)
+  (org-tags-column -1)
+  (org-lowest-priority ?F)  ;; Gives us priorities A through F
+  (org-default-priority ?E) ;; If an item has no priority, it is considered [#E].
+  ;; (org-priority-faces
+  ;;  ((65 . "red2")
+  ;;    (66 . "Gold1")
+  ;;    (67 . "Goldenrod2")
+  ;;    (68 . "PaleTurquoise3")
+  ;;    (69 . "DarkSlateGray4")
+  ;;    (70 . "PaleTurquoise4")))
   :custom-face
   (outline-1 ((t (:height 1.2))))
   (outline-2 ((t (:height 1.1))))
@@ -83,17 +94,7 @@
   (org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
   (org-table ((t (:inherit fixed-pitch))))
   (org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1.0))))
-  (org-tags-column -1)
-  (org-verbatim ((t (:inherit (shadow fixed-pitch)))))
-  (org-lowest-priority ?F)  ;; Gives us priorities A through F
-  (org-default-priority ?E) ;; If an item has no priority, it is considered [#E].
-  (org-priority-faces
-   '((65 . "red2")
-     (66 . "Gold1")
-     (67 . "Goldenrod2")
-     (68 . "PaleTurquoise3")
-     (69 . "DarkSlateGray4")
-     (70 . "PaleTurquoise4"))))
+  (org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (use-package evil-org
   :diminish evil-org-mode
@@ -178,21 +179,21 @@
 
 
 ;; Templates
-(use-package org-tempo
-  :ensure nil
-  :after org
-  :config
-  (let ((templates '(("sh"  . "src sh")
-                     ("el"  . "src emacs-lisp")
-                     ("vim" . "src vim")
-                     ("cpp" . "src C++ :includes <iostream> :namespaces std"))))
-    (dolist (template templates)
-      (push template org-structure-template-alist))))
+;; (use-package org-tempo
+;;   :ensure nil
+;;   :after org
+;;   :config
+;;   (let ((templates '(("sh"  . "src sh")
+;;                      ("el"  . "src emacs-lisp")
+;;                      ("vim" . "src vim")
+;;                      ("cpp" . "src C++ :includes <iostream> :namespaces std"))))
+;;     (dolist (template templates)
+;;       (push template org-structure-template-alist))))
 
 
-(use-package org-timeblock)
+;; (use-package org-timeblock)
 
-(use-package org-transclusion :after org)
+;; (use-package org-transclusion :after org)
 
 (provide 'org-cfg)
 ;;; org-cfg.el ends here

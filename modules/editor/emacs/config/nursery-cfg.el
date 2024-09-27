@@ -58,15 +58,15 @@
   :commands (org-roam-links))
 
 (use-package org-roam-dblocks
-  :ensure nil
-  :hook (org-mode . org-roam-dblocks-autoupdate-mode))
+  :ensure nil)
+  ;; :hook (org-mode . org-roam-dblocks-autoupdate-mode))
 
-(use-package org-roam-rewrite
-  :ensure nil
-  :commands (org-roam-rewrite-rename
-             org-roam-rewrite-remove
-             org-roam-rewrite-inline
-             org-roam-rewrite-extract))
+  (use-package org-roam-rewrite
+    :ensure nil
+    :commands (org-roam-rewrite-rename
+               org-roam-rewrite-remove
+               org-roam-rewrite-inline
+               org-roam-rewrite-extract))
 
 (use-package org-capture-detect
   :ensure nil

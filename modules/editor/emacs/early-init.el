@@ -21,6 +21,7 @@
 (add-to-list 'load-path (expand-file-name "config/" user-emacs-config-directory))
 (add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory))
 (add-to-list 'load-path (expand-file-name "var/packages/md-roam-2024-09-22/" user-emacs-data-directory))
+(add-to-list 'load-path (expand-file-name "var/packages/yequake-2024-09-27/" user-emacs-data-directory))
 
 ;; from doom early-init
 (setq gc-cons-threshold most-positive-fixnum)

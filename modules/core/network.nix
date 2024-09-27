@@ -15,7 +15,7 @@ in
     wpa.enable = lib.mkOption {
       description = "Enable wpa";
       type = lib.types.bool;
-      default = false;
+      default = !cfg.enable;
     };
   };
 

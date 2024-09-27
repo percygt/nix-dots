@@ -2,14 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 
-;; (use-package md-roam
-;;   :ensure nil
-;;   :after org-roam
-;;   ;; :load-path (expand-file-name "var/packages/md-roam-2024-09-21" user-emacs-data-directory)
-;;   :custom
-;;   (md-roam-file-extension "md")
-;;   :config
-;;   (md-roam-mode 1))
+(use-package md-roam
+  :ensure nil
+  :after org-roam
+  :custom
+  (md-roam-file-extension "md")
+  :config
+  (md-roam-mode 1))
 
 (use-package org-roam
   :after (org marginalia)
@@ -102,7 +101,33 @@
     "wd" 'org-roam-dailies-capture-today)
   (global-definer
     :keymaps '(org-mode-map)
+    "wI" 'org-roam-insert-immediate
     "wi" 'org-roam-node-insert))
+
+;; (use-package consult-notes
+;;   :commands (consult-notes
+;;              consult-notes-search-in-all-notes
+;;              ;; if using org-roam 
+;;              consult-notes-org-roam-find-node
+;;              consult-notes-org-roam-find-node-relation)
+;;   :config
+;;   (setq consult-notes-file-dir-sources '(("Name"  ?key  "path/to/dir"))) ;; Set notes dir(s), see below
+;;   ;; Set org-roam integration, denote integration, or org-heading integration e.g.:
+;;   (setq consult-notes-org-headings-files '("~/path/to/file1.org"
+;;                                            "~/path/to/file2.org"))
+;;   (consult-notes-org-headings-mode)
+;;   (when (locate-library "denote")
+;;     (consult-notes-denote-mode))
+;;   ;; search only for text files in denote dir
+;;   (setq consult-notes-denote-files-function (function denote-directory-text-only-files)))
+
+(use-package org-roam-ui
+  :after org-roam
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 (use-package org-roam-timestamps
   :after org-roam

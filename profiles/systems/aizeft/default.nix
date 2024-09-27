@@ -23,7 +23,7 @@
       vscode.enable = true;
     };
     networking = {
-      # vpn.enable = true;
+      vpn.enable = true;
       tailscale.enable = true;
       syncthing.enable = true;
     };

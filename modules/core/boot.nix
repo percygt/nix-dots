@@ -13,7 +13,7 @@
   config = lib.mkIf config.modules.core.boot.enable {
     boot = {
       kernelPackages = pkgs.linuxPackages_latest;
-      tmp.cleanOnBoot = true;
+      # tmp.cleanOnBoot = true;
       # kernel.sysctl = {
       #   "net.ipv4.ip_forward" = 1;
       #   "net.ipv6.conf.all.forwarding" = 1;
@@ -43,9 +43,13 @@
 
       kernelParams = [
         "quiet"
-        "boot.shell_on_fail"
-        "rd.systemd.show_status=false"
+        "splash"
+        "loglevel=3"
+        "udev.log_level=3"
         "rd.udev.log_level=3"
+        "systemd.show_status=false"
+        "rd.systemd.show_status=false"
+        "boot.shell_on_fail"
         "udev.log_priority=3"
       ];
     };

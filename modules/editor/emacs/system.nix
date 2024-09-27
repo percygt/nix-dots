@@ -7,13 +7,6 @@
 let
   g = config._general;
   cfg = config.modules.editor.emacs;
-  editorScript = pkgs.writeShellScriptBin "emacseditor" ''
-    if [ -z "$1" ]; then
-      exec ${cfg.finalPackage}/bin/emacsclient --create-frame --alternate-editor ${cfg.finalPackage}/bin/emacs
-    else
-      exec ${cfg.finalPackage}/bin/emacsclient --alternate-editor ${cfg.finalPackage}/bin/emacs "$@"
-    fi
-  '';
 in
 {
   imports = [ ./module.nix ];
