@@ -41,7 +41,8 @@
                               (search . " %i %-12:c")))
 
   (org-agenda-deadline-leaders '("Deadline:  " "In %2d d.: " "%2d d. ago: "))
-  (org-agenda-files '(notes-directory)))
+  ;; (org-agenda-files '(notes-directory))
+  )
 
 (use-package org-super-agenda
   :after org

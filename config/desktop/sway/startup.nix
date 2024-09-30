@@ -10,5 +10,9 @@
       command = "tmux start-server";
       always = true;
     }
+    {
+      command = "emacs --fg-daemon";
+      always = true;
+    }
   ];
 }

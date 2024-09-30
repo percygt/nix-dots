@@ -56,11 +56,6 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
-  environment.etc."greetd/environments".text = ''
-    sway
-    fish
-  '';
-
   security = {
     polkit.enable = true;
     pam.services.swaylock.text = "auth include login";

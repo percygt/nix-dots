@@ -45,6 +45,11 @@ in
     };
   };
   environment = {
+
+    etc."greetd/environments".text = ''
+      sway
+      fish
+    '';
     persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist/system".directories = [
         {

@@ -66,16 +66,18 @@ in
             title = "^Media viewer$";
           };
         }
-        # {
-        #   command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
-        #   criteria = {
-        #     class = "Emacs";
-        #   };
-        # }
         {
-          command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
+          command = ''floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show '';
           criteria = {
             app_id = "emacs";
+            title = "^EmacsConfig$";
+          };
+        }
+        {
+          command = ''floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show '';
+          criteria = {
+            app_id = "emacs";
+            title = "^Notes$";
           };
         }
         {

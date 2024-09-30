@@ -6,15 +6,10 @@
 let
   inherit (config._general) flakeDirectory;
   moduleEmacs = "${flakeDirectory}/modules/editor/emacs";
-  cfg = config.modules.editor.emacs;
 in
 {
   imports = [ ./module.nix ];
   config = lib.mkIf config.modules.editor.emacs.enable {
-    home.packages = [
-      cfg.finalPackage
-      cfg.editorScript
-    ];
     xdg = {
       dataFile = {
         "emacs/var/packages/yequake-2024-09-27" = {

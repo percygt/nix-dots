@@ -12,7 +12,6 @@
               "js": "node",
               "python": "ipython3 --no-banner",
               "shell": "{$SHELL}",
-              "emacseditor": "emacseditor -c -e \"(org-roam-node-find)\" %U"
           }
       }
     '';

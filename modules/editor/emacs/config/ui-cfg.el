@@ -2,6 +2,26 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package dashboard
+  :after (nerd-icons evil)
+  :custom
+  (dashboard-items '((recents  .  5)
+		     (projects .  5)
+		     (agenda   . 10)))
+  (dashboard-set-footer nil)
+  (dashboard-set-init-info t)
+  (dashboard-center-content t)
+  (dashboard-set-file-icons t)
+  (dashboard-set-heading-icons t)
+  (dashboard-startup-banner 'logo)
+  (dashboard-projects-backend 'project-el)
+  :config
+  (dashboard-setup-startup-hook)
+  (evil-set-initial-state 'dashboard-mode 'normal)
+  (setq initial-buffer-choice (lambda ()
+				(get-buffer-create "*dashboard*")
+				(dashboard-refresh-buffer))))
+
 (use-package doom-themes
   :demand
   :config

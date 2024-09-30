@@ -25,7 +25,8 @@ in
     down = "j";
     left = "h";
     right = "l";
-    terminal = "${pkgs.foot}/bin/foot";
+    terminal = lib.getExe pkgs.foot;
+    menu = "tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
     output."*".bg = "${a.wallpaper} fill";
     gaps.inner = 4;
     input = {

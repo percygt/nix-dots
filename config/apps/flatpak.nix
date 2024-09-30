@@ -19,6 +19,34 @@ in
         onCalendar = "weekly"; # Default value
       };
     };
+    overrides = {
+      global = {
+        # Force Wayland by default
+        Context = {
+          sockets = [
+            "wayland"
+            "!x11"
+            "!fallback-x11"
+          ];
+          filesystems = [
+            "xdg-data/themes:ro"
+            "xdg-data/icons:ro"
+            "xdg-config/gtkrc:ro"
+            "xdg-config/gtkrc-2.0:ro"
+            "xdg-config/gtk-2.0:ro"
+            "xdg-config/gtk-3.0:ro"
+            "xdg-config/gtk-4.0:ro"
+            "/run/current-system/sw/bin:ro"
+          ];
+        };
+      };
+      "org.libreoffice.LibreOffice" = {
+        Environment = {
+          # Force correct theme for some GTK apps
+          GTK_THEME = "Adwaita:dark";
+        };
+      };
+    };
     remotes = lib.mkOptionDefault [
       {
         name = "flathub-beta";
@@ -57,17 +85,18 @@ in
     ];
   };
   fileSystems."/var/lib/flatpak".options = [ "exec" ];
-  home-manager.users.${g.username} = {
-    xdg.dataFile = {
-      "flatpak/overrides/global".text = ''
-        [Context]
-        filesystems=xdg-data/themes:ro;xdg-data/icons:ro;xdg-config/gtkrc:ro;xdg-config/gtkrc-2.0:ro;xdg-config/gtk-2.0:ro;xdg-config/gtk-3.0:ro;xdg-config/gtk-4.0:ro;/nix/store
-      '';
-    };
-  };
+  # home-manager.users.${g.username} = {
+  #   xdg.dataFile = {
+  #     "flatpak/overrides/global".text = ''
+  #       [Context]
+  #       filesystems=xdg-data/themes:ro;xdg-data/icons:ro;xdg-config/gtkrc:ro;xdg-config/gtkrc-2.0:ro;xdg-config/gtk-2.0:ro;xdg-config/gtk-3.0:ro;xdg-config/gtk-4.0:ro;/nix/store
+  #     '';
+  #   };
+  # };
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist/system".directories = [ "/var/lib/flatpak" ];
     "/persist".users.${g.username}.directories = [
+      ".var/app/org.libreoffice.LibreOffice"
       ".var/app/org.telegram.desktop"
       ".var/app/info.febvre.Komikku"
       ".var/app/com.github.PintaProject.Pinta"

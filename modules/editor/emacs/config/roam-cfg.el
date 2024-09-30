@@ -107,7 +107,7 @@
 ;; (use-package consult-notes
 ;;   :commands (consult-notes
 ;;              consult-notes-search-in-all-notes
-;;              ;; if using org-roam 
+;;              ;; if using org-roam
 ;;              consult-notes-org-roam-find-node
 ;;              consult-notes-org-roam-find-node-relation)
 ;;   :config
