@@ -102,6 +102,7 @@
             findutils
             pciutils
             usbutils
+            wirelesstools
             ntfs3g
             psmisc
             lsof

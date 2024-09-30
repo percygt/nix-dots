@@ -1,6 +1,9 @@
 ;;; common-cfg.el --- Common Config -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+(use-package spacious-padding
+  :defer
+  :hook (after-init . spacious-padding-mode))
 
 (use-package multiple-cursors
   :general

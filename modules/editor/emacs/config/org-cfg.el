@@ -51,7 +51,7 @@
   (org-hide-block-startup nil)
   (org-src-tab-acts-natively t)
   (org-src-preserve-indentation nil)
-  (org-startup-folded 'showeverything)
+  (org-startup-folded t)
   (org-image-actual-width 300)
   (org-cycle-separator-lines 2)
   (org-hide-leading-stars t)

@@ -37,13 +37,13 @@ in
             "xdg-config/gtk-3.0:ro"
             "xdg-config/gtk-4.0:ro"
             "/run/current-system/sw/bin:ro"
+            "/nix/store:ro"
           ];
         };
       };
       "org.libreoffice.LibreOffice" = {
         Environment = {
-          # Force correct theme for some GTK apps
-          GTK_THEME = "Adwaita:dark";
+          GTK_THEME = "Yaru-bark-dark";
         };
       };
     };
@@ -90,6 +90,7 @@ in
   #     "flatpak/overrides/global".text = ''
   #       [Context]
   #       filesystems=xdg-data/themes:ro;xdg-data/icons:ro;xdg-config/gtkrc:ro;xdg-config/gtkrc-2.0:ro;xdg-config/gtk-2.0:ro;xdg-config/gtk-3.0:ro;xdg-config/gtk-4.0:ro;/nix/store
+  #           "/run/current-system/sw/bin:ro"
   #     '';
   #   };
   # };
