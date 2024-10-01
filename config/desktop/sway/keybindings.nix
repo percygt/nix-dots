@@ -27,6 +27,45 @@ in
     (pkgs.writers.writeBashBin "emacsnote" { } ''
       emacsclient -c -e '(org-roam-node-find)' -F '((name . "Notes"))' 
     '')
+    (pkgs.writers.writeBashBin "ddapp" { }
+      #bash
+      ''
+        app_id=""
+        title=""
+        command=""
+        while [[ $# -gt 0 ]]; do
+            case $1 in
+                -a=*)
+                    app_id="''${1#-a=}"
+                    shift
+                    ;;
+                -t=*)
+                    title="''${1#-t=}"
+                    shift
+                    ;;
+                -c=*)
+                    command="''${1#-c=}"
+                    shift
+                    ;;
+                *)
+                    echo "Invalid option: $1"
+                    exit 1
+                    ;;
+            esac
+        done
+        if [[ -z $greeting || -z $name ]]; then
+            echo "Usage: ddapp -a=\"app_id\" -t=\"title\" -c=\"command\""
+            exit 1
+        fi
+
+        if swaymsg "[ app_id=$app_id title=$title  ] scratchpad show"
+        then
+            swaymsg "[ app_id=$app_id title=$title ] resize set 100ppt 100ppt , move position center"
+        else
+            exec $command, move position center, resize set width 100 ppt height 100 ppt
+        fi
+      ''
+    )
   ];
   wayland.windowManager.sway = {
     extraConfigEarly = ''
@@ -50,9 +89,10 @@ in
         "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
         "${mod}+m" = "exec $toggle_window --id btop -- foot --title=SystemMonitor --app-id=btop btop";
         "${mod}+v" = "exec $toggle_window --id pavucontrol -- pavucontrol";
+        "${mod}+r" = "exec $toggle_window --id info.febvre.Komikku -- info.febvre.Komikku";
         "${mod}+n" = "exec $toggle_window --id wpa_gui -- wpa_gui";
         "${mod}+e" = "exec swaymsg [ app_id=emacs title=^Notes$ ] scratchpad show || exec emacsnote, $maximize";
-        "${mod}+Shift+e" = "exec swaymsg [ app_id=emacs title=^EmacsConfig$ ] scratchpad show || exec emacsconfig, $maximize";
+        "${mod}+Shift+e" = "exec ddapp -a=emacs -t=^EmacsConfig$ -c=emacsconfig";
         "${mod}+Shift+i" = "exec $toggle_window --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
         "${mod}+Shift+d" = "exec $toggle_window --id gnome-disks -- gnome-disks";
         "${mod}+b" = "exec $toggle_window --id .blueman-manager-wrapped -- blueman-manager";
@@ -103,7 +143,7 @@ in
         "${mod}+Plus" = "scratchpad show";
 
         # Enter other modes:
-        "${mod}+r" = "mode resize";
+        # "${mod}+r" = "mode resize";
         "${mod}+Shift+p" = "mode passthrough";
       }
       // mkDirectionKeys mod {

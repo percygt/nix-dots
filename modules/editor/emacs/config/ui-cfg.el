@@ -1,3 +1,4 @@
+
 ;;; ui-cfg.el --- UI setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
@@ -6,8 +7,8 @@
   :after (nerd-icons evil)
   :custom
   (dashboard-items '((recents  .  5)
-		     (projects .  5)
-		     (agenda   . 10)))
+		             (projects .  5)
+		             (agenda   . 10)))
   (dashboard-set-footer nil)
   (dashboard-set-init-info t)
   (dashboard-center-content t)
@@ -19,8 +20,8 @@
   (dashboard-setup-startup-hook)
   (evil-set-initial-state 'dashboard-mode 'normal)
   (setq initial-buffer-choice (lambda ()
-				(get-buffer-create "*dashboard*")
-				(dashboard-refresh-buffer))))
+				                (get-buffer-create "*dashboard*")
+				                (dashboard-refresh-buffer))))
 
 (use-package doom-themes
   :demand
@@ -35,35 +36,35 @@
   :hook
   (after-init . doom-modeline-mode))
 
-(use-package centaur-tabs
-  :demand
-  :hook
-  (org-agenda-mode . centaur-tabs-local-mode)
-  (org-mode . centaur-tabs-local-mode)
-  :init
-  (setq centaur-tabs-enable-key-bindings t)
-  :general
-  (normal-definer
-    ("D" 'centaur-tabs--kill-this-buffer-dont-ask)
-    ("gl" 'centaur-tabs-forward)
-    ("gh" 'centaur-tabs-backward))
-  :custom
-  (centaur-tabs-set-icons t)
-  (centaur-tabs-show-new-tab-button t)
-  (centaur-tabs-set-modified-marker t)
-  (centaur-tabs-show-navigation-buttons t)
-  (centaur-tabs-set-bar 'over)
-  (centaur-tabs-show-count nil)
-  (centaur-tabs-style "bar")
-  (centaur-tabs-adjust-buffer-order t)
-  (centaur-tabs-adjust-buffer-order 'left)
-  (x-underline-at-descent-line t)
-  (centaur-tabs-left-edge-margin nil)
-  :config
-  (centaur-tabs-change-fonts (face-attribute 'variable-pitch :font) 130)
-  (centaur-tabs-enable-buffer-reordering)
-  (centaur-tabs-headline-match)
-  (centaur-tabs-mode t))
+;; (use-package centaur-tabs
+;;   :demand
+;;   :hook
+;;   (org-agenda-mode . centaur-tabs-local-mode)
+;;   (org-mode . centaur-tabs-local-mode)
+;;   :init
+;;   (setq centaur-tabs-enable-key-bindings t)
+;;   :general
+;;   (normal-definer
+;;     ("D" 'centaur-tabs--kill-this-buffer-dont-ask)
+;;     ("gl" 'centaur-tabs-forward)
+;;     ("gh" 'centaur-tabs-backward))
+;;   :custom
+;;   (centaur-tabs-set-icons t)
+;;   (centaur-tabs-show-new-tab-button t)
+;;   (centaur-tabs-set-modified-marker t)
+;;   (centaur-tabs-show-navigation-buttons t)
+;;   (centaur-tabs-set-bar 'over)
+;;   (centaur-tabs-show-count nil)
+;;   (centaur-tabs-style "bar")
+;;   (centaur-tabs-adjust-buffer-order t)
+;;   (centaur-tabs-adjust-buffer-order 'left)
+;;   (x-underline-at-descent-line t)
+;;   (centaur-tabs-left-edge-margin nil)
+;;   :config
+;;   (centaur-tabs-change-fonts (face-attribute 'variable-pitch :font) 130)
+;;   (centaur-tabs-enable-buffer-reordering)
+;;   (centaur-tabs-headline-match)
+;;   (centaur-tabs-mode t))
 
 
 (use-package nerd-icons
