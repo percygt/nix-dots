@@ -18,54 +18,35 @@ let
     mkWorkspaceKeys
     mkDirectionKeys
     ;
+  emacsconfig = pkgs.writeScriptBin "emacsconfig" ''
+    emacsclient -F '((name . "EmacsConfig"))' -c ${g.flakeDirectory}/modules/editor/emacs;
+  '';
 in
 {
   home.packages = [
-    (pkgs.writers.writeBashBin "emacsconfig" { } ''
-      emacsclient -F '((name . "EmacsConfig"))' -c ${g.flakeDirectory}/modules/editor/emacs;
-    '')
-    (pkgs.writers.writeBashBin "emacsnote" { } ''
-      emacsclient -c -e '(org-roam-node-find)' -F '((name . "Notes"))' 
-    '')
+    emacsconfig
     (pkgs.writers.writeBashBin "ddapp" { }
       #bash
       ''
-        app_id=""
-        title=""
-        command=""
-        while [[ $# -gt 0 ]]; do
-            case $1 in
-                -a=*)
-                    app_id="''${1#-a=}"
-                    shift
-                    ;;
-                -t=*)
-                    title="''${1#-t=}"
-                    shift
-                    ;;
-                -c=*)
-                    command="''${1#-c=}"
-                    shift
-                    ;;
-                *)
-                    echo "Invalid option: $1"
-                    exit 1
-                    ;;
+        while getopts p:c: flag
+        do
+            case "''${flag}" in
+                p) params=''${OPTARG};;
+                c) command=''${OPTARG};;
             esac
         done
-        if [[ -z $greeting || -z $name ]]; then
-            echo "Usage: ddapp -a=\"app_id\" -t=\"title\" -c=\"command\""
-            exit 1
-        fi
-
-        if swaymsg "[ app_id=$app_id title=$title  ] scratchpad show"
+        if swaymsg "$params scratchpad show"
         then
-            swaymsg "[ app_id=$app_id title=$title ] resize set 100ppt 100ppt , move position center"
+            swaymsg "$params resize set 100ppt 100ppt , move position center"
         else
-            exec $command, move position center, resize set width 100 ppt height 100 ppt
+            swaymsg "for_window $params 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
+            exec $command
         fi
       ''
     )
+    (pkgs.writers.writeBashBin "emacsnote" { } ''
+      emacsclient -c -e '(org-roam-node-find)' -F '((name . "Notes"))' 
+    '')
   ];
   wayland.windowManager.sway = {
     extraConfigEarly = ''
@@ -92,12 +73,12 @@ in
         "${mod}+r" = "exec $toggle_window --id info.febvre.Komikku -- info.febvre.Komikku";
         "${mod}+n" = "exec $toggle_window --id wpa_gui -- wpa_gui";
         "${mod}+e" = "exec swaymsg [ app_id=emacs title=^Notes$ ] scratchpad show || exec emacsnote, $maximize";
-        "${mod}+Shift+e" = "exec ddapp -a=emacs -t=^EmacsConfig$ -c=emacsconfig";
+        "${mod}+Shift+e" = "exec ddapp -p \"[ app_id=emacs title=^EmacsConfig$ ]\" -c ${emacsconfig}/bin/emacsconfig";
         "${mod}+Shift+i" = "exec $toggle_window --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
         "${mod}+Shift+d" = "exec $toggle_window --id gnome-disks -- gnome-disks";
         "${mod}+b" = "exec $toggle_window --id .blueman-manager-wrapped -- blueman-manager";
-        "${mod}+k" = "exec pkill tofi || keepmenu | xargs swaymsg exec --";
-        "${mod}+Shift+k" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
+        "${mod}+k" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} | xargs swaymsg exec --";
+        "${mod}+Shift+k" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass} | xargs swaymsg exec --";
         "${mod}+f" = "exec $toggle_window --id yazi -- foot --app-id=yazi fish -c yazi ~";
         "${mod}+Shift+f" = "exec $toggle_window --id nemo -- nemo ~";
         "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";

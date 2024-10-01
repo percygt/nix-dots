@@ -1,7 +1,5 @@
 {
-  pkgs,
   config,
-  lib,
   libx,
   ...
 }:
@@ -12,10 +10,7 @@ let
   f = config.modules.fonts.shell;
 in
 {
-  console = {
-    font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-    colors = c.toList;
-  };
+  console.colors = c.toList;
 
   services.kmscon = {
     enable = true;

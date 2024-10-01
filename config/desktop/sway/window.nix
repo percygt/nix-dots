@@ -81,7 +81,7 @@ in
           };
         }
         {
-          command = ''floating enable, resize set width 40ppt height 100ppt, move position 60ppt 0ppt'';
+          command = ''floating enable, resize set width 40ppt height 100ppt, move position 0ppt 0ppt'';
           criteria = {
             app_id = "info.febvre.Komikku";
           };
@@ -140,7 +140,7 @@ in
           };
         }
         {
-          command = ''floating enable, resize set width 20ppt height 20ppt, move position 85ppt 85ppt, sticky on'';
+          command = ''floating enable, resize set width 20ppt height 20ppt, move position 80ppt 80ppt, sticky on'';
           criteria = {
             title = "^Picture in picture$";
           };
