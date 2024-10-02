@@ -63,7 +63,7 @@
   (define-key evil-window-map (kbd "o") nil)
   (define-key evil-window-map (kbd "v") nil)
   (define-key evil-window-map (kbd "s") nil)
-  (define-key evil-window-map (kbd "x") nil)
+  (define-key evil-window-map (kbd "q") nil)
 
   (define-key splitscreen/prefix (kbd "h") 'splitscreen/window-left)
   (define-key splitscreen/prefix (kbd "j") 'splitscreen/window-down)
@@ -81,7 +81,7 @@
 
   (define-key splitscreen/prefix (kbd "v") 'split-window-right)
   (define-key splitscreen/prefix (kbd "s") 'split-window-below)
-  (define-key splitscreen/prefix (kbd "x") 'delete-window)
+  (define-key splitscreen/prefix (kbd "q") 'delete-window)
   (define-key splitscreen/prefix (kbd "SPC") 'balance-windows)
 
   (define-minor-mode splitscreen-mode

@@ -20,8 +20,8 @@
 
 (add-to-list 'load-path (expand-file-name "config/" user-emacs-config-directory))
 (add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory))
-(add-to-list 'load-path (expand-file-name "var/packages/md-roam-2024-09-22/" user-emacs-data-directory))
-(add-to-list 'load-path (expand-file-name "var/packages/yequake-2024-09-27/" user-emacs-data-directory))
+;; (add-to-list 'load-path (expand-file-name "var/packages/md-roam-2024-09-22/" user-emacs-data-directory))
+;; (add-to-list 'load-path (expand-file-name "var/packages/yequake-2024-09-27/" user-emacs-data-directory))
 
 ;; from doom early-init
 (setq gc-cons-threshold most-positive-fixnum)
@@ -61,7 +61,7 @@
 (scroll-bar-mode -1)
 (tooltip-mode -1)
 (menu-bar-mode -1)
-(set-fringe-mode 10)              ; give some breathing room
+;; (set-fringe-mode 10)              ; give some breathing room
 (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
 (global-subword-mode 1)
 (set-language-environment "UTF-8")
@@ -90,40 +90,81 @@
 (set-frame-parameter nil 'alpha-background 80)
 (add-to-list 'default-frame-alist '(alpha-background . 80))
 
-;; Makes *scratch* empty.
-(setq initial-scratch-message "")
-;; Removes *scratch* from buffer after the mode has been set.
-(defun remove-scratch-buffer ()
-  (if (get-buffer "*scratch*")
-      (kill-buffer "*scratch*")))
-(add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)
+(defun remove-log ()
+  (if (get-buffer "*Async-native-compile-log*")
+      (kill-buffer "*Async-native-compile-log*")))
+(add-hook 'after-change-major-mode-hook 'remove-log)
 
 ;; Removes *messages* from the buffer.
 (setq-default message-log-max nil)
 (kill-buffer "*Messages*")
 
-(unless (or (daemonp) noninteractive)
-  ;; Emacs really shouldn't be displaying anything until it has fully started
-  ;; up. This saves a bit of time.
-  (setq-default inhibit-redisplay t
-                inhibit-message t)
-  (add-hook 'window-setup-hook
-            (lambda ()
-              (setq-default inhibit-redisplay nil
-                            inhibit-message nil)
-              (redisplay)))
+(add-to-list 'display-buffer-alist
+	         '("\\*\\(Completions\\|Help\\)\\*"
+	           (display-buffer-reuse-window display-buffer-pop-up-window)
+	           (window-width . 60)
+	           (side . right)
+               (slot . 3)))
 
-  ;; Site files tend to use `load-file', which emits "Loading X..." messages in
-  ;; the echo area, which in turn triggers a redisplay. Redisplays can have a
-  ;; substantial effect on startup times and in this case happens so early that
-  ;; Emacs may flash white while starting up.
-  (define-advice load-file (:override (file) silence)
-    (load file nil 'nomessage))
+(add-to-list 'display-buffer-alist
+	         '("\\*\\(eldoc\\)\\*"
+	           (display-buffer-reuse-window display-buffer-in-side-window)
+	           (window-width . 60)
+               (window-parameters . ((no-other-window . t)(no-delete-other-windows . t)))
+               (dedicated . t)
+	           (side . right)
+               (slot . 5)))
 
-  ;; Undo our `load-file' advice above, to limit the scope of any edge cases it
-  ;; may introduce down the road.
-  (define-advice startup--load-user-init-file (:before (&rest _) init-emacs)
-    (advice-remove #'load-file #'load-file@silence)))
+(add-to-list 'display-buffer-alist
+	         '("\\*\\(compilation\\|Async\\)\\*"
+	           (display-buffer-reuse-window display-buffer-in-side-window)
+	           (window-width . 60)
+               (window-parameters . ((no-other-window . t)(no-delete-other-windows . t)))
+               (dedicated . t)
+	           (side . right)
+               (slot . 7)))
+
+(add-to-list 'display-buffer-alist
+	         '("\\*\\(Flymake diag.+\\)\\*"
+	           (display-buffer-reuse-window display-buffer-in-side-window)
+	           (window-width . 60)
+	           (side . right)
+               (slot . 2)))
+
+(add-to-list 'display-buffer-alist
+	         '("\\*\\(Compile-Log\\|Async-native-compile-log\\|Warnings\\)\\*"
+	           (display-buffer-no-window)
+	           (allow-no-window t)))
+
+(add-to-list 'display-buffer-alist
+	         '("\\*\\(Ibuffer\\|vc-dir\\|vc-diff\\|vc-change-log\\|Async Shell Command\\)\\*"
+	           (display-buffer-full-frame)))
+
+(add-to-list 'display-buffer-alist
+	         '("\\(magit: .+\\|magit-log.+\\|magit-revision.+\\)"
+	           (display-buffer-full-frame)))
+;; (unless (or (daemonp) noninteractive)
+;;   ;; Emacs really shouldn't be displaying anything until it has fully started
+;;   ;; up. This saves a bit of time.
+;;   (setq-default inhibit-redisplay t
+;;                 inhibit-message t)
+;;   (add-hook 'window-setup-hook
+;;             (lambda ()
+;;               (setq-default inhibit-redisplay nil
+;;                             inhibit-message nil)
+;;               (redisplay)))
+
+;;   ;; Site files tend to use `load-file', which emits "Loading X..." messages in
+;;   ;; the echo area, which in turn triggers a redisplay. Redisplays can have a
+;;   ;; substantial effect on startup times and in this case happens so early that
+;;   ;; Emacs may flash white while starting up.
+;;   (define-advice load-file (:override (file) silence)
+;;     (load file nil 'nomessage))
+
+;;   ;; Undo our `load-file' advice above, to limit the scope of any edge cases it
+;;   ;; may introduce down the road.
+;;   (define-advice startup--load-user-init-file (:before (&rest _) init-emacs)
+;;     (advice-remove #'load-file #'load-file@silence)))
 
 (provide 'early-init)
 ;;; early-init ends here

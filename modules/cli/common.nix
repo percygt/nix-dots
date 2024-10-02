@@ -21,6 +21,8 @@
     };
     home.packages = with pkgs; [
       # tui
+      ttyper # Terminal-based typing test
+      manga-tui # Terminal-based manga reader and downloader with image support
       fx # Terminal JSON viewer
       htmlq # Like jq, but for HTML
       tabiew # CSV viewer

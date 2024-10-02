@@ -56,7 +56,7 @@
     "s" '(nil :wk "Consult")
     "sf" 'consult-fd
     "sg" 'consult-ripgrep
-    "0"  'consult-buffer
+    ","  'consult-buffer
     "sl" 'consult-line
     "so" 'consult-outline))
 

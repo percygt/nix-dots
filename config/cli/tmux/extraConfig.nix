@@ -42,8 +42,8 @@ in
 
       set -g @tmuxinoicer-find-base "${config.home.homeDirectory}/data:1:4,${config.home.homeDirectory}:1:1"
       set -g @tmuxinoicer-extras "find"
-      unbind 0
-      set -g @tmuxinoicer-bind "0"
+      unbind ,
+      set -g @tmuxinoicer-bind ","
       run-shell ${tp.tmuxinoicer}/share/tmux-plugins/tmuxinoicer/tmuxinoicer.tmux
 
 

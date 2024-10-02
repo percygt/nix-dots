@@ -22,6 +22,7 @@ in
           with pkgs;
           [
             keepmenu
+            xsel
             ydotool
             wl-clipboard
           ]

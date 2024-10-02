@@ -11,6 +11,12 @@
   ];
   config = {
     scheme = config.modules.theme.colorscheme;
+    home.packages = with pkgs; [
+      adwaita-icon-theme
+      yaru-theme
+      hicolor-icon-theme
+      humanity-icon-theme
+    ];
     xdg = {
       dataFile = {
         "themes/Yaru-dark".source = "${pkgs.yaru-theme}/share/themes/Yaru-dark";

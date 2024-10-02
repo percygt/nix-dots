@@ -2,13 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package md-roam
-  :ensure nil
-  :after org-roam
-  :custom
-  (md-roam-file-extension "md")
-  :config
-  (md-roam-mode 1))
 
 (use-package org-roam
   :after (org marginalia)
@@ -132,6 +125,14 @@
 (use-package org-roam-timestamps
   :after org-roam
   :config (org-roam-timestamps-mode))
+
+;; (use-package md-roam
+;;   :ensure nil
+;;   :after org-roam
+;;   :custom
+;;   (md-roam-file-extension "md")
+;;   :config
+;;   (md-roam-mode 1))
 
 (provide 'roam-cfg)
 ;;; roam-cfg.el ends here

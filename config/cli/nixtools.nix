@@ -15,6 +15,7 @@
     nix-output-monitor
     nvd
     nix-search-cli
+    nix-inspect
     # stash.yaml2nix
     nix-prefetch-scripts
     nix-prefetch-github

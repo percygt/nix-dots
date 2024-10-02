@@ -34,32 +34,6 @@ in
     text = builtins.readFile ./clj/toggle-sway-window.clj;
   };
 
-  tofi-pass =
-    pkgs.writers.writeBashBin "tofi-pass"
-      {
-        makeWrapperArgs = [
-          "--prefix"
-          "PATH"
-          ":"
-          "${lib.makeBinPath [
-            pkgs.tofi
-            pkgs.pass
-          ]}"
-        ];
-      }
-      #bash
-      ''
-        shopt -s nullglob globstar
-        dmenu="tofi --prompt-text='Passmenu: '"
-        prefix=''${PASSWORD_STORE_DIR- ~/.password-store}
-        password_files=( "$prefix"/**/*.gpg )
-        password_files=( "''${password_files[@]#"$prefix"/}" )
-        password_files=( "''${password_files[@]%.gpg}" )
-        password=$(printf '%s\n' "''${password_files[@]}" | "$dmenu" "$@")
-        [[ -n $password ]] || exit
-        pass show -c "$password" 2>/dev/null
-      '';
-
   tofi-power-menu =
     pkgs.writers.writeBashBin "tofipowermenu"
       {
@@ -206,6 +180,24 @@ in
       }
     } $@
   '';
+
+  tofi-pass = pkgs.writeShellApplication {
+    name = "tofi-pass";
+    runtimeInputs = [
+      pkgs.tofi
+      pkgs.pass
+    ];
+    text = ''
+      shopt -s nullglob globstar
+      prefix=''${PASSWORD_STORE_DIR- ~/.password-store}
+      password_files=( "$prefix"/**/*.gpg )
+      password_files=( "''${password_files[@]#"$prefix"/}" )
+      password_files=( "''${password_files[@]%.gpg}" )
+      password=$(printf '%s\n' "''${password_files[@]}" | tofi --prompt-text='Passmenu: ')
+      [[ -n $password ]] || exit
+      pass show -c "$password" 2>/dev/null
+    '';
+  };
 
   toggle-service = pkgs.writeShellApplication {
     name = "toggle-service";

@@ -22,6 +22,7 @@ in
     home.packages = with pkgs; [
       zbar
       wl-clipboard
+      tofi-pass
     ];
   };
 }

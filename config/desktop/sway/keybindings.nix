@@ -18,36 +18,14 @@ let
     mkWorkspaceKeys
     mkDirectionKeys
     ;
-  emacsconfig = pkgs.writeScriptBin "emacsconfig" ''
+  emacsconfig = pkgs.writers.writeBash "emacsconfig" ''
     emacsclient -F '((name . "EmacsConfig"))' -c ${g.flakeDirectory}/modules/editor/emacs;
+  '';
+  emacsnote = pkgs.writers.writeBash "emacsnote" ''
+    emacsclient -c -e '(org-roam-node-find)' -F '((name . "Notes"))' 
   '';
 in
 {
-  home.packages = [
-    emacsconfig
-    (pkgs.writers.writeBashBin "ddapp" { }
-      #bash
-      ''
-        while getopts p:c: flag
-        do
-            case "''${flag}" in
-                p) params=''${OPTARG};;
-                c) command=''${OPTARG};;
-            esac
-        done
-        if swaymsg "$params scratchpad show"
-        then
-            swaymsg "$params resize set 100ppt 100ppt , move position center"
-        else
-            swaymsg "for_window $params 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
-            exec $command
-        fi
-      ''
-    )
-    (pkgs.writers.writeBashBin "emacsnote" { } ''
-      emacsclient -c -e '(org-roam-node-find)' -F '((name . "Notes"))' 
-    '')
-  ];
   wayland.windowManager.sway = {
     extraConfigEarly = ''
       set {
@@ -72,14 +50,14 @@ in
         "${mod}+v" = "exec $toggle_window --id pavucontrol -- pavucontrol";
         "${mod}+r" = "exec $toggle_window --id info.febvre.Komikku -- info.febvre.Komikku";
         "${mod}+n" = "exec $toggle_window --id wpa_gui -- wpa_gui";
-        "${mod}+e" = "exec swaymsg [ app_id=emacs title=^Notes$ ] scratchpad show || exec emacsnote, $maximize";
-        "${mod}+Shift+e" = "exec ddapp -p \"[ app_id=emacs title=^EmacsConfig$ ]\" -c ${emacsconfig}/bin/emacsconfig";
+        "${mod}+e" = "exec ddapp -p '[app_id=emacs title=^Notes$]' -c ${emacsnote}";
+        "${mod}+Shift+e" = "exec ddapp -p '[app_id=emacs title=^EmacsConfig$]' -c ${emacsconfig}";
         "${mod}+Shift+i" = "exec $toggle_window --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
         "${mod}+Shift+d" = "exec $toggle_window --id gnome-disks -- gnome-disks";
         "${mod}+b" = "exec $toggle_window --id .blueman-manager-wrapped -- blueman-manager";
         "${mod}+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu}";
         "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C";
-        "${mod}+Shift+p" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass} | xargs swaymsg exec --";
+        "${mod}+Shift+p" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
         "${mod}+f" = "exec $toggle_window --id yazi -- foot --app-id=yazi fish -c yazi ~";
         "${mod}+Shift+f" = "exec $toggle_window --id nemo -- nemo ~";
         "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
