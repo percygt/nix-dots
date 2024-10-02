@@ -56,7 +56,7 @@ in
         "${mod}+Shift+d" = "exec $toggle_window --id gnome-disks -- gnome-disks";
         "${mod}+b" = "exec $toggle_window --id .blueman-manager-wrapped -- blueman-manager";
         "${mod}+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu}";
-        "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C";
+        "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C | xargs swaymsg exec --";
         "${mod}+Shift+p" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
         "${mod}+f" = "exec $toggle_window --id yazi -- foot --app-id=yazi fish -c yazi ~";
         "${mod}+Shift+f" = "exec $toggle_window --id nemo -- nemo ~";
