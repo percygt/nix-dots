@@ -51,20 +51,20 @@ in
         preStart = "${pkgs.coreutils-full}/bin/sleep 30";
         script = "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind";
       };
-      timers.borgmatic = lib.mkForce {
+      timers.borgmatic = {
         description = "Run borgmatic backup";
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "daily";
           Persistent = true;
           RandomizedDelaySec = "1h";
-          OnBootSec = "15min";
+          OnBootSec = "30min";
         };
       };
       services.borgmatic = {
         description = "Run borgmatic backup";
-        wants = [ "network-online.target" ];
-        after = [ "network-online.target" ];
+        after = [ "udisks2.service" ];
+        requires = [ "udisks2.service" ];
         unitConfig.ConditionACPower = true;
         serviceConfig = {
           Type = "oneshot";

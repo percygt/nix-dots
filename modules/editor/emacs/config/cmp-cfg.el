@@ -19,6 +19,7 @@
               ("S-TAB"      . corfu-previous)
               ([backtab]    . corfu-previous)
               ("S-<return>" . corfu-insert)
+              ("<escape>"   . corfu-quit)
               ("RET"        . nil))
 
   :init
@@ -46,7 +47,9 @@
   :init
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-elisp-block)
-  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster))
+  (add-to-list 'completion-at-point-functions #'cape-dict)
+  (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
+  )
 
 (use-package kind-icon
   :after corfu

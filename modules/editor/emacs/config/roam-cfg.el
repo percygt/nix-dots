@@ -9,7 +9,12 @@
   (setq org-roam-v2-ack t)
   :preface
   (defvar auto-org-roam-db-sync--timer nil)
-  (defvar auto-org-roam-db-sync--timer-interval 5)
+  (defun org-roam-node-insert-immediate (arg &rest args)
+    (interactive "P")
+    (let ((args (cons arg args))
+          (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                    '(:immediate-finish t)))))
+      (apply #'org-roam-node-insert args))) (defvar auto-org-roam-db-sync--timer-interval 5)
   (defun get-files-in-directory (dir)
     "Return a list of file names in the specified directory DIR, excluding directories."
     (let ((files (directory-files dir t)))
@@ -94,7 +99,7 @@
     "wd" 'org-roam-dailies-capture-today)
   (global-definer
     :keymaps '(org-mode-map)
-    "wI" 'org-roam-insert-immediate
+    "wI" 'org-roam-node-insert-immediate
     "wi" 'org-roam-node-insert))
 
 ;; (use-package consult-notes

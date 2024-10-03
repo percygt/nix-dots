@@ -52,7 +52,7 @@
   (org-src-tab-acts-natively t)
   (org-src-preserve-indentation nil)
   (org-startup-folded t)
-  (org-image-actual-width 300)
+  (org-image-actual-width nil)
   (org-cycle-separator-lines 2)
   (org-hide-leading-stars t)
   (org-goto-auto-isearch nil)
@@ -67,15 +67,9 @@
   (org-hierarchical-todo-statistics nil)
   (org-use-property-inheritance t)
   (org-tags-column -1)
-  (org-lowest-priority ?F)  ;; Gives us priorities A through F
-  (org-default-priority ?E) ;; If an item has no priority, it is considered [#E].
-  ;; (org-priority-faces
-  ;;  ((65 . "red2")
-  ;;    (66 . "Gold1")
-  ;;    (67 . "Goldenrod2")
-  ;;    (68 . "PaleTurquoise3")
-  ;;    (69 . "DarkSlateGray4")
-  ;;    (70 . "PaleTurquoise4")))
+  (org-highest-priority ?A)
+  (org-default-priority ?D)
+  (org-lowest-priority ?E)
   :custom-face
   (outline-1 ((t (:height 1.2))))
   (outline-2 ((t (:height 1.1))))
@@ -93,7 +87,7 @@
   (org-property-value ((t (:inherit fixed-pitch))) t)
   (org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
   (org-table ((t (:inherit fixed-pitch))))
-  (org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 1.0))))
+  (org-tag ((t (:inherit fixed-pitch :weight bold))))
   (org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (use-package evil-org

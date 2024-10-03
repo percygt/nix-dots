@@ -24,6 +24,8 @@
   (fill-column                      100)
   (initial-major-mode               'fundamental-mode)
   (user-emacs-directory             user-emacs-data-directory)
+  (tab-always-indent                'complete)
+  (text-mode-ispell-word-completion nil)
   (read-extended-command-predicate  #'command-completion-default-include-p)
   :hook ((prog-mode . display-fill-column-indicator-mode)
          ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
@@ -93,30 +95,6 @@
 
 (use-package diminish :after use-package) ;; if you use :diminish
 
-(use-package font
-  :ensure nil
-  :demand
-  :hook
-  (server-after-make-frame . setup-default-fonts)
-  :preface
-  (defun font-installed-p (font-name)
-    "Check if a font with FONT-NAME is available."
-    (find-font (font-spec :name font-name)))
-  (defun setup-default-fonts ()
-    (message "Setting faces!")
-    (when (font-installed-p "Iosevka Aile")
-      (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150 :weight 'medium))
-    (when (font-installed-p "VictorMono Nerd Font")
-      (dolist (face '(default fixed-pitch))
-	      (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions
-		        (lambda (frame)
-                  (with-selected-frame frame
-                    (setup-default-fonts))))
-    (setup-default-fonts))
-  (provide 'font))
-
 (use-package display-line-numbers
   :ensure nil
   :custom
@@ -124,7 +102,7 @@
   (display-line-numbers-width-start t)
   (display-line-numbers-type        'relative)
   :hook (((text-mode prog-mode conf-mode) . display-line-numbers-mode)
-	 (org-mode . (lambda () (display-line-numbers-mode -1)))))
+	     (org-mode . (lambda () (display-line-numbers-mode -1)))))
 
 (use-package no-littering
   :custom

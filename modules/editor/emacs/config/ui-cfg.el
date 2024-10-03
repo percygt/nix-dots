@@ -1,7 +1,28 @@
-
 ;;; ui-cfg.el --- UI setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
+(use-package font
+  :ensure nil
+  :demand
+  :custom-face
+  (font-lock-comment-face ((t (:foreground "dim gray"))))
+  :hook
+  (server-after-make-frame . setup-default-fonts)
+  :config
+  (setup-default-fonts)
+  :preface
+  (defun font-installed-p (font-name)
+    "Check if a font with FONT-NAME is available."
+    (find-font (font-spec :name font-name)))
+  (defun setup-default-fonts ()
+    (message "Setting faces!")
+    (when (font-installed-p "Iosevka Aile")
+      (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150 :weight 'medium))
+    (when (font-installed-p "VictorMono Nerd Font")
+      (dolist (face '(default fixed-pitch))
+	    (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
+  (provide 'font))
 
 (use-package dashboard
   :after (nerd-icons evil)
@@ -26,45 +47,17 @@
 (use-package doom-themes
   :demand
   :config
-  (load-theme 'doom-moonlight t)
+  (load-theme 'doom-rouge t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
   (doom-themes-org-config))
 
 (use-package doom-modeline
+  :custom
+  (doom-modeline-icon t)
   :demand
   :hook
   (after-init . doom-modeline-mode))
-
-;; (use-package centaur-tabs
-;;   :demand
-;;   :hook
-;;   (org-agenda-mode . centaur-tabs-local-mode)
-;;   (org-mode . centaur-tabs-local-mode)
-;;   :init
-;;   (setq centaur-tabs-enable-key-bindings t)
-;;   :general
-;;   (normal-definer
-;;     ("D" 'centaur-tabs--kill-this-buffer-dont-ask)
-;;     ("gl" 'centaur-tabs-forward)
-;;     ("gh" 'centaur-tabs-backward))
-;;   :custom
-;;   (centaur-tabs-set-icons t)
-;;   (centaur-tabs-show-new-tab-button t)
-;;   (centaur-tabs-set-modified-marker t)
-;;   (centaur-tabs-show-navigation-buttons t)
-;;   (centaur-tabs-set-bar 'over)
-;;   (centaur-tabs-show-count nil)
-;;   (centaur-tabs-style "bar")
-;;   (centaur-tabs-adjust-buffer-order t)
-;;   (centaur-tabs-adjust-buffer-order 'left)
-;;   (x-underline-at-descent-line t)
-;;   (centaur-tabs-left-edge-margin nil)
-;;   :config
-;;   (centaur-tabs-change-fonts (face-attribute 'variable-pitch :font) 130)
-;;   (centaur-tabs-enable-buffer-reordering)
-;;   (centaur-tabs-headline-match)
-;;   (centaur-tabs-mode t))
 
 
 (use-package nerd-icons
