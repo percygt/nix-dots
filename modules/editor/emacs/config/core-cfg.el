@@ -105,11 +105,13 @@
 	     (org-mode . (lambda () (display-line-numbers-mode -1)))))
 
 (use-package no-littering
+  :demand
   :custom
   (no-littering-etc-directory user-emacs-data-directory)
   (no-littering-var-directory user-emacs-data-directory))
 
 (use-package files
+  :after no-littering
   :ensure nil
   :demand
   :preface

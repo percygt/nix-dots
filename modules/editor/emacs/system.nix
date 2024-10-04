@@ -17,14 +17,6 @@ in
     };
     environment.systemPackages = [
       cfg.finalPackage
-      (pkgs.aspellWithDicts (
-        dicts: with dicts; [
-          en
-          en-computers
-          en-science
-          es
-        ]
-      ))
     ];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist" = {

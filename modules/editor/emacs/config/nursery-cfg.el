@@ -2,11 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; (use-package nursery
-;;   :ensure nil
-;;   :init
-;;   (add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory)))
-
 (use-package org-roam-review
   :ensure nil
   :config
@@ -37,9 +32,9 @@
 	       "TAB" 'magit-section-cycle
 	       "g r" 'org-roam-review-refresh))
 
-(use-package org-format
-  :ensure nil
-  :hook (org-mode . org-format-on-save-mode))
+;; (use-package org-format
+;;   :ensure nil
+;;   :hook (org-mode . org-format-on-save-mode))
 
 (use-package org-roam-search
   :ensure nil

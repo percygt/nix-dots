@@ -61,7 +61,6 @@
 (scroll-bar-mode -1)
 (tooltip-mode -1)
 (menu-bar-mode -1)
-;; (set-fringe-mode 10)              ; give some breathing room
 (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
 (global-subword-mode 1)
 (set-language-environment "UTF-8")
@@ -143,28 +142,29 @@
 (add-to-list 'display-buffer-alist
 	         '("\\(magit: .+\\|magit-log.+\\|magit-revision.+\\)"
 	           (display-buffer-full-frame)))
-;; (unless (or (daemonp) noninteractive)
-;;   ;; Emacs really shouldn't be displaying anything until it has fully started
-;;   ;; up. This saves a bit of time.
-;;   (setq-default inhibit-redisplay t
-;;                 inhibit-message t)
-;;   (add-hook 'window-setup-hook
-;;             (lambda ()
-;;               (setq-default inhibit-redisplay nil
-;;                             inhibit-message nil)
-;;               (redisplay)))
 
-;;   ;; Site files tend to use `load-file', which emits "Loading X..." messages in
-;;   ;; the echo area, which in turn triggers a redisplay. Redisplays can have a
-;;   ;; substantial effect on startup times and in this case happens so early that
-;;   ;; Emacs may flash white while starting up.
-;;   (define-advice load-file (:override (file) silence)
-;;     (load file nil 'nomessage))
+(unless (or (daemonp) noninteractive)
+  ;; Emacs really shouldn't be displaying anything until it has fully started
+  ;; up. This saves a bit of time.
+  (setq-default inhibit-redisplay t
+                inhibit-message t)
+  (add-hook 'window-setup-hook
+            (lambda ()
+              (setq-default inhibit-redisplay nil
+                            inhibit-message nil)
+              (redisplay)))
 
-;;   ;; Undo our `load-file' advice above, to limit the scope of any edge cases it
-;;   ;; may introduce down the road.
-;;   (define-advice startup--load-user-init-file (:before (&rest _) init-emacs)
-;;     (advice-remove #'load-file #'load-file@silence)))
+  ;; Site files tend to use `load-file', which emits "Loading X..." messages in
+  ;; the echo area, which in turn triggers a redisplay. Redisplays can have a
+  ;; substantial effect on startup times and in this case happens so early that
+  ;; Emacs may flash white while starting up.
+  (define-advice load-file (:override (file) silence)
+    (load file nil 'nomessage))
+
+  ;; Undo our `load-file' advice above, to limit the scope of any edge cases it
+  ;; may introduce down the road.
+  (define-advice startup--load-user-init-file (:before (&rest _) init-emacs)
+    (advice-remove #'load-file #'load-file@silence)))
 
 (provide 'early-init)
 ;;; early-init ends here

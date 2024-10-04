@@ -27,6 +27,24 @@ let
       org-drill
       pcre2el
       ts
+      # Install copilot.el
+      (trivialBuild {
+        pname = "welcome-dashboard";
+        version = "2024-10-03";
+
+        packageRequires = with epkgs; [
+          async
+          nerd-icons
+          all-the-icons
+        ];
+
+        src = pkgs.fetchFromGitHub {
+          owner = "konrad1977";
+          repo = "welcome-dashboard";
+          rev = "b4f3d6084e697533369cbb58f27930c7dc72e7f7";
+          hash = "sha256-LhWmzfl8JHepYXecHkXGzqnQDB3lEJlGHc0EIh8ECPk=";
+        };
+      })
     ];
   emacs = pkgs.emacsWithPackagesFromUsePackage {
     inherit (cfg) package;
@@ -46,13 +64,6 @@ let
     ln -vs ${emacs}/share/man $out/share/man
   '';
 in
-# editorScript = pkgs.writeShellScriptBin "emacseditor" ''
-#   if [ -z "$1" ]; then
-#     exec ${cfg.finalPackage}/bin/emacsclient --create-frame --alternate-editor ${cfg.finalPackage}/bin/emacs
-#   else
-#     exec ${cfg.finalPackage}/bin/emacsclient --alternate-editor ${cfg.finalPackage}/bin/emacs "$@"
-#   fi
-# '';
 {
   options.modules.editor = {
     emacs = {
@@ -62,11 +73,6 @@ in
         default = pkgs.emacs-pgtk;
         type = lib.types.package;
       };
-      # editorScript = lib.mkOption {
-      #   description = "Editor Script";
-      #   default = editorScript;
-      #   type = lib.types.package;
-      # };
       finalPackage = lib.mkOption {
         description = "Emacs final package to use";
         default = emacsWithExtraPackages;

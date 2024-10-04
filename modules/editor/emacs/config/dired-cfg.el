@@ -11,6 +11,7 @@
     "L" 'nil
     "H" 'nil
     "D" 'nil
+    "d" 'nil
     "r" 'dired-do-rename
     "R" 'dired-do-redisplay
     "y" 'dired-do-copy

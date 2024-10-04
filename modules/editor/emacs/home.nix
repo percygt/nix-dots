@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -24,6 +25,10 @@ in
         "emacs/config".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/config";
         "emacs/early-init.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/early-init.el";
         "emacs/init.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/init.el";
+        "emacs/xemacs_color.png".source = pkgs.fetchurl {
+          url = "https://github.com/egstatsml/emacs_fancy_logos/blob/main/xemacs_color.png";
+          sha256 = "1vyvsivxrnbb86lxrwzaml4cakv410z6nx4d9mnvbs9fn22m67bp";
+        };
       };
     };
   };

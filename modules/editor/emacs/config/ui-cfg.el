@@ -1,16 +1,26 @@
 ;;; ui-cfg.el --- UI setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+(use-package visual-fill-column
+  :defer t
+  :config
+  (setq visual-fill-column-center-text t)
+  (setq visual-fill-column-width 80)
+  (setq visual-fill-column-center-text t))
+
+(use-package writeroom-mode
+  :defer t
+  :config
+  (setq writeroom-maximize-window nil
+        writeroom-mode-line t
+        writeroom-global-effects nil ;; No need to have Writeroom do any of that silly stuff
+        writeroom-extra-line-spacing 3) 
+  (setq writeroom-width visual-fill-column-width)
+  )
 
 (use-package font
   :ensure nil
   :demand
-  :custom-face
-  (font-lock-comment-face ((t (:foreground "dim gray"))))
-  :hook
-  (server-after-make-frame . setup-default-fonts)
-  :config
-  (setup-default-fonts)
   :preface
   (defun font-installed-p (font-name)
     "Check if a font with FONT-NAME is available."
@@ -22,6 +32,12 @@
     (when (font-installed-p "VictorMono Nerd Font")
       (dolist (face '(default fixed-pitch))
 	    (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+		        (lambda (frame)
+                  (with-selected-frame frame
+                    (setup-default-fonts))))
+    (setup-default-fonts))
   (provide 'font))
 
 (use-package dashboard
@@ -35,7 +51,7 @@
   (dashboard-center-content t)
   (dashboard-set-file-icons t)
   (dashboard-set-heading-icons t)
-  (dashboard-startup-banner 'logo)
+  (dashboard-startup-banner (concat user-emacs-config-directory "/xemacs_color.png"))
   (dashboard-projects-backend 'project-el)
   :config
   (dashboard-setup-startup-hook)
@@ -46,8 +62,10 @@
 
 (use-package doom-themes
   :demand
+  :hook
+  (server-after-make-frame . (lambda () (load-theme 'doom-ephemeral t)))
   :config
-  (load-theme 'doom-rouge t)
+  (load-theme 'doom-ephemeral t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
   (doom-themes-org-config))
@@ -59,6 +77,18 @@
   :hook
   (after-init . doom-modeline-mode))
 
+(use-package keycast
+  :commands toggle-keycast
+  :config
+  (defun toggle-keycast()
+    (interactive)
+    (if (member '("" keycast-mode-line " ") global-mode-string)
+        (progn (setq global-mode-string (delete '("" keycast-mode-line " ") global-mode-string))
+               (remove-hook 'pre-command-hook 'keycast--update)
+               (message "Keycast OFF"))
+      (add-to-list 'global-mode-string '("" keycast-mode-line " "))
+      (add-hook 'pre-command-hook 'keycast--update t)
+      (message "Keycast ON"))))
 
 (use-package nerd-icons
   :custom (nerd-icons-font-family "Symbols Nerd Font"))

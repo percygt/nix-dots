@@ -96,7 +96,7 @@ return {
             theme = "dropdown",
             layout_config = {
               height = 0.4,
-              prompt_position = "top",
+              prompt_position = "bottom",
               preview_cutoff = 120,
             },
             mappings = {
@@ -113,59 +113,79 @@ return {
             previewer = false,
             layout_config = {
               height = 0.4,
-              prompt_position = "top",
+              prompt_position = "bottom",
               preview_cutoff = 120,
             },
           },
           buffers = {
             mappings = {
               i = {
-                ["D"] = actions.delete_buffer + actions.move_to_top,
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
+                ["<C-d>"] = actions.delete_buffer + actions.move_to_top,
               },
               n = {
-                ["D"] = actions.delete_buffer + actions.move_to_top,
+                ["<C-d>"] = actions.delete_buffer + actions.move_to_top,
                 ["l"] = actions.select_default,
               },
             },
             ignore_current_buffer = true,
             sort_lastused = true,
             previewer = false,
-            initial_mode = "normal",
+            -- initial_mode = "normal",
             theme = "dropdown",
             layout_config = {
               height = 0.4,
               width = 0.6,
-              prompt_position = "top",
+              prompt_position = "bottom",
               preview_cutoff = 120,
             },
           },
           current_buffer_fuzzy_find = {
             previewer = true,
             layout_config = {
-              prompt_position = "top",
+              prompt_position = "bottom",
               preview_cutoff = 120,
             },
           },
           live_grep = {
             only_sort_text = true,
             previewer = true,
+            layout_config = {
+              prompt_position = "bottom",
+              preview_cutoff = 120,
+            },
           },
           grep_string = {
             only_sort_text = true,
             previewer = true,
+            layout_config = {
+              prompt_position = "bottom",
+              preview_cutoff = 120,
+            },
           },
           lsp_references = {
             show_line = false,
             previewer = true,
+            layout_config = {
+              prompt_position = "bottom",
+              preview_cutoff = 120,
+            },
           },
           treesitter = {
             show_line = false,
             previewer = true,
+            layout_config = {
+              prompt_position = "bottom",
+              preview_cutoff = 120,
+            },
           },
           colorscheme = {
             enable_preview = true,
+            layout_config = {
+              prompt_position = "bottom",
+              preview_cutoff = 120,
+            },
           },
         },
         extensions = {
@@ -194,11 +214,8 @@ return {
       })
       telescope.load_extension("fzf")
       telescope.load_extension("ui-select")
-      -- telescope.load_extension("refactoring")
       telescope.load_extension("dap")
-      -- telescope.load_extension("frecency")
       telescope.load_extension("notify")
-      -- telescope.load_extension("git_worktree")
       telescope.load_extension("undo")
     end,
   },

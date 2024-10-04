@@ -51,7 +51,6 @@ in
     };
     extraOpts = {
       BrowserSignin = 0;
-      PasswordManagerEnabled = false;
       ShowHomeButton = true;
       CloudReportingEnabled = false;
       SafeBrowsingEnabled = false;
@@ -91,7 +90,7 @@ in
       NTPCardsVisible = false;
       NTPCustomBackgroundEnabled = true;
       PasswordLeakDetectionEnabled = false;
-      # PasswordManagerEnabled = false;
+      PasswordManagerEnabled = true;
       PromotionalTabsEnabled = false;
       PaymentMethodQueryEnabled = false;
       SafeBrowsingProtectionLevel = 0;

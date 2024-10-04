@@ -2,62 +2,105 @@
 ;;; Commentary:
 ;;; Code:
 
-
 (use-package org-roam
   :after (org marginalia)
   :init
   (setq org-roam-v2-ack t)
+  (unless (file-exists-p resourcesDir) (make-directory resourcesDir t))
   :preface
+  (defvar resourcesDir (concat notes-directory "/resources")
+    "Resources directory")
   (defvar auto-org-roam-db-sync--timer nil)
+
   (defun org-roam-node-insert-immediate (arg &rest args)
     (interactive "P")
     (let ((args (cons arg args))
           (org-roam-capture-templates (list (append (car org-roam-capture-templates)
                                                     '(:immediate-finish t)))))
       (apply #'org-roam-node-insert args))) (defvar auto-org-roam-db-sync--timer-interval 5)
-  (defun get-files-in-directory (dir)
-    "Return a list of file names in the specified directory DIR, excluding directories."
-    (let ((files (directory-files dir t)))
-      (cl-remove-if (lambda (file)
-		              (or (file-directory-p file) ; Ignore directories
-			              (string-match-p "\\`\\." (file-name-nondirectory file)))) ; Ignore '.' and '..'
-		            files)))
-  (defun get-next-file-number (dir)
-    "Return the next available file number based on the first two digits in file names in DIR."
-    (let ((files (get-files-in-directory dir)) ; Get the list of files
-	      (max-number -1)) ; Initialize the max number
-      ;; Iterate through each file
-      (dolist (file files)
-	    (let* ((file-name (file-name-nondirectory file)) ; Get just the file name
-	           (number (and (string-match "\\`\\([0-9][0-9]\\)-" file-name) ; Extract digits
-			                (string-to-number (match-string 1 file-name)))))
-	      (when number
-	        (setq max-number (max max-number number))))) ; Update max number if necessary
-      (format "%02d" (1+ max-number))))
+
+  (defun org-roam-filter-by-tag (tag-name)
+    (lambda (node)
+      (member tag-name (org-roam-node-tags node))))
+
+  (defun org-roam-list-notes-by-tag (tag-name)
+    (mapcar #'org-roam-node-file
+            (seq-filter
+             (org-roam-filter-by-tag tag-name)
+             (org-roam-node-list))))
+
+  (defun org-roam-refresh-agenda-list ()
+    (interactive)
+    (setq org-agenda-files (org-roam-list-notes-by-tag "Project")))
+
+  (defun org-roam-project-finalize-hook ()
+    "Adds the captured project file to `org-agenda-files' if the
+capture was not aborted."
+    ;; Remove the hook since it was added temporarily
+    (remove-hook 'org-capture-after-finalize-hook #'org-roam-project-finalize-hook)
+    ;; Add project file to the agenda list if the capture was confirmed
+    (unless org-note-abort
+      (with-current-buffer (org-capture-get :buffer)
+        (add-to-list 'org-agenda-files (buffer-file-name)))))
+
+  (defun org-roam-find-project ()
+    (interactive)
+    ;; Add the project file to the agenda after capture is finished
+    (add-hook 'org-capture-after-finalize-hook #'org-roam-project-finalize-hook)
+    ;; Select a project file to open, creating it if necessary
+    (org-roam-node-find
+     nil
+     nil
+     (org-roam-filter-by-tag "Project")
+     :templates '(("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+                   :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+                   :unnarrowed t))))
+
+  (defun org-roam-capture-inbox ()
+    (interactive)
+    (org-roam-capture- :node (org-roam-node-create)
+                       :templates '(("i" "inbox" plain "* %?"
+                                     :if-new (file+head "Inbox.org" "#+title: Inbox\n")))))
+
+  (defun org-roam-capture-task ()
+    (interactive)
+    ;; Add the project file to the agenda after capture is finished
+    (add-hook 'org-capture-after-finalize-hook #'org-roam-project-finalize-hook)
+    ;; Capture the new task, creating the project file if necessary
+    (org-roam-capture- :node (org-roam-node-read
+                              nil
+                              (org-roam-filter-by-tag "Project"))
+                       :templates '(("p" "project" plain "** TODO %?"
+                                     :if-new (file+head+olp "%<%Y%m%d%H%M%S>-${slug}.org"
+                                                            "#+title: ${title}\n#+filetags: Project"
+                                                            ("Tasks"))))))
   :config
   (org-roam-setup)
-  (cl-defmethod org-roam-node-numbered-slug
-    ((node org-roam-node)) (upcase (concat (get-next-file-number notes-directory) "-" (org-roam-node-slug node))))
+  (cl-defmethod org-roam-node-capitalized-slug
+    ((node org-roam-node)) (capitalize (org-roam-node-slug node)))
   (cl-defmethod org-roam-node-capitalized-title
     ((node org-roam-node)) (capitalize (org-roam-node-title node)))
   (add-to-list 'display-buffer-alist
                '("\\*org-roam\\*"
                  (display-buffer-full-frame)))
+  ;; Build the agenda list the first time for the session
+  (org-roam-refresh-agenda-list)
   (org-roam-db-autosync-mode)
   :custom
   (org-roam-node-display-template
    (concat "${title:80} " (propertize "${tags:20}" 'face 'org-tag))
    org-roam-node-annotation-function
    (lambda (node) (marginalia--time (org-roam-node-file-mtime node))))
+  (org-roam-completion-everywhere t)
   (org-roam-directory notes-directory)
-  (org-roam-db-location (concat notes-directory "/org-roam.db"))
+  (org-roam-db-location (concat resourcesDir "/org-roam.db"))
   (org-roam-dailies-directory "journals/")
   (org-roam-file-exclude-regexp "\\.git/.*\\|logseq/.*$")
   (org-roam-capture-templates
    `(("i" "index" plain "%?"
       :target
       (file+head
-       "${numbered-slug}.org"
+       "${capitalized-slug}.org"
        "#+title: ${capitalized-title}\n#+created: <%<%Y-%m-%d>>\n#+modified: \n#+filetags: :MOC:${slug}:\n\n* Map of Content\n\n#+BEGIN: notes :tags ${slug}\n#+END:")
       :jump-to-captured t
       :immediate-finish t
@@ -68,17 +111,14 @@
        "org/%<%Y%m%d_%H%M%S>_${slug}.org"
        "#+title: ${title}\n#+date: %<%Y-%m-%d>\n#+filetags: : \n\n")
       :unnarrowed t)
+     ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+      :unnarrowed t)
      ("r" "ref" plain "%?"
       :target
       (file+head
        "org/${citekey}.org"
        "#+title: ${slug}: ${title}\n#+filetags: reference ${keywords} \n\n* ${title}\n\n\n* Summary\n\n\n* Rough note space\n")
-      :unnarrowed t)
-     ("p" "person" plain "%?"
-      :target
-      (file+head
-       "org/${slug}.org"
-       "%^{relation|some guy|family|friend|colleague}p %^{birthday}p %^{address}p#+title:${slug}\n#+filetags: :person: \n")
       :unnarrowed t)
      ))
   (org-roam-dailies-capture-templates
@@ -96,9 +136,14 @@
     "wf" 'org-roam-node-find
     "wg" 'org-roam-graph
     "wc" 'org-roam-capture
-    "wd" 'org-roam-dailies-capture-today)
+    "wd" 'org-roam-dailies-capture-today
+    "wp" 'org-roam-find-project
+    "wt" 'org-roam-capture-task
+    "wi" 'org-roam-capture-inbox
+    )
   (global-definer
     :keymaps '(org-mode-map)
+    "w." 'completion-at-point
     "wI" 'org-roam-node-insert-immediate
     "wi" 'org-roam-node-insert))
 

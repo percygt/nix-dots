@@ -25,6 +25,14 @@ with pkgs;
       ltxcmds
       ;
   })
+  (aspellWithDicts (
+    dicts: with dicts; [
+      en
+      en-computers
+      en-science
+      es
+    ]
+  ))
   (python3.withPackages (
     ps: with ps; [
       python-lsp-server
