@@ -67,6 +67,8 @@
             iputils
             coreutils-full
             findutils
+            util-linux
+            acpi
             procps
             systemd
             nixos-rebuild
@@ -102,6 +104,7 @@
             findutils
             pciutils
             usbutils
+            util-linux
             wirelesstools
             ntfs3g
             psmisc

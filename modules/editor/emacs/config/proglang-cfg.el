@@ -19,20 +19,21 @@
   :ensure nil
   :general
   (local-definer
-   :keymaps 'emacs-lisp-mode-map
-   "e" '(nil :which-key "eval")
-   "es" '(eval-last-sexp :which-key "eval-sexp")
-   "er" '(eval-region :which-key "eval-region")
-   "eb" '(eval-buffer :which-key "eval-buffer")
+    :keymaps 'emacs-lisp-mode-map
+    "e" '(nil :which-key "eval")
+    "es" '(eval-last-sexp :which-key "eval-sexp")
+    "ee" '(eval-defun :which-key "eval-defun")
+    "er" '(eval-region :which-key "eval-region")
+    "eb" '(eval-buffer :which-key "eval-buffer")
 
-   "g" '(counsel-imenu :which-key "imenu")
-   "c" '(check-parens :which-key "check parens")
-   "I" '(indent-region :which-key "indent-region")
+    "g" '(counsel-imenu :which-key "imenu")
+    "c" '(check-parens :which-key "check parens")
+    "I" '(indent-region :which-key "indent-region")
 
-   "b" '(nil :which-key "org src")
-   "bc" 'org-edit-src-abort
-   "bb" 'org-edit-src-exit
-   )
+    "b" '(nil :which-key "org src")
+    "bc" 'org-edit-src-abort
+    "bb" 'org-edit-src-exit
+    )
   )
 (use-package buttercup :defer t)
 (use-package package-lint :defer t)

@@ -7,12 +7,15 @@
 let
   systemctl = "${pkgs.systemd}/bin/systemctl";
   g = config._general;
+  bak = g.security.borgmatic;
+  backupMountPath = bak.mountPath;
+  backupConfig = config.modules.security.backup;
 in
 {
   systemd.user.services.swayidle.Service.ExecStop = lib.getExe (
     pkgs.writeShellApplication {
       name = "swayidle-cleanup";
-      runtimeInputs = [ pkgs.coreutils-full ];
+      runtimeInputs = g.system.envPackages;
       text = ''
         BLOCKFILE="$HOME/.local/share/idle-sleep-block"
         if test -f "$BLOCKFILE"; then
@@ -30,8 +33,7 @@ in
           event = "before-sleep";
           command = lib.getExe (
             pkgs.writeShellApplication {
-              runtimeInputs = [
-                pkgs.coreutils-full
+              runtimeInputs = g.system.envPackages ++ [
                 g.desktop.sway.package
                 config.programs.swaylock.package
               ];
@@ -48,8 +50,7 @@ in
           command = lib.getExe (
             pkgs.writeShellApplication {
               name = "swayidle-after-resume";
-              runtimeInputs = [
-                pkgs.coreutils-full
+              runtimeInputs = g.system.envPackages ++ [
                 g.desktop.sway.package
                 pkgs.pomo
               ];
@@ -69,25 +70,36 @@ in
           command = lib.getExe (
             pkgs.writeShellApplication {
               name = "swayidle-sleepy-sleep";
-              runtimeInputs = [
-                pkgs.coreutils-full
-                pkgs.systemd
+              runtimeInputs = g.system.envPackages ++ [
                 pkgs.playerctl
-                pkgs.gnugrep
-                pkgs.acpi
                 config.programs.swaylock.package
                 g.desktop.sway.package
               ];
-              text = ''
-                set -x
-                if test -f "$HOME/.local/share/idle-sleep-block"; then
-                  echo "Restarting service because of idle-sleep-block file"
-                  systemctl --restart swayidle.service
+              text =
+                if backupConfig.enable then
+                  ''
+                    set -x
+                    if test -f "$HOME/.local/share/idle-sleep-block"; then
+                      echo "Restarting service because of idle-sleep-block file"
+                      systemctl --restart swayidle.service
+                    else
+                      echo "Idle timeout reached. Night night."
+                      findmnt ${backupMountPath} >/dev/null || echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/bind
+                      sleep 10
+                      systemctl sleep
+                    fi
+                  ''
                 else
-                  echo "Idle timeout reached. Night night."
-                  systemctl sleep
-                fi
-              '';
+                  ''
+                    set -x
+                    if test -f "$HOME/.local/share/idle-sleep-block"; then
+                      echo "Restarting service because of idle-sleep-block file"
+                      systemctl --restart swayidle.service
+                    else
+                      echo "Idle timeout reached. Night night."
+                      systemctl sleep
+                    fi
+                  '';
             }
           );
         }
