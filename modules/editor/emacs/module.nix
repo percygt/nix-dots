@@ -6,10 +6,22 @@
 }:
 let
   cfg = config.modules.editor.emacs;
-  emacsConfig = pkgs.concatTextFile {
-    name = "config.el";
-    files = map (dir: ./config/${dir}) (builtins.attrNames (builtins.readDir ./config));
-  };
+  # emacsConfig = pkgs.concatTextFile {
+  #   name = "config.el";
+  #   files = map (dir: ./config/${dir}) (builtins.attrNames (builtins.readDir ./config));
+  # };
+  org-tangle-elisp-blocks =
+    (pkgs.callPackage ./org.nix {
+      inherit pkgs;
+    }).org-tangle
+      (
+        { language, flags }:
+        let
+          is-elisp = (language == "emacs-lisp") || (language == "elisp");
+          is-tangle = if flags ? ":tangle" then flags.":tangle" == "yes" || flags.":tangle" == "y" else false;
+        in
+        is-elisp && is-tangle
+      );
   extraPackages = import ./extraPackages.nix { inherit pkgs; };
   extraEmacsPackages =
     epkgs: with epkgs; [
@@ -51,7 +63,8 @@ let
     inherit (cfg) package;
     inherit extraEmacsPackages;
     alwaysEnsure = true;
-    config = builtins.readFile emacsConfig;
+    config = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./init.org));
+    # config = builtins.readFile emacsConfig;
   };
 
   emacsWithExtraPackages = pkgs.runCommand "emacs" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''

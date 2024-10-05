@@ -1,59 +1,457 @@
-#+TITLE: My Emacs Config
-#+AUTHOR: PercyGT
+#+TITLE: My emacs literate configuration
+#+AUTHOR: Leonardo Santiago
 
-* Vanilla 
+This org file is used as the configuration source for my emacs. Additional packages may be found at emacs.nix (those that cannot be directly installed from =use-package=). Though declared in emacs lisp, they actually are completely managed by the =nix= package manager, by parsing the declarations on this file and using them to fetch the packages, which I think is really cool.
+
+This makes it such that it is trivial to handle complex configurations, such as pylsp with plugins or treesitter grammars installation process (which usually envolves some stateful installations outside of emacs).
+
+In order to run this emacs configuration locally, all you need to do is run the following command:
+#+begin_src shell
+nix run github:o-santi/emacs --experimental-features "nix-command" --experimental-features "flakes"
+#+end_src
+Though you probably shouldn't, because it will most likely build all of emacs from scratch (which takes a little while).
+
+You can also use it as a ~nixosModule~, in order to add additional packages like fonts.
+
+* Core
+** Remove bar mode
 #+begin_src emacs-lisp :tangle yes
-;; Vanilla config
-(use-package emacs
-  :ensure nil
-  :demand
-  :preface
-  (defun indicate-buffer-boundaries-left ()
-    (setq indicate-buffer-boundaries 'left))
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(global-display-line-numbers-mode 1)
+
+(setq use-short-answers t)
+(setq inhibit-startup-message t)
+
+(setq ring-bell-function 'ignore)
+(setq-default indent-tabs-mode nil)
+
+(setq window-combination-resize t)
+#+end_src
+
+** Theme and font
+#+begin_src emacs-lisp :tangle yes
+(use-package modus-themes)
+;; (use-package kanagawa-theme)
+(load-theme 'wheatgrass t)
+
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (select-frame frame)
+            (set-frame-font "Iosevka Nerd Font 12" nil t)))
+#+end_src
+
+** Backups
+#+begin_src emacs-lisp :tangle yes
+(setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist '(("." . "~/.saves/"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)
+#+end_src
+
+* Utility
+** Searching
+#+begin_src emacs-lisp :tangle yes
+(use-package rg)
+(use-package ctrlf
+  :config (ctrlf-mode +1))
+#+end_src
+** Age encryption
+Configuration to automagically open age files, and to encrypt them correctly to all my machines.
+#+begin_src emacs-lisp :tangle yes
+(use-package age
+  :ensure t
+  :demand t
   :custom
-  (initial-scratch-message               nil)
-  (inhibit-startup-screen                t) ;; Don't show the welcome splash screen.
-  (tab-width                             4) ;; Set tab-size to 4 spaces
-  (delete-by-moving-to-trash             t)
-  (visible-bell                          t)
-  (x-stretch-cursor                      t)
-  (mouse-yank-at-point                   t)
-  (use-short-answers                     t)
-  (column-number-mode                    t)
-  (indent-tabs-mode                      nil) ;; Always indent with spaces
-  (even-window-sizes                     nil)
-  (confirm-kill-processes                nil)
-  (fill-column                           100)
-  (tab-always-indent                     'complete)
-  (large-file-warning-threshold          nil)
-  (byte-compile-warnings                 '(ck-functions))
-  (cursor-in-non-selected-windows        nil)
-  (completion-cycle-threshold            3)
-  (completion-ignore-case                t)
-  (read-buffer-completion-ignore-case    t)
-  (read-file-name-completion-ignore-case t)
-  (max-lisp-eval-depth                   10000)
-  (scroll-margin                         0)
-  (fast-but-imprecise-scrolling          t)
-  (scroll-preserve-screen-position       t)
-  (debug-on-error                        nil)
-  (auto-window-vscroll                   nil)
-  (warning-minimum-level                 :emergency)
-  (ad-redefinition-action                'accept)
-  (auto-revert-check-vc-info             t)
-  (echo-keystrokes                       0.2)
-  (font-lock-maximum-decoration          t)
-  (highlight-nonselected-windows         t)
-  (kill-buffer-query-functions           nil) ;; Dont ask for closing spawned processes
-  (use-dialog-box                        nil)
-  (word-wrap                             nil)
-  (auto-mode-case-fold                   nil)
-  (undo-limit                            (* 16 1024 1024)) ;; 64mb
-  (undo-strong-limit                     (* 24 1024 1024)) ;; x 1.5 (96mb)
-  (undo-outer-limit                      (* 24 1024 1024)) ;; x 10 (960mb), (Emacs uses x100), but this seems too high.
-  (jit-lock-defer-time                   0)
-  (text-mode-ispell-word-completion      nil)
-  (read-extended-command-predicate       #'command-completion-default-include-p)
-  :hook ((prog-mode . display-fill-column-indicator-mode)
-         ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
+  (age-program "rage")
+  (age-default-identity "~/.ssh/id_ed25519")
+  (age-default-recipient
+   '("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJp9EEbJgk/oI84419RmpoDeiACDywNfG4akgdpDBL5W"
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKjyS7vbCxr7oDqBpnhHQQzolAW6Fqt1FTOo+hT+lSC"
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrMCLu3VvQVmd2cqreAJsVKkrtKXqgzO8i8NDm06ysm"
+     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuIjOE3xi/frXJHXQuIBntuXP8XyboCWRx48o3sYeub"))
+  :config
+  (age-file-enable))
+#+end_src
+** Nerd icons
+#+begin_src emacs-lisp :tangle yes
+(use-package nerd-icons
+  :custom
+  (nerd-icons-font-family "Iosevka Nerd Font"))
+
+(use-package nerd-icons-completion
+  :after nerd-icons
+  :after marginalia
+  :hook (marginalia-mode . nerd-icons-completion-marginal)
+  :config
+  (nerd-icons-completion-mode))
+
+(use-package nerd-icons-dired
+  :hook (dired-mode . nerd-icons-dired-mode))
+#+end_src
+** Direnv
+To integrate with nix shells.
+#+begin_src emacs-lisp :tangle yes
+(use-package envrc
+  :config (envrc-global-mode))
+#+end_src
+** Magit
+Configurations for magit
+*** Use Magit
+#+begin_src emacs-lisp :tangle yes
+(use-package magit
+  :custom (magit-process-finish-apply-ansi-colors t))
+#+end_src
+
+*** Forge
+#+begin_src emacs-lisp :tangle yes
+(setq auth-sources '("/run/agenix/authinfo"))
+#+end_src
+To interact with gitlab and github.
+#+begin_src emacs-lisp :tangle yes
+(use-package forge
+  :after magit)
+#+end_src
+
+** Vertico, Orderless, Marginalia
+Pretty minibuffer support
+#+begin_src emacs-lisp :tangle yes
+(use-package vertico
+  :config (vertico-mode))
+
+(use-package orderless
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package marginalia
+  :config (marginalia-mode))
+#+end_src
+** Projects
+#+begin_src emacs-lisp :tangle yes
+  (defcustom project-root-markers
+    '("Cargo.toml" "flake.nix" ".git")
+    "Files that indicate that directory is the root of a project"
+    :type '(repeat string)
+    :group 'project)
+
+  (defun project-root-p (path)
+    (catch 'found
+      (dolist (marker project-root-markers)
+        (when (file-exists-p (concat path marker))
+          (throw 'found marker)))))
+
+  (defun project-find-root (path)
+    "Search up the PATH for `project-root-markers'."
+    (let ((path (expand-file-name path)))
+      (catch 'found
+        (while (not (equal "/" path))
+          (if (not (project-root-p path))
+              (setq path (file-name-directory (directory-file-name path)))
+            (throw 'found (cons 'transient path)))))))
+
+  (use-package project
+    :config (setq project-find-functions '(project-find-root)))
+#+end_src
+** Helpful and which key
+Better help defaults
+#+begin_src emacs-lisp :tangle yes
+(use-package helpful
+  :config
+  (global-set-key (kbd "C-h f") #'helpful-callable)
+  (global-set-key (kbd "C-h v") #'helpful-variable)
+  (global-set-key (kbd "C-h x") #'helpful-command)
+  (global-set-key (kbd "C-h k") #'helpful-key))
+
+(use-package which-key
+  :config (which-key-mode))
+#+end_src
+** Dirvish
+I wanna try some QoL addons for dired.
+#+begin_src emacs-lisp :tangle yes
+(use-package dirvish)
+#+end_src
+** Windows
+I wanna test out =winner-mode=
+#+begin_src emacs-lisp :tangle yes
+(use-package winner
+  :config (winner-mode))
+#+end_src
+** Bind key
+#+begin_src emacs-lisp :tangle yes
+(use-package bind-key)
+#+end_src
+** Eglot
+Language server support. Already comes installed but used to configure additional language servers.
+#+begin_src emacs-lisp :tangle yes
+(use-package eglot
+  :ensure nil
+  :config (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
+
+(use-package eglot-booster
+  :after eglot
+  :config (eglot-booster-mode))
+#+end_src
+
+** Corfu
+Completion popup system
+#+begin_src emacs-lisp :tangle yes
+(use-package corfu
+  :config (global-corfu-mode)
+  :custom
+  (corfu-auto t)
+  (corfu-cycle t)
+  (corfu-separator ?\s)
+  (corfu-quit-no-match t))
+#+end_src
+** Vterm
+#+begin_src emacs-lisp :tangle yes
+(use-package eat)
+#+end_src
+** Compilation
+Add support for ansi escape codes in compilation
+#+begin_src emacs-lisp :tangle yes
+(use-package xterm-color
+  :custom (compilation-environment '("TERM=xterm-256color")))
+(defun my/advice-compilation-filter (f proc string)
+  (funcall f proc (xterm-color-filter string)))
+(add-hook 'compilation-filter-hook #'my/advice-compilation-filter)
+#+end_src
+
+** Pdf reader
+#+begin_src emacs-lisp :tangle yes
+(use-package pdf-tools
+  :defer t
+  :mode ("\\.pdf\\'" . pdf-view-mode)
+  :magic ("%PDF" . pdf-view-mode))
+#+end_src
+** View Large Files
+Minor mode to allow opening files in chunks
+#+begin_src emacs-lisp :tangle yes
+(use-package vlf
+  :config
+  (require 'vlf-setup)
+  (custom-set-variables
+   '(vlf-application 'dont-ask)))
+#+end_src
+* Languages
+I try to mostly use the new Treesitter modes, which comes builtin with the new emacs 29.
+** Python
+The package already comes builtin, so we only instantiate it to define the hooks and remap the default package for the new one.
+
+It also relies on python lsp server with builtin ruff support.
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
+(add-hook 'python-ts-mode-hook #'eglot-ensure)
+#+end_src
+
+** Nix
+#+begin_src emacs-lisp :tangle yes
+(use-package nix-mode
+  :hook (nix-mode . eglot-ensure))
+#+end_src
+** Rust
+Try to use the package.
+#+begin_src emacs-lisp :tangle yes
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
+(add-hook 'rust-ts-mode-hook #'eglot-ensure)
+
+(setq rust-ts-mode-indent-offset 2)
+#+end_src
+
+** Markdown
+#+begin_src emacs-lisp :tangle yes
+(use-package markdown-mode
+  :mode "\\.md\\'")
+#+end_src
+** Coq
+#+begin_src emacs-lisp :tangle yes
+(use-package proof-general
+  :custom
+  (proof-splash-enable nil))
+
+(use-package company-coq
+  :hook (coq-mode . company-coq-mode))
+#+end_src
+* Personal
+** Org mode
+#+begin_src emacs-lisp :tangle yes
+(use-package org
+  :hook (org-mode . org-indent-mode)
+  :bind ("C-c a" . org-agenda)
+  :config
+  (add-to-list 'org-src-lang-modes '("rust" . rust-ts))
+  (add-to-list 'org-src-lang-modes '("python" . python-ts))
+  (custom-set-faces
+   '(org-headline-done
+     ((((class color) (min-colors 16) (background dark))
+       (:foreground "gray" :strike-through t)))))
+  :custom
+  (org-todo-keywords '((sequence "IDEA" "TODO" "STUCK" "DOING" "|" "DONE")
+                       (sequence "ASSIGNED(a@!)" "WORKING(w!)" "ON REVIEW(r!)" "|" "MERGED(m!)" "CANCELLED(c!)")
+                       (sequence "EVENT" "|" "FULFILLED")))
+  (org-startup-truncated nil)
+  (org-ellipsis "…")
+  (org-pretty-entities t)
+  (org-hide-emphasis-markers nil)
+  (org-fontify-quote-and-verse-blocks t)
+  (org-image-actual-width nil)
+  (org-indirect-buffer-display 'other-window)
+  (org-confirm-babel-evaluate nil)
+  (org-edit-src-content-indentation 0)
+  (org-auto-align-tags t)
+  (org-fontify-done-headline t))
+#+end_src
+*** Org Agenda
+#+begin_src emacs-lisp :tangle yes
+(setq
+ org-agenda-window-setup 'current-window
+ org-agenda-restore-windows-after-quit t
+ org-agenda-skip-deadline-prewarning-if-scheduled t
+ org-agenda-compact-blocks t
+ org-agenda-span 'week
+ org-agenda-skip-deadline-if-done t
+ org-agenda-skip-scheduled-if-done t
+ org-agenda-skip-timestamp-if-done t
+ org-agenda-format-date "%e de %B, %A"
+ org-agenda-deadline-leaders  '("Deadline:  " "Daqui a %d dias:" "%d dias atrás")
+ org-agenda-scheduled-leaders '("Agendado:  " "%d dias atrasado:")
+ )
+
+(setq
+ org-agenda-custom-commands
+ '(("w" "work"
+    ((todo "ASSIGNED")
+     (todo "WORKING")
+     (todo "ON REVIEW")
+     (tags-todo "CATEGORY=\"trabalho\"")))))
+#+end_src
+
+*** Org alert
+#+begin_src emacs-lisp :tangle yes
+(use-package org-alert
+  :ensure t
+  :config (org-alert-enable)
+  :custom
+  (org-alert-interval 60)
+  (org-alert-notify-cutoff 30)
+  (org-alert-notification-title "Emacs Agenda")
+  (alert-default-style 'notifications))
+#+end_src
+*** Ox-hugo
+In order to publish files to hugo from org.
+#+begin_src emacs-lisp :tangle yes
+(use-package ox-hugo
+  :after ox)
+#+end_src
+** Calendar
+try out emacs calfw
+#+begin_src emacs-lisp :tangle yes
+(use-package calfw)
+(use-package calfw-org
+  :bind ("C-c c l" . cfw:open-org-calendar)
+  :custom (cfw:org-overwrite-default-keybinding t))
+#+end_src
+** Email
+*** RSS feed reader
+#+begin_src emacs-lisp :tangle yes
+(use-package elfeed
+  :custom
+  (elfeed-feeds
+   '(("https://xeiaso.net/blog.rss" nixos)
+     ("https://smallcultfollowing.com/babysteps//atom.xml" rust)
+     ("https://fasterthanli.me/index.xml" rust nixos)
+     ("http://radar.spacebar.org/f/a/weblog/rss/1" tom7)
+     ("https://matklad.github.io/feed.xml" rust zig)
+     ("https://blog.m-ou.se/index.xml" rust)
+     ("https://without.boats/index.xml" rust)
+  )))
+
+#+end_src
+
+#+RESULTS:
+
+*** Mu4e
+**** Setting up mu4e.
+#+begin_src emacs-lisp :tangle yes
+(setq send-mail-function 'sendmail-send-it)
+(setq smtpmail-smtp-server "mail.google.com")
+(setq epg-pinentry-mode 'loopback)
+(setq user-mail-address "leonardo.ribeiro.santiago@gmail.com")
+#+end_src
+Helper functions, to try to discover which mail pertains to which account.
+#+begin_src emacs-lisp :tangle yes
+(defun personal-p (msg)
+  (string-prefix-p "/personal/" (mu4e-message-field msg :maildir)))
+(defun university-p (msg)
+  (string-prefix-p "/university/" (mu4e-message-field msg :maildir)))
+(defun work-p (msg)
+  (string-prefix-p "/work/" (mu4e-message-field msg :maildir)))
+#+end_src
+Actual mu4e definition
+#+begin_src emacs-lisp :tangle yes
+(use-package mu4e
+  :bind ("C-c m" . mu4e)
+  :config
+  :custom
+  (read-mail-command 'mu4e)
+  (mu4e-sent-messages-behavior 'delete)
+  (mu4e-index-cleanup nil)
+  (mu4e-index-lazy-check t)
+  (mu4e-use-fancy-chars (display-graphic-p))
+  (mu4e-confirm-quit nil)
+  (mu4e-eldoc-support t)
+  (mu4e-change-filenames-when-moving t)
+  (mu4e-update-interval (* 5 60))
+  (mu4e-get-mail-command "parallel mbsync ::: personal work university")
+  (mu4e-headers-fields
+   '((:human-date . 10)
+     (:flags . 6)
+     (:topic . 10)
+     (:from-or-to . 22)
+     (:subject . nil)))
+  (mu4e-drafts-folder (lambda (msg)
+                        (cond
+                         ((personal-p msg)   "/personal/[Gmail]/Rascunhos")
+                         ((university-p msg) "/university/[Gmail]/Rascunhos")
+                         ((work-p msg)       "/work/[Gmail]/Drafts"))))
+  (mu4e-sent-folder (lambda (msg)
+                      (cond
+                       ((personal-p msg)   "/personal/[Gmail]/Enviados")
+                       ((university-p msg) "/university/[Gmail]/Enviados")
+                       ((work-p msg)       "/work/[Gmail]/Sent"))))
+  (mu4e-refile-folder (lambda (msg)
+                        (cond
+                         ((personal-p msg)   "/personal/[Gmail]/Todos\ os\ e-mails")
+                         ((university-p msg) "/university/[Gmail]/Todos\ os\ e-mails")
+                         ((work-p msg)       "/work/[Gmail]/All\ mail"))))
+  (mu4e-trash-folder  (lambda (msg)
+                        (cond
+                         ((personal-p msg)   "/personal/[Gmail]/Lixeira")
+                         ((university-p msg) "/university/[Gmail]/Lixeira")
+                         ((work-p msg)       "/work/[Gmail]/Trash"))))
+  :config
+  (add-hook 'mu4e-compose-mode-hook #'(lambda () (auto-save-mode -1)))
+  (add-to-list 'display-buffer-alist
+               `( ,(regexp-quote mu4e-main-buffer-name)
+                  display-buffer-same-window)) ; to avoid opening in full frame everytime.
+  (add-to-list 'mu4e-bookmarks
+               '(:name "Inboxes"
+                 :query "m:/personal/Inbox OR m:/work/Inbox OR m:/university/Inbox"
+                 :key ?i))
+  (add-to-list 'mu4e-header-info-custom
+               '(:topic
+                 :name "Topic"
+                 :shortname "Topic"
+                 :function (lambda (msg)
+                             (cond
+                              ((personal-p msg)   "Personal")
+                              ((university-p msg) "University")
+                              ((work-p msg)       "Work"))))))
 #+end_src

@@ -122,17 +122,17 @@ return {
               i = {
                 ["<C-j>"] = actions.move_selection_next,
                 ["<C-k>"] = actions.move_selection_previous,
-                ["<C-d>"] = actions.delete_buffer + actions.move_to_top,
               },
               n = {
                 ["<C-d>"] = actions.delete_buffer + actions.move_to_top,
                 ["l"] = actions.select_default,
+                ["D"] = actions.delete_buffer + actions.move_to_top,
               },
             },
             ignore_current_buffer = true,
             sort_lastused = true,
             previewer = false,
-            -- initial_mode = "normal",
+            initial_mode = "normal",
             theme = "dropdown",
             layout_config = {
               height = 0.4,
