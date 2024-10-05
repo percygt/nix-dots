@@ -71,15 +71,16 @@
   (org-lowest-priority ?E)
   :custom-face
   (outline-1 ((t (:height 1.2))))
-  (outline-2 ((t (:height 1.15))))
-  (outline-3 ((t (:height 1.1))))
-  (outline-4 ((t (:height 1.05))))
+  (outline-2 ((t (:height 1.1))))
+  (outline-3 ((t (:height 1.05))))
+  (outline-4 ((t (:height 1.025))))
   (outline-5 ((t (:height 1.0))))
   (outline-6 ((t (:height 1.0))))
   (outline-7 ((t (:height 1.0))))
   (outline-8 ((t (:height 1.0))))
-  (org-block ((t (:inherit fixed-pitch))))
   (org-code ((t (:inherit (shadow fixed-pitch)))))
+  (org-document-title ((t (:inherit (fixed-pitch) :foreground "LightGray"))))
+  (org-document-info ((t (:inherit (fixed-pitch) :foreground "LightGray" :height 0.8))))
   (org-document-info-keyword ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
   (org-drawer ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
   ;; (org-indent ((t (:inherit (org-hide fixed-pitch)))))
@@ -173,17 +174,17 @@
 ;;   (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
 
 
-;; Templates
-;; (use-package org-tempo
-;;   :ensure nil
-;;   :after org
-;;   :config
-;;   (let ((templates '(("sh"  . "src sh")
-;;                      ("el"  . "src emacs-lisp")
-;;                      ("vim" . "src vim")
-;;                      ("cpp" . "src C++ :includes <iostream> :namespaces std"))))
-;;     (dolist (template templates)
-;;       (push template org-structure-template-alist))))
+Templates
+(use-package org-tempo
+  :ensure nil
+  :after org
+  :config
+  (let ((templates '(("sh"  . "src sh")
+                     ("el"  . "src emacs-lisp")
+                     ("vim" . "src vim")
+                     ("cpp" . "src C++ :includes <iostream> :namespaces std"))))
+    (dolist (template templates)
+      (push template org-structure-template-alist))))
 
 
 ;; (use-package org-timeblock)

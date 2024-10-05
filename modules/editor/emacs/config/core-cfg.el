@@ -11,7 +11,7 @@
     (setq indicate-buffer-boundaries 'left))
   :custom
   (initial-scratch-message               nil)
-  ;; (inhibit-startup-screen                t) ;; Don't show the welcome splash screen.
+  (inhibit-startup-screen                t) ;; Don't show the welcome splash screen.
   (tab-width                             4) ;; Set tab-size to 4 spaces
   (delete-by-moving-to-trash             t)
   (visible-bell                          t)
@@ -56,9 +56,34 @@
   :hook ((prog-mode . display-fill-column-indicator-mode)
          ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
 
-(use-package emacs
+(use-package window
   :ensure nil
   :after (evil)
+  :bind
+  :custom
+  (display-buffer-alist
+   '(("\\*Async Shell Command\\*"
+      (display-buffer-no-window))
+     ("\\*Faces\\|[Hh]elp\\*"
+      (display-buffer-in-side-window)
+      (body-function . select-window)
+      (window-width . 0.4)
+      (side . right)
+      (slot . 1))
+     ("\\*e?shell\\|*ellama\\|\\*vterm\\*"
+      (display-buffer-in-side-window)
+      (body-function . select-window)
+      (window-height . 0.13)
+      (window-parameters . ((mode-line-format . none)))
+      (side . bottom)
+      (slot . 10))
+     ("\\*Flycheck\\|[Cc]olors\\*\\|Warnings"
+      (display-buffer-in-side-window display-buffer-reuse-window)
+      (body-function . select-window)
+      (display-buffer-at-bottom)
+      (window-height . 0.15)
+      (side . bottom)
+      (slot . 3))))
   :init
   (defvar splitscreen/mode-map (make-sparse-keymap))
   (define-prefix-command 'splitscreen/prefix)
@@ -92,6 +117,7 @@
   (define-key evil-window-map (kbd "v") nil)
   (define-key evil-window-map (kbd "s") nil)
   (define-key evil-window-map (kbd "q") nil)
+  (define-key evil-window-map (kbd "w") nil)
 
   (define-key splitscreen/prefix (kbd "h") 'splitscreen/window-left)
   (define-key splitscreen/prefix (kbd "j") 'splitscreen/window-down)
@@ -110,6 +136,8 @@
   (define-key splitscreen/prefix (kbd "v") 'split-window-right)
   (define-key splitscreen/prefix (kbd "s") 'split-window-below)
   (define-key splitscreen/prefix (kbd "q") 'delete-window)
+  (define-key splitscreen/prefix (kbd "w") 'window-toggle-side-windows)
+  (define-key splitscreen/prefix (kbd "Q") 'kill-buffer-and-window)
   (define-key splitscreen/prefix (kbd "SPC") 'balance-windows)
 
   (define-minor-mode splitscreen-mode

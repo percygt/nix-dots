@@ -2,6 +2,7 @@
   lib,
   inputs,
   config,
+  pkgs,
   ...
 }:
 let
@@ -9,6 +10,13 @@ let
 in
 {
   imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
+  systemd.services = {
+    "home-manager-${g.username}" = {
+      serviceConfig.TimeoutStartSec = pkgs.lib.mkForce 1200;
+    };
+  };
+
+  users.users.${g.username}.extraGroups = [ "flatpak" ];
   services.flatpak = {
     enable = true;
     uninstallUnmanaged = true;
@@ -23,11 +31,6 @@ in
       global = {
         # Force Wayland by default
         Context = {
-          sockets = [
-            "wayland"
-            "!x11"
-            "!fallback-x11"
-          ];
           filesystems = [
             "xdg-data/themes:ro"
             "xdg-data/icons:ro"
@@ -85,15 +88,6 @@ in
     ];
   };
   fileSystems."/var/lib/flatpak".options = [ "exec" ];
-  # home-manager.users.${g.username} = {
-  #   xdg.dataFile = {
-  #     "flatpak/overrides/global".text = ''
-  #       [Context]
-  #       filesystems=xdg-data/themes:ro;xdg-data/icons:ro;xdg-config/gtkrc:ro;xdg-config/gtkrc-2.0:ro;xdg-config/gtk-2.0:ro;xdg-config/gtk-3.0:ro;xdg-config/gtk-4.0:ro;/nix/store
-  #           "/run/current-system/sw/bin:ro"
-  #     '';
-  #   };
-  # };
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist/system".directories = [ "/var/lib/flatpak" ];
     "/persist".users.${g.username}.directories = [

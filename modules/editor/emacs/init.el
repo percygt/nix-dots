@@ -18,52 +18,6 @@
 ;;
 
 
-(add-to-list 'display-buffer-alist
-	         '("\\*\\(Completions\\|Help\\)\\*"
-	           (display-buffer-reuse-window display-buffer-pop-up-window)
-	           (window-width . 60)
-	           (side . right)
-               (slot . 3)))
-
-(add-to-list 'display-buffer-alist
-	         '("\\*\\(eldoc\\)\\*"
-	           (display-buffer-reuse-window display-buffer-in-side-window)
-	           (window-width . 60)
-               (window-parameters . ((no-other-window . t)(no-delete-other-windows . t)))
-               (dedicated . t)
-	           (side . right)
-               (slot . 5)))
-
-(add-to-list 'display-buffer-alist
-	         '("\\*\\(compilation\\|Async\\)\\*"
-	           (display-buffer-reuse-window display-buffer-in-side-window)
-	           (window-width . 60)
-               (window-parameters . ((no-other-window . t)(no-delete-other-windows . t)))
-               (dedicated . t)
-	           (side . right)
-               (slot . 7)))
-
-(add-to-list 'display-buffer-alist
-	         '("\\*\\(Flymake diag.+\\)\\*"
-	           (display-buffer-reuse-window display-buffer-in-side-window)
-	           (window-width . 60)
-	           (side . right)
-               (slot . 2)))
-
-(add-to-list 'display-buffer-alist
-	         '("\\*\\(Compile-Log\\|Async-native-compile-log\\|Warnings\\)\\*"
-	           (display-buffer-no-window)
-	           (allow-no-window t)))
-
-(add-to-list 'display-buffer-alist
-	         '("\\*\\(Ibuffer\\|vc-dir\\|vc-diff\\|vc-change-log\\|Async Shell Command\\)\\*"
-	           (display-buffer-full-frame)))
-
-(add-to-list 'display-buffer-alist
-	         '("\\(magit: .+\\|magit-log.+\\|magit-revision.+\\)"
-	           (display-buffer-full-frame)))
-
-
 (require 'use-package)
 
 ;; (require 'package-cfg)

@@ -42,25 +42,24 @@
       VDPAU_DRIVER = lib.mkIf config.hardware.graphics.enable (lib.mkDefault "va_gl");
       LIBVA_DRIVER_NAME = "iHD";
     };
-
-    hardware.graphics.extraPackages = [
+    hardware.graphics.extraPackages = with pkgs; [
       (
         if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11") then
-          pkgs.vaapiIntel
+          vaapiIntel
         else
-          pkgs.intel-vaapi-driver
+          intel-vaapi-driver.override { enableHybridCodec = true; }
       )
-      pkgs.intel-media-driver
+      intel-media-driver
     ];
 
-    hardware.graphics.extraPackages32 = [
+    hardware.graphics.extraPackages32 = with pkgs.driversi686Linux; [
       (
         if (lib.versionOlder (lib.versions.majorMinor lib.version) "23.11") then
-          pkgs.driversi686Linux.vaapiIntel
+          vaapiIntel
         else
-          pkgs.driversi686Linux.intel-vaapi-driver
+          intel-vaapi-driver.override { enableHybridCodec = true; }
       )
-      pkgs.driversi686Linux.intel-media-driver
+      intel-media-driver
     ];
   };
 }

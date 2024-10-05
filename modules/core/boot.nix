@@ -13,6 +13,15 @@
   config = lib.mkIf config.modules.core.boot.enable {
     boot = {
       kernelPackages = pkgs.linuxPackages_latest;
+      kernel = {
+        sysctl = {
+          "fs.file-max" = 2097152;
+          "fs.inotify.max_user_watches" = 524288;
+          "net.core.netdev_max_backlog" = 16384;
+          "net.core.somaxconn" = 8192;
+          "net.ipv4.tcp_slow_start_after_idle" = 0;
+        };
+      };
       # tmp.cleanOnBoot = true;
       # kernel.sysctl = {
       #   "net.ipv4.ip_forward" = 1;
@@ -43,8 +52,9 @@
 
       kernelParams = [
         "quiet"
-        "splash"
-        "loglevel=3"
+        "loglevel=0"
+        "nmi_watchdog=0"
+        "nowatchdog"
         "udev.log_level=3"
         "rd.udev.log_level=3"
         "systemd.show_status=false"

@@ -1,0 +1,59 @@
+#+TITLE: My Emacs Config
+#+AUTHOR: PercyGT
+
+* Vanilla 
+#+begin_src emacs-lisp :tangle yes
+;; Vanilla config
+(use-package emacs
+  :ensure nil
+  :demand
+  :preface
+  (defun indicate-buffer-boundaries-left ()
+    (setq indicate-buffer-boundaries 'left))
+  :custom
+  (initial-scratch-message               nil)
+  (inhibit-startup-screen                t) ;; Don't show the welcome splash screen.
+  (tab-width                             4) ;; Set tab-size to 4 spaces
+  (delete-by-moving-to-trash             t)
+  (visible-bell                          t)
+  (x-stretch-cursor                      t)
+  (mouse-yank-at-point                   t)
+  (use-short-answers                     t)
+  (column-number-mode                    t)
+  (indent-tabs-mode                      nil) ;; Always indent with spaces
+  (even-window-sizes                     nil)
+  (confirm-kill-processes                nil)
+  (fill-column                           100)
+  (tab-always-indent                     'complete)
+  (large-file-warning-threshold          nil)
+  (byte-compile-warnings                 '(ck-functions))
+  (cursor-in-non-selected-windows        nil)
+  (completion-cycle-threshold            3)
+  (completion-ignore-case                t)
+  (read-buffer-completion-ignore-case    t)
+  (read-file-name-completion-ignore-case t)
+  (max-lisp-eval-depth                   10000)
+  (scroll-margin                         0)
+  (fast-but-imprecise-scrolling          t)
+  (scroll-preserve-screen-position       t)
+  (debug-on-error                        nil)
+  (auto-window-vscroll                   nil)
+  (warning-minimum-level                 :emergency)
+  (ad-redefinition-action                'accept)
+  (auto-revert-check-vc-info             t)
+  (echo-keystrokes                       0.2)
+  (font-lock-maximum-decoration          t)
+  (highlight-nonselected-windows         t)
+  (kill-buffer-query-functions           nil) ;; Dont ask for closing spawned processes
+  (use-dialog-box                        nil)
+  (word-wrap                             nil)
+  (auto-mode-case-fold                   nil)
+  (undo-limit                            (* 16 1024 1024)) ;; 64mb
+  (undo-strong-limit                     (* 24 1024 1024)) ;; x 1.5 (96mb)
+  (undo-outer-limit                      (* 24 1024 1024)) ;; x 10 (960mb), (Emacs uses x100), but this seems too high.
+  (jit-lock-defer-time                   0)
+  (text-mode-ispell-word-completion      nil)
+  (read-extended-command-predicate       #'command-completion-default-include-p)
+  :hook ((prog-mode . display-fill-column-indicator-mode)
+         ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
+#+end_src

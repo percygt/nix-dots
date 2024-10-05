@@ -15,7 +15,6 @@
       };
     };
     services.blueman.enable = true;
-    # environment.systemPackages = with pkgs; [blueberry];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist/system".directories = [ "/var/lib/bluetooth" ];
     };
