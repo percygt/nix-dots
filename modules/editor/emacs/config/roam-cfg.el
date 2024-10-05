@@ -75,7 +75,6 @@ capture was not aborted."
                                                             "#+title: ${title}\n#+filetags: Project"
                                                             ("Tasks"))))))
   :config
-  (org-roam-setup)
   (cl-defmethod org-roam-node-capitalized-slug
     ((node org-roam-node)) (capitalize (org-roam-node-slug node)))
   (cl-defmethod org-roam-node-capitalized-title
@@ -85,7 +84,8 @@ capture was not aborted."
                  (display-buffer-full-frame)))
   ;; Build the agenda list the first time for the session
   (org-roam-refresh-agenda-list)
-  (org-roam-db-autosync-mode)
+  (org-roam-db-autosync-enable)
+  (org-roam-setup)
   :custom
   (org-roam-node-display-template
    (concat "${title:80} " (propertize "${tags:20}" 'face 'org-tag))

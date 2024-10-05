@@ -2,7 +2,7 @@ local org_dir = "~/data/notes"
 return {
   {
     "chipsenkbeil/org-roam.nvim",
-    enabled = false,
+    -- enabled = false,
     event = "VeryLazy",
     ft = { "org" },
     dependencies = {
@@ -11,12 +11,15 @@ return {
     config = function()
       require("org-roam").setup({
         directory = org_dir,
+        database = {
+          path = "resources/nvim-org-roam.db",
+        },
       })
     end,
   },
   {
     "akinsho/org-bullets.nvim",
-    enabled = false,
+    -- enabled = false,
     event = "VeryLazy",
     ft = { "org" },
     config = function()
@@ -25,7 +28,7 @@ return {
   },
   {
     "nvim-orgmode/orgmode",
-    enabled = false,
+    -- enabled = false,
     event = "VeryLazy",
     dependencies = { "dhruvasagar/vim-table-mode", "nvim-orgmode/orgmode" },
     ft = { "org" },
@@ -44,8 +47,13 @@ return {
       -- Setup orgmode
       require("orgmode").setup({
         org_agenda_files = org_dir .. "/**/*",
+        mappings = {
+          global = {
+            org_agenda = { "<Leader>oa" },
+            org_capture = { "<Leader>oc" },
+          },
+        },
       })
-
       local cmp = require("cmp")
       local config = cmp.get_config()
       table.insert(config.sources, { name = "orgmode" })

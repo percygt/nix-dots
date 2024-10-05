@@ -15,37 +15,38 @@ let
     epkgs: with epkgs; [
       # required stuff
       treesit-grammars.with-all-grammars
-      dash
       emacsql
       emacsql-sqlite
-      magit-section
-      s
-      f
-      ht
-      ts
-      async
-      org-drill
-      pcre2el
-      ts
-      # Install copilot.el
       (trivialBuild {
-        pname = "welcome-dashboard";
-        version = "2024-10-03";
-
+        pname = "nursery";
+        version = "2024-10-05";
+        src = pkgs.fetchFromGitHub {
+          owner = "chrisbarrett";
+          repo = "nursery";
+          rev = "00a169c75b934a2eb42ea8620e8eebf34577d4ca";
+          hash = "sha256-x+/TTSdHzQ+GKHV6jgvoQrwZCH4cZQfQGKDIBzFbJRw=";
+        };
+        sourceRoot = "source/lisp";
         packageRequires = with epkgs; [
           async
-          nerd-icons
-          all-the-icons
+          org-drill
+          pcre2el
+          ts
+          f
+          ht
+          dash
+          org-roam
+          memoize
+          magit
+          consult
+          org-transclusion
         ];
-
-        src = pkgs.fetchFromGitHub {
-          owner = "konrad1977";
-          repo = "welcome-dashboard";
-          rev = "b4f3d6084e697533369cbb58f27930c7dc72e7f7";
-          hash = "sha256-LhWmzfl8JHepYXecHkXGzqnQDB3lEJlGHc0EIh8ECPk=";
-        };
+        preBuild = ''
+          rm nursery-pkg.el
+        '';
       })
     ];
+
   emacs = pkgs.emacsWithPackagesFromUsePackage {
     inherit (cfg) package;
     inherit extraEmacsPackages;

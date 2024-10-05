@@ -28,8 +28,8 @@ return {
       { "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
       { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
       { "<leader>sn", "<cmd>Telescope notify<cr>", desc = "Notifications" },
-      { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Undo" },
       { "<leader>sl", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Undo" },
     },
     config = function()
       local telescope = require("telescope")

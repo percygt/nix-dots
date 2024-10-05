@@ -1,6 +1,7 @@
 ;;; ui-cfg.el --- UI setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
 (use-package visual-fill-column
   :defer t
   :config
@@ -14,7 +15,7 @@
   (setq writeroom-maximize-window nil
         writeroom-mode-line t
         writeroom-global-effects nil ;; No need to have Writeroom do any of that silly stuff
-        writeroom-extra-line-spacing 3) 
+        writeroom-extra-line-spacing 3)
   (setq writeroom-width visual-fill-column-width)
   )
 
@@ -51,7 +52,7 @@
   (dashboard-center-content t)
   (dashboard-set-file-icons t)
   (dashboard-set-heading-icons t)
-  (dashboard-startup-banner (concat user-emacs-config-directory "/xemacs_color.png"))
+  (dashboard-startup-banner (concat user-emacs-config-directory "/xemacs_color.svg"))
   (dashboard-projects-backend 'project-el)
   :config
   (dashboard-setup-startup-hook)
@@ -59,6 +60,7 @@
   (setq initial-buffer-choice (lambda ()
 				                (get-buffer-create "*dashboard*")
 				                (dashboard-refresh-buffer))))
+
 
 (use-package doom-themes
   :demand
@@ -117,7 +119,7 @@
 (use-package highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :config
-  (set-face-foreground 'highlight-indent-guides-top-character-face "steel blue")
+  (set-face-foreground 'highlight-indent-guides-top-character-face "SteelBlue")
   (set-face-foreground 'highlight-indent-guides-character-face "gray20")
   :custom
   (highlight-indent-guides-auto-enabled  nil)

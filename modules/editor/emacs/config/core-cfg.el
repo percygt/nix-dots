@@ -1,6 +1,7 @@
 ;;; core-cfg.el --- Core Config -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
 ;; Vanilla config
 (use-package emacs
   :ensure nil
@@ -9,24 +10,49 @@
   (defun indicate-buffer-boundaries-left ()
     (setq indicate-buffer-boundaries 'left))
   :custom
-  (fast-but-imprecise-scrolling     t)
-  (tab-width                        4) ;; Set tab-size to 4 spaces
-  (delete-by-moving-to-trash        t)
-  (visible-bell                     t)
-  (x-stretch-cursor                 t)
-  (mouse-yank-at-point              t)
-  (use-short-answers                t)
-  (column-number-mode               t)
-  (indent-tabs-mode                 nil) ;; Always indent with spaces
-  (even-window-sizes                nil)
-  (confirm-kill-processes           nil)
-  (visible-bell                     nil)
-  (fill-column                      100)
-  (initial-major-mode               'fundamental-mode)
-  (user-emacs-directory             user-emacs-data-directory)
-  (tab-always-indent                'complete)
-  (text-mode-ispell-word-completion nil)
-  (read-extended-command-predicate  #'command-completion-default-include-p)
+  (initial-scratch-message               nil)
+  ;; (inhibit-startup-screen                t) ;; Don't show the welcome splash screen.
+  (tab-width                             4) ;; Set tab-size to 4 spaces
+  (delete-by-moving-to-trash             t)
+  (visible-bell                          t)
+  (x-stretch-cursor                      t)
+  (mouse-yank-at-point                   t)
+  (use-short-answers                     t)
+  (column-number-mode                    t)
+  (indent-tabs-mode                      nil) ;; Always indent with spaces
+  (even-window-sizes                     nil)
+  (confirm-kill-processes                nil)
+  (fill-column                           100)
+  (tab-always-indent                     'complete)
+  (large-file-warning-threshold          nil)
+  (byte-compile-warnings                 '(ck-functions))
+  (cursor-in-non-selected-windows        nil)
+  (completion-cycle-threshold            3)
+  (completion-ignore-case                t)
+  (read-buffer-completion-ignore-case    t)
+  (read-file-name-completion-ignore-case t)
+  (max-lisp-eval-depth                   10000)
+  (scroll-margin                         0)
+  (fast-but-imprecise-scrolling          t)
+  (scroll-preserve-screen-position       t)
+  (debug-on-error                        nil)
+  (auto-window-vscroll                   nil)
+  (warning-minimum-level                 :emergency)
+  (ad-redefinition-action                'accept)
+  (auto-revert-check-vc-info             t)
+  (echo-keystrokes                       0.2)
+  (font-lock-maximum-decoration          t)
+  (highlight-nonselected-windows         t)
+  (kill-buffer-query-functions           nil) ;; Dont ask for closing spawned processes
+  (use-dialog-box                        nil)
+  (word-wrap                             nil)
+  (auto-mode-case-fold                   nil)
+  (undo-limit                            (* 16 1024 1024)) ;; 64mb
+  (undo-strong-limit                     (* 24 1024 1024)) ;; x 1.5 (96mb)
+  (undo-outer-limit                      (* 24 1024 1024)) ;; x 10 (960mb), (Emacs uses x100), but this seems too high.
+  (jit-lock-defer-time                   0)
+  (text-mode-ispell-word-completion      nil)
+  (read-extended-command-predicate       #'command-completion-default-include-p)
   :hook ((prog-mode . display-fill-column-indicator-mode)
          ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
 
@@ -125,9 +151,12 @@
   (unless (file-exists-p auto-save-dir) (make-directory auto-save-dir t))
   (unless (file-exists-p backup-dir) (make-directory backup-dir t))
   (when (file-exists-p customfile) (load customfile))
+  :config
+  (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
   :custom
   (create-lockfiles                 nil)
   (make-backup-files                nil)
+  (user-emacs-directory             user-emacs-data-directory)
   (backup-directory-alist           `(("\\`/tmp/" . nil)
                                       ("\\`/dev/shm/" . nil)
                                       (".*" . ,backup-dir)))
@@ -135,29 +164,20 @@
   (custom-file                      customfile)
   (auto-save-no-message             t)
   (auto-save-interval               100)
-  (require-final-newline            t)
+  (find-file-visit-truename          t)
   (backup-by-copying                t)    ; Always use copying to create backup files
   (delete-old-versions              t)    ; Delete excess backup versions
   (kept-new-versions                6)    ; Number of newest versions to keep when a new backup is made
   (kept-old-versions                2)    ; Number of oldest versions to keep when a new backup is made
   (version-control                  t)    ; Make numeric backup versions unconditionally
   (delete-by-moving-to-trash        t)    ; Move deleted files to the trash
-  (mode-require-final-newline       nil)  ; Don't add newlines at the end of files
-  (large-file-warning-threshold     nil)) ; Open large files without requesting confirmation
+  (mode-require-final-newline       nil))  ; Don't add newlines at the end of files
 
 (use-package autorevert
   :ensure nil
   :defer 2
   :custom (auto-revert-verbose nil)
   :diminish auto-revert-mode)
-
-(use-package gcmh
-  :diminish gcmh-mode
-  :custom
-  (gcmh-mode 1)
-  (gcmh-idle-delay 10)
-  (gcmh-high-cons-threshold (* 32 1024 1024))
-  (gc-cons-percentage 0.8))
 
 (use-package savehist
   :ensure nil
@@ -169,24 +189,26 @@
   :custom
   (recentf-max-saved-items 1000)
   (recentf-exclude `("/tmp/" "/ssh:" "/nix/store"
-		     ,(concat user-emacs-data-directory "lib/.*-autoloads\\.el\\'")))
+		             ,(concat user-emacs-data-directory "lib/.*-autoloads\\.el\\'")))
   :config
-  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
   (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
+  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
   (recentf-mode))
-
 
 (use-package eldoc
   :ensure nil
   :diminish eldoc-mode)
 
-(use-package undo-fu)
+(use-package undo-fu
+  :after evil
+  :config
+  (setq undo-fu-allow-undo-in-region t))
+
 (use-package undo-fu-session
+  :hook (after-init . undo-fu-session-global-mode)
   :custom
   (undo-fu-session-directory (expand-file-name  "var/undo-fu-session/" user-emacs-data-directory))
-  (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-  :config
-  (undo-fu-session-global-mode))
+  (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 (provide 'core-cfg)
 ;;; core-cfg.el ends here
