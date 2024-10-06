@@ -1,5 +1,5 @@
 #+TITLE: My emacs literate configuration
-#+AUTHOR: Leonardo Santiago
+#+AUTHOR: PercyGT
 
 This org file is used as the configuration source for my emacs. Additional packages may be found at emacs.nix (those that cannot be directly installed from =use-package=). Though declared in emacs lisp, they actually are completely managed by the =nix= package manager, by parsing the declarations on this file and using them to fetch the packages, which I think is really cool.
 
@@ -14,231 +14,460 @@ Though you probably shouldn't, because it will most likely build all of emacs fr
 You can also use it as a ~nixosModule~, in order to add additional packages like fonts.
 
 * Core
-** Remove bar mode
+** Vanilla Emacs
+   #+begin_src emacs-lisp :tangle yes
+   (use-package emacs
+     :ensure nil
+     :demand
+     :preface
+     (defun indicate-buffer-boundaries-left ()
+       (setq indicate-buffer-boundaries 'left))
+     :custom
+     (initial-scratch-message               nil)
+     (inhibit-startup-screen                t) ;; Don't show the welcome splash screen.
+     (tab-width                             4) ;; Set tab-size to 4 spaces
+     (delete-by-moving-to-trash             t)
+     (visible-bell                          t)
+     (x-stretch-cursor                      t)
+     (mouse-yank-at-point                   t)
+     (use-short-answers                     t)
+     (column-number-mode                    t)
+     (indent-tabs-mode                      nil) ;; Always indent with spaces
+     (even-window-sizes                     nil)
+     (confirm-kill-processes                nil)
+     (fill-column                           100)
+     (tab-always-indent                     'complete)
+     (large-file-warning-threshold          nil)
+     (byte-compile-warnings                 '(ck-functions))
+     (cursor-in-non-selected-windows        nil)
+     (completion-cycle-threshold            3)
+     (completion-ignore-case                t)
+     (read-buffer-completion-ignore-case    t)
+     (read-file-name-completion-ignore-case t)
+     (max-lisp-eval-depth                   10000)
+     (scroll-margin                         0)
+     (fast-but-imprecise-scrolling          t)
+     (scroll-preserve-screen-position       t)
+     (debug-on-error                        nil)
+     (auto-window-vscroll                   nil)
+     (warning-minimum-level                 :emergency)
+     (ad-redefinition-action                'accept)
+     (auto-revert-check-vc-info             t)
+     (echo-keystrokes                       0.2)
+     (font-lock-maximum-decoration          t)
+     (highlight-nonselected-windows         t)
+     (kill-buffer-query-functions           nil) ;; Dont ask for closing spawned processes
+     (use-dialog-box                        nil)
+     (word-wrap                             nil)
+     (auto-mode-case-fold                   nil)
+     (undo-limit                            (* 16 1024 1024)) ;; 64mb
+     (undo-strong-limit                     (* 24 1024 1024)) ;; x 1.5 (96mb)
+     (undo-outer-limit                      (* 24 1024 1024)) ;; x 10 (960mb), (Emacs uses x100), but this seems too high.
+     (jit-lock-defer-time                   0)
+     (text-mode-ispell-word-completion      nil)
+     (read-extended-command-predicate       #'command-completion-default-include-p)
+     :hook ((prog-mode . display-fill-column-indicator-mode)
+            ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
+
+    (use-package diminish :after use-package) ;; if you use :diminish
+    #+end_src
+
+** Display line numbers
+  #+begin_src emacs-lisp :tangle yes
+  (use-package display-line-numbers
+    :ensure nil
+    :custom
+    (display-line-numbers-grow-only   t)
+    (display-line-numbers-width-start t)
+    (display-line-numbers-type        'relative)
+    :hook (((text-mode prog-mode conf-mode) . display-line-numbers-mode)
+         (org-mode . (lambda () (display-line-numbers-mode -1)))))
+  #+end_src
+** No littering
+  (use-package no-littering
+   :demand
+   :custom
+     (no-littering-etc-directory user-emacs-data-directory)
+     (no-littering-var-directory user-emacs-data-directory))
+  #+begin_src emacs-lisp :tangle yes
+  #+end_src
+
+** Files
 #+begin_src emacs-lisp :tangle yes
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-
-(global-display-line-numbers-mode 1)
-
-(setq use-short-answers t)
-(setq inhibit-startup-message t)
-
-(setq ring-bell-function 'ignore)
-(setq-default indent-tabs-mode nil)
-
-(setq window-combination-resize t)
-#+end_src
-
-** Theme and font
-#+begin_src emacs-lisp :tangle yes
-(use-package modus-themes)
-;; (use-package kanagawa-theme)
-(load-theme 'wheatgrass t)
-
-(add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (select-frame frame)
-            (set-frame-font "Iosevka Nerd Font 12" nil t)))
-#+end_src
-
-** Backups
-#+begin_src emacs-lisp :tangle yes
-(setq
-   backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist '(("." . "~/.saves/"))    ; don't litter my fs tree
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t)
-#+end_src
-
-* Utility
-** Searching
-#+begin_src emacs-lisp :tangle yes
-(use-package rg)
-(use-package ctrlf
-  :config (ctrlf-mode +1))
-#+end_src
-** Age encryption
-Configuration to automagically open age files, and to encrypt them correctly to all my machines.
-#+begin_src emacs-lisp :tangle yes
-(use-package age
-  :ensure t
-  :demand t
-  :custom
-  (age-program "rage")
-  (age-default-identity "~/.ssh/id_ed25519")
-  (age-default-recipient
-   '("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJp9EEbJgk/oI84419RmpoDeiACDywNfG4akgdpDBL5W"
-     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINKjyS7vbCxr7oDqBpnhHQQzolAW6Fqt1FTOo+hT+lSC"
-     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDrMCLu3VvQVmd2cqreAJsVKkrtKXqgzO8i8NDm06ysm"
-     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKuIjOE3xi/frXJHXQuIBntuXP8XyboCWRx48o3sYeub"))
-  :config
-  (age-file-enable))
-#+end_src
-** Nerd icons
-#+begin_src emacs-lisp :tangle yes
-(use-package nerd-icons
-  :custom
-  (nerd-icons-font-family "Iosevka Nerd Font"))
-
-(use-package nerd-icons-completion
-  :after nerd-icons
-  :after marginalia
-  :hook (marginalia-mode . nerd-icons-completion-marginal)
-  :config
-  (nerd-icons-completion-mode))
-
-(use-package nerd-icons-dired
-  :hook (dired-mode . nerd-icons-dired-mode))
-#+end_src
-** Direnv
-To integrate with nix shells.
-#+begin_src emacs-lisp :tangle yes
-(use-package envrc
-  :config (envrc-global-mode))
-#+end_src
-** Magit
-Configurations for magit
-*** Use Magit
-#+begin_src emacs-lisp :tangle yes
-(use-package magit
-  :custom (magit-process-finish-apply-ansi-colors t))
-#+end_src
-
-*** Forge
-#+begin_src emacs-lisp :tangle yes
-(setq auth-sources '("/run/agenix/authinfo"))
-#+end_src
-To interact with gitlab and github.
-#+begin_src emacs-lisp :tangle yes
-(use-package forge
-  :after magit)
-#+end_src
-
-** Vertico, Orderless, Marginalia
-Pretty minibuffer support
-#+begin_src emacs-lisp :tangle yes
-(use-package vertico
-  :config (vertico-mode))
-
-(use-package orderless
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-defaults nil)
-  (completion-category-overrides '((file (styles basic partial-completion)))))
-
-(use-package marginalia
-  :config (marginalia-mode))
-#+end_src
-** Projects
-#+begin_src emacs-lisp :tangle yes
-  (defcustom project-root-markers
-    '("Cargo.toml" "flake.nix" ".git")
-    "Files that indicate that directory is the root of a project"
-    :type '(repeat string)
-    :group 'project)
-
-  (defun project-root-p (path)
-    (catch 'found
-      (dolist (marker project-root-markers)
-        (when (file-exists-p (concat path marker))
-          (throw 'found marker)))))
-
-  (defun project-find-root (path)
-    "Search up the PATH for `project-root-markers'."
-    (let ((path (expand-file-name path)))
-      (catch 'found
-        (while (not (equal "/" path))
-          (if (not (project-root-p path))
-              (setq path (file-name-directory (directory-file-name path)))
-            (throw 'found (cons 'transient path)))))))
-
-  (use-package project
-    :config (setq project-find-functions '(project-find-root)))
-#+end_src
-** Helpful and which key
-Better help defaults
-#+begin_src emacs-lisp :tangle yes
-(use-package helpful
-  :config
-  (global-set-key (kbd "C-h f") #'helpful-callable)
-  (global-set-key (kbd "C-h v") #'helpful-variable)
-  (global-set-key (kbd "C-h x") #'helpful-command)
-  (global-set-key (kbd "C-h k") #'helpful-key))
-
-(use-package which-key
-  :config (which-key-mode))
-#+end_src
-** Dirvish
-I wanna try some QoL addons for dired.
-#+begin_src emacs-lisp :tangle yes
-(use-package dirvish)
-#+end_src
-** Windows
-I wanna test out =winner-mode=
-#+begin_src emacs-lisp :tangle yes
-(use-package winner
-  :config (winner-mode))
-#+end_src
-** Bind key
-#+begin_src emacs-lisp :tangle yes
-(use-package bind-key)
-#+end_src
-** Eglot
-Language server support. Already comes installed but used to configure additional language servers.
-#+begin_src emacs-lisp :tangle yes
-(use-package eglot
+(use-package files
+  :after no-littering
   :ensure nil
-  :config (add-to-list 'eglot-server-programs '(nix-mode . ("nil"))))
-
-(use-package eglot-booster
-  :after eglot
-  :config (eglot-booster-mode))
-#+end_src
-
-** Corfu
-Completion popup system
-#+begin_src emacs-lisp :tangle yes
-(use-package corfu
-  :config (global-corfu-mode)
-  :custom
-  (corfu-auto t)
-  (corfu-cycle t)
-  (corfu-separator ?\s)
-  (corfu-quit-no-match t))
-#+end_src
-** Vterm
-#+begin_src emacs-lisp :tangle yes
-(use-package eat)
-#+end_src
-** Compilation
-Add support for ansi escape codes in compilation
-#+begin_src emacs-lisp :tangle yes
-(use-package xterm-color
-  :custom (compilation-environment '("TERM=xterm-256color")))
-(defun my/advice-compilation-filter (f proc string)
-  (funcall f proc (xterm-color-filter string)))
-(add-hook 'compilation-filter-hook #'my/advice-compilation-filter)
-#+end_src
-
-** Pdf reader
-#+begin_src emacs-lisp :tangle yes
-(use-package pdf-tools
-  :defer t
-  :mode ("\\.pdf\\'" . pdf-view-mode)
-  :magic ("%PDF" . pdf-view-mode))
-#+end_src
-** View Large Files
-Minor mode to allow opening files in chunks
-#+begin_src emacs-lisp :tangle yes
-(use-package vlf
+  :demand
+  :preface
+  (defvar backup-dir (no-littering-expand-var-file-name "backup/")
+    "Directory to store backups.")
+  (defvar auto-save-dir (no-littering-expand-var-file-name "auto-save/")
+    "Directory to store auto-save files.")
+  (defvar customfile (no-littering-expand-etc-file-name "custom.el")
+    "Custom file")
+  :init
+  (unless (file-exists-p auto-save-dir) (make-directory auto-save-dir t))
+  (unless (file-exists-p backup-dir) (make-directory backup-dir t))
+  (when (file-exists-p customfile) (load customfile))
   :config
-  (require 'vlf-setup)
-  (custom-set-variables
-   '(vlf-application 'dont-ask)))
+  (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
+  :custom
+  (create-lockfiles                 nil)
+  (make-backup-files                nil)
+  (user-emacs-directory             user-emacs-data-directory)
+  (backup-directory-alist           `(("\\`/tmp/" . nil)
+                                      ("\\`/dev/shm/" . nil)
+                                      (".*" . ,backup-dir)))
+  (auto-save-file-name-transforms   `((".*" ,auto-save-dir t)))
+  (custom-file                      customfile)
+  (auto-save-no-message             t)
+  (auto-save-interval               100)
+  (find-file-visit-truename          t)
+  (backup-by-copying                t)    ; Always use copying to create backup files
+  (delete-old-versions              t)    ; Delete excess backup versions
+  (kept-new-versions                6)    ; Number of newest versions to keep when a new backup is made
+  (kept-old-versions                2)    ; Number of oldest versions to keep when a new backup is made
+  (version-control                  t)    ; Make numeric backup versions unconditionally
+  (delete-by-moving-to-trash        t)    ; Move deleted files to the trash
+  (mode-require-final-newline       nil))  ; Don't add newlines at the end of files
+
+#+end_src
+
+** Auto Revert
+#+begin_src emacs-lisp :tangle yes
+(use-package autorevert
+  :ensure nil
+  :defer 2
+  :custom (auto-revert-verbose nil)
+  :diminish auto-revert-mode)
+#+end_src
+
+** Save History
+#+begin_src emacs-lisp :tangle yes
+(use-package savehist
+  :ensure nil
+  :hook (after-init . savehist-mode))
+#+end_src
+
+** Recent File
+#+begin_src emacs-lisp :tangle yes
+(use-package recentf
+  :ensure nil
+  :defer 2
+  :custom
+  (recentf-max-saved-items 1000)
+  (recentf-exclude `("/tmp/" "/ssh:" "/nix/store"
+		             ,(concat user-emacs-data-directory "lib/.*-autoloads\\.el\\'")))
+  :config
+  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
+  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
+  (recentf-mode))
+#+end_src
+
+** Eldo
+#+begin_src emacs-lisp :tangle yes
+(use-package eldoc
+  :ensure nil
+  :diminish eldoc-mode)
+#+end_src
+
+** Undo
+#+begin_src emacs-lisp :tangle yes
+(use-package undo-fu
+  :after evil
+  :config
+  (setq undo-fu-allow-undo-in-region t))
+
+(use-package undo-fu-session
+  :hook (after-init . undo-fu-session-global-mode)
+  :custom
+  (undo-fu-session-directory (expand-file-name  "var/undo-fu-session/" user-emacs-data-directory))
+  (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
+#+end_src
+
+** Window
+    #+begin_src emacs-lisp :tangle yes
+    (use-package window
+      :ensure nil
+      :after (evil)
+      :bind
+      :custom
+      (display-buffer-alist
+       '(("\\*Async Shell Command\\*"
+          (display-buffer-no-window))
+         ("\\*Faces\\|[Hh]elp\\*"
+          (display-buffer-in-side-window)
+          (body-function . select-window)
+          (window-width . 0.4)
+          (side . right)
+          (slot . 1))
+         ("\\*e?shell\\|*ellama\\|\\*vterm\\*"
+          (display-buffer-in-side-window)
+          (body-function . select-window)
+          (window-height . 0.13)
+          (window-parameters . ((mode-line-format . none)))
+          (side . bottom)
+          (slot . 10))
+         ("\\*Flycheck\\|[Cc]olors\\*\\|Warnings"
+          (display-buffer-in-side-window display-buffer-reuse-window)
+          (body-function . select-window)
+          (display-buffer-at-bottom)
+          (window-height . 0.15)
+          (side . bottom)
+          (slot . 3))))
+      :init
+      (defvar splitscreen/mode-map (make-sparse-keymap))
+      (define-prefix-command 'splitscreen/prefix)
+      (define-key splitscreen/mode-map (kbd "C-w") 'splitscreen/prefix)
+
+      (defun splitscreen/window-left () (interactive) (evil-window-left 1))
+      (defun splitscreen/window-right () (interactive) (evil-window-right 1))
+      (defun splitscreen/window-up () (interactive) (evil-window-up 1))
+      (defun splitscreen/window-down () (interactive) (evil-window-down 1))
+
+      (defun splitscreen/increase-width () (interactive) (evil-window-increase-width 10))
+      (defun splitscreen/decrease-width () (interactive) (evil-window-decrease-width 10))
+      (defun splitscreen/increase-height () (interactive) (evil-window-increase-height 10))
+      (defun splitscreen/decrease-height () (interactive) (evil-window-decrease-height 10))
+
+      ;; We override these. Just declare them as part of the splitscreen map, not
+      ;; evil-window-map.
+      (define-key evil-window-map (kbd "h") nil)
+      (define-key evil-window-map (kbd "j") nil)
+      (define-key evil-window-map (kbd "k") nil)
+      (define-key evil-window-map (kbd "l") nil)
+      (define-key evil-window-map (kbd "n") nil)
+      (define-key evil-window-map (kbd "p") nil)
+      (define-key evil-window-map (kbd "c") nil)
+      (define-key evil-window-map (kbd "C-h") nil)
+      (define-key evil-window-map (kbd "C-j") nil)
+      (define-key evil-window-map (kbd "C-k") nil)
+      (define-key evil-window-map (kbd "C-l") nil)
+      (define-key evil-window-map (kbd "l") nil)
+      (define-key evil-window-map (kbd "o") nil)
+      (define-key evil-window-map (kbd "v") nil)
+      (define-key evil-window-map (kbd "s") nil)
+      (define-key evil-window-map (kbd "q") nil)
+      (define-key evil-window-map (kbd "w") nil)
+
+      (define-key splitscreen/prefix (kbd "h") 'splitscreen/window-left)
+      (define-key splitscreen/prefix (kbd "j") 'splitscreen/window-down)
+      (define-key splitscreen/prefix (kbd "k") 'splitscreen/window-up)
+      (define-key splitscreen/prefix (kbd "l") 'splitscreen/window-right)
+
+      (define-key splitscreen/prefix (kbd "C-h") 'splitscreen/decrease-width)
+      (define-key splitscreen/prefix (kbd "C-j") 'splitscreen/decrease-height)
+      (define-key splitscreen/prefix (kbd "C-k") 'splitscreen/increase-height)
+      (define-key splitscreen/prefix (kbd "C-l") 'splitscreen/increase-width)
+      (define-key splitscreen/prefix (kbd "s-h") 'splitscreen/decrease-width)
+      (define-key splitscreen/prefix (kbd "s-j") 'splitscreen/decrease-height)
+      (define-key splitscreen/prefix (kbd "s-k") 'splitscreen/increase-height)
+      (define-key splitscreen/prefix (kbd "s-l") 'splitscreen/increase-width)
+
+      (define-key splitscreen/prefix (kbd "v") 'split-window-right)
+      (define-key splitscreen/prefix (kbd "s") 'split-window-below)
+      (define-key splitscreen/prefix (kbd "q") 'delete-window)
+      (define-key splitscreen/prefix (kbd "w") 'window-toggle-side-windows)
+      (define-key splitscreen/prefix (kbd "Q") 'kill-buffer-and-window)
+      (define-key splitscreen/prefix (kbd "SPC") 'balance-windows)
+
+      (define-minor-mode splitscreen-mode
+        "Provides tmux-like bindings for managing windows and buffers.
+                     See https://github.com/mattduck/splitscreen"
+        :init-value 1 ; enable by default
+        :global 1
+        :keymap splitscreen/mode-map))
+    #+end_src
+** Dired
+  #+begin_src emacs-lisp :tangle yes
+  (use-package dired
+    :ensure nil
+    :custom ((dired-listing-switches "-agho --group-directories-first"))
+    :general
+    (normal-definer
+      :keymaps '(dired-mode-map)
+      "L" 'nil
+      "H" 'nil
+      "D" 'nil
+      "d" 'nil
+      "r" 'dired-do-rename
+      "R" 'dired-do-redisplay
+      "y" 'dired-do-copy
+      "d" 'dired-do-delete))
+
+  (use-package dired-single
+    :after dired
+    :general
+    (normal-definer
+      :keymaps '(dired-mode-map)
+      "l" 'dired-single-buffer
+      "h" 'dired-single-up-directory))
+
+  (use-package diredfl
+    :after dired
+    :hook (dired-mode . diredfl-global-mode))
+
+  (use-package dired-open
+    :after dired
+    :custom
+    (dired-open-extensions '(("png" . "feh")
+                             ("mkv" . "mpv"))))
+
+  (use-package dired-hide-dotfiles
+    :general
+    (normal-definer
+      :keymaps '(dired-mode-map)
+      "SPC" 'nil
+      "."   'dired-hide-dotfiles-mode))
+  #+end_src
+* Keybindings
+** General
+#+begin_src emacs-lisp :tangle yes
+(use-package general
+  :demand t
+  :preface
+  (defun switch-to-recent-buffer ()
+    (interactive)
+    (switch-to-buffer (other-buffer (current-buffer))))
+  (defun kill-this-buffer ()  ; for the menu bar
+    "Kill the current buffer.
+When called in the minibuffer, get out of the minibuffer
+using `abort-recursive-edit'."
+    (interactive)
+    (cond
+     ;; Don't do anything when `menu-frame' is not alive or visible
+     ;; (Bug#8184).
+     ((not (menu-bar-menu-frame-live-and-visible-p)))
+     ((menu-bar-non-minibuffer-window-p)
+      (kill-buffer (current-buffer)))
+     (t
+      (abort-recursive-edit))))
+  :config
+  (general-override-mode)
+  (general-auto-unbind-keys)
+  (general-create-definer global-definer
+    :keymaps 'override
+    :states '(insert normal hybrid motion visual operator emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+  (general-create-definer local-definer
+    :keymaps 'override
+    :states '(insert normal hybrid motion visual operator emacs)
+    :prefix ","
+    :global-prefix "C-,")
+  (general-create-definer normal-definer
+    :keymaps 'override
+    :states '(normal))
+
+  (normal-definer
+    "D" 'kill-this-buffer)
+  (global-definer
+    "!" 'shell-command
+    ":" 'eval-expression
+    "f" 'find-file
+    "l" 'load-file
+    "d" 'dired
+    "." 'switch-to-recent-buffer
+    "u"  '(nil :wk "Utils")
+    "u." 'repeat
+    )
+
+  (general-create-definer global-leader
+    :keymaps 'override
+    :states '(insert normal hybrid motion visual operator)
+    :prefix "SPC m"
+    :non-normal-prefix "C-SPC m"
+    "" '( :ignore t
+  	      :which-key
+  	      (lambda (arg)
+  	        (cons (cadr (split-string (car arg) " "))
+  		          (replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
+  )
+#+end_src
+
+** Evil
+#+begin_src emacs-lisp :tangle yes
+(use-package evil
+  :preface
+  (defun evil-insert-jk-for-normal-mode ()
+    (interactive)
+    (insert "j")
+    (let ((event (read-event nil)))
+      (if (= event ?k)
+          (progn
+            (backward-delete-char 1)
+            (evil-normal-state))
+	    (push event unread-command-events))))
+  :init
+  (setq evil-want-keybinding      nil)
+  (setq evil-want-integration     t)
+  (setq evil-emacs-state-cursor  '("white" box))
+  (setq evil-normal-state-cursor '("cyan" box))
+  (setq evil-visual-state-cursor '("pale goldenrod" box))
+  (setq evil-insert-state-cursor '("sky blue" bar))
+  :custom
+  (evil-want-fine-undo           t)
+  (evil-respect-visual-line-mode t)
+  (evil-want-C-u-scroll          t)
+  (evil-want-C-i-jump            nil)
+  (evil-search-module            'evil-search)
+  (evil-undo-system              'undo-fu)
+  (evil-split-window-right       t)
+  (evil-split-window-below       t)
+  (evil-want-Y-yank-to-eol       t)
+  :hook ((custom-mode
+          eshell-mode
+          git-rebase-mode
+          term-mode) . evil-emacs-state-mode)
+  :bind ( :map evil-normal-state-map
+	      ("C-e" . evil-end-of-line)
+	      ("C-b" . evil-beginning-of-line)
+	      ("ESCAPE" . keyboard-escape-quit)
+	      ("WW" . save-buffer)
+	      :map evil-insert-state-map
+	      ("j"   . evil-insert-jk-for-normal-mode)
+	      :map evil-visual-state-map
+	      ("ESCAPE" . keyboard-quit)
+	      :map special-mode-map
+	      ("q" . quit-window))
+  :config
+  (evil-mode 1)
+  (evil-set-initial-state 'messages-buffer-mode 'normal))
+
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-commentary
+  :after evil
+  :config
+  (evil-commentary-mode))
+
+(use-package evil-goggles
+  :init
+  (evil-goggles-mode)
+  :after evil
+  :config
+  (setq evil-goggles-pulse t
+        (evil-goggles-use-diff-faces))
+        evil-goggles-duration 0.3)
+
+(use-package avy
+  :bind (:map evil-normal-state-map
+              ("M-s" . avy-goto-char)))
+
+(use-package move-text
+  :bind (:map evil-normal-state-map
+              ("M-k" . move-text-up)
+	          ("M-j" . move-text-down))
+  :config
+  (move-text-default-bindings))
 #+end_src
 * Languages
 I try to mostly use the new Treesitter modes, which comes builtin with the new emacs 29.
@@ -278,180 +507,4 @@ Try to use the package.
 
 (use-package company-coq
   :hook (coq-mode . company-coq-mode))
-#+end_src
-* Personal
-** Org mode
-#+begin_src emacs-lisp :tangle yes
-(use-package org
-  :hook (org-mode . org-indent-mode)
-  :bind ("C-c a" . org-agenda)
-  :config
-  (add-to-list 'org-src-lang-modes '("rust" . rust-ts))
-  (add-to-list 'org-src-lang-modes '("python" . python-ts))
-  (custom-set-faces
-   '(org-headline-done
-     ((((class color) (min-colors 16) (background dark))
-       (:foreground "gray" :strike-through t)))))
-  :custom
-  (org-todo-keywords '((sequence "IDEA" "TODO" "STUCK" "DOING" "|" "DONE")
-                       (sequence "ASSIGNED(a@!)" "WORKING(w!)" "ON REVIEW(r!)" "|" "MERGED(m!)" "CANCELLED(c!)")
-                       (sequence "EVENT" "|" "FULFILLED")))
-  (org-startup-truncated nil)
-  (org-ellipsis "…")
-  (org-pretty-entities t)
-  (org-hide-emphasis-markers nil)
-  (org-fontify-quote-and-verse-blocks t)
-  (org-image-actual-width nil)
-  (org-indirect-buffer-display 'other-window)
-  (org-confirm-babel-evaluate nil)
-  (org-edit-src-content-indentation 0)
-  (org-auto-align-tags t)
-  (org-fontify-done-headline t))
-#+end_src
-*** Org Agenda
-#+begin_src emacs-lisp :tangle yes
-(setq
- org-agenda-window-setup 'current-window
- org-agenda-restore-windows-after-quit t
- org-agenda-skip-deadline-prewarning-if-scheduled t
- org-agenda-compact-blocks t
- org-agenda-span 'week
- org-agenda-skip-deadline-if-done t
- org-agenda-skip-scheduled-if-done t
- org-agenda-skip-timestamp-if-done t
- org-agenda-format-date "%e de %B, %A"
- org-agenda-deadline-leaders  '("Deadline:  " "Daqui a %d dias:" "%d dias atrás")
- org-agenda-scheduled-leaders '("Agendado:  " "%d dias atrasado:")
- )
-
-(setq
- org-agenda-custom-commands
- '(("w" "work"
-    ((todo "ASSIGNED")
-     (todo "WORKING")
-     (todo "ON REVIEW")
-     (tags-todo "CATEGORY=\"trabalho\"")))))
-#+end_src
-
-*** Org alert
-#+begin_src emacs-lisp :tangle yes
-(use-package org-alert
-  :ensure t
-  :config (org-alert-enable)
-  :custom
-  (org-alert-interval 60)
-  (org-alert-notify-cutoff 30)
-  (org-alert-notification-title "Emacs Agenda")
-  (alert-default-style 'notifications))
-#+end_src
-*** Ox-hugo
-In order to publish files to hugo from org.
-#+begin_src emacs-lisp :tangle yes
-(use-package ox-hugo
-  :after ox)
-#+end_src
-** Calendar
-try out emacs calfw
-#+begin_src emacs-lisp :tangle yes
-(use-package calfw)
-(use-package calfw-org
-  :bind ("C-c c l" . cfw:open-org-calendar)
-  :custom (cfw:org-overwrite-default-keybinding t))
-#+end_src
-** Email
-*** RSS feed reader
-#+begin_src emacs-lisp :tangle yes
-(use-package elfeed
-  :custom
-  (elfeed-feeds
-   '(("https://xeiaso.net/blog.rss" nixos)
-     ("https://smallcultfollowing.com/babysteps//atom.xml" rust)
-     ("https://fasterthanli.me/index.xml" rust nixos)
-     ("http://radar.spacebar.org/f/a/weblog/rss/1" tom7)
-     ("https://matklad.github.io/feed.xml" rust zig)
-     ("https://blog.m-ou.se/index.xml" rust)
-     ("https://without.boats/index.xml" rust)
-  )))
-
-#+end_src
-
-#+RESULTS:
-
-*** Mu4e
-**** Setting up mu4e.
-#+begin_src emacs-lisp :tangle yes
-(setq send-mail-function 'sendmail-send-it)
-(setq smtpmail-smtp-server "mail.google.com")
-(setq epg-pinentry-mode 'loopback)
-(setq user-mail-address "leonardo.ribeiro.santiago@gmail.com")
-#+end_src
-Helper functions, to try to discover which mail pertains to which account.
-#+begin_src emacs-lisp :tangle yes
-(defun personal-p (msg)
-  (string-prefix-p "/personal/" (mu4e-message-field msg :maildir)))
-(defun university-p (msg)
-  (string-prefix-p "/university/" (mu4e-message-field msg :maildir)))
-(defun work-p (msg)
-  (string-prefix-p "/work/" (mu4e-message-field msg :maildir)))
-#+end_src
-Actual mu4e definition
-#+begin_src emacs-lisp :tangle yes
-(use-package mu4e
-  :bind ("C-c m" . mu4e)
-  :config
-  :custom
-  (read-mail-command 'mu4e)
-  (mu4e-sent-messages-behavior 'delete)
-  (mu4e-index-cleanup nil)
-  (mu4e-index-lazy-check t)
-  (mu4e-use-fancy-chars (display-graphic-p))
-  (mu4e-confirm-quit nil)
-  (mu4e-eldoc-support t)
-  (mu4e-change-filenames-when-moving t)
-  (mu4e-update-interval (* 5 60))
-  (mu4e-get-mail-command "parallel mbsync ::: personal work university")
-  (mu4e-headers-fields
-   '((:human-date . 10)
-     (:flags . 6)
-     (:topic . 10)
-     (:from-or-to . 22)
-     (:subject . nil)))
-  (mu4e-drafts-folder (lambda (msg)
-                        (cond
-                         ((personal-p msg)   "/personal/[Gmail]/Rascunhos")
-                         ((university-p msg) "/university/[Gmail]/Rascunhos")
-                         ((work-p msg)       "/work/[Gmail]/Drafts"))))
-  (mu4e-sent-folder (lambda (msg)
-                      (cond
-                       ((personal-p msg)   "/personal/[Gmail]/Enviados")
-                       ((university-p msg) "/university/[Gmail]/Enviados")
-                       ((work-p msg)       "/work/[Gmail]/Sent"))))
-  (mu4e-refile-folder (lambda (msg)
-                        (cond
-                         ((personal-p msg)   "/personal/[Gmail]/Todos\ os\ e-mails")
-                         ((university-p msg) "/university/[Gmail]/Todos\ os\ e-mails")
-                         ((work-p msg)       "/work/[Gmail]/All\ mail"))))
-  (mu4e-trash-folder  (lambda (msg)
-                        (cond
-                         ((personal-p msg)   "/personal/[Gmail]/Lixeira")
-                         ((university-p msg) "/university/[Gmail]/Lixeira")
-                         ((work-p msg)       "/work/[Gmail]/Trash"))))
-  :config
-  (add-hook 'mu4e-compose-mode-hook #'(lambda () (auto-save-mode -1)))
-  (add-to-list 'display-buffer-alist
-               `( ,(regexp-quote mu4e-main-buffer-name)
-                  display-buffer-same-window)) ; to avoid opening in full frame everytime.
-  (add-to-list 'mu4e-bookmarks
-               '(:name "Inboxes"
-                 :query "m:/personal/Inbox OR m:/work/Inbox OR m:/university/Inbox"
-                 :key ?i))
-  (add-to-list 'mu4e-header-info-custom
-               '(:topic
-                 :name "Topic"
-                 :shortname "Topic"
-                 :function (lambda (msg)
-                             (cond
-                              ((personal-p msg)   "Personal")
-                              ((university-p msg) "University")
-                              ((work-p msg)       "Work"))))))
 #+end_src

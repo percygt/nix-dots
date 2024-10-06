@@ -1,5 +1,6 @@
 ## stripped down version of https://github.com/o-santi/from-elisp/commit/3177e75d727232a9301822742f4d0bd23bb277c6
 {
+  pkgs ? import <nixpkgs> { },
   commentMaxLength ? 300,
   stringMaxLength ? 3000,
   characterMaxLength ? 50,
@@ -10,6 +11,7 @@
   orgModeBabelCodeBlockHeaderMaxLength ? 200,
 }:
 
+with pkgs.lib;
 with builtins;
 
 let
@@ -957,6 +959,7 @@ let
       readFlags = false;
       readBody = false;
     } (stringToCharacters text)).acc;
+
 in
 {
   inherit parseOrgModeBabel;

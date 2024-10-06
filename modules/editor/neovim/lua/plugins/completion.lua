@@ -7,7 +7,6 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
-    event = "BufRead",
     dependencies = {
       "neovim/nvim-lspconfig",
       "hrsh7th/cmp-nvim-lua",

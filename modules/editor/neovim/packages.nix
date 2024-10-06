@@ -38,6 +38,7 @@
 
         # Telescope dependencies
         manix
+        fzf
         ripgrep
         fd
 

@@ -13,6 +13,7 @@ let
   org-tangle-elisp-blocks =
     (pkgs.callPackage ./org.nix {
       inherit pkgs;
+      from-elisp = import ./from-elisp.nix;
     }).org-tangle
       (
         { language, flags }:
@@ -29,6 +30,16 @@ let
       treesit-grammars.with-all-grammars
       emacsql
       emacsql-sqlite
+      (trivialBuild {
+        pname = "eglot-booster";
+        version = "0.1.0";
+        src = pkgs.fetchFromGitHub {
+          owner = "jdtsmith";
+          repo = "eglot-booster";
+          rev = "e19dd7ea81bada84c66e8bdd121408d9c0761fe6";
+          hash = "sha256-vF34ZoUUj8RENyH9OeKGSPk34G6KXZhEZozQKEcRNhs=";
+        };
+      })
       (trivialBuild {
         pname = "nursery";
         version = "2024-10-05";
