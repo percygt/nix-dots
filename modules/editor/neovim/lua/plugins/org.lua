@@ -1,4 +1,4 @@
-local org_dir = "~/data/notes"
+local org_dir = os.getenv("HOME") .. "/data/notes"
 return {
   {
     "chipsenkbeil/org-roam.nvim",
@@ -12,7 +12,7 @@ return {
       require("org-roam").setup({
         directory = org_dir,
         database = {
-          path = "resources/nvim-org-roam.db",
+          path = org_dir .. "/resources/nvim-org-roam.db",
         },
       })
     end,
@@ -26,6 +26,11 @@ return {
       require("org-bullets").setup()
     end,
   },
+  -- {
+  --   "lukas-reineke/headlines.nvim",
+  --   dependencies = "nvim-treesitter/nvim-treesitter",
+  --   config = true, -- or `opts = {}`
+  -- },
   {
     "nvim-orgmode/orgmode",
     -- enabled = false,

@@ -28,7 +28,6 @@
 (require 'agenda-cfg)
 (require 'evil-cfg)
 (require 'ui-cfg)
-(require 'filetree-cfg)
 (require 'lsp-cfg)
 (require 'treesit-cfg)
 (require 'minibuffer-cfg)

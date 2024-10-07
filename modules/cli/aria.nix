@@ -78,7 +78,7 @@ in
         ProtectSystem = "full";
       };
 
-      Install.WantedBy = [ "graphical-session.target" ];
+      Install.WantedBy = [ "sway-session.target" ];
     };
   };
 }

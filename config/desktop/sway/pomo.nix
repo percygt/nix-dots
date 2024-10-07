@@ -18,20 +18,19 @@ in
       Service = {
         Type = "simple";
         Environment = "PATH=$PATH:${
-          lib.makeBinPath [
-            pkgs.pomo
-            pkgs.procps
-            pkgs.coreutils-full
-            g.desktop.sway.package
-            config.programs.swaylock.package
-          ]
+          lib.makeBinPath (
+            g.system.envPackages
+            ++ [
+              pkgs.pomo
+              g.desktop.sway.package
+              config.programs.swaylock.package
+            ]
+          )
         }";
         ExecStart = "${pkgs.pomo}/bin/pomo notify";
         Restart = "always";
       };
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
+      Install.WantedBy = [ "sway-session.target" ];
     };
   };
   xdg.configFile."pomo.cfg" = {

@@ -14,17 +14,17 @@ in
       font = f.name;
       image = "${a.wallpaper}";
       indicator-idle-visible = false;
-      font-size = 24;
+      # font-size = 24;
       screenshots = true;
       clock = true;
-      effect-vignette = "0.5:0.5";
-      timestr = "%Hh:%Mm:%Ss";
-      datestr = "%b.%d.%Y";
+      effect-vignette = "0.5:0.25 ";
+      timestr = "0:%I:%M";
+      datestr = "0:%d.%a";
       indicator = true;
-      indicator-radius = 200;
+      indicator-radius = 250;
       indicator-thickness = 30;
-      indicator-x-position = 965;
-      indicator-y-position = 540;
+      # indicator-x-position = 965;
+      # indicator-y-position = 540;
       effect-blur = "3x5";
       scaling = "fill";
       grace = 2;
@@ -36,8 +36,4 @@ in
       fade-in = 0.2;
     };
   };
-  #
-  # systemd.user.services.swaylock = {
-  #   Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config";
-  # };
 }
