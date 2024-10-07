@@ -94,7 +94,8 @@
 (use-package clojure-ts-mode
   :hook ((clojure-ts-mode . clj-refactor-mode)
          (clojure-ts-mode . cider-mode)))
-
+(use-package markdown-mode
+  :mode "\\.md\\'")
 ;; (use-package direnv
 ;;   :config (direnv-mode))
 

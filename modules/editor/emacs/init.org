@@ -61,34 +61,22 @@
     (use-package diminish :after use-package) ;; if you use :diminish
 #+end_src
 
-** Display line numbers
-#+begin_src emacs-lisp :tangle yes
-(use-package display-line-numbers
-    :ensure nil
-    :custom
-    (display-line-numbers-grow-only   t)
-    (display-line-numbers-width-start t)
-    (display-line-numbers-type        'relative)
-    :hook (((text-mode prog-mode conf-mode) . display-line-numbers-mode)
-         (org-mode . (lambda () (display-line-numbers-mode -1)))))
-#+end_src
-
 ** No littering
-  #+begin_src emacs-lisp :tangle yes
-  (use-package no-littering
-   :demand
-   :custom
-     (no-littering-etc-directory user-emacs-data-directory)
-     (no-littering-var-directory user-emacs-data-directory))
-  #+end_src
+#+begin_src emacs-lisp :tangle yes
+(use-package no-littering
+  :init
+  (setq no-littering-etc-directory user-emacs-directory)
+  (setq no-littering-var-directory user-emacs-directory)
+  :demand t)
+#+end_src
 
 ** Files
 #+begin_src emacs-lisp :tangle yes
-(use-package files
   :after no-littering
   :ensure nil
-  :demand
+  :demand t
   :preface
+  (require 'no-littering)
   (defvar backup-dir (no-littering-expand-var-file-name "backup/")
     "Directory to store backups.")
   (defvar auto-save-dir (no-littering-expand-var-file-name "auto-save/")
@@ -104,7 +92,6 @@
   :custom
   (create-lockfiles                 nil)
   (make-backup-files                nil)
-  (user-emacs-directory             user-emacs-data-directory)
   (backup-directory-alist           `(("\\`/tmp/" . nil)
                                       ("\\`/dev/shm/" . nil)
                                       (".*" . ,backup-dir)))
@@ -120,7 +107,167 @@
   (version-control                  t)    ; Make numeric backup versions unconditionally
   (delete-by-moving-to-trash        t)    ; Move deleted files to the trash
   (mode-require-final-newline       nil))  ; Don't add newlines at the end of files
+#+end_src
 
+** General
+#+begin_src emacs-lisp :tangle yes
+(use-package general
+  :demand t
+  :preface
+  (defun switch-to-recent-buffer ()
+    (interactive)
+    (switch-to-buffer (other-buffer (current-buffer))))
+  (defun kill-this-buffer ()  ; for the menu bar
+    "Kill the current buffer.
+When called in the minibuffer, get out of the minibuffer
+using `abort-recursive-edit'."
+    (interactive)
+    (cond
+     ;; Don't do anything when `menu-frame' is not alive or visible
+     ;; (Bug#8184).
+     ((not (menu-bar-menu-frame-live-and-visible-p)))
+     ((menu-bar-non-minibuffer-window-p)
+      (kill-buffer (current-buffer)))
+     (t
+      (abort-recursive-edit))))
+  :config
+  (general-override-mode)
+  (general-auto-unbind-keys)
+  (general-create-definer global-definer
+    :keymaps 'override
+    :states '(insert normal hybrid motion visual operator emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+  (general-create-definer local-definer
+    :keymaps 'override
+    :states '(insert normal hybrid motion visual operator emacs)
+    :prefix ","
+    :global-prefix "C-,")
+  (general-create-definer normal-definer
+    :keymaps 'override
+    :states '(normal))
+
+  (normal-definer
+    "D" 'kill-this-buffer)
+  (global-definer
+    "!" 'shell-command
+    ":" 'eval-expression
+    "f" 'find-file
+    "l" 'load-file
+    "d" 'dired
+    "." 'switch-to-recent-buffer
+    "u"  '(nil :wk "Utils")
+    "u." 'repeat
+    )
+
+  (general-create-definer global-leader
+    :keymaps 'override
+    :states '(insert normal hybrid motion visual operator)
+    :prefix "SPC m"
+    :non-normal-prefix "C-SPC m"
+    "" '( :ignore t
+  	      :which-key
+  	      (lambda (arg)
+  	        (cons (cadr (split-string (car arg) " "))
+  		          (replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
+  )
+#+end_src
+
+** Evil
+#+begin_src emacs-lisp :tangle yes
+(use-package evil
+  :preface
+  (defun evil-insert-jk-for-normal-mode ()
+    (interactive)
+    (insert "j")
+    (let ((event (read-event nil)))
+      (if (= event ?k)
+          (progn
+            (backward-delete-char 1)
+            (evil-normal-state))
+	    (push event unread-command-events))))
+  :init
+  (setq evil-want-keybinding      nil)
+  (setq evil-want-integration     t)
+  (setq evil-emacs-state-cursor  '("white" box))
+  (setq evil-normal-state-cursor '("cyan" box))
+  (setq evil-visual-state-cursor '("pale goldenrod" box))
+  (setq evil-insert-state-cursor '("sky blue" bar))
+  :custom
+  (evil-want-fine-undo           t)
+  (evil-respect-visual-line-mode t)
+  (evil-want-C-u-scroll          t)
+  (evil-want-C-i-jump            nil)
+  (evil-search-module            'evil-search)
+  (evil-undo-system              'undo-fu)
+  (evil-split-window-right       t)
+  (evil-split-window-below       t)
+  (evil-want-Y-yank-to-eol       t)
+  :hook ((custom-mode
+          eshell-mode
+          git-rebase-mode
+          term-mode) . evil-emacs-state-mode)
+  :bind ( :map evil-normal-state-map
+	      ("C-e" . evil-end-of-line)
+	      ("C-b" . evil-beginning-of-line)
+	      ("ESCAPE" . keyboard-escape-quit)
+	      ("WW" . save-buffer)
+	      :map evil-insert-state-map
+	      ("j"   . evil-insert-jk-for-normal-mode)
+	      :map evil-visual-state-map
+	      ("ESCAPE" . keyboard-quit)
+	      :map special-mode-map
+	      ("q" . quit-window))
+  :config
+  (evil-mode 1)
+  (evil-set-initial-state 'messages-buffer-mode 'normal))
+
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-commentary
+  :after evil
+  :config
+  (evil-commentary-mode))
+
+(use-package evil-goggles
+  :init
+  (evil-goggles-mode)
+  :after evil
+  :config
+  (setq evil-goggles-pulse t
+        (evil-goggles-use-diff-faces))
+        evil-goggles-duration 0.3)
+
+(use-package avy
+  :bind (:map evil-normal-state-map
+              ("M-s" . avy-goto-char)))
+
+(use-package move-text
+  :bind (:map evil-normal-state-map
+              ("M-k" . move-text-up)
+	          ("M-j" . move-text-down))
+  :config
+  (move-text-default-bindings))
+#+end_src
+
+** Display line numbers
+#+begin_src emacs-lisp :tangle yes
+(use-package display-line-numbers
+    :ensure nil
+    :custom
+    (display-line-numbers-grow-only   t)
+    (display-line-numbers-width-start t)
+    (display-line-numbers-type        'relative)
+    :hook (((text-mode prog-mode conf-mode) . display-line-numbers-mode)
+         (org-mode . (lambda () (display-line-numbers-mode -1)))))
 #+end_src
 
 ** Auto Revert
@@ -147,14 +294,15 @@
   :custom
   (recentf-max-saved-items 1000)
   (recentf-exclude `("/tmp/" "/ssh:" "/nix/store"
-		             ,(concat user-emacs-data-directory "lib/.*-autoloads\\.el\\'")))
+		             ,(concat user-emacs-directory "lib/.*-autoloads\\.el\\'")))
   :config
+  (require 'recentf)
   (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
   (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
   (recentf-mode))
 #+end_src
 
-** Eldo
+** Eldoc
 #+begin_src emacs-lisp :tangle yes
 (use-package eldoc
   :ensure nil
@@ -176,8 +324,8 @@
 #+end_src
 
 ** Window
-    #+begin_src emacs-lisp :tangle yes
-    (use-package window
+#+begin_src emacs-lisp :tangle yes
+(use-package window
       :ensure nil
       :after (evil)
       :bind
@@ -267,7 +415,7 @@
         :init-value 1 ; enable by default
         :global 1
         :keymap splitscreen/mode-map))
-    #+end_src
+#+end_src
 
 ** Dired
   #+begin_src emacs-lisp :tangle yes
@@ -702,157 +850,6 @@
 (use-package rainbow-mode)
   #+end_src
 
-* Keybindings
-
-** General
-#+begin_src emacs-lisp :tangle yes
-(use-package general
-  :demand t
-  :preface
-  (defun switch-to-recent-buffer ()
-    (interactive)
-    (switch-to-buffer (other-buffer (current-buffer))))
-  (defun kill-this-buffer ()  ; for the menu bar
-    "Kill the current buffer.
-When called in the minibuffer, get out of the minibuffer
-using `abort-recursive-edit'."
-    (interactive)
-    (cond
-     ;; Don't do anything when `menu-frame' is not alive or visible
-     ;; (Bug#8184).
-     ((not (menu-bar-menu-frame-live-and-visible-p)))
-     ((menu-bar-non-minibuffer-window-p)
-      (kill-buffer (current-buffer)))
-     (t
-      (abort-recursive-edit))))
-  :config
-  (general-override-mode)
-  (general-auto-unbind-keys)
-  (general-create-definer global-definer
-    :keymaps 'override
-    :states '(insert normal hybrid motion visual operator emacs)
-    :prefix "SPC"
-    :global-prefix "C-SPC")
-  (general-create-definer local-definer
-    :keymaps 'override
-    :states '(insert normal hybrid motion visual operator emacs)
-    :prefix ","
-    :global-prefix "C-,")
-  (general-create-definer normal-definer
-    :keymaps 'override
-    :states '(normal))
-
-  (normal-definer
-    "D" 'kill-this-buffer)
-  (global-definer
-    "!" 'shell-command
-    ":" 'eval-expression
-    "f" 'find-file
-    "l" 'load-file
-    "d" 'dired
-    "." 'switch-to-recent-buffer
-    "u"  '(nil :wk "Utils")
-    "u." 'repeat
-    )
-
-  (general-create-definer global-leader
-    :keymaps 'override
-    :states '(insert normal hybrid motion visual operator)
-    :prefix "SPC m"
-    :non-normal-prefix "C-SPC m"
-    "" '( :ignore t
-  	      :which-key
-  	      (lambda (arg)
-  	        (cons (cadr (split-string (car arg) " "))
-  		          (replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
-  )
-#+end_src
-
-** Evil
-#+begin_src emacs-lisp :tangle yes
-(use-package evil
-  :preface
-  (defun evil-insert-jk-for-normal-mode ()
-    (interactive)
-    (insert "j")
-    (let ((event (read-event nil)))
-      (if (= event ?k)
-          (progn
-            (backward-delete-char 1)
-            (evil-normal-state))
-	    (push event unread-command-events))))
-  :init
-  (setq evil-want-keybinding      nil)
-  (setq evil-want-integration     t)
-  (setq evil-emacs-state-cursor  '("white" box))
-  (setq evil-normal-state-cursor '("cyan" box))
-  (setq evil-visual-state-cursor '("pale goldenrod" box))
-  (setq evil-insert-state-cursor '("sky blue" bar))
-  :custom
-  (evil-want-fine-undo           t)
-  (evil-respect-visual-line-mode t)
-  (evil-want-C-u-scroll          t)
-  (evil-want-C-i-jump            nil)
-  (evil-search-module            'evil-search)
-  (evil-undo-system              'undo-fu)
-  (evil-split-window-right       t)
-  (evil-split-window-below       t)
-  (evil-want-Y-yank-to-eol       t)
-  :hook ((custom-mode
-          eshell-mode
-          git-rebase-mode
-          term-mode) . evil-emacs-state-mode)
-  :bind ( :map evil-normal-state-map
-	      ("C-e" . evil-end-of-line)
-	      ("C-b" . evil-beginning-of-line)
-	      ("ESCAPE" . keyboard-escape-quit)
-	      ("WW" . save-buffer)
-	      :map evil-insert-state-map
-	      ("j"   . evil-insert-jk-for-normal-mode)
-	      :map evil-visual-state-map
-	      ("ESCAPE" . keyboard-quit)
-	      :map special-mode-map
-	      ("q" . quit-window))
-  :config
-  (evil-mode 1)
-  (evil-set-initial-state 'messages-buffer-mode 'normal))
-
-(use-package evil-surround
-  :after evil
-  :config
-  (global-evil-surround-mode 1))
-
-(use-package evil-collection
-  :after evil
-  :config
-  (evil-collection-init))
-
-(use-package evil-commentary
-  :after evil
-  :config
-  (evil-commentary-mode))
-
-(use-package evil-goggles
-  :init
-  (evil-goggles-mode)
-  :after evil
-  :config
-  (setq evil-goggles-pulse t
-        (evil-goggles-use-diff-faces))
-        evil-goggles-duration 0.3)
-
-(use-package avy
-  :bind (:map evil-normal-state-map
-              ("M-s" . avy-goto-char)))
-
-(use-package move-text
-  :bind (:map evil-normal-state-map
-              ("M-k" . move-text-up)
-	          ("M-j" . move-text-down))
-  :config
-  (move-text-default-bindings))
-#+end_src
-
 * Languages
 
 ** LSP
@@ -1207,10 +1204,11 @@ using `abort-recursive-edit'."
   (org-cycle-separator-lines 1)
   (org-ellipsis " ")
   (org-pretty-entities t)
+  (org-src-preserve-indentation nil)
   (org-src-fontify-natively t)
   (org-fontify-whole-heading-line t)
   (org-fontify-quote-and-verse-blocks t)
-  (org-hide-block-startup nil)
+  ;; (org-hide-block-startup nil)
   (org-src-tab-acts-natively t)
   (org-startup-folded t)
   (org-image-actual-width nil)
@@ -1250,7 +1248,7 @@ using `abort-recursive-edit'."
   (org-document-info ((t (:inherit (fixed-pitch) :foreground "LightGray" :height 0.8))))
   (org-document-info-keyword ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
   (org-drawer ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
-  ;; (org-indent ((t (:inherit (org-hide fixed-pitch)))))
+  (org-indent ((t (:inherit (org-hide fixed-pitch)))))
   (org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
   (org-property-value ((t (:inherit fixed-pitch))))
   (org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
@@ -1265,19 +1263,26 @@ using `abort-recursive-edit'."
   :config
   (add-hook 'org-mode-hook 'evil-org-mode)
   (add-hook 'evil-org-mode-hook
-          (lambda () (evil-org-set-key-theme)))
+	        (lambda () (evil-org-set-key-theme)))
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
 (use-package org-modern
   :ensure t
-  :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize-hook . org-modern-agenda))
-  :custom ((org-modern-table nil)
-         (org-modern-list'((?+ . "✦") (?- . "‣") (?* . "◉")))
-         (org-modern-variable-pitch t))
+  :custom
+  (org-modern-table nil)
+  (org-modern-hide-stars nil)		; adds extra indentation
+  (org-modern-list'((?+ . "✦") (?- . "‣") (?* . "◉")))
+  (org-modern-block-name '("" . "")) ; or other chars; so top bracket is drawn promptly
+  ;; (org-modern-variable-pitch t)
   :commands (org-modern-mode org-modern-agenda)
-  :init (global-org-modern-mode))
+  :hook
+  (org-mode . org-modern-mode)
+  (org-agenda-finalize . org-modern-agenda))
+
+(use-package org-modern-indent
+  :config ; add late to hook
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 (use-package org-appear
   :commands (org-appear-mode)
@@ -1340,6 +1345,7 @@ using `abort-recursive-edit'."
 ;;   :config
 ;;   (add-hook 'org-brain-visualize-mode-hook #'org-brain-polymode))
 
+
 ;; Templates
 (use-package org-tempo
   :ensure nil
@@ -1351,7 +1357,10 @@ using `abort-recursive-edit'."
                      ("cpp" . "src C++ :includes <iostream> :namespaces std"))))
     (dolist (template templates)
       (push template org-structure-template-alist))))
+
+
 ;; (use-package org-timeblock)
+
 ;; (use-package org-transclusion :after org)
 #+end_src
 
@@ -1630,9 +1639,9 @@ capture was not aborted."
 	       "TAB" 'magit-section-cycle
 	       "g r" 'org-roam-review-refresh))
 
-;; (use-package org-format
-;;   :ensure nil
-;;   :hook (org-mode . org-format-on-save-mode))
+(use-package org-format
+  :ensure nil
+  :hook (org-mode . org-format-on-save-mode))
 
 (use-package org-roam-search
   :ensure nil
@@ -1651,10 +1660,10 @@ capture was not aborted."
   :commands (org-roam-links))
 
 (use-package org-roam-dblocks
-  :ensure nil)
-  ;; :hook (org-mode . org-roam-dblocks-autoupdate-mode))
+  :ensure nil
+  :hook (org-mode . org-roam-dblocks-autoupdate-mode))
 
-  (use-package org-roam-rewrite
+(use-package org-roam-rewrite
     :ensure nil
     :commands (org-roam-rewrite-rename
                org-roam-rewrite-remove

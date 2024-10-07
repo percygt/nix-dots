@@ -12,14 +12,47 @@
                  (display-buffer-full-frame)))
 
   :preface
+  ;; (defun org-prettify-symbols-setup ()
+  ;;   ;; checkboxes
+  ;;   (push '("[ ]" .  "☐") prettify-symbols-alist)
+  ;;   (push '("[X]" . "☑" ) prettify-symbols-alist)
+  ;;   ;; (push '("[X]" . "☒" ) prettify-symbols-alist)
+  ;;   (push '("[-]" . "❍" ) prettify-symbols-alist)
+  ;;
+  ;;   ;; org-babel
+  ;;   (push '("#+BEGIN_SRC" . ?≫) prettify-symbols-alist)
+  ;;   (push '("#+END_SRC" . ?≫) prettify-symbols-alist)
+  ;;   (push '("#+begin_src" . ?≫) prettify-symbols-alist)
+  ;;   (push '("#+end_src" . ?≫) prettify-symbols-alist)
+  ;;
+  ;;   (push '("#+BEGIN" . ?≫) prettify-symbols-alist)
+  ;;   (push '("#+END" . ?≫) prettify-symbols-alist)
+  ;;   (push '("#+BEGIN_QUOTE" . ?❝) prettify-symbols-alist)
+  ;;   (push '("#+END_QUOTE" . ?❞) prettify-symbols-alist)
+  ;;
+  ;;   ;; (push '("#+BEGIN_SRC python" . ) prettify-symbols-alist) ;; This is the Python symbol. Comes up weird for some reason
+  ;;   (push '("#+RESULTS:" . ?≚ ) prettify-symbols-alist)
+  ;;
+  ;;   ;; drawers
+  ;;   (push '(":PROPERTIES:" . ?) prettify-symbols-alist)
+  ;;
+  ;;   ;; tags
+  ;;   ;; (push '(":Misc:" . "" ) prettify-symbols-alist)
+  ;;
+  ;;   (prettify-symbols-mode))
+
   (defun org-mode-setup ()
     (org-indent-mode)
-    (variable-pitch-mode)
     (auto-fill-mode 0)
     (visual-line-mode 1)
-    (setq evil-auto-indent nil))
+    (valign-mode)
+    )
   :hook
   (org-mode . org-mode-setup)
+  ;; (org-mode . org-prettify-symbols-setup)
+  (org-capture-mode . evil-insert-state) ;; Start org-capture in Insert state by default
+  :diminish org-indent-mode
+  :diminish visual-line-mode
   :custom
   (org-capture-templates
    '(("t" "todo" entry (file+headline "todo.org" "Inbox")
@@ -41,10 +74,12 @@
   (org-cycle-separator-lines 1)
   (org-ellipsis " ")
   (org-pretty-entities t)
+  (org-src-preserve-indentation nil)
   (org-src-fontify-natively t)
   (org-fontify-whole-heading-line t)
   (org-fontify-quote-and-verse-blocks t)
   (org-hide-block-startup nil)
+  (org-special-ctrl-a/e t)
   (org-src-tab-acts-natively t)
   (org-startup-folded t)
   (org-image-actual-width nil)
@@ -103,15 +138,25 @@
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
+(use-package valign :defer t)
+
 (use-package org-modern
-  :ensure t
-  :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize-hook . org-modern-agenda))
-  :custom ((org-modern-table nil)
-	       (org-modern-list'((?+ . "✦") (?- . "‣") (?* . "◉")))
-	       (org-modern-variable-pitch t))
+  :custom
+  (org-modern-table nil)
+  (org-modern-hide-stars nil)		; adds extra indentation
+  (org-modern-list'((?+ . "✦") (?- . "‣") (?* . "◉")))
+  (org-modern-block-name '("" . "")) ; or other chars; so top bracket is drawn promptly
+  (org-modern-variable-pitch t)
   :commands (org-modern-mode org-modern-agenda)
-  :init (global-org-modern-mode))
+  ;; :init (global-org-modern-mode)
+  :hook
+  (org-mode . org-modern-mode)
+  (org-agenda-finalize . org-modern-agenda))
+
+(use-package org-modern-indent
+  :ensure nil
+  :config ; add late to hook
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 (use-package org-appear
   :commands (org-appear-mode)

@@ -6,23 +6,23 @@
 }:
 let
   cfg = config.modules.editor.emacs;
-  # emacsConfig = pkgs.concatTextFile {
-  #   name = "config.el";
-  #   files = map (dir: ./config/${dir}) (builtins.attrNames (builtins.readDir ./config));
-  # };
-  org-tangle-elisp-blocks =
-    (pkgs.callPackage ./org.nix {
-      inherit pkgs;
-      from-elisp = import ./from-elisp.nix;
-    }).org-tangle
-      (
-        { language, flags }:
-        let
-          is-elisp = (language == "emacs-lisp") || (language == "elisp");
-          is-tangle = if flags ? ":tangle" then flags.":tangle" == "yes" || flags.":tangle" == "y" else false;
-        in
-        is-elisp && is-tangle
-      );
+  emacsConfig = pkgs.concatTextFile {
+    name = "config.el";
+    files = map (dir: ./config/${dir}) (builtins.attrNames (builtins.readDir ./config));
+  };
+  # org-tangle-elisp-blocks =
+  #   (pkgs.callPackage ./org.nix {
+  #     inherit pkgs;
+  #     from-elisp = import ./from-elisp.nix;
+  #   }).org-tangle
+  #     (
+  #       { language, flags }:
+  #       let
+  #         is-elisp = (language == "emacs-lisp") || (language == "elisp");
+  #         is-tangle = if flags ? ":tangle" then flags.":tangle" == "yes" || flags.":tangle" == "y" else false;
+  #       in
+  #       is-elisp && is-tangle
+  #     );
   extraPackages = import ./extraPackages.nix { inherit pkgs; };
   extraEmacsPackages =
     epkgs: with epkgs; [
@@ -30,6 +30,16 @@ let
       treesit-grammars.with-all-grammars
       emacsql
       emacsql-sqlite
+      (trivialBuild {
+        pname = "org-modern-indent";
+        version = "0.1.4";
+        src = pkgs.fetchFromGitHub {
+          owner = "jdtsmith";
+          repo = "org-modern-indent";
+          rev = "f2b859bc53107b2a1027b76dbf4aaebf14c03433";
+          hash = "sha256-vtbaa3MURnAI1ypLueuSfgAno0l51y3Owb7g+jkK6JU=";
+        };
+      })
       (trivialBuild {
         pname = "eglot-booster";
         version = "0.1.0";
@@ -74,8 +84,8 @@ let
     inherit (cfg) package;
     inherit extraEmacsPackages;
     alwaysEnsure = true;
-    config = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./init.org));
-    # config = builtins.readFile emacsConfig;
+    # config = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./init.org));
+    config = builtins.readFile emacsConfig;
   };
 
   emacsWithExtraPackages = pkgs.runCommand "emacs" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''

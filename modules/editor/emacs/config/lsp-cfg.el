@@ -38,5 +38,10 @@
 				       :autopep8 (:enabled :json-false)
 				       :black (:enabled :json-false)))))))
 
+(use-package eglot-booster
+  :ensure nil
+  :after eglot
+  :config (eglot-booster-mode))
+
 (provide 'lsp-cfg)
 ;;; lsp-cfg.el ends here
