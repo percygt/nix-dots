@@ -2,21 +2,7 @@
 ;;; early-init.el --- early in the morning -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
-(defvar user-emacs-config-directory
-  (concat (getenv "XDG_CONFIG_HOME") "/emacs")
-  "Emacs config directory.")
-(defvar user-emacs-data-directory
-  (concat (getenv "XDG_DATA_HOME") "/emacs")
-  "Emacs local home directory.")
-(defvar user-emacs-cache-directory
-  (concat (getenv "XDG_CACHE_HOME") "/emacs")
-  "Home directory.")
-(defvar notes-directory
-  (concat (getenv "HOME") "/data/notes")
-  "My notes.")
-
-(add-to-list 'load-path (expand-file-name "config/" user-emacs-config-directory))
-;; (add-to-list 'load-path (expand-file-name "var/packages/nursery-2024-09-07/lisp/" user-emacs-data-directory))
+(add-to-list 'load-path (concat (getenv "XDG_CONFIG_HOME") "/emacs/config/"))
 
 ;; language stuff
 (set-language-environment "UTF-8")
@@ -58,18 +44,19 @@
       initial-scratch-message nil
       load-prefer-newer noninteractive
       auto-mode-case-fold nil
-      bidi-inhibit-bpa t
-      site-run-file nil)
+      bidi-inhibit-bpa t)
 
 ;; In Emacs 27+, package initialization occurs before `user-init-file' is
 ;; loaded, but after `early-init-file'. We want to keep from loading at startup.
 (setq package-enable-at-startup nil
       package-quickstart nil)
 
-(when (fboundp 'startup-redirect-eln-cache)
+(when (and (fboundp 'startup-redirect-eln-cache)
+           (fboundp 'native-comp-available-p)
+           (native-comp-available-p))
   (startup-redirect-eln-cache
    (convert-standard-filename
-    (expand-file-name  "var/eln-cache/" user-emacs-data-directory))))
+    (concat (getenv "XDG_DATA_HOME") "/emacs/var/eln-cache/"))))
 
 (advice-add #'x-apply-session-resources :override #'ignore)
 

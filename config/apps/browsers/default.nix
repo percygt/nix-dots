@@ -1,7 +1,7 @@
 {
   imports = [
     ./chromium
-    ./nyxt
+    # ./nyxt
     # ./firefox
   ];
 }

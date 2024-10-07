@@ -44,6 +44,7 @@
   (defun org-mode-setup ()
     (org-indent-mode)
     (auto-fill-mode 0)
+    (variable-pitch-mode)
     (visual-line-mode 1)
     (valign-mode)
     )

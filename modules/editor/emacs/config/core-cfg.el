@@ -6,6 +6,19 @@
 (use-package emacs
   :ensure nil
   :demand
+  :init
+  (defvar user-emacs-config-directory
+    (concat (getenv "XDG_CONFIG_HOME") "/emacs")
+    "Emacs config directory.")
+  (defvar user-emacs-data-directory
+    (concat (getenv "XDG_DATA_HOME") "/emacs")
+    "Emacs local home directory.")
+  (defvar user-emacs-cache-directory
+    (concat (getenv "XDG_CACHE_HOME") "/emacs")
+    "Home directory.")
+  (defvar notes-directory
+    (concat (getenv "HOME") "/data/notes")
+    "My notes.")
   :preface
   (defun indicate-buffer-boundaries-left ()
     (setq indicate-buffer-boundaries 'left))
@@ -55,6 +68,50 @@
   (read-extended-command-predicate       #'command-completion-default-include-p)
   :hook ((prog-mode . display-fill-column-indicator-mode)
          ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
+
+(use-package no-littering
+  :demand t
+  :init
+  (setq no-littering-etc-directory user-emacs-data-directory)
+  (setq no-littering-var-directory user-emacs-data-directory))
+
+(use-package files
+  :after no-littering
+  :ensure nil
+  :demand t
+  :preface
+  (require 'no-littering)
+  (defvar backup-dir (no-littering-expand-var-file-name "backup/")
+    "Directory to store backups.")
+  (defvar auto-save-dir (no-littering-expand-var-file-name "auto-save/")
+    "Directory to store auto-save files.")
+  (defvar customfile (no-littering-expand-etc-file-name "custom.el")
+    "Custom file")
+  :init
+  (unless (file-exists-p auto-save-dir) (make-directory auto-save-dir t))
+  (unless (file-exists-p backup-dir) (make-directory backup-dir t))
+  (when (file-exists-p customfile) (load customfile))
+  :config
+  (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
+  :custom
+  (create-lockfiles                 nil)
+  (make-backup-files                nil)
+  (user-emacs-directory             user-emacs-data-directory)
+  (backup-directory-alist           `(("\\`/tmp/" . nil)
+                                      ("\\`/dev/shm/" . nil)
+                                      (".*" . ,backup-dir)))
+  (auto-save-file-name-transforms   `((".*" ,auto-save-dir t)))
+  (custom-file                      customfile)
+  (auto-save-no-message             t)
+  (auto-save-interval               100)
+  (find-file-visit-truename          t)
+  (backup-by-copying                t)    ; Always use copying to create backup files
+  (delete-old-versions              t)    ; Delete excess backup versions
+  (kept-new-versions                6)    ; Number of newest versions to keep when a new backup is made
+  (kept-old-versions                2)    ; Number of oldest versions to keep when a new backup is made
+  (version-control                  t)    ; Make numeric backup versions unconditionally
+  (delete-by-moving-to-trash        t)    ; Move deleted files to the trash
+  (mode-require-final-newline       nil))  ; Don't add newlines at the end of files
 
 (use-package window
   :ensure nil
@@ -158,48 +215,6 @@
   :hook (((text-mode prog-mode conf-mode) . display-line-numbers-mode)
 	     (org-mode . (lambda () (display-line-numbers-mode -1)))))
 
-(use-package no-littering
-  :demand
-  :custom
-  (no-littering-etc-directory user-emacs-data-directory)
-  (no-littering-var-directory user-emacs-data-directory))
-
-(use-package files
-  :after no-littering
-  :ensure nil
-  :demand
-  :preface
-  (defvar backup-dir (no-littering-expand-var-file-name "backup/")
-    "Directory to store backups.")
-  (defvar auto-save-dir (no-littering-expand-var-file-name "auto-save/")
-    "Directory to store auto-save files.")
-  (defvar customfile (no-littering-expand-etc-file-name "custom.el")
-    "Custom file")
-  :init
-  (unless (file-exists-p auto-save-dir) (make-directory auto-save-dir t))
-  (unless (file-exists-p backup-dir) (make-directory backup-dir t))
-  (when (file-exists-p customfile) (load customfile))
-  :config
-  (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
-  :custom
-  (create-lockfiles                 nil)
-  (make-backup-files                nil)
-  (user-emacs-directory             user-emacs-data-directory)
-  (backup-directory-alist           `(("\\`/tmp/" . nil)
-                                      ("\\`/dev/shm/" . nil)
-                                      (".*" . ,backup-dir)))
-  (auto-save-file-name-transforms   `((".*" ,auto-save-dir t)))
-  (custom-file                      customfile)
-  (auto-save-no-message             t)
-  (auto-save-interval               100)
-  (find-file-visit-truename          t)
-  (backup-by-copying                t)    ; Always use copying to create backup files
-  (delete-old-versions              t)    ; Delete excess backup versions
-  (kept-new-versions                6)    ; Number of newest versions to keep when a new backup is made
-  (kept-old-versions                2)    ; Number of oldest versions to keep when a new backup is made
-  (version-control                  t)    ; Make numeric backup versions unconditionally
-  (delete-by-moving-to-trash        t)    ; Move deleted files to the trash
-  (mode-require-final-newline       nil))  ; Don't add newlines at the end of files
 
 (use-package autorevert
   :ensure nil
