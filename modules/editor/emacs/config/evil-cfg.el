@@ -64,14 +64,14 @@
   :config
   (evil-commentary-mode))
 
-(use-package evil-goggles
-  :init
-  (evil-goggles-mode)
-  :after evil
-  :config
-  (setq evil-goggles-pulse t
-        (evil-goggles-use-diff-faces))
-        evil-goggles-duration 0.3)
+;; (use-package evil-goggles
+;;   :init
+;;   (evil-goggles-mode)
+;;   :after evil
+;;   :config
+;;   (setq evil-goggles-pulse t
+;;         (evil-goggles-use-diff-faces))
+;;         evil-goggles-duration 0.3)
 
 (use-package avy
   :bind (:map evil-normal-state-map
