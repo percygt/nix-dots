@@ -23,7 +23,11 @@ let
   #       in
   #       is-elisp && is-tangle
   #     );
-  extraPackages = import ./extraPackages.nix { inherit pkgs; };
+  extraPackages = (import ./extraPackages.nix { inherit pkgs; }) ++ [
+    (pkgs.emacs-lsp-booster.overrideAttrs (_: {
+      nativeCheckInputs = [ emacs ]; # override emacs pkg for tests/bytecode_test
+    }))
+  ];
   extraEmacsPackages =
     epkgs: with epkgs; [
       # required stuff

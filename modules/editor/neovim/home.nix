@@ -6,8 +6,8 @@
   ...
 }:
 let
-  inherit (config._general) flakeDirectory;
-  moduleNvim = "${flakeDirectory}/modules/editor/neovim";
+  g = config._general;
+  moduleNvim = "${g.flakeDirectory}/modules/editor/neovim";
   cfg = config.modules.editor.neovim;
 in
 {
@@ -84,6 +84,7 @@ in
     };
     xdg = {
       configFile = {
+        "nvim/lua/config/private.lua".text = g.editor.emacs."private.lua";
         "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazy-lock.json";
         "nvim/neoconf.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/neoconf.json";
         "nvim/spell".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/spell";
@@ -91,9 +92,9 @@ in
         "nvim/lua/plugins".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/plugins";
         "nvim/lua/utils".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/utils";
         # Nixd LSP configuration
-        "${flakeDirectory}/.neoconf.json".text =
+        "${g.flakeDirectory}/.neoconf.json".text =
           let
-            flake = ''builtins.getFlake "${flakeDirectory}"'';
+            flake = ''builtins.getFlake "${g.flakeDirectory}"'';
           in
           builtins.toJSON {
             lspconfig.nixd.nixd = {

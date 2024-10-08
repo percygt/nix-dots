@@ -1,7 +1,6 @@
 ;;; general-cfg.el ---  General.el -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 (use-package general
   :demand t
   :preface

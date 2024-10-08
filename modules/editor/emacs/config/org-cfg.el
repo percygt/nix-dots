@@ -3,6 +3,21 @@
 ;;; Code:
 (use-package org
   :ensure nil
+  :commands org-babel-do-load-languages
+  :diminish org-indent-mode
+  :diminish visual-line-mode
+  :hook
+  (org-mode . org-mode-setup)
+  ;; (org-mode . org-prettify-symbols-setup)
+  (org-capture-mode . evil-insert-state) ;; Start org-capture in Insert state by default
+  (org-mode-hook . (lambda ()
+                     (fset 'tex-font-lock-suscript 'ignore)
+                     (org-babel-do-load-languages
+                      'org-babel-load-languages
+                      '((python . t)
+                        (shell . t)
+                        (elisp . t)
+                        ))))
   :config
   (add-to-list 'display-buffer-alist
                '("^\\*Capture\\*$"
@@ -12,48 +27,13 @@
                  (display-buffer-full-frame)))
 
   :preface
-  ;; (defun org-prettify-symbols-setup ()
-  ;;   ;; checkboxes
-  ;;   (push '("[ ]" .  "☐") prettify-symbols-alist)
-  ;;   (push '("[X]" . "☑" ) prettify-symbols-alist)
-  ;;   ;; (push '("[X]" . "☒" ) prettify-symbols-alist)
-  ;;   (push '("[-]" . "❍" ) prettify-symbols-alist)
-  ;;
-  ;;   ;; org-babel
-  ;;   (push '("#+BEGIN_SRC" . ?≫) prettify-symbols-alist)
-  ;;   (push '("#+END_SRC" . ?≫) prettify-symbols-alist)
-  ;;   (push '("#+begin_src" . ?≫) prettify-symbols-alist)
-  ;;   (push '("#+end_src" . ?≫) prettify-symbols-alist)
-  ;;
-  ;;   (push '("#+BEGIN" . ?≫) prettify-symbols-alist)
-  ;;   (push '("#+END" . ?≫) prettify-symbols-alist)
-  ;;   (push '("#+BEGIN_QUOTE" . ?❝) prettify-symbols-alist)
-  ;;   (push '("#+END_QUOTE" . ?❞) prettify-symbols-alist)
-  ;;
-  ;;   ;; (push '("#+BEGIN_SRC python" . ) prettify-symbols-alist) ;; This is the Python symbol. Comes up weird for some reason
-  ;;   (push '("#+RESULTS:" . ?≚ ) prettify-symbols-alist)
-  ;;
-  ;;   ;; drawers
-  ;;   (push '(":PROPERTIES:" . ?) prettify-symbols-alist)
-  ;;
-  ;;   ;; tags
-  ;;   ;; (push '(":Misc:" . "" ) prettify-symbols-alist)
-  ;;
-  ;;   (prettify-symbols-mode))
-
   (defun org-mode-setup ()
     (org-indent-mode)
     (auto-fill-mode 0)
     (variable-pitch-mode)
     (visual-line-mode 1)
-    (valign-mode)
+    ;; (valign-mode)
     )
-  :hook
-  (org-mode . org-mode-setup)
-  ;; (org-mode . org-prettify-symbols-setup)
-  (org-capture-mode . evil-insert-state) ;; Start org-capture in Insert state by default
-  :diminish org-indent-mode
-  :diminish visual-line-mode
   :custom
   (org-capture-templates
    '(("t" "todo" entry (file+headline "todo.org" "Inbox")
@@ -149,7 +129,7 @@
   (org-modern-block-name '("" . "")) ; or other chars; so top bracket is drawn promptly
   (org-modern-variable-pitch t)
   :commands (org-modern-mode org-modern-agenda)
-  ;; :init (global-org-modern-mode)
+  :init (global-org-modern-mode)
   :hook
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))

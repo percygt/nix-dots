@@ -24,24 +24,27 @@
   (add-to-list 'eglot-server-programs '((nix-mode nix-ts-mode) . ("nil")))
   (add-to-list 'eglot-server-programs '(rust-ts-mode . ("rust-analyzer")))
   (setq-default eglot-workspace-configuration
-		'((:pylsp . (:plugins (
-				       :ruff (:enabled t :lineLength 88)
-				       ;; :pylsp_mypy (:enabled t
-				       ;;              :report_progress t
-				       ;;              :live_mode :json-false)
-				       :jedi_completion (:enabled t)
-				       :pycodestyle (:enabled :json-false)
-				       :pylint (:enabled :json-false)
-				       :mccabe (:enabled :json-false)
-				       :pyflakes (:enabled :json-false)
-				       :yapf (:enabled :json-false)
-				       :autopep8 (:enabled :json-false)
-				       :black (:enabled :json-false)))))))
+		        '(
+                  (:pylsp . (:plugins (
+				                       :ruff (:enabled t :lineLength 88)
+				                       ;; :pylsp_mypy (:enabled t
+				                       ;;              :report_progress t
+				                       ;;              :live_mode :json-false)
+				                       :jedi_completion (:enabled t)
+				                       :pycodestyle (:enabled :json-false)
+				                       :pylint (:enabled :json-false)
+				                       :mccabe (:enabled :json-false)
+				                       :pyflakes (:enabled :json-false)
+				                       :yapf (:enabled :json-false)
+				                       :autopep8 (:enabled :json-false)
+				                       :black (:enabled :json-false))))
+                  (:nil . (:nix (:flake (:autoArchive t))))
+                  )))
 
-;; (use-package eglot-booster
-;;   :ensure nil
-;;   :after eglot
-;;   :config (eglot-booster-mode))
+(use-package eglot-booster
+  :ensure nil
+  :after eglot
+  :config (eglot-booster-mode))
 
 (provide 'lsp-cfg)
 ;;; lsp-cfg.el ends here

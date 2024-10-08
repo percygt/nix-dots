@@ -2,23 +2,19 @@
 ;;; Commentary:
 ;;; Code:
 
+(defvar user-emacs-data-directory
+  (concat (getenv "XDG_DATA_HOME") "/emacs")
+  "Emacs local home directory.")
+(defvar user-emacs-cache-directory
+  (concat (getenv "XDG_CACHE_HOME") "/emacs")
+  "Home directory.")
+(defvar notes-directory
+  (concat (getenv "HOME") "/data/notes")
+  "My notes.")
+
 ;; Vanilla config
 (use-package emacs
   :ensure nil
-  :demand
-  :init
-  (defvar user-emacs-config-directory
-    (concat (getenv "XDG_CONFIG_HOME") "/emacs")
-    "Emacs config directory.")
-  (defvar user-emacs-data-directory
-    (concat (getenv "XDG_DATA_HOME") "/emacs")
-    "Emacs local home directory.")
-  (defvar user-emacs-cache-directory
-    (concat (getenv "XDG_CACHE_HOME") "/emacs")
-    "Home directory.")
-  (defvar notes-directory
-    (concat (getenv "HOME") "/data/notes")
-    "My notes.")
   :preface
   (defun indicate-buffer-boundaries-left ()
     (setq indicate-buffer-boundaries 'left))
@@ -70,38 +66,32 @@
          ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
 
 (use-package no-littering
-  :demand t
+  :demand
   :init
   (setq no-littering-etc-directory user-emacs-data-directory)
-  (setq no-littering-var-directory user-emacs-data-directory))
+  (setq no-littering-var-directory user-emacs-cache-directory)
+  (no-littering-theme-backups))
+
 
 (use-package files
-  :after no-littering
   :ensure nil
-  :demand t
   :preface
-  (require 'no-littering)
-  (defvar backup-dir (no-littering-expand-var-file-name "backup/")
-    "Directory to store backups.")
-  (defvar auto-save-dir (no-littering-expand-var-file-name "auto-save/")
-    "Directory to store auto-save files.")
-  (defvar customfile (no-littering-expand-etc-file-name "custom.el")
-    "Custom file")
+  (defvar files/common (expand-file-name "common.el" user-emacs-directory)
+    "Common file.")
+  (defvar files/private (expand-file-name "private.el" user-emacs-directory)
+    "Private file.")
+  (defvar files/custom (expand-file-name "custom.el" user-emacs-directory)
+    "Custom file.")
   :init
-  (unless (file-exists-p auto-save-dir) (make-directory auto-save-dir t))
-  (unless (file-exists-p backup-dir) (make-directory backup-dir t))
-  (when (file-exists-p customfile) (load customfile))
+  (when (file-exists-p files/common) (load files/common))
+  (when (file-exists-p files/private) (load files/private))
+  (when (file-exists-p files/custom) (load files/custom))
   :config
   (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
   :custom
   (create-lockfiles                 nil)
   (make-backup-files                nil)
-  (user-emacs-directory             user-emacs-data-directory)
-  (backup-directory-alist           `(("\\`/tmp/" . nil)
-                                      ("\\`/dev/shm/" . nil)
-                                      (".*" . ,backup-dir)))
-  (auto-save-file-name-transforms   `((".*" ,auto-save-dir t)))
-  (custom-file                      customfile)
+  (custom-file                      files/custom)
   (auto-save-no-message             t)
   (auto-save-interval               100)
   (find-file-visit-truename          t)
@@ -250,7 +240,7 @@
 (use-package undo-fu-session
   :hook (after-init . undo-fu-session-global-mode)
   :custom
-  (undo-fu-session-directory (expand-file-name  "var/undo-fu-session/" user-emacs-data-directory))
+  (undo-fu-session-directory (expand-file-name  "undo-fu-session/" user-emacs-data-directory))
   (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 (provide 'core-cfg)

@@ -52,7 +52,7 @@
   (dashboard-center-content t)
   (dashboard-set-file-icons t)
   (dashboard-set-heading-icons t)
-  (dashboard-startup-banner (concat user-emacs-config-directory "/xemacs_color.svg"))
+  (dashboard-startup-banner (concat user-emacs-directory "/xemacs_color.svg"))
   (dashboard-projects-backend 'project-el)
   :config
   (dashboard-setup-startup-hook)

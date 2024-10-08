@@ -1,14 +1,14 @@
-
 ;;; early-init.el --- early in the morning -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
+
 (add-to-list 'load-path (concat (getenv "XDG_CONFIG_HOME") "/emacs/config/"))
 
-;; language stuff
+;; Language stuff
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
 
-;; garbage collection
+;; Garbage collection
 (setq read-process-output-max (* 64 1024)
       process-adaptive-read-buffering nil
       gc-cons-threshold most-positive-fixnum)
@@ -48,17 +48,16 @@
 
 ;; In Emacs 27+, package initialization occurs before `user-init-file' is
 ;; loaded, but after `early-init-file'. We want to keep from loading at startup.
-(setq package-enable-at-startup nil
-      package-quickstart nil)
+(setq package-enable-at-startup nil)
 
 (when (and (fboundp 'startup-redirect-eln-cache)
            (fboundp 'native-comp-available-p)
            (native-comp-available-p))
   (startup-redirect-eln-cache
    (convert-standard-filename
-    (concat (getenv "XDG_DATA_HOME") "/emacs/var/eln-cache/"))))
+    (concat (getenv "XDG_CACHE_HOME") "/emacs/eln-cache/"))))
 
 (advice-add #'x-apply-session-resources :override #'ignore)
 
 (provide 'early-init)
-;;; early-init ends here
+;;; early-init.el ends here
