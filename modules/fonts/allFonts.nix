@@ -16,6 +16,7 @@ let
     nerdfonts-fontconfig
     inter
     work-sans
+    roboto-mono
     source-serif
     noto-fonts
     noto-fonts-cjk

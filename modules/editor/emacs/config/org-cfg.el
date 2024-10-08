@@ -8,16 +8,17 @@
   :diminish visual-line-mode
   :hook
   (org-mode . org-mode-setup)
-  ;; (org-mode . org-prettify-symbols-setup)
+  (org-mode . common/org-prettify-symbols-setup)
   (org-capture-mode . evil-insert-state) ;; Start org-capture in Insert state by default
-  (org-mode-hook . (lambda ()
-                     (fset 'tex-font-lock-suscript 'ignore)
-                     (org-babel-do-load-languages
-                      'org-babel-load-languages
-                      '((python . t)
-                        (shell . t)
-                        (elisp . t)
-                        ))))
+  (org-mode . (lambda ()
+                (fset 'tex-font-lock-suscript 'ignore)
+                (org-babel-do-load-languages
+                 'org-babel-load-languages
+                 '((python . t)
+                   (shell . t)
+                   (elisp . t)
+                   ))))
+  (org-mode . (lambda () (add-hook 'after-save-hook #'org-babel-tangle-config)))
   :config
   (add-to-list 'display-buffer-alist
                '("^\\*Capture\\*$"
@@ -25,35 +26,29 @@
   (add-to-list 'display-buffer-alist
                '("\\*Org Select\\*"
                  (display-buffer-full-frame)))
-
   :preface
+  ;; Automatically tangle our Emacs.org config file when we save it
+  (defun org-babel-tangle-config ()
+    (when (string-equal (buffer-file-name)
+                        (expand-file-name "~/data/nix-dots/modules/editor/emacs/init.org"))
+      ;; Dynamic scoping to the rescue
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
   (defun org-mode-setup ()
+    ;; (setq line-prefix nil)
     (org-indent-mode)
     (auto-fill-mode 0)
     (variable-pitch-mode)
     (visual-line-mode 1)
-    ;; (valign-mode)
+    (valign-mode)
     )
   :custom
-  (org-capture-templates
-   '(("t" "todo" entry (file+headline "todo.org" "Inbox")
-      "* [ ] %?\n%i\n%a"
-      :prepend t)
-     ("d" "deadline" entry (file+headline "todo.org" "Inbox")
-      "* [ ] %?\nDEADLINE: <%(org-read-date)>\n\n%i\n%a"
-      :prepend t)
-     ("s" "schedule" entry (file+headline "todo.org" "Inbox")
-      "* [ ] %?\nSCHEDULED: <%(org-read-date)>\n\n%i\n%a"
-      :prepend t)
-     ("c" "check out later" entry (file+headline "todo.org" "Check out later")
-      "* [ ] %?\n%i\n%a"
-      :prepend t)))
   (org-highlight-latex-and-related '(native)) ;; Highlight inline LaTeX
   (org-startup-indented t)
   (org-hide-emphasis-markers t)
   (org-list-indent-offset 1)
   (org-cycle-separator-lines 1)
-  (org-ellipsis " ")
+  (org-ellipsis " 󰕎")
   (org-pretty-entities t)
   (org-src-preserve-indentation nil)
   (org-src-fontify-natively t)
@@ -69,13 +64,15 @@
   (org-goto-auto-isearch nil)
   (org-log-done 'time)
   (org-log-into-drawer t)
+  (org-auto-align-tags nil)
+  (org-insert-heading-respect-content t)
   ;; M-Ret can split lines on items and tables but not headlines and not on anything else (unconfigured)
   (org-M-RET-may-split-line '((headline) (item . t) (table . t) (default)))
   (org-loop-over-headlines-in-active-region nil)
 
   (org-link-frame-setup '((file . find-file)));; Opens links to other org file in same frame (rather than splitting)
   (org-catch-invisible-edits 'show-and-error) ;; 'smart
-  (org-todo-keywords '((type "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c@)")))
+  ;; (org-todo-keywords '((type "TODO(t)" "WAIT(w)" "|" "DONE(d)" "CANCELLED(c@)")))
   (org-checkbox-hierarchical-statistics t)
   (org-list-demote-modify-bullet '(("+" . "*") ("*" . "-") ("-" . "+")))
   (org-enforce-todo-dependencies t)
@@ -86,28 +83,27 @@
   (org-default-priority ?D)
   (org-lowest-priority ?E)
   :custom-face
-  (outline-1 ((t (:height 1.2))))
+  (outline-1 ((t (:height 1.15))))
   (outline-2 ((t (:height 1.1))))
   (outline-3 ((t (:height 1.05))))
-  (outline-4 ((t (:height 1.025))))
+  (outline-4 ((t (:height 1.0))))
   (outline-5 ((t (:height 1.0))))
   (outline-6 ((t (:height 1.0))))
   (outline-7 ((t (:height 1.0))))
   (outline-8 ((t (:height 1.0))))
-  (org-code ((t (:inherit fixed-pitch))))
-  (org-block ((t (:inherit fixed-pitch))))
-  (org-document-title ((t (:inherit (fixed-pitch) :foreground "LightGray"))))
-  (org-document-info ((t (:inherit (fixed-pitch) :foreground "LightGray" :height 0.8))))
-  (org-document-info-keyword ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
-  (org-drawer ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
-  (org-indent ((t (:inherit (org-hide fixed-pitch)))))
-  (org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
-  (org-property-value ((t (:inherit fixed-pitch))))
-  (org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
-  (org-table ((t (:inherit fixed-pitch))))
-  (org-tag ((t (:inherit fixed-pitch :weight bold))))
-  (org-verbatim ((t (:inherit (shadow fixed-pitch)))))
-  )
+  (org-code ((t (:inherit fixed-pitch :height 1.0))))
+  (org-block ((t (:inherit fixed-pitch :height 1.0))))
+  (org-block-begin-line ((t (:inherit fixed-pitch :height 0.8 :slant italic :background "unspecified-bg"))))
+  (italic ((t (:inherit fixed-pitch :slant italic))))
+  (org-ellipsis ((t (:inherit fixed-pitch :box nil))))
+  (org-document-info ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  (org-document-info-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  (org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  (org-property-value ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  (org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+  ;; (org-table ((t (:inherit fixed-pitch))))
+  ;; (org-tag ((t (:inherit fixed-pitch :weight bold))))
+  (org-verbatim ((t (:inherit (shadow fixed-pitch))))))
 
 (use-package evil-org
   :diminish evil-org-mode
@@ -123,16 +119,26 @@
 
 (use-package org-modern
   :custom
+  (org-modern-keyword nil)
+  (org-modern-checkbox nil)
   (org-modern-table nil)
-  (org-modern-hide-stars nil)		; adds extra indentation
-  (org-modern-list'((?+ . "✦") (?- . "‣") (?* . "◉")))
-  (org-modern-block-name '("" . "")) ; or other chars; so top bracket is drawn promptly
-  (org-modern-variable-pitch t)
+  ;; (org-modern-block-name nil)
+  (org-modern-list '((?* . "◉")(?- . "‣") (?+ . "✦")))
+  ;; (org-modern-block-name '("" . "")) ; or other chars; so top bracket is drawn promptly
+  ;; (org-modern-variable-pitch t)
   :commands (org-modern-mode org-modern-agenda)
   :init (global-org-modern-mode)
   :hook
   (org-mode . org-modern-mode)
-  (org-agenda-finalize . org-modern-agenda))
+  (org-agenda-finalize . org-modern-agenda)
+  :config
+  (dolist (face '(window-divider
+                  window-divider-first-pixel
+                  window-divider-last-pixel))
+    (face-spec-reset-face face)
+    (set-face-foreground face (face-attribute 'default :background)))
+  (set-face-background 'fringe (face-attribute 'default :background))
+  )
 
 (use-package org-modern-indent
   :ensure nil

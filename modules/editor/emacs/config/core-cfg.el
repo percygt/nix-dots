@@ -59,7 +59,6 @@
   (undo-limit                            (* 16 1024 1024)) ;; 64mb
   (undo-strong-limit                     (* 24 1024 1024)) ;; x 1.5 (96mb)
   (undo-outer-limit                      (* 24 1024 1024)) ;; x 10 (960mb), (Emacs uses x100), but this seems too high.
-  (jit-lock-defer-time                   0)
   (text-mode-ispell-word-completion      nil)
   (read-extended-command-predicate       #'command-completion-default-include-p)
   :hook ((prog-mode . display-fill-column-indicator-mode)
@@ -84,10 +83,10 @@
     "Custom file.")
   :init
   (when (file-exists-p files/common) (load files/common))
-  (when (file-exists-p files/private) (load files/private))
-  (when (file-exists-p files/custom) (load files/custom))
   :config
   (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
+  (when (file-exists-p files/private) (load files/private))
+  (when (file-exists-p files/custom) (load files/custom))
   :custom
   (create-lockfiles                 nil)
   (make-backup-files                nil)
@@ -111,7 +110,7 @@
   (display-buffer-alist
    '(("\\*Async Shell Command\\*"
       (display-buffer-no-window))
-     ("\\*Faces\\|[Hh]elp\\*"
+     ("\\*Faces\\|[Hh]elp\\*\\|\\*EGLOT"
       (display-buffer-in-side-window)
       (body-function . select-window)
       (window-width . 0.4)
@@ -221,11 +220,10 @@
   :defer 2
   :custom
   (recentf-max-saved-items 1000)
-  (recentf-exclude `("/tmp/" "/ssh:" "/nix/store"
-		             ,(concat user-emacs-data-directory "lib/.*-autoloads\\.el\\'")))
   :config
   (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
   (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
+  (add-to-list 'recentf-exclude `("/tmp/" "/ssh:" "/nix/store"))
   (recentf-mode))
 
 (use-package eldoc

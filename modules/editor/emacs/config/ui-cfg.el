@@ -28,11 +28,11 @@
     (find-font (font-spec :name font-name)))
   (defun setup-default-fonts ()
     (message "Setting faces!")
-    (when (font-installed-p "Iosevka Aile")
-      (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150 :weight 'medium))
-    (when (font-installed-p "VictorMono Nerd Font")
+    (when (font-installed-p "Libertinus Serif")
+      (set-face-attribute 'variable-pitch nil :font "Libertinus Serif" :height 150))
+    (when (font-installed-p "VictorMono NFP")
       (dolist (face '(default fixed-pitch))
-	    (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
+	    (set-face-attribute `,face nil :font "VictorMono NFP Medium" :height 130))))
   (if (daemonp)
       (add-hook 'after-make-frame-functions
 		        (lambda (frame)
@@ -64,20 +64,35 @@
 
 (use-package doom-themes
   :demand
-  :hook
-  (server-after-make-frame . (lambda () (load-theme 'doom-ephemeral t)))
+  ;; :hook
+  ;; (server-after-make-frame . (lambda () (load-theme 'doom-ephemeral t)))
   :config
-  (load-theme 'doom-ephemeral t)
+  ;; (load-theme 'doom-ephemeral t)
   (doom-themes-visual-bell-config)
   (doom-themes-neotree-config)
   (doom-themes-org-config))
 
-(use-package doom-modeline
-  :custom
-  (doom-modeline-icon t)
-  :demand
+;;; For packaged versions which must use `require'.
+(use-package modus-themes
   :hook
-  (after-init . doom-modeline-mode))
+  (server-after-make-frame . (lambda () (load-theme 'modus-vivendi-tinted t)))
+  :config
+  ;; ;; Add all your customizations prior to loading the themes
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs nil)
+  ;; ;; Maybe define some palette overrides, such as by using our presets
+  ;; (setq modus-themes-common-palette-overrides
+  ;;       modus-themes-preset-overrides-intense)
+  ;; Load the theme of your choice.
+  (load-theme 'modus-vivendi-tinted t))
+  ;; (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
+
+  (use-package doom-modeline
+    :custom
+    (doom-modeline-icon t)
+    :demand
+    :hook
+    (after-init . doom-modeline-mode))
 
 (use-package keycast
   :commands toggle-keycast

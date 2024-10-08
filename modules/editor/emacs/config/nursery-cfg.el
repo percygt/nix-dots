@@ -34,6 +34,8 @@
 
 (use-package org-format
   :ensure nil
+  :custom
+  (org-format-blank-lines-before-subheadings 0)
   :hook (org-mode . org-format-on-save-mode))
 
 (use-package org-roam-search

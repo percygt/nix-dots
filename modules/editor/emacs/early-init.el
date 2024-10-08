@@ -40,6 +40,7 @@
       inhibit-startup-buffer-menu t
       inhibit-startup-message t
       inhibit-startup-screen t
+      line-spacing 1
       initial-major-mode 'fundamental-mode
       initial-scratch-message nil
       load-prefer-newer noninteractive

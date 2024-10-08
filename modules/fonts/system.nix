@@ -43,6 +43,7 @@ in
             "Noto Sans"
           ];
           monospace = setFontConfig "monospace" ++ [
+            "Roboto Mono"
             "Noto Sans Mono"
             "JetBrainsMono Nerd Font"
             "Symbols Nerd Font Mono"

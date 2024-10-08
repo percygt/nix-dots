@@ -32,12 +32,16 @@
     extraFonts = with pkgs; [
       (iosevka-bin.override { variant = "Aile"; })
       emacs-all-the-icons-fonts
+      pkgs.libertinus
     ];
     nerdfontPackages = pkgs.nerdfonts.override {
       fonts = [
+        "MartianMono"
+        "Monaspace"
+        "RobotoMono"
+        "GeistMono"
         "VictorMono"
         "JetBrainsMono"
-        "Iosevka"
         "NerdFontsSymbolsOnly"
       ];
     };
