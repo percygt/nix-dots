@@ -84,7 +84,7 @@ in
     };
     xdg = {
       configFile = {
-        "nvim/lua/config/private.lua".text = g.editor.emacs."private.lua";
+        "nvim/lua/config/private.lua".text = g.editor.nvim."private.lua";
         "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazy-lock.json";
         "nvim/neoconf.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/neoconf.json";
         "nvim/spell".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/spell";
