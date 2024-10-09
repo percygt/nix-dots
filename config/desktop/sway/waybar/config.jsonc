@@ -35,7 +35,7 @@
       "custom/menu"
     ],
     "custom/pomo": {
-      "format": "{} ",
+      "format": "{} ",
       "exec": "pomo clock",
       "interval": 1,
       "on-click": "pomo pause",
@@ -62,7 +62,7 @@
       }
     },
     "clock": {
-      "format": " {0:%d.%a} {0:%I:%M}",
+      "format": "{:%a, %b%d  %I:%M}",
       "interval": 60,
       "tooltip-format": "<tt><small>{calendar}</small></tt>"
     },

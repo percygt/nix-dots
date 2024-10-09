@@ -8,7 +8,7 @@
   :diminish visual-line-mode
   :hook
   (org-mode . org-mode-setup)
-  (org-mode . common/org-prettify-symbols-setup)
+  ;; (org-mode . common/org-prettify-symbols-setup)
   (org-capture-mode . evil-insert-state) ;; Start org-capture in Insert state by default
   (org-mode . (lambda ()
                 (fset 'tex-font-lock-suscript 'ignore)
@@ -18,7 +18,7 @@
                    (shell . t)
                    (elisp . t)
                    ))))
-  (org-mode . (lambda () (add-hook 'after-save-hook #'org-babel-tangle-config)))
+  ;; (org-mode . (lambda () (add-hook 'after-save-hook #'org-babel-tangle-config)))
   :config
   (add-to-list 'display-buffer-alist
                '("^\\*Capture\\*$"
@@ -28,12 +28,12 @@
                  (display-buffer-full-frame)))
   :preface
   ;; Automatically tangle our Emacs.org config file when we save it
-  (defun org-babel-tangle-config ()
-    (when (string-equal (buffer-file-name)
-                        (expand-file-name "~/data/nix-dots/modules/editor/emacs/init.org"))
-      ;; Dynamic scoping to the rescue
-      (let ((org-confirm-babel-evaluate nil))
-        (org-babel-tangle))))
+  ;; (defun org-babel-tangle-config ()
+  ;;   (when (string-equal (buffer-file-name)
+  ;;                       (expand-file-name "modules/editor/emacs/init.org" flakeDirectory))
+  ;;     ;; Dynamic scoping to the rescue
+  ;;     (let ((org-confirm-babel-evaluate nil))
+  ;;       (org-babel-tangle))))
   (defun org-mode-setup ()
     ;; (setq line-prefix nil)
     (org-indent-mode)

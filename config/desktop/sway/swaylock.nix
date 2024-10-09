@@ -18,8 +18,8 @@ in
       screenshots = true;
       clock = true;
       effect-vignette = "0.5:0.25 ";
-      timestr = "0:%I:%M";
-      datestr = "0:%d.%a";
+      timestr = ":%I:%M";
+      datestr = ":%a, %b%d";
       indicator = true;
       indicator-radius = 250;
       indicator-thickness = 30;

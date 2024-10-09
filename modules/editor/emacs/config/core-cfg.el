@@ -65,11 +65,12 @@
          ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
 
 (use-package no-littering
-  :demand
+  :demand t
   :init
   (setq no-littering-etc-directory user-emacs-data-directory)
   (setq no-littering-var-directory user-emacs-cache-directory)
-  (no-littering-theme-backups))
+  (no-littering-theme-backups)
+  )
 
 
 (use-package files
