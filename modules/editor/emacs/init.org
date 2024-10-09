@@ -1301,7 +1301,7 @@ using `abort-recursive-edit'."
 
 ;; (use-package org-brain
 ;;   :custom
-;;   (org-brain-path notes-directory)
+;;   (org-brain-path notesDirectory)
 ;;   (org-brain-visualize-default-choices 'all)
 ;;   (org-brain-title-max-length 12)
 ;;   (org-brain-include-file-entries nil)
@@ -1405,7 +1405,7 @@ using `abort-recursive-edit'."
                               (search . " %i %-12:c")))
 
   (org-agenda-deadline-leaders '("Deadline:  " "In %2d d.: " "%2d d. ago: "))
-  ;; (org-agenda-files '(notes-directory))
+  ;; (org-agenda-files '(notesDirectory))
   )
 
 (use-package org-super-agenda
@@ -1426,7 +1426,7 @@ using `abort-recursive-edit'."
   (setq org-roam-v2-ack t)
   (unless (file-exists-p resourcesDir) (make-directory resourcesDir t))
   :preface
-  (defvar resourcesDir (concat notes-directory "/resources")
+  (defvar resourcesDir (concat notesDirectory "/resources")
     "Resources directory")
   (defvar auto-org-roam-db-sync--timer nil)
 
@@ -1510,7 +1510,7 @@ capture was not aborted."
    org-roam-node-annotation-function
    (lambda (node) (marginalia--time (org-roam-node-file-mtime node))))
   (org-roam-completion-everywhere t)
-  (org-roam-directory notes-directory)
+  (org-roam-directory notesDirectory)
   (org-roam-db-location (concat resourcesDir "/org-roam.db"))
   (org-roam-dailies-directory "journals/")
   (org-roam-file-exclude-regexp "\\.git/.*\\|logseq/.*$")

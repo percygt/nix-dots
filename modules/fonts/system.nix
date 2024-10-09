@@ -41,6 +41,7 @@ in
             "Inter"
             "Work Sans"
             "Noto Sans"
+            "Source Sans Pro"
           ];
           monospace = setFontConfig "monospace" ++ [
             "Roboto Mono"

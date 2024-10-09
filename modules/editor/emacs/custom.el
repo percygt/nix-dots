@@ -13,5 +13,28 @@
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+
+ '(fringe ((nil (:background nil))))
+ '(header-line ((nil (:background nil :inherit 'default))));; If there is more than one, they won't work right.
+ '(italic ((t (:inherit fixed-pitch :slant italic))))
+ '(org-block ((t (:inherit fixed-pitch))))
+ '(org-block-begin-line ((t (:inherit fixed-pitch :height 0.8 :slant italic :background "unspecified-bg"))))
+ '(org-code ((t (:inherit fixed-pitch))))
+ '(org-document-info ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
+ '(org-document-info-keyword ((t (:inherit (font-lock-comment-face fixed-pitch) :height 1.0))))
+ '(org-ellipsis ((t (:inherit fixed-pitch :box nil))))
+ '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch) :height 1.0))))
+ '(org-property-value ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
+ '(org-table ((t (:inherit fixed-pitch))))
+ '(org-verbatim ((t (:inherit (shadow fixed-pitch)))))
+ '(org-document-title ((t (:height 1.1))))
+ ;; '(org-level-1 ((t (:family "Inter SemiBold"))))
+ ;; '(org-level-2 ((t (:family "Inter SemiBold"))))
+ ;; '(org-level-3 ((t (:family "Inter SemiBold"))))
+ ;; '(org-level-4 ((t (:family "Inter SemiBold"))))
+ ;; '(org-level-5 ((t (:family "Inter SemiBold"))))
+ ;; '(org-level-6 ((t (:family "Inter SemiBold"))))
+ ;; '(org-level-7 ((t (:family "Inter SemiBold"))))
+ ;; '(org-level-8 ((t (:family "Inter SemiBold"))))
  )

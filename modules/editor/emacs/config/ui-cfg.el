@@ -1,3 +1,4 @@
+
 ;;; ui-cfg.el --- UI setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
@@ -13,11 +14,10 @@
   :defer t
   :config
   (setq writeroom-maximize-window nil
-        writeroom-mode-line t
+        writeroom-mode-line nil
         writeroom-global-effects nil ;; No need to have Writeroom do any of that silly stuff
         writeroom-extra-line-spacing 3)
-  (setq writeroom-width visual-fill-column-width)
-  )
+  (setq writeroom-width visual-fill-column-width))
 
 (use-package font
   :ensure nil
@@ -28,11 +28,14 @@
     (find-font (font-spec :name font-name)))
   (defun setup-default-fonts ()
     (message "Setting faces!")
-    (when (font-installed-p "Libertinus Serif")
-      (set-face-attribute 'variable-pitch nil :font "Libertinus Serif" :height 150))
-    (when (font-installed-p "VictorMono NFP")
+    (when (font-installed-p "VictorMono NFP Medium")
       (dolist (face '(default fixed-pitch))
-	    (set-face-attribute `,face nil :font "VictorMono NFP Medium" :height 130))))
+	    (set-face-attribute `,face nil :font "VictorMono NFP Medium" :height 130)))
+    (when (font-installed-p "Libertinus Serif")
+      (set-face-attribute 'fixed-pitch-serif nil :font "Libertinus Serif"))
+    (when (font-installed-p "Work Sans Light")
+      (set-face-attribute 'variable-pitch nil :family "Work Sans Light" :height 1.0))
+    )
   (if (daemonp)
       (add-hook 'after-make-frame-functions
 		        (lambda (frame)
@@ -40,6 +43,23 @@
                     (setup-default-fonts))))
     (setup-default-fonts))
   (provide 'font))
+
+(use-package modus-themes
+  :hook
+  (server-after-make-frame . (lambda () (load-theme 'modus-vivendi-tinted t)))
+  :config
+  (setq modus-themes-italic-constructs t
+        modus-themes-bold-constructs nil)
+  (setq modus-themes-headings
+        '(
+          (1 . (bold 1.3))
+          (2 . (bold 1.2))
+          (3 . (bold 1.1))
+          (t . (bold 1.05))
+          ))
+  (setq modus-themes-common-palette-overrides
+        '((fringe unspecified)))
+  (load-theme 'modus-vivendi-tinted t))
 
 (use-package dashboard
   :after (nerd-icons evil)
@@ -62,37 +82,12 @@
 				                (dashboard-refresh-buffer))))
 
 
-(use-package doom-themes
+(use-package doom-modeline
+  :custom
+  (doom-modeline-icon t)
   :demand
-  ;; :hook
-  ;; (server-after-make-frame . (lambda () (load-theme 'doom-ephemeral t)))
-  :config
-  ;; (load-theme 'doom-ephemeral t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-neotree-config)
-  (doom-themes-org-config))
-
-;;; For packaged versions which must use `require'.
-(use-package modus-themes
   :hook
-  (server-after-make-frame . (lambda () (load-theme 'modus-vivendi-tinted t)))
-  :config
-  ;; ;; Add all your customizations prior to loading the themes
-  (setq modus-themes-italic-constructs t
-        modus-themes-bold-constructs nil)
-  ;; ;; Maybe define some palette overrides, such as by using our presets
-  ;; (setq modus-themes-common-palette-overrides
-  ;;       modus-themes-preset-overrides-intense)
-  ;; Load the theme of your choice.
-  (load-theme 'modus-vivendi-tinted t))
-  ;; (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
-
-  (use-package doom-modeline
-    :custom
-    (doom-modeline-icon t)
-    :demand
-    :hook
-    (after-init . doom-modeline-mode))
+  (after-init . doom-modeline-mode))
 
 (use-package keycast
   :commands toggle-keycast

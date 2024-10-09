@@ -35,11 +35,10 @@ in
           wireless = {
             enable = true;
             secretsFile = config.sops.secrets."wireless.env".path;
-            fallbackToWPA2 = false;
             networks = {
               "${g.network.wifi}" = {
                 hidden = true;
-                pskRaw = "ext:home_psk";
+                psk = "ext:home_psk";
               };
             };
             # Imperative

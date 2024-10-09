@@ -1,3 +1,4 @@
+
 ;;; org-cfg.el --- Org Mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
@@ -8,17 +9,15 @@
   :diminish visual-line-mode
   :hook
   (org-mode . org-mode-setup)
-  ;; (org-mode . common/org-prettify-symbols-setup)
-  (org-capture-mode . evil-insert-state) ;; Start org-capture in Insert state by default
+  (org-mode . common/org-prettify-symbols-setup)
   (org-mode . (lambda ()
                 (fset 'tex-font-lock-suscript 'ignore)
                 (org-babel-do-load-languages
                  'org-babel-load-languages
                  '((python . t)
                    (shell . t)
-                   (elisp . t)
                    ))))
-  ;; (org-mode . (lambda () (add-hook 'after-save-hook #'org-babel-tangle-config)))
+  (org-mode . (lambda () (add-hook 'after-save-hook #'org-babel-tangle-config)))
   :config
   (add-to-list 'display-buffer-alist
                '("^\\*Capture\\*$"
@@ -28,27 +27,26 @@
                  (display-buffer-full-frame)))
   :preface
   ;; Automatically tangle our Emacs.org config file when we save it
-  ;; (defun org-babel-tangle-config ()
-  ;;   (when (string-equal (buffer-file-name)
-  ;;                       (expand-file-name "modules/editor/emacs/init.org" flakeDirectory))
-  ;;     ;; Dynamic scoping to the rescue
-  ;;     (let ((org-confirm-babel-evaluate nil))
-  ;;       (org-babel-tangle))))
+  (defun org-babel-tangle-config ()
+    (when (string-equal (buffer-file-name)
+                        (expand-file-name "modules/editor/emacs/init.org" flakeDirectory))
+      ;; Dynamic scoping to the rescue
+      (let ((org-confirm-babel-evaluate nil))
+        (org-babel-tangle))))
   (defun org-mode-setup ()
-    ;; (setq line-prefix nil)
     (org-indent-mode)
+    (fringe-mode 0)
     (auto-fill-mode 0)
     (variable-pitch-mode)
     (visual-line-mode 1)
-    (valign-mode)
-    )
+    (valign-mode))
   :custom
   (org-highlight-latex-and-related '(native)) ;; Highlight inline LaTeX
   (org-startup-indented t)
   (org-hide-emphasis-markers t)
   (org-list-indent-offset 1)
   (org-cycle-separator-lines 1)
-  (org-ellipsis " 󰕎")
+  (org-ellipsis " ")
   (org-pretty-entities t)
   (org-src-preserve-indentation nil)
   (org-src-fontify-natively t)
@@ -81,29 +79,7 @@
   (org-tags-column -1)
   (org-highest-priority ?A)
   (org-default-priority ?D)
-  (org-lowest-priority ?E)
-  :custom-face
-  (outline-1 ((t (:height 1.15))))
-  (outline-2 ((t (:height 1.1))))
-  (outline-3 ((t (:height 1.05))))
-  (outline-4 ((t (:height 1.0))))
-  (outline-5 ((t (:height 1.0))))
-  (outline-6 ((t (:height 1.0))))
-  (outline-7 ((t (:height 1.0))))
-  (outline-8 ((t (:height 1.0))))
-  (org-code ((t (:inherit fixed-pitch :height 1.0))))
-  (org-block ((t (:inherit fixed-pitch :height 1.0))))
-  (org-block-begin-line ((t (:inherit fixed-pitch :height 0.8 :slant italic :background "unspecified-bg"))))
-  (italic ((t (:inherit fixed-pitch :slant italic))))
-  (org-ellipsis ((t (:inherit fixed-pitch :box nil))))
-  (org-document-info ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  (org-document-info-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  (org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  (org-property-value ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  (org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  ;; (org-table ((t (:inherit fixed-pitch))))
-  ;; (org-tag ((t (:inherit fixed-pitch :weight bold))))
-  (org-verbatim ((t (:inherit (shadow fixed-pitch))))))
+  (org-lowest-priority ?E))
 
 (use-package evil-org
   :diminish evil-org-mode
@@ -122,10 +98,8 @@
   (org-modern-keyword nil)
   (org-modern-checkbox nil)
   (org-modern-table nil)
-  ;; (org-modern-block-name nil)
-  (org-modern-list '((?* . "◉")(?- . "‣") (?+ . "✦")))
-  ;; (org-modern-block-name '("" . "")) ; or other chars; so top bracket is drawn promptly
-  ;; (org-modern-variable-pitch t)
+  (org-modern-list '((42 . "◦") (43 . "•") (45 . "–")))
+  (org-modern-block-name '("" . "")) ; or other chars; so top bracket is drawn promptly
   :commands (org-modern-mode org-modern-agenda)
   :init (global-org-modern-mode)
   :hook
@@ -137,8 +111,7 @@
                   window-divider-last-pixel))
     (face-spec-reset-face face)
     (set-face-foreground face (face-attribute 'default :background)))
-  (set-face-background 'fringe (face-attribute 'default :background))
-  )
+  (set-face-background 'fringe (face-attribute 'default :background)))
 
 (use-package org-modern-indent
   :ensure nil
@@ -162,7 +135,7 @@
 
 ;; (use-package org-brain
 ;;   :custom
-;;   (org-brain-path notes-directory)
+;;   (org-brain-path notesDirectory)
 ;;   (org-brain-visualize-default-choices 'all)
 ;;   (org-brain-title-max-length 12)
 ;;   (org-brain-include-file-entries nil)

@@ -2,7 +2,7 @@ local org_dir = os.getenv("HOME") .. "/data/notes"
 return {
   {
     "chipsenkbeil/org-roam.nvim",
-    -- enabled = false,
+    enabled = false,
     event = "VeryLazy",
     ft = { "org" },
     dependencies = {
@@ -19,7 +19,7 @@ return {
   },
   {
     "akinsho/org-bullets.nvim",
-    -- enabled = false,
+    enabled = false,
     event = "VeryLazy",
     ft = { "org" },
     config = function()
@@ -33,7 +33,7 @@ return {
   -- },
   {
     "nvim-orgmode/orgmode",
-    -- enabled = false,
+    enabled = false,
     event = "VeryLazy",
     dependencies = { "dhruvasagar/vim-table-mode", "nvim-orgmode/orgmode" },
     ft = { "org" },

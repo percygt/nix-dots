@@ -15,8 +15,10 @@ let
   defaultPkgs = with pkgs; [
     nerdfonts-fontconfig
     inter
+    etBook
     work-sans
     roboto-mono
+    source-sans-pro
     source-serif
     noto-fonts
     noto-fonts-cjk

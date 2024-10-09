@@ -1,24 +1,29 @@
 ;;; core-cfg.el --- Core Config -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
-(defvar user-emacs-data-directory
-  (concat (getenv "XDG_DATA_HOME") "/emacs")
-  "Emacs local home directory.")
-(defvar user-emacs-cache-directory
-  (concat (getenv "XDG_CACHE_HOME") "/emacs")
-  "Home directory.")
-(defvar notes-directory
-  (concat (getenv "HOME") "/data/notes")
-  "My notes.")
-
 ;; Vanilla config
+(defvar files/common (expand-file-name "common.el" user-emacs-directory)
+  "Common file.")
+(defvar files/private (expand-file-name "private.el" user-emacs-directory)
+  "Private file.")
+(defvar files/custom (expand-file-name "custom.el" user-emacs-directory)
+  "Custom file.")
+
+(when (file-exists-p files/common) (load files/common))
+(when (file-exists-p files/private) (load files/private))
+(when (file-exists-p files/custom) (load files/custom))
+
+
 (use-package emacs
   :ensure nil
   :preface
   (defun indicate-buffer-boundaries-left ()
     (setq indicate-buffer-boundaries 'left))
   :custom
+  (fringes-outside-margins nil)
+  (indicate-buffer-boundaries nil) ;; Otherwise shows a corner icon on the edge
+  (indicate-empty-lines nil) ;; Otherwise there are weird fringes on blank lines
+  (line-spacing                          2)
   (initial-scratch-message               nil)
   (inhibit-startup-screen                t) ;; Don't show the welcome splash screen.
   (tab-width                             4) ;; Set tab-size to 4 spaces
@@ -75,19 +80,8 @@
 
 (use-package files
   :ensure nil
-  :preface
-  (defvar files/common (expand-file-name "common.el" user-emacs-directory)
-    "Common file.")
-  (defvar files/private (expand-file-name "private.el" user-emacs-directory)
-    "Private file.")
-  (defvar files/custom (expand-file-name "custom.el" user-emacs-directory)
-    "Custom file.")
-  :init
-  (when (file-exists-p files/common) (load files/common))
   :config
   (global-hl-line-mode 1)           ; Highlight the current line to make it more visible
-  (when (file-exists-p files/private) (load files/private))
-  (when (file-exists-p files/custom) (load files/custom))
   :custom
   (create-lockfiles                 nil)
   (make-backup-files                nil)
@@ -198,7 +192,11 @@
 
 (use-package display-line-numbers
   :ensure nil
+  :config
   :custom
+  (fringes-outside-margins nil)
+  (indicate-buffer-boundaries nil) ;; Otherwise shows a corner icon on the edge
+  (indicate-empty-lines nil) ;; Otherwise there are weird fringes on blank lines
   (display-line-numbers-grow-only   t)
   (display-line-numbers-width-start t)
   (display-line-numbers-type        'relative)

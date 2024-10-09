@@ -6,10 +6,11 @@
   :after (org marginalia)
   :init
   (setq org-roam-v2-ack t)
-  (unless (file-exists-p resourcesDir) (make-directory resourcesDir t))
+  (unless (file-exists-p roam/resourcesDir) (make-directory roam/resourcesDir t))
   :preface
-  (defvar resourcesDir (concat notes-directory "/resources")
+  (defvar roam/resourcesDir (expand-file-name "resources" notesDirectory)
     "Resources directory")
+
   (defvar auto-org-roam-db-sync--timer nil)
 
   (defun org-roam-node-insert-immediate (arg &rest args)
@@ -87,13 +88,13 @@ capture was not aborted."
   (org-roam-db-autosync-enable)
   (org-roam-setup)
   :custom
+  (org-roam-directory notesDirectory)
+  (org-roam-db-location (expand-file-name "org-roam.db" roam/resourcesDir))
   (org-roam-node-display-template
    (concat "${title:80} " (propertize "${tags:20}" 'face 'org-tag))
    org-roam-node-annotation-function
    (lambda (node) (marginalia--time (org-roam-node-file-mtime node))))
   (org-roam-completion-everywhere t)
-  (org-roam-directory notes-directory)
-  (org-roam-db-location (concat resourcesDir "/org-roam.db"))
   (org-roam-dailies-directory "journals/")
   (org-roam-file-exclude-regexp "\\.git/.*\\|logseq/.*$")
   (org-roam-capture-templates

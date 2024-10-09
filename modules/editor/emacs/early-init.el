@@ -3,7 +3,6 @@
 ;;; Code:
 
 (add-to-list 'load-path (concat (getenv "XDG_CONFIG_HOME") "/emacs/config/"))
-
 ;; Language stuff
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8-unix)
@@ -30,6 +29,7 @@
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(alpha-background . 80) default-frame-alist)
 
+
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t
       frame-title-format nil
@@ -40,7 +40,6 @@
       inhibit-startup-buffer-menu t
       inhibit-startup-message t
       inhibit-startup-screen t
-      line-spacing 1
       initial-major-mode 'fundamental-mode
       initial-scratch-message nil
       load-prefer-newer noninteractive
