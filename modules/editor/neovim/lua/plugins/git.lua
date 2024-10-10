@@ -22,10 +22,6 @@ return {
         telescope = true,
       },
       disable_prompt_on_change = true,
-      kind = "floating",
-      commit_editor = {
-        kind = "floating",
-      },
       commit_select_view = {
         kind = "floating",
       },
@@ -35,16 +31,7 @@ return {
       log_view = {
         kind = "floating",
       },
-      rebase_editor = {
-        kind = "floating",
-      },
       reflog_view = {
-        kind = "floating",
-      },
-      merge_editor = {
-        kind = "floating",
-      },
-      tag_editor = {
         kind = "floating",
       },
       preview_buffer = {
