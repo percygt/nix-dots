@@ -30,9 +30,6 @@ return {
       reflog_view = {
         kind = "floating",
       },
-      popup = {
-        kind = "floating",
-      },
     },
   },
 
