@@ -67,6 +67,13 @@
   :mode (("\\.nix\\'" . nix-ts-mode))
   :hook (nix-ts-mode . eglot-ensure))
 
+;; Lua mode
+(use-package lua-mode)
+(use-package lua-ts-mode
+  :ensure nil
+  :mode (("\\.lua\\'" . lua-ts-mode))
+  :hook (lua-ts-mode . eglot-ensure))
+
 ;; Go mode
 (use-package go-mode)
 (use-package go-ts-mode

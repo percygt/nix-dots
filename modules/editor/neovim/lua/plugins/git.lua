@@ -1,4 +1,21 @@
 return {
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
+
+      -- Only one of these is needed.
+      "nvim-telescope/telescope.nvim", -- optional
+      "ibhagwan/fzf-lua", -- optional
+      "echasnovski/mini.pick", -- optional
+    },
+    keys = {
+      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
+    },
+    config = true,
+  },
+
   { "akinsho/git-conflict.nvim", version = "*", config = true },
   {
     "lewis6991/gitsigns.nvim",
@@ -16,7 +33,7 @@ return {
 			{ "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<cr>", desc = "Unstage hunk" },
 			{ "<leader>go", "<cmd>Telescope git_status<cr>", desc = "Git status" },
 			{ "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branches" },
-			{ "<leader>gg", "<cmd>Telescope git_commits<cr>", desc = "Checkout commits" },
+			{ "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commits" },
 			{ "<leader>gG", "<cmd>Telescope git_bcommits<cr>", desc = "Checkout commits(for current buffer)" },
 			{ "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", desc = "Git diff" },
     },
