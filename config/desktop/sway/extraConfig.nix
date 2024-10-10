@@ -7,7 +7,7 @@
     blur_contrast 1
     blur enable
     corner_radius 12
-    default_dim_inactive 0.3
+    default_dim_inactive 0.2
     scratchpad_minimize enable
     bindgesture swipe:4:right workspace prev
     bindgesture swipe:4:left workspace next

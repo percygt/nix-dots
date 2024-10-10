@@ -43,8 +43,9 @@
 	      ("j"   . evil-insert-jk-for-normal-mode)
 	      :map evil-visual-state-map
 	      ("ESCAPE" . keyboard-quit)
-	      :map special-mode-map
-	      ("q" . quit-window))
+	      ;; :map special-mode-map
+	      ;; ("q" . quit-window)
+        )
   :config
   (evil-mode 1)
   (evil-set-initial-state 'messages-buffer-mode 'normal))

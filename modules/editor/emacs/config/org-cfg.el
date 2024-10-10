@@ -1,4 +1,3 @@
-
 ;;; org-cfg.el --- Org Mode -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
@@ -10,14 +9,14 @@
   :hook
   (org-mode . org-mode-setup)
   (org-mode . common/org-prettify-symbols-setup)
-  (org-mode . (lambda ()
-                (fset 'tex-font-lock-suscript 'ignore)
-                (org-babel-do-load-languages
-                 'org-babel-load-languages
-                 '((python . t)
-                   (shell . t)
-                   ))))
-  (org-mode . (lambda () (add-hook 'after-save-hook #'org-babel-tangle-config)))
+  ;; (org-mode . (lambda ()
+  ;;               (fset 'tex-font-lock-suscript 'ignore)
+  ;;               (org-babel-do-load-languages
+  ;;                'org-babel-load-languages
+  ;;                '((python . t)
+  ;;                  (shell . t)
+  ;;                  ))))
+  ;; (org-mode . (lambda () (add-hook 'after-save-hook #'org-babel-tangle-config)))
   :config
   (add-to-list 'display-buffer-alist
                '("^\\*Capture\\*$"

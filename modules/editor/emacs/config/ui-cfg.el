@@ -1,4 +1,5 @@
 
+
 ;;; ui-cfg.el --- UI setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
@@ -105,8 +106,8 @@
 (use-package nerd-icons
   :custom (nerd-icons-font-family "Symbols Nerd Font"))
 
-(use-package nerd-icons-dired
-  :hook (dired-mode . nerd-icons-dired-mode))
+;; (use-package nerd-icons-dired
+;;   :hook (dired-mode . nerd-icons-dired-mode))
 
 (use-package nerd-icons-completion
   :after marginalia

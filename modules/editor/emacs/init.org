@@ -37,6 +37,22 @@ The following is exported to the top of the tangled init.el file as a note.
 
 #+end_src
 
+* Loading custom lisp files
+#+begin_src emacs-lisp
+  (defvar user-emacs-data-directory
+    (concat (getenv "XDG_DATA_HOME") "/emacs")
+    "Emacs local home directory.")
+  (defvar user-emacs-cache-directory
+    (concat (getenv "XDG_CACHE_HOME") "/emacs")
+    "Home directory.")
+  (defvar files/common (expand-file-name "common.el" user-emacs-directory)
+    "Common file.")
+  (defvar files/private (expand-file-name "private.el" user-emacs-directory)
+    "Private file.")
+  (defvar files/custom (expand-file-name "custom.el" user-emacs-directory)
+    "Custom file.")
+#+end_src
+
 * Core
 ** Vanilla Emacs
 #+begin_src emacs-lisp :tangle yes
@@ -726,141 +742,133 @@ using `abort-recursive-edit'."
   #+end_src
 ** Git
   #+begin_src emacs-lisp :tangle yes
-(use-package magit
-  :bind ("C-x g" . magit-status)     ; Display the main magit popup
-  :init (setq magit-log-arguments
-              '("--graph" "--color" "--decorate" "--show-signature" "-n256")))
+    (use-package magit
+      :bind ("C-x g" . magit-status)     ; Display the main magit popup
+      :init (setq magit-log-arguments
+                  '("--graph" "--color" "--decorate" "--show-signature" "-n256")))
   #+end_src
 ** UI
   #+begin_src emacs-lisp :tangle yes
-(use-package visual-fill-column
-  :defer t
-  :config
-  (setq visual-fill-column-center-text t)
-  (setq visual-fill-column-width 80)
-  (setq visual-fill-column-center-text t))
+    (use-package visual-fill-column
+      :defer t
+      :config
+      (setq visual-fill-column-center-text t)
+      (setq visual-fill-column-width 80)
+      (setq visual-fill-column-center-text t))
+    (use-package writeroom-mode
+      :defer t
+      :config
+      (setq writeroom-maximize-window nil
+            writeroom-mode-line t
+            writeroom-global-effects nil ;; No need to have Writeroom do any of that silly stuff
+            writeroom-extra-line-spacing 3)
+      (setq writeroom-width visual-fill-column-width)
+      )
+    (use-package font
+      :ensure nil
+      :demand
+      :preface
+      (defun font-installed-p (font-name)
+        "Check if a font with FONT-NAME is available."
+        (find-font (font-spec :name font-name)))
+      (defun setup-default-fonts ()
+        (message "Setting faces!")
+        (when (font-installed-p "Iosevka Aile")
+          (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150 :weight 'medium))
+        (when (font-installed-p "VictorMono Nerd Font")
+          (dolist (face '(default fixed-pitch))
+    	    (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
+      (if (daemonp)
+          (add-hook 'after-make-frame-functions
+    		        (lambda (frame)
+                      (with-selected-frame frame
+                        (setup-default-fonts))))
+        (setup-default-fonts))
+      (provide 'font))
+    (use-package dashboard
+      :after (nerd-icons evil)
+      :custom
+      (dashboard-items '((recents  .  5)
+    		             (projects .  5)
+    		             (agenda   . 10)))
+      (dashboard-set-footer nil)
+      (dashboard-set-init-info t)
+      (dashboard-center-content t)
+      (dashboard-set-file-icons t)
+      (dashboard-set-heading-icons t)
+      (dashboard-startup-banner (concat user-emacs-config-directory "/xemacs_color.svg"))
+      (dashboard-projects-backend 'project-el)
+      :config
+      (dashboard-setup-startup-hook)
+      (evil-set-initial-state 'dashboard-mode 'normal)
+      (setq initial-buffer-choice (lambda ()
+    				                (get-buffer-create "*dashboard*")
+    				                (dashboard-refresh-buffer))))
+    (use-package doom-themes
+      :demand
+      :hook
+      (server-after-make-frame . (lambda () (load-theme 'doom-ephemeral t)))
+      :config
+      (load-theme 'doom-ephemeral t)
+      (doom-themes-visual-bell-config)
+      (doom-themes-neotree-config)
+      (doom-themes-org-config))
+    (use-package doom-modeline
+      :custom
+      (doom-modeline-icon t)
+      :demand
+      :hook
+      (after-init . doom-modeline-mode))
 
-(use-package writeroom-mode
-  :defer t
-  :config
-  (setq writeroom-maximize-window nil
-        writeroom-mode-line t
-        writeroom-global-effects nil ;; No need to have Writeroom do any of that silly stuff
-        writeroom-extra-line-spacing 3)
-  (setq writeroom-width visual-fill-column-width)
-  )
+    (use-package keycast
+      :commands toggle-keycast
+      :config
+      (defun toggle-keycast()
+        (interactive)
+        (if (member '("" keycast-mode-line " ") global-mode-string)
+            (progn (setq global-mode-string (delete '("" keycast-mode-line " ") global-mode-string))
+                   (remove-hook 'pre-command-hook 'keycast--update)
+                   (message "Keycast OFF"))
+          (add-to-list 'global-mode-string '("" keycast-mode-line " "))
+          (add-hook 'pre-command-hook 'keycast--update t)
+          (message "Keycast ON"))))
+    (use-package nerd-icons
+      :custom (nerd-icons-font-family "Symbols Nerd Font"))
+    (use-package nerd-icons-dired
+      :hook (dired-mode . nerd-icons-dired-mode))
 
-(use-package font
-  :ensure nil
-  :demand
-  :preface
-  (defun font-installed-p (font-name)
-    "Check if a font with FONT-NAME is available."
-    (find-font (font-spec :name font-name)))
-  (defun setup-default-fonts ()
-    (message "Setting faces!")
-    (when (font-installed-p "Iosevka Aile")
-      (set-face-attribute 'variable-pitch nil :font "Iosevka Aile" :height 150 :weight 'medium))
-    (when (font-installed-p "VictorMono Nerd Font")
-      (dolist (face '(default fixed-pitch))
-	    (set-face-attribute `,face nil :font "VictorMono Nerd Font" :height 150 :weight 'medium))))
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions
-		        (lambda (frame)
-                  (with-selected-frame frame
-                    (setup-default-fonts))))
-    (setup-default-fonts))
-  (provide 'font))
+    (use-package nerd-icons-completion
+      :after marginalia
+      :config (nerd-icons-completion-mode)
+      :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
 
-(use-package dashboard
-  :after (nerd-icons evil)
-  :custom
-  (dashboard-items '((recents  .  5)
-		             (projects .  5)
-		             (agenda   . 10)))
-  (dashboard-set-footer nil)
-  (dashboard-set-init-info t)
-  (dashboard-center-content t)
-  (dashboard-set-file-icons t)
-  (dashboard-set-heading-icons t)
-  (dashboard-startup-banner (concat user-emacs-config-directory "/xemacs_color.svg"))
-  (dashboard-projects-backend 'project-el)
-  :config
-  (dashboard-setup-startup-hook)
-  (evil-set-initial-state 'dashboard-mode 'normal)
-  (setq initial-buffer-choice (lambda ()
-				                (get-buffer-create "*dashboard*")
-				                (dashboard-refresh-buffer))))
+    (use-package beacon ;; This applies a beacon effect to the highlighted line
+      :config (beacon-mode 1))
 
+    (use-package solaire-mode
+      :hook (after-init . solaire-global-mode)
+      :config
+      (push '(treemacs-window-background-face . solaire-default-face) solaire-mode-remap-alist)
+      (push '(treemacs-hl-line-face . solaire-hl-line-face) solaire-mode-remap-alist))
 
-(use-package doom-themes
-  :demand
-  :hook
-  (server-after-make-frame . (lambda () (load-theme 'doom-ephemeral t)))
-  :config
-  (load-theme 'doom-ephemeral t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-neotree-config)
-  (doom-themes-org-config))
+    (use-package hide-mode-line
+      :defer
+      :hook (org-mode . hide-mode-line-mode))
 
-(use-package doom-modeline
-  :custom
-  (doom-modeline-icon t)
-  :demand
-  :hook
-  (after-init . doom-modeline-mode))
+    (use-package highlight-indent-guides
+      :hook (prog-mode . highlight-indent-guides-mode)
+      :config
+      (set-face-foreground 'highlight-indent-guides-top-character-face "SteelBlue")
+      (set-face-foreground 'highlight-indent-guides-character-face "gray20")
+      :custom
+      (highlight-indent-guides-auto-enabled  nil)
+      (highlight-indent-guides-responsive 'top)
+      (highlight-indent-guides-method 'character))
 
-(use-package keycast
-  :commands toggle-keycast
-  :config
-  (defun toggle-keycast()
-    (interactive)
-    (if (member '("" keycast-mode-line " ") global-mode-string)
-        (progn (setq global-mode-string (delete '("" keycast-mode-line " ") global-mode-string))
-               (remove-hook 'pre-command-hook 'keycast--update)
-               (message "Keycast OFF"))
-      (add-to-list 'global-mode-string '("" keycast-mode-line " "))
-      (add-hook 'pre-command-hook 'keycast--update t)
-      (message "Keycast ON"))))
+    (use-package rainbow-delimiters
+      :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package nerd-icons
-  :custom (nerd-icons-font-family "Symbols Nerd Font"))
-
-(use-package nerd-icons-dired
-  :hook (dired-mode . nerd-icons-dired-mode))
-
-(use-package nerd-icons-completion
-  :after marginalia
-  :config (nerd-icons-completion-mode)
-  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
-
-(use-package beacon ;; This applies a beacon effect to the highlighted line
-  :config (beacon-mode 1))
-
-(use-package solaire-mode
-  :hook (after-init . solaire-global-mode)
-  :config
-  (push '(treemacs-window-background-face . solaire-default-face) solaire-mode-remap-alist)
-  (push '(treemacs-hl-line-face . solaire-hl-line-face) solaire-mode-remap-alist))
-
-(use-package hide-mode-line
-  :defer
-  :hook (org-mode . hide-mode-line-mode))
-
-(use-package highlight-indent-guides
-  :hook (prog-mode . highlight-indent-guides-mode)
-  :config
-  (set-face-foreground 'highlight-indent-guides-top-character-face "SteelBlue")
-  (set-face-foreground 'highlight-indent-guides-character-face "gray20")
-  :custom
-  (highlight-indent-guides-auto-enabled  nil)
-  (highlight-indent-guides-responsive 'top)
-  (highlight-indent-guides-method 'character))
-
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
-
-(use-package rainbow-mode)
+    (use-package rainbow-mode)
   #+end_src
 
 * Languages
