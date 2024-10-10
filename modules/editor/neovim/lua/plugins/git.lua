@@ -12,7 +12,7 @@ return {
       { "<leader>gp", "<cmd>Neogit push<cr>", desc = "Neogit Push" },
       { "<leader>gP", "<cmd>Neogit pull<cr>", desc = "Neogit Pull" },
     },
-    config = {
+    opts = {
       integrations = {
         diffview = true,
         telescope = true,
@@ -28,6 +28,9 @@ return {
         kind = "floating",
       },
       reflog_view = {
+        kind = "floating",
+      },
+      popup = {
         kind = "floating",
       },
     },
