@@ -160,9 +160,10 @@ return {
     },
     event = { "BufNewFile", "BufReadPost" },
     config = function()
+      local c = require("config.colorscheme")
       require("todo-comments").setup({
         keywords = {
-          TODO = { icon = " ", color = "#de9e00" },
+          TODO = { icon = " ", color = c.base07 },
         },
       })
     end,

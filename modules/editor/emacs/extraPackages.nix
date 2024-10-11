@@ -1,9 +1,10 @@
 { pkgs }:
 with pkgs;
 [
+  straight-el # NOTE not being used
   ## binaries
-  straight-el
   # dirvish deps
+  poppler_utils
   poppler
   ffmpegthumbnailer
   mediainfo

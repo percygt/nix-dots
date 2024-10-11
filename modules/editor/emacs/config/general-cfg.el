@@ -42,9 +42,7 @@ using `abort-recursive-edit'."
   (global-definer
     "!" 'shell-command
     ":" 'eval-expression
-    "f" 'find-file
     "l" 'load-file
-    "d" 'dired
     "." 'switch-to-recent-buffer
     "u"  '(nil :wk "Utils")
     "u." 'repeat

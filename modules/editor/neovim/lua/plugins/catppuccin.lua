@@ -23,26 +23,6 @@ return {
         telescope = {
           enabled = true,
         },
-        native_lsp = {
-          enabled = true,
-          virtual_text = {
-            errors = { "italic" },
-            hints = { "italic" },
-            warnings = { "italic" },
-            information = { "italic" },
-            ok = { "italic" },
-          },
-          underlines = {
-            errors = { "underline" },
-            hints = { "underline" },
-            warnings = { "underline" },
-            information = { "underline" },
-            ok = { "underline" },
-          },
-          inlay_hints = {
-            background = true,
-          },
-        },
       },
       styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
         comments = { "italic" }, -- Change the style of comments
@@ -62,6 +42,7 @@ return {
             CursorLineSign = { bg = c.base01 },
             CursorLineFold = { bg = c.base01 },
             ColorColumn = { bg = c.base10 },
+            Comment = { fg = colors.red },
             MatchParen = { fg = c.base13, bold = true, bg = "NONE" },
 
             Boolean = { fg = colors.mauve },

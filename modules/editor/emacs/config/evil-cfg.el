@@ -37,12 +37,12 @@
   :bind ( :map evil-normal-state-map
 	      ("C-e" . evil-end-of-line)
 	      ("C-b" . evil-beginning-of-line)
-	      ("ESCAPE" . keyboard-escape-quit)
+	      ("<escape>" . keyboard-escape-quit)
 	      ("WW" . save-buffer)
 	      :map evil-insert-state-map
 	      ("j"   . evil-insert-jk-for-normal-mode)
 	      :map evil-visual-state-map
-	      ("ESCAPE" . keyboard-quit)
+	      ("<escape>" . keyboard-quit)
 	      :map special-mode-map
 	      ("q" . quit-window)
           )

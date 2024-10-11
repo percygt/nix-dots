@@ -6,15 +6,15 @@
   :ensure nil
   :bind
   ( :map minibuffer-local-map
-    ("ESCAPE" . minibuffer-keyboard-quit)
+    ("<escape>" . abort-recursive-edit)
     :map minibuffer-local-ns-map
-    ("ESCAPE" . minibuffer-keyboard-quit)
+    ("<escape>" . abort-recursive-edit)
     :map minibuffer-local-completion-map
-    ("ESCAPE" . minibuffer-keyboard-quit)
+    ("<escape>" . abort-recursive-edit)
     :map minibuffer-local-must-match-map
-    ("ESCAPE" . minibuffer-keyboard-quit)
+    ("<escape>" . abort-recursive-edit)
     :map minibuffer-local-isearch-map
-    ("ESCAPE" . minibuffer-keyboard-quit)))
+    ("<escape>" . abort-recursive-edit)))
 
 (use-package vertico
   :init (vertico-mode)
@@ -54,11 +54,22 @@
   :general
   (global-definer
     "s" '(nil :wk "Consult")
-    "sf" 'consult-fd
+    "sF" 'consult-fd
+    "sf" 'find-file
     "sg" 'consult-ripgrep
     ","  'consult-buffer
     "sl" 'consult-line
     "so" 'consult-outline))
+
+(use-package affe
+  :after orderless
+  :config
+  (defun affe-orderless-regexp-compiler (input _type _ignorecase)
+    (setq input (cdr (orderless-compile input)))
+    (cons input (apply-partially #'orderless--highlight input t)))
+  (setq affe-regexp-compiler #'affe-orderless-regexp-compiler)
+  ;; Manual preview key for `affe-grep'
+  (consult-customize affe-grep :preview-key "M-."))
 
 (use-package embark
   :bind (("C-." . embark-act)
