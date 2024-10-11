@@ -8,4 +8,5 @@
   i3-quickterm = pkgs.python3Packages.callPackage ./python/i3-quickterm.nix { };
   colloid-gtk-theme-catppuccin = pkgs.callPackage ./standard/colloid-gtk-theme.nix { };
   colloid-kvantum = pkgs.callPackage ./standard/colloid-kvantum.nix { };
+  straight-el = pkgs.callPackage ./standard/straight-el.nix { };
 }

@@ -43,9 +43,9 @@
 	      ("j"   . evil-insert-jk-for-normal-mode)
 	      :map evil-visual-state-map
 	      ("ESCAPE" . keyboard-quit)
-	      ;; :map special-mode-map
-	      ;; ("q" . quit-window)
-        )
+	      :map special-mode-map
+	      ("q" . quit-window)
+          )
   :config
   (evil-mode 1)
   (evil-set-initial-state 'messages-buffer-mode 'normal))
@@ -57,6 +57,23 @@
 
 (use-package evil-collection
   :after evil
+  :custom
+  (evil-collection-mode-list
+   '(comint
+     deadgrep
+     ediff
+     elfeed
+     eww
+     ibuffer
+     info
+     magit
+     mu4e
+     package-menu
+     pdf-view
+     proced
+     replace
+     vterm
+     which-key))
   :config
   (evil-collection-init))
 

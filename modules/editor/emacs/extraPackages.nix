@@ -1,6 +1,47 @@
 { pkgs }:
 with pkgs;
 [
+  ## binaries
+  straight-el
+  # dirvish deps
+  poppler
+  ffmpegthumbnailer
+  mediainfo
+  gnutar
+  unzip
+  binutils # native-comp needs 'as', provided by this
+  ## Dependencies
+  git
+  ripgrep
+  gnutls # for TLS connectivity
+  ## Optional dependencies
+  fd # faster projectile indexing
+  imagemagick # for image-dired
+  # (lib.mkIf config.programs.gnupg.agent.enable pinentry-emacs) # in-emacs gnupg prompts
+  zstd # for undo-fu-session/undo-tree compression
+  ## Module dependencies
+  # :email mu4e
+  mu
+  isync
+  # :checkers spell
+  (aspellWithDicts (
+    dicts: with dicts; [
+      en
+      en-computers
+      en-science
+      es
+    ]
+  ))
+  # :tools editorconfig
+  editorconfig-core-c # per-project style config
+  # :tools lookup & :lang org +roam
+  sqlite
+  # :lang beancount
+  beancount
+  fava
+  # :lang nix
+  age
+  # :lang latex
   (texlive.combine {
     inherit (pkgs.texlive)
       dvisvgm
@@ -25,14 +66,6 @@ with pkgs;
       ltxcmds
       ;
   })
-  (aspellWithDicts (
-    dicts: with dicts; [
-      en
-      en-computers
-      en-science
-      es
-    ]
-  ))
   (python3.withPackages (
     ps: with ps; [
       python-lsp-server
@@ -103,6 +136,4 @@ with pkgs;
   terraform-ls
   actionlint
   parallel
-  ripgrep
-  fd
 ]

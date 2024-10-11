@@ -10,6 +10,7 @@ in
 {
   imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.gpg.enable {
+    programs.gnupg.agent.enable = true;
     environment.sessionVariables.SSH_AUTH_SOCK = lib.mkIf cfg.sshSupport.enable cfg.sshSupport.authSock;
     home-manager.users.${g.username} = import ./home.nix;
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
