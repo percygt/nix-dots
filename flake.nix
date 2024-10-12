@@ -44,6 +44,8 @@
     nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
     nixpkgs-master.follows = "nix-sources/nixpkgs-master";
     emacs-overlay.follows = "nix-sources/emacs-overlay";
+    doom-emacs.url = "github:doomemacs/doomemacs/master";
+    doom-emacs.flake = false;
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

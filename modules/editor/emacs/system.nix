@@ -23,6 +23,7 @@ in
           directories = [
             ".local/cache/emacs"
             ".local/share/emacs"
+            ".local/share/doom"
           ];
         };
       };

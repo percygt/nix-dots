@@ -1,7 +1,7 @@
 { pkgs }:
 with pkgs;
 [
-  straight-el # NOTE not being used
+  # straight-el # NOTE not being used
   ## binaries
   # dirvish deps
   poppler_utils
@@ -24,6 +24,8 @@ with pkgs;
   # :email mu4e
   mu
   isync
+
+  maim
   # :checkers spell
   (aspellWithDicts (
     dicts: with dicts; [
@@ -43,6 +45,7 @@ with pkgs;
   # :lang nix
   age
   # :lang latex
+  graphviz
   (texlive.combine {
     inherit (pkgs.texlive)
       dvisvgm
@@ -119,13 +122,20 @@ with pkgs;
   babashka
 
   #docker
+  dockfmt
   hadolint
 
   #markdown
   marksman
 
+  #zig
+  zig
+  zls
+
   # Additional
   yamllint
+  terraform
+  terraform-ls
   bash-language-server
   yaml-language-server
   dockerfile-language-server-nodejs
@@ -133,8 +143,8 @@ with pkgs;
   markdownlint-cli
   taplo-cli
   codespell
+  libxml2
   gitlint
-  terraform-ls
   actionlint
   parallel
 ]

@@ -84,25 +84,25 @@ let
       })
     ];
 
-  emacs = pkgs.emacsWithPackagesFromUsePackage {
-    inherit (cfg) package;
-    inherit extraEmacsPackages;
-    alwaysEnsure = true;
-    # config = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./init.org));
-    config = builtins.readFile emacsConfig;
-    override = final: prev: {
-      ##  use maintained fork
-      dirvish = prev.melpaPackages.dirvish.overrideAttrs (_: {
-        src = pkgs.fetchFromGitHub {
-          owner = "hlissner";
-          repo = "dirvish";
-          rev = "5f046190e886fb0a2dae7e884cc7cd9bcf48ac26";
-          hash = "sha256-VCTbhevhPMVVwBdkT0gdxcSOrWOs4IjdemdZJVDq9W4=";
-        };
-      });
-    };
-  };
-
+  # emacs = pkgs.emacsWithPackagesFromUsePackage {
+  #   inherit (cfg) package;
+  #   inherit extraEmacsPackages;
+  #   alwaysEnsure = true;
+  #   # config = pkgs.writeText "config.el" (org-tangle-elisp-blocks (builtins.readFile ./init.org));
+  #   config = builtins.readFile emacsConfig;
+  #   override = final: prev: {
+  #     ##  use maintained fork
+  #     dirvish = prev.melpaPackages.dirvish.overrideAttrs (_: {
+  #       src = pkgs.fetchFromGitHub {
+  #         owner = "hlissner";
+  #         repo = "dirvish";
+  #         rev = "5f046190e886fb0a2dae7e884cc7cd9bcf48ac26";
+  #         hash = "sha256-VCTbhevhPMVVwBdkT0gdxcSOrWOs4IjdemdZJVDq9W4=";
+  #       };
+  #     });
+  #   };
+  # };
+  emacs = cfg.package;
   emacsWithExtraPackages = pkgs.runCommand "emacs" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''
     makeWrapper ${emacs}/bin/emacsclient $out/bin/emacsclient --prefix PATH : ${lib.makeBinPath extraPackages}
     makeWrapper ${emacs}/bin/emacs $out/bin/emacs --prefix PATH : ${lib.makeBinPath extraPackages}
