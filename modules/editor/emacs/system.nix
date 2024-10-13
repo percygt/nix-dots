@@ -21,8 +21,6 @@ in
       "/persist" = {
         users.${g.username} = {
           directories = [
-            ".local/cache/emacs"
-            ".local/share/emacs"
             ".local/share/doom"
           ];
         };

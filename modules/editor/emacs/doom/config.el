@@ -19,7 +19,6 @@
 ;;   :map 'magit-status-mode-map
 ;;   :niv "C-t" nil))
 
-(setq doom-theme  'modus-vivendi-tinted)
 (setq shell-file-name (executable-find "bash"))
 
 ;;; org-mode
@@ -66,11 +65,12 @@
 ;;  doom-big-font             (font-spec :font "VictorMono NFP Medium" :size 24)
 ;; ))
 ;; in $DOOMDIR/config.el
-(setq doom-font (font-spec :family "VictorMono NFP" :size 18 :weight 'medium)
+(setq doom-theme 'modus-vivendi-tinted
+      doom-font (font-spec :family "VictorMono NFP" :size 18 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Work Sans" :size 18 :weight 'light)
       doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
       doom-big-font (font-spec :family "VictorMono NPF" :size 24))
-;; (setq doom-theme 'base16-materia)
+
 ;; (with-demoted-errors "Error enabling theme on startup: %S"
 ;;   (+theme-update))
 

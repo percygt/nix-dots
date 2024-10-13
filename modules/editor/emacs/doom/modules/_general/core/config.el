@@ -11,20 +11,20 @@
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(alpha-background . 70) default-frame-alist)
 
-(setq frame-inhibit-implied-resize t
-      frame-resize-pixelwise t
-      frame-title-format nil
-      truncate-lines nil
-      truncate-partial-width-windows t
-      indicate-buffer-boundaries '((bottom . right))
-      inhibit-splash-screen t
-      inhibit-startup-buffer-menu t
-      initial-major-mode 'fundamental-mode
-      load-prefer-newer noninteractive
-      auto-mode-case-fold nil
-      fringes-outside-margins nil
-      indicate-buffer-boundaries nil ;; Otherwise shows a corner icon on the edge
-      indicate-empty-lines nil ;; Otherwise there are weird fringes on blank lines
+(setq frame-inhibit-implied-resize          t
+      frame-resize-pixelwise                t
+      frame-title-format                    nil
+      truncate-lines                        nil
+      truncate-partial-width-windows        t
+      indicate-buffer-boundaries            '((bottom . right))
+      inhibit-splash-screen                 t
+      inhibit-startup-buffer-menu           t
+      initial-major-mode                    'fundamental-mode
+      load-prefer-newer                     noninteractive
+      auto-mode-case-fold                   nil
+      fringes-outside-margins               nil
+      indicate-buffer-boundaries            nil ;; Otherwise shows a corner icon on the edge
+      indicate-empty-lines                  nil ;; Otherwise there are weird fringes on blank lines
       line-spacing                          2
       initial-scratch-message               nil
       inhibit-startup-screen                t ;; Don't show the welcome splash screen.

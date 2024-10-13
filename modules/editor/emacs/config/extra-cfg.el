@@ -1,6 +1,6 @@
 ;;; extra-cfg.el --- Extra -*- lexical-binding: t -*-
 ;;; Commentary:
-;;; Code:
+;;; Code
 (use-package pdf-tools
   :defer t
   ;; stop pdf-tools being automatically updated when I update the

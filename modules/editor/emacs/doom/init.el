@@ -3,7 +3,6 @@
 ;; This file controls what Doom modules are enabled and what order they load
 ;; in. Remember to run 'doom sync' after modifying it!
 
-;; NOTE Press 'SPC h d h' to access Doom's documentation.
 
 (setq doom-modules-dirs
       (list (file-name-concat doom-user-dir "modules/")
@@ -19,7 +18,8 @@
 
 (doom! :_general
        core
-       modus
+       ui
+       extra
        :config
        (default +smartparens) ; Doom's built-in defaults
        ;; default-exts
