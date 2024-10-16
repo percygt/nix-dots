@@ -29,7 +29,7 @@ in
                 { mpv ${pkgs.failure-alert} || true; } &
                 sleep 5 && kill -9 "$!"
               }
-              if systemctl start nixos-rebuild.service; then
+              if systemctl start borgmatic.service; then
                 notify-send -i backup "Daily Backup" "Backup started"
                 while systemctl -q is-active borgmatic.service; do
                   sleep 1

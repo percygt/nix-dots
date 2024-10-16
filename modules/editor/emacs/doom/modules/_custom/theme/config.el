@@ -1,11 +1,6 @@
 ;;; _general/modus/config.el -*- lexical-binding: t; -*-
-(setq display-line-numbers-type 'relative)
 
-(setq-hook! (dired-mode org-mode treemacs-mode)
-  display-line-numbers nil)
-
-(add-hook! 'org-mode-hook
-  (variable-pitch-mode))
+(setq-hook! (dired-mode org-mode treemacs-mode) display-line-numbers nil)
 
 (use-package! page-break-lines
   :hook (doom-first-input . global-page-break-lines-mode)
@@ -41,10 +36,6 @@
           (agenda-structure . (variable-pitch light 1.8))
           (t . (1.1)))))
 
-(setq-hook! (dired-mode org-mode treemacs-mode)
-  display-line-numbers nil)
-
-;; Prevent display-buffer from creating new frames
 
 (defun +display-buffer-fallback (buffer &rest _)
   (when-let* ((win (split-window-sensibly)))

@@ -48,11 +48,6 @@ in
             DOOMPROFILELOADFILE
             ;
         };
-        # activation = {
-        #   linkEmacsModule = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-        #     [ -e "${config.xdg.configHome}/doom/modules" ] && cp -rs ${moduleEmacs}/doom/modules/. ${config.xdg.configHome}/doom/modules/
-        #   '';
-        # };
       };
       xdg = {
         configFile = {

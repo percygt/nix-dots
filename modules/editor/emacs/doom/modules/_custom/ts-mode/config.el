@@ -6,9 +6,11 @@
 
 (require 'map)
 (require 'pcase)
+(require 'nix-ts-mode)
 
 ;;; Tree-sitter
 ;; Remap major modes to use treesit modes, including in org-mode.
+
 (setq treesit-font-lock-level 4)
 (defconst +treesit-mode-remaps
   '((:orig-mode c-mode :treesit-mode c-ts-mode :org-src ("C"))
@@ -19,7 +21,7 @@
     (:orig-mode toml-mode :treesit-mode toml-ts-mode :org-src ("toml"))
     (:orig-mode nix-mode :treesit-mode nix-ts-mode :org-src ("nix"))
     (:orig-mode lua-mode :treesit-mode lua-ts-mode :org-src ("lua"))
-    (:orig-mode css-mode :treesit-mode css-ts-mode :org-src ("lua"))
+    (:orig-mode css-mode :treesit-mode css-ts-mode :org-src ("css"))
     (:orig-mode go-mode :treesit-mode go-ts-mode :org-src ("go"))
     (:orig-mode csharp-mode :treesit-mode csharp-ts-mode :org-src ("csharp"))
     (:orig-mode dockerfile-mode :treesit-mode dockerfile-ts-mode :org-src ("dockerfile"))
@@ -33,6 +35,7 @@
     (:orig-mode yaml-mode :treesit-mode yaml-ts-mode :org-src ("yml" "yaml"))))
 
 (mapc (pcase-lambda ((map :orig-mode :treesit-mode :org-src))
+        ;; (set-keymap-parent (concat (format "%s" treesit-mode) "-map") (concat (format "%s" orig-mode) "-map"))
         (after! files
           (add-to-list 'major-mode-remap-alist (cons orig-mode treesit-mode)))
         (after! org-src
@@ -57,7 +60,5 @@
 (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
 
-
-(use-package! nix-ts-mode
-  :mode (("\\.nix\\'" . nix-ts-mode))
-  :defer t)
+(after! nix-mode
+  (set-keymap-parent nix-ts-mode-map nix-mode-map))

@@ -16,6 +16,7 @@
 
 * Meta
 This file contains my Emacs configuration. I have roughly ordered the org headings in order of importance/reliability. For example, misc packages is loaded last as I try new stuff there. Keyboard section is also important as if there's error I feel comfortable enough to go fix it.
+
 ** Dependencies
 Here is a list of programs I have installed for Emacs. They are not all explicitly  
  required, however.
@@ -25,6 +26,7 @@ Here is a list of programs I have installed for Emacs. They are not all explicit
 + fd (faster find)
 + gnu coreutils (gls, ggrep, etc)
 + aspell (spellchecking)
+
 ** Exported file note
 The following is exported to the top of the tangled init.el file as a note.
 #+begin_src emacs-lisp 
@@ -54,6 +56,7 @@ The following is exported to the top of the tangled init.el file as a note.
 #+end_src
 
 * Core
+
 ** Vanilla Emacs
 #+begin_src emacs-lisp :tangle yes
   (use-package emacs
@@ -111,6 +114,7 @@ The following is exported to the top of the tangled init.el file as a note.
 
       (use-package diminish :after use-package) ;; if you use :diminish
 #+end_src
+
 ** No littering
 #+begin_src emacs-lisp :tangle yes
   (use-package no-littering
@@ -119,6 +123,7 @@ The following is exported to the top of the tangled init.el file as a note.
     (setq no-littering-var-directory user-emacs-directory)
     :demand t)
 #+end_src
+
 ** Files
 #+begin_src emacs-lisp :tangle yes
   :after no-littering
@@ -157,6 +162,7 @@ The following is exported to the top of the tangled init.el file as a note.
   (delete-by-moving-to-trash        t)    ; Move deleted files to the trash
   (mode-require-final-newline       nil))  ; Don't add newlines at the end of files
 #+end_src
+
 ** General
 #+begin_src emacs-lisp :tangle yes
 (use-package general
@@ -220,6 +226,7 @@ using `abort-recursive-edit'."
   		          (replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
   )
 #+end_src
+
 ** Evil
 #+begin_src emacs-lisp :tangle yes
 (use-package evil
@@ -304,6 +311,7 @@ using `abort-recursive-edit'."
   :config
   (move-text-default-bindings))
 #+end_src
+
 ** Display line numbers
 #+begin_src emacs-lisp :tangle yes
   (use-package display-line-numbers
@@ -315,6 +323,7 @@ using `abort-recursive-edit'."
     :hook (((text-mode prog-mode conf-mode) . display-line-numbers-mode)
            (org-mode . (lambda () (display-line-numbers-mode -1)))))
 #+end_src
+
 ** Auto Revert
 #+begin_src emacs-lisp :tangle yes
 (use-package autorevert
@@ -323,12 +332,14 @@ using `abort-recursive-edit'."
   :custom (auto-revert-verbose nil)
   :diminish auto-revert-mode)
 #+end_src
+
 ** Save History
 #+begin_src emacs-lisp :tangle yes
   (use-package savehist
     :ensure nil
     :hook (after-init . savehist-mode))
 #+end_src
+
 ** Recent File
 #+begin_src emacs-lisp :tangle yes
 (use-package recentf
@@ -344,12 +355,14 @@ using `abort-recursive-edit'."
   (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
   (recentf-mode))
 #+end_src
+
 ** Eldoc
 #+begin_src emacs-lisp :tangle yes
 (use-package eldoc
   :ensure nil
   :diminish eldoc-mode)
 #+end_src
+
 ** Undo
 #+begin_src emacs-lisp :tangle yes
 (use-package undo-fu
@@ -363,6 +376,7 @@ using `abort-recursive-edit'."
   (undo-fu-session-directory (expand-file-name  "var/undo-fu-session/" user-emacs-data-directory))
   (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 #+end_src
+
 ** Window
 #+begin_src emacs-lisp :tangle yes
 (use-package window
@@ -456,6 +470,7 @@ using `abort-recursive-edit'."
         :global 1
         :keymap splitscreen/mode-map))
 #+end_src
+
 ** Dired
 #+begin_src emacs-lisp :tangle yes
   (use-package dired
@@ -494,6 +509,7 @@ using `abort-recursive-edit'."
       "SPC" 'nil
       "."   'dired-hide-dotfiles-mode))
   #+end_src
+
 ** Minifuffer
   #+begin_src emacs-lisp :tangle yes
 (use-package minibuffer
@@ -567,6 +583,7 @@ using `abort-recursive-edit'."
               ("C-c C-c" . wgrep-finish-edit)))
 
   #+end_src
+
 ** Completion
   #+begin_src emacs-lisp :tangle yes
 (use-package corfu
@@ -667,6 +684,7 @@ using `abort-recursive-edit'."
   :after (nerd-icons ibuffer)
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
   #+end_src
+
 ** Spell
   #+begin_src emacs-lisp :tangle yes
 (use-package ispell
@@ -709,6 +727,7 @@ using `abort-recursive-edit'."
   :bind (:map flyspell-mode-map
               ("C-;" . flyspell-correct-wrapper)))
   #+end_src
+
 ** Shell
   #+begin_src emacs-lisp :tangle yes
 (use-package eat
@@ -740,6 +759,7 @@ using `abort-recursive-edit'."
         (remove 'eshell-handle-ansi-color eshell-output-filter-functions))
   (setenv "TERM" "xterm-256color"))
   #+end_src
+
 ** Git
   #+begin_src emacs-lisp :tangle yes
     (use-package magit
@@ -747,6 +767,7 @@ using `abort-recursive-edit'."
       :init (setq magit-log-arguments
                   '("--graph" "--color" "--decorate" "--show-signature" "-n256")))
   #+end_src
+
 ** UI
   #+begin_src emacs-lisp :tangle yes
     (use-package visual-fill-column
@@ -872,6 +893,7 @@ using `abort-recursive-edit'."
   #+end_src
 
 * Languages
+
 ** LSP
 #+begin_src emacs-lisp :tangle yes
 (use-package flymake
@@ -910,6 +932,7 @@ using `abort-recursive-edit'."
 				       :autopep8 (:enabled :json-false)
 				       :black (:enabled :json-false)))))))
 #+end_src
+
 ** TreeSitter
 #+begin_src emacs-lisp :tangle yes
 (use-package treesit
@@ -939,6 +962,7 @@ using `abort-recursive-edit'."
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode)))
 #+end_src
+
 ** Web
 #+begin_src emacs-lisp :tangle yes
 (use-package web-mode
@@ -956,6 +980,7 @@ using `abort-recursive-edit'."
   :hook (web-mode . auto-rename-tag-mode))
 
 #+end_src
+
 ** Elisp
 #+begin_src emacs-lisp :tangle yes
 (use-package emacs-lisp-mode
@@ -985,6 +1010,7 @@ using `abort-recursive-edit'."
 (use-package highlight-quoted
   :hook (emacs-lisp-mode . highlight-quoted-mode))
 #+end_src
+
 ** Python
 #+begin_src emacs-lisp :tangle yes
 (use-package python
@@ -992,6 +1018,7 @@ using `abort-recursive-edit'."
   :mode (("\\.py\\'" . python-ts-mode))
   :hook ((python-ts-mode . eglot-ensure)))
 #+end_src
+
 ** C/C++
 #+begin_src emacs-lisp :tangle yes
 (use-package cc-mode
@@ -1008,6 +1035,7 @@ using `abort-recursive-edit'."
   :after cmake-mode
   :config (cmake-font-lock-activate))
 #+end_src
+
 ** Nix
 #+begin_src emacs-lisp :tangle yes
 (use-package nix-mode)
@@ -1015,6 +1043,7 @@ using `abort-recursive-edit'."
   :mode (("\\.nix\\'" . nix-ts-mode))
   :hook (nix-ts-mode . eglot-ensure))
 #+end_src
+
 ** Go
 #+begin_src emacs-lisp :tangle yes
 (use-package go-mode)
@@ -1029,6 +1058,7 @@ using `abort-recursive-edit'."
                       :program "goimports"
                       :args '("/dev/stdin")))
 #+end_src
+
 ** Rust
 #+begin_src emacs-lisp :tangle yes
 (use-package rust-mode)
@@ -1037,11 +1067,13 @@ using `abort-recursive-edit'."
   :mode (("\\.rs\\'" . rust-ts-mode))
   :hook (rust-ts-mode . eglot-ensure))
 #+end_src
+
 ** Markdown
 #+begin_src emacs-lisp :tangle yes
 (use-package markdown-mode
   :mode "\\.md\\'")
 #+end_src
+
 ** Clojure
 #+begin_src emacs-lisp :tangle yes
 (use-package cider)
@@ -1053,6 +1085,7 @@ using `abort-recursive-edit'."
   :hook ((clojure-ts-mode . clj-refactor-mode)
          (clojure-ts-mode . cider-mode)))
 #+end_src
+
 ** LaTeX
 #+begin_src emacs-lisp :tangle yes
 ;; (use-package tex-mode
@@ -1169,7 +1202,9 @@ using `abort-recursive-edit'."
 ;;   :ensure nil
 ;;   :init (require 'ox-moderncv))
 #+end_src
+
 ** Org
+
 *** Vanilla Org
 #+begin_src emacs-lisp :tangle yes
 (use-package org
@@ -1371,6 +1406,7 @@ using `abort-recursive-edit'."
 
 ;; (use-package org-transclusion :after org)
 #+end_src
+
 *** Agenda
 #+begin_src emacs-lisp :tangle yes
 (use-package org-agenda
@@ -1426,6 +1462,7 @@ using `abort-recursive-edit'."
             #'(lambda () (setq-local nobreak-char-display nil)))
   (org-super-agenda-mode))
 #+end_src
+
 *** Roam
 #+begin_src emacs-lisp :tangle yes
 (use-package org-roam
@@ -1612,6 +1649,7 @@ capture was not aborted."
 
 
 #+end_src
+
 *** Nursery
 #+begin_src emacs-lisp :tangle yes
 (use-package org-roam-review

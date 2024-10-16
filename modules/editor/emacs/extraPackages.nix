@@ -139,7 +139,7 @@ with pkgs;
   bash-language-server
   yaml-language-server
   dockerfile-language-server-nodejs
-  pkgs.stable.vscode-langservers-extracted
+  vscode-langservers-extracted
   markdownlint-cli
   taplo-cli
   codespell

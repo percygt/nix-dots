@@ -3,23 +3,29 @@
 ;; This file controls what Doom modules are enabled and what order they load
 ;; in. Remember to run 'doom sync' after modifying it!
 
+(load! "private" doom-user-dir)
 
 (setq doom-modules-dirs
       (list (file-name-concat doom-user-dir "modules/")
-            "~/org/modules/"
+            (file-name-concat orgDirectory "modules/")
             doom-modules-dir))
 
 
-(doom! :_general
-       ;; core
-       lsp
+(doom! :_custom
+       eglot
+       cmp
        ts-mode
        theme
-       ;; extra
-       cmp
+
+       :checkers
+       (spell +aspell +everywhere)
+
+       :completion
+       (corfu +icons +orderless +dabbrev)
+       (vertico +icons)
 
        :config
-       default ; Doom's built-in defaults
+       default
 
        :editor
        (evil +everywhere)
@@ -37,62 +43,57 @@
        (undo +tree)
        vc
 
-       :completion
-       (corfu +icons +orderless +dabbrev)
-       (vertico +icons)
 
-       :checkers
-       (spell +aspell +everywhere)
+       :lang
+       cc
+       data
+       emacs-lisp
+       (java +lsp)
+       (javascript +lsp)
+       (json +lsp)
+       (latex +lsp +fold)
+       (lua +lsp)
+       (nix +lsp)
+       (ocaml +lsp)
+       (org +dragndrop +roam2 +pretty +present)
+       (python +poetry)
+       (rust +lsp)
+       (sh +lsp)
+       web
+       (yaml +lsp)
+       (zig +lsp)
+       (org-exts
+        +citations
+        ;; +initial-buffers
+        +modern
+        +nursery
+        +roam
+        +slack)
 
        :term
        eshell
-       ;; eshell-exts
 
        :tools
-       ;; debugging
-       tree-sitter
-       (docker +lsp)
        direnv
+       (docker +lsp)
        editorconfig
        (eval +overlay)
        lookup
        (lsp +eglot)
-       pdf
-       ;; lsp-exts
-       ;; nix
        (magit +forge)
-       ;; vc-exts
        make
-       ;; search
+       pdf
        (terraform +lsp)
-
-       :lang
-       data
-       emacs-lisp
-       (org +dragndrop +roam2 +pretty +present)
-       (latex +lsp +fold)
-       cc
-       web
-       (json +lsp)
-       (python +poetry)
-       (java +lsp)
-       (lua +lsp)
-       (nix +lsp)
-       (ocaml +lsp)
-       (rust +lsp)
-       (sh +lsp)
-       (javascript +lsp)
-       (yaml +lsp)
-       (zig +lsp)
+       tree-sitter
 
        :ui
-       doom-dashboard    ; a nifty splash screen for Emacs
-       (popup +defaults +all)
+       doom-dashboard
        hl-todo
        indent-guides
-       treemacs
        modeline
        ophints
+       (popup +defaults +all)
+       treemacs
        (vc-gutter +pretty)
        vi-tilde-fringe
        )
