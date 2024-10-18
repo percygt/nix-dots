@@ -27,7 +27,7 @@ return {
         width_preview = 100,
       },
       mappings = {
-        close = "q",
+        close = "<esc>",
         go_in = "L",
         go_in_plus = "l",
       },

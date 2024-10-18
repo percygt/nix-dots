@@ -1,12 +1,7 @@
-;;; _general/lang/config.el -*- lexical-binding: t; -*-
-;;; Commentary:
-;;; Code:
-;;; Tree-sitter
-;;; config/default-exts/+treesit.el -*- lexical-binding: t; -*-
+;;; +treesit.el -*- lexical-binding: t; -*-
 
 (require 'map)
 (require 'pcase)
-(require 'nix-ts-mode)
 
 ;;; Tree-sitter
 ;; Remap major modes to use treesit modes, including in org-mode.
@@ -60,5 +55,4 @@
 (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
 
-(after! nix-mode
-  (set-keymap-parent nix-ts-mode-map nix-mode-map))
+

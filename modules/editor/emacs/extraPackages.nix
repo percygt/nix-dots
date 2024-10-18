@@ -10,6 +10,7 @@ with pkgs;
   mediainfo
   gnutar
   unzip
+  eza
   binutils # native-comp needs 'as', provided by this
   ## Dependencies
   git
@@ -89,6 +90,7 @@ with pkgs;
   # alejandra
   nixfmt-rfc-style
   nil
+  nix
 
   # C, C++
   clang-tools

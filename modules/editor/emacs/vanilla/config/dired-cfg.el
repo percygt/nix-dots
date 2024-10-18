@@ -26,32 +26,32 @@
   (advice-add #'dired-noselect :around #'dirvish-dired-noselect-a)
   :general
   (global-definer
-    "f" 'dirvish)
+   "f" 'dirvish)
   (normal-definer
-    "C-c f" 'dirvish-fd)
+   "C-c f" 'dirvish-fd)
   (normal-definer
-    :keymaps '(dired-mode-map)
-    "l"   'dired-find-file
-    "h"   'dired-up-directory
-    :keymaps '(dirvish-mode-map)
-    "q"   'dirvish-quit
-    "a"   'dirvish-quick-access
-    "f"   'dirvish-file-info-menu
-    "y"   'dirvish-yank-menu
-    "N"   'dirvish-narrow
-    "^"   'dirvish-history-last
-    "H"   'dirvish-history-jump ; remapped `describe-mode'
-    "s"   'dirvish-quicksort    ; remapped `dired-sort-toggle-or-edit'
-    "v"   'dirvish-vc-menu      ; remapped `dired-view-file'
-    "TAB" 'dirvish-subtree-toggle
-    "M-f" 'dirvish-history-go-forward
-    "M-b" 'dirvish-history-go-backward
-    "M-l" 'dirvish-ls-switches-menu
-    "M-m" 'dirvish-mark-menu
-    "M-t" 'dirvish-layout-toggle
-    "M-s" 'dirvish-setup-menu
-    "M-e" 'dirvish-emerge-menu
-    "M-j" 'dirvish-fd-jump)
+   :keymaps '(dired-mode-map)
+   "l"   'dired-find-file
+   "h"   'dired-up-directory
+   :keymaps '(dirvish-mode-map)
+   "ESC" 'dirvish-quit
+   "a"   'dirvish-quick-access
+   "f"   'dirvish-file-info-menu
+   "y"   'dirvish-yank-menu
+   "N"   'dirvish-narrow
+   "^"   'dirvish-history-last
+   "H"   'dirvish-history-jump ; remapped `describe-mode'
+   "s"   'dirvish-quicksort    ; remapped `dired-sort-toggle-or-edit'
+   "v"   'dirvish-vc-menu      ; remapped `dired-view-file'
+   "TAB" 'dirvish-subtree-toggle
+   "M-f" 'dirvish-history-go-forward
+   "M-b" 'dirvish-history-go-backward
+   "M-l" 'dirvish-ls-switches-menu
+   "M-m" 'dirvish-mark-menu
+   "M-t" 'dirvish-layout-toggle
+   "M-s" 'dirvish-setup-menu
+   "M-e" 'dirvish-emerge-menu
+   "M-j" 'dirvish-fd-jump)
   :custom
   ;; (dired-recursive-copies 'always)
   ;; (dired-recursive-deletes 'always)

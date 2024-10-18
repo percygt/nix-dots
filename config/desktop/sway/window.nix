@@ -8,10 +8,10 @@ in
     border = 1;
     commands =
       (mkAppsFloat {
+        titles = [ "^Sign in - Google Accounts.*" ];
         app_ids = [
           "xdg-desktop-portal-gtk"
           "org.gnome.Calculator"
-          "org.telegram.desktop"
           "org.gnome.Calendar"
           "org.gnome.Firmware"
           "org.gnome.Snapshot"
@@ -58,6 +58,14 @@ in
           command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
           criteria = {
             title = "^Media viewer$";
+            app_id = "org.telegram.desktop";
+          };
+        }
+        {
+          command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
+          criteria = {
+            title = ".*";
+            app_id = "org.telegram.desktop";
           };
         }
         {

@@ -11,13 +11,7 @@
             doom-modules-dir))
 
 
-(doom! :_custom
-       eglot
-       cmp
-       ts-mode
-       theme
-
-       :checkers
+(doom! :checkers
        (spell +aspell +everywhere)
 
        :completion
@@ -45,6 +39,7 @@
 
 
        :lang
+       (org +dragndrop +roam2)
        cc
        data
        emacs-lisp
@@ -55,20 +50,12 @@
        (lua +lsp)
        (nix +lsp)
        (ocaml +lsp)
-       (org +dragndrop +roam2 +pretty +present)
        (python +poetry)
        (rust +lsp)
        (sh +lsp)
        web
        (yaml +lsp)
        (zig +lsp)
-       (org-exts
-        +citations
-        ;; +initial-buffers
-        +modern
-        +nursery
-        +roam
-        +slack)
 
        :term
        eshell
@@ -87,6 +74,7 @@
        tree-sitter
 
        :ui
+       doom
        doom-dashboard
        hl-todo
        indent-guides
@@ -96,4 +84,5 @@
        treemacs
        (vc-gutter +pretty)
        vi-tilde-fringe
+       zen
        )

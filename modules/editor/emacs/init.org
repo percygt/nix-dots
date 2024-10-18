@@ -41,59 +41,59 @@ The following is exported to the top of the tangled init.el file as a note.
 
 * Loading custom lisp files
 #+begin_src emacs-lisp
-  (defvar user-emacs-data-directory
-    (concat (getenv "XDG_DATA_HOME") "/emacs")
-    "Emacs local home directory.")
-  (defvar user-emacs-cache-directory
-    (concat (getenv "XDG_CACHE_HOME") "/emacs")
-    "Home directory.")
-  (defvar files/common (expand-file-name "common.el" user-emacs-directory)
-    "Common file.")
-  (defvar files/private (expand-file-name "private.el" user-emacs-directory)
-    "Private file.")
-  (defvar files/custom (expand-file-name "custom.el" user-emacs-directory)
-    "Custom file.")
+(defvar user-emacs-data-directory
+  (concat (getenv "XDG_DATA_HOME") "/emacs")
+  "Emacs local home directory.")
+(defvar user-emacs-cache-directory
+  (concat (getenv "XDG_CACHE_HOME") "/emacs")
+  "Home directory.")
+(defvar files/common (expand-file-name "common.el" user-emacs-directory)
+  "Common file.")
+(defvar files/private (expand-file-name "private.el" user-emacs-directory)
+  "Private file.")
+(defvar files/custom (expand-file-name "custom.el" user-emacs-directory)
+  "Custom file.")
 #+end_src
 
 * Core
 
 ** Vanilla Emacs
 #+begin_src emacs-lisp :tangle yes
-  (use-package emacs
-    :ensure nil
-    :demand
-    :preface
-    (defun indicate-buffer-boundaries-left ()
-      (setq indicate-buffer-boundaries 'left))
-    :custom
-    (initial-scratch-message               nil)
-    (inhibit-startup-screen                t) ;; Don't show the welcome splash screen.
-    (tab-width                             4) ;; Set tab-size to 4 spaces
-    (delete-by-moving-to-trash             t)
-    (visible-bell                          t)
-    (x-stretch-cursor                      t)
-    (mouse-yank-at-point                   t)
-    (use-short-answers                     t)
-    (column-number-mode                    t)
-    (indent-tabs-mode                      nil) ;; Always indent with spaces
-    (even-window-sizes                     nil)
-    (confirm-kill-processes                nil)
-    (fill-column                           100)
-    (tab-always-indent                     'complete)
-    (large-file-warning-threshold          nil)
-    (byte-compile-warnings                 '(ck-functions))
-    (cursor-in-non-selected-windows        nil)
-    (completion-cycle-threshold            3)
-    (completion-ignore-case                t)
-    (read-buffer-completion-ignore-case    t)
-    (read-file-name-completion-ignore-case t)
-    (max-lisp-eval-depth                   10000)
-    (scroll-margin                         0)
-    (fast-but-imprecise-scrolling          t)
-    (scroll-preserve-screen-position       t)
-    (debug-on-error                        nil)
-    (auto-window-vscroll                   nil)
-    (warning-minimum-level                 :emergency)
+(use-package emacs
+  :ensure nil
+  :demand
+  :preface
+  (defun indicate-buffer-boundaries-left ()
+    (setq indicate-buffer-boundaries 'left))
+  :custom
+  (initial-scratch-message               nil)
+  (inhibit-startup-screen                t) ;; Don't show the welcome splash screen.
+  (tab-width                             4) ;; Set tab-size to 4 spaces
+  (delete-by-moving-to-trash             t)
+  (visible-bell                          t)
+  (x-stretch-cursor                      t)
+  (mouse-yank-at-point                   t)
+  (use-short-answers                     t)
+  (column-number-mode                    t)
+  (indent-tabs-mode                      nil) ;; Always indent with spaces
+  (even-window-sizes                     nil)
+  (confirm-kill-processes                nil)
+  (fill-column                           100)
+  (tab-always-indent                     'complete)
+  (large-file-warning-threshold          nil)
+  (byte-compile-warnings                 '(ck-functions))
+  (cursor-in-non-selected-windows        nil)
+  (completion-cycle-threshold            3)
+  (completion-ignore-case                t)
+  (read-buffer-completion-ignore-case    t)
+  (read-file-name-completion-ignore-case t)
+  (max-lisp-eval-depth                   10000)
+  (scroll-margin                         0)
+  (fast-but-imprecise-scrolling          t)
+  (scroll-preserve-screen-position       t)
+  (debug-on-error                        nil)
+  (auto-window-vscroll                   nil)
+  (warning-minimum-level                 :emergency)
     (ad-redefinition-action                'accept)
     (auto-revert-check-vc-info             t)
     (echo-keystrokes                       0.2)
@@ -112,7 +112,7 @@ The following is exported to the top of the tangled init.el file as a note.
     :hook ((prog-mode . display-fill-column-indicator-mode)
            ((prog-mode text-mode) . indicate-buffer-boundaries-left)))
 
-      (use-package diminish :after use-package) ;; if you use :diminish
+(use-package diminish :after use-package) ;; if you use :diminish
 #+end_src
 
 ** No littering
@@ -893,7 +893,6 @@ using `abort-recursive-edit'."
   #+end_src
 
 * Languages
-
 ** LSP
 #+begin_src emacs-lisp :tangle yes
 (use-package flymake
@@ -932,7 +931,6 @@ using `abort-recursive-edit'."
 				       :autopep8 (:enabled :json-false)
 				       :black (:enabled :json-false)))))))
 #+end_src
-
 ** TreeSitter
 #+begin_src emacs-lisp :tangle yes
 (use-package treesit
@@ -962,7 +960,6 @@ using `abort-recursive-edit'."
   (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
   (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode)))
 #+end_src
-
 ** Web
 #+begin_src emacs-lisp :tangle yes
 (use-package web-mode
