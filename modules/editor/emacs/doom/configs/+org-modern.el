@@ -1,5 +1,4 @@
 ;;; +org-modern.el -*- lexical-binding: t; -*-
-(with-eval-after-load 'org (global-org-modern-mode))
 (after! org-modern
   (setq org-auto-align-tags nil)
   (setq org-tags-column nil)
@@ -13,3 +12,5 @@
                                         '("▶" . "▼")
                                         10))
   (setq org-modern-list nil))
+
+(with-eval-after-load 'org (global-org-modern-mode))

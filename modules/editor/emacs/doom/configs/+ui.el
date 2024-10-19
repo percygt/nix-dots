@@ -6,6 +6,18 @@
       doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
       doom-big-font (font-spec :family "VictorMono NPF" :size 24))
 
+(setq frame-title-format
+      '(""
+        (:eval
+         (if (s-contains-p org-roam-directory (or buffer-file-name ""))
+             (replace-regexp-in-string
+              ".*/[0-9]*-?" "☰ "
+              (subst-char-in-string ?_ ?  buffer-file-name))
+           "%b"))
+        (:eval
+         (let ((project-name (projectile-project-name)))
+           (unless (string= "-" project-name)
+             (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 
 (use-package! beacon
   :config (beacon-mode 1))
@@ -40,22 +52,23 @@
       "C-x SPC" 'insert-char
       :map (global-map) [remap make-frame] #'ignore)
 
-;; (defun +display-buffer-fallback (buffer &rest _)
-;;   (when-let* ((win (split-window-sensibly)))
-;;     (with-selected-window win
-;;       (switch-to-buffer buffer)
-;;       (help-window-setup (selected-window))))
-;;   t)
+(defun +display-buffer-fallback (buffer &rest _)
+  (when-let* ((win (split-window-sensibly)))
+    (with-selected-window win
+      (switch-to-buffer buffer)
+      (help-window-setup (selected-window))))
+  t)
 
-;; (setq display-buffer-fallback-action
-;;       '((display-buffer--maybe-same-window
-;;          display-buffer-reuse-window
-;;          display-buffer--maybe-pop-up-window
-;;          display-buffer-in-previous-window
-;;          display-buffer-use-some-window
-;;          display-buffer-pop-up-window
-;;          +display-buffer-fallback)))
+(setq display-buffer-fallback-action
+      '((display-buffer--maybe-same-window
+         display-buffer-reuse-window
+         display-buffer--maybe-pop-up-window
+         display-buffer-in-previous-window
+         display-buffer-use-some-window
+         display-buffer-pop-up-window
+         +display-buffer-fallback)))
 
 (after! compile
   (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
   (remove-hook 'compilation-filter-hook #'doom-apply-ansi-color-to-compilation-buffer-h))
+

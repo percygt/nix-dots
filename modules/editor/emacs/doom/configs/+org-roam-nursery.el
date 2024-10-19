@@ -1,12 +1,13 @@
 ;;; +org-roam-nursery.el -*- lexical-binding: t; -*-
-
-(after! org-roam
-  (set-popup-rule! "^\\*org-roam-review\\*" :slot 2 :side 'bottom :size 40 :modeline nil :select t :quit t))
-
 (after! org-roam
   (require 'org-roam-review)
-  (require 'org-roam-dblocks)
-  )
+  (require 'org-roam-dblocks))
+
+(after! org-roam
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam-review\\*"
+                 (display-buffer-full-frame)
+                 (display-buffer-reuse-window))))
 
 (map! :after org-roam
       :map org-roam-review-mode-map
@@ -35,8 +36,19 @@
       :n :desc "Set evergreen" "e" #'org-roam-review-set-evergreen)
 
 (after! org-roam
-  (unless (not (derived-mode-p 'org-capture-mode))
-    (add-hook! 'org-mode-hook #'org-roam-dblocks-autoupdate-mode)))
+  (setq org-roam-dblocks-auto-refresh-tags `("MOC"))
+  (add-hook! 'org-mode-hook #'org-roam-dblocks-autoupdate-mode)
+  (add-hook! 'org-roam-capture-new-node-hook #'org-roam-review-set-seedling))
+
+(use-package! org-roam-slipbox
+  :after org-roam
+  :demand t
+  :config
+  (org-roam-slipbox-buffer-identification-mode +1)
+  (org-roam-slipbox-tag-mode +1))
+
+(use-package! org-roam-search
+  :commands (org-roam-search))
 
 ;; (use-package org-format
 ;;   :ensure nil
@@ -44,19 +56,12 @@
 ;;   (org-format-blank-lines-before-subheadings 0)
 ;;   :hook (org-mode . org-format-on-save-mode))
 
-(use-package! org-roam-search
-  :commands (org-roam-search))
-
-;; (use-package org-roam-links
-;;   :config
-;;   (add-to-list 'display-buffer-alist
-;;                '("\\*org-roam-links\\*"
-;;                  (display-buffer-full-frame)))
-;;   :general
-;;   (global-definer
-;;    :keymaps '(org-mode-map)
-;;    "wl" 'org-roam-links)
-;;   :commands (org-roam-links))
+(use-package org-roam-links
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\*org-roam-links\\*"
+                 (display-buffer-full-frame)))
+  :commands (org-roam-links))
 
 
 ;; (use-package org-roam-rewrite
@@ -69,20 +74,14 @@
 ;;   :ensure nil
 ;;   :after org-roam)
 
-;; (use-package org-roam-links
-;;   :ensure nil
-;;   :after org-roam
-;;   :demand t)
 
-;; (use-package org-roam-lazy-previews
-;;   :ensure nil
-;;   :after org-roam
-;;   :demand t)
+(use-package org-roam-lazy-previews
+  :after org-roam
+  :demand t)
 
-;; (use-package org-roam-slipbox
-;;   :ensure nil
-;;   :after org-roam
-;;   :demand t
-;;   :config
-;;   (org-roam-slipbox-buffer-identification-mode +1)
-;;   (org-roam-slipbox-tag-mode +1))
+(use-package org-roam-slipbox
+  :after org-roam
+  :demand t
+  :config
+  (org-roam-slipbox-buffer-identification-mode +1)
+  (org-roam-slipbox-tag-mode +1))

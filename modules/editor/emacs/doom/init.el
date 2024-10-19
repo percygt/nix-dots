@@ -80,6 +80,7 @@
        indent-guides
        modeline
        ophints
+       (ligatures +extra)
        (popup +defaults +all)
        treemacs
        (vc-gutter +pretty)

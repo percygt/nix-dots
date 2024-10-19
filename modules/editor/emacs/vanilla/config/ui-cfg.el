@@ -1,5 +1,3 @@
-
-
 ;;; ui-cfg.el --- UI setup -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
@@ -31,15 +29,14 @@
     (message "Setting faces!")
     (when (font-installed-p "VictorMono NFP Medium")
       (dolist (face '(default fixed-pitch))
-	    (set-face-attribute `,face nil :font "VictorMono NFP Medium" :height 130)))
+	(set-face-attribute `,face nil :font "VictorMono NFP Medium" :height 130)))
     (when (font-installed-p "Libertinus Serif")
       (set-face-attribute 'fixed-pitch-serif nil :font "Libertinus Serif"))
     (when (font-installed-p "Work Sans Light")
-      (set-face-attribute 'variable-pitch nil :family "Work Sans Light" :height 1.0))
-    )
+      (set-face-attribute 'variable-pitch nil :family "Work Sans Light" :height 1.0)))
   (if (daemonp)
       (add-hook 'after-make-frame-functions
-		        (lambda (frame)
+		(lambda (frame)
                   (with-selected-frame frame
                     (setup-default-fonts))))
     (setup-default-fonts))
@@ -66,8 +63,8 @@
   :after (nerd-icons evil)
   :custom
   (dashboard-items '((recents  .  5)
-		             (projects .  5)
-		             (agenda   . 10)))
+		     (projects .  5)
+		     (agenda   . 10)))
   (dashboard-set-footer nil)
   (dashboard-set-init-info t)
   (dashboard-center-content t)
@@ -79,8 +76,8 @@
   (dashboard-setup-startup-hook)
   (evil-set-initial-state 'dashboard-mode 'normal)
   (setq initial-buffer-choice (lambda ()
-				                (get-buffer-create "*dashboard*")
-				                (dashboard-refresh-buffer))))
+				(get-buffer-create "*dashboard*")
+				(dashboard-refresh-buffer))))
 
 
 (use-package doom-modeline

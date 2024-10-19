@@ -113,7 +113,7 @@ capture was not aborted."
        "#+title: ${title}\n#+date: %<%Y-%m-%d>\n#+filetags: : \n\n")
       :unnarrowed t)
      ("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
       :unnarrowed t)
      ("r" "ref" plain "%?"
       :target
@@ -126,27 +126,27 @@ capture was not aborted."
    '(("d" "default" entry
       "* %?"
       :target (file+datetree
-	           "%<%Y-%m-%d>.org" week))))
+	       "%<%Y-%m-%d>.org" week))))
   (org-roam-mode-sections '(org-roam-backlinks-section
-			                org-roam-reflinks-section
-			                org-roam-unlinked-references-section))
+			    org-roam-reflinks-section
+			    org-roam-unlinked-references-section))
   :general
   (global-definer
-    "w"  '(nil :wk "Writer")
-    "wb" 'org-roam-buffer-toggle
-    "wf" 'org-roam-node-find
-    "wg" 'org-roam-graph
-    "wc" 'org-roam-capture
-    "wd" 'org-roam-dailies-capture-today
-    "wp" 'org-roam-find-project
-    "wt" 'org-roam-capture-task
-    "wi" 'org-roam-capture-inbox
-    )
+   "w"  '(nil :wk "Writer")
+   "wb" 'org-roam-buffer-toggle
+   "wf" 'org-roam-node-find
+   "wg" 'org-roam-graph
+   "wc" 'org-roam-capture
+   "wd" 'org-roam-dailies-capture-today
+   "wp" 'org-roam-find-project
+   "wt" 'org-roam-capture-task
+   "wi" 'org-roam-capture-inbox
+   )
   (global-definer
-    :keymaps '(org-mode-map)
-    "w." 'completion-at-point
-    "wI" 'org-roam-node-insert-immediate
-    "wi" 'org-roam-node-insert))
+   :keymaps '(org-mode-map)
+   "w." 'completion-at-point
+   "wI" 'org-roam-node-insert-immediate
+   "wi" 'org-roam-node-insert))
 
 ;; (use-package consult-notes
 ;;   :commands (consult-notes
