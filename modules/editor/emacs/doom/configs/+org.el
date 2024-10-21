@@ -1,23 +1,16 @@
 ;;; +org.el -*- lexical-binding: t; -*-
 (setq org-directory orgDirectory
-      org-roam-directory (file-name-concat org-directory "roam")
-      org-roam-db-location (file-name-concat org-directory ".org-roam.db")
-      org-roam-dailies-directory "journal/"
       org-archive-location (file-name-concat org-directory ".archive/%s::"))
 
 (add-hook! 'org-mode-hook #'abbrev-mode #'auto-fill-mode #'variable-pitch-mode)
+(add-hook! 'org-mode-hook #'org-appear-mode #'hide-mode-line-mode)
 
-(add-hook! 'org-mode-hook
-  (when (locate-dominating-file default-directory
-                                (fn! (file-equal-p org-directory %)))
-    (setq-local abbrev-file-name (expand-file-name "abbrev.el" org-directory))))
-
-
-(add-hook 'org-mode-hook #'org-appear-mode)
-(add-hook 'org-mode-hook #'hide-mode-line-mode)
+;; Completing all child TODOs will change the parent TODO to DONE.
+(add-hook! 'org-after-todo-statistics-hook
+  (fn! (let (org-log-done) ; turn off logging
+         (org-todo (if (zerop %2) "DONE" "TODO")))))
 
 (after! org
-
 ;;; Visual settings
   (setq org-link-frame-setup '((file . find-file)));; Opens links to other org file in same frame (rather than splitting)
   (setq org-startup-folded 'show2levels)
@@ -38,35 +31,51 @@
   (setq org-hierarchical-todo-statistics nil)
   (setq org-use-property-inheritance t)
   ;; Custom todo states
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "SOMEDAY(s)")))
-
-  ;; Custom faces for the todo states
+  (setq org-todo-keywords '((type
+                             "TODO(t)" "NEXT(x)" "WAITING(w)"
+                             "IDEA(i)" "NOTE(n)" "STUDY(s)" "READ(r)"
+                             "WORK(w)" "PROJECT(p)" "CONTACT(c)" "SOMEDAY"
+                             "|" "DONE(d)" "CANCELLED(C@)")))
   (setq org-todo-keyword-faces
-        '(("TODO" . org-warning)
-          ("NEXT" . "orange")
-          ("WAITING" . "yellow")
-          ("CANCELLED" . (:foreground "blue" :weight bold :strike-through t))
-          ("SOMEDAY" . (:foreground "magenta" :weight bold))))
-
-  ;; Completing all child TODOs will change the parent TODO to DONE.
-  (add-hook! 'org-after-todo-statistics-hook
-    (fn! (let (org-log-done) ; turn off logging
-           (org-todo (if (zerop %2) "DONE" "TODO")))))
+        '(("TODO"  :inherit (org-todo region ) :foreground "yellow"   :weight bold)
+          ("WORK"  :inherit (org-todo region) :foreground "DarkOrange1"   :weight bold)
+          ("READ"  :inherit (org-todo region) :foreground "MediumPurple2" :weight bold)
+          ("PROJECT"  :inherit (org-todo region) :foreground "orange3"     :weight bold)
+          ("STUDY" :inherit (region org-todo) :foreground "plum3"       :weight bold)
+          ("NOTE" :inherit (region org-todo) :foreground "SteelBlue"       :weight bold)
+          ("DONE" . "SeaGreen4")))
 
 ;;; Interactive behaviour
 
   (setq org-bookmark-names-plist nil)
   (setq org-M-RET-may-split-line nil)
-  (setq org-adapt-indentation nil)
+  ;; (setq org-adapt-indentation nil)
   (setq org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
   (setq org-fold-catch-invisible-edits 'smart)
   (setq org-footnote-auto-adjust t)
   (setq org-insert-heading-respect-content t)
   (setq org-loop-over-headlines-in-active-region 'start-level)
 
-  )
+  (setq org-capture-templates
+        '(
+          ("s" "Stash")
+          ("st" "Stash" entry
+           (file "Stash.org")
+           "* %^{Type|STUDY|READ|PROJECT|WORK|NOTE} %^{Todo title}\n** %?" :empty-lines-before 0)
+          ("n" "CPB Note" entry (file+headline "Inbox.org" "Refile")
+           "** NOTE: %? @ %U"        :empty-lines 0 :refile-targets (("Inbox.org" :maxlevel . 8)))
 
+          ("i" "CPB Idea" entry (file+headline "~/Dropbox/org/cpb.org" "Refile")
+           "** IDEA: %? @ %U :idea:" :empty-lines 0 :refile-targets (("~/Dropbox/org/cpb.org" :maxlevel . 8)))
+
+          ("m" "CPB Note Clipboard")
+
+          ("mm" "Paste clipboard" entry (file+headline "~/Dropbox/org/cpb.org" "Refile")
+           "** NOTE: %(simpleclip-get-contents) %? @ %U" :empty-lines 0 :refile-targets (("~/Dropbox/org/cpb.org" :maxlevel . 8)))
+
+          ("ml" "Create link and fetch title" entry (file+headline "~/Dropbox/org/cpb.org" "Refile")
+           "** [[%(simpleclip-get-contents)][%(jib/www-get-page-title (simpleclip-get-contents))]] @ %U" :empty-lines 0 :refile-targets (("~/Dropbox/org/cpb.org" :maxlevel . 8)))
+          )))
 ;; (after! org
 ;;   (add-to-list 'warning-suppress-types '(org-element-cache))
 ;;   (add-to-list 'warning-suppress-log-types '(org-element-cache)))

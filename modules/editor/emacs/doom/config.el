@@ -12,14 +12,6 @@
 (setq doom-localleader-key ",")
 (setq doom-localleader-alt-key "M-,")
 
-(setq undo-limit 80000000
-      evil-want-fine-undo t
-      auto-save-default t
-      truncate-string-ellipsis "…"
-      password-cache-expiry nil
-      scroll-preserve-screen-position 'always
-      )
-
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (pixel-scroll-precision-mode t)
 
@@ -38,6 +30,7 @@
       :desc "Files" "f" #'dirvish)
 
 (map! :leader
+      :after org-roam
       "r" #'org-roam-review)
 
 (load! "configs/+evil.el")
@@ -49,6 +42,7 @@
 (load! "configs/+treesit.el")
 (load! "configs/+treesit-lang.el")
 (load! "configs/+eglot.el")
+(load! "configs/+tools.el")
 (load! "configs/+org.el")
 (load! "configs/+org-agenda.el")
 (load! "configs/+org-modern.el")

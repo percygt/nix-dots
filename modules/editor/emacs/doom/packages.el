@@ -13,9 +13,14 @@
    :host github
    :repo "jdtsmith/eglot-booster"))
 
+;;; tools
+(package! simpleclip)
+
 ;;; ui
 
 (package! beacon)
+(package! base16-theme)
+(package! org-superstar)
 (package! hide-mode-line)
 (package! modus-themes)
 (package! page-break-lines)
@@ -45,7 +50,7 @@
 (package! lorem-ipsum)
 
 ;;; disbaled
-(package! doom-themes :disable t)
+;; (package! doom-themes :disable t)
 (package! company-sourcekit :disable t)
 (package! flycheck-plantuml :disable t)
 (package! flymake-popon :disable t)

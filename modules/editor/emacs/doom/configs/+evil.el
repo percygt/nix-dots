@@ -19,7 +19,8 @@
       "C-<up>"         #'+evil/window-move-up
       "C-<right>"      #'+evil/window-move-right)
 
-(setq evil-split-window-below t
+(setq evil-want-fine-undo t
+      evil-split-window-below t
       evil-vsplit-window-right t)
 
 (map! :after evil

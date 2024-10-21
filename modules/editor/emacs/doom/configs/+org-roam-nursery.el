@@ -36,7 +36,7 @@
       :n :desc "Set evergreen" "e" #'org-roam-review-set-evergreen)
 
 (after! org-roam
-  (setq org-roam-dblocks-auto-refresh-tags `("MOC"))
+  (setq org-roam-dblocks-auto-refresh-tags `("MOC" "dailies"))
   (add-hook! 'org-mode-hook #'org-roam-dblocks-autoupdate-mode)
   (add-hook! 'org-roam-capture-new-node-hook #'org-roam-review-set-seedling))
 

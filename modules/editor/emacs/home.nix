@@ -7,6 +7,8 @@
 }:
 let
   g = config._general;
+  t = config.modules.theme;
+  c = t.colors.withHashtag;
   cfg = config.modules.editor.emacs;
   moduleEmacs = "${g.flakeDirectory}/modules/editor/emacs";
   DOOMLOCALDIR = "${config.xdg.dataHome}/doom";
@@ -79,6 +81,41 @@ in
                        )))
 
             (provide 'nix)
+          '';
+          "doom/themes/base16-syft-theme.el".text = ''
+            ;; base16-syft-theme.el -- A base16 colorscheme
+
+            ;;; Commentary:
+            ;; Base16: (https://github.com/tinted-theming/home)
+
+            ;;; Authors:
+            ;; Scheme: percygt (github.com/percygt)
+            ;; Template: PercyGT
+
+            ;;; Code:
+
+            (defvar base16-syft-theme-colors
+              '(:base00 "${c.base00}"
+                :base01 "${c.base01}"
+                :base02 "${c.base02}"
+                :base03 "${c.base03}"
+                :base04 "${c.base04}"
+                :base05 "${c.base05}"
+                :base06 "${c.base06}"
+                :base07 "${c.base07}"
+                :base08 "${c.base08}"
+                :base09 "${c.base09}"
+                :base0A "${c.base0A}"
+                :base0B "${c.base0B}"
+                :base0C "${c.base0C}"
+                :base0D "${c.base0D}"
+                :base0E "${c.base0E}"
+                :base0F "${c.base0F}")
+              "All colors for Base16 Syft are defined here.")
+
+            (provide 'base16-syft-theme)
+
+            ;;; base16-syft-theme.el ends here
           '';
         };
       };

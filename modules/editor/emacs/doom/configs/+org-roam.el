@@ -3,9 +3,13 @@
 (setq org-roam-directory org-directory
       org-roam-db-location (file-name-concat org-directory "resources/.org-roam.db")
       org-roam-dailies-directory "journal/")
+
+(setq org-roam-node-display-template
+      "${title:65}📝${tags:*}")
+
 (defun org-roam-filter-by-tag (tag-name)
   (lambda (node)
-    (member tag-name (org-roam-search-tags node))))
+    (member tag-name (org-roam-node-tags node))))
 
 (defun org-roam-list-notes-by-tag (tag-name)
   (mapcar #'org-roam-node-file
@@ -36,9 +40,11 @@ capture was not aborted."
    nil
    nil
    (org-roam-filter-by-tag "Project")
-   :templates '(("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-                 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
-                 :unnarrowed t))))
+   nil
+   :templates
+   '(("p" "project" plain "* Goals\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :Project:")
+      :unnarrowed t))))
 
 (defun org-roam-capture-inbox ()
   (interactive)
@@ -84,8 +90,13 @@ capture was not aborted."
     ((node org-roam-node)) (capitalize (org-roam-node-title node)))
   (setq org-roam-dailies-capture-templates
         (let ((head
-               (concat "#+title: %<%Y-%m-%d (%A)>\n#+startup: showall\n* Daily Overview\n"
-                       "* [/] Do Today\n* [/] Maybe Do Today\n* Journal\n")))
+               (concat "#+title: %<%Y-%m-%d (%A)>\n"
+                       "#+startup: showall\n"
+                       "#+filetags: :dailies:\n"
+                       "* Daily Overview\n"
+                       "* [/] Do Today\n"
+                       "* [/] Maybe Do Today\n"
+                       "* Journal\n")))
           `(("j" "journal" entry
              "* %<%H:%M> %?"
              :if-new (file+head+olp "%<%Y-%m-%d>.org" ,head ("journal"))
