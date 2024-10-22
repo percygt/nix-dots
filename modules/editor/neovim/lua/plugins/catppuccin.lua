@@ -42,7 +42,7 @@ return {
             CursorLineSign = { bg = c.base01 },
             CursorLineFold = { bg = c.base01 },
             ColorColumn = { bg = c.base10 },
-            Comment = { fg = colors.red },
+            -- Comment = { fg = colors.red },
             MatchParen = { fg = c.base13, bold = true, bg = "NONE" },
 
             Boolean = { fg = colors.mauve },

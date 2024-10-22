@@ -2,12 +2,9 @@
 :PROPERTIES:
 #+AUTHOR: PercyGT
 #+STARTUP: fold
-#+PROPERTY: header-args:emacs-lisp :tangle ./init.el :mkdirp yes
-#+HTML_HEAD: <link rel="stylesheet" href="https://sandyuraz.com/styles/org.min.css">
-#+SEQ_TODO: TODO(t) | DISABLED(d)
 :END:
 
-* Things to do
+* NOTE saas
 :PROPERTIES:
 :VISIBILITY: all
 :END:
@@ -55,7 +52,7 @@ The following is exported to the top of the tangled init.el file as a note.
   "Custom file.")
 #+end_src
 
-* Core
+* WAIT: Core
 
 ** Vanilla Emacs
 #+begin_src emacs-lisp :tangle yes

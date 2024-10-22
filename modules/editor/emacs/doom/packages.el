@@ -20,9 +20,9 @@
 
 (package! beacon)
 (package! base16-theme)
-(package! org-superstar)
 (package! hide-mode-line)
 (package! modus-themes)
+(package! mixed-pitch)
 (package! page-break-lines)
 (package! spacious-padding)
 

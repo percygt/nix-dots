@@ -82,8 +82,8 @@ in
 
             (provide 'nix)
           '';
-          "doom/themes/base16-syft-theme.el".text = ''
-            ;; base16-syft-theme.el -- A base16 colorscheme
+          "doom/themes/base16-nix-custom-theme.el".text = ''
+            ;; base16-nix-custom-theme.el -- A base16 colorscheme
 
             ;;; Commentary:
             ;; Base16: (https://github.com/tinted-theming/home)
@@ -94,7 +94,9 @@ in
 
             ;;; Code:
 
-            (defvar base16-syft-theme-colors
+            (require 'base16-theme)
+
+            (defvar base16-nix-custom-theme-colors
               '(:base00 "${c.base00}"
                 :base01 "${c.base01}"
                 :base02 "${c.base02}"
@@ -111,11 +113,20 @@ in
                 :base0D "${c.base0D}"
                 :base0E "${c.base0E}"
                 :base0F "${c.base0F}")
-              "All colors for Base16 Syft are defined here.")
+              "All colors for Base16 Nix Custom are defined here.")
 
-            (provide 'base16-syft-theme)
+            ;; Define the theme
+            (deftheme base16-nix-custom)
 
-            ;;; base16-syft-theme.el ends here
+            ;; Add all the faces to the theme
+            (base16-theme-define 'base16-nix-custom base16-nix-custom-theme-colors)
+
+            ;; Mark the theme as provided
+            (provide-theme 'base16-nix-custom)
+
+            (provide 'base16-nix-custom-theme)
+
+            ;;; base16-nix-custom-theme.el ends here
           '';
         };
       };

@@ -16,7 +16,7 @@
         sha256 = "1b7n1kskxzbk1w81pi78brwyjwkavyqs4hqa579xri8k3rx2r0fw";
       };
     };
-    colorscheme = import ./colorscheme.nix;
+    colorscheme = import ./base24-syft-tokyo.nix;
     opacity = 0.7;
     cursorTheme = {
       name = "phinger-cursors-light";

@@ -43,9 +43,9 @@
 (load! "configs/+treesit-lang.el")
 (load! "configs/+eglot.el")
 (load! "configs/+tools.el")
+(load! "configs/+org-modern.el")
 (load! "configs/+org.el")
 (load! "configs/+org-agenda.el")
-(load! "configs/+org-modern.el")
 (load! "configs/+org-roam.el")
 
 (pushnew! vc-directory-exclusion-list

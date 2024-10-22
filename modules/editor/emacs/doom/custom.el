@@ -19,7 +19,7 @@
  ;; '(header-line ((nil (:background nil :inherit 'default))));; If there is more than one, they won't work right.
  ;; '(italic ((t (:inherit fixed-pitch :slant italic))))
  ;; '(org-block ((t (:inherit fixed-pitch))))
- '(org-block-begin-line ((t (:inherit fixed-pitch :height 0.8 :slant italic :background "unspecified"))))
+ ;; '(org-block-begin-line ((t (:inherit fixed-pitch :height 0.8 :slant italic :background "unspecified"))))
  ;; '(org-code ((t (:inherit fixed-pitch))))
  ;; '(org-document-info ((t (:inherit (font-lock-comment-face fixed-pitch) :height 0.8))))
  ;; '(org-document-info-keyword ((t (:inherit (font-lock-comment-face fixed-pitch) :height 1.0))))
