@@ -4,10 +4,12 @@
 #+STARTUP: fold
 :END:
 
-* NOTE saas
+* WAIT saas
 :PROPERTIES:
 :VISIBILITY: all
 :END:
+- State "DUPLICATE"  from "CANCELLED"  [2024-10-22 Tue 12:42]
+- State "CANCELLED"  from "NOTE"       [2024-10-22 Tue 12:42]
 + Get variable pitch org headings on doom-themes (can't figure it out)
 + https://github.com/minad/jinx
 

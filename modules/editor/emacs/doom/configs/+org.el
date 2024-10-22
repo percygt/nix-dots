@@ -2,10 +2,63 @@
 (setq org-directory orgDirectory
       org-archive-location (file-name-concat org-directory ".archive/%s::"))
 
-(add-hook! 'org-mode-hook #'abbrev-mode #'auto-fill-mode #'variable-pitch-mode)
-(add-hook! 'org-mode-hook #'org-appear-mode #'hide-mode-line-mode)
+(map! :after org
+      :leader
+      :prefix ("o" . "Org")
+      "c" #'org-capture
+      )
 
-;; Completing all child TODOs will change the parent TODO to DONE.
+(use-package! mixed-pitch
+  :hook
+  (org-mode . mixed-pitch-mode))
+
+(use-package! org-appear
+  :hook
+  (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autoemphasis t)
+  (setq org-appear-autosubmarkers t)
+  (setq org-appear-autolinks t)
+  )
+
+(defun p67/org-mode-setup ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t
+        display-fill-column-indicator nil
+        display-line-numbers nil)
+  (visual-fill-column-mode 1)
+  (visual-line-mode +1)
+  (org-indent-mode +1)
+  (hide-mode-line-mode +1)
+  (auto-fill-mode 0)
+  (variable-pitch-mode)
+  )
+
+(add-hook 'org-mode-hook #'p67/org-mode-setup)
+
+(after! org
+  (custom-set-faces!
+    '(org-document-title :height 1.5)
+    '(outline-1 :weight extra-bold :height 1.5)
+    '(outline-2 :weight bold :height 1.3)
+    '(outline-3 :weight bold :height 1.2)
+    '(outline-4 :weight bold :height 1.1)
+    '(outline-5 :weight semi-bold :height 1.1)
+    '(outline-6 :weight semi-bold :height 1.05)
+    '(outline-7 :weight semi-bold)
+    '(outline-8 :weight semi-bold)
+    ;; Ensure that anything that should be fixed-pitch in org buffers appears that
+    ;; way
+    '(org-block nil :inherit 'fixed-pitch)
+    '(org-code nil :inherit '(shadow fixed-pitch))
+    '(org-table nil :inherit '(shadow fixed-pitch))
+    '(org-verbatim nil :inherit '(shadow fixed-pitch))
+    '(org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+    '(org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+    '(org-checkbox nil :inherit 'fixed-pitch)))
+
+
+;; ;; Completing all child TODOs will change the parent TODO to DONE.
 (add-hook! 'org-after-todo-statistics-hook
   (fn! (let (org-log-done) ; turn off logging
          (org-todo (if (zerop %2) "DONE" "TODO")))))
@@ -26,26 +79,11 @@
   (setq org-startup-with-inline-images t)
   (setq org-startup-with-latex-preview nil)
 ;;; TODOs, checkboxes, stats, properties.
-
-  (setq org-enforce-todo-dependencies t)
   (setq org-hierarchical-todo-statistics nil)
   (setq org-use-property-inheritance t)
-  ;; Custom todo states
-  (setq org-todo-keywords '((type
-                             "TODO(t)" "NEXT(x)" "WAITING(w)"
-                             "IDEA(i)" "NOTE(n)" "STUDY(s)" "READ(r)"
-                             "WORK(w)" "PROJECT(p)" "CONTACT(c)" "SOMEDAY"
-                             "|" "DONE(d)" "CANCELLED(C@)")))
-  (setq org-todo-keyword-faces
-        '(("TODO"  :inherit (org-todo region ) :foreground "yellow"   :weight bold)
-          ("WORK"  :inherit (org-todo region) :foreground "DarkOrange1"   :weight bold)
-          ("READ"  :inherit (org-todo region) :foreground "MediumPurple2" :weight bold)
-          ("PROJECT"  :inherit (org-todo region) :foreground "orange3"     :weight bold)
-          ("STUDY" :inherit (region org-todo) :foreground "plum3"       :weight bold)
-          ("NOTE" :inherit (region org-todo) :foreground "SteelBlue"       :weight bold)
-          ("DONE" . "SeaGreen4")))
+  (setq org-enforce-todo-dependencies t)
 
-;;; Interactive behaviour
+  ;;; Interactive behaviour
 
   (setq org-bookmark-names-plist nil)
   (setq org-M-RET-may-split-line nil)
@@ -55,137 +93,35 @@
   (setq org-footnote-auto-adjust t)
   (setq org-insert-heading-respect-content t)
   (setq org-loop-over-headlines-in-active-region 'start-level)
+  (setq org-treat-S-cursor-todo-selection-as-state-change nil)
+  )
 
-  (setq org-capture-templates
+(after! org
+  (setq org-todo-keywords
         '(
-          ("s" "Stash")
-          ("st" "Stash" entry
-           (file "Stash.org")
-           "* %^{Type|STUDY|READ|PROJECT|WORK|NOTE} %^{Todo title}\n** %?" :empty-lines-before 0)
-          ("n" "CPB Note" entry (file+headline "Inbox.org" "Refile")
-           "** NOTE: %? @ %U"        :empty-lines 0 :refile-targets (("Inbox.org" :maxlevel . 8)))
+          (sequence
+           "TODO(t)" ; doing later
+           "NEXT(n)" ; doing now or soon
+           "|"
+           "DONE(d)" ; done
+           )
+          (sequence
+           "WAIT(w@/!)" ; waiting for some external change (event)
+           "HOLD(h@/!)" ; waiting for some internal change (of mind)
+           "|"
+           "KILL(C@/!)"
+           )
+          (type
+           "IDEA(i)" ; maybe someday
+           "NOTE(N)"
+           "STUDY(s)"
+           "READ(r)"
+           "WORK(w)"
+           "PROJECT(p)"
+           "PEOPLE(h)"
+           "|"
+           )
+          )
+        )
 
-          ("i" "CPB Idea" entry (file+headline "~/Dropbox/org/cpb.org" "Refile")
-           "** IDEA: %? @ %U :idea:" :empty-lines 0 :refile-targets (("~/Dropbox/org/cpb.org" :maxlevel . 8)))
-
-          ("m" "CPB Note Clipboard")
-
-          ("mm" "Paste clipboard" entry (file+headline "~/Dropbox/org/cpb.org" "Refile")
-           "** NOTE: %(simpleclip-get-contents) %? @ %U" :empty-lines 0 :refile-targets (("~/Dropbox/org/cpb.org" :maxlevel . 8)))
-
-          ("ml" "Create link and fetch title" entry (file+headline "~/Dropbox/org/cpb.org" "Refile")
-           "** [[%(simpleclip-get-contents)][%(jib/www-get-page-title (simpleclip-get-contents))]] @ %U" :empty-lines 0 :refile-targets (("~/Dropbox/org/cpb.org" :maxlevel . 8)))
-          )))
-;; (after! org
-;;   (add-to-list 'warning-suppress-types '(org-element-cache))
-;;   (add-to-list 'warning-suppress-log-types '(org-element-cache)))
-
-;; (map! "C-c a" 'org-agenda)
-
-;; (map! :after org
-;;       :map org-mode-map
-;;       :ni "C-c l" #'+ol-insert-link
-;;       :ni "C-c f" 'org-footnote-new
-;;       :ni "C-c C-k" (general-predicate-dispatch 'org-cut-subtree
-;;                       (bound-and-true-p org-capture-mode) 'org-capture-kill
-;;                       (string-prefix-p "*Org" (buffer-name)) 'org-kill-note-or-show-branches)
-;;       :ni "C-c RET" (general-predicate-dispatch 'org-insert-todo-heading
-;;                       (org-at-table-p) 'org-table-hline-and-move)
-;;       :i "<tab>" (general-predicate-dispatch 'org-cycle
-;;                    (and (modulep! :editor snippets)
-;;                         (featurep 'yasnippet)
-;;                         (yas--templates-for-key-at-point)) #'yas-expand)
-
-;;       :n "<backtab>" 'org-global-cycle
-;;       :n "<tab>" 'org-cycle
-;;       :n "C-c c" 'org-columns
-;;       :n "C-c d" 'org-dynamic-block-insert-dblock
-;;       :n "C-c n" 'org-next-link
-;;       :n "C-c p" 'org-previous-link
-;;       :n "M-n" 'org-metadown
-;;       :n "M-p" 'org-metaup
-;;       :n "RET" 'org-open-at-point
-;;       :n "t"   'org-todo
-
-;;       :ni "M-+" 'org-table-insert-column
-;;       :ni "M--" 'org-table-delete-column
-;;       :ni "C-c C-." 'org-time-stamp-inactive
-;;       :ni "C-c ." 'org-time-stamp
-;;       :ni "C-c o" 'org-table-toggle-coordinate-overlays)
-
-;; (map! :after org :localleader :map org-mode-map
-;;       :desc "Copy subtree" "y" #'org-copy-subtree
-;;       :desc "Cut subtree" "x" #'org-cut-subtree
-;;       :desc "Paste tree" "p" #'org-paste-subtree
-;;       :desc "Todo tree" "t" #'org-show-todo-tree)
-
-;; (when (modulep! +nursery)
-;;   (map! "<f12>" (general-predicate-dispatch 'timekeep-start
-;;                   (and (fboundp 'org-clocking-p) (org-clocking-p)) 'timekeep-stop)))
-
-
-;; KLUDGE: Doom is attempting to set bindings on this mode, but evil-org appears
-;; to have removed it.
-;; (after! org
-;;   (defalias 'evil-org-agenda-mode 'ignore)
-;;   (defvar evil-org-agenda-mode-map (make-sparse-keymap)))
-
-;; Remove doom's default capture templates.
-;; (remove-hook 'org-load-hook #'+org-init-capture-defaults-h)
-
-;; (after! evil-org
-;;   (setq evil-org-special-o/O '(table-row item)))
-
-;; (after! evil
-;;   (setq evil-org-key-theme '(todo navigation insert textobjects additional calendar)))
-
-;; ;; Prefer inserting headings with M-RET
-
-;; (after! org
-;;   (add-hook! 'org-metareturn-hook
-;;     (when (org-in-item-p)
-;;       (org-insert-heading current-prefix-arg)
-;;       (evil-append-line 1)
-;;       t)))
-
-;; Automatically enter insert state when inserting new headings, logbook notes
-;; or when using `org-capture'.
-
-;; (after! evil
-;;   (defadvice! +enter-evil-insert-state (&rest _)
-;;     :after '(org-insert-heading
-;;              org-insert-heading-respect-content
-;;              org-insert-todo-heading-respect-content
-;;              org-insert-todo-heading)
-;;     (when (and (bound-and-true-p evil-mode)
-;;                (called-interactively-p nil))
-;;       (evil-insert-state)))
-
-;;   (define-advice org-capture (:after (&rest _) insert-state)
-;;     (when (and (bound-and-true-p evil-mode)
-;;                (called-interactively-p nil)
-;;                (bound-and-true-p org-capture-mode))
-;;       (evil-insert-state)))
-
-;;   (add-hook 'org-log-buffer-setup-hook #'evil-insert-state))
-
-;; (autoload 'org-capture-detect "org-capture-detect")
-
-;; (after! ws-butler
-;;   (define-advice ws-butler-before-save (:around (fn &rest args) inhibit-during-capture)
-;;     (unless (org-capture-detect)
-;;       (apply fn args)))
-
-;;   (define-advice ws-butler-after-save (:around (fn &rest args) inhibit-during-capture)
-;;     (unless (org-capture-detect)
-;;       (apply fn args))))
-
-;; (define-advice org-reveal (:around (fn &rest args) org-buffers-only)
-;;   "Work around Doom errors attempting to use org-reveal in scratch buffer."
-;;   (when (derived-mode-p 'org-mode)
-;;     (apply fn args)))
-
-;; (define-advice org-align-tags (:around (fn &rest args) ignore-errors)
-;;   "Fix issue in `org-roam-promote-entire-buffer'."
-;;   (ignore-errors
-;;     (apply fn args)))
+  )

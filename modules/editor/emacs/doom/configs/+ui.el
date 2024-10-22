@@ -6,24 +6,12 @@
       doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
       doom-big-font (font-spec :family "VictorMono NPF" :size 24))
 
-
-;; (defun p67/get-clrs (id)
-;;   (plist-get base16-nix-custom-theme-colors id))
-
-;; (setq evil-emacs-state-cursor   `(,(p67/get-clrs :base0D) box)
-;;       evil-insert-state-cursor  `(,(p67/get-clrs :base0D) bar)
-;;       evil-motion-state-cursor  `(,(p67/get-clrs :base0E) box)
-;;       evil-normal-state-cursor  `(,(p67/get-clrs :base05) box)
-;;       evil-replace-state-cursor `(,(p67/get-clrs :base08) bar)
-;;       evil-visual-state-cursor  `(,(p67/get-clrs :base0) box))
-
 (use-package! base16-theme)
 (custom-theme-set-faces! 'base16-nix-custom
   `(font-lock-comment-delimiter-face :foreground "DarkGrey" :slant italic)
   `(font-lock-comment-face :foreground "DarkGrey" :slant italic)
+  `(show-paren-match :foreground "yellow" :bold t)
   )
-
-
 
 (use-package! beacon
   :config (beacon-mode 1))

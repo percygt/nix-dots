@@ -45,8 +45,11 @@
 (load! "configs/+tools.el")
 (load! "configs/+org-modern.el")
 (load! "configs/+org.el")
+(load! "configs/+org-capture.el")
 (load! "configs/+org-agenda.el")
 (load! "configs/+org-roam.el")
+(load! "configs/+org-roam-capture.el")
+(load! "configs/+org-roam-nursery.el")
 
 (pushnew! vc-directory-exclusion-list
           "node_modules"

@@ -1,8 +1,5 @@
 ;;; autoload/org.el -*- lexical-binding: t; -*-
 
-;; (defun p67/base16-colors (id)
-;;   (load! (file-name-concat doom-user-dir "themes/base16-syft-theme.el"))
-;;   (plist-get base16-tokyo-city-dark-theme-colors id))
 
 (defun p67/org-done-keep-todo ()
   "Mark an org todo item as done while keeping its former keyword intact, and archive.
