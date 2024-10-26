@@ -21,7 +21,7 @@ in
     };
     home.packages = with pkgs; [
       zbar
-      wl-clipboard-rs
+      wl-clipboard
       tofi-pass
     ];
   };

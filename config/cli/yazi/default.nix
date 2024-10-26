@@ -11,7 +11,7 @@
       fd
       fzf
       zoxide
-      wl-clipboard-rs
+      wl-clipboard
       glow
       hexyl
       miller

@@ -2,7 +2,7 @@
 {
   imports = [ inputs.wayland-pipewire-idle-inhibit.homeModules.default ];
   services = {
-    cliphist.enable = true;
+    clipman.enable = true;
 
     wlsunset = {
       enable = true;
