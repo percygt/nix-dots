@@ -24,7 +24,7 @@ in
     shellAliases.home = "tmux new -As home";
     # dependencies
     packages = with pkgs; [
-      wl-clipboard
+      wl-clipboard-rs
       moreutils
       fzf
       gitmux

@@ -4,27 +4,11 @@
 (setq org-directory orgDirectory
       org-archive-location (file-name-concat org-directory ".archive/%s::"))
 
-(defun org-capture-inbox ()
-  (interactive)
-  (call-interactively 'org-store-link)
-  (org-capture nil "i"))
-
-(defun org-capture-mail ()
-  (interactive)
-  (call-interactively 'org-store-link)
-  (org-capture nil "@"))
-
 (map! :after org
       :leader
       :prefix ("o" . "Org")
       "c" #'org-capture
-      "i" #'org-capture-inbox
-      "@" #'org-capture-mail
       )
-
-;; (use-package! mixed-pitch
-;;   :hook
-;;   (org-mode . mixed-pitch-mode))
 
 (use-package! org-appear
   :hook
@@ -58,26 +42,12 @@
   (auto-fill-mode 0)
   (variable-pitch-mode))
 
-(defun p67/log-todo-next-creation-date (&rest ignore)
-  "Log NEXT creation time in the property drawer under the key 'ACTIVATED'"
-  (when (and (string= (org-get-todo-state) "NEXT")
-             (not (org-entry-get nil "ACTIVATED")))
-    (org-entry-put nil "ACTIVATED" (format-time-string "[%Y-%m-%d]"))))
+(advice-add 'org-insert-todo-heading :after #'p67/log-todo-creation-date)
+(advice-add 'org-insert-todo-heading-respect-content :after #'p67/log-todo-creation-date)
+(advice-add 'org-insert-todo-subheading :after #'p67/log-todo-creation-date)
 
-
-(add-hook 'org-after-todo-state-change-hook #'p67/log-todo-next-creation-date)
-
-(defun my/log-todo-creation-date (&rest ignore)
-  "Log TODO creation time in the property drawer under the key 'CREATED'."
-  (when (and (org-get-todo-state)
-             (not (org-entry-get nil "CREATED")))
-    (org-entry-put nil "CREATED" (format-time-string (cdr org-time-stamp-formats)))))
-
-(advice-add 'org-insert-todo-heading :after #'my/log-todo-creation-date)
-(advice-add 'org-insert-todo-heading-respect-content :after #'my/log-todo-creation-date)
-(advice-add 'org-insert-todo-subheading :after #'my/log-todo-creation-date)
-
-(add-hook 'org-capture-before-finalize-hook #'my/log-todo-creation-date)
+(add-hook 'org-after-todo-state-change-hook #'p67/log-todo-state-properties)
+(add-hook 'org-capture-before-finalize-hook #'p67/log-todo-state-properties)
 
 ;; Refile
 (setq org-refile-use-outline-path 'file)

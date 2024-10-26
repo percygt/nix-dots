@@ -24,7 +24,7 @@ in
             keepmenu
             xsel
             ydotool
-            wl-clipboard
+            wl-clipboard-rs
           ]
         );
       sessionVariables.KPDB = kpdb;

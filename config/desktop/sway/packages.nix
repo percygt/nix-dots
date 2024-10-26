@@ -31,7 +31,7 @@
     wev
     slurp
     wdisplays
-    wl-clipboard
+    wl-clipboard-rs
     ydotool
     xdg-utils
     xwayland

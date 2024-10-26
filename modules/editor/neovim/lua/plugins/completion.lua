@@ -6,16 +6,22 @@ return {
     },
   },
   {
-    "hrsh7th/nvim-cmp",
+    --NOTE: Better nvim cmp
+    "iguanacucumber/magazine.nvim",
+    name = "nvim-cmp", -- Otherwise highlighting gets messed up
     dependencies = {
+      { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
+      { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
+      { "iguanacucumber/mag-buffer", name = "cmp-buffer" },
+      { "iguanacucumber/mag-cmdline", name = "cmp-cmdline" },
+      -- "hrsh7th/cmp-nvim-lua",
+      -- "hrsh7th/cmp-nvim-lsp",
+      -- "hrsh7th/cmp-buffer",
+      -- "hrsh7th/cmp-cmdline",
+      "FelipeLema/cmp-async-path",
       "neovim/nvim-lspconfig",
-      "hrsh7th/cmp-nvim-lua",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-git",
       "hrsh7th/cmp-emoji",
-      "FelipeLema/cmp-async-path",
       "davidsierradz/cmp-conventionalcommits",
       "chrisgrieser/cmp-nerdfont",
       "onsails/lspkind.nvim",

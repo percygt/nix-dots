@@ -60,6 +60,7 @@ in
           "doom/packages.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/packages.el";
           "doom/modules".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/modules";
           "doom/configs".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/configs";
+          "doom/autoload/".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
           "doom/private.el".text = g.editor.emacs."private.el";
           "doom/nix.el".text = ''
             ;;; nix.el --- Nixos stuff -*- lexical-binding: t -*-
