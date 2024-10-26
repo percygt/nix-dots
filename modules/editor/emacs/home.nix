@@ -115,6 +115,19 @@ in
                 :base0F "${c.base0F}")
               "All colors for Base16 Nix Custom are defined here.")
 
+            (defvar base24-nix-custom-theme-colors (
+                      append 
+                        base16-nix-custom-theme-colors 
+                        '(:base10 "${c.base10}"
+                          :base11 "${c.base11}"
+                          :base12 "${c.base12}"
+                          :base13 "${c.base13}"
+                          :base14 "${c.base14}"
+                          :base15 "${c.base15}"
+                          :base16 "${c.base16}"
+                          :base17 "${c.base17}"))
+              "All colors for Base24 Nix Custom are defined here.")
+
             ;; Define the theme
             (deftheme base16-nix-custom)
 

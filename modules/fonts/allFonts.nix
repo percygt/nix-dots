@@ -21,7 +21,7 @@ let
     source-sans-pro
     source-serif
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     joypixels
     noto-fonts-emoji
     corefonts

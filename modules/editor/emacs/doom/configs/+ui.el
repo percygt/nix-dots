@@ -7,11 +7,28 @@
       doom-big-font (font-spec :family "VictorMono NPF" :size 24))
 
 (use-package! base16-theme)
+
+(setq evil-emacs-state-cursor   `("white" bar)
+      evil-insert-state-cursor  `("Cyan" bar)
+      evil-normal-state-cursor  `("white" box)
+      evil-visual-state-cursor  `("PaleGoldenrod" box))
+
 (custom-theme-set-faces! 'base16-nix-custom
   `(font-lock-comment-delimiter-face :foreground "DarkGrey" :slant italic)
   `(font-lock-comment-face :foreground "DarkGrey" :slant italic)
   `(show-paren-match :foreground "yellow" :bold t)
+  `(org-block-begin-line :inherit fixed-pitch :height 0.8 :slant italic :background "unspecified")
   )
+
+(use-package! highlight-indent-guides
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config
+  (set-face-foreground 'highlight-indent-guides-top-character-face "SteelBlue")
+  (set-face-foreground 'highlight-indent-guides-character-face "gray20")
+  :custom
+  (highlight-indent-guides-auto-enabled nil)
+  (highlight-indent-guides-responsive 'top)
+  (highlight-indent-guides-method 'character))
 
 (use-package! beacon
   :config (beacon-mode 1))

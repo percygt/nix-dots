@@ -4,16 +4,20 @@
 #+STARTUP: fold
 :END:
 
-* WAIT saas
+* KILL Hey
 :PROPERTIES:
 :VISIBILITY: all
+:ACTIVATED: [2024-10-25]
 :END:
 - State "DUPLICATE"  from "CANCELLED"  [2024-10-22 Tue 12:42]
 - State "CANCELLED"  from "NOTE"       [2024-10-22 Tue 12:42]
 + Get variable pitch org headings on doom-themes (can't figure it out)
 + https://github.com/minad/jinx
 
-* Meta
+* IDEA Meta
+:PROPERTIES:
+:ACTIVATED: [2024-10-25]
+:END:
 This file contains my Emacs configuration. I have roughly ordered the org headings in order of importance/reliability. For example, misc packages is loaded last as I try new stuff there. Keyboard section is also important as if there's error I feel comfortable enough to go fix it.
 
 ** Dependencies
@@ -54,7 +58,7 @@ The following is exported to the top of the tangled init.el file as a note.
   "Custom file.")
 #+end_src
 
-* WAIT: Core
+* WAIT Core
 
 ** Vanilla Emacs
 #+begin_src emacs-lisp :tangle yes

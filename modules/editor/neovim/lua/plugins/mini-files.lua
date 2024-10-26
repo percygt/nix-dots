@@ -22,9 +22,9 @@ return {
       windows = {
         max_number = math.huge,
         preview = true,
-        width_focus = 50,
+        width_focus = 60,
         width_nofocus = 15,
-        width_preview = 100,
+        width_preview = 125,
       },
       mappings = {
         close = "q",

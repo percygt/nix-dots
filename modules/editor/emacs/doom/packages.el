@@ -20,6 +20,8 @@
 
 (package! beacon)
 (package! base16-theme)
+(package! writeroom-mode)
+(package! highlight-indent-guides)
 (package! hide-mode-line)
 (package! modus-themes)
 (package! mixed-pitch)

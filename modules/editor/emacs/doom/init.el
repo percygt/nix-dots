@@ -77,7 +77,7 @@
        doom
        doom-dashboard
        hl-todo
-       indent-guides
+       ;; indent-guides
        modeline
        ophints
        (ligatures +extra)
@@ -85,5 +85,5 @@
        treemacs
        (vc-gutter +pretty)
        vi-tilde-fringe
-       zen
+       ;; zen
        )

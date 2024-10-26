@@ -2,26 +2,35 @@
 
 (use-package! org-modern
   :preface
-  (defun getColor (id) (plist-get base16-nix-custom-theme-colors id))
+  (defun getColor (id) (plist-get base24-nix-custom-theme-colors id))
+  (defun modify-org-done-face ()
+    (setq org-fontify-done-headline t)
+    (set-face-attribute 'org-modern-done nil
+                        :foreground "Gray15")
+    (set-face-attribute 'org-headline-done nil
+                        :foreground "Gray15"))
   :hook (org-mode . org-modern-mode)
+  :custom-face
+  (org-modern-todo ((nil (:inherit fixed-pitch :weight bold))))
   :config
   (setq org-modern-todo-faces
         `(
-          ("TODO"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base06))
-          ("NEXT"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base07))
-          ("WAIT"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base0B))
-          ("HOLD"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base0B))
-          ("DONE"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base05) :background ,(getColor :base03) :weight bold)
-          ("NOTE"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base08) :background ,(getColor :base03) :weight bold)
-          ("DUPE"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground "tomato" :background ,(getColor :base02))
-          ("KILL"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground "tomato" :background ,(getColor :base02))
-          ("DISABLED" :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground "tomato" :background ,(getColor :base02))
-          ("IDEA"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base07))
-          ("STUDY"    :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base09))
-          ("READ"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base0A))
-          ("WORK"     :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base0C))
-          ("PROJECT"  :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base0D))
-          ("PEOPLE"   :inherit variable-pitch :distant-foreground ,(getColor :base05) :foreground ,(getColor :base01) :background ,(getColor :base0E))
+          ("TODO"     :inherit org-modern-todo :foreground ,(getColor :base0A))
+          ("NEXT"     :inherit org-modern-todo :foreground ,(getColor :base0B))
+          ("DONE"     :inherit org-modern-todo :foreground "Gray15")
+          ("WAIT"     :inherit org-modern-todo :foreground ,(getColor :base0C))
+          ("HOLD"     :inherit org-modern-todo :foreground ,(getColor :base0D))
+          ("KILL"     :inherit org-modern-todo :foreground "Gray15")
+          ("IDEA"     :inherit org-modern-todo :foreground ,(getColor :base08))
+          ("NOTE"     :inherit org-modern-todo :foreground ,(getColor :base09))
+          ("STUDY"    :inherit org-modern-todo :foreground ,(getColor :base0A))
+          ("READ"     :inherit org-modern-todo :foreground ,(getColor :base0B))
+          ("WORK"     :inherit org-modern-todo :foreground ,(getColor :base0C))
+          ("PROJECT"  :inherit org-modern-todo :foreground ,(getColor :base0D))
+          ("PEOPLE"   :inherit org-modern-todo :foreground ,(getColor :base0E))
+          ("DISABLED" :inherit org-modern-todo :foreground ,(getColor :base02))
           ))
-  (setq org-modern-fold-stars '(("◉" . "○") ("▷" . "▽") ("⯈" . "⯆") ("▹" . "▿") ("▸" . "▾")))
+
+  (eval-after-load "org"
+    (add-hook 'org-add-hook 'modify-org-done-face))
   )
