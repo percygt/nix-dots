@@ -67,28 +67,17 @@
 
 (add-hook 'org-after-todo-state-change-hook #'p67/log-todo-next-creation-date)
 
-;; (defun my/log-todo-creation-date (&rest ignore)
-;;   "Log TODO creation time in the property drawer under the key 'CREATED'."
-;;   (when (and (org-get-todo-state)
-;;              (not (org-entry-get nil "CREATED")))
-;;     (org-entry-put nil "CREATED" (format-time-string "[%U]"))))
+(defun my/log-todo-creation-date (&rest ignore)
+  "Log TODO creation time in the property drawer under the key 'CREATED'."
+  (when (and (org-get-todo-state)
+             (not (org-entry-get nil "CREATED")))
+    (org-entry-put nil "CREATED" (format-time-string (cdr org-time-stamp-formats)))))
 
-;; (advice-add 'org-insert-todo-heading :after #'my/log-todo-creation-date)
-;; (advice-add 'org-insert-todo-heading-respect-content :after #'my/log-todo-creation-date)
-;; (advice-add 'org-insert-todo-subheading :after #'my/log-todo-creation-date)
+(advice-add 'org-insert-todo-heading :after #'my/log-todo-creation-date)
+(advice-add 'org-insert-todo-heading-respect-content :after #'my/log-todo-creation-date)
+(advice-add 'org-insert-todo-subheading :after #'my/log-todo-creation-date)
 
-(defun insert-created-date(&rest ignore)
-  (insert (format-time-string (concat "\nCREATED: " "[%U]")))
-  (org-back-to-heading) ; in org-capture, this folds the entry; when inserting a heading, this moves point back to the heading line
-  (move-end-of-line()) ; when inserting a heading, this moves point to the end of the line
-  )
-(add-hook 'org-capture-before-finalize-hook
-          #'insert-created-date
-          )
-                                        ; hook it to adding headings with M-S-RET
-                                        ; do not add this to org-insert-heading-hook, otherwise this also works in non-TODO items
-                                        ; and Org-mode has no org-insert-todo-heading-hook
-(advice-add 'org-insert-todo-heading :after #'insert-created-date)
+(add-hook 'org-capture-before-finalize-hook #'my/log-todo-creation-date)
 
 ;; Refile
 (setq org-refile-use-outline-path 'file)
