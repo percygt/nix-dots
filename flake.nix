@@ -26,10 +26,6 @@
         };
       };
       homeConfigurations = {
-        "percygt@aizeft" = bldr.buildHome {
-          profile = "aizeft";
-          desktop = "sway";
-        };
         furies = bldr.buildHome {
           profile = "furies";
           desktop = "sway";

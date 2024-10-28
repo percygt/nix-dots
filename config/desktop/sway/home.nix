@@ -2,6 +2,7 @@
   imports = [
     ./pomo.nix
     ./waybar
+    ./cliphist.nix
     ./shikane.nix
     ./swaync
     ./wlsunset.nix

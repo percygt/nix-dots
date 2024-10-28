@@ -17,9 +17,6 @@ let
     mkWorkspaceKeys
     mkDirectionKeys
     ;
-  clipfzf = pkgs.writers.writeBash "clipfzf" ''
-    foot --app-id=clipboard --title=Clipboard -- clipman pick --print0 --tool=CUSTOM --tool-args="fzf --prompt 'pick > ' --bind 'tab:up' --cycle --read0"
-  '';
 in
 {
   wayland.windowManager.sway = {
@@ -35,7 +32,6 @@ in
         "Ctrl+KP_Insert" = "exec $toggle_window --id system-software-update -- ${viewRebuildLogCmd}";
         "Ctrl+KP_Delete" = "exec $toggle_window --id backup -- ${viewBackupLogCmd}";
         "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
-        "${mod}+v" = "exec $toggle_window --width 90 --height 90 --kill true --id clipboard -- '${clipfzf}'";
         "${mod}+Space" = "exec swaync-client -t -sw";
         "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
         "Ctrl+Alt+w" = "exec ${lib.getExe wez-ddterm}";

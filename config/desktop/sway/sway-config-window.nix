@@ -44,6 +44,11 @@ in
         ];
       })
       ++ (mkAppsFloat {
+        w = 90;
+        h = 90;
+        app_ids = [ "clipboard" ];
+      })
+      ++ (mkAppsFloat {
         titles = [ ".*" ];
         command = ''inhibit_idle fullscreen'';
       })
@@ -54,13 +59,6 @@ in
         ];
       })
       ++ [
-        {
-          command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
-          criteria = {
-            title = "^Media viewer$";
-            app_id = "org.telegram.desktop";
-          };
-        }
         {
           command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
           criteria = {

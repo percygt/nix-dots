@@ -30,7 +30,6 @@
 
       '';
     })
-    clipman
     swayidle
     brightnessctl
     autotiling
