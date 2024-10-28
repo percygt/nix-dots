@@ -2,21 +2,26 @@
   imports = [
     ./pomo.nix
     ./waybar
+    ./shikane.nix
     ./swaync
-    ./services.nix
+    ./wlsunset.nix
+    ./wayland-pipewire-idle-inhibit.nix
+    ./polkit-gnome-authentication.nix
+    ./ddapp.nix
     ./kanshi.nix
     ./packages.nix
     ./swayidle.nix
     ./swaylock.nix
     ./swappy.nix
     ./tofi.nix
-    ./config.nix
-    ./extraConfig.nix
-    ./extraSessionCommands.nix
+    ./sway-config.nix
+    ./sway-extraConfig.nix
+    ./sway-extraSessionCommands.nix
   ];
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "sway";
     NIXOS_OZONE_WL = "1";
+    GTK_USE_PORTAL = "0";
   };
   wayland.windowManager.sway = {
     enable = true;

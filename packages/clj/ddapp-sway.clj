@@ -57,8 +57,8 @@
 (defn start []
   (p/process ["swaymsg" (str/join " " (cons "exec" args))]))
 
-(defn focus []
-  (p/sh ["swaymsg" (str criteria " focus, move window to workspace current, " position-cmds)]))
+(defn show []
+  (p/sh ["swaymsg" (str criteria " show, move window to workspace current, " position-cmds)]))
 
 (defn hide []
   (p/sh ["swaymsg" (str criteria (if (:kill opts) " kill" " move scratchpad"))]))
@@ -72,5 +72,5 @@
 (if-let [node (get-node)]
   (if (:focused node)
     (hide)
-    (focus))
+    (show))
   (start))

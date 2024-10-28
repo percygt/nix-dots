@@ -65,12 +65,14 @@
 
     theme =
       (builtins.fromTOML (
-        builtins.readFile (
-          pkgs.fetchurl {
-            url = "https://raw.githubusercontent.com/catppuccin/yazi/main/themes/mocha.toml";
-            sha256 = "0bhccaf3m3mhhqwfxhwds1rhb228pxj014mrd5hm7ys52jkqljxb";
+        builtins.readFile "${
+          pkgs.fetchFromGitHub {
+            owner = "catppuccin";
+            repo = "yazi";
+            rev = "54d868433a0c2f3e1651114136ea088eef72a4a7";
+            hash = "sha256-dMXSXS3Scj1LZZqqnvvC37VWSyjSQZg9thvjcm2iNSM=";
           }
-        )
+        }/themes/macchiato/catppuccin-macchiato-teal.toml"
       ))
       // {
         status = {

@@ -33,13 +33,13 @@ in
           profile
           isIso
           ;
+        bldr = "system";
       };
-      homeArgs = mkArgs.args;
     in
     nixosSystem {
       inherit system modules;
       specialArgs = {
-        inherit homeArgs;
+        homeArgs = mkArgs.args;
       } // mkArgs.args;
     };
 
@@ -61,6 +61,7 @@ in
           profile
           isGeneric
           ;
+        bldr = "home";
       };
     in
     homeManagerConfiguration {

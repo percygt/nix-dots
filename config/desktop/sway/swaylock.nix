@@ -14,7 +14,6 @@ in
       font = f.name;
       image = "${a.wallpaper}";
       indicator-idle-visible = false;
-      # font-size = 24;
       screenshots = true;
       clock = true;
       effect-vignette = "0.5:0.25 ";
@@ -23,8 +22,6 @@ in
       indicator = true;
       indicator-radius = 250;
       indicator-thickness = 30;
-      # indicator-x-position = 965;
-      # indicator-y-position = 540;
       effect-blur = "3x5";
       scaling = "fill";
       grace = 2;

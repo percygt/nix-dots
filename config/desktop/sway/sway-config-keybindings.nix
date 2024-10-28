@@ -17,12 +17,16 @@ let
     mkWorkspaceKeys
     mkDirectionKeys
     ;
+  clipfzf = pkgs.writers.writeBash "clipfzf" ''
+    foot --app-id=clipboard --title=Clipboard -- clipman pick --print0 --tool=CUSTOM --tool-args="fzf --prompt 'pick > ' --bind 'tab:up' --cycle --read0"
+  '';
 in
 {
   wayland.windowManager.sway = {
     extraConfigEarly = ''
       set {
         $maximize move position center, resize set width 100 ppt height 100 ppt
+        $default_size --width 80ppt --height 80ppt
         $toggle_window ${lib.getExe pkgs.toggle-sway-window}
       }
     '';
@@ -31,6 +35,7 @@ in
         "Ctrl+KP_Insert" = "exec $toggle_window --id system-software-update -- ${viewRebuildLogCmd}";
         "Ctrl+KP_Delete" = "exec $toggle_window --id backup -- ${viewBackupLogCmd}";
         "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
+        "${mod}+v" = "exec $toggle_window --width 90 --height 90 --kill true --id clipboard -- '${clipfzf}'";
         "${mod}+Space" = "exec swaync-client -t -sw";
         "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
         "Ctrl+Alt+w" = "exec ${lib.getExe wez-ddterm}";
@@ -40,9 +45,8 @@ in
         "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
         "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
         "${mod}+m" = "exec $toggle_window --id btop -- foot --title=SystemMonitor --app-id=btop btop";
-        "${mod}+v" = "exec $toggle_window --id pavucontrol -- pavucontrol";
         "${mod}+r" = "exec $toggle_window --id info.febvre.Komikku -- info.febvre.Komikku";
-        "${mod}+n" = "exec $toggle_window --id wpa_gui -- wpa_gui";
+        "${mod}+Shift+v" = "exec $toggle_window --id org.pulseaudio.pavucontrol -- pavucontrol";
         "${mod}+Shift+i" = "exec $toggle_window --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
         "${mod}+Shift+d" = "exec $toggle_window --id gnome-disks -- gnome-disks";
         "${mod}+b" = "exec $toggle_window --id .blueman-manager-wrapped -- blueman-manager";

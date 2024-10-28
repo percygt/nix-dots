@@ -8,6 +8,12 @@ let
   g = config._general;
   wpa = config.modules.core.network.wpa.enable;
   cfg = config.modules.core.network;
+  networkApplet =
+    if wpa then
+      "exec $toggle_window --id wpa_gui -- wpa_gui"
+    else
+      "exec $toggle_window --id nm-connection-editor -- nm-connection-editor";
+
 in
 {
   options.modules.core.network = {
@@ -22,6 +28,24 @@ in
   config = lib.mkIf cfg.enable (
     lib.mkMerge [
       { sops.secrets."wireless.env".neededForUsers = true; }
+      (lib.mkIf config.programs.sway.enable {
+        home-manager.users.${g.username} = {
+          imports = [
+            (
+              { config, ... }:
+              let
+                cfg = config.wayland.windowManager.sway.config;
+                mod = cfg.modifier;
+              in
+              {
+                wayland.windowManager.sway.config.keybindings = {
+                  "${mod}+n" = networkApplet;
+                };
+              }
+            )
+          ];
+        };
+      })
       (lib.mkIf wpa {
         users.groups.network = { };
         users.users.${g.username}.extraGroups = [ "network" ];

@@ -60,18 +60,20 @@ in
           "doom/packages.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/packages.el";
           "doom/modules".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/modules";
           "doom/configs".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/configs";
-          "doom/autoload/".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
+          "doom/autoload".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
           "doom/private.el".text = g.editor.emacs."private.el";
-          "doom/nix.el".text = ''
-            ;;; nix.el --- Nixos stuff -*- lexical-binding: t -*-
-            ;;; Commentary:
-            ;;; Code:
+          "doom/nix.el".text =
+            # lisp
+            ''
+              ;;; nix.el --- Nixos stuff -*- lexical-binding: t -*-
+              ;;; Commentary:
+              ;;; Code:
 
-            ;; treesit grammars path
-            (add-to-list 'treesit-extra-load-path "${cfg.package.pkgs.treesit-grammars.with-all-grammars}/lib")
+              ;; treesit grammars path
+              (add-to-list 'treesit-extra-load-path "${cfg.package.pkgs.treesit-grammars.with-all-grammars}/lib")
 
-            ;; Dirvish quickacces directories
-            (after! dirvish
+              ;; Dirvish quickacces directories
+              (require 'dirvish)
               (setq dirvish-quick-access-entries
                      `(("o" "${g.orgDirectory}"                         "Org")
                        ("n" "${g.orgDirectory}/notes"                   "Notes")
@@ -79,69 +81,72 @@ in
                        ("f" "${g.flakeDirectory}"                       "Flake Directory")
                        ("s" "${g.secretsDirectory}"                     "Secrets Directory")
                        ("d" "${g.dataDirectory}"                        "Data directory")
-                       )))
+                       ))
 
-            (provide 'nix)
-          '';
-          "doom/themes/base16-nix-custom-theme.el".text = ''
-            ;; base16-nix-custom-theme.el -- A base16 colorscheme
+              (provide 'nix)
+              ;;; nix.el ends here
+            '';
+          "doom/themes/base16-nix-custom-theme.el".text =
+            # lisp
+            ''
+              ;; base16-nix-custom-theme.el -- A base16 colorscheme
 
-            ;;; Commentary:
-            ;; Base16: (https://github.com/tinted-theming/home)
+              ;;; Commentary:
+              ;; Base16: (https://github.com/tinted-theming/home)
 
-            ;;; Authors:
-            ;; Scheme: percygt (github.com/percygt)
-            ;; Template: PercyGT
+              ;;; Authors:
+              ;; Scheme: percygt (github.com/percygt)
+              ;; Template: PercyGT
 
-            ;;; Code:
+              ;;; Code:
 
-            (require 'base16-theme)
+              (require 'base16-theme)
 
-            (defvar base16-nix-custom-theme-colors
-              '(:base00 "${c.base00}"
-                :base01 "${c.base01}"
-                :base02 "${c.base02}"
-                :base03 "${c.base03}"
-                :base04 "${c.base04}"
-                :base05 "${c.base05}"
-                :base06 "${c.base06}"
-                :base07 "${c.base07}"
-                :base08 "${c.base08}"
-                :base09 "${c.base09}"
-                :base0A "${c.base0A}"
-                :base0B "${c.base0B}"
-                :base0C "${c.base0C}"
-                :base0D "${c.base0D}"
-                :base0E "${c.base0E}"
-                :base0F "${c.base0F}")
-              "All colors for Base16 Nix Custom are defined here.")
+              (defvar base16-nix-custom-theme-colors
+                '(:base00 "${c.base00}"
+                  :base01 "${c.base01}"
+                  :base02 "${c.base02}"
+                  :base03 "${c.base03}"
+                  :base04 "${c.base04}"
+                  :base05 "${c.base05}"
+                  :base06 "${c.base06}"
+                  :base07 "${c.base07}"
+                  :base08 "${c.base08}"
+                  :base09 "${c.base09}"
+                  :base0A "${c.base0A}"
+                  :base0B "${c.base0B}"
+                  :base0C "${c.base0C}"
+                  :base0D "${c.base0D}"
+                  :base0E "${c.base0E}"
+                  :base0F "${c.base0F}")
+                "All colors for Base16 Nix Custom are defined here.")
 
-            (defvar base24-nix-custom-theme-colors (
-                      append 
-                        base16-nix-custom-theme-colors 
-                        '(:base10 "${c.base10}"
-                          :base11 "${c.base11}"
-                          :base12 "${c.base12}"
-                          :base13 "${c.base13}"
-                          :base14 "${c.base14}"
-                          :base15 "${c.base15}"
-                          :base16 "${c.base16}"
-                          :base17 "${c.base17}"))
-              "All colors for Base24 Nix Custom are defined here.")
+              (defvar base24-nix-custom-theme-colors (
+                        append 
+                          base16-nix-custom-theme-colors 
+                          '(:base10 "${c.base10}"
+                            :base11 "${c.base11}"
+                            :base12 "${c.base12}"
+                            :base13 "${c.base13}"
+                            :base14 "${c.base14}"
+                            :base15 "${c.base15}"
+                            :base16 "${c.base16}"
+                            :base17 "${c.base17}"))
+                "All colors for Base24 Nix Custom are defined here.")
 
-            ;; Define the theme
-            (deftheme base16-nix-custom)
+              ;; Define the theme
+              (deftheme base16-nix-custom)
 
-            ;; Add all the faces to the theme
-            (base16-theme-define 'base16-nix-custom base16-nix-custom-theme-colors)
+              ;; Add all the faces to the theme
+              (base16-theme-define 'base16-nix-custom base16-nix-custom-theme-colors)
 
-            ;; Mark the theme as provided
-            (provide-theme 'base16-nix-custom)
+              ;; Mark the theme as provided
+              (provide-theme 'base16-nix-custom)
 
-            (provide 'base16-nix-custom-theme)
+              (provide 'base16-nix-custom-theme)
 
-            ;;; base16-nix-custom-theme.el ends here
-          '';
+              ;;; base16-nix-custom-theme.el ends here
+            '';
         };
       };
     })

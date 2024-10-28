@@ -11,9 +11,9 @@ let
 in
 {
   imports = [
-    ./startup.nix
-    ./window.nix
-    ./keybindings.nix
+    ./sway-config-startup.nix
+    ./sway-config-window.nix
+    ./sway-config-keybindings.nix
   ];
   wayland.windowManager.sway.config = rec {
     fonts = {

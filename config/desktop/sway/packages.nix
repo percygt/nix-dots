@@ -1,29 +1,39 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    (pkgs.writers.writeBashBin "ddapp" { }
-      #bash
-      ''
-        while getopts p:c: flag
-        do
-            case "''${flag}" in
-                p) params=''${OPTARG};;
-                c) command=''${OPTARG};;
-            esac
-        done
-        if swaymsg "$params scratchpad show"
-        then
-            swaymsg "$params resize set 100ppt 100ppt , move position center"
-        else
-            swaymsg "for_window $params 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
-            exec $command
-        fi
-      ''
-    )
+    (pkgs.writeShellApplication {
+      name = "ocr";
+      runtimeInputs = with pkgs; [
+        tesseract
+        grim
+        slurp
+        coreutils
+      ];
+      text = ''
+        echo "Generating a random ID..."
+        id=$(tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w 6 | head -n 1 || true)
+        echo "Image ID: $id"
+
+        echo "Taking screenshot..."
+        grim -g "$(slurp -w 0 -b eebebed2)" /tmp/ocr-"$id".png
+
+        echo "Running OCR..."
+        tesseract /tmp/ocr-"$id".png - | wl-copy
+        echo -en "File saved to /tmp/ocr-'$id'.png\n"
+
+
+        echo "Sending notification..."
+        notify-send "OCR " "Text copied!"
+
+        echo "Cleaning up..."
+        rm /tmp/ocr-"$id".png -vf
+
+      '';
+    })
+    clipman
     swayidle
     brightnessctl
     autotiling
-    wlsunset
     grim
     kanshi
     libnotify

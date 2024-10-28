@@ -5,7 +5,8 @@
   profile,
   isGeneric ? false,
   desktop ? null,
-  isIso,
+  isIso ? false,
+  bldr,
 }:
 rec {
 
@@ -13,6 +14,7 @@ rec {
 
   args = {
     inherit
+      bldr
       self
       inputs
       outputs
