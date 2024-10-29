@@ -95,56 +95,6 @@ in
           tmux new-session -As home
         fi
       '';
-  wez-wrapped-ddterm =
-    pkgs.writers.writeBashBin "wezddterm"
-      {
-        makeWrapperArgs = [
-          "--prefix"
-          "PATH"
-          ":"
-          "${lib.makeBinPath [
-            pkgs.wezterm_wrapped
-          ]}"
-        ];
-      }
-      #bash
-      ''
-        TERM_PIDFILE="/tmp/wez-ddterm"
-        TERM_PID="$(<"$TERM_PIDFILE")"
-        if swaymsg "[ pid=$TERM_PID ] scratchpad show"
-        then
-            swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
-        else
-            echo "$$" > "$TERM_PIDFILE"
-            swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
-            exec wezterm
-        fi
-      '';
-  wez-nightly-ddterm =
-    pkgs.writers.writeBashBin "wezddterm"
-      {
-        makeWrapperArgs = [
-          "--prefix"
-          "PATH"
-          ":"
-          "${lib.makeBinPath [
-            pkgs.wezterm
-          ]}"
-        ];
-      }
-      #bash
-      ''
-        TERM_PIDFILE="/tmp/wez-ddterm"
-        TERM_PID="$(<"$TERM_PIDFILE")"
-        if swaymsg "[ pid=$TERM_PID ] scratchpad show"
-        then
-            swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
-        else
-            echo "$$" > "$TERM_PIDFILE"
-            swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
-            exec wezterm
-        fi
-      '';
   foot-ddterm =
     pkgs.writers.writeBashBin "footddterm"
       {

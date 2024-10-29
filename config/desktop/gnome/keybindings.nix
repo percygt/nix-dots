@@ -198,12 +198,6 @@
       name = "Firefox Dev";
     };
 
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
-      binding = "<Super>KP_Insert";
-      command = "wezterm start -- fish -c br";
-      name = "Wezterm File";
-    };
-
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7" = {
       binding = "<Alt><Super>KP_Enter";
       command = "brave-browser --profile-directory=\"Default\"";

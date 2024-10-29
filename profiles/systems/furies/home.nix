@@ -27,8 +27,6 @@ in
     };
   };
 
-  terminal.wezterm.enable = true;
-
   dev.git.ghq.enable = true;
 
   modules.security = {
