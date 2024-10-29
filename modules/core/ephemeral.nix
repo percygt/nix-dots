@@ -74,7 +74,7 @@ in
             mode = "u=rwx,g=rx,o=";
           }
         ];
-        files = [ "/etc/machine-id" ];
+        # files = [ "/etc/machine-id" ];
       };
     };
   };

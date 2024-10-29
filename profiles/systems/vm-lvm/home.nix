@@ -24,11 +24,6 @@ in
 
   editor.neovim.enable = true;
 
-  terminal = {
-    foot.enable = true;
-    wezterm.enable = true;
-  };
-
   modules.cli = {
     atuin.enable = true;
     direnv.enable = true;

@@ -22,11 +22,6 @@ in
     };
   };
 
-  terminal = {
-    wezterm.enable = true;
-    foot.enable = true;
-  };
-
   modules.security = {
     pass.enable = true;
     keepass.enable = true;

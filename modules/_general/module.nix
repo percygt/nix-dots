@@ -98,6 +98,7 @@
             s.gpg.package
             s.ssh.package
             d.git.package
+            just
             nfs-utils
             iputils
             coreutils-full

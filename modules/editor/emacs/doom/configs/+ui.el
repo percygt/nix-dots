@@ -30,6 +30,18 @@
   (highlight-indent-guides-responsive 'top)
   (highlight-indent-guides-method 'character))
 
+(use-package! keycast
+  :custom
+  (keycast-mode-line-format "%k%c%R ")
+  (keycast-substitute-alist
+   '((keycast-log-erase-buffer nil nil)
+     (transient-update         nil nil)
+     (self-insert-command "." "Typing…")
+     (org-self-insert-command "." "Typing…")
+     (mwheel-scroll nil nil)
+     (mouse-movement-p nil nil)
+     (mouse-event-p nil nil))))
+
 (use-package! beacon
   :config (beacon-mode 1))
 

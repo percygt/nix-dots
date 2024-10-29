@@ -2,6 +2,7 @@
 let
   t = config.modules.theme;
   c = t.colors.withHashtag;
+  f = config.modules.fonts.shell;
 in
 {
   dconf.settings = {

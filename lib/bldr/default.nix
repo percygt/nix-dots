@@ -7,13 +7,16 @@ let
     outputs.nixosModules.default
   ];
 in
-{
+rec {
+  supportedSystems = [
+    "x86_64-linux"
+    "aarch64-linux"
+  ];
   forAllSystems =
     function:
-    inputs.nixpkgs.lib.genAttrs [
-      "x86_64-linux"
-      "aarch64-linux"
-    ] (system: function inputs.nixpkgs.legacyPackages.${system});
+    inputs.nixpkgs.lib.genAttrs supportedSystems (
+      system: function inputs.nixpkgs.legacyPackages.${system}
+    );
 
   buildSystem =
     {

@@ -6,6 +6,16 @@
       bldr = import ./lib { inherit self inputs; };
     in
     {
+      checks = inputs.nixpkgs.lib.genAttrs bldr.supportedSystems (
+        system: import ./checks { inherit inputs system; }
+      );
+      devShells = inputs.nixpkgs.lib.genAttrs bldr.supportedSystems (
+        system:
+        import ./shell.nix {
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          checks = self.checks.${system};
+        }
+      );
       packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
       formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
       overlays = import ./overlays { inherit inputs; };
@@ -16,25 +26,25 @@
           profile = "aizeft";
           desktop = "sway";
         };
-        minimal = bldr.buildSystem {
-          profile = "minimal";
-          isIso = true;
-        };
-        graphical = bldr.buildSystem {
-          profile = "graphical";
-          isIso = true;
-        };
+        # minimal = bldr.buildSystem {
+        #   profile = "minimal";
+        #   isIso = true;
+        # };
+        # graphical = bldr.buildSystem {
+        #   profile = "graphical";
+        #   isIso = true;
+        # };
       };
-      homeConfigurations = {
-        furies = bldr.buildHome {
-          profile = "furies";
-          desktop = "sway";
-        };
-        fates = bldr.buildHome {
-          profile = "fates";
-          desktop = "gnome";
-        };
-      };
+      # homeConfigurations = {
+      #   furies = bldr.buildHome {
+      #     profile = "furies";
+      #     desktop = "sway";
+      #   };
+      #   fates = bldr.buildHome {
+      #     profile = "fates";
+      #     desktop = "gnome";
+      #   };
+      # };
     };
 
   inputs = {
@@ -80,6 +90,9 @@
 
     tt-schemes.url = "github:tinted-theming/schemes";
     tt-schemes.flake = false;
+
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
     general.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     general.flake = false;

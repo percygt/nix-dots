@@ -3,13 +3,11 @@
   lib,
   config,
   libx,
-  isGeneric,
   ...
 }:
 let
   cfg = config.wayland.windowManager.sway.config;
   mod = cfg.modifier;
-  wez-ddterm = if isGeneric then pkgs.wez-wrapped-ddterm else pkgs.wez-nightly-ddterm;
   inherit (libx) sway;
   inherit (sway)
     viewRebuildLogCmd
@@ -22,8 +20,6 @@ in
   wayland.windowManager.sway = {
     extraConfigEarly = ''
       set {
-        $maximize move position center, resize set width 100 ppt height 100 ppt
-        $default_size --width 80ppt --height 80ppt
         $toggle_window ${lib.getExe pkgs.toggle-sway-window}
       }
     '';
@@ -34,10 +30,8 @@ in
         "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
         "${mod}+Space" = "exec swaync-client -t -sw";
         "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
-        "Ctrl+Alt+w" = "exec ${lib.getExe wez-ddterm}";
         "${mod}+w" = "exec ${lib.getExe pkgs.foot-ddterm}";
-        "Ctrl+Alt+return" = "exec ${lib.getExe pkgs.ptyxis}";
-        # "Ctrl+Alt+return" = "exec ${lib.getExe config.programs.wezterm.package}";
+        "Ctrl+Alt+return" = "exec ${lib.getExe pkgs.tilix}";
         "${mod}+Return" = "exec ${lib.getExe pkgs.foot}";
         "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
         "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
@@ -52,7 +46,7 @@ in
         "${mod}+Shift+p" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
         "${mod}+f" = "exec $toggle_window --id yazi -- foot --app-id=yazi fish -c yazi ~";
 
-        "${mod}+Shift+f" = "exec $toggle_window --id nemo -- nemo ~";
+        # "${mod}+Shift+f" = "exec $toggle_window --id nemo -- nemo ~";
         "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
         "${mod}+Tab" = "workspace back_and_forth";
         "${mod}+Backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";

@@ -21,7 +21,10 @@ let
     emacsclient -F '((name . "DoomConfig"))' -c ${moduleEmacs}/doom;
   '';
   emacsqa = pkgs.writers.writeBash "emacsqa" ''
-    emacsclient -c -e '(dirvish-quick-access)' -F '((name . "Emacs Quick Access"))' 
+    emacsclient -c -e '(dirvish-quick-access)' -F '((name . "Emacs Quick Access"))'
+  '';
+  emacsfiles = pkgs.writers.writeBash "emacsfiles" ''
+    emacsclient -c -e '(dirvish)' -F '((name . "Files"))'
   '';
 in
 {
@@ -30,8 +33,10 @@ in
     (lib.mkIf (swayCfg.enable && cfg.enable) {
       wayland.windowManager.sway.config = {
         keybindings = {
-          "${mod}+q" = "exec ddapp -p '[app_id=emacs title=^Emacs\sQuick\sAccess$]' -c ${emacsqa}";
+          "${mod}+Shift+f" = "exec ddapp -p '[app_id=emacs title=^Files$]' -c ${emacsfiles}";
+          "${mod}+q" = "exec ddapp -p '[app_id=emacs title=^Emacs Quick Access.*]' -c ${emacsqa}";
           "${mod}+Shift+e" = "exec ddapp -p '[app_id=emacs title=^DoomConfig$]' -c ${doomconfig}";
+          "${mod}+e" = "exec ddapp -p '[app_id=emacs title=^Notes$]' -c emacs";
         };
       };
     })
@@ -122,8 +127,8 @@ in
                 "All colors for Base16 Nix Custom are defined here.")
 
               (defvar base24-nix-custom-theme-colors (
-                        append 
-                          base16-nix-custom-theme-colors 
+                        append
+                          base16-nix-custom-theme-colors
                           '(:base10 "${c.base10}"
                             :base11 "${c.base11}"
                             :base12 "${c.base12}"

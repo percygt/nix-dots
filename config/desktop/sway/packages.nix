@@ -21,13 +21,11 @@
         tesseract /tmp/ocr-"$id".png - | wl-copy
         echo -en "File saved to /tmp/ocr-'$id'.png\n"
 
-
         echo "Sending notification..."
-        notify-send "OCR " "Text copied!"
+        notify-send -i diodon "OCR " "Text copied!"
 
         echo "Cleaning up..."
         rm /tmp/ocr-"$id".png -vf
-
       '';
     })
     swayidle

@@ -19,6 +19,7 @@
 ;;; ui
 
 (package! beacon)
+(package! keycast)
 (package! base16-theme)
 (package! writeroom-mode)
 (package! highlight-indent-guides)

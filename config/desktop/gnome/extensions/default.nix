@@ -161,7 +161,6 @@ in
     };
 
     "org/gnome/shell/extensions/quake-mode/accelerators" = {
-      app-1 = "org.wezfurlong.wezterm.desktop";
       app-2 = "org.codeberg.dnkl.foot.desktop";
     };
 
@@ -613,7 +612,6 @@ in
     "org/gnome/shell/extensions/rounded-window-corners" = {
       black-list = [
         "com.github.amezin.ddterm"
-        "org.wezfurlong.wezterm"
         "foot"
       ];
       border-color = mkTuple [

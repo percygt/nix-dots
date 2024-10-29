@@ -62,7 +62,6 @@ in
           mode = "0755";
         }
       ];
-      files = [ "/etc/machine-id" ];
     };
   };
 

@@ -40,7 +40,6 @@
         class = "obsidian";
         title = "Obsidian";
       }
-      { class = "org.wezfurlong.wezterm"; }
       { class = "quake-terminal"; }
       { class = "foot"; }
       { class = "veracrypt"; }
@@ -49,7 +48,6 @@
     skiptaskbarhidden = [
       { class = "foot"; }
       { class = "veracrypt"; }
-      { class = "org.wezfurlong.wezterm"; }
       { class = "quake-terminal"; }
       { class = "gnome-terminal-server"; }
     ];

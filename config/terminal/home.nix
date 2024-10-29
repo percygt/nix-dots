@@ -1,6 +1,7 @@
 {
   imports = [
     ./foot.nix
-    ./ptyxis.nix
+    ./tilix.nix
+    ./xfce4-terminal.nix
   ];
 }

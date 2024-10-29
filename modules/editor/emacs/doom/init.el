@@ -59,6 +59,7 @@
 
        :term
        eshell
+       vterm
 
        :tools
        direnv
@@ -81,7 +82,7 @@
        modeline
        ophints
        (ligatures +extra)
-       (popup +defaults +all)
+       (popup +defaults)
        treemacs
        (vc-gutter +pretty)
        vi-tilde-fringe

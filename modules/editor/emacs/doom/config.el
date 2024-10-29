@@ -17,6 +17,10 @@
 
 (plist-put +popup-defaults :quit t)
 
+(add-hook
+ 'server-after-make-frame-hook (lambda ()
+                                 (find-file (file-name-concat org-directory "Inbox.org"))))
+
 (map! :mn "WW" #'save-buffer
       :mn "D" #'doom/save-and-kill-buffer
       :mn "M-<backspace>" #'doom/kill-buried-buffers)
@@ -27,7 +31,7 @@
                                               (interactive)
                                               (switch-to-buffer (other-buffer (current-buffer))))
       :desc "Open buffer menu" "," #'switch-to-buffer
-      :desc "Files" "f" #'dirvish)
+      :desc "Files" "f" #'dirvish-dwim)
 
 (map! :leader
       :after org-roam
