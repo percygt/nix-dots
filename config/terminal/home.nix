@@ -1,6 +1,6 @@
 {
   imports = [
     ./foot.nix
-    ./wezterm
+    ./ptyxis.nix
   ];
 }

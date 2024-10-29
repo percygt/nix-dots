@@ -2,7 +2,7 @@
   pkgs,
   lib,
   config,
-  # isGeneric,
+  isGeneric,
   ...
 }:
 let
@@ -37,7 +37,7 @@ in
   };
   programs.wezterm = {
     enable = true;
-    # package = if isGeneric then pkgs.wezterm_wrapped else pkgs.wezterm_nightly;
+    package = if isGeneric then pkgs.wezterm_wrapped else pkgs.wezterm_nightly;
     colorSchemes = {
       Syft = {
         ansi = [

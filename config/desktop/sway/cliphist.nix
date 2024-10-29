@@ -2,16 +2,20 @@
 let
   swayCfg = config.wayland.windowManager.sway;
   mod = swayCfg.config.modifier;
-  clipfzf = pkgs.writers.writeBash "clipfzf" ''
-    foot --app-id=clipboard --title=Clipboard -- cliphist list | fzf  -d '\t' --with-nth 2 --prompt 'pick > ' --bind 'tab:up' --cycle | cliphist decode | wl-copy
+  cliphistFzfSixel = pkgs.writers.writeBash "cliphistFzfSixel" ''
+    foot --app-id=clipboard --title=Clipboard -- cliphist-fzf-sixel
   '';
 in
 {
   services.cliphist.enable = true;
-  home.packages = [ pkgs.cliphist ];
+  home.packages = with pkgs; [
+    cliphist
+    chafa
+    libsixel
+  ];
   wayland.windowManager.sway.config = {
     keybindings = {
-      "${mod}+v" = "exec $toggle_window --width 90ppt --height 90 --kill true --id clipboard -- '${clipfzf}'";
+      "${mod}+v" = "exec $toggle_window --width 90 --height 90 --kill true --id clipboard -- ${cliphistFzfSixel}";
     };
   };
 }

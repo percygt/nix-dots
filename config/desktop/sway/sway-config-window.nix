@@ -38,6 +38,7 @@ in
         h = 50;
         app_ids = [
           "wpa_gui"
+          "nm-connection-editor"
           "udiskie"
           "pavucontrol"
           "\.?blueman-manager(-wrapped)?"

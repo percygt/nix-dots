@@ -36,7 +36,8 @@ in
         "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
         "Ctrl+Alt+w" = "exec ${lib.getExe wez-ddterm}";
         "${mod}+w" = "exec ${lib.getExe pkgs.foot-ddterm}";
-        "Ctrl+Alt+return" = "exec ${lib.getExe config.programs.wezterm.package}";
+        "Ctrl+Alt+return" = "exec ${lib.getExe pkgs.ptyxis}";
+        # "Ctrl+Alt+return" = "exec ${lib.getExe config.programs.wezterm.package}";
         "${mod}+Return" = "exec ${lib.getExe pkgs.foot}";
         "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
         "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
@@ -50,6 +51,7 @@ in
         "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C | xargs swaymsg exec --";
         "${mod}+Shift+p" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
         "${mod}+f" = "exec $toggle_window --id yazi -- foot --app-id=yazi fish -c yazi ~";
+
         "${mod}+Shift+f" = "exec $toggle_window --id nemo -- nemo ~";
         "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
         "${mod}+Tab" = "workspace back_and_forth";
@@ -75,7 +77,9 @@ in
         "Ctrl+Alt+l" = "workspace next";
         "Ctrl+Alt+h" = "workspace prev";
 
-        "Ctrl+Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";
+        "${mod}+Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";
+        "Ctrl+Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png";
+        "Alt+Print" = "exec ocr";
 
         # Backlight:
         XF86MonBrightnessUp = "exec brightnessctl set 5%+";
