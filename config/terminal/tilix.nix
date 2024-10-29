@@ -19,7 +19,7 @@ in
       bold-color-set = false;
       dim-transparency-percent = 0;
       badge-color-set = false;
-      background-transparency-percent = builtins.floor (1 - (t.opacity * 100));
+      background-transparency-percent = builtins.floor ((1 - t.opacity) * 100);
       foreground-color = c.base05;
       background-color = c.base00;
       cursor-background-color = c.base07;

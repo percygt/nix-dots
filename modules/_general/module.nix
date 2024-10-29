@@ -64,9 +64,12 @@
             s.gpg.package
             s.ssh.package
             d.git.package
+            nfs-utils
             iputils
             coreutils-full
             findutils
+            pciutils
+            usbutils
             util-linux
             acpi
             procps
@@ -89,23 +92,11 @@
         default =
           let
             s = config._general.security;
-            d = config._general.dev;
           in
           with pkgs;
           [
-            s.sops.package
             s.keepass.package
-            s.gpg.package
-            s.ssh.package
-            d.git.package
             just
-            nfs-utils
-            iputils
-            coreutils-full
-            findutils
-            pciutils
-            usbutils
-            util-linux
             wirelesstools
             ntfs3g
             psmisc
@@ -124,7 +115,8 @@
             unzip
             gzip
             unrar-free
-          ];
+          ]
+          ++ config._general.system.envPackages;
       };
     };
 

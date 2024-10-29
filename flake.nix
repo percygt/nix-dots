@@ -6,6 +6,10 @@
       bldr = import ./lib { inherit self inputs; };
     in
     {
+      packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
+      formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
+      overlays = import ./overlays { inherit inputs; };
+      templates = import ./templates;
       checks = inputs.nixpkgs.lib.genAttrs bldr.supportedSystems (
         system: import ./checks { inherit inputs system; }
       );
@@ -16,20 +20,16 @@
           checks = self.checks.${system};
         }
       );
-      packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
-      formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
-      overlays = import ./overlays { inherit inputs; };
-      templates = import ./templates;
       nixosModules.default = ./modules;
       nixosConfigurations = {
         aizeft = bldr.buildSystem {
           profile = "aizeft";
           desktop = "sway";
         };
-        # minimal = bldr.buildSystem {
-        #   profile = "minimal";
-        #   isIso = true;
-        # };
+        minimal = bldr.buildSystem {
+          profile = "minimal";
+          isIso = true;
+        };
         # graphical = bldr.buildSystem {
         #   profile = "graphical";
         #   isIso = true;

@@ -7,7 +7,7 @@ in
   home.packages = with pkgs; [ tofi ];
   xdg.configFile = {
     "tofi/config".text = ''
-      # vim: ft=dosini
+      # vim: set ft=dosini :
       ; BEHAVIOR OPTIONS
       hide-cursor = true
       text-cursor = false

@@ -26,38 +26,37 @@ return {
           duration = 100,
           delay = 100,
         },
-        -- NOTE: buggy -- using indent-blankline as replacement
-        -- indent = {
-        --   enable = true,
-        --   style = { c.base03 },
-        --   chars = {
-        --     "│",
-        --   },
-        -- },
+        indent = {
+          enable = true,
+          style = { c.base03 },
+          chars = {
+            "│",
+          },
+        },
       }
     end,
   },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "BufRead",
-    main = "ibl",
-    opts = {
-      scope = {
-        enabled = false,
-      },
-      indent = {
-        char = "│",
-        smart_indent_cap = true,
-        highlight = "IndentBlack",
-      },
-    },
-    config = function(_, opts)
-      local c = require("config.colorscheme")
-      local hooks = require("ibl.hooks")
-      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-        vim.api.nvim_set_hl(0, "IndentBlack", { fg = c.base03 })
-      end)
-      require("ibl").setup(opts)
-    end,
-  },
+  -- {
+  --   "lukas-reineke/indent-blankline.nvim",
+  --   event = "BufRead",
+  --   main = "ibl",
+  --   opts = {
+  --     scope = {
+  --       enabled = false,
+  --     },
+  --     indent = {
+  --       char = "│",
+  --       smart_indent_cap = true,
+  --       highlight = "IndentBlack",
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     local c = require("config.colorscheme")
+  --     local hooks = require("ibl.hooks")
+  --     hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+  --       vim.api.nvim_set_hl(0, "IndentBlack", { fg = c.base03 })
+  --     end)
+  --     require("ibl").setup(opts)
+  --   end,
+  -- },
 }
