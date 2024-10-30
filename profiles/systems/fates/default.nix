@@ -10,8 +10,8 @@ in
     cli.enable = true;
     editor = {
       neovim.enable = true;
-      vscode.enable = true;
-      emacs.enable = true;
+      # vscode.enable = true;
+      # emacs.enable = true;
     };
   };
 

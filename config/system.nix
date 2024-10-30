@@ -14,6 +14,7 @@ in
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix") ]
     ++ [
+      inputs.nixos-cli.nixosModules.nixos-cli
       ./core
       ./nixos-rebuild.nix
       ./home-manager.nix
