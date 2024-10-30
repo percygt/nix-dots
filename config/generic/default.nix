@@ -12,7 +12,7 @@ in
     ../cli
     ../dev
     ../shell
-    ../common
+    ../common/home.nix
     ../desktop
     ../nixpkgs/config.nix
     ../nix.nix

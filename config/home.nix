@@ -11,7 +11,7 @@ in
   imports = [
     ./shellAliases.nix
     ./sessionVariables.nix
-    ./nixpkgs
+    ./nixpkgs/overlay.nix
   ];
 
   programs.home-manager.enable = true;
