@@ -10,8 +10,8 @@
   # programs.gnome-terminal.enable = true;
   home.packages = with pkgs; [
     nautilus-open-any-terminal
-    gnome.dconf-editor
-    gnome.gnome-terminal
+    dconf-editor
+    gnome-terminal
   ];
   home.sessionVariables = {
     QT_QPA_PLATFORM = "xcb;wayland";

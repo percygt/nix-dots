@@ -1,12 +1,12 @@
 {
   lib,
   pkgs,
-  self,
+  # self,
   ...
 }:
 let
-  date-menu-formatter = pkgs.callPackage "${self}/standard/date-menu-formatter.nix" { };
-  quake-mode = pkgs.callPackage "${self}/standard/quake-mode.nix" { };
+  # date-menu-formatter = pkgs.callPackage "${self}/standard/date-menu-formatter.nix" { };
+  # quake-mode = pkgs.callPackage "${self}/standard/quake-mode.nix" { };
   ddterm = pkgs.gnomeExtensions.ddterm.overrideAttrs (_oldAttrs: rec {
     version = "54";
     src = pkgs.fetchzip {
@@ -55,8 +55,8 @@ in
     ++ [
       ddterm
       blur-my-shell
-      quake-mode
-      date-menu-formatter
+      # quake-mode
+      # date-menu-formatter
     ];
   dconf.settings = with lib.hm.gvariant; {
     "org/gnome/shell" = {

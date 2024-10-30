@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   g = config._general;
 in
@@ -18,4 +18,5 @@ in
     ../nix.nix
   ];
   home.packages = g.system.corePackages;
+  nix.package = pkgs.nixVersions.latest;
 }

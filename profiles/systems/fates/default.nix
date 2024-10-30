@@ -15,17 +15,6 @@ in
     };
   };
 
-  generic = {
-    fonts.enable = true;
-    bluez-suspend.disable = true;
-    sops.enable = true;
-    overlays.enable = true;
-    xremap = {
-      enable = true;
-      withGnome = true;
-    };
-  };
-
   home = {
     packages = with pkgs; [
       gnomeExtensions.fedora-linux-update-indicator
