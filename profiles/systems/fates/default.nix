@@ -5,10 +5,14 @@ in
 {
   targets.genericLinux.enable = true;
 
-  editor = {
-    neovim.enable = true;
-    vscode.enable = true;
-    emacs.enable = true;
+  modules = {
+    dev.enable = true;
+    cli.enable = true;
+    editor = {
+      neovim.enable = true;
+      vscode.enable = true;
+      emacs.enable = true;
+    };
   };
 
   generic = {
@@ -22,20 +26,6 @@ in
     };
   };
 
-  modules.security = {
-    pass.enable = true;
-    keepass.enable = true;
-    backup.enable = true;
-  };
-
-  modules.cli = {
-    atuin.enable = true;
-    direnv.enable = true;
-    extra.enable = true;
-    starship.enable = true;
-    tui.enable = true;
-    yazi.enable = true;
-  };
   home = {
     packages = with pkgs; [
       gnomeExtensions.fedora-linux-update-indicator
