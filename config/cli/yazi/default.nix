@@ -21,26 +21,47 @@
     ];
   };
   xdg.configFile = {
-    "yazi/plugins/glow.yazi/init.lua".source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/Reledia/glow.yazi/main/init.lua";
-      sha256 = "0ca7drxxm1xc78gqn7m8mffph2wdjc7hab62knp3cm39d2bvi73g";
-    };
-    "yazi/plugins/hexyl.yazi/init.lua".source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/Reledia/hexyl.yazi/main/init.lua";
-      sha256 = "0q4vbka73hx7dryhwkw39cl3smhwm18l11dqpy5y6nsamzmgyz9j";
-    };
-    "yazi/plugins/miller.yazi/init.lua".source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/Reledia/miller.yazi/main/init.lua";
-      sha256 = "0x8b3jrgginb2zddxn83h8df92jcyjxjs0x83jj0b6zv9fppq8w6";
-    };
-    "yazi/plugins/exifaudio.yazi/init.lua".source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/Sonico98/exifaudio.yazi/master/init.lua";
-      sha256 = "0vsjyd1qr5ndrg9prg60cgz03sa3qk5qha5xwaknpb6qpw09hb73";
-    };
-    "yazi/plugins/ouch.yazi/init.lua".source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/ndtoan96/ouch.yazi/main/init.lua";
-      sha256 = "1hf8h444w1m3x02nl4qqgvn33i5xnfj9qbwpa30v0sb4301vq78h";
-    };
+    "yazi/plugins/glow.yazi/init.lua".source = "${
+      pkgs.fetchFromGitHub {
+        owner = "Reledia";
+        repo = "glow.yazi";
+        rev = "388e847dca6497cf5903f26ca3b87485b2de4680";
+        hash = "sha256-fKJ5ld5xc6HsM/h5j73GABB5i3nmcwWCs+QSdDPA9cU=";
+      }
+    }/init.lua";
+    "yazi/plugins/hexyl.yazi/init.lua".source = "${
+      pkgs.fetchFromGitHub {
+        owner = "Reledia";
+        repo = "hexyl.yazi";
+        rev = "ccc0a4a959bea14dbe8f2b243793aacd697e34e2";
+        hash = "sha256-9rPJcgMYtSY5lYnFQp3bAhaOBdNUkBaN1uMrjen6Z8g=";
+      }
+    }/init.lua";
+    "yazi/plugins/miller.yazi/init.lua".source = "${
+      pkgs.fetchFromGitHub {
+        owner = "Reledia";
+        repo = "miller.yazi";
+        rev = "40e02654725a9902b689114537626207cbf23436";
+        hash = "sha256-GXZZ/vI52rSw573hoMmspnuzFoBXDLcA0fqjF76CdnY=";
+      }
+    }/init.lua";
+    "yazi/plugins/exifaudio.yazi/init.lua".source = "${
+      pkgs.fetchFromGitHub {
+        owner = "Sonico98";
+        repo = "exifaudio.yazi";
+        rev = "855ff055c11fb8f268b4c006a8bd59dd9bcf17a7";
+        hash = "sha256-8f1iG9RTLrso4S9mHYcm3dLKWXd/WyRzZn6KNckmiCc=";
+      }
+    }/init.lua";
+    "yazi/plugins/ouch.yazi/init.lua".source = "${
+      pkgs.fetchFromGitHub {
+        owner = "ndtoan96";
+        repo = "ouch.yazi";
+        rev = "d13f7c08cdebcfaadf38c3eb9999639ddd89201c";
+        hash = "sha256-Ii0gowsx6fegFNaOtThAbKaKa2WF1uavgzeONRPaQGU=";
+      }
+    }/init.lua";
+
   };
   programs.yazi = {
     enable = true;

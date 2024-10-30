@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
+  imports = [
+    inputs.nixos-cli.nixosModules.nixos-cli
+  ];
   home.packages = with pkgs; [
     # alejandra
     devenv

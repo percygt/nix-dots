@@ -17,15 +17,15 @@
 let
   pname = "colloid-gtk-theme";
 in
-stdenvNoCC.mkDerivation rec {
+stdenvNoCC.mkDerivation {
   inherit pname;
-  version = "2024-08-08";
+  version = "2024-10-30";
 
   src = fetchFromGitHub {
     owner = "vinceliuice";
     repo = "Colloid-gtk-theme";
-    rev = version;
-    hash = "sha256-Th6Wi+enyE0qO/e8ffIby6SfxgAfdYiHCT5Q+sJ+pL4=";
+    rev = "2ef8de7aa6deffaa13d4078d7371c265589dc58b";
+    hash = "sha256-IFyTbi8cZwentnyurdXk2I/FdCzZCmobZHDKwNuPTQ0=";
   };
 
   nativeBuildInputs = [
