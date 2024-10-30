@@ -8,8 +8,8 @@
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   home-manager = {
-    # useGlobalPkgs = true;
-    # useUserPackages = true;
+    useGlobalPkgs = true;
+    useUserPackages = true;
     extraSpecialArgs = homeArgs // {
       inherit homeArgs;
       nixosConfig = config;

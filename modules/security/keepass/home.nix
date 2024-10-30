@@ -3,7 +3,6 @@
   lib,
   config,
   desktop,
-  libx,
   ...
 }:
 let
@@ -11,8 +10,10 @@ let
   kpdb = g.security.keepass.db;
 in
 {
-  imports = [ ./keepfzf.nix ];
-  options.modules.security.keepass.enable = libx.enableDefault "keepass";
+  imports = [
+    ./keepfzf.nix
+    ./module.nix
+  ];
 
   config = lib.mkIf config.modules.security.keepass.enable {
     home = {

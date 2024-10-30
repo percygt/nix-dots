@@ -2,14 +2,18 @@
   config,
   lib,
   pkgs,
-  libx,
   ...
 }:
 let
   g = config._general;
 in
 {
-  options.modules.core.audioengine.enable = libx.enableDefault "audioengine";
+  options.modules.core.audioengine.enable = lib.mkOption {
+    default = true;
+    type = lib.types.bool;
+    description = "Enable keepass";
+  };
+
   config = lib.mkIf config.modules.core.audioengine.enable {
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${g.username}.directories = [ ".local/state/wireplumber" ];

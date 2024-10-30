@@ -2,15 +2,16 @@
   inputs,
   config,
   lib,
-  libx,
   ...
 }:
 let
   g = config._general;
 in
 {
-  imports = [ inputs.sops-nix.nixosModules.sops ];
-  options.modules.security.sops.enable = libx.enableDefault "sops";
+  imports = [
+    inputs.sops-nix.nixosModules.sops
+    ./module.nix
+  ];
   config = lib.mkIf config.modules.security.sops.enable {
     home-manager.users.${g.username} = import ./home.nix;
     sops = {

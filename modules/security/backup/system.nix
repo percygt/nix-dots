@@ -22,9 +22,7 @@ let
   '';
 in
 {
-  options.modules.security.backup = {
-    enable = libx.enableDefault "backup";
-  };
+  imports = [ ./module.nix ];
   # configured in home
   config = lib.mkIf cfg.enable {
     home-manager.users.${g.username} = import ./home.nix;

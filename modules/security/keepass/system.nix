@@ -8,7 +8,8 @@ let
   g = config._general;
 in
 {
-  options.modules.security.keepass.enable = libx.enableDefault "keepass";
+
+  imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.sops.enable {
     home-manager.users.${g.username} = import ./home.nix;
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {

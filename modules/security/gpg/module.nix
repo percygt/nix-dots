@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  libx,
   ...
 }:
 let
@@ -9,7 +8,12 @@ let
 in
 {
   options.modules.security.gpg = {
-    enable = libx.enableDefault "gpg";
+    enable = lib.mkOption {
+      default = true;
+      type = lib.types.bool;
+      description = "Enable gpg";
+    };
+
     sshSupport = {
       enable = lib.mkOption {
         description = "Enable ssh support";

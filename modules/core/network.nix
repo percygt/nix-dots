@@ -32,7 +32,11 @@ let
 in
 {
   options.modules.core.network = {
-    enable = libx.enableDefault "network";
+    enable = lib.mkOption {
+      default = true;
+      type = lib.types.bool;
+      description = "Enable network";
+    };
     wpa.enable = lib.mkOption {
       description = "Enable wpa";
       type = lib.types.bool;

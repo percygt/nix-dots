@@ -1,12 +1,13 @@
 {
   config,
   lib,
-  libx,
   ...
 }:
 {
-  options.modules.core.ntp = {
-    enable = libx.enableDefault "ntp";
+  options.modules.core.ntp.enable = lib.mkOption {
+    default = true;
+    type = lib.types.bool;
+    description = "Enable ntp";
   };
 
   config = lib.mkIf config.modules.core.ntp.enable {

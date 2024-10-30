@@ -1,12 +1,13 @@
 {
   config,
   lib,
-  libx,
   ...
 }:
 {
-  options.modules.core.graphics = {
-    enable = libx.enableDefault "graphics";
+  options.modules.core.graphics.enable = lib.mkOption {
+    default = true;
+    type = lib.types.bool;
+    description = "Enable graphics";
   };
 
   config = lib.mkIf config.modules.core.graphics.enable {

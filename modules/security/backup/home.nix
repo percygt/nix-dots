@@ -2,14 +2,13 @@
   lib,
   config,
   pkgs,
-  libx,
   ...
 }:
 let
   g = config._general;
 in
 {
-  options.modules.security.backup.enable = libx.enableDefault "backup";
+  imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.backup.enable {
     systemd.user.services.borgmatic = {
       Service = {

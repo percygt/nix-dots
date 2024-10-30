@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  libx,
   ...
 }:
 let
@@ -9,7 +8,12 @@ let
 in
 {
   options.modules.core.systemd = {
-    enable = libx.enableDefault "systemd";
+    enable = lib.mkOption {
+      default = true;
+      type = lib.types.bool;
+      description = "Enable systemd";
+    };
+
     initrd = {
       enable = lib.mkOption {
         description = "Enable systemd initrd";

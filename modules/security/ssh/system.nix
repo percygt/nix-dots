@@ -1,14 +1,13 @@
 {
   lib,
   config,
-  libx,
   ...
 }:
 let
   g = config._general;
 in
 {
-  options.modules.security.ssh.enable = libx.enableDefault "ssh";
+  imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.ssh.enable {
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist/system".directories = [ "/etc/ssh" ];

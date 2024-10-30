@@ -1,14 +1,14 @@
 {
   config,
   lib,
-  libx,
   ...
 }:
 {
-  options.modules.core.filesystem = {
-    enable = libx.enableDefault "filesystem";
+  options.modules.core.filesystem.enable = lib.mkOption {
+    default = true;
+    type = lib.types.bool;
+    description = "Enable filesystem";
   };
-
   config = lib.mkIf config.modules.core.filesystem.enable {
     services = {
       btrfs.autoScrub = {

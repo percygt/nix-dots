@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  libx,
   ...
 }:
 let
@@ -13,7 +12,12 @@ let
 in
 {
   options.modules.core.battery = {
-    enable = libx.enableDefault "battery";
+    enable = lib.mkOption {
+      default = true;
+      type = lib.types.bool;
+      description = "Enable battery";
+    };
+
     chargeUpto = lib.mkOption {
       description = "Maximum level of charge for your battery, as a percentage.";
       default = 80;

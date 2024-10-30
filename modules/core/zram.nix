@@ -1,12 +1,13 @@
 {
   config,
   lib,
-  libx,
   ...
 }:
 {
-  options.modules.core.zram = {
-    enable = libx.enableDefault "zram";
+  options.modules.core.zram.enable = lib.mkOption {
+    default = true;
+    type = lib.types.bool;
+    description = "Enable zram";
   };
 
   config = lib.mkIf config.modules.core.zram.enable {

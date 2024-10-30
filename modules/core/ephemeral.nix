@@ -38,9 +38,13 @@ let
 in
 {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
-  options.modules.core.ephemeral = {
-    enable = libx.enableDefault "ephemeral";
+
+  options.modules.core.ephemeral.enable = lib.mkOption {
+    default = true;
+    type = lib.types.bool;
+    description = "Enable ephemeral";
   };
+
   config = lib.mkIf config.modules.core.ephemeral.enable {
     boot.initrd = {
       supportedFilesystems = [ "btrfs" ];

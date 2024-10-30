@@ -15,23 +15,6 @@ in
   };
 
   colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; };
-  inheritModule =
-    {
-      config,
-      module,
-      name,
-    }:
-    lib.mkIf config.modules."${name}"."${module}".enable {
-      home-manager.users.${config._general.username}.modules."${name}"."${module}".enable = true;
-    };
-  enableDefault =
-    n:
-    lib.mkOption {
-      description = "Enable ${n}";
-      type = lib.types.bool;
-      default = !isIso;
-    };
-
   importPaths = rec {
     moduleDefault =
       rootDir:

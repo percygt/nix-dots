@@ -1,5 +1,4 @@
 {
-  libx,
   lib,
   config,
   ...
@@ -8,7 +7,7 @@ let
   g = config._general;
 in
 {
-  options.modules.security.ssh.enable = libx.enableDefault "ssh";
+  imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.ssh.enable {
     programs.ssh = {
       enable = true;
