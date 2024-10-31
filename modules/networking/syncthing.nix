@@ -31,8 +31,6 @@ let
   };
 in
 {
-  options.modules.networking.syncthing.enable = lib.mkEnableOption "Enable syncthing";
-
   config = lib.mkIf config.modules.networking.syncthing.enable {
     users.users.${g.username}.packages = [ pkgs.syncthing ];
     sops.secrets = {

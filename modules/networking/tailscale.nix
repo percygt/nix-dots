@@ -8,8 +8,6 @@ let
   g = config._general;
 in
 {
-  options.modules.networking.tailscale.enable = lib.mkEnableOption "Enable tailscale";
-
   config = lib.mkIf config.modules.networking.tailscale.enable {
     networking.firewall = {
       trustedInterfaces = [ "tailscale0" ];

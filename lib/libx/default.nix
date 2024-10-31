@@ -6,7 +6,7 @@
   username,
 }:
 let
-  lib = if isGeneric then inputs.home-manager.lib else inputs.nixpkgs.lib;
+  lib = if (isGeneric || buildMarker == "home") then inputs.home-manager.lib else inputs.nixpkgs.lib;
 in
 {
   sway = import ./sway.nix { inherit lib; };
@@ -53,16 +53,17 @@ in
     {
       default =
         rootDir:
-        (
+        if (!isGeneric && buildMarker == "all") then
           {
             imports = moduleDefault rootDir;
-          }
-          // (lib.mkIf (!isGeneric && buildMarker == "all") {
             home-manager.users.${username} = {
               imports = importHome rootDir;
             };
-          })
-        );
+          }
+        else
+          {
+            imports = moduleDefault rootDir;
+          };
       all = rootDir: { imports = moduleAll rootDir; };
     };
 

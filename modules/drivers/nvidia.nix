@@ -5,16 +5,6 @@
   ...
 }:
 {
-  options.modules.drivers = {
-    nvidia = {
-      prime.enable = lib.mkEnableOption "Enable nvidia-prime";
-      bye = lib.mkOption {
-        description = "Disable nvidia gpu";
-        default = false;
-        type = lib.types.bool;
-      };
-    };
-  };
 
   config = lib.mkMerge [
     (lib.mkIf config.modules.drivers.nvidia.prime.enable {

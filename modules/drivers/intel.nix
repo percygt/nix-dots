@@ -5,19 +5,6 @@
   ...
 }:
 {
-  options.modules.drivers = {
-    intel = {
-      enable = lib.mkEnableOption "Enable intel graphics";
-      gpu.driver = lib.mkOption {
-        description = "Intel graphics driver to use";
-        type = lib.types.enum [
-          "i915"
-          "xe"
-        ];
-        default = "i915";
-      };
-    };
-  };
 
   config = lib.mkIf config.modules.drivers.intel.enable {
     boot = {

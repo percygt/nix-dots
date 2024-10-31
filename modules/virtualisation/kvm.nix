@@ -8,7 +8,6 @@ let
   g = config._general;
 in
 {
-  options.modules.virtualisation.kvm.enable = lib.mkEnableOption "Enable kvm";
   config = lib.mkIf config.modules.virtualisation.kvm.enable {
     environment.systemPackages = with pkgs; [
       adwaita-icon-theme

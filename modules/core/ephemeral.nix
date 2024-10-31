@@ -40,27 +40,6 @@ in
 {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
 
-  options.modules.core.ephemeral = {
-    enable = lib.mkEnableOption "Enable ephemeral";
-
-    phase1Systemd = {
-      enable = lib.mkOption {
-        description = "Enable phase1 systemd";
-        default = cfg.enable;
-        type = lib.types.bool;
-      };
-    };
-    rootDeviceName = lib.mkOption {
-      description = "Declare root device name e.g. /dev/root_vg/root -> ['dev' 'root_vg' 'root']";
-      default = [
-        "dev"
-        "root_vg"
-        "root"
-      ];
-      type = with lib.types; listOf str;
-    };
-  };
-
   config = lib.mkIf config.modules.core.ephemeral.enable {
     boot.initrd = {
       services.lvm.enable = true;

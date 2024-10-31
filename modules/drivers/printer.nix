@@ -8,7 +8,6 @@ let
   g = config._general;
 in
 {
-  options.modules.drivers.printer.enable = lib.mkEnableOption "Enable printers";
   config = lib.mkIf config.modules.drivers.printer.enable {
     # hardware.printers.ensurePrinters = [ g.localPrinter ];
     environment.systemPackages = [ pkgs.epsonscan2 ];

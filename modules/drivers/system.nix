@@ -1,5 +1,6 @@
 {
   imports = [
+    ./module.nix
     ./printer.nix
     ./bluetooth.nix
     ./intel.nix

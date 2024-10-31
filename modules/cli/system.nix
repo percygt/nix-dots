@@ -11,8 +11,5 @@ in
         ".local/share/aria2"
       ];
     };
-    home-manager.users.${g.username} = {
-      modules.cli.enable = lib.mkDefault true;
-    };
   };
 }

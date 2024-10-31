@@ -12,9 +12,5 @@ in
         };
       };
     };
-    home-manager.users.${g.username} = {
-      # imports = [ ./home.nix ];
-      modules.dev.enable = lib.mkDefault true;
-    };
   };
 }

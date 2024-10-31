@@ -10,13 +10,6 @@ let
   g = config._general;
 in
 {
-  options = {
-    modules.networking.vpn = {
-      enable = mkEnableOption "Enable vpn";
-      wireguard.enable = mkEnableOption "Enable Wireguard Vpn";
-    };
-  };
-
   config = lib.mkMerge [
     { modules.core.wpa_supplicant.enable = lib.mkForce false; }
     (mkIf cfg.enable {

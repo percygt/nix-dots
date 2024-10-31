@@ -11,20 +11,6 @@ let
   cfg = config.modules.core.battery;
 in
 {
-  options.modules.core.battery = {
-    enable = lib.mkEnableOption "Enable battery";
-
-    chargeUpto = lib.mkOption {
-      description = "Maximum level of charge for your battery, as a percentage.";
-      default = 80;
-      type = lib.types.int;
-    };
-    enableChargeUptoScript = lib.mkOption {
-      description = "Whether to add charge-upto to environment.systemPackages. `charge-upto 75` temporarily sets the charge limit to 75%.";
-      type = lib.types.bool;
-      default = cfg.enable;
-    };
-  };
   config = lib.mkIf cfg.enable {
     services.thermald.enable = true;
     services.auto-cpufreq = {

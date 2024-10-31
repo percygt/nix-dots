@@ -8,8 +8,6 @@ let
   cfg = config.modules.core.wpa_supplicant;
 in
 {
-  options.modules.core.wpa_supplicant.enable = lib.mkEnableOption "Enable wpa";
-
   config = lib.mkIf cfg.enable {
     users.groups.network = { };
     users.users.${g.username}.extraGroups = [ "network" ];
