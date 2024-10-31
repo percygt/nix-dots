@@ -26,7 +26,7 @@
         aizeft = bldr.buildSystem {
           profile = "aizeft";
           desktop = "sway";
-          buildHome = false;
+          # buildAll = false;
         };
         # minimal = bldr.buildSystem {
         #   profile = "minimal";

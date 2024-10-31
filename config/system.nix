@@ -5,6 +5,7 @@
   config,
   inputs,
   desktop,
+  buildMarker,
   ...
 }:
 let
@@ -17,7 +18,6 @@ in
       inputs.nixos-cli.nixosModules.nixos-cli
       ./core
       ./rebuild
-      ./home-manager.nix
       ./console.nix
       ./locale.nix
       ./nix.nix
@@ -33,6 +33,9 @@ in
       ./apps
       ./common
       ./desktop
+    ]
+    ++ lib.optionals (buildMarker == "all") [
+      ./home-manager.nix
     ];
 
   environment.systemPackages = g.system.corePackages;

@@ -7,7 +7,7 @@
   desktop ? null,
   isIso ? false,
   username,
-  buildHome,
+  buildMarker,
 }:
 rec {
 
@@ -17,13 +17,13 @@ rec {
       isGeneric
       isIso
       username
-      buildHome
+      buildMarker
       ;
   };
 
   args = {
     inherit
-      buildHome
+      buildMarker
       self
       inputs
       outputs

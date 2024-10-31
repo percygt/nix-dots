@@ -29,10 +29,11 @@ rec {
       isIso ? false,
       desktop ? null,
       system ? "x86_64-linux",
-      buildHome ? true,
+      buildAll ? true,
     }:
     let
       inherit (inputs.nixpkgs.lib) nixosSystem;
+      buildMarker = if buildAll then "all" else "system";
       mkArgs = import ./mkArgs.nix {
         inherit
           inputs
@@ -42,7 +43,7 @@ rec {
           profile
           isIso
           username
-          buildHome
+          buildMarker
           ;
       };
     in
@@ -59,10 +60,10 @@ rec {
       isGeneric ? true,
       desktop ? null,
       system ? "x86_64-linux",
-      buildHome ? true,
     }:
     let
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
+      buildMarker = "home";
       mkArgs = import ./mkArgs.nix {
         inherit
           inputs
@@ -72,7 +73,7 @@ rec {
           profile
           isGeneric
           username
-          buildHome
+          buildMarker
           ;
       };
     in

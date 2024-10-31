@@ -1,7 +1,7 @@
 {
   inputs,
   isGeneric,
-  buildHome,
+  buildMarker,
   isIso,
   username,
 }:
@@ -21,9 +21,21 @@ in
     let
       importHome =
         rootDir: if (builtins.pathExists (rootDir + /home.nix)) then [ (rootDir + /home.nix) ] else [ ];
+
       importSystem =
         rootDir: if (builtins.pathExists (rootDir + /system.nix)) then [ (rootDir + /system.nix) ] else [ ];
-      moduleDefault = rootDir: if isGeneric then importHome rootDir else importSystem rootDir;
+
+      moduleDefault = rootDir: if isGeneric then importHome rootDir else buildModule rootDir;
+
+      buildModule =
+        rootDir:
+        if (buildMarker == "all") then
+          importSystem rootDir
+        else if (buildMarker == "home") then
+          importHome rootDir
+        else
+          importSystem rootDir;
+
       moduleAll =
         rootDir:
         builtins.filter (path: builtins.pathExists path) (
@@ -39,12 +51,18 @@ in
         );
     in
     {
-      default = rootDir: {
-        imports = moduleDefault rootDir;
-        home-manager.users.${username} = {
-          imports = if (builtins.pathExists (rootDir + /home.nix)) then [ (rootDir + /home.nix) ] else [ ];
-        };
-      };
+      default =
+        rootDir:
+        (
+          {
+            imports = moduleDefault rootDir;
+          }
+          // (lib.mkIf (!isGeneric && buildMarker == "all") {
+            home-manager.users.${username} = {
+              imports = importHome rootDir;
+            };
+          })
+        );
       all = rootDir: { imports = moduleAll rootDir; };
     };
 

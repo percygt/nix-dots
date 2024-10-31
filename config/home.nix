@@ -1,18 +1,32 @@
 {
   config,
-  isGeneric,
+  buildMarker,
   lib,
+  desktop,
   ...
 }:
 let
   g = config._general;
 in
 {
-  imports = [
-    ./shellAliases.nix
-    ./sessionVariables.nix
-    ./nixpkgs/overlay.nix
-  ];
+  imports =
+    [
+      ./shellAliases.nix
+      ./sessionVariables.nix
+      ./nixpkgs/overlay.nix
+    ]
+    ++ lib.optionals (buildMarker == "home") [
+      ./nixpkgs/config.nix
+      ./dev
+      ./cli
+      ./shell
+      ./terminal
+    ]
+    ++ lib.optionals (buildMarker == "home" && desktop != null) [
+      ./apps
+      ./common
+      ./desktop
+    ];
 
   programs.home-manager.enable = true;
 

@@ -20,7 +20,6 @@ in
   ];
   _general.username = "nixos";
   isoImage.squashfsCompression = "gzip -Xcompression-level 1";
-  # home-manager.users.${g.username} = import ./home.nix;
   environment.systemPackages = g.system.corePackages;
   services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
   boot.kernelPackages = pkgs.linuxPackages_latest;
