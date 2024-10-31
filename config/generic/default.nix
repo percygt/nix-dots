@@ -8,11 +8,11 @@ in
     ./bluez-suspend.nix
     ./nvd.nix
     ../home.nix
-    ../apps/home.nix
-    ../cli/home.nix
-    ../dev/home.nix
-    ../shell/home.nix
-    ../common/home.nix
+    ../apps
+    ../cli
+    ../dev
+    ../shell
+    ../common
     ../desktop
     ../nixpkgs/config.nix
     ../nix.nix

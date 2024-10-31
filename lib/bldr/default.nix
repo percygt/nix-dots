@@ -1,4 +1,9 @@
-{ inputs, self, ... }:
+{
+  inputs,
+  self,
+  username,
+  ...
+}:
 let
   inherit (self) outputs;
   modules = [
@@ -24,6 +29,7 @@ rec {
       isIso ? false,
       desktop ? null,
       system ? "x86_64-linux",
+      buildHome ? true,
     }:
     let
       inherit (inputs.nixpkgs.lib) nixosSystem;
@@ -35,8 +41,9 @@ rec {
           desktop
           profile
           isIso
+          username
+          buildHome
           ;
-        bldr = "system";
       };
     in
     nixosSystem {
@@ -52,6 +59,7 @@ rec {
       isGeneric ? true,
       desktop ? null,
       system ? "x86_64-linux",
+      buildHome ? true,
     }:
     let
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
@@ -63,8 +71,9 @@ rec {
           desktop
           profile
           isGeneric
+          username
+          buildHome
           ;
-        bldr = "home";
       };
     in
     homeManagerConfiguration {

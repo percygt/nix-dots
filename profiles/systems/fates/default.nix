@@ -20,19 +20,10 @@ in
       gnomeExtensions.fedora-linux-update-indicator
       hwinfo
     ];
-    activation.report-changes = config.lib.dag.entryAnywhere ''
-      if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
-        ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath
-      fi
-    '';
     shellAliases = {
       mkVM = "qemu-system-x86_64 -enable-kvm -m 2G -boot menu=on -drive file=vm.img -cpu=host -vga virtio -display sdl,gl=on -cdrom";
       hms = "home-manager switch --flake ${g.flakeDirectory}#$hostname";
       hmr = "home-manager generations | fzf --tac | awk '{print $7}' | xargs -I{} bash {}/activate";
-    };
-    sessionVariables = {
-      LIBVIRT_DEFAULT_URI = "qemu:///system";
-      EDITOR = "nvim";
     };
   };
   services.syncthing = {

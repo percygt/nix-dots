@@ -19,7 +19,7 @@ in
     spice-vdagentd.enable = true;
   };
 
-  core.network.wpa.enable = true;
+  core.wpa_supplicant.enable = true;
   # symlinks to enable "erase your darlings"
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {

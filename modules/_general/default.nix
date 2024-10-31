@@ -1,4 +1,1 @@
-{ inputs, libx, ... }:
-{
-  imports = [ (builtins.toString inputs.general) ] ++ libx.importPaths.moduleDefault ./.;
-}
+{ libx, ... }: libx.importPaths.default ./.

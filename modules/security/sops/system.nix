@@ -13,7 +13,6 @@ in
     ./module.nix
   ];
   config = lib.mkIf config.modules.security.sops.enable {
-    home-manager.users.${g.username} = import ./home.nix;
     sops = {
       defaultSopsFile = g.systemSopsFile;
       validateSopsFiles = false;

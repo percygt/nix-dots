@@ -8,6 +8,6 @@ in
     ./ydotool.nix
     # ./blocky.nix
   ];
-  home-manager.users.${g.username} = import ./home.nix;
+  # home-manager.users.${g.username} = import ./home.nix;
   programs.xfconf.enable = true;
 }

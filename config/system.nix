@@ -16,7 +16,7 @@ in
     ++ [
       inputs.nixos-cli.nixosModules.nixos-cli
       ./core
-      ./nixos-rebuild.nix
+      ./rebuild
       ./home-manager.nix
       ./console.nix
       ./locale.nix
@@ -34,8 +34,6 @@ in
       ./common
       ./desktop
     ];
-
-  home-manager.users.${g.username} = import ./home.nix;
 
   environment.systemPackages = g.system.corePackages;
 

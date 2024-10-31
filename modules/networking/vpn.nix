@@ -18,20 +18,13 @@ in
   };
 
   config = lib.mkMerge [
+    { modules.core.wpa_supplicant.enable = lib.mkForce false; }
     (mkIf cfg.enable {
-      modules.core.network = {
-        enable = lib.mkForce true;
-        wpa.enable = lib.mkForce false;
-      };
       environment.systemPackages = with pkgs; [
         protonvpn-gui
       ];
     })
     (mkIf cfg.wireguard.enable {
-      modules.core.network = {
-        enable = lib.mkForce true;
-        wpa.enable = lib.mkForce false;
-      };
       sops.secrets."wireguard/key/private".neededForUsers = true;
       networking.wg-quick.interfaces."${g.network.wireguard.name}" = {
         autostart = true;

@@ -2,7 +2,7 @@
 {
   modules.fonts = {
     shell = {
-      name = "VictorMono NFP";
+      name = "VictorMono Nerd Font";
       style = [
         "SemiBold"
         "Bold"

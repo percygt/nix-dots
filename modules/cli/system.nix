@@ -4,7 +4,7 @@ let
 in
 {
   imports = [ ./module.nix ];
-  config = lib.mkIf config.modules.dev.enable {
+  config = lib.mkIf config.modules.cli.enable {
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${g.username}.directories = [
         ".local/share/atuin"
@@ -12,7 +12,6 @@ in
       ];
     };
     home-manager.users.${g.username} = {
-      imports = [ ./home.nix ];
       modules.cli.enable = lib.mkDefault true;
     };
   };

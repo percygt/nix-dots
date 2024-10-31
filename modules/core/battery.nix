@@ -12,11 +12,7 @@ let
 in
 {
   options.modules.core.battery = {
-    enable = lib.mkOption {
-      default = true;
-      type = lib.types.bool;
-      description = "Enable battery";
-    };
+    enable = lib.mkEnableOption "Enable battery";
 
     chargeUpto = lib.mkOption {
       description = "Maximum level of charge for your battery, as a percentage.";

@@ -5,7 +5,6 @@
   ...
 }:
 let
-  g = config._general;
   cfg = config.modules.fonts;
   optionals =
     { fonttype, typeface }:
@@ -24,12 +23,11 @@ in
 {
   imports = [ ./module.nix ];
   config = {
-    home-manager.users.${g.username} = import ./module.nix;
     nixpkgs.config.joypixels.acceptLicense = true;
     fonts = {
       enableDefaultPackages = false;
       fontDir.enable = true;
-      packages = import ./allFonts.nix { inherit pkgs config lib; };
+      packages = import ./allFonts.nix { inherit pkgs config; };
       fontconfig = {
         antialias = true;
         defaultFonts = {

@@ -1,10 +1,8 @@
 { pkgs, config, ... }:
 let
-  g = config._general;
   t = config.modules.theme.gnomeShellTheme;
 in
 {
-  home-manager.users.${g.username} = import ./home.nix;
   services = {
     flatpak.enable = true;
     locate.enable = true;

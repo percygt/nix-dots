@@ -25,7 +25,6 @@ in
   imports = [ ./module.nix ];
   # configured in home
   config = lib.mkIf cfg.enable {
-    home-manager.users.${g.username} = import ./home.nix;
     environment.systemPackages = with pkgs; [ borgbackup ];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${g.username}.directories = [ configDir ];

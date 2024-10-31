@@ -3,7 +3,8 @@
   outputs =
     { self, ... }@inputs:
     let
-      bldr = import ./lib { inherit self inputs; };
+      username = "percygt";
+      bldr = import ./lib { inherit self inputs username; };
     in
     {
       packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
@@ -25,6 +26,7 @@
         aizeft = bldr.buildSystem {
           profile = "aizeft";
           desktop = "sway";
+          buildHome = false;
         };
         # minimal = bldr.buildSystem {
         #   profile = "minimal";
@@ -36,6 +38,10 @@
         # };
       };
       homeConfigurations = {
+        # aizeft = bldr.buildHome {
+        #   profile = "aizeft";
+        #   desktop = "sway";
+        # };
         # furies = bldr.buildHome {
         #   profile = "furies";
         #   desktop = "sway";

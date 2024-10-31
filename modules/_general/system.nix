@@ -1,8 +1,11 @@
-{ config, ... }:
+{ config, inputs, ... }:
 let
   g = config._general;
 in
 {
-  imports = [ ./module.nix ];
-  config.home-manager.users.${g.username} = import ./home.nix;
+  imports = [
+    (builtins.toString inputs.general)
+    ./module.nix
+  ];
+  # config.home-manager.users.${g.username} = import ./home.nix;
 }

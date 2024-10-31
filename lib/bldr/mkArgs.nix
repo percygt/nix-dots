@@ -6,15 +6,24 @@
   isGeneric ? false,
   desktop ? null,
   isIso ? false,
-  bldr,
+  username,
+  buildHome,
 }:
 rec {
 
-  libx = import "${self}/lib/libx" { inherit inputs isGeneric isIso; };
+  libx = import "${self}/lib/libx" {
+    inherit
+      inputs
+      isGeneric
+      isIso
+      username
+      buildHome
+      ;
+  };
 
   args = {
     inherit
-      bldr
+      buildHome
       self
       inputs
       outputs

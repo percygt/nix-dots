@@ -13,7 +13,7 @@ in
       };
     };
     home-manager.users.${g.username} = {
-      imports = [ ./home.nix ];
+      # imports = [ ./home.nix ];
       modules.editor.vscode.enable = lib.mkDefault true;
     };
   };

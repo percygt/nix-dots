@@ -20,12 +20,6 @@ in
 
   home = {
     inherit (g) username stateVersion homeDirectory;
-    activation = lib.optionalAttrs (!isGeneric) {
-      rmUselessDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        rm -rf ${g.homeDirectory}/.nix-defexpr
-        rm -rf ${g.homeDirectory}/.nix-profile
-      '';
-    };
   };
 
   xdg.configFile."nixpkgs/config.nix".text = ''

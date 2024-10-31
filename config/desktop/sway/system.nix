@@ -9,7 +9,6 @@ let
 in
 {
   imports = [ ./regreet.nix ];
-  home-manager.users.${g.username} = import ./home.nix;
   environment = {
     sessionVariables = {
       XDG_CURRENT_DESKTOP = "sway";

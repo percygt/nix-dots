@@ -20,7 +20,6 @@ in
       };
     };
   };
-  home-manager.users.${g.username} = import ./home.nix;
   environment.systemPackages = with pkgs; [
     nemo-with-extensions
   ];

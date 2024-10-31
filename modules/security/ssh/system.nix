@@ -18,7 +18,6 @@ in
         }
       ];
     };
-    home-manager.users.${g.username} = import ./home.nix;
     services.openssh = {
       enable = lib.mkDefault false;
       inherit (g.security.ssh) package;

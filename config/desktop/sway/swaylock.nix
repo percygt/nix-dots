@@ -11,6 +11,8 @@ in
       depsBuildBuild = [ pkgs.pkg-config ];
     });
     settings = {
+      daemonize = true;
+      show-failed-attempts = true;
       font = f.name;
       image = "${a.wallpaper}";
       indicator-idle-visible = false;

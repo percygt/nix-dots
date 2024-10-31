@@ -2,13 +2,14 @@
   lib,
   config,
   inputs,
-  libx,
   ...
 }:
 let
   g = config._general;
-  root_path = lib.concatMapStrings (x: "/" + x) config.modules.core.systemd.initrd.rootDeviceName;
-  root_device = "${lib.concatStringsSep "-" config.modules.core.systemd.initrd.rootDeviceName}.device";
+  cfg = config.modules.core.ephemeral;
+  phase1Systemd = cfg.phase1Systemd.enable;
+  root_path = lib.concatMapStrings (x: "/" + x) cfg.rootDeviceName;
+  root_device = "${lib.concatStringsSep "-" cfg.rootDeviceName}.device";
   wipeScript = # bash
     ''
       mkdir /btrfs_tmp
@@ -34,19 +35,39 @@ let
       btrfs subvolume create /btrfs_tmp/root
       umount /btrfs_tmp
     '';
-  phase1Systemd = config.modules.core.systemd.initrd.enable;
+
 in
 {
   imports = [ inputs.impermanence.nixosModules.impermanence ];
 
-  options.modules.core.ephemeral.enable = lib.mkOption {
-    default = true;
-    type = lib.types.bool;
-    description = "Enable ephemeral";
+  options.modules.core.ephemeral = {
+    enable = lib.mkEnableOption "Enable ephemeral";
+
+    phase1Systemd = {
+      enable = lib.mkOption {
+        description = "Enable phase1 systemd";
+        default = cfg.enable;
+        type = lib.types.bool;
+      };
+    };
+    rootDeviceName = lib.mkOption {
+      description = "Declare root device name e.g. /dev/root_vg/root -> ['dev' 'root_vg' 'root']";
+      default = [
+        "dev"
+        "root_vg"
+        "root"
+      ];
+      type = with lib.types; listOf str;
+    };
   };
 
   config = lib.mkIf config.modules.core.ephemeral.enable {
     boot.initrd = {
+      services.lvm.enable = true;
+      systemd = {
+        enable = true;
+        emergencyAccess = true;
+      };
       supportedFilesystems = [ "btrfs" ];
       postDeviceCommands = lib.mkIf (!phase1Systemd) (lib.mkBefore wipeScript);
       systemd.services.restore-root = lib.mkIf phase1Systemd {

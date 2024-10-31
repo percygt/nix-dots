@@ -25,7 +25,7 @@ in
       };
     };
     home-manager.users.${g.username} = {
-      imports = [ ./home.nix ];
+      # imports = [ ./home.nix ];
       modules.editor.neovim.enable = lib.mkDefault true;
     };
   };

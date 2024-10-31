@@ -4,7 +4,7 @@ default:
 
 update:
   nix flake update
-  doom ync -u
+  doom sync -u
 
 rebuild:
   nh os switch -- --accept-flake-config --show-trace

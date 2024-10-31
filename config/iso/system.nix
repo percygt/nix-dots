@@ -3,6 +3,8 @@
   lib,
   inputs,
   config,
+  profile,
+  self,
   ...
 }:
 let
@@ -11,14 +13,14 @@ in
 {
   imports = [
     "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-    ./installer.nix
+    "${self}/profiles/systems/${profile}/installer.nix"
     ../nixpkgs
     ../nix.nix
     ../home-manager.nix
   ];
   _general.username = "nixos";
   isoImage.squashfsCompression = "gzip -Xcompression-level 1";
-  home-manager.users.${g.username} = import ./home.nix;
+  # home-manager.users.${g.username} = import ./home.nix;
   environment.systemPackages = g.system.corePackages;
   services.openssh.settings.PermitRootLogin = lib.mkForce "yes";
   boot.kernelPackages = pkgs.linuxPackages_latest;

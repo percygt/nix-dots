@@ -11,7 +11,7 @@ in
   imports = [ ./module.nix ];
   config = lib.mkIf config.modules.editor.emacs.enable {
     home-manager.users.${g.username} = {
-      imports = [ ./home.nix ];
+      # imports = [ ./home.nix ];
       modules.editor.emacs.enable = lib.mkDefault true;
     };
     environment.systemPackages = [

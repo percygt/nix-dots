@@ -1,9 +1,1 @@
-{
-  imports = [
-    ./autoupgrade.nix
-    ./ephemeral.nix
-    ./network.nix
-    ./systemd.nix
-    ./battery.nix
-  ];
-}
+{ libx, ... }: libx.importPaths.all ./.

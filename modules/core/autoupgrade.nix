@@ -2,7 +2,6 @@
 {
   config,
   lib,
-  libx,
   ...
 }:
 
@@ -14,11 +13,7 @@ in
 {
   options.modules.core = {
     autoupgrade = {
-      enable = lib.mkOption {
-        default = true;
-        type = lib.types.bool;
-        description = "Enable autoupgrade";
-      };
+      enable = lib.mkEnableOption "Enable autoupgrade";
 
       branches = lib.mkOption {
         type = lib.types.attrs;
