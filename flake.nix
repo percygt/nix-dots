@@ -26,7 +26,6 @@
         aizeft = bldr.buildSystem {
           profile = "aizeft";
           desktop = "sway";
-          # buildAll = false;
         };
         # minimal = bldr.buildSystem {
         #   profile = "minimal";
@@ -38,10 +37,10 @@
         # };
       };
       homeConfigurations = {
-        # aizeft = bldr.buildHome {
-        #   profile = "aizeft";
-        #   desktop = "sway";
-        # };
+        "percygt@aizeft" = bldr.buildHome {
+          profile = "aizeft";
+          desktop = "sway";
+        };
         # furies = bldr.buildHome {
         #   profile = "furies";
         #   desktop = "sway";

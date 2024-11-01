@@ -6,8 +6,8 @@
   isGeneric ? false,
   desktop ? null,
   isIso ? false,
+  homeMarker ? false,
   username,
-  buildMarker,
 }:
 rec {
 
@@ -17,13 +17,12 @@ rec {
       isGeneric
       isIso
       username
-      buildMarker
+      homeMarker
       ;
   };
 
   args = {
     inherit
-      buildMarker
       self
       inputs
       outputs
@@ -32,6 +31,7 @@ rec {
       isGeneric
       desktop
       isIso
+      homeMarker
       ;
   };
 }

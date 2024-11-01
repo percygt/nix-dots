@@ -1,4 +1,10 @@
-{ profile, isIso, ... }:
+{
+  profile,
+  isGeneric,
+  isIso,
+  lib,
+  ...
+}:
 {
   imports = [
     ./common

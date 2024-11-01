@@ -3,11 +3,6 @@ let
   g = config._general;
 in
 {
-  imports = [
-    ./gitaliases.nix
-    ./delta.nix
-    ./gitignores.nix
-  ];
   home.packages = [ pkgs.glab ];
   sops.secrets = {
     "git/glab-cli/config.yml" = {

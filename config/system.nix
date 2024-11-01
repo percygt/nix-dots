@@ -4,8 +4,6 @@
   modulesPath,
   config,
   inputs,
-  desktop,
-  buildMarker,
   ...
 }:
 let
@@ -22,19 +20,9 @@ in
       ./locale.nix
       ./nix.nix
       ./nixpkgs
+      ./ydotool.nix
       ./xremap.nix
       ./user.nix
-      ./dev
-      ./cli
-      ./shell
-      ./terminal
-    ]
-    ++ lib.optionals (desktop != null) [
-      ./apps
-      ./common
-      ./desktop
-    ]
-    ++ lib.optionals (buildMarker == "all") [
       ./home-manager.nix
     ];
 

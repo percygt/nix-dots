@@ -1,4 +1,4 @@
-local keymap = require("config.utils")
+local keymap = require("utils")
 local silent = { silent = true }
 local nmap = keymap.nmap
 local vmap = keymap.vmap

@@ -63,7 +63,11 @@ in
     fileSystems."/persist".neededForBoot = true;
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${g.username} = {
-        directories = [ ".local/share/nix" ];
+        directories = [
+          ".local/share/nix"
+          ".local/state/nix"
+          ".local/state/home-manager"
+        ];
       };
       "/persist/system" = {
         hideMounts = true;

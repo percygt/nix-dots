@@ -1,5 +1,6 @@
 {
   imports = [
+    ./dconf.nix
     ./pomo.nix
     ./waybar
     ./cliphist.nix

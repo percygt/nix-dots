@@ -53,9 +53,6 @@ in
     };
     home = {
       activation = {
-        linkNvim = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-          [ -e "${config.xdg.configHome}/nvim/lua/config" ] && cp -rs ${moduleNvim}/lua/config/. ${config.xdg.configHome}/nvim/lua/config/
-        '';
         lazyRestore =
           lib.hm.dag.entryAfter [ "linkGeneration" ]
             # bash
@@ -91,6 +88,12 @@ in
         "nvim/ftdetect".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/ftdetect";
         "nvim/lua/plugins".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/plugins";
         "nvim/lua/utils".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/utils";
+        "nvim/lua/config/autocmds.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/autocmds.lua";
+        "nvim/lua/config/icons.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/icons.lua";
+        "nvim/lua/config/lazy.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/lazy.lua";
+        "nvim/lua/config/lsp-servers.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/lsp-servers.lua";
+        "nvim/lua/config/options.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/options.lua";
+        "nvim/lua/config/remaps.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/remaps.lua";
         # Nixd LSP configuration
         "${g.flakeDirectory}/.neoconf.json".text =
           let

@@ -5,6 +5,7 @@
     ./ddterm.nix
     ./terminal.nix
     ./keybindings.nix
+    ./dconf.nix
   ];
 
   # programs.gnome-terminal.enable = true;

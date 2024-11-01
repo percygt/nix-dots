@@ -1,12 +1,12 @@
 {
   inputs,
   isGeneric,
-  buildMarker,
   isIso,
+  homeMarker,
   username,
 }:
 let
-  lib = if (isGeneric || buildMarker == "home") then inputs.home-manager.lib else inputs.nixpkgs.lib;
+  lib = inputs.home-manager.lib // inputs.nixpkgs.lib;
 in
 {
   sway = import ./sway.nix { inherit lib; };
@@ -19,22 +19,27 @@ in
   colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; };
   importPaths =
     let
-      importHome =
+      importHomeDir =
+        rootDir: if (builtins.pathExists (rootDir + /home)) then [ (rootDir + /home) ] else [ ];
+      importHomeFile =
         rootDir: if (builtins.pathExists (rootDir + /home.nix)) then [ (rootDir + /home.nix) ] else [ ];
 
-      importSystem =
+      importSystemDir =
+        rootDir: if (builtins.pathExists (rootDir + /system)) then [ (rootDir + /system) ] else [ ];
+      importSystemFile =
         rootDir: if (builtins.pathExists (rootDir + /system.nix)) then [ (rootDir + /system.nix) ] else [ ];
 
-      moduleDefault = rootDir: if isGeneric then importHome rootDir else buildModule rootDir;
+      importCommonDir =
+        rootDir: if (builtins.pathExists (rootDir + /common)) then [ (rootDir + /common) ] else [ ];
+      importCommonFile =
+        rootDir: if (builtins.pathExists (rootDir + /common.nix)) then [ (rootDir + /common.nix) ] else [ ];
 
-      buildModule =
-        rootDir:
-        if (buildMarker == "all") then
-          importSystem rootDir
-        else if (buildMarker == "home") then
-          importHome rootDir
-        else
-          importSystem rootDir;
+      commonImports = rootDir: (importCommonFile rootDir) ++ (importCommonDir rootDir);
+
+      homeImports = rootDir: (importHomeFile rootDir) ++ (importHomeDir rootDir);
+
+      systemImports =
+        rootDir: (importSystemFile rootDir) ++ (importSystemDir rootDir) ++ (commonImports rootDir);
 
       moduleAll =
         rootDir:
@@ -53,16 +58,16 @@ in
     {
       default =
         rootDir:
-        if (!isGeneric && buildMarker == "all") then
+        if (!isGeneric && !homeMarker) then
           {
-            imports = moduleDefault rootDir;
+            imports = systemImports rootDir;
             home-manager.users.${username} = {
-              imports = importHome rootDir;
+              imports = homeImports rootDir;
             };
           }
         else
           {
-            imports = moduleDefault rootDir;
+            imports = homeImports rootDir;
           };
       all = rootDir: { imports = moduleAll rootDir; };
     };
