@@ -4,6 +4,7 @@
   modulesPath,
   config,
   inputs,
+  desktop,
   ...
 }:
 let
@@ -11,8 +12,8 @@ let
 in
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix") ]
-    ++ [
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
       inputs.nixos-cli.nixosModules.nixos-cli
       ./core
       ./rebuild
@@ -24,6 +25,10 @@ in
       ./xremap.nix
       ./user.nix
       ./home-manager.nix
+    ]
+    ++ lib.optionals (desktop != null) [
+      ./fonts.nix
+      ./themes.nix
     ];
 
   environment.systemPackages = g.system.corePackages;

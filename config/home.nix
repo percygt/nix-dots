@@ -1,24 +1,29 @@
 {
   config,
   lib,
-  homeMarker,
+  desktop,
   ...
 }:
 let
   g = config._general;
 in
 {
-  imports = [
-    ./shellAliases.nix
-    ./sessionVariables.nix
-    ./nixpkgs
-    ./nix.nix
-    ./xdg.nix
-    ./qt.nix
-    ./gtk.nix
-    ./audio.nix
-    ./automount.nix
-  ] ++ lib.optional homeMarker ./common.nix;
+  imports =
+    [
+      ./shellAliases.nix
+      ./sessionVariables.nix
+      ./nixpkgs
+      ./nix.nix
+      ./xdg.nix
+      ./audio.nix
+      ./automount.nix
+    ]
+    ++ lib.optionals (desktop != null) [
+      ./fonts.nix
+      ./themes.nix
+      ./qt.nix
+      ./gtk.nix
+    ];
 
   programs.home-manager.enable = true;
 

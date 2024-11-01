@@ -36,8 +36,11 @@ in
 
       commonImports = rootDir: (importCommonFile rootDir) ++ (importCommonDir rootDir);
 
-      homeImports = rootDir: (importHomeFile rootDir) ++ (importHomeDir rootDir);
-
+      homeImports =
+        rootDir:
+        (importHomeFile rootDir)
+        ++ (importHomeDir rootDir)
+        ++ lib.optionals homeMarker (commonImports rootDir);
       systemImports =
         rootDir: (importSystemFile rootDir) ++ (importSystemDir rootDir) ++ (commonImports rootDir);
 

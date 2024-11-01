@@ -55,7 +55,7 @@ rec {
   buildHome =
     {
       profile,
-      isGeneric ? true,
+      isGeneric ? false,
       desktop ? null,
       system ? "x86_64-linux",
     }:
