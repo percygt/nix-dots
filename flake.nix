@@ -3,8 +3,16 @@
   outputs =
     { self, ... }@inputs:
     let
-      username = "percygt";
-      bldr = import ./lib { inherit self inputs username; };
+      defaultUsername = "percygt";
+      stateVersion = "23.05";
+      bldr = import ./lib {
+        inherit
+          self
+          inputs
+          defaultUsername
+          stateVersion
+          ;
+      };
     in
     {
       packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
@@ -27,28 +35,32 @@
           profile = "aizeft";
           desktop = "sway";
         };
-        # minimal = bldr.buildSystem {
-        #   profile = "minimal";
-        #   isIso = true;
-        # };
-        # graphical = bldr.buildSystem {
-        #   profile = "graphical";
-        #   isIso = true;
-        # };
+        minimal = bldr.buildSystem {
+          profile = "minimal";
+          isIso = true;
+          username = "nixos";
+        };
+        graphical = bldr.buildSystem {
+          profile = "graphical";
+          isIso = true;
+          username = "nixos";
+        };
       };
       homeConfigurations = {
         "percygt@aizeft" = bldr.buildHome {
           profile = "aizeft";
           desktop = "sway";
+          username = "percygt";
         };
         # furies = bldr.buildHome {
         #   profile = "furies";
         #   desktop = "sway";
         # };
-        fates = bldr.buildHome {
-          profile = "fates";
-          desktop = "gnome";
-        };
+        # fates = bldr.buildHome {
+        #   profile = "fates";
+        #   desktop = "gnome";
+        #   isGeneric = true;
+        # };
       };
     };
 

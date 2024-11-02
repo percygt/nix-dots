@@ -1,7 +1,4 @@
-{ pkgs, inputs }:
-let
-  inherit (inputs.nixpkgs) lib;
-in
+{ pkgs }:
 (import ./derivations.nix { inherit pkgs; })
 // {
   success-alert = pkgs.fetchurl {
@@ -34,93 +31,54 @@ in
     text = builtins.readFile ./clj/toggle-sway-window.clj;
   };
 
-  tofi-power-menu =
-    pkgs.writers.writeBashBin "tofipowermenu"
-      {
-        makeWrapperArgs = [
-          "--prefix"
-          "PATH"
-          ":"
-          "${lib.makeBinPath [
-            pkgs.tofi
-            pkgs.systemd
-          ]}"
-        ];
-      }
-      #bash
-      ''
-        case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | tofi --prompt-text="Power Menu: ") in
-        "Power Off")
-          systemctl poweroff
-          ;;
-        "Restart")
-          systemctl reboot
-          ;;
-        "Suspend")
-          systemctl suspend
-          ;;
-        "Lock")
-          swaylock
-          ;;
-        "Log Out")
-          swaymsg exit
-          ;;
-        esac
-      '';
-  tmux-launch-session =
-    pkgs.writers.writeBashBin "tmuxLaunchSession"
-      {
-        makeWrapperArgs = [
-          "--prefix"
-          "PATH"
-          ":"
-          "${lib.makeBinPath [
-            pkgs.tmux
-          ]}"
-        ];
-      }
-      #bash
-      ''
-        if [ -d $FLAKE ]; then
-          tmux has-session -t nix-dots 2>/dev/null
-          if [ $? != 0 ]; then
-            tmux new-session -ds nix-dots -c "$FLAKE"
-          fi
-          tmux new-session -As nix-dots
-        else
-          tmux has-session -t home 2>/dev/null
-          if [ $? != 0 ]; then
-            tmux new-session -ds home -c "$HOME"
-          fi
-          tmux new-session -As home
+  tofi-power-menu = pkgs.writeShellApplication {
+    name = "tofi-power-menu";
+    runtimeInputs = [
+      pkgs.tofi
+      pkgs.systemd
+    ];
+    text = ''
+      case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | tofi --prompt-text="Power Menu: ") in
+      "Power Off")
+        systemctl poweroff
+        ;;
+      "Restart")
+        systemctl reboot
+        ;;
+      "Suspend")
+        systemctl suspend
+        ;;
+      "Lock")
+        swaylock
+        ;;
+      "Log Out")
+        swaymsg exit
+        ;;
+      esac
+    '';
+  };
+
+  tmux-launch-session = pkgs.writeShellApplication {
+    name = "tmux-launch-session";
+    runtimeInputs = [
+      pkgs.tmux
+    ];
+    text = ''
+      if [ -d $FLAKE ]; then
+        tmux has-session -t nix-dots 2>/dev/null
+        if [ $? != 0 ]; then
+          tmux new-session -ds nix-dots -c "$FLAKE"
         fi
-      '';
-  foot-ddterm =
-    pkgs.writers.writeBashBin "footddterm"
-      {
-        makeWrapperArgs = [
-          "--prefix"
-          "PATH"
-          ":"
-          "${lib.makeBinPath [
-            pkgs.tmux-launch-session
-            pkgs.foot
-          ]}"
-        ];
-      }
-      #bash
-      ''
-        TERM_PIDFILE="/tmp/foot-ddterm"
-        TERM_PID="$(<"$TERM_PIDFILE")"
-        if swaymsg "[ pid=$TERM_PID ] scratchpad show"
-        then
-            swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
-        else
-            echo "$$" > "$TERM_PIDFILE"
-            swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
-            exec foot tmuxLaunchSession
+        tmux new-session -As nix-dots
+      else
+        tmux has-session -t home 2>/dev/null
+        if [ $? != 0 ]; then
+          tmux new-session -ds home -c "$HOME"
         fi
-      '';
+        tmux new-session -As home
+      fi
+    '';
+  };
 
   json2nix = pkgs.writeScriptBin "json2nix" ''
     ${pkgs.python3}/bin/python ${

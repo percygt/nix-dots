@@ -7,5 +7,4 @@
     theme.enable = true;
     editor.neovim.enable = true;
   };
-
 }

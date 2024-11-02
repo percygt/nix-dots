@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  username,
   ...
 }:
 let
@@ -10,7 +11,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     users.groups.network = { };
-    users.users.${g.username}.extraGroups = [ "network" ];
+    users.users.${username}.extraGroups = [ "network" ];
     services.avahi.enable = lib.mkForce false;
     systemd.services.wpa_supplicant = {
       preStart = "touch /etc/wpa_supplicant.conf";

@@ -2,11 +2,9 @@
   pkgs,
   lib,
   config,
+  username,
   ...
 }:
-let
-  g = config._general;
-in
 {
   config = lib.mkIf config.modules.virtualisation.docker.enable {
     virtualisation.docker = {
@@ -18,7 +16,7 @@ in
     };
 
     # Give access to the user
-    users.users.${g.username}.extraGroups = [ "docker" ];
+    users.users.${username}.extraGroups = [ "docker" ];
 
     # Include other utilities
     environment.systemPackages = with pkgs; [ docker-compose ];

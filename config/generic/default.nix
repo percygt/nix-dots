@@ -13,7 +13,7 @@ in
     ./xremap.nix
     ./bluez-suspend.nix
     ./nvd.nix
-    "${c}/home.nix"
+    "${c}/+home.nix"
     "${c}/apps"
     "${c}/cli"
     "${c}/dev"

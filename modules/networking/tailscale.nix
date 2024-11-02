@@ -1,12 +1,10 @@
 {
   lib,
   config,
+  username,
   pkgs,
   ...
 }:
-let
-  g = config._general;
-in
 {
   config = lib.mkIf config.modules.networking.tailscale.enable {
     networking.firewall = {
@@ -15,7 +13,7 @@ in
       allowedUDPPorts = [ config.services.tailscale.port ];
       checkReversePath = "loose";
     };
-    users.users.${g.username}.packages = [ pkgs.tailscale ];
+    users.users.${username}.packages = [ pkgs.tailscale ];
     # inter-machine VPN
     services.tailscale = {
       enable = true;

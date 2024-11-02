@@ -9,7 +9,6 @@
   packageOverlays =
     final: _:
     import ../packages/overlays.nix {
-      inherit inputs;
       pkgs = final;
     };
 }

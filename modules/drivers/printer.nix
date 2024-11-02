@@ -2,11 +2,9 @@
   config,
   lib,
   pkgs,
+  username,
   ...
 }:
-let
-  g = config._general;
-in
 {
   config = lib.mkIf config.modules.drivers.printer.enable {
     # hardware.printers.ensurePrinters = [ g.localPrinter ];
@@ -29,7 +27,7 @@ in
         ];
       };
     };
-    users.users.${g.username}.extraGroups = [
+    users.users.${username}.extraGroups = [
       "scanner"
       "lp"
     ];

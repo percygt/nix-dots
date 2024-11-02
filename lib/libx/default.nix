@@ -20,29 +20,45 @@ in
   importPaths =
     let
       importHomeDir =
-        rootDir: if (builtins.pathExists (rootDir + /home)) then [ (rootDir + /home) ] else [ ];
+        rootDir: if (builtins.pathExists (rootDir + /+home)) then [ (rootDir + /+home) ] else [ ];
       importHomeFile =
-        rootDir: if (builtins.pathExists (rootDir + /home.nix)) then [ (rootDir + /home.nix) ] else [ ];
+        rootDir: if (builtins.pathExists (rootDir + /+home.nix)) then [ (rootDir + /+home.nix) ] else [ ];
 
       importSystemDir =
-        rootDir: if (builtins.pathExists (rootDir + /system)) then [ (rootDir + /system) ] else [ ];
+        rootDir: if (builtins.pathExists (rootDir + /+system)) then [ (rootDir + /+system) ] else [ ];
       importSystemFile =
-        rootDir: if (builtins.pathExists (rootDir + /system.nix)) then [ (rootDir + /system.nix) ] else [ ];
+        rootDir:
+        if (builtins.pathExists (rootDir + /+system.nix)) then [ (rootDir + /+system.nix) ] else [ ];
 
       importCommonDir =
-        rootDir: if (builtins.pathExists (rootDir + /common)) then [ (rootDir + /common) ] else [ ];
+        rootDir: if (builtins.pathExists (rootDir + /+common)) then [ (rootDir + /+common) ] else [ ];
       importCommonFile =
-        rootDir: if (builtins.pathExists (rootDir + /common.nix)) then [ (rootDir + /common.nix) ] else [ ];
+        rootDir:
+        if (builtins.pathExists (rootDir + /+common.nix)) then [ (rootDir + /+common.nix) ] else [ ];
 
+      importConfigFile =
+        rootDir:
+        if (builtins.pathExists (rootDir + /+config.nix)) then [ (rootDir + /+config.nix) ] else [ ];
+
+      importModuleFile =
+        rootDir:
+        if (builtins.pathExists (rootDir + /+module.nix)) then [ (rootDir + /+module.nix) ] else [ ];
       commonImports = rootDir: (importCommonFile rootDir) ++ (importCommonDir rootDir);
 
       homeImports =
         rootDir:
         (importHomeFile rootDir)
         ++ (importHomeDir rootDir)
+        ++ (importModuleFile rootDir)
+        ++ (importConfigFile rootDir)
         ++ lib.optionals homeMarker (commonImports rootDir);
       systemImports =
-        rootDir: (importSystemFile rootDir) ++ (importSystemDir rootDir) ++ (commonImports rootDir);
+        rootDir:
+        (importSystemFile rootDir)
+        ++ (importSystemDir rootDir)
+        ++ (importModuleFile rootDir)
+        ++ (importConfigFile rootDir)
+        ++ (commonImports rootDir);
 
       moduleAll =
         rootDir:
@@ -51,8 +67,12 @@ in
             builtins.attrNames (
               removeAttrs (builtins.readDir rootDir) [
                 "default.nix"
-                "home.nix"
-                "system.nix"
+                "+home.nix"
+                "+system.nix"
+                "+module.nix"
+                "+config.nix"
+                "+common.nix"
+                "+assets"
               ]
             )
           )

@@ -9,11 +9,11 @@ rn:
 
 ra: rn && rh
 
-check:
+ch:
   nix flake check
 
-update:
+up:
   nix flake update
   doom sync -u
 
-rebuild-update: update && ra
+ur: up && ra

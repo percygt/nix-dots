@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  homeDirectory,
+  ...
+}:
 let
   g = config._general;
 in
@@ -30,7 +35,7 @@ in
     enable = true;
     extraOptions = [ "-gui-address=fates.atlas-qilin.ts.net:8384" ];
   };
-  xdg.systemDirs.data = [ "${g.homeDirectory}/.nix-profile/share/applications" ];
+  xdg.systemDirs.data = [ "${homeDirectory}/.nix-profile/share/applications" ];
   dconf.settings = {
     "org/gnome/shell/extensions/fedora-update" = {
       update-cmd = "${pkgs.gnomeExtensions.ddterm}/share/gnome-shell/extensions/ddterm@amezin.github.com/bin/com.github.amezin.ddterm -- fish -c \"sudo dnf check-update --refresh & sudo dnf upgrade -y; echo Done - Press enter to exit; read _\" ";

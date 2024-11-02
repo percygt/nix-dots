@@ -3,10 +3,12 @@ let
   f = config.modules.fonts.shell;
   t = config.modules.theme;
   c = t.colors;
+  g = config._general;
 in
 {
   programs.foot = {
     enable = true;
+    inherit (g.terminal.foot) package;
     settings = {
       main = {
         term = "foot";

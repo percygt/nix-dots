@@ -3,20 +3,18 @@
   inputs,
   config,
   pkgs,
+  username,
   ...
 }:
-let
-  g = config._general;
-in
 {
   imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
   systemd.services = {
-    "home-manager-${g.username}" = {
+    "home-manager-${username}" = {
       serviceConfig.TimeoutStartSec = pkgs.lib.mkForce 1200;
     };
   };
 
-  users.users.${g.username}.extraGroups = [ "flatpak" ];
+  users.users.${username}.extraGroups = [ "flatpak" ];
   services.flatpak = {
     enable = true;
     uninstallUnmanaged = true;
@@ -90,7 +88,7 @@ in
   fileSystems."/var/lib/flatpak".options = [ "exec" ];
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist/system".directories = [ "/var/lib/flatpak" ];
-    "/persist".users.${g.username}.directories = [
+    "/persist".users.${username}.directories = [
       ".var/app/org.libreoffice.LibreOffice"
       ".var/app/org.telegram.desktop"
       ".var/app/info.febvre.Komikku"

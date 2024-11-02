@@ -1,4 +1,4 @@
-## source: https://github.com/stelcodes/nixos-config/blob/dfdbd1fab39f55c32875366e6467d056cf619cfd/modules/sway/home.nix#L1055
+## source: https://github.com/stelcodes/nixos-config/blob/dfdbd1fab39f55c32875366e6467d056cf619cfd/modules/sway/+home.nix#L1055
 {
   pkgs,
   config,

@@ -1,7 +1,8 @@
 {
   inputs,
   self,
-  username,
+  defaultUsername,
+  stateVersion,
   ...
 }:
 let
@@ -30,6 +31,7 @@ rec {
       isIso ? false,
       desktop ? null,
       system ? "x86_64-linux",
+      username ? defaultUsername,
     }:
     let
       inherit (inputs.nixpkgs.lib) nixosSystem;
@@ -42,6 +44,7 @@ rec {
           profile
           isIso
           username
+          stateVersion
           ;
       };
     in
@@ -58,6 +61,7 @@ rec {
       isGeneric ? false,
       desktop ? null,
       system ? "x86_64-linux",
+      username ? defaultUsername,
     }:
     let
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
@@ -70,6 +74,7 @@ rec {
           profile
           isGeneric
           username
+          stateVersion
           ;
         homeMarker = true;
       };

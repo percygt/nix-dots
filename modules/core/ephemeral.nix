@@ -2,10 +2,10 @@
   lib,
   config,
   inputs,
+  username,
   ...
 }:
 let
-  g = config._general;
   cfg = config.modules.core.ephemeral;
   phase1Systemd = cfg.phase1Systemd.enable;
   root_path = lib.concatMapStrings (x: "/" + x) cfg.rootDeviceName;
@@ -62,7 +62,7 @@ in
     };
     fileSystems."/persist".neededForBoot = true;
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist".users.${g.username} = {
+      "/persist".users.${username} = {
         directories = [
           ".local/share/nix"
           ".local/state/nix"

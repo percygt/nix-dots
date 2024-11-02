@@ -1,10 +1,10 @@
 {
-  pkgs,
   config,
   lib,
   ...
 }:
 let
+  g = config._general;
   a = config.modules.theme.assets;
   f = config.modules.fonts.interface;
   c = config.modules.theme.colors.withHashtag;
@@ -25,7 +25,7 @@ in
     down = "j";
     left = "h";
     right = "l";
-    terminal = lib.getExe pkgs.foot;
+    terminal = lib.getExe g.terminal.foot.package;
     menu = "tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
     output."*".bg = "${a.wallpaper} fill";
     gaps.inner = 4;

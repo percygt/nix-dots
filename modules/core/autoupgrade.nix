@@ -2,6 +2,7 @@
 {
   config,
   lib,
+  username,
   ...
 }:
 
@@ -24,7 +25,7 @@ in
     systemd.services.nixos-upgrade = {
       serviceConfig = {
         Type = "oneshot";
-        User = g.username;
+        User = username;
       };
       environment = {
         inherit (config.environment.sessionVariables) SSH_AUTH_SOCK;

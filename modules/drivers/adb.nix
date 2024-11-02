@@ -1,12 +1,13 @@
-{ lib, config, ... }:
-let
-  g = config._general;
-in
 {
-
+  lib,
+  config,
+  username,
+  ...
+}:
+{
   config = lib.mkIf config.modules.drivers.adb.enable {
     programs.adb.enable = true;
-    users.users.${g.username} = {
+    users.users.${username} = {
       extraGroups = [ "adbusers" ];
     };
   };

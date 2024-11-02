@@ -3,6 +3,8 @@
   lib,
   pkgs,
   profile,
+  username,
+  homeDirectory,
   ...
 }:
 let
@@ -32,7 +34,7 @@ let
 in
 {
   config = lib.mkIf config.modules.networking.syncthing.enable {
-    users.users.${g.username}.packages = [ pkgs.syncthing ];
+    users.users.${username}.packages = [ pkgs.syncthing ];
     sops.secrets = {
       "syncthing/cert.pem" = { };
       "syncthing/key.pem" = { };
@@ -40,17 +42,17 @@ in
     };
     services.syncthing = {
       enable = true;
-      user = g.username;
+      user = username;
       openDefaultPorts = true;
       guiAddress = "${profile}.atlas-qilin.ts.net:8384";
-      dataDir = "${g.homeDirectory}/data";
+      dataDir = "${homeDirectory}/data";
       configDir = g.syncthingDirectory;
       cert = config.sops.secrets."syncthing/cert.pem".path;
       key = config.sops.secrets."syncthing/key.pem".path;
 
       settings = rec {
         gui = {
-          user = g.username;
+          user = username;
           theme = "black";
         };
         devices.phone.id = "NMI66EH-U5GFS4R-VV32KKU-34FNTLC-CEB6KXO-A6L3E37-KZOC24S-P3PPDQQ";

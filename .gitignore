@@ -15,5 +15,6 @@ key
 *tmp
 test
 .clj-kondo
+.pre-commit-config.yaml
 .lsp
 wificapture*

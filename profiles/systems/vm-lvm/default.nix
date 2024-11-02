@@ -3,11 +3,9 @@
   lib,
   inputs,
   config,
+  username,
   ...
 }:
-let
-  g = config._general;
-in
 {
   imports = [
     ./disks.nix
@@ -24,7 +22,7 @@ in
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {
       hideMounts = true;
-      users.${g.username} = {
+      users.${username} = {
         directories = [
           {
             directory = ".ssh";
