@@ -4,36 +4,24 @@
     { self, ... }@inputs:
     let
       defaultUsername = "percygt";
+      defaultDesktop = "sway";
+      defaultSystem = "x86_64-linux";
       stateVersion = "23.05";
       bldr = import ./lib {
         inherit
           self
           inputs
-          defaultUsername
           stateVersion
+          defaultSystem
+          defaultDesktop
+          defaultUsername
           ;
       };
     in
     {
-      packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
-      formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
-      overlays = import ./overlays { inherit inputs; };
-      templates = import ./templates;
-      checks = inputs.nixpkgs.lib.genAttrs bldr.supportedSystems (
-        system: import ./checks { inherit inputs system; }
-      );
-      devShells = inputs.nixpkgs.lib.genAttrs bldr.supportedSystems (
-        system:
-        import ./shell.nix {
-          pkgs = inputs.nixpkgs.legacyPackages.${system};
-          checks = self.checks.${system};
-        }
-      );
-      nixosModules.default = ./modules;
       nixosConfigurations = {
         aizeft = bldr.buildSystem {
           profile = "aizeft";
-          desktop = "sway";
         };
         minimal = bldr.buildSystem {
           profile = "minimal";
@@ -49,19 +37,29 @@
       homeConfigurations = {
         "percygt@aizeft" = bldr.buildHome {
           profile = "aizeft";
-          desktop = "sway";
-          username = "percygt";
         };
-        # furies = bldr.buildHome {
-        #   profile = "furies";
-        #   desktop = "sway";
-        # };
-        # fates = bldr.buildHome {
-        #   profile = "fates";
-        #   desktop = "gnome";
-        #   isGeneric = true;
-        # };
+        fates = bldr.buildHome {
+          profile = "fates";
+          desktop = "gnome";
+          isGeneric = true;
+        };
       };
+
+      nixosModules.default = ./modules;
+      packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
+      formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
+      overlays = import ./overlays { inherit inputs; };
+      templates = import ./templates;
+      checks = inputs.nixpkgs.lib.genAttrs bldr.supportedSystems (
+        system: import ./checks { inherit inputs system; }
+      );
+      devShells = inputs.nixpkgs.lib.genAttrs bldr.supportedSystems (
+        system:
+        import ./shell.nix {
+          pkgs = inputs.nixpkgs.legacyPackages.${system};
+          checks = self.checks.${system};
+        }
+      );
     };
 
   inputs = {

@@ -1,8 +1,10 @@
 {
   inputs,
   self,
-  defaultUsername,
   stateVersion,
+  defaultSystem,
+  defaultDesktop,
+  defaultUsername,
   ...
 }:
 let
@@ -29,8 +31,8 @@ rec {
     {
       profile,
       isIso ? false,
-      desktop ? null,
-      system ? "x86_64-linux",
+      system ? defaultSystem,
+      desktop ? defaultDesktop,
       username ? defaultUsername,
     }:
     let
@@ -59,8 +61,8 @@ rec {
     {
       profile,
       isGeneric ? false,
-      desktop ? null,
-      system ? "x86_64-linux",
+      system ? defaultSystem,
+      desktop ? defaultDesktop,
       username ? defaultUsername,
     }:
     let
