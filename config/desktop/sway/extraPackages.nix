@@ -19,7 +19,7 @@ in
         else
             echo "$$" > "$TERM_PIDFILE"
             swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
-            exec foot tmuxLaunchSession
+            exec foot tmux-launch-session
         fi
       '';
     })

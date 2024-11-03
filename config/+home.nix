@@ -6,7 +6,10 @@
   ...
 }:
 {
-  imports = [ ./nixpkgs ];
+  imports = [
+    ./nixpkgs
+    ./nix.nix
+  ];
 
   programs.home-manager.enable = true;
 
