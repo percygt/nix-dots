@@ -7,7 +7,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
   bak = g.security.borgmatic;
   backupMountPath = bak.mountPath;
   configDir = ".config/borgmatic.d";

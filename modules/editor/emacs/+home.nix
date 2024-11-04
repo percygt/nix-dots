@@ -6,7 +6,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
   t = config.modules.theme;
   c = t.colors.withHashtag;
   cfg = config.modules.editor.emacs;
@@ -28,7 +28,6 @@ let
   '';
 in
 {
-  # imports = [ ./module.nix ];
   config = lib.mkMerge [
     (lib.mkIf (swayCfg.enable && cfg.enable) {
       wayland.windowManager.sway.config = {

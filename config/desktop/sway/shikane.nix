@@ -5,7 +5,7 @@
 }:
 let
   tomlFormat = pkgs.formats.toml { };
-  swaymsg = "${config._general.desktop.sway.package}/bin/swaymsg";
+  swaymsg = "${config._base.desktop.sway.package}/bin/swaymsg";
 in
 {
   home.packages = [ pkgs.shikane ];

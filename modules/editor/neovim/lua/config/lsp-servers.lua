@@ -9,6 +9,7 @@ return {
   clojure_lsp = {},
   clangd = {},
   nil_ls = {},
+  nushell = {},
   nixd = {
     cmd = { "nixd" },
     on_init = function(client, _)

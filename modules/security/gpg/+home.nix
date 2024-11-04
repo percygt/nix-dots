@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
   timeout = 432000;
   gpgsshctl = pkgs.writeShellApplication {
     name = "gpgsshctl";

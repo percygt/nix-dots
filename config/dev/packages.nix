@@ -6,5 +6,9 @@
     lazydocker
     lazysql
     podman-tui
+    # build tools / command runners
+    gnumake
+    just
+    go-task
   ];
 }

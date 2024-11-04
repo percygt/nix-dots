@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
 in
 {
   targets.genericLinux.enable = true;

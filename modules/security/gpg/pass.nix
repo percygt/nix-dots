@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
   PASSWORD_STORE_DIR = g.security.gpg.passDir;
 in
 {

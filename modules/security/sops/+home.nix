@@ -7,7 +7,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
 in
 {
   imports = [

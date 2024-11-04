@@ -1,7 +1,7 @@
 { config, ... }:
 let
-  g = config._general;
+  g = config._base;
 in
 {
-  environment.systemPackages = [ g.terminal.foot.package ];
+  environment.systemPackages = [ g.terminal.default.package ];
 }

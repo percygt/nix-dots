@@ -1,8 +1,8 @@
 ;;; +ui.el -*- lexical-binding: t; -*-
 
 (setq doom-theme 'base16-nix-custom
-      doom-font (font-spec :family "VictorMono NFP" :size 18 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "Work Sans" :size 18 :weight 'light)
+      doom-font (font-spec :family "VictorMono NFP" :size 20 :weight 'medium)
+      doom-variable-pitch-font (font-spec :family "Work Sans" :size 20 :weight 'light)
       doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
       doom-big-font (font-spec :family "VictorMono NPF" :size 24))
 

@@ -1,7 +1,12 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+let
+  g = config._base;
+  fishShellPkg = g.shell.fish.package;
+in
 {
   programs = {
     fish = {
+      package = fishShellPkg;
       enable = true;
       plugins = with pkgs.fishPlugins; [
         {

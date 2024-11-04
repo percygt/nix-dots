@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  g = config._general;
+  g = config._base;
 in
 {
   home.packages = [ pkgs.glab ];

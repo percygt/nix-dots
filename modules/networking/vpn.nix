@@ -7,7 +7,7 @@
 with lib;
 let
   cfg = config.modules.networking.vpn;
-  g = config._general;
+  g = config._base;
 in
 {
   config = lib.mkMerge [

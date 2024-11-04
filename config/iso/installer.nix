@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
   mkPathList = dir: builtins.attrNames (builtins.readDir dir);
   mkBashScriptsFromList =
     scripts:
@@ -37,10 +37,13 @@ in
         	exit 1
         fi
 
+
         export DOTS_DIR="$HOME/nix-dots";
         export SEC_DIR="$HOME/sikreto"
+
+        TARGET_HOST=$(find "$DOTS_DIR"/profiles/*/configuration.nix | cut -d'/' -f6 | gum choose)
+        export TARGET_HOST
         export TARGET_USER=${g.systemInstall.targetUser}
-        export TARGET_HOST=$(find "$DOTS_DIR"/profiles/*/configuration.nix | cut -d'/' -f6 | gum choose)
         export FLAKE=${g.flakeDirectory}
         export SECRETS=${g.secretsDirectory}
         export DATA=${g.dataDirectory}

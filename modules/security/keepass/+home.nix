@@ -6,7 +6,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
   kpdb = g.security.keepass.db;
 in
 {

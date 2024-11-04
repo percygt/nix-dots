@@ -15,18 +15,10 @@ let
   defaultPkgs = with pkgs; [
     nerdfonts-fontconfig
     inter
-    etBook
-    work-sans
     roboto-mono
-    source-sans-pro
-    source-serif
-    noto-fonts
-    noto-fonts-cjk-sans
+    gelasio
+    work-sans
     joypixels
-    noto-fonts-emoji
-    corefonts
-    vistafonts
-    ubuntu_font_family
   ];
 in
 defaultPkgs ++ addPackages ++ cfg.extraFonts

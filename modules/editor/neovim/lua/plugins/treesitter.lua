@@ -7,6 +7,7 @@ return {
     end,
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
+      { "nushell/tree-sitter-nu", build = ":TSUpdate nu" },
     },
     keys = {
       { "<leader>ti", "<cmd>Inspect<cr>", desc = "Show highlighting groups and captures" },

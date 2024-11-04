@@ -31,24 +31,19 @@ in
         antialias = true;
         defaultFonts = {
           serif = setFontConfig "serif" ++ [
-            "Source Serif"
-            "Noto Serif"
+            "Libertinus Serif"
+            "Gelasio"
           ];
           sansSerif = setFontConfig "sansSerif" ++ [
-            "Inter"
             "Work Sans"
-            "Noto Sans"
-            "Source Sans Pro"
+            "Inter"
           ];
           monospace = setFontConfig "monospace" ++ [
             "Roboto Mono"
-            "Noto Sans Mono"
-            "JetBrainsMono Nerd Font"
             "Symbols Nerd Font Mono"
           ];
           emoji = [
             "Joypixels"
-            "Noto Color Emoji"
           ];
         };
         enable = true;

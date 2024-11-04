@@ -112,8 +112,8 @@
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
-    general.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
-    general.flake = false;
+    base.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
+    base.flake = false;
   };
   nixConfig = {
     extra-substituters = [

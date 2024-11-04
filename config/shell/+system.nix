@@ -1,10 +1,14 @@
 {
   lib,
-  config,
   pkgs,
   username,
+  config,
   ...
 }:
+let
+  g = config._base;
+  defaultShell = g.shell.default.package;
+in
 {
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {
@@ -13,11 +17,11 @@
       };
     };
   };
-  programs.fish.enable = true;
-  users.users.${username}.shell = pkgs.fish;
-  users.defaultUserShell = pkgs.fish;
-  environment.shells = with pkgs; [
-    fish
-    bash
+  programs.fish.enable = lib.mkIf (defaultShell == pkgs.fish);
+  users.users.${username}.shell = defaultShell;
+  users.defaultUserShell = defaultShell;
+  environment.shells = [
+    defaultShell
+    pkgs.bash
   ];
 }

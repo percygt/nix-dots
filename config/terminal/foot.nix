@@ -3,7 +3,7 @@ let
   f = config.modules.fonts.shell;
   t = config.modules.theme;
   c = t.colors;
-  g = config._general;
+  g = config._base;
 in
 {
   programs.foot = {
@@ -13,7 +13,7 @@ in
       main = {
         term = "foot";
         login-shell = "no";
-        shell = lib.getExe config.programs.fish.package;
+        shell = lib.getExe g.shell.default.package;
         font = "${f.name}:style=${builtins.elemAt f.style 0}:size=${builtins.toString f.size}";
         font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString f.size}";
         font-italic = "${f.name}:style=${builtins.elemAt f.style 2}:size=${builtins.toString f.size}";

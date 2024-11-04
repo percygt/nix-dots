@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  inherit (config._general) flakeDirectory;
+  inherit (config._base) flakeDirectory;
 in
 {
   home.shellAliases = {
@@ -25,18 +25,11 @@ in
     jcu = "journalctl --user -exf --unit";
     curl = "curlie";
     dc = "docker compose";
-    buildIsoMinimal = "nix build .#nixosConfigurations.iso-minimal.config.system.build.isoImage";
-    buildIsoGraphical = "nix build .#nixosConfigurations.iso-graphical.config.system.build.isoImage";
-    n2ne = "nvim $FLAKE/packages/node/packages.json";
-    n2ni = "node2nix -i $FLAKE/packages/node/packages.json -e $FLAKE/packages/node/node-env.nix -o $FLAKE/packages/node/packages.nix -c $FLAKE/packages/node/default.nix";
     ts = "tailscale";
     tssh = "tailscale ssh";
     tst = "tailscale status";
     tsu = "sudo tailscale up --ssh --operator=$USER";
     tsd = "tailscale down";
-    gcnix = "nh clean all --keep-since 7d --keep 3";
-    swup = "nh os switch -u -- --accept-flake-config";
-    sw = "nh os switch -- --accept-flake-config";
     ns = "nom shell";
     nd = "nom develop";
     nrs = "systemctl start --user nixos-rebuild.service";

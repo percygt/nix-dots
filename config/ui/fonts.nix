@@ -32,7 +32,16 @@
     extraFonts = with pkgs; [
       (iosevka-bin.override { variant = "Aile"; })
       emacs-all-the-icons-fonts
-      pkgs.libertinus
+      noto-fonts
+      noto-fonts-cjk-sans
+      libertinus
+      corefonts
+      vistafonts
+      open-sans
+      source-sans-pro
+      source-serif
+      noto-fonts-emoji
+      ubuntu_font_family
     ];
     nerdfontPackages = pkgs.nerdfonts.override {
       fonts = [

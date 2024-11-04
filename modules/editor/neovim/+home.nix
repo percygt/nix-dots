@@ -6,8 +6,8 @@
   ...
 }:
 let
-  g = config._general;
-  moduleNvim = "${g.flakeDirectory}/modules/editor/neovim";
+  g = config._base;
+  moduleNvim = "${g.flakeDirectory}/modrles/editor/neovim";
   cfg = config.modules.editor.neovim;
 in
 {

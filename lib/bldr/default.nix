@@ -13,7 +13,7 @@ let
     "${self}/profiles"
     "${self}/config"
     outputs.nixosModules.default
-    (builtins.toString inputs.general)
+    (builtins.toString inputs.base)
   ];
 in
 rec {

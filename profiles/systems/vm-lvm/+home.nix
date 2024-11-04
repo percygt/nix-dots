@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
 in
 {
   imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];

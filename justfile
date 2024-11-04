@@ -1,19 +1,37 @@
+alias r := rebuild
+alias ra := rebuild-all
+alias ru := rebuild-up
+alias upin := update-input
+alias c := check
+
 default:
-  @just --list
+  @just --list --unsorted
 
-rh:
-	nh home switch -- --accept-flake-config --show-trace
+diff:
+  git diff ':!flake.lock'
 
-rn:
-	nh os switch -- --accept-flake-config --show-trace
+check:
+  nix flake check -L
 
-ra: rn && rh
+rebuild-pre:
+  git add *.nix
 
-ch:
-  nix flake check
+rebuild config="os" update="": rebuild-pre
+	nh {{ config }} switch {{ update }} -- --accept-flake-config --show-trace
 
-up:
-  nix flake update
+update-input input:
+  nix flake update {{ input }}
+
+rebuild-all update="":
+  just rebuild os {{update}} && just rebuild home
+  doom sync
+
+rebuild-up:
+  just rebuild-all -u
   doom sync -u
 
-ur: up && ra
+clean:
+  nh clean all --keep-since 3d --keep 3
+
+isobld profile:
+  nix build .#nixosConfigurations.{{profile}}.config.system.build.isoImage

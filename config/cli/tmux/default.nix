@@ -1,14 +1,21 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
-  inherit (config._general) flakeDirectory;
+  g = config._base;
+  inherit (g) flakeDirectory;
   c = config.modules.theme.colors.withHashtag;
+  defaultShell = g.shell.default.package;
 in
 {
   imports = [ ./extraConfig.nix ];
   programs.tmux = {
     enable = true;
     baseIndex = 1;
-    shell = "${pkgs.fish}/bin/fish";
+    shell = lib.getExe defaultShell;
     keyMode = "vi";
     sensibleOnTop = true;
     terminal = "tmux-256color";

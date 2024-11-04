@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
   gh_http_repo = "https://github.com/percygt/";
   glab_http_repo = "https://gitlab.com/percygt/";
   gh_ssh_repo = "ssh://git@github.com/percygt/";

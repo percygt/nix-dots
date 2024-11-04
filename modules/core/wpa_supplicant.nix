@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
   cfg = config.modules.core.wpa_supplicant;
 in
 {

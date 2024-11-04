@@ -7,7 +7,7 @@
 }:
 let
 
-  g = config._general;
+  g = config._base;
   cfg = config.wayland.windowManager.sway.config;
   mod = cfg.modifier;
   inherit (libx) sway;
@@ -33,8 +33,8 @@ in
         "${mod}+Space" = "exec swaync-client -t -sw";
         "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
         "${mod}+w" = "exec foot-ddterm";
-        "Ctrl+Alt+return" = "exec ${lib.getExe pkgs.tilix}";
-        "${mod}+Return" = "exec ${lib.getExe g.terminal.foot.package}";
+        "Ctrl+Alt+return" = "exec ${lib.getExe g.terminal.tilix.package}";
+        "${mod}+Return" = "exec ${lib.getExe g.terminal.default.package}";
         "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
         "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
         "${mod}+m" = "exec $toggle_window --id btop -- foot --title=SystemMonitor --app-id=btop btop";

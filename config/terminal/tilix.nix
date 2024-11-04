@@ -1,11 +1,12 @@
 { config, pkgs, ... }:
 let
+  g = config._base;
   t = config.modules.theme;
   c = t.colors.withHashtag;
   f = config.modules.fonts.shell;
 in
 {
-  home.packages = [ pkgs.tilix ];
+  home.packages = [ g.terminal.tilix.package ];
   dconf.settings = {
     "com/gexperts/Tilix" = {
       enable-wide-handle = true;

@@ -7,7 +7,7 @@
 let
   t = config.modules.theme;
   f = config.modules.fonts.interface;
-  g = config._general;
+  g = config._base;
   swayPkg = g.desktop.sway.package;
   homeCfgs = config.home-manager.users;
   unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;

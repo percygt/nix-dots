@@ -7,7 +7,7 @@
   ...
 }:
 let
-  g = config._general;
+  g = config._base;
   moduleVscode = "${g.flakeDirectory}/modules/editor/vscode";
 in
 {
@@ -30,7 +30,7 @@ in
           zlib
           cmake
           clang
-          fish
+
           nil
           nixd
           nixfmt-rfc-style

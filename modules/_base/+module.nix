@@ -5,7 +5,7 @@
   ...
 }:
 {
-  options._general = {
+  options._base = {
     desktop = {
       sway.package = lib.mkOption {
         description = "Sway package";
@@ -21,10 +21,37 @@
       };
     };
     terminal = {
+      default.package = lib.mkOption {
+        description = "Default terminal package";
+        type = lib.types.package;
+        default = config._base.terminal.foot.package;
+      };
       foot.package = lib.mkOption {
         description = "Foot terminal package";
         type = lib.types.package;
         default = pkgs.foot;
+      };
+      tilix.package = lib.mkOption {
+        description = "Tilix terminal package";
+        type = lib.types.package;
+        default = pkgs.tilix;
+      };
+    };
+    shell = {
+      default.package = lib.mkOption {
+        description = "Default shell package";
+        type = lib.types.package;
+        default = config._base.shell.nushell.package;
+      };
+      fish.package = lib.mkOption {
+        description = "Fish shell package";
+        type = lib.types.package;
+        default = pkgs.fish;
+      };
+      nushell.package = lib.mkOption {
+        description = "Fish shell package";
+        type = lib.types.package;
+        default = pkgs.nushell;
       };
     };
     security = {
@@ -60,8 +87,8 @@
         type = with lib.types; listOf package;
         default =
           let
-            s = config._general.security;
-            d = config._general.dev;
+            s = config._base.security;
+            d = config._base.dev;
           in
           with pkgs;
           [
@@ -98,12 +125,11 @@
         type = with lib.types; listOf package;
         default =
           let
-            s = config._general.security;
+            s = config._base.security;
           in
           with pkgs;
           [
             s.keepass.package
-            just
             wirelesstools
             ntfs3g
             psmisc
@@ -123,7 +149,7 @@
             gzip
             unrar-free
           ]
-          ++ config._general.system.envPackages;
+          ++ config._base.system.envPackages;
       };
     };
   };
