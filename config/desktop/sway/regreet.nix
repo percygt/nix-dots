@@ -47,7 +47,8 @@ in
   environment = {
     etc."greetd/environments".text = ''
       sway
-      fish
+      bash
+      nu
     '';
     persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist/system".directories = [

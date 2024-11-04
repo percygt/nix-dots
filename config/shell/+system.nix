@@ -17,11 +17,12 @@ in
       };
     };
   };
-  programs.fish.enable = lib.mkIf (defaultShell == pkgs.fish);
+  programs.fish.enable = defaultShell == pkgs.fish;
   users.users.${username}.shell = defaultShell;
   users.defaultUserShell = defaultShell;
   environment.shells = [
-    defaultShell
+    pkgs.nushell
     pkgs.bash
+    pkgs.fish
   ];
 }
