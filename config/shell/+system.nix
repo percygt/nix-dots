@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   username,
   config,
   ...
@@ -13,16 +12,21 @@ in
   environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
     "/persist" = {
       users.${username} = {
-        directories = [ ".local/share/fish" ];
+        directories = [
+          ".local/share/fish"
+          ".local/share/nushell"
+        ];
       };
     };
   };
-  programs.fish.enable = defaultShell == pkgs.fish;
+  programs.fish.enable = defaultShell == g.shell.fish.package;
   users.users.${username}.shell = defaultShell;
   users.defaultUserShell = defaultShell;
-  environment.shells = [
-    pkgs.nushell
-    pkgs.bash
-    pkgs.fish
-  ];
+  environment = {
+    shells = with g.shell; [
+      nushell.package
+      bash.package
+      fish.package
+    ];
+  };
 }

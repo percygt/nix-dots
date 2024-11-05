@@ -8,6 +8,7 @@ in
 {
   programs.starship = {
     enable = true;
+    enableNushellIntegration = false;
     enableTransience = true;
     settings = {
       add_newline = false;

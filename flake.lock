@@ -37,6 +37,24 @@
         "type": "github"
       }
     },
+    "base": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1730650420,
+        "narHash": "sha256-Q6dfu/76NPGS7gqY7wH8AtxMBDhQj+HW2AGN4JXMIA8=",
+        "ref": "main",
+        "rev": "58ec4ca0c3f1232bce5a8c17ff24511575a2a0d3",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -641,24 +659,6 @@
         "owner": "wfxr",
         "repo": "tmux-fzf-url",
         "type": "github"
-      }
-    },
-    "general": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1730543472,
-        "narHash": "sha256-CSGfcxPoTj8Dv64UCIhadMLCrjWClGcOob5qux/Iwok=",
-        "ref": "main",
-        "rev": "e02320332b77d8b4063db25041a4f703814b7045",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
-      },
-      "original": {
-        "ref": "main",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@gitlab.com/percygt/sikreto.git"
       }
     },
     "git-hooks": {
@@ -1743,6 +1743,7 @@
     },
     "root": {
       "inputs": {
+        "base": "base",
         "base16": "base16",
         "disko": "disko",
         "doom-emacs": "doom-emacs",
@@ -1750,7 +1751,6 @@
           "nix-sources",
           "emacs-overlay"
         ],
-        "general": "general",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nix-flatpak": "nix-flatpak",

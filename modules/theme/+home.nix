@@ -2,8 +2,12 @@
   config,
   inputs,
   pkgs,
+  lib,
   ...
 }:
+let
+  c = config.modules.theme.colors;
+in
 {
   imports = [
     inputs.base16.homeManagerModule
@@ -16,7 +20,27 @@
       hicolor-icon-theme
       humanity-icon-theme
     ];
+    home.sessionVariables = {
+      LS_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.theme.vividTheme})";
+      EZA_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.theme.vividTheme})";
+    };
     xdg = {
+      configFile."vivid/themes/custom-vivid.yml".text = lib.concatStringsSep "\n" [
+        ''
+          colors:
+            black: "${c.base01}"
+            red: "${c.base08}"
+            green: "${c.base0B}"
+            yellow: "${c.base0A}"
+            blue: "${c.base0D}"
+            purple: "${c.base0E}"
+            cyan: "${c.base0C}"
+            orange: "${c.base09}"
+            white: "${c.base05}"
+            grey: "${c.base03}"
+        ''
+        (lib.readFile ./vivid-theme.yml)
+      ];
       dataFile = {
         "themes/Yaru-dark".source = "${pkgs.yaru-theme}/share/themes/Yaru-dark";
         "themes/Yaru-bark".source = "${pkgs.yaru-theme}/share/themes/Yaru-bark";

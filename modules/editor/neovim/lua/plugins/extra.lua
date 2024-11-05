@@ -30,6 +30,10 @@ return {
         twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
         gitsigns = { enabled = false }, -- disables git signs
         tmux = { enabled = true }, -- disables the tmux statusline
+        wezterm = {
+          enabled = true,
+          font = "+1", -- (10% increase per step)
+        },
       },
     },
   },
@@ -40,28 +44,6 @@ return {
     keys = {
       { "<a-T>", "<cmd>Twilight<cr>", desc = "Twilight", silent = true },
     },
-  },
-  {
-    "levouh/tint.nvim",
-    event = "VeryLazy",
-    config = function()
-      -- Override some defaults
-      require("tint").setup({
-        tint = -50, -- Darken colors, use a positive value to brighten
-        saturation = 0.6, -- Saturation to preserve
-        transforms = require("tint").transforms.SATURATE_TINT, -- Showing default behavior, but value here can be predefined set of transforms
-        tint_background_colors = true, -- Tint background portions of highlight groups
-        highlight_ignore_patterns = { "WinSeparator", "Status.*" }, -- Highlight group patterns to ignore, see `string.find`
-        window_ignore_function = function(winid)
-          local bufid = vim.api.nvim_win_get_buf(winid)
-          local buftype = vim.api.nvim_buf_get_option(bufid, "buftype")
-          local floating = vim.api.nvim_win_get_config(winid).relative ~= ""
-
-          -- Do not tint `terminal` or floating windows, tint everything else
-          return buftype == "terminal" or floating
-        end,
-      })
-    end,
   },
   {
     "tzachar/local-highlight.nvim",
@@ -177,17 +159,55 @@ return {
       end
     end,
   },
-  {
-    "numToStr/Comment.nvim",
-    dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-    },
-    opts = function()
-      require("Comment").setup({
-        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-      })
-    end,
-  },
+  -- {
+  --   "numToStr/Comment.nvim",
+  --   dependencies = {
+  --     "JoosepAlviste/nvim-ts-context-commentstring",
+  --   },
+  --   opts = function()
+  --     require("Comment").setup({
+  --       padding = true,
+  --       ---Whether the cursor should stay at its position
+  --       sticky = true,
+  --       ---Lines to be ignored while (un)comment
+  --       ---LHS of toggle mappings in NORMAL mode
+  --       toggler = {
+  --         ---Line-comment toggle keymap
+  --         line = "gcc",
+  --         ---Block-comment toggle keymap
+  --         block = "gbc",
+  --       },
+  --       ---LHS of operator-pending mappings in NORMAL and VISUAL mode
+  --       opleader = {
+  --         ---Line-comment keymap
+  --         line = "gc",
+  --         ---Block-comment keymap
+  --         block = "gb",
+  --       },
+  --       ---LHS of extra mappings
+  --       extra = {
+  --         ---Add comment on the line above
+  --         above = "gcO",
+  --         ---Add comment on the line below
+  --         below = "gco",
+  --         ---Add comment at the end of line
+  --         eol = "gcA",
+  --       },
+  --       ---Enable keybindings
+  --       ---NOTE: If given `false` then the plugin won't create any mappings
+  --       mappings = {
+  --         ---Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
+  --         basic = true,
+  --         ---Extra mapping; `gco`, `gcO`, `gcA`
+  --         extra = true,
+  --       },
+  --       ---Function to call before (un)comment
+  --       pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+  --       post_hook = nil,
+  --       ignore = "^$",
+  --     })
+  --   end,
+  -- },
   {
     "karb94/neoscroll.nvim",
     opts = {

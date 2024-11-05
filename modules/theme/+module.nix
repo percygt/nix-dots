@@ -41,8 +41,8 @@
       default = "${inputs.tt-schemes}/base24/one-dark.yaml";
     };
     colors = lib.mkOption {
-      description = "Current colors";
-      type = lib.types.anything;
+      description = "Base24 colors";
+      type = lib.types.attrs;
       default = config.scheme;
     };
     opacity = lib.mkOption {
@@ -118,6 +118,11 @@
         type = lib.types.package;
         default = config.modules.theme.gtkTheme.package;
       };
+    };
+    vividTheme = lib.mkOption {
+      description = "Vivid theme name";
+      type = lib.types.str;
+      default = "custom-vivid";
     };
   };
 }

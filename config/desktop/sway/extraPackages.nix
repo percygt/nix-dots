@@ -11,7 +11,9 @@ in
         g.terminal.foot.package
       ];
       text = ''
-        TERM_PIDFILE="/tmp/foot-ddterm"
+        # ensure pidfile is created
+        touch /tmp/foot-ddterm.pid
+        TERM_PIDFILE="/tmp/foot-ddterm.pid"
         TERM_PID="$(<"$TERM_PIDFILE")"
         if swaymsg "[ pid=$TERM_PID ] scratchpad show"
         then

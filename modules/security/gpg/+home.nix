@@ -17,7 +17,6 @@ let
 in
 {
   imports = [
-    # ./module.nix
     ./pass.nix
   ];
   config = lib.mkIf config.modules.security.gpg.enable {

@@ -77,7 +77,7 @@ return {
             {
               "diagnostics",
               sources = { "nvim_lsp" },
-              symbols = { error = " ", warn = " ", info = " " },
+              symbols = { error = " ", warn = " ", info = " " },
             },
             {
               require("noice").api.status.command.get,
@@ -85,8 +85,13 @@ return {
               color = { fg = c.base07 },
             },
             {
-              require("noice").api.statusline.mode.get,
-              cond = require("noice").api.statusline.mode.has,
+              require("noice").api.status.search.get,
+              cond = require("noice").api.status.search.has,
+              color = { fg = c.base06 },
+            },
+            {
+              require("noice").api.status.mode.get,
+              cond = require("noice").api.status.mode.has,
               color = { fg = c.base09 },
             },
             {
@@ -102,7 +107,15 @@ return {
             { get_name, cond = is_active },
           },
           lualine_x = {
-            { "diff" },
+            {
+              "diff",
+              symbols = { added = " ", modified = " ", removed = " " },
+              diff_color = {
+                added = { fg = c.base0B },
+                modified = { fg = c.base13 },
+                removed = { fg = c.base08 },
+              },
+            },
           },
           lualine_y = {
             clients_lsp,

@@ -2,7 +2,8 @@
   imports = [
     ./fish.nix
     ./bash.nix
-    ./nushell.nix
+    ./nushell
+    ./atuin.nix
     ./starship.nix
   ];
   programs.carapace.enable = true;

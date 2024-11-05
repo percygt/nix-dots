@@ -41,7 +41,7 @@
       default.package = lib.mkOption {
         description = "Default shell package";
         type = lib.types.package;
-        default = config._base.shell.nushell.package;
+        default = config._base.shell.fish.package;
       };
       fish.package = lib.mkOption {
         description = "Fish shell package";
@@ -49,9 +49,14 @@
         default = pkgs.fish;
       };
       nushell.package = lib.mkOption {
-        description = "Fish shell package";
+        description = "Nushell shell package";
         type = lib.types.package;
         default = pkgs.nushell;
+      };
+      bash.package = lib.mkOption {
+        description = "Bash shell package";
+        type = lib.types.package;
+        default = pkgs.bash;
       };
     };
     security = {
