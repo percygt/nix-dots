@@ -25,7 +25,6 @@ in
         "$hostname"
         "$shlvl"
         " "
-        "$time"
         "\n$container$character"
       ];
       status = {

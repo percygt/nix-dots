@@ -30,7 +30,7 @@ in
       #nu
       ''
         $env.STARSHIP_CONFIG = "${config.xdg.configHome}/nushell/starship.toml"
-        if (git rev-parse --is-inside-work-tree | str contains 'true') {
+        if (git rev-parse --is-inside-work-tree err> /dev/null | str contains 'true') {
             ${lib.getExe pkgs.onefetch}
         }
       '';
@@ -41,6 +41,7 @@ in
       "nushell/starship.toml" = lib.mkIf starshipCfg.enable {
         source = tomlFormat.generate "nushell-starship-config" nushell-starship-settings;
       };
+      "nushell/nix-your-shell.nu".source = pkgs.nix-your-shell.generate-config "nu";
       "nushell/keybindings.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/keybindings.nu";
       "nushell/menus.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/menus.nu";
       "nushell/prompts.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/prompts.nu";

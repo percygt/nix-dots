@@ -48,12 +48,6 @@ in
 
 
       # ---------------------
-      # tmuxplugin-tmux-floax
-      # ---------------------
-      set -g @floax-bind '-n M-0'
-      run-shell ${tp.tmux-floax}/share/tmux-plugins/tmux-floax/floax.tmux
-
-      # ---------------------
       # tmuxplugin-vim-tmux-navigator
       # ---------------------
       run-shell ${tp.vim-tmux-navigator}/share/tmux-plugins/vim-tmux-navigator/vim-tmux-navigator.tmux
