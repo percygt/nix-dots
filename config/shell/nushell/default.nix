@@ -1,5 +1,7 @@
 {
+  pkgs,
   config,
+  lib,
   ...
 }:
 let
@@ -8,11 +10,19 @@ let
   configNu = "${g.flakeDirectory}/config/shell/nushell";
   t = config.modules.theme;
   c = t.colors.withHashtag;
+  starshipCfg = config.programs.starship;
+  tomlFormat = pkgs.formats.toml { };
+  nushell-starship-settings = starshipCfg.settings // {
+    character.disabled = true;
+  };
 in
 {
 
   xdg = {
     configFile = {
+      "nushell/starship.toml" = lib.mkIf starshipCfg.enable {
+        source = tomlFormat.generate "nushell-starship-config" nushell-starship-settings;
+      };
       "nushell/keybindings.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/keybindings.nu";
       "nushell/menus.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/menus.nu";
       "nushell/prompts.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/prompts.nu";
@@ -54,6 +64,11 @@ in
     package = nushellPkg;
     envFile.source = ./env.nu;
     configFile.source = ./config.nu;
+    extraEnv =
+      #nu
+      ''
+        $env.STARSHIP_CONFIG = "${config.xdg.configHome}/nushell/starship.toml"
+      '';
     inherit (config.home) shellAliases;
   };
 }

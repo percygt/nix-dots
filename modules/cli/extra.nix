@@ -29,8 +29,8 @@
       serpl # Simple terminal UI for search and replace, ala VS Code
       sshs # Terminal user interface for SSH.
       atac # based on well-known clients such as Postman, Insomnia
-      termscp # file transfer and explorer, with support for SCP/SFTP/FTP/S3
-      pkgs.stable.visidata # interactive multitool for tabular data #NOTE:dependency libolm tagged as insecure package
+      stable.termscp # file transfer and explorer, with support for SCP/SFTP/FTP/S3
+      stable.visidata # interactive multitool for tabular data #NOTE:dependency libolm tagged as insecure package
       wtf # personal information dashboard
       termshark
       bluetuith

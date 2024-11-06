@@ -1,5 +1,4 @@
-# const theme_file = "base24.nu"
-const theme_file = "default-dark.nu"
+const theme_file = "base24.nu"
 
 let keybindings = source ($nu.default-config-dir | path join keybindings.nu)
 let menus = source ($nu.default-config-dir | path join menus.nu)

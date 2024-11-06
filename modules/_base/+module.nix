@@ -41,7 +41,7 @@
       default.package = lib.mkOption {
         description = "Default shell package";
         type = lib.types.package;
-        default = config._base.shell.fish.package;
+        default = config._base.shell.nu.package;
       };
       fish.package = lib.mkOption {
         description = "Fish shell package";

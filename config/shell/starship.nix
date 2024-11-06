@@ -8,7 +8,6 @@ in
 {
   programs.starship = {
     enable = true;
-    enableNushellIntegration = false;
     enableTransience = true;
     settings = {
       add_newline = false;
@@ -44,7 +43,7 @@ in
         disabled = false;
         use_12hr = true;
         style = "yellow dimmed";
-        format = "[$time]($style) ";
+        format = "[$time]($style)";
         time_format = "%I:%M:%S";
       };
       hostname = {

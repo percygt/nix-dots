@@ -67,7 +67,7 @@ in
     ydotool
     xdg-utils
     xwayland
-    wl-screenrec
+    stable.wl-screenrec
     libnotify
   ];
 }
