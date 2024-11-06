@@ -15,6 +15,7 @@ in
         directories = [
           ".local/share/fish"
           ".local/share/nushell"
+          ".config/nushell"
         ];
       };
     };

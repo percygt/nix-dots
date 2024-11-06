@@ -40,7 +40,7 @@ in
         disabled = false;
       };
       time = {
-        disabled = false;
+        disabled = true;
         use_12hr = true;
         style = "yellow dimmed";
         format = "[$time]($style)";

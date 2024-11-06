@@ -35,11 +35,6 @@ in
         color = "${c.base01} ${c.base05}";
       };
 
-      key-bindings = {
-        prompt-prev = "Control+Shift+z";
-        prompt-next = "Control+Shift+x";
-      };
-
       mouse.hide-when-typing = "yes";
 
       csd = {

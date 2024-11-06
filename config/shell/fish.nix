@@ -71,6 +71,8 @@ in
             starship module time
           end
 
+          set -gx STARSHIP_CONFIG "${config.xdg.configHome}/starship.toml"
+
           set -gx FZF_DEFAULT_OPTS "
             --border rounded
             --info=inline
@@ -89,6 +91,15 @@ in
           set fish_cursor_replace_one underscore blink
           set fish_cursor_visual      block
         '';
+      shellAliases = {
+        ll = "eza --group --header --group-directories-first --long --git --all --binary --icons";
+        la = "ll -a";
+        l = "eza --group-directories-first --all -1";
+        cat = "bat -p";
+        date-sortable = "date +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with local timezone
+        date-sortable-utc = "date -u +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with UTC timezone
+        tmp = "pushd $(mktemp -d)";
+      };
     };
   };
   xdg.configFile = {

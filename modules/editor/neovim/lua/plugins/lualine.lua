@@ -74,6 +74,7 @@ return {
             { "harpoon2" },
           },
           lualine_c = {
+            { get_name, cond = is_active },
             {
               "diagnostics",
               sources = { "nvim_lsp" },

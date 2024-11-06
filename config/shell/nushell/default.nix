@@ -17,6 +17,24 @@ let
   };
 in
 {
+  programs.nushell = {
+    enable = true;
+    package = nushellPkg;
+    envFile.source = ./env.nu;
+    configFile.source = ./config.nu;
+    shellAliases = config.home.shellAliases // {
+      la = "ls -a";
+      ll = "ls -la";
+    };
+    extraEnv =
+      #nu
+      ''
+        $env.STARSHIP_CONFIG = "${config.xdg.configHome}/nushell/starship.toml"
+        if (git rev-parse --is-inside-work-tree | str contains 'true') {
+            ${lib.getExe pkgs.onefetch}
+        }
+      '';
+  };
 
   xdg = {
     configFile = {
@@ -58,17 +76,5 @@ in
           }
         '';
     };
-  };
-  programs.nushell = {
-    enable = true;
-    package = nushellPkg;
-    envFile.source = ./env.nu;
-    configFile.source = ./config.nu;
-    extraEnv =
-      #nu
-      ''
-        $env.STARSHIP_CONFIG = "${config.xdg.configHome}/nushell/starship.toml"
-      '';
-    inherit (config.home) shellAliases;
   };
 }

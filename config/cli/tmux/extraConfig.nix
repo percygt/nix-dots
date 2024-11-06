@@ -58,6 +58,11 @@ in
       # ---------------------
       run-shell ${tp.vim-tmux-navigator}/share/tmux-plugins/vim-tmux-navigator/vim-tmux-navigator.tmux
 
+      # ---------------------
+      # tmuxplugin-yank
+      # ---------------------
+
+      run-shell ${pkgs.tmuxPlugins.yank}/share/tmux-plugins/yank/yank.tmux
 
       # ---------------------
       # tmuxplugin-extrakto

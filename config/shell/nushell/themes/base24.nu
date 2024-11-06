@@ -25,7 +25,7 @@ let c = source ($nu.default-config-dir | path join base24-colorscheme.nu)
   list: $c.base06
   block: $c.base06
   hints: $c.base03
-  search_result: { bg: $c.base08 fg: $c.base05 }
+  search_result: { bg: $c.base08 fg: $c.base05 attr: i}
   shape_and: { fg: $c.base0E attr: b}
   shape_binary: { fg: $c.base0E attr: b}
   shape_block: { fg: $c.base0D attr: b}
