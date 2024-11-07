@@ -5,6 +5,7 @@
     ./nushell
     ./atuin.nix
     ./starship.nix
+    ./carapace.nix
+    ./zoxide.nix
   ];
-  programs.carapace.enable = true;
 }

@@ -1,5 +1,5 @@
-let c = source ($nu.default-config-dir | path join base24-colorscheme.nu)
-{
+let c = source base24-colorscheme.nu
+$env.config.color_config = {
   # color for nushell primitives
   separator: $c.base06
   leading_trailing_space_bg: $c.base04

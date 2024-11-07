@@ -1,4 +1,4 @@
-[
+let menus = [
     # Configuration for default nushell menus
     # Note the lack of source parameter
     {
@@ -85,3 +85,5 @@
         }
     }
 ]
+
+$env.config.menus = [...$env.config.menus ...$menus]

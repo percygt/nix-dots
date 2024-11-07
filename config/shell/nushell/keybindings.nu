@@ -1,4 +1,4 @@
-[
+let keybindings  = [
   {
       name: completion_menu
       modifier: none
@@ -504,3 +504,5 @@
       event: { edit: selectall }
   }
 ]
+
+$env.config.keybindings = [...$env.config.keybindings ...$keybindings]
