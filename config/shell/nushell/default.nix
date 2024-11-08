@@ -22,28 +22,27 @@ in
     package = nushellPkg;
     envFile.source = ./env.nu;
     configFile.source = ./config.nu;
-    extraConfig =
-      #nu
-      ''
-        source config-extra.nu
-        let prev_completer = $env.config?.completions?.external?.completer? | default echo
-        let next_completer = {|spans: list<string>|
-          let expansion = scope aliases
-          | where name == $spans.0
-          | get -i 0.expansion
-          | default $spans.0
-          | split row " "
-
-          do $prev_completer ($spans | skip 1 | prepend $expansion)
-        }
-        $env.config = ($env.config?
-        | default {}
-        | merge { completions: { external: { completer: $next_completer } } })
-      '';
+    # extraConfig =
+    #   lib.mkOrder 2000
+    #     #nu
+    #     ''
+    #       let prev_completer = $env.config?.completions?.external?.completer? | default echo
+    #       let next_completer = {|spans: list<string>|
+    #         let expansion = scope aliases
+    #         | where name == $spans.0
+    #         | get -i 0.expansion
+    #         | default $spans.0
+    #         | split row " "
+    #
+    #         do $prev_completer ($spans | skip 1 | prepend $expansion)
+    #       }
+    #       $env.config = ($env.config?
+    #       | default {}
+    #       | merge { completions: { external: { completer: $next_completer } } })
+    #     '';
     extraEnv =
       #nu
       ''
-        source env-extra.nu
         $env.STARSHIP_CONFIG = "${config.xdg.configHome}/nushell/starship.toml"
         if (git rev-parse --is-inside-work-tree err> /dev/null | str contains 'true') {
             ${lib.getExe pkgs.onefetch}
@@ -61,6 +60,7 @@ in
         source = tomlFormat.generate "nushell-starship-config" nushell-starship-settings;
       };
       "nushell/nix-your-shell.nu".source = pkgs.nix-your-shell.generate-config "nu";
+      "nushell/completer.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/completer.nu";
       "nushell/keybindings.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/keybindings.nu";
       "nushell/color_config.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/color_config.nu";
       "nushell/config-extra.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/config-extra.nu";

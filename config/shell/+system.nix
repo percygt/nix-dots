@@ -15,8 +15,8 @@ in
         directories = [
           ".local/share/fish"
           ".local/share/nushell"
-          ".config/nushell"
         ];
+        files = [ ".config/nushell/history.txt" ];
       };
     };
   };

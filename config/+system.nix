@@ -23,10 +23,7 @@ in
 
   programs = {
     command-not-found.enable = false;
-    nix-index = {
-      enable = true;
-      enableFishIntegration = true;
-    };
+    nix-index.enable = true;
     nh = {
       enable = true;
       flake = g.flakeDirectory;
