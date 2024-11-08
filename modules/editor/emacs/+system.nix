@@ -8,7 +8,6 @@ let
   cfg = config.modules.editor.emacs;
 in
 {
-  # imports = [ ./module.nix ];
   config = lib.mkIf config.modules.editor.emacs.enable {
     environment.systemPackages = [
       cfg.finalPackage

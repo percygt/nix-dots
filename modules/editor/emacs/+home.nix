@@ -33,7 +33,7 @@ in
       wayland.windowManager.sway.config = {
         keybindings = {
           "${mod}+Shift+f" = "exec ddapp -p '[app_id=emacs title=^Files$]' -c ${emacsfiles}";
-          "${mod}+q" = "exec ddapp -p '[app_id=emacs title=^Emacs Quick Access.*]' -c ${emacsqa}";
+          "${mod}+q" = "exec ddapp -p '[app_id=emacs title=^Emacs Quick Access*]' -c ${emacsqa}";
           "${mod}+Shift+e" = "exec ddapp -p '[app_id=emacs title=^DoomConfig$]' -c ${doomconfig}";
           "${mod}+e" = "exec ddapp -p '[app_id=emacs title=^Notes$]' -c emacs";
         };

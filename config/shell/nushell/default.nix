@@ -49,6 +49,7 @@ in
       "nushell/env-extra.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/env-extra.nu";
       "nushell/menus.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/menus.nu";
       "nushell/modules".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/modules";
+      "nushell/scripts".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/scripts";
       "nushell/base24-colorscheme.nu".text =
         #nu
         ''
