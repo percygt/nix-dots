@@ -7,49 +7,9 @@
 let
   g = config._base;
   fishShellPkg = g.shell.fish.package;
-  inherit (lib)
-    mkMerge
-    mkBefore
-    mkAfter
-    ;
 in
 {
   programs = {
-    # # https://www.nushell.sh/cookbook/external_completers.html
-    # nushell.extraConfig = mkMerge [
-    #   # Lowermost fallback
-    #   (mkBefore
-    #     #nu
-    #     ''
-    #       let fish_completer = {|spans: list<string>|
-    #         fish -ic $'complete "--do-complete=($spans | str join " ")"'
-    #         | $"value(char tab)description(char newline)" + $in
-    #         | from tsv --flexible --no-infer
-    #       }
-    #       $env.config = ($env.config?
-    #       | default {}
-    #       | merge { completions: { external: { completer: $fish_completer } } })
-    #     ''
-    #   )
-    #
-    #   # Specific commands that work better with fish completion
-    #   (mkAfter
-    #     #nu
-    #     ''
-    #       let prev_completer = $env.config?.completions?.external?.completer? | default echo
-    #       let next_completer = {|spans: list<string>|
-    #         if $spans.0 in [ nix ] {
-    #           do $fish_completer $spans
-    #         } else {
-    #           do $prev_completer $spans
-    #         }
-    #       }
-    #       $env.config = ($env.config?
-    #       | default {}
-    #       | merge { completions: { external: { completer: $next_completer } } })
-    #     ''
-    #   )
-    # ];
     fish = lib.mkMerge [
       (lib.mkIf (g.shell.default.package != fishShellPkg) {
         interactiveShellInit =

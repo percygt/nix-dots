@@ -22,24 +22,6 @@ in
     package = nushellPkg;
     envFile.source = ./env.nu;
     configFile.source = ./config.nu;
-    # extraConfig =
-    #   lib.mkOrder 2000
-    #     #nu
-    #     ''
-    #       let prev_completer = $env.config?.completions?.external?.completer? | default echo
-    #       let next_completer = {|spans: list<string>|
-    #         let expansion = scope aliases
-    #         | where name == $spans.0
-    #         | get -i 0.expansion
-    #         | default $spans.0
-    #         | split row " "
-    #
-    #         do $prev_completer ($spans | skip 1 | prepend $expansion)
-    #       }
-    #       $env.config = ($env.config?
-    #       | default {}
-    #       | merge { completions: { external: { completer: $next_completer } } })
-    #     '';
     extraEnv =
       #nu
       ''
