@@ -12,7 +12,6 @@ let
 in
 {
   imports = [
-    # ./module.nix
     ./packages.nix
   ];
   config = lib.mkIf cfg.enable {

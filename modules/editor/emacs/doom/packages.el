@@ -21,6 +21,7 @@
 (package! beacon)
 (package! keycast)
 (package! base16-theme)
+(package! org-super-agenda)
 (package! writeroom-mode)
 (package! highlight-indent-guides)
 (package! hide-mode-line)

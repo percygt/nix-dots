@@ -26,6 +26,9 @@ let
   emacsfiles = pkgs.writers.writeBash "emacsfiles" ''
     emacsclient -c -e '(dirvish)' -F '((name . "Files"))'
   '';
+  emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
+    emacsclient -c ${g.orgDirectory}/Inbox.org
+  '';
 in
 {
   config = lib.mkMerge [
@@ -35,7 +38,7 @@ in
           "${mod}+Shift+f" = "exec ddapp -p '[app_id=emacs title=^Files$]' -c ${emacsfiles}";
           "${mod}+q" = "exec ddapp -p '[app_id=emacs title=^Emacs Quick Access*]' -c ${emacsqa}";
           "${mod}+Shift+e" = "exec ddapp -p '[app_id=emacs title=^DoomConfig$]' -c ${doomconfig}";
-          "${mod}+e" = "exec ddapp -p '[app_id=emacs title=^Notes$]' -c emacs";
+          "${mod}+e" = "exec ddapp -p '[app_id=emacs title=^Notes$]' -c ${emacsnotes}";
         };
       };
     })

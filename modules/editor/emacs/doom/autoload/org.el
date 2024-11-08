@@ -1,33 +1,4 @@
 ;;; autoload/org.el -*- lexical-binding: t; -*-
-
-(defun p67/log-todo-state-properties (&rest ignore)
-  "Log creation time in the property drawer"
-  (when (and (org-get-todo-state)
-             (not (org-entry-get nil "CREATED")))
-    (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %I:%M>")))
-
-  (when (string= (org-get-todo-state) "TODO")
-    (when (org-entry-get nil "ACTIVATED")
-      (org-entry-delete nil "ACTIVATED"))
-    (when (org-entry-get nil "COMPLETED")
-      (org-entry-delete nil "COMPLETED")))
-
-  (when (string= (org-get-todo-state) "NEXT")
-    (when (not (org-entry-get nil "CREATED"))
-      (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %I:%M>")))
-    (when (org-entry-get nil "COMPLETED")
-      (org-entry-delete nil "COMPLETED"))
-    (when (not (org-entry-get nil "ACTIVATED"))
-      (org-entry-put nil "ACTIVATED" (format-time-string "<%Y-%m-%d %a %I:%M>"))))
-
-  (when (string= (org-get-todo-state) "DONE")
-    (when (not (org-entry-get nil "CREATED"))
-      (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %I:%M>")))
-    (when (not (org-entry-get nil "ACTIVATED"))
-      (org-entry-put nil "ACTIVATED" (format-time-string "<%Y-%m-%d %a %I:%M>")))
-    (when (not (org-entry-get nil "COMPLETED"))
-      (org-entry-put nil "COMPLETED" (format-time-string "<%Y-%m-%d %a %I:%M>")))))
-
 (defun p67/org-done-keep-todo ()
   "Mark an org todo item as done while keeping its former keyword intact, and archive.
 For example, * TODO This item    becomes    * DONE TODO This item."

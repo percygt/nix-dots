@@ -19,11 +19,12 @@
 
 (setq org-capture-templates
       `(
-        ("t" "Tasks")
-        ("tt" "Task" entry  (file "Task.org")
+        ("t" "Inbox")
+        ("tt" "Task" entry  (file "Inbox.org")
          "* TODO %?\n")
-        ("tp" "org-protocol" entry (file "Task.org")
+        ("tp" "org-protocol" entry (file "Inbox.org")
          "* TODO Review %c\n%U\n" :immediate-finish t)
+
         ("m" "Meeting" entry  (file+headline "Agenda.org" "Future")
          ,(concat "* %? :meeting:\n"
                   "<%<%Y-%m-%d %a %H:00>>"))
@@ -33,7 +34,7 @@
          (file+headline "Stash.org" "Stash")
          "** NOTE %(simpleclip-get-contents)"
          :empty-lines-after 1
-         :immediate-finish t
+         ;; :immediate-finish t
          )
         ("ss" "Default" entry
          (file+headline "Stash.org" "Stash")
