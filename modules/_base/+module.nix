@@ -94,6 +94,7 @@
           let
             s = config._base.security;
             d = config._base.dev;
+            inherit (config._base.shell) bash;
           in
           with pkgs;
           [
@@ -103,6 +104,7 @@
             s.gpg.package
             s.ssh.package
             d.git.package
+            bash.package
             nfs-utils
             iputils
             coreutils-full

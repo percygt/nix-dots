@@ -66,7 +66,7 @@ in
           # Execute the commands
           cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
           cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
-          su - ${username} -c "$cmd_build && $cmd_nvd" && /tmp/nixos-configuration/bin/switch-to-configuration switch || exit 1
+          su - ${username} -c "bash -c '$cmd_build && $cmd_nvd'" && /tmp/nixos-configuration/bin/switch-to-configuration switch || exit 1
         '';
     };
   };

@@ -1,5 +1,9 @@
 ;;; +org-roam.el -*- lexical-binding: t; -*-
 
+(after! org-roam
+  (load! "+org-roam-capture.el")
+  (load! "+org-roam-nursery.el")
+  )
 (setq org-roam-directory org-directory
       org-roam-db-location (file-name-concat org-directory "resources/.org-roam.db")
       org-roam-dailies-directory "journal/")
@@ -9,7 +13,7 @@
 
 (map! :after org-roam
       :leader
-      :prefix ("r" . "Roam")
+      :prefix ("R" . "Roam")
       "b" #'org-roam-buffer-toggle
       "f" #'org-roam-node-find
       "g" #'org-roam-graph

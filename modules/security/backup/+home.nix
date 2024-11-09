@@ -8,7 +8,6 @@ let
   g = config._base;
 in
 {
-  # imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.backup.enable {
     systemd.user.services.borgmatic = {
       Service = {
@@ -46,7 +45,6 @@ in
         );
       };
     };
-    home.packages = with pkgs; [ pika-backup ];
     sops.secrets."backup/key" = { };
     services.udiskie.settings.device_config = [
       {

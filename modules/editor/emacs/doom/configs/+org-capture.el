@@ -1,8 +1,7 @@
 ;;; +org-capture.el -*- lexical-binding: t; -*-
 (require 'org)
 
-(map! :after org
-      :leader
+(map! :leader
       "t" #'org-capture-task
       "q" #'org-capture-quick-paste
       )
@@ -10,43 +9,43 @@
 (defun org-capture-task ()
   (interactive)
   (call-interactively 'org-store-link)
-  (org-capture nil "tt"))
+  (org-capture nil "it"))
 
 (defun org-capture-quick-paste ()
   (interactive)
   (call-interactively 'org-store-link)
-  (org-capture nil "sq"))
+  (org-capture nil "rq"))
 
 (setq org-capture-templates
       `(
-        ("t" "Inbox")
-        ("tt" "Task" entry  (file "Inbox.org")
+        ("i" "Inbox")
+        ("it" "Task" entry  (file "Inbox.org")
          "* TODO %?\n")
-        ("tp" "org-protocol" entry (file "Inbox.org")
+        ("ip" "org-protocol" entry (file "Inbox.org")
          "* TODO Review %c\n%U\n" :immediate-finish t)
 
         ("m" "Meeting" entry  (file+headline "Agenda.org" "Future")
          ,(concat "* %? :meeting:\n"
                   "<%<%Y-%m-%d %a %H:00>>"))
 
-        ("s" "Stash")
-        ("sq" "Quick Paste" entry
+        ("r" "Refile")
+        ("rq" "Quick Paste" entry
          (file+headline "Stash.org" "Stash")
          "** NOTE %(simpleclip-get-contents)"
          :empty-lines-after 1
          ;; :immediate-finish t
          )
-        ("ss" "Default" entry
+        ("rs" "Default" entry
          (file+headline "Stash.org" "Stash")
          "** %^{Type|IDEA|NOTE|STUDY|READ|WORK|PROJECT|PEOPLE} %?"
          :empty-lines-after 1
          )
-        ("sc" "Paste Clipboard" entry
+        ("rc" "Paste Clipboard" entry
          (file+headline "Stash.org" "Stash")
          "** %^{Type|IDEA|NOTE|STUDY|READ|WORK|PROJECT|PEOPLE} %?\n%(simpleclip-get-contents)"
          :empty-lines-after 1
          )
-        ("sl" "Create link and fetch title" entry
+        ("rl" "Create link and fetch title" entry
          (file+headline "Stash.org" "Stash")
          "** %^{Type|IDEA|NOTE|STUDY|READ|WORK|PROJECT|PEOPLE} %?\n[[%(simpleclip-get-contents)][%(p67/www-get-page-title (simpleclip-get-contents))]]"
          :empty-lines-after 1

@@ -13,6 +13,9 @@ diff:
 check:
   nix flake check -L
 
+backup-to-tmp path="":
+  sudo borgmatic extract --archive latest --path {{ path }} --destination /tmp
+
 rebuild-pre:
   git add *.nix
 

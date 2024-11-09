@@ -13,19 +13,14 @@ let
   configDir = ".config/borgmatic.d";
   flagFile = "${homeDirectory}/${configDir}/last_run";
   cfg = config.modules.security.backup;
-  beforeActions = pkgs.writeShellScriptBin "beforeActions" ''
-    if [ -f "${flagFile}" ] && grep -q "$(date +%F)" "${flagFile}"; then
-        ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/unbind
-        exit 75
-    fi
-    ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/bind
-    sleep 60
-  '';
 in
 {
   # configured in home
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ borgbackup ];
+    environment.systemPackages = with pkgs; [
+      pika-backup
+      borgbackup
+    ];
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${username}.directories = [ configDir ];
     };
@@ -46,15 +41,15 @@ in
         requires = [ "udisks2.service" ];
         serviceConfig.Type = "oneshot";
         preStart = "${pkgs.coreutils-full}/bin/sleep 30";
-        script = "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind";
+        script = "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null";
       };
       timers.borgmatic = {
         description = "Run borgmatic backup";
         wantedBy = [ "timers.target" ];
         timerConfig = {
-          OnCalendar = "daily";
+          OnCalendar = "Mon..Sun *-*-* 5:00:00";
           Persistent = true;
-          RandomizedDelaySec = "1h";
+          RandomizedDelaySec = "30min";
           OnBootSec = "30min";
         };
       };
@@ -92,7 +87,13 @@ in
           Restart = "no";
           LogRateLimitIntervalSec = 0;
           ExecStartPre = "${pkgs.coreutils-full}/bin/sleep 1m";
-          ExecStart = "systemd-inhibit --who=\"borgmatic\" --what=\"sleep:shutdown\" --why=\"Prevent interrupting scheduled backup\" ${g.security.borgmatic.package}/bin/borgmatic --verbosity -2 --syslog-verbosity 1";
+          ExecStart = pkgs.writers.writeBash "borgmaticInit" ''
+            systemd-inhibit \
+              --who="borgmatic" \
+              --what="sleep:shutdown" \
+              --why="Prevent interrupting scheduled backup" \
+              ${g.security.borgmatic.package}/bin/borgmatic --verbosity -2 --syslog-verbosity 1
+          '';
         };
       };
     };
@@ -102,10 +103,10 @@ in
         repositories = [
           {
             label = "local";
-            path = "${backupMountPath}/backup/data";
+            path = g.backupDirectory;
           }
         ];
-        source_directories = [ "${homeDirectory}/data" ];
+        source_directories = [ g.dataDirectory ];
         exclude_caches = true;
         exclude_patterns = [
           "*.img"
@@ -117,12 +118,28 @@ in
         borgmatic_source_directory = "${homeDirectory}/${configDir}";
         encryption_passcommand = "cat ${config.sops.secrets."borgmatic/encryption".path}";
         keep_daily = 7;
-        before_actions = [ "${beforeActions}/bin/beforeActions" ];
-        after_actions = [
-          "sync"
-          "sleep 60"
+        before_backup = [
+          (pkgs.writers.writeBash "beforeBackup" ''
+            if [ -f "${flagFile}" ] && grep -q "$(date +%F)" "${flagFile}"; then
+                ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null
+                exit 75
+            fi
+          '')
+        ];
+
+        after_backup = [
           "echo $(date +%F) > '${flagFile}'"
-          "echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind"
+          "sync"
+        ];
+
+        before_actions = [
+          "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/bind &>/dev/null"
+          "sleep 15"
+        ];
+
+        after_actions = [
+          "sleep 15"
+          "echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null"
         ];
       };
     };

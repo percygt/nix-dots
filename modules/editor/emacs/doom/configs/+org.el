@@ -1,14 +1,34 @@
 ;;; +org.el -*- lexical-binding: t; -*-
 (require 'org)
+(after! org
+  (load! "+org-modern.el")
+  (load! "+org-capture.el")
+  (load! "+org-agenda.el")
+  (load! "+org-roam.el")
+  )
 
 (setq org-directory orgDirectory
       org-archive-location (file-name-concat org-directory ".archive/%s::"))
+(setq org-agenda-files (list org-directory))
 
 (map! :after org
       :leader
       :prefix ("o" . "Org")
       "c" #'org-capture
       )
+
+(use-package! org-journal
+  :defer t
+  :init
+  ;; org journal
+  (setq org-journal-dir (concat orgDirectory "journal/"))
+  (setq org-journal-file-type 'daily)
+  (setq org-journal-file-format "%Y%m%d.org")
+  (setq org-journal-date-format "%A, %B %d %Y")
+  (setq org-extend-today-until 4)
+  :config
+  (setq org-journal-carryover-items "")
+  )
 
 (use-package! org-appear
   :hook
@@ -87,14 +107,15 @@
 
 (custom-set-faces!
   '(org-document-title :height 1.5)
-  '(org-level-1 :inherit (variable-pitch outline-1) :weight extra-bold :height 1.5)
-  '(org-level-2 :inherit (variable-pitch outline-2) :weight bold :height 1.3)
-  '(org-level-3 :inherit (variable-pitch outline-3) :weight bold :height 1.2)
-  '(org-level-4 :inherit (variable-pitch outline-4) :weight bold :height 1.1)
-  '(org-level-5 :inherit (variable-pitch outline-5) :weight semi-bold :height 1.1)
-  '(org-level-6 :inherit (variable-pitch outline-6) :weight semi-bold :height 1.05)
-  '(org-level-7 :inherit (variable-pitch outline-7) :weight semi-bold)
-  '(org-level-8 :inherit (variable-pitch outline-8) :weight semi-bold)
+  '(org-ellipsis :foreground "DimGray" :height 0.6)
+  '(org-level-1 :inherit (outline-1 variable-pitch) :extend t :weight extra-bold :height 1.5)
+  '(org-level-2 :inherit (outline-2 variable-pitch) :extend t :weight bold :height 1.3)
+  '(org-level-3 :inherit (outline-3 variable-pitch) :extend t :weight bold :height 1.2)
+  '(org-level-4 :inherit (outline-4 variable-pitch) :extend t :weight bold :height 1.1)
+  '(org-level-5 :inherit (outline-5 variable-pitch) :extend t :weight semi-bold :height 1.1)
+  '(org-level-6 :inherit (outline-6 variable-pitch) :extend t :weight semi-bold :height 1.05)
+  '(org-level-7 :inherit (outline-7 variable-pitch) :extend t :weight semi-bold)
+  '(org-level-8 :inherit (outline-8 variable-pitch) :extend t :weight semi-bold)
   '(org-block-begin-line :inherit fixed-pitch :height 0.8 :slant italic :background "unspecified")
   ;; Ensure that anything that should be fixed-pitch in org buffers appears that
   ;; way
@@ -103,9 +124,9 @@
   )
 
 
-(add-hook! 'org-after-todo-statistics-hook
-  (fn! (let (org-log-done) ; turn off logging
-         (org-todo (if (zerop %2) "DONE" "TODO")))))
+;; (add-hook! 'org-after-todo-statistics-hook
+;;   (fn! (let (org-log-done) ; turn off logging
+;;          (org-todo (if (zerop %2) "DONE" "TODO")))))
 
 ;;; Visual settings
 (setq org-link-frame-setup '((file . find-file)));; Opens links to other org file in same frame (rather than splitting)
