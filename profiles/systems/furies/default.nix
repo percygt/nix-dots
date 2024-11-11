@@ -6,7 +6,7 @@
   ];
 
   modules = {
-    drivers = {
+    driver = {
       adb.enable = true;
       bluetooth.enable = true;
       intel.enable = true;

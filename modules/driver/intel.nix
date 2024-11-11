@@ -6,16 +6,16 @@
 }:
 {
 
-  config = lib.mkIf config.modules.drivers.intel.enable {
+  config = lib.mkIf config.modules.driver.intel.enable {
     boot = {
-      initrd.kernelModules = [ config.modules.drivers.intel.gpu.driver ];
+      initrd.kernelModules = [ config.modules.driver.intel.gpu.driver ];
       kernelParams =
-        if (config.modules.drivers.intel.gpu.driver == "xe") then
+        if (config.modules.driver.intel.gpu.driver == "xe") then
           [
             "i915.force_probe=!9a49"
             "xe.force_probe=9a49"
           ]
-        else if (config.modules.drivers.intel.gpu.driver == "i915") then
+        else if (config.modules.driver.intel.gpu.driver == "i915") then
           [ "i915.enable_guc=3" ]
         else
           [ ];

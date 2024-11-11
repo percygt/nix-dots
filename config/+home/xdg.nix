@@ -10,10 +10,7 @@ in
 {
   xdg = {
     enable = true;
-    mimeApps = {
-      enable = true;
-      defaultApplications = import ./+assets/file-associations.nix;
-    };
+    mimeApps.enable = true;
     configHome = homeDirectory + "/.config";
     cacheHome = homeDirectory + "/.local/cache";
     dataHome = homeDirectory + "/.local/share";
@@ -32,9 +29,7 @@ in
       templates = homeDirectory;
       videos = homeDirectory;
 
-      extraConfig = {
-        XDG_SCREENSHOTS_DIR = "${homeDirectory}/pictures/screenshots";
-      };
+      extraConfig.XDG_SCREENSHOTS_DIR = "${homeDirectory}/pictures/screenshots";
     };
   };
 

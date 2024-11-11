@@ -1,6 +1,6 @@
 { lib, ... }:
 {
-  options.modules.drivers = {
+  options.modules.driver = {
     adb.enable = lib.mkEnableOption "Enable adb";
 
     bluetooth.enable = lib.mkEnableOption "Enable bluetooth";

@@ -5,7 +5,7 @@
       ephemeral.enable = true;
       autoupgrade.enable = true;
     };
-    drivers = {
+    driver = {
       adb.enable = true;
       bluetooth.enable = true;
       intel.enable = true;
@@ -29,6 +29,7 @@
     };
     pentesting = {
       wireless.enable = true;
+      malware.enable = true;
       proxies.enable = true;
       traffic.enable = true;
     };
@@ -37,6 +38,9 @@
       podman.enable = true;
       kvm.enable = true;
       vmvariant.enable = true;
+    };
+    utility = {
+      uad.enable = true;
     };
   };
 

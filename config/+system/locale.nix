@@ -1,4 +1,8 @@
+{ config, ... }:
 {
+  environment.variables = {
+    TZ = "${config.time.timeZone}";
+  };
   time.timeZone = "Asia/Manila";
 
   console.keyMap = "us";

@@ -12,6 +12,10 @@
 (setq doom-localleader-key ",")
 (setq doom-localleader-alt-key "M-,")
 
+(setq org-directory orgDirectory
+      org-archive-location (file-name-concat org-directory ".archive/%s::")
+      org-agenda-files (list org-directory))
+
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (pixel-scroll-precision-mode t)
 

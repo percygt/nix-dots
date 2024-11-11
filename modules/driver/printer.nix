@@ -6,7 +6,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.modules.drivers.printer.enable {
+  config = lib.mkIf config.modules.driver.printer.enable {
     # hardware.printers.ensurePrinters = [ g.localPrinter ];
     environment.systemPackages = [ pkgs.epsonscan2 ];
     programs.system-config-printer.enable = true;

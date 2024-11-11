@@ -7,14 +7,10 @@
   (load! "+org-roam.el")
   )
 
-(setq org-directory orgDirectory
-      org-archive-location (file-name-concat org-directory ".archive/%s::"))
-(setq org-agenda-files (list org-directory))
 
 (map! :after org
       :leader
-      :prefix ("o" . "Org")
-      "c" #'org-capture
+      :desc "Org Capture" "c" #'org-capture
       )
 
 (use-package! org-journal
@@ -52,7 +48,7 @@
         writeroom-extra-line-spacing 3)
   (setq writeroom-width visual-fill-column-width))
 
-(defun p67/org-mode-setup ()
+(defun +aiz-org-mode-setup ()
   (setq visual-fill-column-width 100
         visual-fill-column-center-text t
         display-fill-column-indicator nil
@@ -62,40 +58,40 @@
   (auto-fill-mode 0)
   (variable-pitch-mode))
 
-(defun p67/log-todo-state-properties (&rest ignore)
-  "Log creation time in the property drawer"
-  (when (and (org-get-todo-state)
-             (not (org-entry-get nil "CREATED")))
-    (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %I:%M>")))
+;; (defun +aiz-log-todo-state-properties (&rest ignore)
+;;   "Log creation time in the property drawer"
+;;   (when (and (org-get-todo-state)
+;;              (not (org-entry-get nil "CREATED")))
+;;     (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %R>")))
 
-  (when (string= (org-get-todo-state) "TODO")
-    (when (org-entry-get nil "ACTIVATED")
-      (org-entry-delete nil "ACTIVATED"))
-    (when (org-entry-get nil "COMPLETED")
-      (org-entry-delete nil "COMPLETED")))
+;;   (when (string= (org-get-todo-state) "TODO")
+;;     (when (org-entry-get nil "ACTIVATED")
+;;       (org-entry-delete nil "ACTIVATED"))
+;;     (when (org-entry-get nil "COMPLETED")
+;;       (org-entry-delete nil "COMPLETED")))
 
-  (when (string= (org-get-todo-state) "NEXT")
-    (when (not (org-entry-get nil "CREATED"))
-      (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %I:%M>")))
-    (when (org-entry-get nil "COMPLETED")
-      (org-entry-delete nil "COMPLETED"))
-    (when (not (org-entry-get nil "ACTIVATED"))
-      (org-entry-put nil "ACTIVATED" (format-time-string "<%Y-%m-%d %a %I:%M>"))))
+;;   (when (string= (org-get-todo-state) "NEXT")
+;;     (when (not (org-entry-get nil "CREATED"))
+;;       (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %R>")))
+;;     (when (org-entry-get nil "COMPLETED")
+;;       (org-entry-delete nil "COMPLETED"))
+;;     (when (not (org-entry-get nil "ACTIVATED"))
+;;       (org-entry-put nil "ACTIVATED" (format-time-string "<%Y-%m-%d %a %R>"))))
 
-  (when (string= (org-get-todo-state) "DONE")
-    (when (not (org-entry-get nil "CREATED"))
-      (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %I:%M>")))
-    (when (not (org-entry-get nil "ACTIVATED"))
-      (org-entry-put nil "ACTIVATED" (format-time-string "<%Y-%m-%d %a %I:%M>")))
-    (when (not (org-entry-get nil "COMPLETED"))
-      (org-entry-put nil "COMPLETED" (format-time-string "<%Y-%m-%d %a %I:%M>")))))
+;;   (when (string= (org-get-todo-state) "DONE")
+;;     (when (not (org-entry-get nil "CREATED"))
+;;       (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %R>")))
+;;     (when (not (org-entry-get nil "ACTIVATED"))
+;;       (org-entry-put nil "ACTIVATED" (format-time-string "<%Y-%m-%d %a %R>")))
+;;     (when (not (org-entry-get nil "COMPLETED"))
+;;       (org-entry-put nil "COMPLETED" (format-time-string "<%Y-%m-%d %a %R>")))))
 
-(advice-add 'org-insert-todo-heading :after #'p67/log-todo-creation-date)
-(advice-add 'org-insert-todo-heading-respect-content :after #'p67/log-todo-creation-date)
-(advice-add 'org-insert-todo-subheading :after #'p67/log-todo-creation-date)
+;; (advice-add 'org-insert-todo-heading :after #'+aiz-log-todo-creation-date)
+;; (advice-add 'org-insert-todo-heading-respect-content :after #'+aiz-log-todo-creation-date)
+;; (advice-add 'org-insert-todo-subheading :after #'+aiz-log-todo-creation-date)
 
-(add-hook 'org-after-todo-state-change-hook #'p67/log-todo-state-properties)
-(add-hook 'org-capture-before-finalize-hook #'p67/log-todo-state-properties)
+;; (add-hook 'org-after-todo-state-change-hook #'+aiz-log-todo-state-properties)
+;; (add-hook 'org-capture-before-finalize-hook #'+aiz-log-todo-state-properties)
 
 ;; Refile
 (setq org-refile-use-outline-path 'file)
@@ -103,7 +99,7 @@
 (setq org-refile-targets
       '(("projects.org" :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
 
-(add-hook 'org-mode-hook #'p67/org-mode-setup)
+(add-hook 'org-mode-hook #'+aiz-org-mode-setup)
 
 (custom-set-faces!
   '(org-document-title :height 1.5)
@@ -124,9 +120,9 @@
   )
 
 
-;; (add-hook! 'org-after-todo-statistics-hook
-;;   (fn! (let (org-log-done) ; turn off logging
-;;          (org-todo (if (zerop %2) "DONE" "TODO")))))
+(add-hook! 'org-after-todo-statistics-hook
+  (fn! (let (org-log-done) ; turn off logging
+         (org-todo (if (zerop %2) "DONE" "TODO")))))
 
 ;;; Visual settings
 (setq org-link-frame-setup '((file . find-file)));; Opens links to other org file in same frame (rather than splitting)
@@ -135,6 +131,8 @@
 (setq org-cycle-separator-lines 1)
 (setq org-indent-indentation-per-level 2)
 (setq org-ellipsis " ")
+(setq org-log-done 'time)
+(setq org-log-into-drawer t)
 (setq org-hide-emphasis-markers t)
 (setq org-indent-mode-turns-on-hiding-stars t)
 (setq org-pretty-entities t)

@@ -1,7 +1,7 @@
 { config, lib, ... }:
 {
 
-  config = lib.mkIf config.modules.drivers.bluetooth.enable {
+  config = lib.mkIf config.modules.driver.bluetooth.enable {
     # bluetooth
     hardware.bluetooth = {
       enable = true;

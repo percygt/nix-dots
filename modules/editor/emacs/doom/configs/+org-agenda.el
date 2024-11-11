@@ -1,6 +1,7 @@
 ;;; +org-agenda.el -*- lexical-binding: t; -*-
 (require 'org)
 (require 'org-agenda)
+(require 'org-ql)
 (require 'org-super-agenda)
 (org-super-agenda-mode +1)
 (setq org-agenda-todo-ignore-states '("SOMEDAY" "CANCELLED"))
@@ -10,6 +11,22 @@
 (setq org-agenda-inhibit-startup t)
 (setq org-agenda-dim-blocked-tasks "invisible")
 (setq org-agenda-span 14)
+(setq org-agenda-timegrid-use-ampm t)
+(setq org-deadline-warning-days 3)
+(setq org-agenda-skip-deadline-if-done t)
+;; If something is done, don't show when it's scheduled for
+(setq org-agenda-skip-scheduled-if-done t)
+;; If something is scheduled, don't tell me it is due soon
+(setq org-agenda-skip-deadline-prewarning-if-scheduled t)
+(setq org-agenda-time-grid nil)
+(setq org-agenda-block-separator ?-)
+;; custom time stamp format. I don't use this.
+(setq org-time-stamp-custom-formats '("<%A, %B %d, %Y" . "<%m/%d/%y %a %I:%M %p>"))
+(setq org-agenda-start-with-log-mode t)
+(setq org-agenda-log-mode-items '(closed clock state))
+(setq org-agenda-restore-windows-after-quit t)
+
+(setq org-agenda-window-setup 'current-window)
 (map! :map org-agenda-keymap "j" #'org-agenda-next-line)
 (map! :map org-agenda-mode-map "j" #'org-agenda-next-line)
 (map! :map org-super-agenda-header-map "j" #'org-agenda-next-line)
@@ -18,6 +35,11 @@
 (map! :map org-super-agenda-header-map "k" #'org-agenda-previous-line)
 (map! :map org-super-agenda-header-map "k" #'org-agenda-previous-line)
 (map! :map org-super-agenda-header-map "k" #'org-agenda-previous-line)
+
+(defvar +aiz-org-ql-query
+  '(property "ACTIVATED"))
+(defvar +aiz-org-agenda-super-groups
+  '(:name "Personal Items" :property "ACTIVATED"))
 (setq org-agenda-custom-commands '(
                                    ("r" "Main View"
                                     ((agenda "" ((org-agenda-span 'day)
@@ -30,10 +52,19 @@
                                                      :scheduled past)
                                                     (:name "Leftover Habits"
                                                      :tag "habit")
+                                                    (:name "Personal Items"
+                                                     :and (:property "ACTIVATED"
+                                                           :date today
+                                                           :time-grid nil
+                                                           )
+                                                     )
                                                     (:name "Today"
                                                      :time-grid t
                                                      :date today
                                                      :scheduled today)))))
+                                     ;; (org-ql-block +aiz-org-ql-query
+                                     ;;               ((org-ql-block-header "Productivity Overview:")
+                                     ;;                (org-super-agenda-groups +aiz-org-agenda-super-groups)))
                                      (alltodo "" ((org-agenda-overriding-header "")
                                                   (org-super-agenda-groups
                                                    '(
