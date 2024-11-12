@@ -8,24 +8,17 @@
     ./mpv.nix
     ./quickemu.nix
     ./zathura.nix
+    ./lollypop.nix
   ];
 
   home.packages = with pkgs; [
-    mission-center
-    qalculate-gtk
-    shotwell
-    audacity
-    amberol
+    gnome-calculator
+    gnome-podcasts
     foliate
-    mumble
-    gimp
+    # gimp
     font-manager
     pinta
-    inkscape
-    krita
-    # obsidian
-    logseq
-    gnome-podcasts
+    # logseq
     lutris
   ];
 }

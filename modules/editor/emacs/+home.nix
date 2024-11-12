@@ -23,9 +23,6 @@ let
   emacsqa = pkgs.writers.writeBash "emacsqa" ''
     emacsclient -c -e '(dirvish-quick-access)' -F '((name . "Emacs Quick Access"))'
   '';
-  emacsfiles = pkgs.writers.writeBash "emacsfiles" ''
-    emacsclient -c -e '(dirvish)' -F '((name . "Files"))'
-  '';
   emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
     emacsclient -c ${g.orgDirectory}/Inbox.org
   '';
@@ -35,7 +32,6 @@ in
     (lib.mkIf (swayCfg.enable && cfg.enable) {
       wayland.windowManager.sway.config = {
         keybindings = {
-          "${mod}+Shift+f" = "exec ddapp -p '[app_id=emacs title=^Files$]' -c ${emacsfiles}";
           "${mod}+q" = "exec ddapp -p '[app_id=emacs title=^Emacs Quick Access*]' -c ${emacsqa}";
           "${mod}+Shift+e" = "exec ddapp -p '[app_id=emacs title=^DoomConfig$]' -c ${doomconfig}";
           "${mod}+e" = "exec ddapp -p '[app_id=emacs title=^Notes$]' -c ${emacsnotes}";

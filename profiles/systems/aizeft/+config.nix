@@ -33,6 +33,11 @@
       proxies.enable = true;
       traffic.enable = true;
     };
+    terminal = {
+      xfce4-terminal.enable = true;
+      tilix.enable = true;
+      waveterm.enable = true;
+    };
     virtualisation = {
       docker.enable = true;
       podman.enable = true;

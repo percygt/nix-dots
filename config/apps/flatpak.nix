@@ -56,14 +56,8 @@
     ];
     packages = [
       "io.github.zen_browser.zen"
-      # "engineer.atlas.Nyxt"
-      "io.github.jorchube.monitorets"
-      # "com.github.PintaProject.Pinta"
-      # "org.gnome.Shotwell"
-      "org.kde.digikam"
-      "so.libdb.dissent"
-      "org.freedesktop.Bustle"
-      "io.github.bytezz.IPLookup"
+      "org.gnome.Shotwell"
+      "org.audacityteam.Audacity "
       "com.github.geigi.cozy"
       "com.obsproject.Studio"
       "org.kde.kdenlive"

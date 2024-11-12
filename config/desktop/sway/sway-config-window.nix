@@ -10,8 +10,6 @@ in
       (mkAppsFloat {
         titles = [ "^Sign in - Google Accounts.*" ];
         app_ids = [
-          "xdg-desktop-portal-gtk"
-          "org.gnome.Calculator"
           "org.gnome.Calendar"
           "org.gnome.Firmware"
           "org.gnome.Snapshot"
@@ -28,7 +26,6 @@ in
           "com.github.johnfactotum.Foliate"
           "chrome-chatgpt.com__-WebApp-ai"
           "chrome-app.zoom.us__wc-WebApp-zoom"
-          "io.bassi.Amberol"
           "qalculate-gtk"
           "info.mumble.Mumble"
         ];

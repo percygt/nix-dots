@@ -48,13 +48,12 @@ in
         "${mod}+Shift+p" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
         "${mod}+f" = "exec $toggle_window --id yazi -- foot --app-id=yazi fish -c yazi ~";
 
-        # "${mod}+Shift+f" = "exec $toggle_window --id nemo -- nemo ~";
         "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
         "${mod}+Tab" = "workspace back_and_forth";
         "${mod}+Backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
         "${mod}+Delete" = "exec swaylock";
-
-        XF86Calculator = "exec $toggle_window --id qalculate-gtk -- qalculate-gtk";
+        "${mod}+Shift+f" = "exec $toggle_window --id org.gnome.Nautilus -- nautilus ~";
+        XF86Calculator = "exec $toggle_window --id org.gnome.Calculator -- gnome-calculator";
         XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
 
         "F11" = "fullscreen toggle";
