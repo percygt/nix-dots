@@ -10,21 +10,6 @@ in
 {
   imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
 
-  # home.persistence."/persist/home/${username}" = {
-  #   directories = [
-  #     ".local/share/nix"
-  #     ".local/share/atuin"
-  #     ".local/share/nvim"
-  #     ".local/share/fish"
-  #     ".local/share/zoxide"
-  #     ".config/BraveSoftware/Brave-Browser"
-  #   ];
-  #   files = [ ".local/share/tmux/resurrect/last" ];
-  #   allowOther = true;
-  # };
-
-  # browser.brave.enable = true;
-
   desktop.modules.xdg.enable = true;
 
   editor.neovim.enable = true;

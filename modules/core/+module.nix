@@ -32,12 +32,22 @@
         cfg = config.modules.core.persist;
         options = param: {
           directories = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
+            type =
+              with lib.types;
+              listOf (oneOf [
+                attrs
+                str
+              ]);
             default = [ ];
             description = "Directories to pass to environment.persistence attribute for ${param} under ${cfg.prefix}";
           };
           files = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
+            type =
+              with lib.types;
+              listOf (oneOf [
+                attrs
+                str
+              ]);
             default = [ ];
             description = "Files to pass to environment.persistence attribute for ${param} under ${cfg.prefix}";
           };

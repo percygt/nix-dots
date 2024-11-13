@@ -12,7 +12,6 @@ let
 in
 {
   imports = [ inputs.vscode-server.homeModules.default ];
-  options.modules.editor.vscode.enable = lib.mkEnableOption "Enable vscode home";
   config = lib.mkIf config.modules.editor.vscode.enable {
     services.vscode-server = {
       enable = true;
