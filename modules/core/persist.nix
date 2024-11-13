@@ -8,7 +8,7 @@ let
   cfg = config.modules.core.persist;
 in
 {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable && config.modules.core.ephemeral.enable) {
     fileSystems.${cfg.prefix}.neededForBoot = true;
     environment.etc."machine-id".source = "${cfg.systemPrefix}/etc/machine-id";
     environment.persistence = {

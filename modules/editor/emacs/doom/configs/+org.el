@@ -161,9 +161,9 @@
       '(
         (sequence
          "TODO(t)" ; doing later
-         "NEXT(n)" ; doing now or soon
+         "NEXT(n!)" ; doing now or soon
          "|"
-         "DONE(d)" ; done
+         "DONE(d!)" ; done
          )
         (sequence
          "WAIT(w@/!)" ; waiting for some external change (event)
