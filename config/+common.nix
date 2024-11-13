@@ -7,10 +7,10 @@
       ./shell
       ./terminal
       ./rebuild
-      ./utils
+      ./utility
     ]
     ++ lib.optionals (desktop != null) [
-      ./apps
+      ./app
       ./desktop
       ./ui
     ];

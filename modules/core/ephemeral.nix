@@ -61,6 +61,7 @@ in
       };
     };
     fileSystems."/persist".neededForBoot = true;
+    environment.etc."machine-id".source = "/persist/system/etc/machine-id";
     environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
       "/persist".users.${username} = {
         directories = [

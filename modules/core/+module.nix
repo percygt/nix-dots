@@ -26,6 +26,32 @@
       };
     };
 
+    ## persist
+    # persist =
+    #   let
+    #     options = param: prefix: {
+    #       directories = lib.mkOption {
+    #         type = lib.types.listOf lib.types.str;
+    #         default = [ ];
+    #         description = "Directories to pass to environment.persistence attribute for ${param} under ${prefix}";
+    #       };
+    #       files = lib.mkOption {
+    #         type = lib.types.listOf lib.types.str;
+    #         default = [ ];
+    #         description = "Files to pass to environment.persistence attribute for ${param} under ${prefix}";
+    #       };
+    #     };
+    #   in
+    #   {
+    #     enable = lib.mkEnableOption "Enable base zfs persistence settings";
+    #     dataPrefix = lib.mkOption {
+    #       type = lib.types.str;
+    #       default = "/persist";
+    #       description = "The path to where persistent local storage happens";
+    #     };
+    #     systemData = options "systemData" config.etu.localPrefix;
+    #     userData = options "userData" config.etu.localPrefix;
+    #   };
     ## battery
     battery = {
       enable = lib.mkEnableOption "Enable battery";
