@@ -4,6 +4,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config._base;
+in
 {
   options._base = {
     desktop = {
@@ -24,7 +27,7 @@
       default.package = lib.mkOption {
         description = "Default terminal package";
         type = lib.types.package;
-        default = config._base.terminal.foot.package;
+        default = cfg.terminal.foot.package;
       };
       foot.package = lib.mkOption {
         description = "Foot terminal package";
@@ -36,12 +39,17 @@
         type = lib.types.package;
         default = pkgs.tilix;
       };
+      xfce4-terminal.package = lib.mkOption {
+        description = "Xfce4-terminal terminal package";
+        type = lib.types.package;
+        default = pkgs.xfce.xfce4-terminal;
+      };
     };
     shell = {
       default.package = lib.mkOption {
         description = "Default shell package";
         type = lib.types.package;
-        default = config._base.shell.nushell.package;
+        default = cfg.shell.nushell.package;
       };
       fish.package = lib.mkOption {
         description = "Fish shell package";
@@ -92,19 +100,21 @@
         type = with lib.types; listOf package;
         default =
           let
-            s = config._base.security;
-            d = config._base.dev;
-            inherit (config._base.shell) bash;
+            inherit (cfg)
+              security
+              shell
+              dev
+              ;
           in
           with pkgs;
           [
-            config.programs.fish.package
             config.nix.package.out
-            s.sops.package
-            s.gpg.package
-            s.ssh.package
-            d.git.package
-            bash.package
+            shell.default.package
+            shell.bash.package
+            security.sops.package
+            security.gpg.package
+            security.ssh.package
+            dev.git.package
             nfs-utils
             iputils
             coreutils-full
@@ -132,7 +142,7 @@
         type = with lib.types; listOf package;
         default =
           let
-            s = config._base.security;
+            s = cfg.security;
           in
           with pkgs;
           [
@@ -156,7 +166,7 @@
             gzip
             unrar-free
           ]
-          ++ config._base.system.envPackages;
+          ++ cfg.system.envPackages;
       };
     };
   };
