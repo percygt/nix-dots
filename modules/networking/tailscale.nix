@@ -20,8 +20,6 @@
       openFirewall = true;
       useRoutingFeatures = lib.mkDefault "client";
     };
-    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist/system".directories = [ "/var/lib/tailscale" ];
-    };
+    modules.core.persist.systemData.directories = [ "/var/lib/tailscale" ];
   };
 }

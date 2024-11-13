@@ -44,22 +44,22 @@ in
       fit = "Cover";
     };
   };
+
+  modules.core.persist.systemData.directories = [
+    {
+      directory = "/var/cache/regreet";
+      user = "greeter";
+      group = "greeter";
+      mode = "0755";
+    }
+  ];
+
   environment = {
     etc."greetd/environments".text = ''
       sway
       bash
       nu
     '';
-    persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist/system".directories = [
-        {
-          directory = "/var/cache/regreet";
-          user = "greeter";
-          group = "greeter";
-          mode = "0755";
-        }
-      ];
-    };
   };
 
   security.pam.services.greetd.enableGnomeKeyring = true;

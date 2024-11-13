@@ -9,17 +9,14 @@ let
   defaultShell = g.shell.default.package;
 in
 {
-  environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-    "/persist" = {
-      users.${username} = {
-        directories = [
-          ".local/share/fish"
-          ".local/share/nushell"
-        ];
-        files = [ ".config/nushell/history.txt" ];
-      };
-    };
+  modules.core.persist.userData = {
+    directories = [
+      ".local/share/fish"
+      ".local/share/nushell"
+    ];
+    files = [ ".config/nushell/history.txt" ];
   };
+
   programs.fish.enable = defaultShell == g.shell.fish.package;
   users.users.${username}.shell = defaultShell;
   users.defaultUserShell = defaultShell;

@@ -19,11 +19,9 @@ lib.mkMerge [
       enable = true;
       indicator = true;
     };
-    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist/system" = {
-        directories = [ "/etc/NetworkManager/system-connections" ];
-      };
-    };
+    modules.core.persist.systemData.directories = [
+      "/etc/NetworkManager/system-connections"
+    ];
     networking = {
       wireless.iwd.settings.Settings.AutoConnect = true;
       networkmanager = {

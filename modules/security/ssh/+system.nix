@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  username,
   ...
 }:
 let
@@ -10,15 +9,13 @@ in
 {
   # imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.ssh.enable {
-    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist/system".directories = [ "/etc/ssh" ];
-      "/persist".users.${username}.directories = [
-        {
-          directory = ".ssh";
-          mode = "0700";
-        }
-      ];
-    };
+    modules.core.persist.systemData.directories = [ "/etc/ssh" ];
+    modules.core.persist.userData.directories = [
+      {
+        directory = ".ssh";
+        mode = "0700";
+      }
+    ];
     services.openssh = {
       enable = lib.mkDefault false;
       inherit (g.security.ssh) package;

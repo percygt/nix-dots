@@ -2,7 +2,6 @@
   lib,
   config,
   inputs,
-  username,
   ...
 }:
 let
@@ -58,32 +57,6 @@ in
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         script = wipeScript;
-      };
-    };
-    fileSystems."/persist".neededForBoot = true;
-    environment.etc."machine-id".source = "/persist/system/etc/machine-id";
-    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist".users.${username} = {
-        directories = [
-          ".local/share/nix"
-          ".local/state/nix"
-          ".local/state/home-manager"
-        ];
-      };
-      "/persist/system" = {
-        hideMounts = true;
-        directories = [
-          "/var/lib/systemd/coredump"
-          "/var/lib/nixos"
-          "/srv"
-          {
-            directory = "/var/lib/colord";
-            user = "colord";
-            group = "colord";
-            mode = "u=rwx,g=rx,o=";
-          }
-        ];
-        # files = [ "/etc/machine-id" ];
       };
     };
   };

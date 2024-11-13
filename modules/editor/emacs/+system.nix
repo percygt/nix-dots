@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  username,
   ...
 }:
 let
@@ -12,14 +11,9 @@ in
     environment.systemPackages = [
       cfg.finalPackage
     ];
-    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist" = {
-        users.${username} = {
-          directories = [
-            ".local/share/doom"
-          ];
-        };
-      };
-    };
+
+    modules.core.persist.userData.directories = [
+      ".local/share/doom"
+    ];
   };
 }

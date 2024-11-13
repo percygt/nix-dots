@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  lib,
   username,
   ...
 }:
@@ -10,22 +9,20 @@ let
 in
 {
   imports = [ ./regreet.nix ];
+
+  modules.core.persist.userData = {
+    directories = [
+      ".local/share/keyrings"
+      ".config/goa-1.0"
+      ".local/cache/nix-index"
+    ];
+    files = [ ".local/state/tofi-drun-history" ];
+  };
+
   environment = {
     sessionVariables = {
       XDG_CURRENT_DESKTOP = "sway";
       NIXOS_OZONE_WL = "1";
-    };
-    persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist" = {
-        users.${username} = {
-          directories = [
-            ".local/share/keyrings"
-            ".config/goa-1.0"
-            ".local/cache/nix-index"
-          ];
-          files = [ ".local/state/tofi-drun-history" ];
-        };
-      };
     };
   };
   programs = {

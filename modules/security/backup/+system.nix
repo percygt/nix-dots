@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  username,
   homeDirectory,
   ...
 }:
@@ -21,9 +20,7 @@ in
       pika-backup
       borgbackup
     ];
-    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist".users.${username}.directories = [ configDir ];
-    };
+    modules.core.persist.userData.directories = [ configDir ];
     sops.secrets."borgmatic/encryption" = { };
     systemd = {
       timers.poweroff_hdd = {

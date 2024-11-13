@@ -4,7 +4,8 @@
     neovim.enable = lib.mkEnableOption "Enable neovim";
     neovim.package = lib.mkOption {
       description = "neovim package";
-      default = pkgs.neovim-unstable;
+      default = pkgs.neovim-unwrapped;
+      # default = pkgs.neovim-unstable;
       type = lib.types.package;
     };
   };

@@ -27,31 +27,42 @@
     };
 
     ## persist
-    # persist =
-    #   let
-    #     options = param: prefix: {
-    #       directories = lib.mkOption {
-    #         type = lib.types.listOf lib.types.str;
-    #         default = [ ];
-    #         description = "Directories to pass to environment.persistence attribute for ${param} under ${prefix}";
-    #       };
-    #       files = lib.mkOption {
-    #         type = lib.types.listOf lib.types.str;
-    #         default = [ ];
-    #         description = "Files to pass to environment.persistence attribute for ${param} under ${prefix}";
-    #       };
-    #     };
-    #   in
-    #   {
-    #     enable = lib.mkEnableOption "Enable base zfs persistence settings";
-    #     dataPrefix = lib.mkOption {
-    #       type = lib.types.str;
-    #       default = "/persist";
-    #       description = "The path to where persistent local storage happens";
-    #     };
-    #     systemData = options "systemData" config.etu.localPrefix;
-    #     userData = options "userData" config.etu.localPrefix;
-    #   };
+    persist =
+      let
+        cfg = config.modules.core.persist;
+        options = param: {
+          directories = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ ];
+            description = "Directories to pass to environment.persistence attribute for ${param} under ${cfg.prefix}";
+          };
+          files = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ ];
+            description = "Files to pass to environment.persistence attribute for ${param} under ${cfg.prefix}";
+          };
+        };
+      in
+      {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = config.modules.core.ephemeral.enable;
+          description = "Enable persistence settings";
+        };
+        prefix = lib.mkOption {
+          type = lib.types.str;
+          default = "/persist";
+          description = "The path to where persistent local storage happens";
+        };
+        systemPrefix = lib.mkOption {
+          type = lib.types.str;
+          default = "${cfg.prefix}/system";
+          description = "The path to where persistent local storage happens";
+        };
+        systemData = options "systemData";
+        userData = options "userData";
+      };
+
     ## battery
     battery = {
       enable = lib.mkEnableOption "Enable battery";

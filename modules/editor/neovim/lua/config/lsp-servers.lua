@@ -8,14 +8,14 @@ return {
   pylsp = {},
   clojure_lsp = {},
   clangd = {},
-  nil_ls = {},
   nushell = {},
-  nixd = {
-    cmd = { "nixd" },
-    on_init = function(client, _)
-      client.server_capabilities.semanticTokensProvider = nil
-    end,
-  },
+  nil_ls = {},
+  -- nixd = {
+  --   cmd = { "nixd" },
+  --   on_init = function(client, _)
+  --     client.server_capabilities.semanticTokensProvider = nil
+  --   end,
+  -- },
   dockerls = {},
   bashls = {
     filetypes = { "sh", "zsh" },

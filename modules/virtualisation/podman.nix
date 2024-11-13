@@ -11,8 +11,6 @@ in
       defaultNetwork.settings.dns_enabled = true;
     };
 
-    environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-      "/persist/system".directories = [ "/var/lib/containers" ];
-    };
+    modules.core.persist.systemData.directories = [ "/var/lib/containers" ];
   };
 }

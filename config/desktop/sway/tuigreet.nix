@@ -25,21 +25,19 @@ in
     };
   };
 
-  environment = {
-    persistence."/persist/system".directories = [
-      {
-        directory = "/var/cache/tuigreet";
-        user = "greeter";
-        group = "greeter";
-        mode = "0755";
-      }
-    ];
-    etc."greetd/environments".text = ''
-      sway
-      fish
-      bash
-    '';
-  };
+  modules.core.persist.systemData.directories = [
+    {
+      directory = "/var/cache/tuigreet";
+      user = "greeter";
+      group = "greeter";
+      mode = "0755";
+    }
+  ];
+  environment.etc."greetd/environments".text = ''
+    sway
+    fish
+    bash
+  '';
 
   security.pam.services.greetd.enableGnomeKeyring = true;
 

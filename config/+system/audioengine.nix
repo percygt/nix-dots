@@ -7,9 +7,7 @@
 }:
 {
   environment.systemPackages = with pkgs; [ pavucontrol ];
-  environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-    "/persist".users.${username}.directories = [ ".local/state/wireplumber" ];
-  };
+  modules.core.persist.userData.directories = [ ".local/state/wireplumber" ];
   hardware.pulseaudio.enable = lib.mkForce false;
   security.rtkit.enable = true;
   services.pipewire = {

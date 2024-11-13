@@ -10,18 +10,12 @@
     ./flatpak.nix
   ];
 
-  environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-    "/persist" = {
-      users.${username} = {
-        directories = [
-          ".local/share/Mumble"
-          ".local/share/lutris"
-          ".config/Mumble"
-          ".config/Logseq"
-        ];
-      };
-    };
-  };
+  modules.core.persist.userData.directories = [
+    ".local/share/Mumble"
+    ".local/share/lutris"
+    ".config/Mumble"
+    ".config/Logseq"
+  ];
 
   programs.nautilus-open-any-terminal = {
     enable = true;

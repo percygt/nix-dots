@@ -80,14 +80,22 @@
     ];
   };
   fileSystems."/var/lib/flatpak".options = [ "exec" ];
-  environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
-    "/persist/system".directories = [ "/var/lib/flatpak" ];
-    "/persist".users.${username}.directories = [
-      ".var/app/org.libreoffice.LibreOffice"
-      ".var/app/org.telegram.desktop"
-      ".var/app/info.febvre.Komikku"
-      ".var/app/com.github.PintaProject.Pinta"
-      ".var/app/io.github.zen_browser.zen"
-    ];
-  };
+  modules.core.persist.systemData.directories = [ "/var/lib/flatpak" ];
+  modules.core.persist.userData.directories = [
+    ".var/app/org.libreoffice.LibreOffice"
+    ".var/app/org.telegram.desktop"
+    ".var/app/info.febvre.Komikku"
+    ".var/app/com.github.PintaProject.Pinta"
+    ".var/app/io.github.zen_browser.zen"
+  ];
+  # environment.persistence = lib.mkIf config.modules.core.ephemeral.enable {
+  #   "/persist/system".directories = [ "/var/lib/flatpak" ];
+  #   "/persist".users.${username}.directories = [
+  #     ".var/app/org.libreoffice.LibreOffice"
+  #     ".var/app/org.telegram.desktop"
+  #     ".var/app/info.febvre.Komikku"
+  #     ".var/app/com.github.PintaProject.Pinta"
+  #     ".var/app/io.github.zen_browser.zen"
+  #   ];
+  # };
 }
