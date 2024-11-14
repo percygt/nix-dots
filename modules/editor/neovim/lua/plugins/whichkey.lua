@@ -14,6 +14,9 @@ return {
         align = "center",
       },
       triggers = {
+        { "<auto>", mode = "xso" },
+        { "g", mode = { "n" } },
+        { "z", mode = { "n" } },
         { "<leader>", mode = { "n", "v" } },
         { "<C-w>", mode = { "n", "v" } },
         { "<localleader>", mode = { "n", "v" } },

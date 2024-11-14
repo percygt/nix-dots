@@ -51,4 +51,4 @@ xmap("<leader>p", [["_dP]])
 nmap("gh", "<cmd>bprev<cr>")
 nmap("gl", "<cmd>bnext<cr>")
 -- Delete buffer
-nmap("D", "<cmd>bdelete<cr>")
+-- nmap("D", "<cmd>bdelete<cr>")

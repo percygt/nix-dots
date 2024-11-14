@@ -5,6 +5,7 @@ in
 {
   home.shellAliases = {
     dig = "dog";
+    cat = "bat";
     mv = "mv -n";
     rm = "rm -i";
     rmrf = "rm -rf";

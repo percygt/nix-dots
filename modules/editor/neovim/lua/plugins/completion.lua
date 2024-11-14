@@ -9,6 +9,7 @@ return {
     --NOTE: Better nvim cmp
     "iguanacucumber/magazine.nvim",
     name = "nvim-cmp", -- Otherwise highlighting gets messed up
+    event = "InsertEnter",
     dependencies = {
       { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
       { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },

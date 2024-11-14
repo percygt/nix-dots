@@ -20,14 +20,11 @@ return {
       { "<leader>,", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
       { "<leader>.", "<c-6>", desc = "Previous buffer" },
       { "<leader>s", "", desc = "+Search", mode = { "n", "v" } },
-      { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Opened files" },
       { "<leader>sf", "<cmd>Telescope find_files<cr>", desc = "Files" },
       { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help" },
-      { "<leader>sw", "<cmd>Telescope grep_string<cr>", desc = "Current word" },
       { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "Grep" },
       { "<leader>sd", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
       { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
-      { "<leader>sn", "<cmd>Telescope notify<cr>", desc = "Notifications" },
       { "<leader>sl", "<cmd>TodoTelescope<cr>", desc = "Todo" },
       { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Undo" },
     },
@@ -215,7 +212,6 @@ return {
       -- telescope.load_extension("fzf")
       telescope.load_extension("ui-select")
       telescope.load_extension("dap")
-      telescope.load_extension("notify")
       telescope.load_extension("undo")
     end,
   },

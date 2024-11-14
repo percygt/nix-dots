@@ -137,7 +137,7 @@ in
                 if [ "$SWAYSOCK" ]; then
                   foot -- nvim "$1" || true
                 else
-                  gnome-terminal -- nvim "$1" || true
+                  tilix -- nvim "$1" || true
                 fi
               '';
             in

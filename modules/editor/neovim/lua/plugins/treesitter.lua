@@ -5,6 +5,7 @@ return {
     build = function()
       vim.cmd("TSUpdate")
     end,
+    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "nushell/tree-sitter-nu", build = ":TSUpdate nu" },
