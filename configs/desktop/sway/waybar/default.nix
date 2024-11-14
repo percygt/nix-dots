@@ -47,7 +47,7 @@ let
         makeWrapper ${pkgs.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
       '';
   inherit (config._base) flakeDirectory;
-  moduleWaybar = "${flakeDirectory}/config/desktop/sway/waybar";
+  moduleWaybar = "${flakeDirectory}/configs/desktop/sway/waybar";
   c = config.modules.theme.colors.withHashtag;
   f = config.modules.fonts.interface;
   i = config.modules.fonts.icon;

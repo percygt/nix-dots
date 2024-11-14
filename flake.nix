@@ -106,9 +106,6 @@
 
     nur.url = "github:nix-community/NUR";
 
-    tt-schemes.url = "github:tinted-theming/schemes";
-    tt-schemes.flake = false;
-
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
 

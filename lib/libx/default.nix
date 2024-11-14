@@ -20,18 +20,18 @@ in
   importPaths =
     let
       importHomeDir =
-        rootDir: if (builtins.pathExists (rootDir + /+home)) then [ (rootDir + /+home) ] else [ ];
+        rootDir: if (builtins.pathExists (rootDir + /+home)) then moduleAll (rootDir + /+home) else [ ];
       importHomeFile =
         rootDir: if (builtins.pathExists (rootDir + /+home.nix)) then [ (rootDir + /+home.nix) ] else [ ];
 
       importSystemDir =
-        rootDir: if (builtins.pathExists (rootDir + /+system)) then [ (rootDir + /+system) ] else [ ];
+        rootDir: if (builtins.pathExists (rootDir + /+system)) then moduleAll (rootDir + /+system) else [ ];
       importSystemFile =
         rootDir:
         if (builtins.pathExists (rootDir + /+system.nix)) then [ (rootDir + /+system.nix) ] else [ ];
 
       importCommonDir =
-        rootDir: if (builtins.pathExists (rootDir + /+common)) then [ (rootDir + /+common) ] else [ ];
+        rootDir: if (builtins.pathExists (rootDir + /+common)) then moduleAll (rootDir + /+common) else [ ];
       importCommonFile =
         rootDir:
         if (builtins.pathExists (rootDir + /+common.nix)) then [ (rootDir + /+common.nix) ] else [ ];
@@ -43,6 +43,7 @@ in
       importModuleFile =
         rootDir:
         if (builtins.pathExists (rootDir + /+module.nix)) then [ (rootDir + /+module.nix) ] else [ ];
+
       commonImports = rootDir: (importCommonFile rootDir) ++ (importCommonDir rootDir);
 
       homeImports =

@@ -6,7 +6,7 @@
 }:
 let
   g = config._base;
-  moduleSwaync = "${g.flakeDirectory}/config/desktop/sway/swaync";
+  moduleSwaync = "${g.flakeDirectory}/configs/desktop/sway/swaync";
   c = config.modules.theme.colors.withHashtag;
   f = config.modules.fonts.app;
   i = config.modules.fonts.icon;

@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  inputs,
   pkgs,
   ...
 }:
@@ -38,7 +37,7 @@
     colorscheme = lib.mkOption {
       description = "Current colorscheme";
       type = with lib.types; either attrs path;
-      default = "${inputs.tt-schemes}/base24/one-dark.yaml";
+      default = import ./+assets/base24-syft-tokyo.nix;
     };
     colors = lib.mkOption {
       description = "Base24 colors";

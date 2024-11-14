@@ -12,7 +12,7 @@ in
   imports = [
     inputs.base16.homeManagerModule
   ];
-  config = {
+  config = lib.mkIf config.modules.theme.enable {
     scheme = config.modules.theme.colorscheme;
     home.packages = with pkgs; [
       adwaita-icon-theme

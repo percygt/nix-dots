@@ -11,7 +11,7 @@ let
   inherit (self) outputs;
   modules = [
     "${self}/profiles"
-    "${self}/config"
+    "${self}/configs"
     outputs.nixosModules.default
     (builtins.toString inputs.base)
   ];

@@ -10,12 +10,12 @@ return {
   clangd = {},
   nushell = {},
   nil_ls = {},
-  -- nixd = {
-  --   cmd = { "nixd" },
-  --   on_init = function(client, _)
-  --     client.server_capabilities.semanticTokensProvider = nil
-  --   end,
-  -- },
+  nixd = {
+    cmd = { "nixd" },
+    on_init = function(client, _)
+      client.server_capabilities.semanticTokensProvider = nil
+    end,
+  },
   dockerls = {},
   bashls = {
     filetypes = { "sh", "zsh" },

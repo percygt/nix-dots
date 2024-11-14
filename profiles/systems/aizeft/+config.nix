@@ -47,6 +47,9 @@
     utility = {
       uad.enable = true;
     };
+    app = {
+      librewolf.enable = true;
+    };
   };
 
 }
