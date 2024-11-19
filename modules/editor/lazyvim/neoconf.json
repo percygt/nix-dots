@@ -59,7 +59,6 @@
     },
     "pylsp": {
       "pylsp.plugins.ruff.enabled": true,
-      // "pylsp.plugins.ruff.extendSelect": ["I"],
       "pylsp.plugins.jedi_completion.fuzzy": false,
       "pylsp.plugins.pyls_isort.enabled": false,
       "pylsp.plugins.black.enabled": false,
@@ -91,7 +90,9 @@
           "enable": true
         },
         "doc": {
-          "privateName": ["^_"]
+          "privateName": [
+            "^_"
+          ]
         },
         "completion": {
           "showWord": "Disable",

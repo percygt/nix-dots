@@ -98,6 +98,9 @@
         #markdown
         marksman
 
+        #sql
+        sqlfluff
+
         # Additional
         yamllint
         bash-language-server
