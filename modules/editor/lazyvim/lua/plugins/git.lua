@@ -46,7 +46,6 @@ return {
 			{ "<leader>g", "", desc = "+Git", mode = { "n", "v" } },
 			{ "<leader>go", "<cmd>Telescope git_status<cr>", desc = "Git status" },
 			{ "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branches" },
-			-- { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commits" },
 			{ "<leader>gG", "<cmd>Telescope git_bcommits<cr>", desc = "Checkout commits(for current buffer)" },
     },
     opts = {

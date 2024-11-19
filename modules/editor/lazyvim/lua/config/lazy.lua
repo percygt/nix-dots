@@ -16,6 +16,8 @@ require("lazy").setup({
     { "folke/persistence.nvim", enabled = false },
     { "akinsho/bufferline.nvim", enabled = false },
     { "nvim-neo-tree/neo-tree.nvim", enabled = false },
+    { "williamboman/mason.nvim", enabled = false },
+    { "williamboman/mason-lspconfig.nvim", enabled = false },
     -- {
     --   "hrsh7th/nvim-cmp",
     --   url = "https://github.com/iguanacucumber/magazine.nvim",

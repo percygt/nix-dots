@@ -1,4 +1,3 @@
 return {
-
-  -- "williamboman/mason.nvim",
+  --lsp config
 }

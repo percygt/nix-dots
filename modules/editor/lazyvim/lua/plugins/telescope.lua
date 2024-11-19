@@ -20,8 +20,6 @@ return {
         { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics" },
         { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics" },
         { "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
-        -- { "<leader>sl", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-        -- { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Undo" },
         { "<leader>sw", LazyVim.pick("grep_string", { word_match = "-w" }), desc = "Word (Root Dir)" },
         { "<leader>sW", LazyVim.pick("grep_string", { root = false, word_match = "-w" }), desc = "Word (cwd)" },
         { "<leader>sw", LazyVim.pick("grep_string"), mode = "v", desc = "Selection (Root Dir)" },
