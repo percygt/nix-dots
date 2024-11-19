@@ -12,23 +12,13 @@ return {
           c = { bg = c.base00 },
         },
         normal = {
-          a = { fg = c.base16, bg = c.base01 },
+          a = { fg = c.base15, bg = c.base02 },
           b = { bg = c.base10 },
           c = { bg = c.base10 },
         },
         visual = { a = { fg = c.base10, bg = c.base16 } },
-        insert = { a = { fg = c.base05, bg = c.base02 } },
+        insert = { a = { fg = c.base05, bg = c.base03 } },
       }
-      -- LSP clients attached to buffer
-      local function clients_lsp()
-        local buf_clients = nil
-        buf_clients = vim.lsp.get_clients({ bufnr = 0 })
-        local buf_client_names = {}
-        for _, client in pairs(buf_clients) do
-          table.insert(buf_client_names, client.name)
-        end
-        return table.concat(buf_client_names, "|")
-      end
       -- color for lualine progress
       vim.api.nvim_set_hl(0, "progressHl1", { fg = c.base06 })
       vim.api.nvim_set_hl(0, "progressHl2", { fg = c.base09 })
@@ -74,12 +64,31 @@ return {
             { "harpoon2" },
           },
           lualine_c = {
-            { get_name, cond = is_active },
+            {
+              "diff",
+              symbols = { added = " ", modified = " ", removed = " " },
+              diff_color = {
+                added = { fg = c.base0B },
+                modified = { fg = c.base13 },
+                removed = { fg = c.base08 },
+              },
+              source = function()
+                local gitsigns = vim.b.gitsigns_status_dict
+                if gitsigns then
+                  return {
+                    added = gitsigns.added,
+                    modified = gitsigns.changed,
+                    removed = gitsigns.removed,
+                  }
+                end
+              end,
+            },
             {
               "diagnostics",
               sources = { "nvim_lsp" },
               symbols = { error = " ", warn = " ", info = " " },
             },
+            { get_name, cond = is_active },
             {
               require("noice").api.status.command.get,
               cond = require("noice").api.status.command.has,
@@ -104,22 +113,41 @@ return {
                 return "[" .. count .. "]"
               end,
             },
-            -- multicursor status
-            { get_name, cond = is_active },
           },
           lualine_x = {
             {
-              "diff",
-              symbols = { added = " ", modified = " ", removed = " " },
-              diff_color = {
-                added = { fg = c.base0B },
-                modified = { fg = c.base13 },
-                removed = { fg = c.base08 },
-              },
+              function()
+                return "  " .. require("dap").status()
+              end,
+              cond = function()
+                return package.loaded["dap"] and require("dap").status() ~= ""
+              end,
+              color = { fg = c.base08 },
             },
           },
           lualine_y = {
-            clients_lsp,
+            {
+              require("lazy.status").updates,
+              cond = require("lazy.status").has_updates,
+              color = { fg = c.base16 },
+            },
+            {
+              function()
+                local buf_clients = nil
+                buf_clients = vim.lsp.get_clients({ bufnr = 0 })
+                local buf_client_names = {}
+                local lsp_count = 0
+                for _, client in pairs(buf_clients) do
+                  table.insert(buf_client_names, client.name)
+                  lsp_count = lsp_count + 1
+                end
+                if lsp_count > 1 then
+                  return table.concat(buf_client_names, "|")
+                end
+                return buf_client_names[1]
+              end,
+              color = { fg = c.base13 },
+            },
           },
           lualine_z = {
             {

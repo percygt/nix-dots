@@ -1151,6 +1151,23 @@
         "type": "github"
       }
     },
+    "lazy-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1731739188,
+        "narHash": "sha256-ulovQ7g5WGvwyyOJnYR1fZ2KOpht04M3uAkleomPk2o=",
+        "owner": "LazyVim",
+        "repo": "LazyVim",
+        "rev": "1db2af267eeb9046550ac29bd543f3b3021cdd7b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LazyVim",
+        "repo": "LazyVim",
+        "rev": "1db2af267eeb9046550ac29bd543f3b3021cdd7b",
+        "type": "github"
+      }
+    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -1862,6 +1879,7 @@
         ],
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "lazy-vim": "lazy-vim",
         "nix-flatpak": "nix-flatpak",
         "nix-sources": "nix-sources",
         "nix-stash": "nix-stash",

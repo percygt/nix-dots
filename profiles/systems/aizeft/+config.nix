@@ -18,7 +18,8 @@
     cli.enable = true;
     security.extraPackages.enable = true;
     editor = {
-      neovim.enable = true;
+      # neovim.enable = true;
+      lazyvim.enable = true;
       emacs.enable = true;
       vscode.enable = true;
     };

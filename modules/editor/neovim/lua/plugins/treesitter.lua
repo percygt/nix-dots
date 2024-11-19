@@ -108,20 +108,39 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-context",
     event = "BufRead",
-    cmd = { "TSContextToggle" },
-    keys = { { "<leader>tt", "<cmd>TSContextToggle<cr>", desc = "Toggle treesitter context" } },
-    opts = {
-      enable = false,
-      max_lines = 5,
-      trim_scope = "outer",
-      zindex = 40,
-      mode = "cursor",
-      separator = nil,
-    },
+    -- keys = { { "<leader>tt", "<cmd>TSContextToggle<cr>", desc = "Toggle treesitter context" } },
+    opts = function()
+      local tsc = require("treesitter-context")
+      Snacks.toggle({
+        name = "Treesitter Context",
+        get = tsc.enabled,
+        set = function(state)
+          if state then
+            tsc.enable()
+          else
+            tsc.disable()
+          end
+        end,
+      }):map("<leader>ut")
+      return {
+        enable = false,
+        max_lines = 5,
+        trim_scope = "outer",
+        zindex = 40,
+        mode = "cursor",
+        separator = nil,
+      }
+    end,
   },
   -- -- Playground treesitter utility
   {
     "nvim-treesitter/playground",
     cmd = "TSPlaygroundToggle",
+  },
+  -- Automatically add closing tags for HTML and JSX
+  {
+    "windwp/nvim-ts-autotag",
+    event = "BufRead",
+    opts = {},
   },
 }

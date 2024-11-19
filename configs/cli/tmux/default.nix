@@ -39,7 +39,7 @@ in
   };
   xdg.configFile =
     let
-      moduleTmux = "${flakeDirectory}/config/cli/tmux";
+      moduleTmux = "${flakeDirectory}/configs/cli/tmux";
     in
     {
       "tmux/gitmux.yaml".source = config.lib.file.mkOutOfStoreSymlink "${moduleTmux}/gitmux.yaml";

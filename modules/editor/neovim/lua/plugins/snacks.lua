@@ -11,8 +11,9 @@ return {
     },
     quickfile = { enabled = true },
     statuscolumn = { enabled = false }, -- we set this in options.lua
-    words = { enabled = false },
+    words = { enabled = true },
     rename = { enabled = true },
+    win = { enabled = true },
     styles = {
       notification = {
         wo = { wrap = true }, -- Wrap notifications
@@ -48,13 +49,6 @@ return {
     --   end,
     --   desc = "Lazygit Log (cwd)",
     -- },
-    {
-      "<leader>gL",
-      function()
-        Snacks.git.blame_line()
-      end,
-      desc = "Git Blame Line",
-    },
     {
       "<leader>gB",
       function()

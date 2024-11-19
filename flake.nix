@@ -72,6 +72,9 @@
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
 
+    lazy-vim.url = "github:LazyVim/LazyVim/1db2af267eeb9046550ac29bd543f3b3021cdd7b";
+    lazy-vim.flake = false;
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 

@@ -3,12 +3,14 @@
   lib,
   config,
   profile,
+  inputs,
   ...
 }:
 let
   g = config._base;
   moduleNvim = "${g.flakeDirectory}/modules/editor/neovim";
   cfg = config.modules.editor.neovim;
+  lazyvim = "${inputs.lazy-vim}/lua/lazyvim";
 in
 {
   imports = [
@@ -42,7 +44,7 @@ in
           vim.g.gcc_bin_path = '${lib.getExe pkgs.gcc}'
           vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'
           require("config.options")
-          require("config.remaps")
+          require("config.keymaps")
           require("config.autocmds")
           require("config.lazy")
         '';
@@ -87,12 +89,13 @@ in
         "nvim/ftdetect".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/ftdetect";
         "nvim/lua/plugins".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/plugins";
         "nvim/lua/utils".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/utils";
+        "nvim/lua/lazyvim".source = lazyvim;
         "nvim/lua/config/autocmds.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/autocmds.lua";
         "nvim/lua/config/icons.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/icons.lua";
         "nvim/lua/config/lazy.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/lazy.lua";
         "nvim/lua/config/lsp-servers.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/lsp-servers.lua";
         "nvim/lua/config/options.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/options.lua";
-        "nvim/lua/config/remaps.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/remaps.lua";
+        "nvim/lua/config/keymaps.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/keymaps.lua";
         # Nixd LSP configuration
         "${g.flakeDirectory}/.neoconf.json".text =
           let
