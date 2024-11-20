@@ -1,9 +1,23 @@
+local masonLsp = { "astro", "ts_ls" }
+local servers = require("config.lsp-servers")
+local function isInMasonServer(server_name)
+  for _, name in ipairs(masonLsp) do
+    if name == server_name then
+      return true
+    end
+  end
+  return false
+end
+for server_name, server_config in pairs(servers) do
+  if not isInMasonServer(server_name) then
+    server_config.mason = false
+  end
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
-    opts = {
-      servers = require("config.lsp-servers"),
-    },
+    opts = { servers = servers },
   },
   {
     "williamboman/mason.nvim",

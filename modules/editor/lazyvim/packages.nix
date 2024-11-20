@@ -11,6 +11,7 @@
         luaPkgs: with luaPkgs; [
           jsregexp
           magick
+          luacheck
         ];
       extraPackages = with pkgs; [
         (python3.withPackages (
@@ -83,6 +84,8 @@
         gopls
         delve
         golangci-lint
+        gomodifytags
+        impl
         golines
         gotools
         gofumpt
@@ -101,13 +104,17 @@
         #sql
         sqlfluff
 
+        # tailwind
+        tailwindcss-language-server
+
         # Additional
         yamllint
         bash-language-server
         yaml-language-server
         dockerfile-language-server-nodejs
         vscode-langservers-extracted
-        markdownlint-cli
+        cmake-language-server
+        markdownlint-cli2
         taplo-cli
         codespell
         gitlint

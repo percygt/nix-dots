@@ -96,7 +96,6 @@
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs = {
       nixpkgs.follows = "nixpkgs";
-      nixpkgs-stable.follows = "nixpkgs-stable";
     };
 
     wayland-pipewire-idle-inhibit.url = "github:rafaelrc7/wayland-pipewire-idle-inhibit";

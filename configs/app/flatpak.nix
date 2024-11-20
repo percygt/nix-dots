@@ -1,7 +1,6 @@
 {
   lib,
   inputs,
-  config,
   pkgs,
   username,
   ...
@@ -22,7 +21,7 @@
       onActivation = false;
       auto = {
         enable = true;
-        onCalendar = "weekly"; # Default value
+        onCalendar = "Sun *-*-* 3:30:00";
       };
     };
     overrides = {

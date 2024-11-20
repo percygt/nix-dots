@@ -5,9 +5,6 @@ return {
       colorscheme = function()
         require("catppuccin").load()
       end,
-      defaults = {
-        keymaps = false,
-      },
       icons = {
         kinds = require("config.icons").kind,
         diagnostics = require("config.icons").diagnostics,
@@ -40,13 +37,13 @@ return {
           end,
           desc = "Git Browse",
         },
-        {
-          "<leader>R",
-          function()
-            Snacks.rename()
-          end,
-          desc = "Rename File",
-        },
+        -- {
+        --   "<leader>R",
+        --   function()
+        --     Snacks.rename()
+        --   end,
+        --   desc = "Rename File",
+        -- },
         {
           "]]",
           function()
@@ -63,24 +60,6 @@ return {
           desc = "Prev Reference",
           mode = { "n", "t" },
         },
-        -- {
-        --   "<leader>N",
-        --   desc = "Neovim News",
-        --   function()
-        --     Snacks.win({
-        --       file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-        --       width = 0.75,
-        --       height = 0.75,
-        --       wo = {
-        --         spell = false,
-        --         wrap = false,
-        --         signcolumn = "yes",
-        --         statuscolumn = " ",
-        --         conceallevel = 3,
-        --       },
-        --     })
-        --   end,
-        -- },
       }
     end,
   },

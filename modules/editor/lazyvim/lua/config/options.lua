@@ -1,7 +1,6 @@
 local g, opt = vim.g, vim.opt
 
 g.mapleader = " "
-g.maplocalleader = ","
 
 g.lazyvim_picker = "telescope"
 

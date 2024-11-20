@@ -38,28 +38,6 @@ return {
       },
     },
   },
-  -- {
-  --   "folke/todo-comments.nvim",
-  --   dependencies = {
-  --     "nvim-tree/nvim-web-devicons",
-  --     "nvim-lua/plenary.nvim",
-  --   },
-  --   event = { "BufNewFile", "BufReadPost" },
-  --   config = function()
-  --     local c = require("config.colorscheme")
-  --     require("todo-comments").setup({
-  --       keywords = {
-  --         TODO = { icon = " ", color = c.base07 },
-  --       },
-  --     })
-  --   end,
-  -- },
-  -- -- comments
-  -- {
-  --   "folke/ts-comments.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  -- },
   {
     "karb94/neoscroll.nvim",
     opts = {

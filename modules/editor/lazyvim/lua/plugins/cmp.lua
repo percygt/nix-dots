@@ -4,7 +4,7 @@ return {
     dependencies = {
       { "hrsh7th/cmp-path", enabled = false },
       "hrsh7th/cmp-emoji",
-      "cmp-nvim-lua",
+      -- "cmp-nvim-lua",
       "FelipeLema/cmp-async-path",
     },
     opts = function(_, opts)
@@ -16,7 +16,7 @@ return {
         end
       end
       table.insert(opts.sources, { name = "async_path", priority_weight = 110 })
-      table.insert(opts.sources, { name = "nvim_lua" })
+      -- table.insert(opts.sources, { name = "nvim_lua" })
       table.insert(opts.sources, { name = "emoji" })
 
       local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
@@ -25,6 +25,11 @@ return {
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
+      opts.preselect = cmp.PreselectMode.None
+      opts.completion = {
+        completeopt = "menu,menuone,preview,noselect",
+      }
+
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
@@ -88,31 +93,6 @@ return {
           return item
         end,
       }
-    end,
-  },
-  {
-    "kristijanhusak/vim-dadbod-completion",
-    dependencies = { "hrsh7th/nvim-cmp" },
-    ft = { "sql", "mysql", "plsql" },
-    lazy = true,
-    config = function()
-      local cmp = require("cmp")
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = {
-          "sql",
-        },
-        command = [[setlocal omnifunc=vim_dadbod_completion#omni]],
-      })
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "sql", "mysql", "plsql" },
-        callback = function()
-          cmp.setup.buffer({
-            sources = {
-              { name = "vim-dadbod-completion" },
-            },
-          })
-        end,
-      })
     end,
   },
   {

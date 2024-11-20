@@ -3,14 +3,12 @@
   lib,
   config,
   profile,
-  inputs,
   ...
 }:
 let
   g = config._base;
   moduleNvim = "${g.flakeDirectory}/modules/editor/lazyvim";
   cfg = config.modules.editor.lazyvim;
-  lazyvim = "${inputs.lazy-vim}/lua/lazyvim";
 in
 {
   imports = [ ./packages.nix ];
@@ -46,9 +44,6 @@ in
           require("config.autocmds")
           require("config.lazy")
         '';
-      plugins = [
-        pkgs.vimPlugins.lazy-nvim # All other plugins are managed by lazy-nvim
-      ];
     };
     home = {
       activation = {
@@ -56,11 +51,16 @@ in
           lib.hm.dag.entryAfter [ "linkGeneration" ]
             # bash
             ''
-              LOCK_FILE=$(readlink -f ~/.config/nvim/lazy-lock.json)
+              LAZYNVIM_DIR="$XDG_DATA_HOME/nvim/lazy/lazy.nvim"
+              LAZYNVIM_URL="https://github.com/folke/lazy.nvim"
+              if [ ! -d $LAZYNVIM_DIR ];then
+                ${lib.getExe config._base.dev.git.package} clone --filter=blob:none --branch=stable "$LAZYNVIM_URL" "$LAZYNVIM_DIR"
+              fi
+              LOCK_FILE=$(readlink -f $XDG_CONFIG_HOME/nvim/lazy-lock.json)
               echo $LOCK_FILE
               [ ! -f "$LOCK_FILE" ] && echo "No lock file found, skipping" && exit 0
 
-              STATE_DIR=~/.local/state/nix/
+              STATE_DIR=$XDG_STATE_HOME/nix/
               STATE_FILE=$STATE_DIR/lazy-lock-checksum
 
               [ ! -d $STATE_DIR ] && mkdir -p $STATE_DIR
@@ -80,9 +80,13 @@ in
     };
     xdg = {
       configFile = {
-        "nvim/lua/lazyvim".source = lazyvim;
+        "nvim/lua/config/coffee.jpg".source = pkgs.fetchurl {
+          url = "https://i.pinimg.com/736x/6d/1a/f2/6d1af2b82e7bb1e815c69a7d8110223c.jpg";
+          sha256 = "iZ06SaNw5kZwQ68cppOleGV+Uipsa0OHVlXKXH8SQew=";
+        };
         "nvim/lua/config/private.lua".text = g.editor.nvim."private.lua";
         "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazy-lock.json";
+        "nvim/lazyvim.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazyvim.json";
         "nvim/neoconf.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/neoconf.json";
         "nvim/spell".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/spell";
         "nvim/ftdetect".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/ftdetect";

@@ -1,18 +1,18 @@
 return {
   "mfussenegger/nvim-lint",
   opts = function(_, opts)
-    table.insert(opts.linters_by_ft, {
-      lua = { "luacheck" },
-      python = { "ruff" },
+    opts.linters_by_ft = {
       nix = { "statix" },
       sh = { "shellcheck" },
       yaml = { "yamllint" },
       cpp = { "cppcheck" },
+      cmake = { "cmakelint" },
+      dockerfile = { "hadolint" },
       go = { "golangcilint" },
-    })
-    table.insert(opts.linters, {
+    }
+    opts.linters = {
       "actionlint",
       "eslint_d",
-    })
+    }
   end,
 }

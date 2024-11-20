@@ -6,6 +6,7 @@ local imap = keymap.imap
 local xmap = keymap.xmap
 local cmap = keymap.cmap
 local nvmap = keymap.nvmap
+
 vmap("Q", "<nop>", silent)
 -- Quit
 nmap("QQ", ":q!<cr>", silent)
@@ -50,5 +51,3 @@ xmap("<leader>p", [["_dP]])
 -- -- Navigate buffers
 nmap("gh", "<cmd>bprev<cr>")
 nmap("gl", "<cmd>bnext<cr>")
--- Delete buffer
--- nmap("D", "<cmd>bdelete<cr>")

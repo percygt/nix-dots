@@ -29,7 +29,7 @@ in
     pass.enable = lib.mkOption {
       description = "Enable password manager support";
       type = lib.types.bool;
-      default = false;
+      default = cfg.enable;
     };
   };
 

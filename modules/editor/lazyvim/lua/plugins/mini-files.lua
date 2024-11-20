@@ -1,5 +1,17 @@
 return {
   "echasnovski/mini.files",
+  init = function()
+    -- delete lazygit keymap for file history
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "LazyVimKeymaps",
+      once = true,
+      callback = function()
+        pcall(vim.keymap.del, "n", "<leader>fn")
+        pcall(vim.keymap.del, "n", "<leader>ft")
+        pcall(vim.keymap.del, "n", "<leader>fT")
+      end,
+    })
+  end,
   keys = {
     { "<leader>fm", false },
     { "<leader>fM", false },
