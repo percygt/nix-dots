@@ -17,7 +17,12 @@ end
 return {
   {
     "neovim/nvim-lspconfig",
-    opts = { servers = servers },
+    opts = {
+      inlay_hints = {
+        enabled = false,
+      },
+      servers = servers,
+    },
   },
   {
     "williamboman/mason.nvim",

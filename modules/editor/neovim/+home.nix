@@ -52,11 +52,13 @@ in
           lib.hm.dag.entryAfter [ "linkGeneration" ]
             # bash
             ''
+              # setup lazy.nvim
               LAZYNVIM_DIR="$XDG_DATA_HOME/nvim/lazy/lazy.nvim"
               LAZYNVIM_URL="https://github.com/folke/lazy.nvim"
               if [ ! -d $LAZYNVIM_DIR ];then
                 ${lib.getExe config._base.dev.git.package} clone --filter=blob:none --branch=stable "$LAZYNVIM_URL" "$LAZYNVIM_DIR"
               fi
+
               LOCK_FILE=$(readlink -f $XDG_CONFIG_HOME/nvim/lazy-lock.json)
               echo $LOCK_FILE
               [ ! -f "$LOCK_FILE" ] && echo "No lock file found, skipping" && exit 0

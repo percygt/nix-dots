@@ -19,7 +19,6 @@
     security.extraPackages.enable = true;
     editor = {
       neovim.enable = true;
-      # lazyvim.enable = true;
       emacs.enable = true;
       vscode.enable = true;
     };
@@ -37,7 +36,6 @@
     terminal = {
       xfce4-terminal.enable = true;
       tilix.enable = true;
-      waveterm.enable = true;
     };
     virtualisation = {
       docker.enable = true;

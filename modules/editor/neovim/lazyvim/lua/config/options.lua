@@ -2,8 +2,6 @@ local g, opt = vim.g, vim.opt
 
 g.mapleader = " "
 
-g.lazyvim_picker = "telescope"
-
 opt.nu = true -- Show numberline
 opt.relativenumber = true -- Show number relative to the current cursor position
 
@@ -37,8 +35,6 @@ opt.swapfile = false -- Disable swap files
 opt.backup = false
 opt.cmdheight = 1 -- more space in the neovim command line for displaying messages
 opt.showcmd = false -- Don't show the command in the last line
--- opt.laststatus = 0 -- Always display the status line
--- opt.pumheight = 10 -- pop up menu height
 opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
 opt.showtabline = 0 -- always show tabs
 opt.splitbelow = true -- force all horizontal splits to go below current window
@@ -48,5 +44,5 @@ opt.undofile = true -- Enable persistent undo
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 opt.fileencoding = "utf-8" -- the encoding written to a file
 opt.spell = true
-opt.spelllang = "en_us"
+opt.spelllang = { "en" }
 opt.spelloptions = "camel"
