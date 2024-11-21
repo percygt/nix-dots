@@ -9,7 +9,7 @@ let
   g = config._base;
   cfg = config.modules.editor.neovim;
   nvimDir = if cfg.vanilla.enable then "vanilla" else "lazyvim";
-  moduleNvim = "${g.flakeDirectory}/modules/editor/${nvimDir}";
+  moduleNvim = "${g.flakeDirectory}/modules/editor/neovim/${nvimDir}";
 in
 {
   imports = [ ./packages.nix ];

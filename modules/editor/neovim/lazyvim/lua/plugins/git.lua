@@ -7,11 +7,7 @@ return {
       "nvim-telescope/telescope.nvim", -- optional
     },
     keys = {
-      { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
-      { "<leader>gc", "<cmd>Neogit commit<cr>", desc = "Neogit Commit" },
-      { "<leader>gp", "<cmd>Neogit push<cr>", desc = "Neogit Push" },
-      { "<leader>gP", "<cmd>Neogit pull<cr>", desc = "Neogit Pull" },
-      { "<leader>gd", "<cmd>Neogit diff<cr>", desc = "Neogit Diff" },
+      { "<leader>N", "<cmd>Neogit<cr>", desc = "Neogit" },
     },
     opts = {
       integrations = {
@@ -45,8 +41,6 @@ return {
     keys = {
 			{ "<leader>g", "", desc = "+Git", mode = { "n", "v" } },
 			{ "<leader>go", "<cmd>Telescope git_status<cr>", desc = "Git status" },
-			{ "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branches" },
-			{ "<leader>gG", "<cmd>Telescope git_bcommits<cr>", desc = "Checkout commits(for current buffer)" },
     },
     opts = {
       on_attach = function(buffer)
@@ -79,8 +73,6 @@ return {
         map("n", "<leader>gu", gs.undo_stage_hunk, "Undo Stage Hunk")
         map("n", "<leader>gR", gs.reset_buffer, "Reset Buffer")
         map("n", "<leader>gh", gs.preview_hunk_inline, "Preview Hunk Inline")
-        map("n", "<leader>gl", function() gs.blame_line({ full = true }) end, "Blame Line")
-        map("n", "<leader>gL", function() gs.blame() end, "Blame Buffer")
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
       end,
     },
