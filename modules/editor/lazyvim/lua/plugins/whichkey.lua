@@ -32,7 +32,7 @@ return {
         { "<leader>c", group = "Code" },
         { "<leader>g", group = "Git" },
         { "<leader>s", group = "Search" },
-        { "<leader>d", group = "Search" },
+        { "<leader>d", group = "Debug" },
         { "<leader>t", group = "Test" },
         { "<leader>u", group = "UI", icon = { icon = "󰙵 ", color = "cyan" } },
         { "<leader>x", group = "Diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },

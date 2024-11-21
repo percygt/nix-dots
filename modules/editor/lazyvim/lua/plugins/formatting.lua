@@ -2,6 +2,16 @@ return {
   "stevearc/conform.nvim",
   opts = function(_, opts)
     local prettier = { "prettierd", "prettier", stop_after_first = true }
+    opts.formatters = {
+      ["markdownlint-cli2"] = {
+        condition = function(_, ctx)
+          local diag = vim.tbl_filter(function(d)
+            return d.source == "markdownlint"
+          end, vim.diagnostic.get(ctx.buf))
+          return #diag > 0
+        end,
+      },
+    }
     opts.formatters_by_ft = {
       nix = { "nixfmt" },
       javascript = { "deno_fmt" },
@@ -10,8 +20,9 @@ return {
       typescriptreact = { "deno_fmt" },
       json = { "deno_fmt" },
       jsonc = { "deno_fmt" },
-      markdown = { "deno_fmt" },
-      -- astro = prettier,
+      markdown = { "deno_fmt", "markdownlint-cli2" },
+      ["markdown.mdx"] = { "deno_fmt", "markdownlint-cli2" },
+      -- ["astro"] = { "prettier" },
       vue = prettier,
       css = prettier,
       scss = prettier,

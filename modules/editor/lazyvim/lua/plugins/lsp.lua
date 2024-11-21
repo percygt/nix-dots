@@ -1,4 +1,4 @@
-local masonLsp = { "astro", "ts_ls" }
+local masonLsp = { "astro", "volar", "svelte" }
 local servers = require("config.lsp-servers")
 local function isInMasonServer(server_name)
   for _, name in ipairs(masonLsp) do

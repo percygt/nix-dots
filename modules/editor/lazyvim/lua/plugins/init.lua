@@ -1,6 +1,18 @@
 return {
   {
     "LazyVim/LazyVim",
+    init = function()
+      -- delete lazygit keymap for file history
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "LazyVimKeymaps",
+        once = true,
+        callback = function()
+          pcall(vim.keymap.del, "n", "<leader>-")
+          pcall(vim.keymap.del, "n", "<leader>|")
+          pcall(vim.keymap.del, "n", "<leader>K")
+        end,
+      })
+    end,
     opts = {
       colorscheme = function()
         require("catppuccin").load()

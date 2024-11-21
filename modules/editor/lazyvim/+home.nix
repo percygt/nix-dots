@@ -80,10 +80,6 @@ in
     };
     xdg = {
       configFile = {
-        "nvim/lua/config/coffee.jpg".source = pkgs.fetchurl {
-          url = "https://i.pinimg.com/736x/6d/1a/f2/6d1af2b82e7bb1e815c69a7d8110223c.jpg";
-          sha256 = "iZ06SaNw5kZwQ68cppOleGV+Uipsa0OHVlXKXH8SQew=";
-        };
         "nvim/lua/config/private.lua".text = g.editor.nvim."private.lua";
         "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazy-lock.json";
         "nvim/lazyvim.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazyvim.json";

@@ -17,6 +17,14 @@ return {
       client.server_capabilities.semanticTokensProvider = nil
     end,
   },
+  volar = {
+    init_options = {
+      vue = {
+        hybridMode = true,
+      },
+    },
+  },
+  svelte = {},
   dockerls = {},
   bashls = {
     filetypes = { "sh" },
@@ -27,6 +35,7 @@ return {
   denols = {
     root_dir = require("lspconfig").util.root_pattern("deno.json", "deno.jsonc"),
   },
+  vtsls = {},
   astro = {},
   yamlls = {
     cmd = { "yaml-language-server", "--stdio" },

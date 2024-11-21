@@ -36,6 +36,7 @@
         cmake
         git
         mercurial
+        krabby
 
         # Telescope dependencies
         manix
@@ -53,6 +54,11 @@
         nixfmt-rfc-style
         nil
         nixd
+
+        #php
+        php.packages.php-cs-fixer
+        php.packages.php-codesniffer
+        phpactor
 
         # rust
         cargo
@@ -73,11 +79,14 @@
 
         # JavaScript
         deno
+        vtsls
         prettierd
         eslint_d
         nodePackages.prettier
-        typescript-language-server
-        astro-language-server
+        # NOTE: Handled by Mason-Lspconfig
+        # astro-language-server
+        # svelte-language-server
+        # vue-language-server
 
         # Go
         go
@@ -97,6 +106,7 @@
 
         #docker
         hadolint
+        dockerfile-language-server-nodejs
 
         #markdown
         marksman
@@ -111,7 +121,6 @@
         yamllint
         bash-language-server
         yaml-language-server
-        dockerfile-language-server-nodejs
         vscode-langservers-extracted
         cmake-language-server
         markdownlint-cli2

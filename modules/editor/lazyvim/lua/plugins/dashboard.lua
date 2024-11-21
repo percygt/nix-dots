@@ -3,21 +3,17 @@ return {
     "folke/snacks.nvim",
     opts = {
       dashboard = {
-
         sections = {
+          { section = "header" },
+          { section = "keys", gap = 1, padding = 1 },
+          { section = "startup" },
           {
             section = "terminal",
-            cmd = "sh -c 'chafa "
-              .. vim.fn.stdpath("config")
-              .. "/lua/config/coffee.jpg"
-              .. " --format symbols --symbols vhalf --size 60x17 --stretch; sleep .1'",
-            height = 17,
-            padding = 1,
-          },
-          {
+            cmd = "krabby random --no-title; sleep .1",
+            random = 10,
             pane = 2,
-            { section = "keys", gap = 1, padding = 1 },
-            { section = "startup" },
+            indent = 4,
+            height = 30,
           },
         },
       },
