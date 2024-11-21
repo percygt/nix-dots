@@ -11,6 +11,7 @@
         luaPkgs: with luaPkgs; [
           jsregexp
           magick
+          luacheck
         ];
       extraPackages = with pkgs; [
         (python3.withPackages (
@@ -36,6 +37,10 @@
         git
         mercurial
 
+        #dashboard
+        cowsay
+        fortune-kind
+
         # Telescope dependencies
         manix
         fzf
@@ -52,6 +57,11 @@
         nixfmt-rfc-style
         nil
         nixd
+
+        #php
+        php.packages.php-cs-fixer
+        php.packages.php-codesniffer
+        phpactor
 
         # rust
         cargo
@@ -72,17 +82,22 @@
 
         # JavaScript
         deno
+        vtsls
         prettierd
         eslint_d
         nodePackages.prettier
-        typescript-language-server
-        astro-language-server
+        # NOTE: Handled by Mason-Lspconfig
+        # astro-language-server
+        # svelte-language-server
+        # vue-language-server
 
         # Go
         go
         gopls
         delve
         golangci-lint
+        gomodifytags
+        impl
         golines
         gotools
         gofumpt
@@ -94,17 +109,24 @@
 
         #docker
         hadolint
+        dockerfile-language-server-nodejs
 
         #markdown
         marksman
+
+        #sql
+        sqlfluff
+
+        # tailwind
+        tailwindcss-language-server
 
         # Additional
         yamllint
         bash-language-server
         yaml-language-server
-        dockerfile-language-server-nodejs
         vscode-langservers-extracted
-        markdownlint-cli
+        cmake-language-server
+        markdownlint-cli2
         taplo-cli
         codespell
         gitlint

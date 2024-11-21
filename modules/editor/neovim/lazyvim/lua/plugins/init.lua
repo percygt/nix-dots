@@ -2,7 +2,6 @@ return {
   {
     "LazyVim/LazyVim",
     init = function()
-      -- delete lazygit keymap for file history
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyVimKeymaps",
         once = true,
@@ -10,6 +9,14 @@ return {
           pcall(vim.keymap.del, "n", "<leader>-")
           pcall(vim.keymap.del, "n", "<leader>|")
           pcall(vim.keymap.del, "n", "<leader>K")
+          pcall(vim.keymap.del, "n", "<leader>qq")
+          pcall(vim.keymap.del, "n", "<leader><tab>l")
+          pcall(vim.keymap.del, "n", "<leader><tab>o")
+          pcall(vim.keymap.del, "n", "<leader><tab>f")
+          pcall(vim.keymap.del, "n", "<leader><tab><tab>")
+          pcall(vim.keymap.del, "n", "<leader><tab>]")
+          pcall(vim.keymap.del, "n", "<leader><tab>d")
+          pcall(vim.keymap.del, "n", "<leader><tab>[")
         end,
       })
     end,
