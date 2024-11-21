@@ -4,16 +4,18 @@ return {
     opts = {
       dashboard = {
         sections = {
-          { section = "header" },
-          { section = "keys", gap = 1, padding = 1 },
-          { section = "startup" },
           {
             section = "terminal",
-            cmd = "krabby random --no-title; sleep .1",
-            random = 10,
+            cmd = "fortune -s | cowsay",
+            hl = "header",
+            random = 20,
+            indent = 3,
+            height = 14,
+          },
+          {
             pane = 2,
-            indent = 4,
-            height = 30,
+            { section = "keys", gap = 1, padding = 1 },
+            { section = "startup" },
           },
         },
       },

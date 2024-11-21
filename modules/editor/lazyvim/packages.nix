@@ -36,7 +36,8 @@
         cmake
         git
         mercurial
-        krabby
+        cowsay
+        fortune-kind
 
         # Telescope dependencies
         manix
