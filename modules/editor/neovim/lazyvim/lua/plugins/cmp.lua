@@ -3,20 +3,18 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
       { "hrsh7th/cmp-path", enabled = false },
-      "hrsh7th/cmp-emoji",
-      -- "cmp-nvim-lua",
       "FelipeLema/cmp-async-path",
+      "hrsh7th/cmp-emoji",
     },
     opts = function(_, opts)
       local cmp = require("cmp")
       for i, source in ipairs(opts.sources) do
         if source.name == "path" then
           table.remove(opts.sources, i)
-          break -- Exit the loop after removing the item
+          break
         end
       end
       table.insert(opts.sources, { name = "async_path", priority_weight = 110 })
-      -- table.insert(opts.sources, { name = "nvim_lua" })
       table.insert(opts.sources, { name = "emoji" })
 
       local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
@@ -27,9 +25,9 @@ return {
       end
       opts.preselect = cmp.PreselectMode.None
       opts.completion = {
-        completeopt = "menu,menuone,preview,noselect",
+        completeopt = "menu,menuone,noinsert,noselect",
       }
-
+      opts.experimental.ghost_text = false
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then

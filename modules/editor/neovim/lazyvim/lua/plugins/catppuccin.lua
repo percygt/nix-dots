@@ -10,6 +10,7 @@ return {
       integrations = {
         cmp = true,
         gitsigns = true,
+        snacks = true,
         treesitter = true,
         treesitter_context = true,
         notify = true,
@@ -44,6 +45,7 @@ return {
             -- ColorColumn = { fg = colors.red },
             -- Comment = { fg = colors.red },
             MatchParen = { fg = c.base13, bold = true, bg = "NONE" },
+            CmpGhostText = { fg = c.base01 },
 
             Boolean = { fg = colors.mauve },
             Number = { fg = colors.mauve },

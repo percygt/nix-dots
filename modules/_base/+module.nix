@@ -34,6 +34,11 @@ in
         type = lib.types.package;
         default = pkgs.foot;
       };
+      wezterm.package = lib.mkOption {
+        description = "Wezterm terminal package";
+        type = lib.types.package;
+        default = pkgs.wezterm;
+      };
       tilix.package = lib.mkOption {
         description = "Tilix terminal package";
         type = lib.types.package;
@@ -111,7 +116,6 @@ in
             config.nix.package.out
             shell.default.package
             shell.bash.package
-            security.sops.package
             security.gpg.package
             security.ssh.package
             dev.git.package
@@ -141,12 +145,8 @@ in
         description = "Core Packages";
         type = with lib.types; listOf package;
         default =
-          let
-            s = cfg.security;
-          in
           with pkgs;
           [
-            s.keepass.package
             wirelesstools
             ntfs3g
             psmisc

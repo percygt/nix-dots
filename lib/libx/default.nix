@@ -1,7 +1,7 @@
 {
   inputs,
   isGeneric,
-  isIso,
+  isDroid,
   homeMarker,
   username,
 }:
@@ -82,7 +82,13 @@ in
     {
       default =
         rootDir:
-        if (!isGeneric && !homeMarker) then
+        if isDroid then
+          {
+            home-manager.config = {
+              imports = homeImports rootDir;
+            };
+          }
+        else if (!isGeneric && !homeMarker) then
           {
             imports = systemImports rootDir;
             home-manager.users.${username} = {

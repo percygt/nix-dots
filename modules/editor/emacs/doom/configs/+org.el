@@ -7,7 +7,6 @@
   (load! "+org-roam.el")
   )
 
-
 (map! :after org
       :leader
       :desc "Org Capture" "c" #'org-capture
@@ -23,8 +22,7 @@
   (setq org-journal-date-format "%A, %B %d %Y")
   (setq org-extend-today-until 4)
   :config
-  (setq org-journal-carryover-items "")
-  )
+  (setq org-journal-carryover-items ""))
 
 (use-package! org-appear
   :hook
@@ -58,46 +56,11 @@
   (auto-fill-mode 0)
   (variable-pitch-mode))
 
-;; (defun +aiz-log-todo-state-properties (&rest ignore)
-;;   "Log creation time in the property drawer"
-;;   (when (and (org-get-todo-state)
-;;              (not (org-entry-get nil "CREATED")))
-;;     (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %R>")))
-
-;;   (when (string= (org-get-todo-state) "TODO")
-;;     (when (org-entry-get nil "ACTIVATED")
-;;       (org-entry-delete nil "ACTIVATED"))
-;;     (when (org-entry-get nil "COMPLETED")
-;;       (org-entry-delete nil "COMPLETED")))
-
-;;   (when (string= (org-get-todo-state) "NEXT")
-;;     (when (not (org-entry-get nil "CREATED"))
-;;       (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %R>")))
-;;     (when (org-entry-get nil "COMPLETED")
-;;       (org-entry-delete nil "COMPLETED"))
-;;     (when (not (org-entry-get nil "ACTIVATED"))
-;;       (org-entry-put nil "ACTIVATED" (format-time-string "<%Y-%m-%d %a %R>"))))
-
-;;   (when (string= (org-get-todo-state) "DONE")
-;;     (when (not (org-entry-get nil "CREATED"))
-;;       (org-entry-put nil "CREATED" (format-time-string "<%Y-%m-%d %a %R>")))
-;;     (when (not (org-entry-get nil "ACTIVATED"))
-;;       (org-entry-put nil "ACTIVATED" (format-time-string "<%Y-%m-%d %a %R>")))
-;;     (when (not (org-entry-get nil "COMPLETED"))
-;;       (org-entry-put nil "COMPLETED" (format-time-string "<%Y-%m-%d %a %R>")))))
-
-;; (advice-add 'org-insert-todo-heading :after #'+aiz-log-todo-creation-date)
-;; (advice-add 'org-insert-todo-heading-respect-content :after #'+aiz-log-todo-creation-date)
-;; (advice-add 'org-insert-todo-subheading :after #'+aiz-log-todo-creation-date)
-
-;; (add-hook 'org-after-todo-state-change-hook #'+aiz-log-todo-state-properties)
-;; (add-hook 'org-capture-before-finalize-hook #'+aiz-log-todo-state-properties)
-
 ;; Refile
 (setq org-refile-use-outline-path 'file)
 (setq org-outline-path-complete-in-steps nil)
-(setq org-refile-targets
-      '(("projects.org" :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+;; (setq org-refile-targets
+;;       '(("projects.org" :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
 
 (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
 
@@ -156,30 +119,3 @@
 (setq org-insert-heading-respect-content t)
 ;; (setq org-loop-over-headlines-in-active-region 'start-level)
 (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-
-(setq org-todo-keywords
-      '(
-        (sequence
-         "TODO(t)" ; doing later
-         "NEXT(n!)" ; doing now or soon
-         "|"
-         "DONE(d!)" ; done
-         )
-        (sequence
-         "WAIT(w@/!)" ; waiting for some external change (event)
-         "HOLD(h@/!)" ; waiting for some internal change (of mind)
-         "|"
-         "KILL(C@/!)"
-         )
-        (type
-         "IDEA(i)" ; maybe someday
-         "NOTE(N)"
-         "STUDY(s)"
-         "READ(r)"
-         "WORK(w)"
-         "PROJECT(p)"
-         "PEOPLE(h)"
-         "|"
-         )
-        )
-      )

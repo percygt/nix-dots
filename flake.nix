@@ -44,7 +44,7 @@
           isGeneric = true;
         };
       };
-
+      nixOnDroidConfigurations.default = bldr.buildDroid { };
       nixosModules.default = ./modules;
       packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
       formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
@@ -111,6 +111,12 @@
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix-on-droid = {
+      url = "github:t184256/nix-on-droid";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     base.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     base.flake = false;
   };
@@ -118,10 +124,14 @@
     extra-substituters = [
       "https://percygtdev.cachix.org"
       "https://nix-community.cachix.org"
+      "https://pre-commit-hooks.cachix.org"
+      "https://nix-on-droid.cachix.org"
     ];
     extra-trusted-public-keys = [
       "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
+      "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
     ];
   };
 }

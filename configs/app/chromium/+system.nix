@@ -1,4 +1,8 @@
 {
+  modules.core.persist.userData.directories = [
+    ".config/BraveSoftware/Brave-Browser"
+    ".config/chromium"
+  ];
   programs.chromium = {
     enable = true; # only enables polices to be put in etc, doesn't install chromium
     initialPrefs = {

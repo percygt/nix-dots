@@ -7,7 +7,6 @@ let
   g = config._base;
 in
 {
-  # imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.ssh.enable {
     modules.core.persist.systemData.directories = [ "/etc/ssh" ];
     modules.core.persist.userData.directories = [

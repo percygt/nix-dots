@@ -86,4 +86,36 @@ rec {
       inherit modules;
       extraSpecialArgs = mkArgs.args;
     };
+
+  buildDroid =
+    {
+      username ? defaultUsername,
+    }:
+    let
+      inherit (inputs.nix-on-droid.lib) nixOnDroidConfiguration;
+      mkArgs = import ./mkArgs.nix {
+        inherit
+          inputs
+          outputs
+          self
+          username
+          stateVersion
+          ;
+        isDroid = true;
+      };
+      system = "aarch64-linux";
+    in
+    nixOnDroidConfiguration {
+      pkgs = inputs.nixpkgs.legacyPackages.${system};
+      # inherit modules;
+      modules = [
+        # "${self}/profiles"
+        "${self}/configs"
+        outputs.nixosModules.default
+        # (builtins.toString inputs.base)
+      ];
+      extraSpecialArgs = {
+        homeArgs = mkArgs.args;
+      } // mkArgs.args;
+    };
 }

@@ -4,8 +4,35 @@
 (require 'org-ql)
 (require 'org-super-agenda)
 (org-super-agenda-mode +1)
-(setq org-agenda-todo-ignore-states '("SOMEDAY" "CANCELLED"))
 
+(setq org-todo-keywords
+      '(
+        (sequence
+         "TODO(t)" ; doing later
+         "NEXT(n!)" ; doing now or soon
+         "|"
+         "DONE(d!)" ; done
+         )
+        (sequence
+         "WAIT(w@/!)" ; waiting for some external change (event)
+         "HOLD(h@/!)" ; waiting for some internal change (of mind)
+         "|"
+         "KILL(C@/!)"
+         )
+        (type
+         "IDEA(i)" ; maybe someday
+         "NOTE(N)"
+         "STUDY(s)"
+         "READ(r)"
+         "WORK(w)"
+         "PROJECT(p)"
+         "PEOPLE(h)"
+         "|"
+         )
+        )
+      )
+
+(setq org-agenda-todo-ignore-states '("SOMEDAY" "CANCELLED"))
 (setq org-habit-show-habits-only-for-today t)
 (setq org-agenda-include-deadlines t)
 (setq org-agenda-inhibit-startup t)
@@ -52,32 +79,30 @@
                                                      :scheduled past)
                                                     (:name "Leftover Habits"
                                                      :tag "habit")
-                                                    (:name "Personal Items"
-                                                     :and (:property "ACTIVATED"
-                                                           :date today
-                                                           :time-grid nil
-                                                           )
-                                                     )
-                                                    (:name "Today"
+                                                    (:name "Today:"
+                                                     :scheduled t
+                                                     :order 2)
+                                                    (:name "Deadlines:"
+                                                     :deadline t
+                                                     :order 3)
+                                                    (:name "Today's Schedule:"
                                                      :time-grid t
                                                      :date today
                                                      :scheduled today)))))
-                                     ;; (org-ql-block +aiz-org-ql-query
-                                     ;;               ((org-ql-block-header "Productivity Overview:")
-                                     ;;                (org-super-agenda-groups +aiz-org-agenda-super-groups)))
-                                     (alltodo "" ((org-agenda-overriding-header "")
-                                                  (org-super-agenda-groups
-                                                   '(
-                                                     (:todo "NEXT")
-                                                     (:todo "WAIT")
-                                                     (:name "Important" :priority "A")
-                                                     (:name "Todos" :and (:todo "TODO" :deadline nil :scheduled nil))
-                                                     (:name "Deadlines" :and (:todo "TODO" :deadline t))
-                                                     (:discard (:habit))
-                                                     (:discard (:todo "TODO"))
-                                                     (:discard (:todo "IDEA"))
-                                                     (:discard (:todo "SOMEDAY"))
-                                                     )))))
+                                     (org-ql-block '(or (todo "TODO"))
+                                                   ((org-ql-block-header "SOMEDAY :Emacs: High-priority")
+                                                    (org-super-agenda-groups
+                                                     '(
+                                                       (:todo "NEXT")
+                                                       (:todo "WAIT")
+                                                       (:name "Important" :priority "A")
+                                                       (:name "Todos" :and (:todo "TODO" :deadline nil :scheduled nil))
+                                                       (:name "Deadlines" :and (:todo "TODO" :deadline t))
+                                                       (:discard (:habit))
+                                                       (:discard (:todo "TODO"))
+                                                       (:discard (:todo "IDEA"))
+                                                       (:discard (:todo "SOMEDAY"))
+                                                       )))))
                                     )
 
                                    ("w" "Someday and Idea"

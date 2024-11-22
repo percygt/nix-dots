@@ -1,3 +1,6 @@
 {
-  imports = [ ./librewolf.nix ];
+  imports = [
+    ./chromium.nix
+    ./librewolf.nix
+  ];
 }

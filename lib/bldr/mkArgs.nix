@@ -2,7 +2,8 @@
   self,
   inputs,
   outputs,
-  profile,
+  isDroid ? false,
+  profile ? null,
   isGeneric ? false,
   desktop ? null,
   isIso ? false,
@@ -16,9 +17,9 @@ rec {
     inherit
       inputs
       isGeneric
-      isIso
       username
       homeMarker
+      isDroid
       ;
   };
 
@@ -32,6 +33,7 @@ rec {
       profile
       username
       libx
+      isDroid
       isGeneric
       homeDirectory
       stateVersion

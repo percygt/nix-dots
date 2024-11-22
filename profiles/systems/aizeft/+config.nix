@@ -1,5 +1,6 @@
 {
   modules = {
+    theme.enable = true;
     core = {
       battery.enable = true;
       ephemeral.enable = true;
@@ -16,7 +17,14 @@
     };
     dev.enable = true;
     cli.enable = true;
-    security.extraPackages.enable = true;
+    security = {
+      extraPackages.enable = true;
+      gpg.enable = true;
+      keepass.enable = true;
+      backup.enable = true;
+      sops.enable = true;
+      ssh.enable = true;
+    };
     editor = {
       neovim.enable = true;
       emacs.enable = true;
@@ -36,6 +44,7 @@
     terminal = {
       xfce4-terminal.enable = true;
       tilix.enable = true;
+      wezterm.enable = true;
     };
     virtualisation = {
       docker.enable = true;

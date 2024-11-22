@@ -21,7 +21,7 @@
       onActivation = false;
       auto = {
         enable = true;
-        onCalendar = "Sun *-*-* 3:30:00";
+        onCalendar = "Sun 3:30";
       };
     };
     overrides = {

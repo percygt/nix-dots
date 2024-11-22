@@ -7,7 +7,6 @@ let
   g = config._base;
 in
 {
-  # imports = [ ./module.nix ];
   config = lib.mkIf config.modules.security.ssh.enable {
     programs.ssh = {
       enable = true;
