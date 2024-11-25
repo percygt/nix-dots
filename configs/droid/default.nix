@@ -9,7 +9,6 @@ in
 {
   imports = [
     ./home-manager.nix
-    ../nixpkgs/overlay.nix
     ../shell
   ];
   nix.extraOptions = ''
