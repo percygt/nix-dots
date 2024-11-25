@@ -103,10 +103,14 @@ rec {
           ;
         isDroid = true;
       };
-      system = "aarch64-linux";
     in
     nixOnDroidConfiguration {
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
+      pkgs = import inputs.nixpkgs {
+        system = "aarch64-linux";
+        overlays = builtins.attrValues outputs.overlays ++ [
+          inputs.nix-on-droid.overlays.default
+        ];
+      };
       # inherit modules;
       modules = [
         # "${self}/profiles"
