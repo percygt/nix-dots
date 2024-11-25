@@ -37,7 +37,7 @@ in
         after = [ "udisks2.service" ];
         requires = [ "udisks2.service" ];
         serviceConfig.Type = "oneshot";
-        preStart = "${pkgs.coreutils-full}/bin/sleep 30";
+        preStart = "${pkgs.coreutils}/bin/sleep 30";
         script = "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null";
       };
       timers.borgmatic = {
