@@ -16,31 +16,5 @@
         sha256 = "1b7n1kskxzbk1w81pi78brwyjwkavyqs4hqa579xri8k3rx2r0fw";
       };
     };
-    opacity = 0.7;
-    cursorTheme = {
-      name = "phinger-cursors-light";
-      package = pkgs.phinger-cursors;
-      size = 32;
-    };
-
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-    };
-
-    qtTheme = {
-      name = "kvantum";
-      package = pkgs.colloid-kvantum;
-    };
-
-    gtkTheme = {
-      name = "Colloid-Dark-Compact-Catppuccin";
-      package = pkgs.colloid-gtk-theme-catppuccin;
-    };
-
-    gnomeShellTheme = {
-      name = "Colloid-Dark-Compact-Catppuccin";
-      package = pkgs.colloid-gtk-theme-catppuccin;
-    };
   };
 }

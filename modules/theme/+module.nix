@@ -18,6 +18,10 @@
             path
             package
           ];
+        default = pkgs.fetchurl {
+          url = "https://images.unsplash.com/photo-1520264914976-a1ddb24d2114?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=michael-aleo-FDhds8oz8bA-unsplash.jpg";
+          sha256 = "1dwy2619vmgca430m0vsq50289bwqi5nc5m0c02bri5phdmfxj6i";
+        };
       };
       nix-logo = lib.mkOption {
         description = "Nix logo";
@@ -28,6 +32,10 @@
             path
             package
           ];
+        default = pkgs.fetchurl {
+          url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/raw/branch/master/png/gruvbox-light-rainbow-square.png";
+          sha256 = "1b7n1kskxzbk1w81pi78brwyjwkavyqs4hqa579xri8k3rx2r0fw";
+        };
       };
     };
     colorscheme = lib.mkOption {
@@ -38,7 +46,7 @@
     colors = lib.mkOption {
       description = "Base24 colors";
       type = lib.types.attrs;
-      default = { };
+      default = if builtins.hasAttr "scheme" config then config.scheme else { };
     };
     opacity = lib.mkOption {
       description = "Background opacity";
@@ -72,7 +80,7 @@
       package = lib.mkOption {
         description = "Icon theme package";
         type = lib.types.package;
-        default = pkgs.catppuccin-papirus-folders;
+        default = pkgs.papirus-icon-theme;
       };
     };
 
@@ -93,7 +101,7 @@
       name = lib.mkOption {
         description = "GTK theme name";
         type = lib.types.str;
-        default = "Colloid-Dark-Catppuccin";
+        default = "Colloid-Dark-Compact-Catppuccin";
       };
       package = lib.mkOption {
         description = "GTK theme package";
