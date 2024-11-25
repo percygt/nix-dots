@@ -127,7 +127,7 @@ in
             dev.git.package
             nfs-utils
             iputils
-            coreutils-full
+            coreutils
             findutils
             pciutils
             usbutils
