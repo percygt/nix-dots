@@ -38,7 +38,7 @@
     colors = lib.mkOption {
       description = "Base24 colors";
       type = lib.types.attrs;
-      default = config.scheme;
+      default = { };
     };
     opacity = lib.mkOption {
       description = "Background opacity";
