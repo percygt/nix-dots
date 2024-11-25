@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  homeDirectory,
   ...
 }:
 let
@@ -9,6 +10,11 @@ let
 in
 {
   options._base = {
+    flakeDirectory = lib.mkOption {
+      description = "Flake directory";
+      default = "${homeDirectory}/nix-dots";
+      type = lib.types.str;
+    };
     desktop = {
       sway.package = lib.mkOption {
         description = "Sway package";
