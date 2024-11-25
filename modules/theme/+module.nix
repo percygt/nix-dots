@@ -6,7 +6,6 @@
 }:
 {
   options.modules.theme = {
-    enable = lib.mkEnableOption "Enable theme";
 
     assets = {
       wallpaper = lib.mkOption {

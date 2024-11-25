@@ -1,6 +1,5 @@
 {
   modules = {
-    theme.enable = true;
     core = {
       battery.enable = true;
       ephemeral.enable = true;

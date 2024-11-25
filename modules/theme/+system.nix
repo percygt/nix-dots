@@ -1,6 +1,5 @@
 {
   inputs,
-  lib,
   config,
   ...
 }:
@@ -8,7 +7,7 @@
   imports = [
     inputs.base16.nixosModule
   ];
-  config = lib.mkIf config.modules.theme.enable {
+  config = {
     scheme = config.modules.theme.colorscheme;
   };
 }

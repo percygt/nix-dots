@@ -6,7 +6,12 @@
 }:
 let
   fontModule = {
-    name = with lib; mkOption { type = types.str; };
+    name =
+      with lib;
+      mkOption {
+        type = types.str;
+        default = "VictorMono Nerd Font";
+      };
     style =
       with lib;
       mkOption {
@@ -23,7 +28,7 @@ let
             "monospace"
           ]
         );
-        default = null;
+        default = "monospace";
       };
     package = lib.mkOption {
       type = with lib.types; either (enum [ "nerdfont" ]) package;
