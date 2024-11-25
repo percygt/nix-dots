@@ -84,6 +84,7 @@ in
         rootDir:
         if isDroid then
           {
+            imports = importModuleFile rootDir;
             home-manager.config = {
               imports = homeImports rootDir;
             };
