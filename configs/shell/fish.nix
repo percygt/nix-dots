@@ -11,33 +11,28 @@ in
 {
   programs = {
     fish = lib.mkMerge [
-      (lib.mkIf (g.shell.default.package != fishShellPkg) {
-        interactiveShellInit =
-          # fish
-          ''
-            set fish_greeting # Disable greeting
-            nix-your-shell fish | source
-            bind \cr _fzf_search_history
-            bind -M insert \cr _fzf_search_history
-            bind \ct 'clear; commandline -f repaint'
-            bind -M insert \ct 'clear; commandline -f repaint'
-            fzf_configure_bindings --directory=\cf --variables=\ev --git_status=\cs --git_log=\cg
-          '';
-      })
+      {
+        interactiveShellInit = lib.concatStringsSep "\n" (
+          [
+            # fish
+            ''
+              set fish_greeting # Disable greeting
+              ${lib.getExe pkgs.nix-your-shell} fish | source
+              bind \cr _fzf_search_history
+              bind -M insert \cr _fzf_search_history
+              bind \ct 'clear; commandline -f repaint'
+              bind -M insert \ct 'clear; commandline -f repaint'
+              fzf_configure_bindings --directory=\cf --variables=\ev --git_status=\cs --git_log=\cg
+            ''
+          ]
+          ++ lib.optionals (g.shell.default.package == fishShellPkg) [
+            ''
+              check_directory_for_new_repository
+            ''
+          ]
+        );
+      }
       (lib.mkIf (g.shell.default.package == fishShellPkg) {
-        interactiveShellInit =
-          # fish
-          ''
-            check_directory_for_new_repository
-            set fish_greeting # Disable greeting
-            # bind \ee edit_command_buffer
-            nix-your-shell fish | source
-            bind \cr _fzf_search_history
-            bind -M insert \cr _fzf_search_history
-            bind \ct 'clear; commandline -f repaint'
-            bind -M insert \ct 'clear; commandline -f repaint'
-            fzf_configure_bindings --directory=\cf --variables=\ev --git_status=\cs --git_log=\cg
-          '';
         functions = {
           envsource = ''
             for line in (cat $argv | grep -v '^#')
@@ -59,7 +54,7 @@ in
               set current_repository (git rev-parse --show-toplevel 2> /dev/null)
               if [ "$current_repository" ] && \
                 [ "$current_repository" != "$last_repository" ]
-                ${pkgs.onefetch}/bin/onefetch
+                ${lib.getExe pkgs.onefetch}
               end
               set -gx last_repository $current_repository
             '';
@@ -108,9 +103,9 @@ in
             set fish_cursor_visual      block
           '';
         shellAliases = {
-          ll = "eza --group --header --group-directories-first --long --git --all --binary --icons";
+          ll = "${lib.getExe pkgs.eza} --group --header --group-directories-first --long --git --all --binary --icons";
           la = "ll -a";
-          l = "eza --group-directories-first --all -1";
+          l = "${lib.getExe pkgs.eza} --group-directories-first --all -1";
           date-sortable = "date +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with local timezone
           date-sortable-utc = "date -u +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with UTC timezone
           tmp = "pushd $(mktemp -d)";
@@ -120,7 +115,7 @@ in
   };
   xdg.configFile = {
     "fish/themes/base16.theme" = {
-      onChange = "${pkgs.fish}/bin/fish -c 'echo y | fish_config theme save base16'";
+      onChange = "${lib.getExe pkgs.fish} -c 'echo y | fish_config theme save base16'";
       text =
         # fish
         ''
