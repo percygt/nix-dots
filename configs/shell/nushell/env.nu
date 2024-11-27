@@ -45,5 +45,5 @@ $env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = {|| create_prompt "| " }
 $env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = {|| create_prompt "> " }
 $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = {|| create_prompt ">>> " }
 $env.TRANSIENT_PROMPT_COMMAND_RIGHT = { || create_transient_right_prompt }
-
+# $env.CARAPACE_BRIDGES = 'fish,bash,inshellisense' # optional
 source env-extra.nu

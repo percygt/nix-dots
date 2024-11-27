@@ -1,4 +1,8 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  ...
+}:
 {
   config = lib.mkIf config.modules.app.librewolf.enable {
     programs.librewolf = {

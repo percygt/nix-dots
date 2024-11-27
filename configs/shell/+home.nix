@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   imports = [
     ./fish.nix
@@ -8,4 +9,5 @@
     ./carapace.nix
     ./zoxide.nix
   ];
+  home.packages = [ pkgs.inshellisense ];
 }
