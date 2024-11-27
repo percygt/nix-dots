@@ -8,7 +8,7 @@ in
 {
   programs.starship = {
     enable = true;
-    enableTransience = true;
+    # enableTransience = true;
     settings = {
       add_newline = false;
       scan_timeout = 10;

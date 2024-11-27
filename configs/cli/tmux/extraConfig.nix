@@ -1,10 +1,15 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  username,
+  ...
+}:
 let
   resurrectDirPath = "${config.xdg.dataHome}/tmux/resurrect";
   resurrectPostSave = pkgs.writers.writeBash "resurrectPostSave" ''
-    sed -i -E "s|(pane.*nvim\s*:)[^;]+;.*\s([^ ]+)$|\1nvim|" "$1"
-    sed -ie "s|:bash .*/tmp/nix-shell-.*/rc|:nix-shell|g" "$1"
-    sed -i "s| $HOME| ~|g" "$1"
+    sed -E '/^pane/s|:/nix/store/[^ ]+/bin/nvim.*loaded_ruby_provider=0|:nvim|g' -i "$1"
+    sed -i '/^pane/s|:/home/${username}/.local/state/nix/profile/bin/||g' "$1"
+    sed -i '/~\/.*>/s|>||g' "$1"
     sed -i 's|fish	:\[fish\] <defunct>|fish	:|g' "$1"
     sed -i ':a;N;$!ba;s|\[fish\] <defunct>\n||g' "$1"
   '';

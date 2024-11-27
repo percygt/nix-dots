@@ -58,6 +58,12 @@ in
       })
       ++ [
         {
+          command = ''floating enable, resize set width 100ppt height 100ppt'';
+          criteria = {
+            app_id = "footddterm";
+          };
+        }
+        {
           command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
           criteria = {
             title = ".*";

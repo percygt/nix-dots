@@ -20,6 +20,15 @@ $env.NU_PLUGIN_DIRS = [
     ($nu.default-config-dir | path join 'plugins') # add <nushell-config-dir>/plugins
 ]
 
+def create_left_prompt [] {
+  (
+   starship prompt
+      --cmd-duration $env.CMD_DURATION_MS
+      $"--status=($env.LAST_EXIT_CODE)"
+      --terminal-width "189"
+  )
+}
+
 def create_transient_right_prompt [] {
     let indicator = ([
         (ansi yellow_dimmed)
@@ -27,23 +36,23 @@ def create_transient_right_prompt [] {
     ] | str join)
     $indicator
 }
-def create_prompt [p] {
+def create_prompt_symbol [p] {
     $'(ansi yellow_dimmed)($p)(ansi reset)'
 }
+
 # Use nushell functions to define your right and left prompt
-# $env.PROMPT_COMMAND = {|| create_left_prompt }
+$env.PROMPT_COMMAND = {|| create_left_prompt }
 # $env.PROMPT_COMMAND_RIGHT = {|| create_right_prompt }
 
 # $env.PROMPT_INDICATOR = {|| create_left_prompt }
-$env.PROMPT_INDICATOR_VI_NORMAL = {|| create_prompt "| " }
-$env.PROMPT_INDICATOR_VI_INSERT = {|| create_prompt "> " }
-$env.PROMPT_MULTILINE_INDICATOR = {|| create_prompt ">>> " }
+$env.PROMPT_INDICATOR_VI_NORMAL = {|| create_prompt_symbol "| " }
+$env.PROMPT_INDICATOR_VI_INSERT = {|| create_prompt_symbol "> " }
+$env.PROMPT_MULTILINE_INDICATOR = {|| create_prompt_symbol ">>> " }
 
 $env.TRANSIENT_PROMPT_COMMAND = {|| "" }
-$env.TRANSIENT_PROMPT_INDICATOR = {|| create_prompt "> " }
-$env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = {|| create_prompt "| " }
-$env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = {|| create_prompt "> " }
-$env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = {|| create_prompt ">>> " }
+$env.TRANSIENT_PROMPT_INDICATOR = {|| create_prompt_symbol "> " }
+$env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = {|| create_prompt_symbol "| " }
+$env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = {|| create_prompt_symbol "> " }
+$env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = {|| create_prompt_symbol ">>> " }
 $env.TRANSIENT_PROMPT_COMMAND_RIGHT = { || create_transient_right_prompt }
-# $env.CARAPACE_BRIDGES = 'fish,bash,inshellisense' # optional
 source env-extra.nu
