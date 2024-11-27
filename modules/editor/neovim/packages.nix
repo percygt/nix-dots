@@ -28,7 +28,7 @@
         imagemagick
         nodePackages.npm
         nodePackages.pnpm
-        nodePackages.neovim
+        # nodePackages.neovim
         vscode-extensions.vadimcn.vscode-lldb.adapter
         tree-sitter
         fswatch
