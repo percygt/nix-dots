@@ -25,6 +25,11 @@
       };
     };
     overrides = {
+      "com.valvesoftware.Steam".Context = {
+        filesystems = [
+          "xdg-data/steam" # Expose user Git config
+        ];
+      };
       global = {
         # Force Wayland by default
         Context = {
@@ -55,6 +60,7 @@
     ];
     packages = [
       "io.github.zen_browser.zen"
+      "com.valvesoftware.Steam"
       "org.gnome.Shotwell"
       "org.audacityteam.Audacity "
       "com.github.geigi.cozy"
@@ -81,6 +87,8 @@
   fileSystems."/var/lib/flatpak".options = [ "exec" ];
   modules.core.persist.systemData.directories = [ "/var/lib/flatpak" ];
   modules.core.persist.userData.directories = [
+    ".local/share/steam"
+    ".var/app/com.valvesoftware.Steam"
     ".var/app/org.libreoffice.LibreOffice"
     ".var/app/org.telegram.desktop"
     ".var/app/info.febvre.Komikku"
