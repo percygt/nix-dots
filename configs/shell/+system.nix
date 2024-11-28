@@ -1,12 +1,9 @@
 {
-  lib,
-  username,
   config,
   ...
 }:
 let
   g = config._base;
-  defaultShell = g.shell.default.package;
 in
 {
   modules.core.persist.userData = {
@@ -17,9 +14,7 @@ in
     files = [ ".config/nushell/history.txt" ];
   };
 
-  programs.fish.enable = defaultShell == g.shell.fish.package;
-  users.users.${username}.shell = defaultShell;
-  users.defaultUserShell = defaultShell;
+  programs.fish.enable = true;
   environment = {
     shells = with g.shell; [
       nushell.package

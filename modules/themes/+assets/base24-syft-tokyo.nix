@@ -5,11 +5,11 @@
   base00 = "00051a"; # [#00051A] eclipse     bG
   base01 = "081028"; # [#081028] midnight    Black
   base02 = "08103a"; # [#08103a] navyNight   brightBlack
-  base03 = "292538"; # [#292538] plum
-  base04 = "b7c5d3"; # [#b7c5d3] stormySky
+  base03 = "292538"; # [#646073] plum
+  base04 = "b7c5d3"; # [#afb4b9 ]stormySky
   base05 = "d8e2ec"; # [#d8e2ec] aqua        fG
   base06 = "f6f6f8"; # [#f6f6f8] cream       white
-  base07 = "fbfbfd"; # [#fbfbfd] lavender    brightWhite
+  base07 = "fbfbfd"; # [#fbfbfd]             brightWhite
   base08 = "f7768e"; # [#f7768e] redwood
   base09 = "ff9e64"; # [#ff9e64] peach       orange
   base0A = "b7c5d3"; # [#b7c5d3] butter      yellow

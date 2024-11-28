@@ -8,6 +8,7 @@
     ./starship.nix
     ./carapace.nix
     ./zoxide.nix
+    ./eza.nix
   ];
   home.packages = [ pkgs.inshellisense ];
 }

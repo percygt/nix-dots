@@ -38,7 +38,7 @@ let next_completer = {|spans: list<string>|
   } else if $spans.0 == zoxide and $spans.1? == remove {
     $spans | get 2 | zoxide query -l $in | lines | where $it != $env.PWD
   } else {
-    do $carapace_completer $spans
+    do $prev_completer $spans
   }
 }
 $env.config = ($env.config?

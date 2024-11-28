@@ -1,18 +1,33 @@
 core:
   normal_text:
-    foreground: white
+    foreground: gray2
 
-  regular_file:
-    foreground: white
+  regular_file: {}
 
   reset_to_normal:
-    foreground: orange
+    foreground: gray2
 
   directory:
     foreground: purple
+    font-style: bold
+
+  executable_file:
+    foreground: green
+    font-style: bold
+
+  sticky_other_writable:
+    foreground: bg
+    background: blue
+    font-style: bold
+
+  other_writable:
+    foreground: blue
+    background: gray1
+    font-style: bold
 
   symlink:
-    foreground: cyan
+    foreground: blue
+    font-style: italic
 
   multi_hard_link: {}
 
@@ -57,24 +72,12 @@ core:
     foreground: black
     background: yellow
 
-  file_with_capability: {}
-
-  sticky_other_writable:
-    foreground: black
-    background: green
-
-  other_writable:
-    foreground: purple
-    background: green
-
   sticky:
     foreground: white
     background: purple
 
-  executable_file:
-    foreground: green
-
 text:
+  foreground: fg
   special:
     foreground: orange
 

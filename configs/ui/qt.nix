@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  cfg = config.modules.theme.qtTheme;
+  cfg = config.modules.themes.qtTheme;
 in
 {
   qt = {

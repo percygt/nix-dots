@@ -5,9 +5,9 @@
 }:
 let
   g = config._base;
-  a = config.modules.theme.assets;
+  a = config.modules.themes.assets;
   f = config.modules.fonts.interface;
-  c = config.modules.theme.colors.withHashtag;
+  c = config.modules.themes.colors.withHashtag;
 in
 {
   imports = [

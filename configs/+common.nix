@@ -6,7 +6,7 @@
       ./cli
       ./shell
       ./rebuild
-      ./utility
+      ./utils
     ]
     ++ lib.optionals (desktop != null) [
       ./app

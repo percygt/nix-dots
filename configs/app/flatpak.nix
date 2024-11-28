@@ -25,10 +25,15 @@
       };
     };
     overrides = {
-      "com.valvesoftware.Steam".Context = {
-        filesystems = [
-          "xdg-data/steam" # Expose user Git config
-        ];
+      "com.valvesoftware.Steam" = {
+        Environment = {
+          GDK_BACKEND = "wayland steam steam://rungameid/1973530";
+        };
+        Context = {
+          filesystems = [
+            "xdg-data/steam"
+          ];
+        };
       };
       global = {
         # Force Wayland by default
@@ -87,7 +92,6 @@
   fileSystems."/var/lib/flatpak".options = [ "exec" ];
   modules.core.persist.systemData.directories = [ "/var/lib/flatpak" ];
   modules.core.persist.userData.directories = [
-    ".local/share/steam"
     ".var/app/com.valvesoftware.Steam"
     ".var/app/org.libreoffice.LibreOffice"
     ".var/app/org.telegram.desktop"

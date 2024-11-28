@@ -5,7 +5,7 @@
 }:
 let
   g = config._base;
-  t = config.modules.theme;
+  t = config.modules.themes;
   f = config.modules.fonts.shell;
   c = t.colors.withHashtag;
 in

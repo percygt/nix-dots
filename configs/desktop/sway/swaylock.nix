@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 let
-  c = config.modules.theme.colors;
-  a = config.modules.theme.assets;
+  c = config.modules.themes.colors;
+  a = config.modules.themes.assets;
   f = config.modules.fonts.interface;
 in
 {

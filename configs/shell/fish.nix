@@ -112,9 +112,9 @@ in
             set fish_cursor_visual      block
           '';
         shellAliases = {
-          ll = "${lib.getExe pkgs.eza} --group --header --group-directories-first --long --git --all --binary --icons";
-          la = "ll -a";
-          l = "${lib.getExe pkgs.eza} --group-directories-first --all -1";
+          ll = "${lib.getExe config.programs.eza.package} --group --header --long --binary --icons";
+          la = "${lib.getExe config.programs.eza.package} --all";
+          l = "${lib.getExe config.programs.eza.package} --all -1";
           date-sortable = "date +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with local timezone
           date-sortable-utc = "date -u +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with UTC timezone
           tmp = "pushd $(mktemp -d)";
@@ -128,16 +128,19 @@ in
       text =
         # fish
         ''
-          fish_color_autosuggestion 808080
-          fish_color_normal white
+          fish_color_autosuggestion 969896
+          fish_color_normal normal
           fish_color_command blue
-          fish_color_param magenta
-          fish_color_cancel --reverse
-          fish_color_comment red
-          fish_color_cwd green
-          fish_color_cwd_root red
+          fish_color_quote blue
+          fish_color_redirection 'cyan' '--bold'
           fish_color_end green
           fish_color_error red
+          fish_color_param magenta
+          fish_color_comment red
+          fish_color_match --background=brblue
+          fish_color_cancel --reverse
+          fish_color_cwd green
+          fish_color_cwd_root red
           fish_color_escape cyan
           fish_color_history_current --bold
           fish_color_host normal
@@ -145,23 +148,21 @@ in
           fish_color_keyword red
           fish_color_operator cyan
           fish_color_option cyan
-          fish_color_quote blue
-          fish_color_redirection 'cyan' '--bold'
           fish_color_search_match 'green' '--background=brblack'
           fish_color_selection 'white' '--bold' '--background=brblack'
           fish_color_status blue
-          fish_color_user green
+          fish_color_user brgreen
           fish_color_valid_path 'blue' '--underline'
           fish_pager_color_background
           fish_pager_color_completion normal
           fish_pager_color_description 'yellow' '--italics'
           fish_pager_color_prefix 'green' '--bold' '--underline'
-          fish_pager_color_progress 'brwhite' '--background=cyan'
+          fish_pager_color_progress
           fish_pager_color_secondary_background
           fish_pager_color_secondary_completion
           fish_pager_color_secondary_description
           fish_pager_color_secondary_prefix
-          fish_pager_color_selected_background --reverse
+          fish_pager_color_selected_background --background=brblack
           fish_pager_color_selected_completion
           fish_pager_color_selected_description
           fish_pager_color_selected_prefix

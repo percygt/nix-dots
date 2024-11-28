@@ -7,7 +7,7 @@
 let
   g = config._base;
   inherit (g) flakeDirectory;
-  c = config.modules.theme.colors.withHashtag;
+  c = config.modules.themes.colors.withHashtag;
   defaultShell = g.shell.default.package;
 in
 {

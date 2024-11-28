@@ -1,14 +1,16 @@
-{ lib, ... }:
+{ lib, config, ... }:
 let
   lang = icon: color: {
     symbol = icon;
     format = "via [$symbol $version](${color}) ";
   };
+  g = config._base;
+  defaultShell = g.shell.default.package;
 in
 {
   programs.starship = {
     enable = true;
-    # enableTransience = true;
+    enableTransience = defaultShell != g.shell.nushell.package;
     settings = {
       add_newline = false;
       scan_timeout = 10;
@@ -39,7 +41,6 @@ in
         disabled = false;
       };
       time = {
-        disabled = true;
         use_12hr = true;
         style = "yellow dimmed";
         format = "[$time]($style)";
@@ -57,12 +58,12 @@ in
         disabled = false;
       };
       character = {
-        success_symbol = "[](bold green) ";
-        error_symbol = "[](bold red) ";
-        vimcmd_symbol = "[󰰔](bold green) ";
-        vimcmd_replace_one_symbol = "[󰰠](bold purple) ";
-        vimcmd_replace_symbol = "[󰰠](bold purple) ";
-        vimcmd_visual_symbol = "[󰰬](bold yellow) ";
+        success_symbol = "[>](dimmed green) ";
+        error_symbol = "[>](dimmed red) ";
+        vimcmd_symbol = "[|](dimmed green) ";
+        vimcmd_replace_one_symbol = "[-](dimmed purple) ";
+        vimcmd_replace_symbol = "[|](dimmed blue) ";
+        vimcmd_visual_symbol = "[|](dimmed yellow) ";
       };
       container = {
         symbol = "󰮄 ";

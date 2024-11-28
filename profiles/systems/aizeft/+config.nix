@@ -51,7 +51,7 @@
       kvm.enable = true;
       vmvariant.enable = true;
     };
-    utility = {
+    utils = {
       uad.enable = true;
     };
     # app = {

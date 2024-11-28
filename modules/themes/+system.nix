@@ -8,6 +8,6 @@
     inputs.base16.nixosModule
   ];
   config = {
-    scheme = config.modules.theme.colorscheme;
+    scheme = config.modules.themes.colorscheme;
   };
 }

@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.modules.utility.uad.enable {
+  config = lib.mkIf config.modules.utils.uad.enable {
     home.packages = with pkgs; [ universal-android-debloater ];
     xdg.desktopEntries = {
       uad-ng = {

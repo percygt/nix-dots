@@ -124,7 +124,7 @@ in
                       del(.slug) |
                       del(.system) |
                       del(.variant) |
-                      .[] |= "#" + .' ${config.modules.theme.colors} > $out
+                      .[] |= "#" + .' ${config.modules.themes.colors} > $out
                 '';
           in
           {

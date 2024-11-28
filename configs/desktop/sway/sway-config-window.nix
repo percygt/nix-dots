@@ -10,8 +10,6 @@ in
       (mkAppsFloat {
         titles = [ "^Sign in - Google Accounts.*" ];
         app_ids = [
-          "org.gnome.Calendar"
-          "org.gnome.Firmware"
           "org.gnome.Snapshot"
           "org.gnome.Loupe"
           "org.keepassxc.KeePassXC"
@@ -27,7 +25,6 @@ in
           "chrome-chatgpt.com__-WebApp-ai"
           "chrome-app.zoom.us__wc-WebApp-zoom"
           "qalculate-gtk"
-          "info.mumble.Mumble"
         ];
       })
       ++ (mkAppsFloat {
@@ -58,16 +55,10 @@ in
       })
       ++ [
         {
-          command = ''floating enable, resize set width 100ppt height 100ppt'';
-          criteria = {
-            app_id = "footddterm";
-          };
-        }
-        {
           command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
           criteria = {
-            title = ".*";
-            app_id = "org.telegram.desktop";
+            title = "^Friends List$";
+            class = "steam";
           };
         }
         {
@@ -133,6 +124,12 @@ in
           command = ''floating enable, resize set width 20ppt height 20ppt, move position 80ppt 80ppt, sticky on'';
           criteria = {
             title = "^Picture in picture$";
+          };
+        }
+        {
+          command = ''floating enable, resize set width 20ppt height 20ppt, move position 80ppt 80ppt, sticky on'';
+          criteria = {
+            title = "^Picture-in-Picture$";
           };
         }
       ];

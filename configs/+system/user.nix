@@ -4,17 +4,20 @@
   username,
   ...
 }:
+let
+  g = config._base;
+in
 {
   sops.secrets.userHashedPassword.neededForUsers = true;
 
   users = {
+    defaultUserShell = g.shell.default.package;
     mutableUsers = false;
     users.${username} = {
       isNormalUser = true;
       hashedPasswordFile = config.sops.secrets.userHashedPassword.path;
       packages = [ pkgs.home-manager ];
       extraGroups = [
-        config.users.groups.ydotool.name
         "storage"
         "users"
         "video"

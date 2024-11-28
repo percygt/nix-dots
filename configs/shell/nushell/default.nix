@@ -8,12 +8,13 @@ let
   g = config._base;
   nushellPkg = g.shell.nushell.package;
   configNu = "${g.flakeDirectory}/configs/shell/nushell";
-  t = config.modules.theme;
+  t = config.modules.themes;
   c = t.colors.withHashtag;
   starshipCfg = config.programs.starship;
   tomlFormat = pkgs.formats.toml { };
   nushell-starship-settings = starshipCfg.settings // {
     character.disabled = true;
+    time.disabled = true;
   };
 in
 {

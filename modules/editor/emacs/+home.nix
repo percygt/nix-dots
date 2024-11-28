@@ -7,7 +7,7 @@
 }:
 let
   g = config._base;
-  t = config.modules.theme;
+  t = config.modules.themes;
   c = t.colors.withHashtag;
   cfg = config.modules.editor.emacs;
   moduleEmacs = "${g.flakeDirectory}/modules/editor/emacs";

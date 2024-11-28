@@ -48,7 +48,7 @@ let
       '';
   inherit (config._base) flakeDirectory;
   moduleWaybar = "${flakeDirectory}/configs/desktop/sway/waybar";
-  c = config.modules.theme.colors.withHashtag;
+  c = config.modules.themes.colors.withHashtag;
   f = config.modules.fonts.interface;
   i = config.modules.fonts.icon;
 in

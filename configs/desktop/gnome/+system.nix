@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 let
-  t = config.modules.theme.gnomeShellTheme;
+  t = config.modules.themes.gnomeShellTheme;
 in
 {
   services = {

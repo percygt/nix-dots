@@ -5,7 +5,7 @@
   ...
 }:
 let
-  t = config.modules.theme;
+  t = config.modules.themes;
   wallpaper = "file://${pkgs.fetchUrl t.wallpaper}";
 in
 {

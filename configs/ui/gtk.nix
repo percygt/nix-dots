@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  inherit (config.modules.theme)
+  inherit (config.modules.themes)
     cursorTheme
     iconTheme
     gtkTheme

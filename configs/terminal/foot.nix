@@ -1,7 +1,7 @@
 { lib, config, ... }:
 let
   f = config.modules.fonts.shell;
-  t = config.modules.theme;
+  t = config.modules.themes;
   c = t.colors;
   g = config._base;
 in

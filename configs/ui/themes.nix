@@ -5,7 +5,7 @@
   ...
 }:
 let
-  c = config.modules.theme.colors;
+  c = config.modules.themes.colors;
 in
 {
   home.packages = with pkgs; [
@@ -15,8 +15,8 @@ in
     humanity-icon-theme
   ];
   home.sessionVariables = {
-    LS_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.theme.vividTheme})";
-    EZA_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.theme.vividTheme})";
+    LS_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.themes.vividTheme})";
+    EZA_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.themes.vividTheme})";
   };
   xdg = {
     configFile."vivid/themes/custom-vivid.yml".text = lib.concatStringsSep "\n" [
@@ -31,7 +31,9 @@ in
           cyan: "${c.base0C}"
           orange: "${c.base09}"
           white: "${c.base05}"
-          grey: "${c.base03}"
+          gray1: "${c.base03}"
+          gray2: "${c.base04}"
+          bg: "${c.base00}
       ''
       (lib.readFile ./+assets/vivid-theme.yml)
     ];

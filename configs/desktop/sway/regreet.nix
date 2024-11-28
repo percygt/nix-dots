@@ -5,7 +5,7 @@
   ...
 }:
 let
-  t = config.modules.theme;
+  t = config.modules.themes;
   f = config.modules.fonts.interface;
   homeCfgs = config.home-manager.users;
   unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;

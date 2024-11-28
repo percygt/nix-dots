@@ -5,7 +5,7 @@
   ...
 }:
 {
-  options.modules.theme = {
+  options.modules.themes = {
 
     assets = {
       wallpaper = lib.mkOption {
@@ -113,12 +113,12 @@
       name = lib.mkOption {
         description = "GnomeShell theme name";
         type = lib.types.str;
-        default = config.modules.theme.gtkTheme.name;
+        default = config.modules.themes.gtkTheme.name;
       };
       package = lib.mkOption {
         description = "GnomeShell theme package";
         type = lib.types.package;
-        default = config.modules.theme.gtkTheme.package;
+        default = config.modules.themes.gtkTheme.package;
       };
     };
     vividTheme = lib.mkOption {

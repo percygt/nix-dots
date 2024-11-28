@@ -8,6 +8,6 @@
     inputs.base16.homeManagerModule
   ];
   config = {
-    scheme = config.modules.theme.colorscheme;
+    scheme = config.modules.themes.colorscheme;
   };
 }

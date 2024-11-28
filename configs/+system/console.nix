@@ -6,7 +6,7 @@
 }:
 let
   inherit (libx.colorConvert) hexToRGBString;
-  c = config.modules.theme.colors;
+  c = config.modules.themes.colors;
   f = config.modules.fonts.shell;
 in
 {
