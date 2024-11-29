@@ -16,7 +16,7 @@ return {
       ["nil"] = {
         nix = {
           flake = {
-            autoArchive = true,
+            autoArchive = false,
           },
         },
       },

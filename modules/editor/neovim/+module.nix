@@ -11,7 +11,6 @@
       package = lib.mkOption {
         description = "neovim package";
         default = pkgs.neovim-unwrapped;
-        # default = pkgs.neovim-unstable;
         type = lib.types.package;
       };
       lazyvim.enable = lib.mkOption {
