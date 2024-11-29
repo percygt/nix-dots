@@ -1,31 +1,7 @@
-{ pkgs, config, ... }:
-let
-  g = config._base;
-in
+{ pkgs, ... }:
 {
   home.packages = with pkgs; [
     tmux-launch-session
-    # (writeShellApplication {
-    #   name = "foot-ddterm";
-    #   runtimeInputs = [
-    #     tmux-launch-session
-    #     g.terminal.foot.package
-    #   ];
-    #   text = ''
-    #     # ensure pidfile is created
-    #     touch /tmp/foot-ddterm.pid
-    #     TERM_PIDFILE="/tmp/foot-ddterm.pid"
-    #     TERM_PID="$(<"$TERM_PIDFILE")"
-    #     if swaymsg "[ pid=$TERM_PID ] scratchpad show"
-    #     then
-    #         swaymsg "[ pid=$TERM_PID ] resize set 100ppt 100ppt , move position center"
-    #     else
-    #         echo "$$" > "$TERM_PIDFILE"
-    #         swaymsg "for_window [ pid=$$ ] 'floating enable ; resize set 100ppt 100ppt ; move position center ; move to scratchpad ; scratchpad show'"
-    #         exec foot tmux-launch-session
-    #     fi
-    #   '';
-    # })
     (writeShellApplication {
       name = "ocr";
       runtimeInputs = with pkgs; [

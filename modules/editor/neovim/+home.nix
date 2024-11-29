@@ -3,6 +3,8 @@
   lib,
   config,
   profile,
+  username,
+  inputs,
   ...
 }:
 let
@@ -89,19 +91,21 @@ in
         "nvim/lazyvim.json" = lib.mkIf cfg.lazyvim.enable {
           source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazyvim.json";
         };
-        # Nixd LSP configuration
-        "${g.flakeDirectory}/.neoconf.json".text =
-          let
-            flake = ''builtins.getFlake "${g.flakeDirectory}"'';
-          in
-          builtins.toJSON {
-            lspconfig.nixd.nixd = {
-              nixpkgs.expr = ''import (${flake}).inputs.nixpkgs {}'';
-              options = {
-                nixos.expr = ''(${flake}).nixosConfigurations.${profile}.options'';
-              };
-            };
-          };
+        # # Nixd LSP configuration
+        # "${g.flakeDirectory}/.neoconf.json".text =
+        #   let
+        #     flake = ''builtins.getFlake "${inputs.self}"'';
+        #   in
+        #   builtins.toJSON {
+        #     lspconfig.nixd.nixd = {
+        #       nixpkgs.expr = ''import (${flake}).inputs.nixpkgs {}'';
+        #       formatting.command = [ "nixfmt" ];
+        #       options = {
+        #         nixos.expr = ''(${flake}).nixosConfigurations.${profile}.options'';
+        #         home-manager.expr = ''(${flake}).homeConfigurations.${username}@${profile}.options'';
+        #       };
+        #     };
+        #   };
         "nvim/lua/config/colorscheme.lua" =
           let
             colorschemeLua =

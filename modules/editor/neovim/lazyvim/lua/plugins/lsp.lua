@@ -1,3 +1,4 @@
+-- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/lsp/init.lua
 local masonLsp = { "astro", "volar", "svelte" }
 local servers = require("config.lsp-servers")
 local function isInMasonServer(server_name)

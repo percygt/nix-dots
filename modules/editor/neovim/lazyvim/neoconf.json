@@ -1,8 +1,5 @@
 {
   "lspconfig": {
-    "nil_ls": {
-      "nix.flake.autoArchive": true
-    },
     "rust-analyzer": {
       "semanticHighlighting.punctuation.enable": true,
       "semanticHighlighting.punctuation.macro.bang": true,

@@ -1,4 +1,5 @@
 return {
+  -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/editor/telescope.lua
   {
     "nvim-telescope/telescope.nvim",
     keys = function()

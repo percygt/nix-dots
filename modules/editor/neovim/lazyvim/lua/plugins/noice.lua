@@ -1,6 +1,9 @@
 return {
   {
     "folke/noice.nvim",
+    keys = {
+      { "<c-b>", false },
+    },
     opts = {
       cmdline = {
         view = "cmdline",
