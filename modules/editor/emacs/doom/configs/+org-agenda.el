@@ -4,7 +4,24 @@
 (require 'org-ql)
 (require 'org-super-agenda)
 (org-super-agenda-mode +1)
+(setq org-tag-alist
+      '(;; Places
+        ("@home" . ?H)
+        ("@work" . ?W)
 
+        ;; Devices
+        ("@computer" . ?C)
+        ("@phone" . ?P)
+
+        ;; Activities
+        ("@note" . ?n)
+        ("@study" . ?s)
+        ("@read" . ?r)
+        ("@project" . ?p)
+        ("@people" . ?P)
+        ("@email" . ?e)
+        ("@calls" . ?c)
+        ("@errands" . ?r)))
 (setq org-todo-keywords
       '(
         (sequence
@@ -19,20 +36,11 @@
          "|"
          "KILL(C@/!)"
          )
-        (type
-         "IDEA(i)" ; maybe someday
-         "NOTE(N)"
-         "STUDY(s)"
-         "READ(r)"
-         "WORK(w)"
-         "PROJECT(p)"
-         "PEOPLE(h)"
-         "|"
-         )
         )
       )
 
-(setq org-agenda-todo-ignore-states '("SOMEDAY" "CANCELLED"))
+(setq org-log-done 'time)
+(setq org-agenda-start-with-log-mode t)
 (setq org-habit-show-habits-only-for-today t)
 (setq org-agenda-include-deadlines t)
 (setq org-agenda-inhibit-startup t)
@@ -52,8 +60,8 @@
 (setq org-agenda-start-with-log-mode t)
 (setq org-agenda-log-mode-items '(closed clock state))
 (setq org-agenda-restore-windows-after-quit t)
-
 (setq org-agenda-window-setup 'current-window)
+
 (map! :map org-agenda-keymap "j" #'org-agenda-next-line)
 (map! :map org-agenda-mode-map "j" #'org-agenda-next-line)
 (map! :map org-super-agenda-header-map "j" #'org-agenda-next-line)
@@ -63,66 +71,30 @@
 (map! :map org-super-agenda-header-map "k" #'org-agenda-previous-line)
 (map! :map org-super-agenda-header-map "k" #'org-agenda-previous-line)
 
-(defvar +aiz-org-ql-query
-  '(property "ACTIVATED"))
-(defvar +aiz-org-agenda-super-groups
-  '(:name "Personal Items" :property "ACTIVATED"))
-(setq org-agenda-custom-commands '(
-                                   ("r" "Main View"
-                                    ((agenda "" ((org-agenda-span 'day)
-                                                 (org-agenda-start-day "+0d")
-                                                 (org-agenda-overriding-header "")
-                                                 (org-super-agenda-groups
-                                                  '(
-                                                    (:name "Past Habits"
-                                                     :tag "habit"
-                                                     :scheduled past)
-                                                    (:name "Leftover Habits"
-                                                     :tag "habit")
-                                                    (:name "Today:"
-                                                     :scheduled t
-                                                     :order 2)
-                                                    (:name "Deadlines:"
-                                                     :deadline t
-                                                     :order 3)
-                                                    (:name "Today's Schedule:"
-                                                     :time-grid t
-                                                     :date today
-                                                     :scheduled today)))))
-                                     (org-ql-block '(or (todo "TODO"))
-                                                   ((org-ql-block-header "SOMEDAY :Emacs: High-priority")
-                                                    (org-super-agenda-groups
-                                                     '(
-                                                       (:todo "NEXT")
-                                                       (:todo "WAIT")
-                                                       (:name "Important" :priority "A")
-                                                       (:name "Todos" :and (:todo "TODO" :deadline nil :scheduled nil))
-                                                       (:name "Deadlines" :and (:todo "TODO" :deadline t))
-                                                       (:discard (:habit))
-                                                       (:discard (:todo "TODO"))
-                                                       (:discard (:todo "IDEA"))
-                                                       (:discard (:todo "SOMEDAY"))
-                                                       )))))
-                                    )
 
-                                   ("w" "Someday and Idea"
-                                    ((alltodo "" ((org-agenda-overriding-header "")
-                                                  (org-super-agenda-groups
-                                                   '(
-                                                     (:todo "IDEA")
-                                                     (:todo "SOMEDAY")
-                                                     (:discard (:not "IDEA"))
-                                                     )
-                                                   )))))
 
-                                   ("R" "Today's" ((agenda "" ((org-agenda-span 'day)
-                                                               (org-agenda-start-day "+0d")
-                                                               (org-agenda-overriding-header "")
-                                                               (org-super-agenda-groups
-                                                                '((:name "Today"
-                                                                   :date today
-                                                                   :scheduled today
-                                                                   :todo "TODAY"
-                                                                   :discard (:not (:deadline today))))))))
-                                    nil (concat org-file-path "phone_folder/Tasker/today.txt"))
-                                   ))
+(setq org-agenda-custom-commands
+      '(("p" "Planning"
+         ((tags-todo "+@planning"
+                     ((org-agenda-overriding-header "Planning Tasks")))
+          (tags-todo "-{.*}"
+                     ((org-agenda-overriding-header "Untagged Tasks")))
+          (todo ".*" ((org-agenda-files (file-name-concat org-directory "/Inbox.org"))
+                      (org-agenda-overriding-header "Unprocessed Inbox Items")))))
+
+        ("d" "Daily Agenda"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-deadline-warning-days 7)))
+          (tags-todo "+PRIORITY=\"A\""
+                     ((org-agenda-overriding-header "High Priority Tasks")))))
+
+        ("w" "Weekly Review"
+         ((agenda ""
+                  ((org-agenda-overriding-header "Completed Tasks")
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
+                   (org-agenda-span 'week)))
+
+          (agenda ""
+                  ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-span 'week)))))))

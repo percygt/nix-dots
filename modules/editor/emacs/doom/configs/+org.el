@@ -94,8 +94,6 @@
 (setq org-cycle-separator-lines 1)
 (setq org-indent-indentation-per-level 2)
 (setq org-ellipsis " ")
-(setq org-log-done 'time)
-(setq org-log-into-drawer t)
 (setq org-hide-emphasis-markers t)
 (setq org-indent-mode-turns-on-hiding-stars t)
 (setq org-pretty-entities t)

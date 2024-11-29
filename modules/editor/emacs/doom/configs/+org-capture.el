@@ -26,22 +26,34 @@
   (call-interactively 'org-store-link)
   (org-capture nil "rq"))
 
+(add-hook 'org-timer-set-hook #'org-clock-in)
 (setq org-capture-templates
       `(
         ("t" "Task" entry  (file "Inbox.org")
-         "* TODO %?\n"
+         "* TODO %?\n %U\n  %a\n  %i"
          :empty-lines-after 1)
-        ("r" "Review" entry (file "Inbox.org")
-         "* TODO Review %c\n%U\n"
-         :immediate-finish t
-         :empty-lines-after 1)
-        ("m" "Meeting" entry  (file+headline "Agenda.org" "Future")
-         ,(concat "* %? :meeting:\n"
-                  "SCHEDULED: <%<%Y-%m-%d %a %^{Time}>>")
-         :empty-lines-after 1
-         :time-prompt t
-         )
-        ("q" "Quick Paste" entry
+        ("s" "Clocked Entry Subtask" entry (clock)
+         "* TODO %?\n  %U\n  %a\n  %i"
+         :empty-lines 1)
+        ("j" "Journal Entries")
+        ("je" "General Entry" entry
+         (file+olp+datetree (file "Journal.org"))
+         "\n* %<%I:%M %p> - %^{Title} \n\n%?\n\n"
+         :tree-type week
+         :clock-in :clock-resume
+         :empty-lines 1)
+        ("jt" "Task Entry" entry
+         (file+olp+datetree (file "Journal.org"))
+         "\n* %<%I:%M %p> - Task Notes: %a\n\n%?\n\n"
+         :tree-type week
+         :clock-in :clock-resume
+         :empty-lines 1)
+        ("jj" "Journal" entry
+         (file+olp+datetree (file "Journal.org"))
+         "\n* %<%I:%M %p> - Journal :journal:\n\n%?\n\n"
+         :tree-type week
+         :clock-in :clock-resume
+         :empty-lines 1)        ("q" "Quick Paste" entry
          (file+headline "Refile.org" "Refile")
          "** NOTE %(simpleclip-get-contents)"
          :empty-lines-after 1
