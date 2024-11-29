@@ -2,9 +2,7 @@
   config,
   lib,
   pkgs,
-  profile,
   username,
-  homeDirectory,
   ...
 }:
 let
@@ -41,21 +39,21 @@ in
       "syncthing/pw" = { };
     };
     services.syncthing = {
+      inherit (g.network.syncthing) guiAddress;
       enable = true;
       user = username;
       openDefaultPorts = true;
-      guiAddress = "${profile}.atlas-qilin.ts.net:8384";
-      dataDir = "${homeDirectory}/data";
+      dataDir = g.dataDirectory;
       configDir = g.syncthingDirectory;
       cert = config.sops.secrets."syncthing/cert.pem".path;
       key = config.sops.secrets."syncthing/key.pem".path;
 
       settings = rec {
+        devices.phone.id = g.network.syncthing.devices.phone.id;
         gui = {
           user = username;
           theme = "black";
         };
-        devices.phone.id = "NMI66EH-U5GFS4R-VV32KKU-34FNTLC-CEB6KXO-A6L3E37-KZOC24S-P3PPDQQ";
         folders = {
           keeps = {
             versioning = staggeredMonth;

@@ -112,9 +112,9 @@ in
             set fish_cursor_visual      block
           '';
         shellAliases = {
-          ll = "${lib.getExe config.programs.eza.package} --group --header --long --binary --icons";
-          la = "${lib.getExe config.programs.eza.package} --all";
-          l = "${lib.getExe config.programs.eza.package} --all -1";
+          ls = "${lib.getExe config.programs.eza.package} --long";
+          ll = "ls --group-directories-first --group --header --binary --icons";
+          la = "ll --all";
           date-sortable = "date +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with local timezone
           date-sortable-utc = "date -u +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with UTC timezone
           tmp = "pushd $(mktemp -d)";
