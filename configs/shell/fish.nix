@@ -123,8 +123,8 @@ in
     ];
   };
   xdg.configFile = {
-    "fish/themes/base16.theme" = {
-      onChange = "${lib.getExe pkgs.fish} -c 'echo y | fish_config theme save base16'";
+    "fish/themes/custom.theme" = {
+      onChange = "${lib.getExe pkgs.fish} -c 'echo y | fish_config theme save custom'";
       text =
         # fish
         ''

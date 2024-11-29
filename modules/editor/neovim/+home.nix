@@ -25,16 +25,6 @@ in
       withNodeJs = true;
       withPython3 = true;
       withRuby = false;
-      extraWrapperArgs = [
-        "--prefix"
-        "LD_LIBRARY_PATH"
-        ":"
-        "${lib.makeLibraryPath [
-          pkgs.libgit2
-          pkgs.gpgme
-        ]}"
-      ];
-
       extraLuaConfig =
         # lua
         ''
