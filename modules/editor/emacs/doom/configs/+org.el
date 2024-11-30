@@ -1,22 +1,35 @@
 ;;; +org.el -*- lexical-binding: t; -*-
-(require 'org)
+
+(setq org-directory orgDirectory
+      org-archive-location (file-name-concat org-directory ".archive/%s::")
+      org-agenda-files (list org-directory)
+      +org-capture-notes-file "Inbox.org"
+      +org-capture-journal-file "Journal.org"
+      )
+
 (after! org
   (load! "+org-modern.el")
-  (load! "+org-capture.el")
-  (load! "+org-agenda.el")
-  (load! "+org-roam.el")
+  (setq org-startup-folded nil ; do not start folded
+        org-link-frame-setup '((file . find-file));; Opens links to other org file in same frame (rather than splitting) org-tags-column 80 ; the column to the right to align tags
+        org-log-done 'time ; record the time when an element was marked done/checked
+        org-ellipsis " "
+        org-pretty-entities t
+        org-fold-catch-invisible-edits 'show-and-error
+        org-babel-min-lines-for-block-output 5 ; when to wrap results in #begin_example
+        org-return-follows-link nil  ; RET doesn't follow links
+        org-hide-emphasis-markers nil ; do show format markers
+        org-startup-with-inline-images t ; open buffers show inline images
+        org-babel-default-header-args:sh '((:results . "verbatim"))
+        org-todo-repeat-to-state t
+        pdf-annot-activate-created-annotations nil ; do not open annotations after creating them
+        org-duration-format (quote h:mm)) ; display clock times as hours only
   )
-
-(map! :after org
-      :leader
-      :desc "Org Capture" "c" #'org-capture
-      )
 
 (use-package! org-journal
   :defer t
   :init
   ;; org journal
-  (setq org-journal-dir (concat orgDirectory "journal/"))
+  (setq org-journal-dir (expand-file-name "journal" org-directory))
   (setq org-journal-file-type 'daily)
   (setq org-journal-file-format "%Y%m%d.org")
   (setq org-journal-date-format "%A, %B %d %Y")
@@ -56,12 +69,6 @@
   (auto-fill-mode 0)
   (variable-pitch-mode))
 
-;; Refile
-(setq org-refile-use-outline-path 'file)
-(setq org-outline-path-complete-in-steps nil)
-;; (setq org-refile-targets
-;;       '(("projects.org" :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
-
 (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
 
 (custom-set-faces!
@@ -79,41 +86,4 @@
   ;; Ensure that anything that should be fixed-pitch in org buffers appears that
   ;; way
   '(org-block :inherit fixed-pitch)
-  '(org-code :inherit (shadow fixed-pitch))
-  )
-
-
-(add-hook! 'org-after-todo-statistics-hook
-  (fn! (let (org-log-done) ; turn off logging
-         (org-todo (if (zerop %2) "DONE" "TODO")))))
-
-;;; Visual settings
-(setq org-link-frame-setup '((file . find-file)));; Opens links to other org file in same frame (rather than splitting)
-(setq org-startup-folded 'show2levels)
-(setq org-list-indent-offset 1)
-(setq org-cycle-separator-lines 1)
-(setq org-indent-indentation-per-level 2)
-(setq org-ellipsis " ")
-(setq org-hide-emphasis-markers t)
-(setq org-indent-mode-turns-on-hiding-stars t)
-(setq org-pretty-entities t)
-(setq org-startup-indented t)
-(setq org-startup-shrink-all-tables t)
-(setq org-startup-with-inline-images t)
-(setq org-startup-with-latex-preview nil)
-;;; TODOs, checkboxes, stats, properties.
-(setq org-hierarchical-todo-statistics nil)
-(setq org-use-property-inheritance t)
-(setq org-enforce-todo-dependencies t)
-
-  ;;; Interactive behaviour
-
-(setq org-bookmark-names-plist nil)
-(setq org-M-RET-may-split-line nil)
-;; (setq org-adapt-indentation nil)
-(setq org-blank-before-new-entry '((heading . t) (plain-list-item . auto)))
-(setq org-fold-catch-invisible-edits 'smart)
-(setq org-footnote-auto-adjust t)
-(setq org-insert-heading-respect-content t)
-;; (setq org-loop-over-headlines-in-active-region 'start-level)
-(setq org-treat-S-cursor-todo-selection-as-state-change nil)
+  '(org-code :inherit (shadow fixed-pitch)))

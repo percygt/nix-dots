@@ -73,28 +73,36 @@
 
 
 
-(setq org-agenda-custom-commands
-      '(("p" "Planning"
-         ((tags-todo "+@planning"
-                     ((org-agenda-overriding-header "Planning Tasks")))
-          (tags-todo "-{.*}"
-                     ((org-agenda-overriding-header "Untagged Tasks")))
-          (todo ".*" ((org-agenda-files (file-name-concat org-directory "/Inbox.org"))
-                      (org-agenda-overriding-header "Unprocessed Inbox Items")))))
+(add-to-list 'org-agenda-custom-commands
+             '(("p" "Planning"
+                ((tags-todo "+@planning"
+                            ((org-agenda-overriding-header "Planning Tasks")))
+                 (tags-todo "-{.*}"
+                            ((org-agenda-overriding-header "Untagged Tasks")))
+                 (org-super-agenda-groups '(
+                                            (:name "Today:"
+                                             :scheduled t
+                                             :order 2)
+                                            (:name "Deadlines:"
+                                             :deadline t
+                                             :order 3)
+                                            (:name "Today's Schedule:"
+                                             :time-grid t
+                                             :discard (:deadline t)
+                                             :order 1)))))
+               ("d" "Daily Agenda"
+                ((agenda "" ((org-agenda-span 'day)
+                             (org-deadline-warning-days 7)))
+                 (tags-todo "+PRIORITY=\"A\""
+                            ((org-agenda-overriding-header "High Priority Tasks")))))
 
-        ("d" "Daily Agenda"
-         ((agenda "" ((org-agenda-span 'day)
-                      (org-deadline-warning-days 7)))
-          (tags-todo "+PRIORITY=\"A\""
-                     ((org-agenda-overriding-header "High Priority Tasks")))))
+               ("w" "Weekly Review"
+                ((agenda ""
+                         ((org-agenda-overriding-header "Completed Tasks")
+                          (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
+                          (org-agenda-span 'week)))
 
-        ("w" "Weekly Review"
-         ((agenda ""
-                  ((org-agenda-overriding-header "Completed Tasks")
-                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo 'done))
-                   (org-agenda-span 'week)))
-
-          (agenda ""
-                  ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
-                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-agenda-span 'week)))))))
+                 (agenda ""
+                         ((org-agenda-overriding-header "Unfinished Scheduled Tasks")
+                          (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                          (org-agenda-span 'week)))))))

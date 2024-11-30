@@ -1,0 +1,13 @@
+
+(load! "+bindings.el")
+(load! "+evil.el")
+(load! "+ui.el")
+(load! "+modus.el")
+(load! "+dired.el")
+(load! "+completion.el")
+(load! "+minibuffer.el")
+(load! "+treesit.el")
+(load! "+treesit-lang.el")
+(load! "+eglot.el")
+(load! "+tools.el")
+(load! "+org.el")

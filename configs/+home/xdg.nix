@@ -47,7 +47,7 @@ in
   };
 
   home.activation = {
-    linkXdgDirs = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    linkXdgDirs = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
       if [ ! -e "${homeDirectory}/pictures/.not_empty" ] && [ -e "${g.dataDirectory}" ]; then
           rm -rf "${homeDirectory}/pictures"
           ln -s "${g.dataDirectory}/home/pictures" "${homeDirectory}/pictures"
