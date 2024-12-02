@@ -125,6 +125,7 @@ in
             security.gpg.package
             security.ssh.package
             dev.git.package
+            home-manager
             nfs-utils
             iputils
             coreutils

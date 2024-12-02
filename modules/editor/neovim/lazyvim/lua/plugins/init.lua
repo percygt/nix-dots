@@ -17,9 +17,14 @@ return {
           pcall(vim.keymap.del, "n", "<leader><tab>]")
           pcall(vim.keymap.del, "n", "<leader><tab>d")
           pcall(vim.keymap.del, "n", "<leader><tab>[")
+          -- pcall(vim.keymap.del, "n", "<c-_>")
+          pcall(vim.keymap.del, "n", "<c-/>")
         end,
       })
     end,
+    keys = {
+      { "<leader>.", "<c-6>", desc = "Previous buffer" },
+    },
     opts = {
       colorscheme = function()
         require("catppuccin").load()
@@ -33,53 +38,18 @@ return {
   },
   {
     "folke/snacks.nvim",
-    keys = function()
-      return {
-        {
-          "<leader><leader>",
-          function()
-            Snacks.notifier.hide()
-          end,
-          desc = "Dismiss All Notifications",
-        },
-        {
-          "D",
-          function()
-            Snacks.bufdelete()
-          end,
-          desc = "Delete Buffer",
-        },
-        {
-          "<leader>gB",
-          function()
-            Snacks.gitbrowse()
-          end,
-          desc = "Git Browse",
-        },
-        -- {
-        --   "<leader>R",
-        --   function()
-        --     Snacks.rename()
-        --   end,
-        --   desc = "Rename File",
-        -- },
-        {
-          "]]",
-          function()
-            Snacks.words.jump(vim.v.count1)
-          end,
-          desc = "Next Reference",
-          mode = { "n", "t" },
-        },
-        {
-          "[[",
-          function()
-            Snacks.words.jump(-vim.v.count1)
-          end,
-          desc = "Prev Reference",
-          mode = { "n", "t" },
-        },
-      }
-    end,
+       -- stylua: ignore
+    keys = {
+      { "<leader>.", false },
+      { "<leader>S", false },
+      { "<leader>n", false },
+      { "<leader><leader>", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
+      { "<leader>S", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
+      { "<leader>`s", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+      { "<leader>`n", function() Snacks.notifier.show_history() end, desc = "Notification History" },
+      { "D", function() Snacks.bufdelete() end, desc = "Delete Buffer", },
+      { "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
+      { "[[", function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+    },
   },
 }

@@ -1,14 +1,15 @@
 {
   stdenv,
   fetchurl,
-  nerdfonts,
+  nerd-fonts,
+  lib,
   ...
 }:
-stdenv.mkDerivation {
-  inherit (nerdfonts) version;
+stdenv.mkDerivation rec {
+  version = builtins.elemAt (lib.strings.splitString "/" nerd-fonts.symbols-only.meta.changelog) 6;
   pname = "nerdfonts-fontconfig";
   src = fetchurl {
-    url = "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/v${nerdfonts.version}/10-nerd-font-symbols.conf";
+    url = "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/${version}/10-nerd-font-symbols.conf";
     hash = "sha256-ZgHkMcXEPYDfzjdRR7KX3ws2u01GWUj48heMHaiaznY=";
   };
   dontUnpack = true;

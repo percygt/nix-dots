@@ -19,6 +19,21 @@ let
       inherit typeface;
       fonttype = "shell";
     });
+  addPackages = [
+    cfg.shell.package
+    cfg.interface.package
+    cfg.app.package
+    cfg.icon.package
+  ];
+  defaultPkgs = with pkgs; [
+    nerdfonts-fontconfig
+    inter
+    roboto-mono
+    gelasio
+    libertinus
+    work-sans
+    joypixels
+  ];
 in
 {
   config = {
@@ -26,7 +41,7 @@ in
     fonts = {
       enableDefaultPackages = false;
       fontDir.enable = true;
-      packages = import ./allFonts.nix { inherit pkgs config; };
+      packages = defaultPkgs ++ addPackages ++ cfg.extraFonts;
       fontconfig = {
         antialias = true;
         defaultFonts = {

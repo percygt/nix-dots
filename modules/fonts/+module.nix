@@ -1,6 +1,5 @@
 {
   lib,
-  config,
   pkgs,
   ...
 }:
@@ -31,8 +30,8 @@ let
         default = "monospace";
       };
     package = lib.mkOption {
-      type = with lib.types; either (enum [ "nerdfont" ]) package;
-      default = config.modules.fonts.nerdfontPackages;
+      type = with lib.types; package;
+      default = pkgs.nerd-fonts.victor-mono;
     };
     size =
       with lib;
@@ -51,10 +50,6 @@ in
     extraFonts = lib.mkOption {
       type = with lib.types; listOf package;
       default = [ ];
-    };
-    nerdfontPackages = lib.mkOption {
-      type = lib.types.package;
-      default = pkgs.nerdfonts;
     };
   };
 }

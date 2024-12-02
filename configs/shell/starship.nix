@@ -10,7 +10,7 @@ in
 {
   programs.starship = {
     enable = true;
-    enableTransience = defaultShell != g.shell.nushell.package;
+    enableTransience = defaultShell == g.shell.fish.package;
     settings = {
       add_newline = false;
       scan_timeout = 10;
@@ -21,12 +21,13 @@ in
       fill = {
         symbol = " ";
       };
+      continuation_prompt = "> ";
       format = lib.strings.concatStrings [
         "$all"
         "$fill"
         "$hostname"
         "$shlvl"
-        " "
+        "$time"
         "\n$container$character"
       ];
       status = {
@@ -45,6 +46,7 @@ in
         style = "yellow dimmed";
         format = "[$time]($style)";
         time_format = "%I:%M:%S";
+        disabled = true;
       };
       hostname = {
         ssh_only = true;
@@ -58,12 +60,12 @@ in
         disabled = false;
       };
       character = {
-        success_symbol = "[>](dimmed green) ";
-        error_symbol = "[>](dimmed red) ";
-        vimcmd_symbol = "[|](dimmed green) ";
-        vimcmd_replace_one_symbol = "[-](dimmed purple) ";
-        vimcmd_replace_symbol = "[|](dimmed blue) ";
-        vimcmd_visual_symbol = "[|](dimmed yellow) ";
+        success_symbol = "[>](dimmed green)";
+        error_symbol = "[>](dimmed red)";
+        vimcmd_symbol = "[|](dimmed green)";
+        vimcmd_replace_one_symbol = "[-](dimmed purple)";
+        vimcmd_replace_symbol = "[|](dimmed blue)";
+        vimcmd_visual_symbol = "[|](dimmed yellow)";
       };
       container = {
         symbol = "󰮄 ";
@@ -110,7 +112,6 @@ in
         disabled = false;
         format = "in [ $name](fg:white) ";
         impure_msg = "";
-        # heuristic = true;
       };
       package = {
         format = "is [󰏗 $version](fg:bright-blue) ";
@@ -127,6 +128,10 @@ in
       java = lang "" "red";
       c = lang "" "blue";
       golang = lang "" "blue";
+      custom.left-arrow = {
+        disabled = false;
+        command = "echo <";
+      };
     };
   };
 }

@@ -9,6 +9,7 @@
         "SemiBold Italic"
         "Bold Italic"
       ];
+      package = pkgs.nerd-fonts.victor-mono;
       typeface = "monospace";
       size = 14.0;
     };
@@ -29,30 +30,26 @@
       package = pkgs.font-awesome;
       size = 12.0;
     };
-    extraFonts = with pkgs; [
-      (iosevka-bin.override { variant = "Aile"; })
-      emacs-all-the-icons-fonts
-      noto-fonts
-      noto-fonts-cjk-sans
-      libertinus
-      corefonts
-      vistafonts
-      open-sans
-      source-sans-pro
-      source-serif
-      noto-fonts-emoji
-      ubuntu_font_family
-    ];
-    nerdfontPackages = pkgs.nerdfonts.override {
-      fonts = [
-        "MartianMono"
-        "Monaspace"
-        "RobotoMono"
-        "GeistMono"
-        "VictorMono"
-        "JetBrainsMono"
-        "NerdFontsSymbolsOnly"
-      ];
-    };
+    extraFonts =
+      (with pkgs; [
+        (iosevka-bin.override { variant = "Aile"; })
+        emacs-all-the-icons-fonts
+        noto-fonts
+        noto-fonts-cjk-sans
+        corefonts
+        vistafonts
+        open-sans
+        source-sans-pro
+        source-serif
+        noto-fonts-emoji
+        ubuntu_font_family
+      ])
+      ++ (with pkgs.nerd-fonts; [
+        martian-mono
+        monaspace
+        geist-mono
+        jetbrains-mono
+        symbols-only
+      ]);
   };
 }

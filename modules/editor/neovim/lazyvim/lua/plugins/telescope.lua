@@ -10,7 +10,6 @@ return {
           desc = "Buffers",
         },
         { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-        { "<leader>.", "<c-6>", desc = "Previous buffer" },
         { "<leader>s", "", desc = "+Search", mode = { "n", "v" } },
         { "<leader>sc", LazyVim.pick.config_files(), desc = "Find Config File" },
         { "<leader>sg", LazyVim.pick("live_grep"), desc = "Grep (Root Dir)" },

@@ -49,16 +49,6 @@ in
         ''
           flake_dir="${g.flakeDirectory}"
           stderr() { printf "%s\n" "$*" >&2; }
-          printf "                                                                                                 \n"
-          printf "                                                                                                 \n"
-          printf "   ███╗   ██╗██╗██╗  ██╗ ██████╗ ███████╗    ██████╗ ███████╗██████╗ ██╗   ██╗██╗██╗     ██████╗ \n"
-          printf "   ████╗  ██║██║╚██╗██╔╝██╔═══██╗██╔════╝    ██╔══██╗██╔════╝██╔══██╗██║   ██║██║██║     ██╔══██╗\n"
-          printf "   ██╔██╗ ██║██║ ╚███╔╝ ██║   ██║███████╗    ██████╔╝█████╗  ██████╔╝██║   ██║██║██║     ██║  ██║\n"
-          printf "   ██║╚██╗██║██║ ██╔██╗ ██║   ██║╚════██║    ██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║██║     ██║  ██║\n"
-          printf "   ██║ ╚████║██║██╔╝ ██╗╚██████╔╝███████║    ██║  ██║███████╗██████╔╝╚██████╔╝██║███████╗██████╔╝\n"
-          printf "   ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝    ╚═╝  ╚═╝╚══════╝╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ \n"
-          printf "                                                                                                 \n"
-          printf "                                                                                                 \n"
           if [ ! -d "$flake_dir" ] || [ ! -f "$flake_dir/flake.nix" ]; then
             stderr "Flake directory: '$flake_dir' is not valid"
             exit 1
@@ -67,6 +57,7 @@ in
           cmd_build="nom build $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel --out-link /tmp/nixos-configuration --accept-flake-config"
           cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
           su - ${username} -c "bash -c '$cmd_build && $cmd_nvd'" && /tmp/nixos-configuration/bin/switch-to-configuration switch || exit 1
+          su - ${username} -c "home-manager switch --flake $flake_dir#${username}@${profile} || exit 1"
         '';
     };
   };

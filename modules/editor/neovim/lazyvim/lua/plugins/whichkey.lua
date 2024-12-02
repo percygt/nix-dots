@@ -25,7 +25,6 @@ return {
         { "<leader>.", icon = "" },
         { "<leader>f", icon = "" },
         { "<leader>F", icon = "" },
-        { "<leader>l", "<cmd>Lazy<cr>", icon = "󰒲" },
         { "<leader>p", [["_dP]], mode = "x" },
         { "<leader>`", group = "Helper", icon = "" },
         { "<leader>n", group = "Multicursor", icon = "" },

@@ -1,17 +1,24 @@
 let keybindings  = [
   {
-      name: completion_menu
-      modifier: none
-      keycode: tab
-      mode: [emacs vi_normal vi_insert]
-      event: {
-          until: [
-              { send: menu name: completion_menu }
-              { send: menunext }
-              { edit: complete }
-          ]
-      }
+      name: delete_one_word_backward
+      modifier: alt
+      keycode: backspace
+      mode: [emacs, vi_normal, vi_insert]
+      event: {edit: backspaceword}
   }
+  # {
+  #     name: completion_menu
+  #     modifier: none
+  #     keycode: tab
+  #     mode: [emacs vi_normal vi_insert]
+  #     event: {
+  #         until: [
+  #             { send: menu name: completion_menu }
+  #             { send: menunext }
+  #             { edit: complete }
+  #         ]
+  #     }
+  # }
   {
       name: completion_previous_menu
       modifier: shift
@@ -21,8 +28,10 @@ let keybindings  = [
   }
   {
       name: ide_completion_menu
-      modifier: control
-      keycode: space
+      # modifier: control
+      modifier: none
+      # keycode: space
+      keycode: tab
       mode: [emacs vi_normal vi_insert]
       event: {
           until: [

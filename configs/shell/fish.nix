@@ -6,10 +6,12 @@
 }:
 let
   g = config._base;
+  c = config.modules.themes.colors;
   fishShellPkg = g.shell.fish.package;
 in
 {
   programs = {
+    zoxide.enableFishIntegration = false;
     fish = lib.mkMerge [
       {
         interactiveShellInit = lib.concatStringsSep "\n" (
@@ -18,10 +20,8 @@ in
             ''
               set fish_greeting # Disable greeting
               ${lib.getExe pkgs.nix-your-shell} fish | source
+              bind --mode insert \cr _fzf_search_history
               bind \cr _fzf_search_history
-              bind -M insert \cr _fzf_search_history
-              bind \ct 'clear; commandline -f repaint'
-              bind -M insert \ct 'clear; commandline -f repaint'
               fzf_configure_bindings --directory=\cf --variables=\ev --git_status=\cs --git_log=\cg
             ''
           ]
@@ -70,6 +70,15 @@ in
             inherit (fzf-fish) src;
           }
           {
+            name = "zoxide";
+            src = pkgs.fetchFromGitHub {
+              owner = "kidonng";
+              repo = "zoxide.fish";
+              rev = "bfd5947bcc7cd01beb23c6a40ca9807c174bba0e";
+              hash = "sha256-Hq9UXB99kmbWKUVFDeJL790P8ek+xZR5LDvS+Qih+N4=";
+            };
+          }
+          {
             name = "fish-ghq";
             src = pkgs.fetchFromGitHub {
               owner = "decors";
@@ -88,7 +97,7 @@ in
 
             # Change previous prompts right side
             function starship_transient_rprompt_func
-              starship module time
+                echo -ne '\033[0;34m'(${pkgs.coreutils}/bin/date "+%I:%M:%S") '\033[0;32m<'
             end
 
             set -gx STARSHIP_CONFIG "${config.xdg.configHome}/starship.toml"
@@ -103,9 +112,12 @@ in
               --preview-window=right,60%,,"
 
             set -gx FZF_TMUX 1
-            set -gx FZF_TMUX_OPTS "-p90%,75%"
+            set -gx FZF_TMUX_OPTS "-p75%,75%"
 
-            fish_vi_key_bindings
+            function fish_user_key_bindings
+                fish_default_key_bindings -M insert
+                fish_vi_key_bindings --no-erase insert
+            end
             set fish_cursor_default     block      blink
             set fish_cursor_insert      line       blink
             set fish_cursor_replace_one underscore blink
@@ -128,7 +140,7 @@ in
       text =
         # fish
         ''
-          fish_color_autosuggestion 969896
+          fish_color_autosuggestion ${c.base03}
           fish_color_normal normal
           fish_color_command blue
           fish_color_quote blue

@@ -27,7 +27,8 @@
     editor = {
       neovim.enable = true;
       emacs.enable = true;
-      vscode.enable = true;
+      zed.enable = true;
+      # vscode.enable = true;
     };
     networking = {
       vpn.enable = true;
