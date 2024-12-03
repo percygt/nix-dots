@@ -8,7 +8,10 @@ let
   g = config._base;
 in
 {
-  imports = [ ./regreet.nix ];
+  imports = [
+    # ./regreet.nix
+    ./tuigreet.nix
+  ];
 
   modules.core.persist.userData = {
     directories = [

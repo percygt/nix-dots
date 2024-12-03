@@ -14,8 +14,8 @@ in
       package = pkgs.evil-helix;
 
       themes = {
-        autumn_night_transparent = {
-          "inherits" = "autumn_night";
+        catppuccin_macchiato_transparent = {
+          "inherits" = "catppuccin_macchiato";
           "ui.background" = { };
         };
       };
@@ -27,22 +27,66 @@ in
         }
       ];
       settings = {
-        theme = "autumn_night_transparent";
+        theme = "catppuccin_macchiato_transparent";
         editor = {
           gutters = [
             "diff"
+            "diagnostics"
             "line-numbers"
             "spacer"
-            "diagnostics"
           ];
+          statusline = {
+            left = [
+              "mode"
+              "spinner"
+            ];
+            center = [ "file-name" ];
+            right = [
+              "diagnostics"
+              "selections"
+              "position"
+              "file-line-ending"
+              "file-type"
+              "version-control"
+            ];
+            separator = "|";
+            mode = {
+              normal = "NOR";
+              insert = "INS";
+              select = "SEL";
+            };
+          };
+          auto-save = true;
+          color-modes = true;
           cursorline = true;
-          # cursor-shape = {
-          #   normal = "block";
-          #   insert = "bar";
-          #   select = "underline";
-          # };
+          cursor-shape = {
+            normal = "block";
+            insert = "bar";
+            select = "underline";
+          };
+          inline-diagnostics = {
+            cursor-line = "hint";
+            other-lines = "error";
+          };
+          indent-guides = {
+            render = true;
+            rainbow = "dim";
+            character = "┆";
+          };
+          whitespace = {
+            characters = {
+              space = "·";
+              nbsp = "⍽";
+              tab = "→";
+              newline = "⏎";
+              tabpad = "·";
+            };
+          };
+          lsp = {
+            display-messages = true;
+            display-inlay-hints = true;
+          };
           true-color = true;
-          lsp.display-messages = true;
           mouse = false;
           soft-wrap = {
             enable = true;

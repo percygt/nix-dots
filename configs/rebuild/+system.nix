@@ -47,23 +47,28 @@ in
       };
       script = # bash
         ''
-          flake_dir="${g.flakeDirectory}"
+          FLAKE="${g.flakeDirectory}"
           stderr() { printf "%s\n" "$*" >&2; }
-          if [ ! -d "$flake_dir" ] || [ ! -f "$flake_dir/flake.nix" ]; then
-            stderr "Flake directory: $flake_dir is not valid"
+          if [ ! -d "$FLAKE" ] || [ ! -f "$FLAKE/flake.nix" ]; then
+            stderr "Flake directory: $FLAKE is not valid"
             exit 1
           fi
           # Execute the commands
-          cmd_build="nom build \
-            $flake_dir#nixosConfigurations.${profile}.config.system.build.toplevel \
+          su ${username} -c \
+            "nom build \
+            $FLAKE#nixosConfigurations.${profile}.config.system.build.toplevel \
             --out-link /tmp/nixos-configuration \
             --accept-flake-config"
-          cmd_nvd="nvd diff /run/current-system /tmp/nixos-configuration"
-          su - ${username} -c \
-            "bash -c \"$cmd_build && $cmd_nvd\"" \
-            && /tmp/nixos-configuration/bin/switch-to-configuration switch || exit 1
-          su - ${username} -c \
-            "nh home switch #${username}@${profile} || exit 1"
+
+          /tmp/nixos-configuration/bin/switch-to-configuration switch || exit 1
+
+          su ${username} -c \
+            "nvd diff /run/current-system /tmp/nixos-configuration"
+
+          su ${username} -c \
+            "nh home switch #${username}@${profile} \
+            --accept-flake-config \
+            || exit 1"
         '';
     };
   };
