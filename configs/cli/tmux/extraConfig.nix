@@ -37,37 +37,37 @@ in
       set -g @resurrect-processes 'nvim'
       set -g @resurrect-dir '${resurrectDirPath}'
       set -g @resurrect-hook-post-save-all '${resurrectPostSave} "${resurrectDirPath}/last"'
-      run-shell ${tp.resurrect}/share/tmux-plugins/resurrect/resurrect.tmux
+      run-shell ${tp.resurrect.rtp}
 
 
 
       # ---------------------
-      # tmuxplugin-tmuxinoicer
+      # tmuxplugin-tmux-switcher
       # ---------------------
 
-      set -g @tmuxinoicer-find-base "${config.home.homeDirectory}/data:1:4,${config.home.homeDirectory}:1:1"
-      set -g @tmuxinoicer-extras "find"
+      set -g @tmux-switcher-find-base "${config.home.homeDirectory}/data:1:4,${config.home.homeDirectory}:1:1"
+      set -g @tmux-switcher-extras "find"
       unbind ,
-      set -g @tmuxinoicer-bind ","
-      run-shell ${tp.tmuxinoicer}/share/tmux-plugins/tmuxinoicer/tmuxinoicer.tmux
+      set -g @tmux-switcher-bind ","
+      run-shell ${tp.tmux-switcher.rtp}
 
 
       # ---------------------
       # tmuxplugin-vim-tmux-navigator
       # ---------------------
-      run-shell ${tp.vim-tmux-navigator}/share/tmux-plugins/vim-tmux-navigator/vim-tmux-navigator.tmux
+      run-shell ${tp.vim-tmux-navigator.rtp}
 
       # ---------------------
       # tmuxplugin-yank
       # ---------------------
 
-      run-shell ${pkgs.tmuxPlugins.yank}/share/tmux-plugins/yank/yank.tmux
+      run-shell ${pkgs.tmuxPlugins.yank.rtp}
 
       # ---------------------
       # tmuxplugin-extrakto
       # ---------------------
       set -g @extrakto_clip_tool 'wl-copy'
-      run-shell ${tp.extrakto}/share/tmux-plugins/extrakto/extrakto.tmux
+      run-shell ${tp.extrakto.rtp}
 
       # ---------------------
       # tmuxplugin-continuum
@@ -76,7 +76,7 @@ in
       set -g @continuum-save-interval '10'
       # set -g @continuum-boot 'on'
       # set -g @continuum-systemd-start-cmd 'start-server'
-      run-shell ${tp.continuum}/share/tmux-plugins/continuum/continuum.tmux
+      run-shell ${tp.continuum.rtp}
 
 
       # ---------------------

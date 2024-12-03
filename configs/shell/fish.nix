@@ -100,19 +100,8 @@ in
                 echo -ne '\033[0;34m'(${pkgs.coreutils}/bin/date "+%I:%M:%S") '\033[0;32m<'
             end
 
+            # ensure starship vars are set
             set -gx STARSHIP_CONFIG "${config.xdg.configHome}/starship.toml"
-
-            set -gx FZF_DEFAULT_OPTS "
-              --border rounded
-              --info=inline
-              --bind=ctrl-j:down
-              --bind=ctrl-k:up
-              --bind=alt-j:preview-down
-              --bind=alt-k:preview-up
-              --preview-window=right,60%,,"
-
-            set -gx FZF_TMUX 1
-            set -gx FZF_TMUX_OPTS "-p75%,75%"
 
             function fish_user_key_bindings
                 fish_default_key_bindings -M insert
@@ -140,7 +129,6 @@ in
       text =
         # fish
         ''
-          fish_color_autosuggestion ${c.base03}
           fish_color_normal normal
           fish_color_command blue
           fish_color_quote blue

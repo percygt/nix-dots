@@ -28,6 +28,7 @@
       neovim.enable = true;
       emacs.enable = true;
       zed.enable = true;
+      helix.enable = true;
       # vscode.enable = true;
     };
     networking = {
