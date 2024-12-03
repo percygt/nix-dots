@@ -1,26 +1,53 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
+  c = config.modules.themes.colors.withHashtag;
   fzfrc = pkgs.writeText "fzfrc" ''
-    --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#693838
-    --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
-    --color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
-    --color=border:#ababb7,label:#aeaeae,query:#d9d9d9
-    --border="rounded" --border-label=" Result " --border-label-pos="0" --preview-window="border-rounded"
-    --prompt="> " --marker=">" --pointer="◆" --separator="─"
-    --scrollbar="▌▐" --layout="reverse" --info="right"'
+    --cycle
+    --pointer="> "
+    --marker="●"
+    --separator="─"
+    --prompt="  "
+    --scrollbar="▌▐"
+    --layout=reverse
+    --info=right
+    --border-label=" Result "
+    --color=bg:-1,bg+:${c.base02}
+    --color=fg:${c.base04},fg+:${c.base05}
+    --color=hl:${c.base16},hl+:${c.base16}
+    --color=border:${c.base04},gutter:${c.base00}
+    --color=info:${c.base09},separator:${c.base04}
+    --color=pointer:${c.base09},marker:${c.base09},prompt:${c.base09}
+    --color=spinner:${c.base16}
   '';
 in
 {
-  home.sessionVarables.FZF_DEFAULT_OPTS_FILE = fzfrc;
+  home.file.".config/fzfrc".text = ''
+    --cycle
+    --pointer="> "
+    --marker="●"
+    --separator="─"
+    --prompt="  "
+    --scrollbar="▌▐"
+    --layout=reverse
+    --info=right
+    --border-label=" Result "
+    --color=fg:${c.base05},hl:${c.base16}
+    --color=fg+:${c.base07},hl+:${c.base16}
+    --color=border:${c.base04},gutter:${c.base11}
+    --color=info:${c.base09},separator:${c.base04}
+    --color=pointer:${c.base13},marker:${c.base06},prompt:${c.base09}
+    --color=spinner:${c.base13}
+  '';
+  home.sessionVariables.FZF_DEFAULT_OPTS_FILE = "${fzfrc}";
   programs.fzf = {
     enable = true;
-    tmux = {
-      enableShellIntegration = true;
-      shellIntegrationOptions = [
-        "-p 50%,50%"
-        "--preview-window=right,60%,,"
-      ];
-    };
+    tmux.enableShellIntegration = true;
+    tmux.shellIntegrationOptions = [ "-p 50%,50%" ];
     defaultCommand = "${lib.getExe pkgs.fd} --type file --hidden --exclude .git";
     fileWidgetCommand = "${lib.getExe pkgs.ripgrep} --files --hidden -g !.git";
     changeDirWidgetCommand = "${lib.getExe pkgs.fd} --type directory --hidden --exclude .git";

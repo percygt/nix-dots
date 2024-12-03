@@ -50,8 +50,8 @@ return {
       local icons = require("config.icons")
       local d = opts.defaults
       local p = opts.pickers
-      d.prompt_prefix = " " .. icons.ui.Telescope .. " "
-      d.selection_caret = icons.ui.BoldArrowRight .. " "
+      d.prompt_prefix = " " .. icons.ui.Telescope .. "  "
+      d.selection_caret = icons.ui.ChevronRight .. " "
       d.path_display = { "filename_first" }
       d.previewer = false
       d.file_ignore_patterns = { "node_modules", "package-lock.json" }
@@ -68,7 +68,7 @@ return {
         theme = "dropdown",
         layout_config = {
           height = 0.4,
-          prompt_position = "bottom",
+          prompt_position = "top",
           preview_cutoff = 120,
         },
         mappings = {
@@ -85,7 +85,7 @@ return {
         previewer = false,
         layout_config = {
           height = 0.4,
-          prompt_position = "bottom",
+          prompt_position = "top",
           preview_cutoff = 120,
         },
       }
@@ -109,14 +109,14 @@ return {
         layout_config = {
           height = 0.4,
           width = 0.6,
-          prompt_position = "bottom",
+          prompt_position = "top",
           preview_cutoff = 120,
         },
       }
       p.current_buffer_fuzzy_find = {
         previewer = true,
         layout_config = {
-          prompt_position = "bottom",
+          prompt_position = "top",
           preview_cutoff = 120,
         },
       }
@@ -124,7 +124,7 @@ return {
         only_sort_text = true,
         previewer = true,
         layout_config = {
-          prompt_position = "bottom",
+          prompt_position = "top",
           preview_cutoff = 120,
         },
       }
@@ -132,7 +132,7 @@ return {
         only_sort_text = true,
         previewer = true,
         layout_config = {
-          prompt_position = "bottom",
+          prompt_position = "top",
           preview_cutoff = 120,
         },
       }
@@ -140,7 +140,7 @@ return {
         show_line = false,
         previewer = true,
         layout_config = {
-          prompt_position = "bottom",
+          prompt_position = "top",
           preview_cutoff = 120,
         },
       }
@@ -148,7 +148,7 @@ return {
         show_line = false,
         previewer = true,
         layout_config = {
-          prompt_position = "bottom",
+          prompt_position = "top",
           preview_cutoff = 120,
         },
       }

@@ -6,7 +6,7 @@
       defaultUsername = "percygt";
       defaultDesktop = "sway";
       defaultSystem = "x86_64-linux";
-      stateVersion = "23.05";
+      stateVersion = "24.11";
       bldr = import ./lib {
         inherit
           self

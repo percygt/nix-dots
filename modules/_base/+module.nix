@@ -125,7 +125,7 @@ in
             security.gpg.package
             security.ssh.package
             dev.git.package
-            home-manager
+            nh
             nfs-utils
             iputils
             coreutils
