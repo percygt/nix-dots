@@ -1,4 +1,17 @@
 {
+  "neodev": {
+    "library": {
+      "enabled": true,
+      "plugins": true
+    }
+  },
+  "neoconf": {
+    "plugins": {
+      "lua_ls": {
+        "enabled": true
+      }
+    }
+  },
   "lspconfig": {
     "rust-analyzer": {
       "semanticHighlighting.punctuation.enable": true,
@@ -69,9 +82,14 @@
         "runtime": {
           "version": "LuaJIT"
         },
+        "formatters": {
+          "ignoreComments": true
+        },
+
         "workspace": {
           "checkThirdParty": "Disable"
         },
+        "signatureHelp": { "enabled": true },
         "format": {
           "enable": false,
           "defaultConfig": {
@@ -104,7 +122,8 @@
             "stub"
           ],
           "disable": [
-            "duplicate-set-field"
+            "duplicate-set-field",
+            "missing-fields"
           ]
         },
         "telemetry": {

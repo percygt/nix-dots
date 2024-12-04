@@ -40,6 +40,7 @@
     };
     extraOpts = {
       BrowserSignin = 0;
+      MemorySaverModeSavings = 2;
       ShowHomeButton = true;
       CloudReportingEnabled = false;
       SafeBrowsingEnabled = false;

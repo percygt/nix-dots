@@ -23,7 +23,7 @@ return {
         TreesitterContextLineNumber = { fg = c.base04 },
         LineNrNC = { fg = c.base03 },
         CursorLine = { bg = c.base01 },
-        CursorLineNr = { bg = c.base01, fg = c.base06, italic = true, bold = true },
+        CursorLineNr = { bg = c.base01, fg = c.base06, bold = true },
         CursorLineSign = { bg = c.base01 },
         CursorLineFold = { bg = c.base01 },
         TelescopeSelection = { fg = c.base05, bg = c.base01 },

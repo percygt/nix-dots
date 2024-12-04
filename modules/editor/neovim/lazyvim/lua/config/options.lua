@@ -12,6 +12,7 @@ opt.hlsearch = true -- Highlighting search
 opt.autowrite = true
 opt.autoread = true
 
+opt.clipboard = ""
 opt.mouse = "a" -- Enable mouse support
 opt.wrap = false -- Disable text wrap
 opt.ignorecase = true -- Case insensitive searching

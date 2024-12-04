@@ -51,7 +51,7 @@ return {
       local d = opts.defaults
       local p = opts.pickers
       d.prompt_prefix = " " .. icons.ui.Telescope .. "  "
-      d.selection_caret = icons.ui.ChevronRight .. " "
+      d.selection_caret = " " .. icons.ui.ChevronRight .. " "
       d.path_display = { "filename_first" }
       d.previewer = false
       d.file_ignore_patterns = { "node_modules", "package-lock.json" }
@@ -67,7 +67,8 @@ return {
         previewer = false,
         theme = "dropdown",
         layout_config = {
-          height = 0.4,
+          height = 0.5,
+          width = 0.5,
           prompt_position = "top",
           preview_cutoff = 120,
         },
@@ -107,8 +108,8 @@ return {
         initial_mode = "normal",
         theme = "dropdown",
         layout_config = {
-          height = 0.4,
-          width = 0.6,
+          height = 0.5,
+          width = 0.5,
           prompt_position = "top",
           preview_cutoff = 120,
         },

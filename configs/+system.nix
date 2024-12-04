@@ -45,16 +45,18 @@ in
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   nix =
-    let
-      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-    in
+    # let
+    #   flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    # in
     {
       # Opinionated: make flake registry and nix path match flake inputs
-      registry = (lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs) // {
-        self.flake = inputs.self;
-        n.flake = inputs.nixpkgs;
-      };
-      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+      # registry = (lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs) // {
+      #   self.flake = inputs.self;
+      #   n.flake = inputs.nixpkgs;
+      # };
+      # nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+      registry.nixpkgs.flake = inputs.nixpkgs;
+      nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
       optimise.automatic = true;
     };
 }

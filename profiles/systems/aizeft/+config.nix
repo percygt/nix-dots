@@ -11,7 +11,6 @@
       intel.enable = true;
       intel.gpu.driver = "xe";
       # nvidia.prime.enable = true;
-      nvidia.bye = true;
       printer.enable = true;
     };
     dev.enable = true;
@@ -48,7 +47,6 @@
       wezterm.enable = true;
     };
     virtualisation = {
-      docker.enable = true;
       podman.enable = true;
       kvm.enable = true;
       vmvariant.enable = true;

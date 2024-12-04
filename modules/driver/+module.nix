@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 {
   options.modules.driver = {
     adb.enable = lib.mkEnableOption "Enable adb";
@@ -23,7 +23,7 @@
       prime.enable = lib.mkEnableOption "Enable nvidia-prime";
       bye = lib.mkOption {
         description = "Disable nvidia gpu";
-        default = false;
+        default = !config.modules.driver.nvidia.prime.enable;
         type = lib.types.bool;
       };
     };

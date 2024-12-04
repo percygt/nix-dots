@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # alejandra
+    nixos-shell
     devenv
     nixfmt-rfc-style
     deadnix
@@ -11,7 +11,6 @@
     nix-your-shell
     cachix
     json2nix
-    # nix-melt
     nix-output-monitor
     nvd
     nix-search-cli

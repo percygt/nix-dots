@@ -19,6 +19,6 @@
     font-manager
     pinta
     # logseq
-    lutris
+    # lutris
   ];
 }

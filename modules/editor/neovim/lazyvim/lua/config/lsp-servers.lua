@@ -11,50 +11,22 @@ return {
   clojure_lsp = {},
   clangd = {},
   nushell = {},
-  nil_ls = {
-    settings = {
-      ["nil"] = {
-        nix = {
-          flake = {
-            autoArchive = false,
-          },
-        },
-      },
-    },
-  },
+  -- nil_ls = {
+  --   settings = {
+  --     nil_ls = {
+  --       nix = {
+  --         flake = {
+  --           autoArchive = true,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
   nixd = {
     cmd = { "nixd" },
-    settings = {
-      nixd = {
-        nixpkgs = {
-          expr = [[import (builtins.getFlake "]] .. private.flakeDirectory .. [[").inputs.nixpkgs { }   ]],
-        },
-        formatting = {
-          command = { "nixfmt" },
-        },
-        options = {
-          nixos = {
-            expr = [[(builtins.getFlake "]]
-              .. private.flakeDirectory
-              .. [[").nixosConfigurations."]]
-              .. private.profile
-              .. [[".options]],
-          },
-          home_manager = {
-            expr = [[(builtins.getFlake "]]
-              .. private.flakeDirectory
-              .. [[").homeConfigurations."]]
-              .. private.username
-              .. "@"
-              .. private.profile
-              .. [[".options]],
-          },
-        },
-      },
-    },
-    on_init = function(client, _)
-      client.server_capabilities.semanticTokensProvider = nil
-    end,
+    -- on_init = function(client, _)
+    --   client.server_capabilities.semanticTokensProvider = nil
+    -- end,
   },
   volar = {
     init_options = {

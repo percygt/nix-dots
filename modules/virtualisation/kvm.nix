@@ -8,6 +8,7 @@
 {
   config = lib.mkIf config.modules.virtualisation.kvm.enable {
     environment.systemPackages = with pkgs; [
+      nixos-shell
       adwaita-icon-theme
       win-virtio
       win-spice

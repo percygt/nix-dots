@@ -2,9 +2,11 @@
   pkgs,
   config,
   lib,
+  username,
   ...
 }:
 let
+  g = config._base;
   unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;
   xSessions = "${config.services.displayManager.sessionData.desktops}/share/xsessions";
   wlSessions = "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
@@ -14,6 +16,10 @@ in
     enable = true;
     settings = {
       vt = 2;
+      initial_session = {
+        command = "${lib.getExe g.desktop.sway.package} ${lib.optionalString unsupported-gpu "--unsupported-gpu"}";
+        user = username;
+      };
       default_session.command = ''
         ${pkgs.greetd.tuigreet}/bin/tuigreet \
         --time \
@@ -21,7 +27,7 @@ in
         --sessions ${xSessions}:${wlSessions} \
         --remember \
         --remember-user-session
-        --cmd 'sway ${lib.optionalString unsupported-gpu "--unsupported-gpu"}'
+        --cmd '${lib.getExe g.desktop.sway.package} ${lib.optionalString unsupported-gpu "--unsupported-gpu"}'
       '';
     };
   };

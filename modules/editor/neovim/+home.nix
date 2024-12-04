@@ -4,7 +4,6 @@
   config,
   profile,
   username,
-  inputs,
   ...
 }:
 let
@@ -27,18 +26,29 @@ in
       withNodeJs = true;
       withPython3 = true;
       withRuby = false;
-      extraLuaConfig =
-        # lua
+      extraLuaConfig = lib.concatStringsSep "\n" [
         ''
           vim.g.gcc_bin_path = '${lib.getExe pkgs.gcc}'
           vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'
-          require("config.options")
-          require("config.keymaps")
-          require("config.autocmds")
-          require("config.lazy")
-        '';
+        ''
+        (lib.readFile ./${nvimDir}/init.lua)
+      ];
     };
     home = {
+      file."${g.flakeDirectory}/.neoconf.json".text =
+        let
+          flake = ''builtins.getFlake "${g.flakeDirectory}"'';
+        in
+        builtins.toJSON {
+          lspconfig.nixd.nixd = {
+            nixpkgs.expr = ''import (${flake}).inputs.nixpkgs {}'';
+            formatting.command = [ "nixfmt" ];
+            options = {
+              nixos.expr = ''(${flake}).nixosConfigurations."${profile}".options'';
+              home-manager.expr = ''(${flake}).homeConfigurations."${username}@${profile}".options'';
+            };
+          };
+        };
       activation = {
         lazyRestore =
           lib.hm.dag.entryAfter [ "linkGeneration" ]
@@ -91,21 +101,7 @@ in
         "nvim/lazyvim.json" = lib.mkIf cfg.lazyvim.enable {
           source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazyvim.json";
         };
-        # # Nixd LSP configuration
-        # "${g.flakeDirectory}/.neoconf.json".text =
-        #   let
-        #     flake = ''builtins.getFlake "${inputs.self}"'';
-        #   in
-        #   builtins.toJSON {
-        #     lspconfig.nixd.nixd = {
-        #       nixpkgs.expr = ''import (${flake}).inputs.nixpkgs {}'';
-        #       formatting.command = [ "nixfmt" ];
-        #       options = {
-        #         nixos.expr = ''(${flake}).nixosConfigurations.${profile}.options'';
-        #         home-manager.expr = ''(${flake}).homeConfigurations.${username}@${profile}.options'';
-        #       };
-        #     };
-        #   };
+        # Nixd LSP configuration
         "nvim/lua/config/colorscheme.lua" =
           let
             colorschemeLua =

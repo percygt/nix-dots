@@ -2,15 +2,17 @@
   pkgs,
   config,
   username,
+  lib,
   ...
 }:
 let
   g = config._base;
+  unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;
 in
 {
   imports = [
-    # ./regreet.nix
-    ./tuigreet.nix
+    ./regreet.nix
+    # ./tuigreet.nix
   ];
 
   modules.core.persist.userData = {
@@ -33,6 +35,9 @@ in
       enable = true;
       inherit (g.desktop.sway) package;
       wrapperFeatures.gtk = true;
+      extraOptions = [
+        (lib.optionalString unsupported-gpu "--unsupported-gpu")
+      ];
     };
   };
 
@@ -65,7 +70,10 @@ in
     dbus = {
       enable = true;
       implementation = "broker";
-      packages = with pkgs; [ dconf ];
+      packages = with pkgs; [
+        dconf
+        xfce.xfconf
+      ];
     };
     gnome = {
       gnome-settings-daemon.enable = true;

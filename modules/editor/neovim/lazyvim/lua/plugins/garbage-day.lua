@@ -3,7 +3,7 @@ return {
   dependencies = "neovim/nvim-lspconfig",
   event = "VeryLazy",
   opts = {
-    excluded_lsp_clients = { "nixd", "nil_ls" },
+    excluded_lsp_clients = { "nixd" },
     notifications = true,
   },
 }

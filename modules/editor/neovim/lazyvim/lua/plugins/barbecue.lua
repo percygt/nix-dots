@@ -1,12 +1,13 @@
 return {
-  {
-    "echasnovski/mini.icons",
-    version = false,
-    init = function() end,
-  },
+  -- {
+  --   "echasnovski/mini.icons",
+  --   version = false,
+  --   init = function() end,
+  -- },
   {
     "utilyre/barbecue.nvim",
     name = "barbecue",
+    enabled = false,
     version = "*",
     dependencies = {
       "SmiteshP/nvim-navic",
@@ -71,23 +72,6 @@ return {
         group = vim.api.nvim_create_augroup("barbecue.updater", {}),
         callback = function()
           require("barbecue.ui").update()
-        end,
-      })
-    end,
-  },
-  {
-    "SmiteshP/nvim-navic",
-    dependencies = { "neovim/nvim-lspconfig" },
-    config = function(_, opts)
-      require("nvim-navic").setup(opts)
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
-        callback = function(a)
-          local client = vim.lsp.get_client_by_id(a.data.client_id)
-          -- don't use nixd as navic lsp provider
-          if client and client.server_capabilities["documentSymbolProvider"] and (client.name ~= "nixd") then
-            require("nvim-navic").attach(client, a.buf)
-          end
         end,
       })
     end,

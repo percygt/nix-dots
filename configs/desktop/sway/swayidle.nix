@@ -46,7 +46,7 @@ in
       {
         timeout = 15 * 60;
         command = "${swaymsg} 'output * dpms off'";
-        resumeCommand = "${swaymsg} 'output * dpms on'";
+        resumeCommand = "${swaymsg} 'reload' && ${swaymsg} 'output * dpms on'";
       }
       {
         timeout = 45 * 60;
