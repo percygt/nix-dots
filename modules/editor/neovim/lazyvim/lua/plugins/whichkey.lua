@@ -17,7 +17,9 @@ return {
         { "<c-w>", mode = { "n", "v" } },
         { "<localleader>", mode = { "n", "v" } },
       },
-      icons = {},
+      icons = {
+        separator = ">",
+      },
       spec = {
         { "W", hidden = true },
         { "Q", hidden = true },
@@ -29,6 +31,7 @@ return {
         { "<leader>`", group = "Helper", icon = "" },
         { "<leader>n", group = "Multicursor", icon = "" },
         -- { "<leader>o", group = "Org", icon = "" },
+        { "<leader>D", icon = "󰇘" },
         { "<leader>c", group = "Code" },
         { "<leader>g", group = "Git" },
         { "<leader>s", group = "Search" },

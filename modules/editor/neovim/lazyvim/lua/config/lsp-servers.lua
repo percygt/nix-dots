@@ -11,22 +11,22 @@ return {
   clojure_lsp = {},
   clangd = {},
   nushell = {},
-  -- nil_ls = {
-  --   settings = {
-  --     nil_ls = {
-  --       nix = {
-  --         flake = {
-  --           autoArchive = true,
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
+  nil_ls = {
+    settings = {
+      nil_ls = {
+        nix = {
+          flake = {
+            autoArchive = true,
+          },
+        },
+      },
+    },
+  },
   nixd = {
     cmd = { "nixd" },
-    -- on_init = function(client, _)
-    --   client.server_capabilities.semanticTokensProvider = nil
-    -- end,
+    on_init = function(client, _)
+      client.server_capabilities.semanticTokensProvider = nil
+    end,
   },
   volar = {
     init_options = {
