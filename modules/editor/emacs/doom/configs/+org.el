@@ -4,72 +4,8 @@
       org-archive-location (file-name-concat org-directory ".archive/%s::")
       org-agenda-files (list org-directory)
       +org-capture-notes-file "Inbox.org"
-      +org-capture-journal-file "Journal.org"
-      )
-
-(after! org
-  (load! "+org-modern.el")
-  (setq org-startup-folded nil ; do not start folded
-        org-link-frame-setup '((file . find-file));; Opens links to other org file in same frame (rather than splitting) org-tags-column 80 ; the column to the right to align tags
-        org-log-done 'time ; record the time when an element was marked done/checked
-        org-ellipsis " "
-        org-pretty-entities t
-        org-fold-catch-invisible-edits 'show-and-error
-        org-babel-min-lines-for-block-output 5 ; when to wrap results in #begin_example
-        org-return-follows-link nil  ; RET doesn't follow links
-        org-hide-emphasis-markers nil ; do show format markers
-        org-startup-with-inline-images t ; open buffers show inline images
-        org-babel-default-header-args:sh '((:results . "verbatim"))
-        org-todo-repeat-to-state t
-        pdf-annot-activate-created-annotations nil ; do not open annotations after creating them
-        org-duration-format (quote h:mm)) ; display clock times as hours only
-  )
-
-(use-package! org-journal
-  :defer t
-  :init
-  ;; org journal
-  (setq org-journal-dir (expand-file-name "journal" org-directory))
-  (setq org-journal-file-type 'daily)
-  (setq org-journal-file-format "%Y%m%d.org")
-  (setq org-journal-date-format "%A, %B %d %Y")
-  (setq org-extend-today-until 4)
-  :config
-  (setq org-journal-carryover-items ""))
-
-(use-package! org-appear
-  :hook
-  (org-mode . org-appear-mode)
-  :config
-  (setq org-appear-autoemphasis t)
-  (setq org-appear-autosubmarkers t)
-  (setq org-appear-autolinks t))
-
-(use-package! visual-fill-column
-  :config
-  (setq visual-fill-column-center-text t)
-  (setq visual-fill-column-width 100)
-  (setq visual-fill-column-center-text t))
-
-(use-package! writeroom-mode
-  :config
-  (setq writeroom-maximize-window nil
-        writeroom-mode-line nil
-        writeroom-global-effects nil ;; No need to have Writeroom do any of that silly stuff
-        writeroom-extra-line-spacing 3)
-  (setq writeroom-width visual-fill-column-width))
-
-(defun +aiz-org-mode-setup ()
-  (setq visual-fill-column-width 100
-        visual-fill-column-center-text t
-        display-fill-column-indicator nil
-        display-line-numbers nil)
-  (writeroom-mode t)
-  (visual-line-mode +1)
-  (auto-fill-mode 0)
-  (variable-pitch-mode))
-
-(add-hook 'org-mode-hook #'+aiz-org-mode-setup)
+      +org-capture-todo-file "Inbox.org"
+      +org-capture-journal-file "Inbox.org")
 
 (custom-set-faces!
   '(org-document-title :height 1.5)
@@ -87,3 +23,36 @@
   ;; way
   '(org-block :inherit fixed-pitch)
   '(org-code :inherit (shadow fixed-pitch)))
+
+(defun +aiz-org-mode-setup ()
+  (setq visual-fill-column-width 100
+        visual-fill-column-center-text t
+        display-fill-column-indicator nil
+        display-line-numbers nil)
+  (writeroom-mode t)
+  (visual-line-mode +1)
+  (auto-fill-mode 0)
+  (variable-pitch-mode)
+  )
+
+(after! org
+  (load! "+org-modern.el")
+  (load! "+org-capture.el")
+  (load! "+visual-fill-column.el")
+  (load! "+writeroom-mode.el")
+  (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
+  (setq org-startup-folded nil ; do not start folded
+        org-link-frame-setup '((file . find-file));; Opens links to other org file in same frame (rather than splitting) org-tags-column 80 ; the column to the right to align tags
+        org-log-done 'time ; record the time when an element was marked done/checked
+        org-ellipsis " "
+        org-pretty-entities t
+        org-fold-catch-invisible-edits 'show-and-error
+        org-babel-min-lines-for-block-output 5 ; when to wrap results in #begin_example
+        org-return-follows-link nil  ; RET doesn't follow links
+        org-hide-emphasis-markers nil ; do show format markers
+        org-startup-with-inline-images t ; open buffers show inline images
+        org-babel-default-header-args:sh '((:results . "verbatim"))
+        org-todo-repeat-to-state t
+        pdf-annot-activate-created-annotations nil ; do not open annotations after creating them
+        org-duration-format (quote h:mm)) ; display clock times as hours only
+  )

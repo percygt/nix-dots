@@ -78,7 +78,6 @@
        doom
        doom-dashboard
        hl-todo
-       ;; indent-guides
        modeline
        ophints
        (ligatures +extra)

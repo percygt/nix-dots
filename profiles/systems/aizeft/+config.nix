@@ -54,9 +54,9 @@
     utils = {
       uad.enable = true;
     };
-    # app = {
-    #   librewolf.enable = true;
-    # };
+    app = {
+      zen-browser.enable = true;
+    };
   };
 
 }

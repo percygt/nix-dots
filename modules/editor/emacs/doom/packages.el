@@ -19,32 +19,16 @@
 ;;; ui
 
 (package! beacon)
-(package! keycast)
 (package! base16-theme)
-(package! org-super-agenda)
 (package! writeroom-mode)
 (package! highlight-indent-guides)
-(package! hide-mode-line)
-(package! modus-themes)
-(package! mixed-pitch)
 (package! page-break-lines)
 (package! spacious-padding)
 
 ;;; org
-(package! org-appear)
-(package! org-cliplink)
-(package! org-ql)
-(package! orgtbl-aggregate)
-(package! page-break-lines)
-(package! poporg)
-(package! gnuplot)
-(package! citar)
-(package! all-the-icons)
-(package! citar-org-roam)
-(package! nursery
-  :recipe (:host github :repo "chrisbarrett/nursery"
-           :files ("lisp/*.el")))
-(package! ox-gfm)
+(package! doct
+  :recipe (:host github :repo "progfolio/doct")
+  :pin "5cab660dab653ad88c07b0493360252f6ed1d898")
 (package! org-modern)
 
 ;;; completion

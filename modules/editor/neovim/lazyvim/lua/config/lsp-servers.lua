@@ -1,4 +1,3 @@
-local private = require("config.private")
 return {
   jsonls = {},
   terraformls = {

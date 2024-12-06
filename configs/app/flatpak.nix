@@ -64,29 +64,22 @@
       }
     ];
     packages = [
-      "io.github.zen_browser.zen"
       "com.valvesoftware.Steam"
-      "org.gnome.Shotwell"
-      "org.audacityteam.Audacity "
-      "com.github.geigi.cozy"
-      "com.obsproject.Studio"
-      "org.kde.kdenlive"
-      "com.rafaelmardojai.SharePreview"
-      "org.mozilla.Thunderbird"
-      "com.github.huluti.Coulr"
-      "com.github.muriloventuroso.pdftricks"
-      "com.slack.Slack"
-      "io.beekeeperstudio.Studio"
-      "io.github.dvlv.boxbuddyrs"
-      "io.github.shiftey.Desktop"
-      "md.obsidian.Obsidian"
-      "org.gnome.Calculator"
-      "org.gnome.Firmware"
-      "org.gnome.Snapshot"
       "org.libreoffice.LibreOffice"
       "org.telegram.desktop"
-      "page.codeberg.Imaginer.Imaginer"
       "info.febvre.Komikku"
+      # "io.github.zen_browser.zen"
+      # "org.audacityteam.Audacity "
+      # "com.github.geigi.cozy"
+      # "com.obsproject.Studio"
+      # "org.kde.kdenlive"
+      # "com.rafaelmardojai.SharePreview"
+      # "org.mozilla.Thunderbird"
+      # "com.github.muriloventuroso.pdftricks"
+      # "com.slack.Slack"
+      # "io.beekeeperstudio.Studio"
+      # "md.obsidian.Obsidian"
+      # "page.codeberg.Imaginer.Imaginer"
     ];
   };
   fileSystems."/var/lib/flatpak".options = [ "exec" ];
@@ -96,7 +89,6 @@
     ".var/app/org.libreoffice.LibreOffice"
     ".var/app/org.telegram.desktop"
     ".var/app/info.febvre.Komikku"
-    ".var/app/com.github.PintaProject.Pinta"
-    ".var/app/io.github.zen_browser.zen"
+    # ".var/app/io.github.zen_browser.zen"
   ];
 }

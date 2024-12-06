@@ -21,6 +21,7 @@
     };
     home.packages = with pkgs; [
       # tui
+      tdf # Tui-based PDF viewer
       ttyper # Terminal-based typing test
       manga-tui # Terminal-based manga reader and downloader with image support
       fx # Terminal JSON viewer
@@ -30,7 +31,7 @@
       sshs # Terminal user interface for SSH.
       atac # based on well-known clients such as Postman, Insomnia
       stable.termscp # file transfer and explorer, with support for SCP/SFTP/FTP/S3
-      stable.visidata # interactive multitool for tabular data #NOTE:dependency libolm tagged as insecure package
+      stable.visidata # interactive multitool for tabular data NOTE: dependency libolm tagged as insecure package
       wtf # personal information dashboard
       termshark
       bluetuith

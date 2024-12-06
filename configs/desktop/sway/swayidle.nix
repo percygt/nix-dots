@@ -6,7 +6,7 @@
 }:
 let
   g = config._base;
-  loginctl = "${pkgs.systemd}/bin/loginctl";
+  # loginctl = "${pkgs.systemd}/bin/loginctl";
   swaymsg = "${g.desktop.sway.package}/bin/swaymsg";
   swaylock = "${lib.getExe config.programs.swaylock.package}";
 in
@@ -27,10 +27,14 @@ in
             ];
             text = ''
               if [ -f "$HOME/.local/share/pomo" ]; then pomo start || true; fi
-              ${swaymsg} 'reload'
+              ${swaymsg} 'output * dpms on'
             '';
           }
         );
+      }
+      {
+        event = "unlock";
+        command = "pkill -SIGUSR1 swaylock";
       }
       {
         event = "before-sleep";
@@ -38,7 +42,7 @@ in
       }
       {
         event = "lock";
-        command = swaylock;
+        command = "${swaylock} --grace 0";
       }
     ];
 
@@ -46,11 +50,12 @@ in
       {
         timeout = 15 * 60;
         command = "${swaymsg} 'output * dpms off'";
-        resumeCommand = "${swaymsg} 'reload' && ${swaymsg} 'output * dpms on'";
+        resumeCommand = "${swaymsg} 'output * dpms on'";
       }
       {
         timeout = 45 * 60;
-        command = "${loginctl} lock-session";
+        # command = "${loginctl} lock-session";
+        command = swaylock;
       }
     ];
   };

@@ -1,8 +1,6 @@
-
-(load! "+bindings.el")
-(load! "+evil.el")
+;;; +init.el -*- lexical-binding: t; -*-
+(load! "+keymaps.el")
 (load! "+ui.el")
-(load! "+modus.el")
 (load! "+dired.el")
 (load! "+completion.el")
 (load! "+minibuffer.el")

@@ -85,7 +85,6 @@
         "formatters": {
           "ignoreComments": true
         },
-
         "workspace": {
           "checkThirdParty": "Disable"
         },
@@ -110,7 +109,6 @@
           ]
         },
         "completion": {
-          "showWord": "Disable",
           "callSnippet": "Replace"
         },
         "diagnostics": {

@@ -61,6 +61,6 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://github.com/vinceliuice/Colloid-kde-theme";
     license = licenses.gpl3Only;
     platforms = platforms.all;
-    maintainers = [ maintainers.romildo ];
+    maintainers = [ ];
   };
 }

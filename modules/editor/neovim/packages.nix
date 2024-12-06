@@ -132,6 +132,7 @@
         gitlint
         terraform-ls
         actionlint
+        vscode-extensions.vadimcn.vscode-lldb.adapter
       ];
     };
   };

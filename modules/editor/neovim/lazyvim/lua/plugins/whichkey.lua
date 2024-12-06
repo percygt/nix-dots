@@ -30,7 +30,6 @@ return {
         { "<leader>p", [["_dP]], mode = "x" },
         { "<leader>`", group = "Helper", icon = "" },
         { "<leader>n", group = "Multicursor", icon = "" },
-        -- { "<leader>o", group = "Org", icon = "" },
         { "<leader>D", icon = "󰇘" },
         { "<leader>c", group = "Code" },
         { "<leader>g", group = "Git" },

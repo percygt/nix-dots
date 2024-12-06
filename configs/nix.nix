@@ -9,6 +9,7 @@
     package = lib.mkIf homeMarker pkgs.nix;
     settings = {
       experimental-features = [
+        "pipe-operators"
         "nix-command"
         "flakes"
         "ca-derivations"

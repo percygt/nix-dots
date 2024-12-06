@@ -13,11 +13,15 @@
 
   home.packages = with pkgs; [
     gnome-calculator
-    gnome-podcasts
-    foliate
-    # gimp
+    gnome-firmware
+    shotwell
+    snapshot
     font-manager
+    coulr
     pinta
+    boxbuddy
+    # foliate
+    # gimp
     # logseq
     # lutris
   ];
