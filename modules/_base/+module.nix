@@ -60,7 +60,7 @@ in
       default.package = lib.mkOption {
         description = "Default shell package";
         type = lib.types.package;
-        default = cfg.shell.fish.package;
+        default = cfg.shell.nushell.package;
       };
       fish.package = lib.mkOption {
         description = "Fish shell package";

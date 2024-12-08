@@ -3,8 +3,8 @@
 (setq org-directory orgDirectory
       org-archive-location (file-name-concat org-directory ".archive/%s::")
       org-agenda-files (list org-directory)
-      +org-capture-notes-file "Inbox.org"
-      +org-capture-todo-file "Inbox.org"
+      +org-capture-notes-file "Notes.org"
+      +org-capture-todo-file "Todo.org"
       +org-capture-journal-file "Inbox.org")
 
 (custom-set-faces!

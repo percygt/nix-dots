@@ -63,6 +63,11 @@ return {
         prompt_position = "top",
         preview_cutoff = 120,
       }
+      d.mappings.i["<esc>"] = actions.close
+      d.mappings.i["<C-u>"] = false
+      d.mappings.i["<C-d>"] = false
+      d.mappings.i["<C-j>"] = actions.move_selection_next
+      d.mappings.i["<C-k>"] = actions.move_selection_previous
       p.find_files = {
         previewer = false,
         theme = "dropdown",
@@ -76,10 +81,6 @@ return {
           n = {
             ["l"] = actions.select_default,
           },
-          i = {
-            ["<C-j>"] = actions.move_selection_next,
-            ["<C-k>"] = actions.move_selection_previous,
-          },
         },
       }
       p.git_files = {
@@ -92,10 +93,6 @@ return {
       }
       p.buffers = {
         mappings = {
-          i = {
-            ["<C-j>"] = actions.move_selection_next,
-            ["<C-k>"] = actions.move_selection_previous,
-          },
           n = {
             ["<C-d>"] = actions.delete_buffer + actions.move_to_top,
             ["l"] = actions.select_default,

@@ -13,6 +13,11 @@ return {
       },
     },
   },
+  -- -- Playground treesitter utility
+  {
+    "nvim-treesitter/playground",
+    cmd = "TSPlaygroundToggle",
+  },
   {
     "nvim-treesitter/nvim-treesitter-context",
     opts = function(_, opts)

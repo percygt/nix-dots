@@ -17,8 +17,6 @@ return {
           pcall(vim.keymap.del, "n", "<leader><tab>]")
           pcall(vim.keymap.del, "n", "<leader><tab>d")
           pcall(vim.keymap.del, "n", "<leader><tab>[")
-          -- pcall(vim.keymap.del, "n", "<c-_>")
-          pcall(vim.keymap.del, "n", "<c-/>")
         end,
       })
     end,

@@ -18,10 +18,10 @@ let
   swayCfg = config.wayland.windowManager.sway;
   mod = swayCfg.config.modifier;
   doomconfig = pkgs.writers.writeBash "doomconfig" ''
-    emacs ${moduleEmacs}/doom -T "DoomConfig"
+    emacs ${moduleEmacs}/doom -T "Doom Config"
   '';
   emacsquickfiles = pkgs.writers.writeBash "emacsquickfiles" ''
-    emacs --eval "(progn (dirvish-quick-access))" -T "QuickFiles"
+    emacs --eval "(progn (dirvish-quick-access))" -T "Quick Files"
   '';
   emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
     emacs ${g.orgDirectory}/Inbox.org  -T "Notes"
@@ -35,11 +35,11 @@ in
     (lib.mkIf (swayCfg.enable && cfg.enable) {
       wayland.windowManager.sway.config = {
         keybindings = {
-          "${mod}+q" = "exec ddapp -p '[app_id=emacs title=^QuickFiles$]' -c ${emacsquickfiles}";
-          "${mod}+n" = "exec ddapp -p '[app_id=emacs title=^Notes$]' -c ${emacsnotes}";
-          "${mod}+Shift+e" = "exec ddapp -p '[app_id=emacs title=^DoomConfig$]' -c ${doomconfig}";
+          "${mod}+q" = "exec ddapp -a 'emacs' -t 'Quick.' -c ${emacsquickfiles}";
+          "${mod}+n" = "exec ddapp -a 'emacs' -t 'Notes' -c ${emacsnotes}";
+          "${mod}+Shift+e" = "exec ddapp -a 'emacs' -t 'Doom.' -c ${doomconfig}";
           "${mod}+Shift+c" = "exec org-capture";
-          "${mod}+e" = "exec ddapp -p '[app_id=emacs title=^Agenda$]' -c ${emacsagenda}";
+          "${mod}+e" = "exec ddapp -a 'emacs' -t 'Agenda' -c ${emacsagenda}";
         };
       };
     })

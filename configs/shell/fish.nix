@@ -6,7 +6,6 @@
 }:
 let
   g = config._base;
-  c = config.modules.themes.colors;
   fishShellPkg = g.shell.fish.package;
 in
 {

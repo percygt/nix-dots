@@ -2,12 +2,22 @@
   programs.mpv = {
     enable = true;
     config = {
-      gapless-audio = "no";
+      profile = "gpu-hq";
+      force-window = true;
+      ytdl-format = "bestvideo+bestaudio";
       sub-auto = "all";
       osd-on-seek = "msg-bar";
       hwdec = "auto-safe";
     };
   };
+  wayland.windowManager.sway.config.window.commands = [
+    {
+      criteria = {
+        instance = "rpiplay";
+      };
+      command = "fullscreen enable";
+    }
+  ];
   xdg.mimeApps.defaultApplications =
     let
       mpv = [ "mpv.desktop" ];

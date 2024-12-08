@@ -1,4 +1,0 @@
-* Inbox
-** TODO sasas
-
-[[file:~/data/nix-dots/modules/editor/emacs/doom/configs/+org-capture.el::(add-to-list 'org-capture-templates]]

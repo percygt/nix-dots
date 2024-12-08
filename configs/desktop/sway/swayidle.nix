@@ -6,7 +6,6 @@
 }:
 let
   g = config._base;
-  # loginctl = "${pkgs.systemd}/bin/loginctl";
   swaymsg = "${g.desktop.sway.package}/bin/swaymsg";
   swaylock = "${lib.getExe config.programs.swaylock.package}";
 in
@@ -54,7 +53,6 @@ in
       }
       {
         timeout = 45 * 60;
-        # command = "${loginctl} lock-session";
         command = swaylock;
       }
     ];

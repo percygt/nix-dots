@@ -2,6 +2,7 @@ return {
   {
     "Bekaboo/dropbar.nvim",
     event = "LazyFile",
+    -- enabled = false,
     dependencies = {
       "nvim-telescope/telescope-fzf-native.nvim",
     },
@@ -33,7 +34,6 @@ return {
           kinds = { dir_icon = "" },
         },
         menu = {
-
           preview = false,
           keymaps = {
             -- Navigate back to the parent menu.
