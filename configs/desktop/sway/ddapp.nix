@@ -24,10 +24,14 @@
           if [ -n "$win_title" ]; then
             title=" title=$win_title"
             visible_floating_win=$(swaymsg -t get_tree |
-              jq -r "recurse(.nodes[]?).floating_nodes[] | select(.app_id != \"$win_app_id\" and (.name|test(\"$win_title\")|not) and .visible) | .app_id + \",\" + .name")
+              jq -r "recurse(.nodes[]?).floating_nodes[] | \
+                select(.app_id != \"$win_app_id\" and (.name|test(\"$win_title\")|not) and .visible) | \
+                .app_id + \",\" + .name")
           else
             visible_floating_win=$(swaymsg -t get_tree |
-              jq -r "recurse(.nodes[]?).floating_nodes[] | select(.app_id != \"$win_app_id\" and .visible) | .app_id + \",\" + .name")
+              jq -r "recurse(.nodes[]?).floating_nodes[] | \
+                select(.app_id != \"$win_app_id\" and .visible) | \
+                .app_id + \",\" + .name")
           fi
           if [ -n "$visible_floating_win" ]; then
             for win in $visible_floating_win; do
