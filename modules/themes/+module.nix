@@ -4,6 +4,9 @@
   pkgs,
   ...
 }:
+let
+  c = config.modules.themes.colors;
+in
 {
   options.modules.themes = {
 
@@ -92,7 +95,13 @@
       package = lib.mkOption {
         description = "QT theme package";
         type = lib.types.package;
-        default = pkgs.colloid-kvantum;
+        default = pkgs.colloid-kvantum.override {
+          border = c.base04;
+          bg = c.base01;
+          bg-dark = c.base00;
+          bg-accent = c.base10;
+          bg-black = c.base11;
+        };
       };
     };
 
@@ -105,7 +114,13 @@
       package = lib.mkOption {
         description = "GTK theme package";
         type = lib.types.package;
-        default = pkgs.colloid-gtk-theme-catppuccin;
+        default = pkgs.colloid-gtk-theme-catppuccin.override {
+          border = c.base04;
+          bg = c.base01;
+          bg-dark = c.base00;
+          bg-accent = c.base10;
+          bg-black = c.base11;
+        };
       };
     };
 

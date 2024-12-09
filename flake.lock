@@ -292,11 +292,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733588480,
-        "narHash": "sha256-2b1y6C9E8uQfl0PnhEFWQctFJ0zGcN9Ff7VpjzXh/wo=",
+        "lastModified": 1733674853,
+        "narHash": "sha256-V1DSHrN8cRMZ0N5pB1gTEw41nWkX9Qtmze1Tp9zYgcM=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "8668b46808a0117cda69acf9d61d17ac2ab374b5",
+        "rev": "af0d36350388a62326d8dd78952bd99767a32fb3",
         "type": "github"
       },
       "original": {
@@ -715,22 +715,6 @@
       }
     },
     "foot": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1732431691,
-        "narHash": "sha256-K+FBZIvJWVcoTEAIFOAYmxSmtFGnw/JJ+1JXtvp0Ado=",
-        "ref": "refs/heads/master",
-        "rev": "256749c6d0ae0a26ad93c973e2e5623213807bdb",
-        "revCount": 6435,
-        "type": "git",
-        "url": "https://codeberg.org/dnkl/foot"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://codeberg.org/dnkl/foot"
-      }
-    },
-    "foot_2": {
       "flake": false,
       "locked": {
         "lastModified": 1732431691,
@@ -1194,22 +1178,6 @@
         "type": "github"
       }
     },
-    "keepmenu_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1720193052,
-        "narHash": "sha256-QufdabJX4ISUu+Pntj3sEp1jByRhozXUNTaIjTyXlQA=",
-        "owner": "percygt",
-        "repo": "keepmenu",
-        "rev": "6d41ce956a11259df935b34f82dc5b0c5e7fd2ea",
-        "type": "github"
-      },
-      "original": {
-        "owner": "percygt",
-        "repo": "keepmenu",
-        "type": "github"
-      }
-    },
     "naersk": {
       "inputs": {
         "nixpkgs": [
@@ -1245,11 +1213,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733530506,
-        "narHash": "sha256-x8slAzUe1gopASFNhnHO9DmWXvnF7u27YMSwTmIY8bU=",
+        "lastModified": 1733618008,
+        "narHash": "sha256-8MM4WF1AapF9QWDJhoXGLcEKrLE3S75QA74YEQt0A18=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "3930a71f90bacc656e8bdf19cc0faa9ebf10353a",
+        "rev": "b75d6c354368841ce4291142b79882362e574f61",
         "type": "github"
       },
       "original": {
@@ -1288,11 +1256,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1733517821,
-        "narHash": "sha256-QjFVx/zMyutuW1TWzOKEe5cY7YGqvPkRhi9wQHY52Yo=",
+        "lastModified": 1733614558,
+        "narHash": "sha256-JcI4DL5fn0KGX5TxoSLIxwTfi6rikRHsG/gI/7SUDIg=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "517ecb85f58ed6ac8b4d5443931612e75e7c7dc2",
+        "rev": "4fcc5cd34a75df9a3088c83dc1a87aa6e37051e1",
         "type": "github"
       },
       "original": {
@@ -1388,23 +1356,19 @@
     "nix-sources": {
       "inputs": {
         "emacs-overlay": "emacs-overlay",
-        "foot": "foot",
-        "keepmenu": "keepmenu",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-your-shell": "nix-your-shell",
         "nixpkgs": "nixpkgs",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable",
-        "pykeepass": "pykeepass",
-        "swayfx-unwrapped": "swayfx-unwrapped",
-        "zen-browser": "zen-browser"
+        "swayfx-unwrapped": "swayfx-unwrapped"
       },
       "locked": {
-        "lastModified": 1733589031,
-        "narHash": "sha256-wQa1gw8F71Tsyf5vQS+iVm8tUACKjcq6TnpTciafr1U=",
+        "lastModified": 1733680590,
+        "narHash": "sha256-qsR+Wyd5VbgKk11Tka0NZ0uv0DWCfMkqaqekIU9wnHs=",
         "owner": "percygt",
         "repo": "nix-sources",
-        "rev": "4487d6c5e3f3bdb8c50bbbcb13b9e66d8368a035",
+        "rev": "f08cdc4254e07ff6a5a9d4084341d2a0dd924a4c",
         "type": "github"
       },
       "original": {
@@ -1416,16 +1380,16 @@
     "nix-sources_2": {
       "inputs": {
         "emacs-overlay": "emacs-overlay_2",
-        "foot": "foot_2",
-        "keepmenu": "keepmenu_2",
+        "foot": "foot",
+        "keepmenu": "keepmenu",
         "neovim-nightly-overlay": "neovim-nightly-overlay_2",
         "nix-your-shell": "nix-your-shell_2",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-master": "nixpkgs-master_2",
         "nixpkgs-stable": "nixpkgs-stable_2",
-        "pykeepass": "pykeepass_2",
+        "pykeepass": "pykeepass",
         "swayfx-unwrapped": "swayfx-unwrapped_2",
-        "zen-browser": "zen-browser_2"
+        "zen-browser": "zen-browser"
       },
       "locked": {
         "lastModified": 1733243432,
@@ -1719,11 +1683,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1733588544,
-        "narHash": "sha256-FCE/q0JA3VYtrtKy+fFxwxu1EB6HektN8LLewsDm5yg=",
+        "lastModified": 1733680532,
+        "narHash": "sha256-/TgTkIJBrylD5pZwqKopKYDOyimUnfk1HzacOaZi/GY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "b5879c104e9e424af2c6153870c84ef22a9804e2",
+        "rev": "b693631e7a8953f00f3a250991900b79961473b5",
         "type": "github"
       },
       "original": {
@@ -2073,22 +2037,6 @@
     "pykeepass": {
       "flake": false,
       "locked": {
-        "lastModified": 1733249443,
-        "narHash": "sha256-ai1q2tJXGKi6SS/AuXmiOsEY4Uys+/8ki4OdXrTkx+M=",
-        "owner": "libkeepass",
-        "repo": "pykeepass",
-        "rev": "396c48db294921cc68821b2639cd4a1bface9e1e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "libkeepass",
-        "repo": "pykeepass",
-        "type": "github"
-      }
-    },
-    "pykeepass_2": {
-      "flake": false,
-      "locked": {
         "lastModified": 1733173902,
         "narHash": "sha256-vCzm6LJd3+MoqKXQy1EMocryi68sOrpTd+9hk7kyNwg=",
         "owner": "libkeepass",
@@ -2130,7 +2078,7 @@
         "vscode-server": "vscode-server",
         "wayland-pipewire-idle-inhibit": "wayland-pipewire-idle-inhibit",
         "xremap": "xremap",
-        "zen-browser": "zen-browser_3"
+        "zen-browser": "zen-browser_2"
       }
     },
     "rust-overlay": {
@@ -2660,27 +2608,6 @@
     "zen-browser": {
       "inputs": {
         "nixpkgs": [
-          "nix-sources",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1727721329,
-        "narHash": "sha256-QYlWZwUSwrM7BuO+dXclZIwoPvBIuJr6GpFKv9XKFPI=",
-        "owner": "MarceColl",
-        "repo": "zen-browser-flake",
-        "rev": "e6ab73f405e9a2896cce5956c549a9cc359e5fcc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "MarceColl",
-        "repo": "zen-browser-flake",
-        "type": "github"
-      }
-    },
-    "zen-browser_2": {
-      "inputs": {
-        "nixpkgs": [
           "nix-stash",
           "nix-sources",
           "nixpkgs"
@@ -2700,7 +2627,7 @@
         "type": "github"
       }
     },
-    "zen-browser_3": {
+    "zen-browser_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"

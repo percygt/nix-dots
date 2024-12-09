@@ -38,8 +38,8 @@
     pentesting = {
       wireless.enable = true;
       malware.enable = true;
-      proxies.enable = true;
       traffic.enable = true;
+      # proxies.enable = true;
     };
     terminal = {
       xfce4-terminal.enable = true;

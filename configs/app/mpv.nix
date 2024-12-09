@@ -10,14 +10,6 @@
       hwdec = "auto-safe";
     };
   };
-  wayland.windowManager.sway.config.window.commands = [
-    {
-      criteria = {
-        instance = "rpiplay";
-      };
-      command = "fullscreen enable";
-    }
-  ];
   xdg.mimeApps.defaultApplications =
     let
       mpv = [ "mpv.desktop" ];

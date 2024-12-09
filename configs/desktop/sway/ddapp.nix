@@ -8,59 +8,57 @@
         height=100ppt
         width=100ppt
         params="[]"
+        visible_floating_win=""
         while getopts h:w:a:l:t:c: flag
         do
             case "''${flag}" in
                 h) height=''${OPTARG};;
                 w) width=''${OPTARG};;
-                a) win_app_id=''${OPTARG} ;;
-                l) win_class=''${OPTARG} ;;
-                t) win_title=''${OPTARG} ;;
+                a) WIN_APP_ID=''${OPTARG} ;;
+                l) WIN_CLASS=''${OPTARG} ;;
+                t) WIN_TITLE=''${OPTARG} ;;
                 c) command=''${OPTARG};;
                 *) notify-send "You f*ck up" "''${OPTARG}" ;;
             esac
         done
-        if [ -n "$win_app_id" ]; then
-          if [ -n "$win_title" ]; then
-            title=" title=$win_title"
+        if [ -n "$WIN_APP_ID" ]; then
+          if [ -n "$WIN_TITLE" ]; then
+            title=" title=$WIN_TITLE"
             visible_floating_win=$(swaymsg -t get_tree |
-              jq -r "recurse(.nodes[]?).floating_nodes[] | \
-                select(.app_id != \"$win_app_id\" and (.name|test(\"$win_title\")|not) and .visible) | \
-                .app_id + \",\" + .name")
+              jq -r 'recurse(.nodes[]?).floating_nodes[] |
+                select((((.app_id=="$WIN_APP_ID") and (.name|startswith("$WIN_TITLE")))|not) and .visible) |
+                .app_id + "," + (.name|sub(" .*$"; ""))')
           else
             visible_floating_win=$(swaymsg -t get_tree |
-              jq -r "recurse(.nodes[]?).floating_nodes[] | \
-                select(.app_id != \"$win_app_id\" and .visible) | \
-                .app_id + \",\" + .name")
+              jq -r 'recurse(.nodes[]?).floating_nodes[] |
+                select((.app_id!="$WIN_APP_ID") and .visible) |
+                .app_id + "," + (.name|sub(" .*$"; ""))')
           fi
           if [ -n "$visible_floating_win" ]; then
             for win in $visible_floating_win; do
-              notify-send $win
               a=$(echo "$win" | cut -d',' -f1)
-              b=$(echo "$win" | cut -d',' -f2)
-              t=$(echo "$b" | awk '{print $1}')
-              swaymsg "[app_id=$a title=$t] scratchpad show"
+              b=$(echo "$win" | cut -d',' -f2 | awk '{print $1}')
+              swaymsg "[app_id=$a title=$b] scratchpad show"
             done
           fi
-          params="[app_id=$win_app_id$title]"
-        elif [ -n "$win_class" ]; then
-          if [ -n "$win_title" ]; then
-            title=" title=$win_title"
+          params="[app_id=$WIN_APP_ID$title]"
+        elif [ -n "$WIN_CLASS" ]; then
+          if [ -n "$WIN_TITLE" ]; then
+            title=" title=$WIN_TITLE"
             visible_floating_win=$(swaymsg -t get_tree |
-              jq -r "recurse(.nodes[]?).floating_nodes[] | select(.class != \"$win_class\" and (.name|test(\"$win_title\")|not) and .visible) | .class + \",\" + .name")
+              jq -r 'recurse(.nodes[]?).floating_nodes[] | select(.app_id != "$WIN_CLASS" and (.name|startswith("$WIN_TITLE")|not) and .visible) | .class + "," + (.name|sub(" .*$"; ""))')
           else
             visible_floating_win=$(swaymsg -t get_tree |
-              jq -r "recurse(.nodes[]?).floating_nodes[] | select(.app_id != \"$win_class\" and .visible) | .class + \",\" + .name")
+              jq -r 'recurse(.nodes[]?).floating_nodes[] | select(.app_id != "$WIN_CLASS" and .visible) | .class + "," + (.name|sub(" .*$"; ""))')
           fi
           if [ -n "$visible_floating_win" ]; then
             for win in $visible_floating_win; do
               c=$(echo "$win" | cut -d',' -f1)
-              b=$(echo "$win" | cut -d',' -f2)
-              t=$(echo "$b" | awk '{print $1}')
-              swaymsg "[class=$c title=$t] scratchpad show"
+              b=$(echo "$win" | cut -d',' -f2 | awk '{print $1}')
+              swaymsg "[class=$c title=$b] scratchpad show"
             done
           fi
-          params="[class=$win_class$title]"
+          params="[class=$WIN_CLASS$title]"
         fi
 
         if swaymsg "$params scratchpad show"

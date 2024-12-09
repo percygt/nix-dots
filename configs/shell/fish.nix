@@ -87,30 +87,37 @@ in
             };
           }
         ];
-        shellInit =
+        shellInit = lib.concatStringsSep "\n" (
           # fish
-          ''
-            function starship_transient_prompt_func
-               starship module character
-            end
+          lib.optionals (g.shell.default.package == fishShellPkg) [
+            ''
+              function fish_user_key_bindings
+                  fish_default_key_bindings -M insert
+                  fish_vi_key_bindings --no-erase insert
+              end
+            ''
+          ]
+          ++ [
+            ''
+              function starship_transient_prompt_func
+                 starship module character
+              end
 
-            # Change previous prompts right side
-            function starship_transient_rprompt_func
-                echo -ne '\033[0;34m'(${pkgs.coreutils}/bin/date "+%I:%M:%S") '\033[0;32m<'
-            end
+              # Change previous prompts right side
+              function starship_transient_rprompt_func
+                  echo -ne '\033[0;34m'(${pkgs.coreutils}/bin/date "+%I:%M:%S") '\033[0;32m<'
+              end
 
-            # ensure starship vars are set
-            set -gx STARSHIP_CONFIG "${config.xdg.configHome}/starship.toml"
+              # ensure starship vars are set
+              set -gx STARSHIP_CONFIG "${config.xdg.configHome}/starship.toml"
 
-            function fish_user_key_bindings
-                fish_default_key_bindings -M insert
-                fish_vi_key_bindings --no-erase insert
-            end
-            set fish_cursor_default     block      blink
-            set fish_cursor_insert      line       blink
-            set fish_cursor_replace_one underscore blink
-            set fish_cursor_visual      block
-          '';
+              set fish_cursor_default     block      blink
+              set fish_cursor_insert      line       blink
+              set fish_cursor_replace_one underscore blink
+              set fish_cursor_visual      block
+            ''
+          ]
+        );
         shellAliases = {
           ls = "${lib.getExe config.programs.eza.package} --long";
           ll = "ls --group-directories-first --group --header --binary --icons";

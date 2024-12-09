@@ -24,7 +24,6 @@
         nodePackages.pnpm
         # nodePackages.neovim
         vscode-extensions.vadimcn.vscode-lldb.adapter
-        tree-sitter
         fswatch
         gnumake
         cmake
