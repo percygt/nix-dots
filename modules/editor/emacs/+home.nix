@@ -35,11 +35,11 @@ in
     (lib.mkIf (swayCfg.enable && cfg.enable) {
       wayland.windowManager.sway.config = {
         keybindings = {
-          "${mod}+q" = "exec ddapp -a 'emacs' -t 'Quick.' -c ${emacsquickfiles}";
-          "${mod}+n" = "exec ddapp -a 'emacs' -t 'Notes' -c ${emacsnotes}";
-          "${mod}+Shift+e" = "exec ddapp -a 'emacs' -t 'Doom.' -c ${doomconfig}";
+          "${mod}+q" = "exec ddapp -t 'emacs' -n 'Quick.' -c ${emacsquickfiles}";
+          "${mod}+n" = "exec ddapp -t 'emacs' -n 'Notes' -c ${emacsnotes}";
+          "${mod}+Shift+e" = "exec ddapp -t 'emacs' -n 'Doom.' -c ${doomconfig}";
           "${mod}+Shift+c" = "exec org-capture";
-          "${mod}+e" = "exec ddapp -a 'emacs' -t 'Agenda' -c ${emacsagenda}";
+          "${mod}+e" = "exec ddapp -t 'emacs' -n 'Agenda' -c ${emacsagenda}";
         };
       };
     })

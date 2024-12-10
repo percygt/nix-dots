@@ -35,7 +35,7 @@ in
         "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
         "${mod}+Space" = "exec swaync-client -t -sw";
         "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
-        "${mod}+w" = "exec ddapp -a 'foot-ddterm' -c ${foot-ddterm}";
+        "${mod}+w" = "exec ddapp -t 'foot-ddterm' -c ${foot-ddterm}";
         "${mod}+Return" = "exec ${lib.getExe g.terminal.default.package}";
         "${mod}+s" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
         "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";

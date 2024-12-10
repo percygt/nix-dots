@@ -3,70 +3,63 @@
   home.packages = [
     (pkgs.writers.writeBashBin "ddapp" { }
       #  dropdown/scratchpad app
-      #bash
+      # bash
       ''
         height=100ppt
         width=100ppt
-        params="[]"
-        visible_floating_win=""
-        while getopts h:w:a:l:t:c: flag
+        while getopts h:w:t:n:c: flag
         do
             case "''${flag}" in
                 h) height=''${OPTARG};;
                 w) width=''${OPTARG};;
-                a) WIN_APP_ID=''${OPTARG} ;;
-                l) WIN_CLASS=''${OPTARG} ;;
-                t) WIN_TITLE=''${OPTARG} ;;
+                t) target=''${OPTARG} ;;
+                n) name=''${OPTARG} ;;
                 c) command=''${OPTARG};;
                 *) notify-send "You f*ck up" "''${OPTARG}" ;;
             esac
         done
-        if [ -n "$WIN_APP_ID" ]; then
-          if [ -n "$WIN_TITLE" ]; then
-            title=" title=$WIN_TITLE"
-            visible_floating_win=$(swaymsg -t get_tree |
-              jq -r 'recurse(.nodes[]?).floating_nodes[] |
-                select((((.app_id=="$WIN_APP_ID") and (.name|startswith("$WIN_TITLE")))|not) and .visible) |
-                .app_id + "," + (.name|sub(" .*$"; ""))')
-          else
-            visible_floating_win=$(swaymsg -t get_tree |
-              jq -r 'recurse(.nodes[]?).floating_nodes[] |
-                select((.app_id!="$WIN_APP_ID") and .visible) |
-                .app_id + "," + (.name|sub(" .*$"; ""))')
-          fi
-          if [ -n "$visible_floating_win" ]; then
-            for win in $visible_floating_win; do
-              a=$(echo "$win" | cut -d',' -f1)
-              b=$(echo "$win" | cut -d',' -f2 | awk '{print $1}')
-              swaymsg "[app_id=$a title=$b] scratchpad show"
-            done
-          fi
-          params="[app_id=$WIN_APP_ID$title]"
-        elif [ -n "$WIN_CLASS" ]; then
-          if [ -n "$WIN_TITLE" ]; then
-            title=" title=$WIN_TITLE"
-            visible_floating_win=$(swaymsg -t get_tree |
-              jq -r 'recurse(.nodes[]?).floating_nodes[] | select(.app_id != "$WIN_CLASS" and (.name|startswith("$WIN_TITLE")|not) and .visible) | .class + "," + (.name|sub(" .*$"; ""))')
-          else
-            visible_floating_win=$(swaymsg -t get_tree |
-              jq -r 'recurse(.nodes[]?).floating_nodes[] | select(.app_id != "$WIN_CLASS" and .visible) | .class + "," + (.name|sub(" .*$"; ""))')
-          fi
-          if [ -n "$visible_floating_win" ]; then
-            for win in $visible_floating_win; do
-              c=$(echo "$win" | cut -d',' -f1)
-              b=$(echo "$win" | cut -d',' -f2 | awk '{print $1}')
-              swaymsg "[class=$c title=$b] scratchpad show"
-            done
-          fi
-          params="[class=$WIN_CLASS$title]"
-        fi
-
-        if swaymsg "$params scratchpad show"
-        then
-            swaymsg "$params resize set $height $width , move position center"
+        nodes=$(swaymsg -t get_tree | jq -r 'recurse(.nodes[]?).floating_nodes[]')
+        if [ -n "$name" ]; then
+          program_data=$( echo $nodes |
+            jq "select((.app_id==\"$target\" or .window_properties.class==\"$target\") and (.name|test(\"$name\")))" )
         else
-            swaymsg "for_window $params 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
-            exec $command
+          program_data=$( echo $nodes |
+            jq "select(.app_id==\"$target\" or .window_properties.class==\"$target\")" )
+        fi
+        if [[ "$program_data" ]]; then
+            id=$( echo "$program_data" | jq ".id" | head -n 1)
+            focused=$( echo "$program_data" | jq ".focused" | head -n 1)
+            params="[con_id=$id]"
+            visible_floating_win=$(echo $nodes |
+              jq -r "select(((.id == \"$id\")|not) and .visible) | .id")
+            if [[ "$focused" == "true" ]]; then
+              swaymsg "$params move window to scratchpad"
+            else
+              if [ -n "$visible_floating_win" ]; then
+                for id in $visible_floating_win; do
+                  swaymsg "[con_id=$id] move window to scratchpad"
+                done
+              fi
+              swaymsg "$params move window to workspace current"
+              swaymsg "$params focus"
+              swaymsg "$params resize set $height $width , move position center"
+            fi
+        else
+            if [ -n "$name" ]; then
+              swaymsg "for_window [app_id=$target title=$name] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
+              swaymsg "for_window [class=$target title=$name] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
+            else
+              swaymsg "for_window [app_id=$target] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
+              swaymsg "for_window [class=$target] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
+            fi
+            swaymsg exec $command
+            visible_floating_win=$(echo $nodes |
+              jq -r "select(.visible) | .id")
+            if [ -n "$visible_floating_win" ]; then
+              for id in $visible_floating_win; do
+                swaymsg "[con_id=$id] move window to scratchpad"
+              done
+            fi
         fi
       ''
     )
