@@ -16,10 +16,7 @@ check:
 backup-to-tmp path="":
   sudo borgmatic extract --archive latest --path {{ path }} --destination /tmp
 
-rebuild-pre:
-  git add *.nix
-
-rebuild config="os" update="": rebuild-pre
+rebuild config="os" update="":
 	nh {{ config }} switch {{ update }} -- --accept-flake-config --show-trace
 
 update-input input:
@@ -27,7 +24,6 @@ update-input input:
 
 rebuild-all update="":
   just rebuild os {{update}} && just rebuild home
-  doom sync
 
 rebuild-up:
   just rebuild-all -u

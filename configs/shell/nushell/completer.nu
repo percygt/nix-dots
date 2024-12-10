@@ -3,12 +3,9 @@ let fish_completer = {|spans: list<string>|
     | from tsv --flexible --noheaders --no-infer
     | rename value description
 }
-
-$env.config = ($env.config?
-| default {}
-| merge { completions: { external: { completer: $fish_completer } } })
-
-let prev_completer = $env.config?.completions?.external?.completer? | default echo
+let zoxide_completer = {|spans|
+    $spans | skip 1 | zoxide query -l ...$in | lines | where {|x| $x != $env.PWD}
+}
 
 let carapace_completer = {|spans: list<string>|
   let completion = carapace $spans.0 nushell ...$spans
@@ -18,14 +15,13 @@ let carapace_completer = {|spans: list<string>|
         return $parsed_completion
       }
     }
-    do $prev_completer $spans
 }
 
-let next_completer = {|spans: list<string>|
+let external_completer = {|spans: list<string>|
   let expanded_alias = scope aliases
     | where name == $spans.0
     | get -i 0.expansion
-  # overwrite
+
   let spans = if $expanded_alias != null {
     $spans
       | skip 1
@@ -33,14 +29,14 @@ let next_completer = {|spans: list<string>|
   } else {
     $spans
   }
-  if $spans.0 in [__zoxide_z __zoxide_zi] {
-    $spans | skip 1 | zoxide query -l ...$in | lines | where $it != $env.PWD
-  } else if $spans.0 == zoxide and $spans.1? == remove {
-    $spans | get 2 | zoxide query -l $in | lines | where $it != $env.PWD
-  } else {
-    do $prev_completer $spans
-  }
+
+  match $spans.0 {
+      # carapace completions are incorrect for nu
+      nu => $fish_completer
+      __zoxide_z | __zoxide_zi => $zoxide_completer
+      _ => $carapace_completer
+  } | do $in $spans
 }
 $env.config = ($env.config?
   | default {}
-  | merge { completions: { external: { completer: $next_completer } } })
+  | merge { completions: { external: { completer: $external_completer } } })

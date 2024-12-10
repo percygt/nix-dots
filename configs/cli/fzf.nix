@@ -8,12 +8,11 @@ let
   c = config.modules.themes.colors.withHashtag;
   fzfrc = pkgs.writeText "fzfrc" ''
     --cycle
-    --pointer="> "
+    --pointer="│",
     --marker="●"
     --separator="─"
     --prompt="  "
     --scrollbar="▌▐"
-    --layout=reverse
     --info=right
     --border-label=" Result "
     --color=bg:-1,bg+:${c.base02}

@@ -54,9 +54,6 @@
     utils = {
       uad.enable = true;
     };
-    app = {
-      zen-browser.enable = true;
-    };
   };
 
 }
