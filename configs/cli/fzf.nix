@@ -6,9 +6,11 @@
 }:
 let
   c = config.modules.themes.colors.withHashtag;
-  fzfrc = pkgs.writeText "fzfrc" ''
+in
+{
+  home.sessionVariables.FZF_DEFAULT_OPTS_FILE = pkgs.writeText "fzfrc" ''
     --cycle
-    --pointer=" │"
+    --pointer="│"
     --marker="●"
     --separator="─"
     --prompt="  "
@@ -24,9 +26,6 @@ let
     --color=pointer:${c.base09},marker:${c.base09},prompt:${c.base09}
     --color=spinner:${c.base16}
   '';
-in
-{
-  home.sessionVariables.FZF_DEFAULT_OPTS_FILE = "${fzfrc}";
   programs.fzf = {
     enable = true;
     tmux.enableShellIntegration = true;
