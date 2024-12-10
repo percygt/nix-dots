@@ -8,12 +8,13 @@ let
   c = config.modules.themes.colors.withHashtag;
   fzfrc = pkgs.writeText "fzfrc" ''
     --cycle
-    --pointer="│",
+    --pointer=" │"
     --marker="●"
     --separator="─"
     --prompt="  "
     --scrollbar="▌▐"
     --info=right
+    --border-label-pos=0:bottom
     --border-label=" Result "
     --color=bg:-1,bg+:${c.base02}
     --color=fg:${c.base04},fg+:${c.base05}
@@ -25,24 +26,6 @@ let
   '';
 in
 {
-  home.file.".config/fzfrc".text = ''
-    --cycle
-    --pointer="> "
-    --marker="●"
-    --separator="─"
-    --prompt="  "
-    --scrollbar="▌▐"
-    --layout=reverse
-    --info=right
-    --border-label=" Result "
-    --color=bg:-1,bg+:${c.base02}
-    --color=fg:${c.base04},fg+:${c.base05}
-    --color=hl:${c.base16},hl+:${c.base16}
-    --color=border:${c.base04},gutter:${c.base00}
-    --color=info:${c.base09},separator:${c.base04}
-    --color=pointer:${c.base09},marker:${c.base09},prompt:${c.base09}
-    --color=spinner:${c.base16}
-  '';
   home.sessionVariables.FZF_DEFAULT_OPTS_FILE = "${fzfrc}";
   programs.fzf = {
     enable = true;

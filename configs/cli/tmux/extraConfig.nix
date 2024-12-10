@@ -2,6 +2,7 @@
   pkgs,
   config,
   username,
+  homeDirectory,
   ...
 }:
 let
@@ -13,6 +14,7 @@ let
     sed -i 's|fish	:\[fish\] <defunct>|fish	:|g' "$1"
     sed -i ':a;N;$!ba;s|\[fish\] <defunct>\n||g' "$1"
   '';
+  g = config._base;
   tp = pkgs.stable.tmuxPlugins;
 in
 {
@@ -45,7 +47,7 @@ in
       # tmuxplugin-tmux-switcher
       # ---------------------
 
-      set -g @tmux-switcher-find-base "${config.home.homeDirectory}/data:1:4,${config.home.homeDirectory}:1:1"
+      set -g @tmux-switcher-find-base "${g.dataDirectory}:1:4,${homeDirectory}:1:1"
       set -g @tmux-switcher-extras "find"
       unbind ,
       set -g @tmux-switcher-bind ","
