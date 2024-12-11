@@ -105,6 +105,7 @@ return {
     Lightbulb = "",
     LineLeft = "▏",
     LineMiddle = "│",
+    LineRight = "▕",
     List = "",
     Lock = "",
     NewFile = "",

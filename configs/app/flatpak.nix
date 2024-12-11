@@ -66,6 +66,8 @@
     packages = [
       "com.valvesoftware.Steam"
       "org.libreoffice.LibreOffice"
+      "io.github.zen_browser.zen"
+
       # "org.audacityteam.Audacity "
       # "com.github.geigi.cozy"
       # "com.obsproject.Studio"
@@ -84,5 +86,6 @@
   modules.core.persist.userData.directories = [
     ".var/app/com.valvesoftware.Steam"
     ".var/app/org.libreoffice.LibreOffice"
+    ".var/app/io.github.zen_browser.zen"
   ];
 }

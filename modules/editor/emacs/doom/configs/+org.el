@@ -37,6 +37,9 @@
 
 (after! org
   (load! "+org-modern.el")
+  (load! "+org-journal.el")
+  (load! "+org-capture-doct.el")
+  (load! "+org-capture-prettify.el")
   (load! "+org-capture.el")
   (load! "+visual-fill-column.el")
   (load! "+writeroom-mode.el")

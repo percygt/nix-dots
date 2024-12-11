@@ -10,7 +10,7 @@ in
 {
   home.sessionVariables.FZF_DEFAULT_OPTS_FILE = pkgs.writeText "fzfrc" ''
     --cycle
-    --pointer="│"
+    --pointer="▕"
     --marker="●"
     --separator="─"
     --prompt="  "

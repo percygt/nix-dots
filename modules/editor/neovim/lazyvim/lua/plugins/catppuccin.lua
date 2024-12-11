@@ -30,6 +30,7 @@ return {
         CursorLineFold = { bg = c.base01 },
         TelescopeSelection = { fg = c.base05, bg = c.base02 },
         TelescopeMatching = { fg = c.base09 },
+        TelescopeNormal = { fg = c.base04 },
         MatchParen = { fg = c.base13, bold = true, bg = "NONE" },
         CmpGhostText = { fg = c.base01 },
       },

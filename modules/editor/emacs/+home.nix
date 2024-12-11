@@ -27,7 +27,7 @@ let
     emacs ${g.orgDirectory}/Inbox.org  -T "Notes"
   '';
   emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
-    emacs --eval '(progn (org-agenda nil "r"))' -T "Agenda"
+    emacsclient -c -e '(progn (org-agenda nil "r"))' -F '((name . "Agenda"))'
   '';
 in
 {
@@ -44,6 +44,12 @@ in
       };
     })
     (lib.mkIf cfg.enable {
+      services.emacs = {
+        enable = true;
+        package = cfg.finalPackage;
+        socketActivation.enable = true;
+      };
+
       home = {
         shellAliases = {
           doom-install = "${EMACSDIR}/bin/doom install --no-env --no-hooks";

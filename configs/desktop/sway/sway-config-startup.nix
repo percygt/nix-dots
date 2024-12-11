@@ -12,7 +12,7 @@
     #   command = "emacs --fg-daemon";
     #   always = true;
     # }
-    { command = "systemctl --user start wlsunset"; }
+    # { command = "systemctl --user start wlsunset"; }
     { command = "autotiling"; }
     {
       command = "tmux start-server";

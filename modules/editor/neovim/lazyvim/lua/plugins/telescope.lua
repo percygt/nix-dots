@@ -51,7 +51,7 @@ return {
       local d = opts.defaults
       local p = opts.pickers
       d.prompt_prefix = " " .. icons.ui.Telescope .. "  "
-      d.selection_caret = " " .. icons.ui.LineMiddle .. " "
+      d.selection_caret = " " .. icons.ui.LineRight .. " "
       d.path_display = { "filename_first" }
       d.previewer = false
       d.file_ignore_patterns = { "node_modules", "package-lock.json" }

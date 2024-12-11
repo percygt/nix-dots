@@ -72,7 +72,6 @@ in
         format = "[$symbol]($style)";
       };
       directory.substitutions = {
-        "~/data" = " ";
         "~/windows" = "󰖳 ";
       };
       git_branch = {
