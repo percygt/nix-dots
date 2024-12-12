@@ -1,4 +1,0 @@
-* Inbox
-** TODO asjask
-
-[[file:~/data/nix-dots/modules/editor/emacs/doom/configs/+org.el::(after! org]]

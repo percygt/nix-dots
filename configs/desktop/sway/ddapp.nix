@@ -31,7 +31,7 @@
             focused=$( echo "$program_data" | jq ".focused" | head -n 1)
             params="[con_id=$id]"
             visible_floating_win=$(echo $nodes |
-              jq -r "select(((.id == \"$id\")|not) and .visible) | .id")
+              jq -r "select(((.id == \"$id\")|not) and .visible and (.sticky|not)) | .id")
             if [[ "$focused" == "true" ]]; then
               swaymsg "$params move window to scratchpad"
             else

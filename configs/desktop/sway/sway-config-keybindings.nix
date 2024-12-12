@@ -71,8 +71,8 @@ in
         "${mod}+Shift+Space" = "floating toggle";
         "${mod}+Shift+r" = "reload";
 
-        "Ctrl+Alt+l" = "workspace next";
-        "Ctrl+Alt+h" = "workspace prev";
+        "${mod}+Shift+l" = "workspace next";
+        "${mod}+Shift+h" = "workspace prev";
 
         "${mod}+Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";
         "Ctrl+Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png";

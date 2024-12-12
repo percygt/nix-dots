@@ -2,9 +2,7 @@
   programs.mpv = {
     enable = true;
     config = {
-      profile = "gpu-hq";
-      force-window = true;
-      ytdl-format = "bestvideo+bestaudio";
+      gapless-audio = "no";
       sub-auto = "all";
       osd-on-seek = "msg-bar";
       hwdec = "auto-safe";

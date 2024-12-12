@@ -19,13 +19,14 @@ in
             ''
               set fish_greeting # Disable greeting
               ${lib.getExe pkgs.nix-your-shell} fish | source
-              bind --mode insert \cr _fzf_search_history
-              bind \cr _fzf_search_history
-              fzf_configure_bindings --directory=\cf --variables=\ev --git_status=\cs --git_log=\cg
             ''
           ]
           ++ lib.optionals (g.shell.default.package == fishShellPkg) [
+            # fish
             ''
+              bind --mode insert \cr _fzf_search_history
+              bind \cr _fzf_search_history
+              fzf_configure_bindings --directory=\cf --variables=\ev --git_status=\cs --git_log=\cg
               check_directory_for_new_repository
             ''
           ]

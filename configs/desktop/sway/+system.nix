@@ -69,7 +69,8 @@ in
   services = {
     dbus = {
       enable = true;
-      implementation = "broker";
+      # implementation = "broker";
+      implementation = "dbus";
       packages = with pkgs; [
         dconf
         xfce.xfconf

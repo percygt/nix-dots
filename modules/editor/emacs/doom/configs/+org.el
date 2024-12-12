@@ -35,18 +35,24 @@
   (variable-pitch-mode)
   )
 
+(defun org-id-complete-link (&optional arg)
+  "Create an id: link using completion"
+  (concat "id:" (org-id-get-with-outline-path-completion)))
+
 (after! org
   (load! "+org-modern.el")
-  (load! "+org-journal.el")
+  (load! "+visual-fill-column.el")
+  (load! "+writeroom-mode.el")
+  (load! "+org-keywords.el")
+  (load! "+org-variables.el")
   (load! "+org-capture-doct.el")
   (load! "+org-capture-prettify.el")
   (load! "+org-capture.el")
-  (load! "+visual-fill-column.el")
-  (load! "+writeroom-mode.el")
   (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
+  (org-link-set-parameters "id" :complete 'org-id-complete-link)
+  (map! :leader :desc "Open today's journal" "j" #'org-journal-open-current-journal-file)
   (setq org-startup-folded nil ; do not start folded
         org-link-frame-setup '((file . find-file));; Opens links to other org file in same frame (rather than splitting) org-tags-column 80 ; the column to the right to align tags
-        org-log-done 'time ; record the time when an element was marked done/checked
         org-ellipsis " "
         org-pretty-entities t
         org-fold-catch-invisible-edits 'show-and-error
@@ -54,8 +60,16 @@
         org-return-follows-link nil  ; RET doesn't follow links
         org-hide-emphasis-markers nil ; do show format markers
         org-startup-with-inline-images t ; open buffers show inline images
-        org-babel-default-header-args:sh '((:results . "verbatim"))
+        org-use-property-inheritance t
+        org-log-done 'time ; record the time when an element was marked done/checked
+        org-log-into-drawer t
+        org-cycle-emulate-tab nil
+        org-startup-folded 'content
         org-todo-repeat-to-state t
         pdf-annot-activate-created-annotations nil ; do not open annotations after creating them
+        org-journal-find-file #'find-file-other-window
+        org-startup-with-inline-images t
+        org-image-actual-width 600
+        org-babel-default-header-args:sh '((:results . "verbatim"))
         org-duration-format (quote h:mm)) ; display clock times as hours only
   )

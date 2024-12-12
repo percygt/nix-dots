@@ -23,9 +23,8 @@ in
     tst = "tailscale status";
     tsu = "sudo tailscale up --ssh --operator=$USER";
     tsd = "tailscale down";
-    ns = "nom shell";
-    nd = "nom develop";
-    nrs = "systemctl start --user nixos-rebuild.service";
+    noms = "nom shell";
+    nomd = "nom develop";
     swaytree = "swaymsg -t get_tree | nvim -R";
     swayinputs = "swaymsg -t get_inputs | nvim -R";
     swayoutputs = "swaymsg -t get_outputs | nvim -R";

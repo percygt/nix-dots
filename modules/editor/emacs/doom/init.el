@@ -39,7 +39,7 @@
 
 
        :lang
-       (org +dragndrop +roam2)
+       (org +journal +dragndrop +roam2)
        cc
        data
        emacs-lisp

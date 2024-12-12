@@ -27,6 +27,7 @@ in
             text = ''
               if [ -f "$HOME/.local/share/pomo" ]; then pomo start || true; fi
               ${swaymsg} 'output * dpms on'
+              ${swaymsg} 'reload'
             '';
           }
         );

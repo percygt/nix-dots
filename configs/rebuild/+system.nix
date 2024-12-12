@@ -38,16 +38,14 @@ in
       environment =
         config.nix.envVars
         // config.networking.proxy.envVars
-        // {
-          inherit (config.environment.sessionVariables) NIX_PATH SSH_AUTH_SOCK;
-        };
+        // config.environment.sessionVariables
+        // config.home-manager.users.${username}.home.sessionVariables;
       serviceConfig = {
         Type = "exec";
         User = "root";
       };
       script = # bash
         ''
-          FLAKE="${g.flakeDirectory}"
           stderr() { printf "%s\n" "$*" >&2; }
           if [ ! -d "$FLAKE" ] || [ ! -f "$FLAKE/flake.nix" ]; then
             stderr "Flake directory: $FLAKE is not valid"
@@ -66,9 +64,7 @@ in
             "nvd diff /run/current-system /tmp/nixos-configuration"
 
           su ${username} -c \
-            "nh home switch #${username}@${profile} \
-            --accept-flake-config \
-            || exit 1"
+            "nh home switch $FLAKE -- --accept-flake-config"
         '';
     };
   };

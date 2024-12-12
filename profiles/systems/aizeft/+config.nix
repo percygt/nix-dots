@@ -45,6 +45,7 @@
       xfce4-terminal.enable = true;
       tilix.enable = true;
       wezterm.enable = true;
+      # waveterm.enable = true;
     };
     virtualisation = {
       podman.enable = true;

@@ -16,6 +16,7 @@ let
     character.disabled = true;
     time.disabled = true;
   };
+  nu_scripts = "${pkgs.nu_scripts}/share/nu_scripts";
 in
 {
   programs.nushell = {
@@ -23,6 +24,12 @@ in
     package = nushellPkg;
     envFile.source = ./env.nu;
     configFile.source = ./config.nu;
+    extraConfig = ''
+      # custom-menus
+      use ${nu_scripts}/custom-menus/zoxide-menu.nu
+      # modules
+      use ${nu_scripts}/modules/nix/nix.nu *
+    '';
     extraEnv =
       #nu
       ''
