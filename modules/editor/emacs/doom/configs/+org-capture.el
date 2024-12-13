@@ -25,6 +25,17 @@
                           "SCHEDULED: %^{Schedule:}t"
                           "DEADLINE: %^{Deadline:}t"
                           "%i %a"))
+              ("Journal" :keys "j"
+               :icon ("nf-fa-sticky_note" :set "faicon" :color "yellow")
+               :file "Inbox.org"
+               :template "\n* %<%I:%M %p> - %^{Title} \n\n%?\n\n"
+               :clock-in t
+               :tree-type week
+               :clock-resume t
+               :datetree t
+               :jump-to-captured t
+               :immediate-finish t
+               )
               ("Note" :keys "n"
                :icon ("nf-fa-sticky_note" :set "faicon" :color "yellow")
                :file "Notes.org"
@@ -56,6 +67,30 @@
                :template ("* TODO %?"
                           "[[%:link][%:description]]"
                           "Captured on: %U"))
+              ("Interesting" :keys "i"
+               :icon ("nf-fa-eye" :set "faicon" :color "lcyan")
+               :file +org-capture-todo-file
+               :prepend t
+               :headline "Interesting"
+               :type entry
+               :template ("* TODO %{desc}%? :%{i-type}:"
+                          "%i %a")
+               :children (("Webpage" :keys "w"
+                           :icon ("nf-fa-globe" :set "faicon" :color "green")
+                           :desc "%(org-cliplink-capture) "
+                           :i-type "read:web")
+                          ("Article" :keys "a"
+                           :icon ("nf-fa-file_text_o" :set "faicon" :color "yellow")
+                           :desc ""
+                           :i-type "read:reaserch")
+                          ("Information" :keys "i"
+                           :icon ("nf-fa-info_circle" :set "faicon" :color "blue")
+                           :desc ""
+                           :i-type "read:info")
+                          ("Idea" :keys "I"
+                           :icon ("nf-md-chart_bubble" :set "mdicon" :color "silver")
+                           :desc ""
+                           :i-type "idea")))
               ("Project" :keys "p"
                :icon ("nf-oct-repo" :set "octicon" :color "silver")
                :prepend t

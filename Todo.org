@@ -1,0 +1,4 @@
+* Inbox
+** TODO asjaskasja
+
+[[file:~/data/nix-dots/modules/editor/emacs/doom/configs/+org-capture.el:::template ("* %{keyword} %?"]]

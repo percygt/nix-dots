@@ -7,6 +7,11 @@
       +org-capture-todo-file "Todo.org"
       +org-capture-journal-file "Inbox.org")
 
+(map! :after org
+      :leader
+      :prefix-map ("o" . "Org")
+      :desc "Org Capture" "c" #'org-capture)
+
 (custom-set-faces!
   '(org-document-title :height 1.5)
   '(org-ellipsis :foreground "DimGray" :height 0.6)
@@ -30,7 +35,7 @@
         display-fill-column-indicator nil
         display-line-numbers nil)
   (writeroom-mode t)
-  (visual-line-mode +1)
+  ;; (visual-line-mode +1)
   (auto-fill-mode 0)
   (variable-pitch-mode)
   )
@@ -41,13 +46,14 @@
 
 (after! org
   (load! "+org-modern.el")
-  (load! "+visual-fill-column.el")
+  ;; (load! "+visual-fill-column.el")
   (load! "+writeroom-mode.el")
   (load! "+org-keywords.el")
   (load! "+org-variables.el")
   (load! "+org-capture-doct.el")
   (load! "+org-capture-prettify.el")
   (load! "+org-capture.el")
+  (load! "+org-agenda.el")
   (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
   (org-link-set-parameters "id" :complete 'org-id-complete-link)
   (map! :leader :desc "Open today's journal" "j" #'org-journal-open-current-journal-file)

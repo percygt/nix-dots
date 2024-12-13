@@ -1,6 +1,5 @@
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "INPROG(i)" "PROJ(p)" "STORY(s)" "WAIT(w@/!)" "|" "DONE(d@/!)" "KILL(k@/!)")
-        (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)"))
+      '((sequence "TODO(t)" "NEXT(n)" "WAIT(w@/!)" "|" "DONE(d@/!)" "KILL(k@/!)"))
       ;; The triggers break down to the following rules:
 
       ;; - Moving a task to =KILLED= adds a =killed= tag

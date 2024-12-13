@@ -47,7 +47,7 @@
   "multicursors.nvim": { "branch": "main", "commit": "562809aaf203b4c65482a75199166d360f2b9298" },
   "neoconf.nvim": { "branch": "main", "commit": "8e41731147b31953baeec7e68f12adee8af1c4b9" },
   "neogen": { "branch": "main", "commit": "37dd095892e3f846418c465852f7b21f81d0f46c" },
-  "neogit": { "branch": "master", "commit": "40038473707c54a846bd11ecaf5933dd45858972" },
+  "neogit": { "branch": "master", "commit": "bd0c2d3429eac3e70dae42cfe913b44242da7132" },
   "neoscroll.nvim": { "branch": "master", "commit": "f957373912e88579e26fdaea4735450ff2ef5c9c" },
   "neotest": { "branch": "master", "commit": "6d3d22cdad49999ef774ebe1bc250a4994038964" },
   "neotest-golang": { "branch": "main", "commit": "148cf3145dfac42fe7ff21d7c96bce1a7802d7c1" },
