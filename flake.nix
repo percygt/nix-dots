@@ -82,6 +82,9 @@
     xremap.url = "github:xremap/nix-flake";
     xremap.inputs.nixpkgs.follows = "nixpkgs";
 
+    fenix.url = "github:nix-community/fenix";
+    fenix.inputs.nixpkgs.follows = "nixpkgs";
+
     nixd.url = "github:nix-community/nixd";
 
     impermanence.url = "github:nix-community/impermanence";

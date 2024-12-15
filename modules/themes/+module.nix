@@ -109,7 +109,7 @@ in
       name = lib.mkOption {
         description = "GTK theme name";
         type = lib.types.str;
-        default = "Colloid-Dark-Compact-Catppuccin";
+        default = "Colloid-Dark-Catppuccin";
       };
       package = lib.mkOption {
         description = "GTK theme package";

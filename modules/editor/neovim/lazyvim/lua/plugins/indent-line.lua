@@ -1,7 +1,28 @@
 return {
   {
+    "folke/snacks.nvim",
+    opts = {
+      indent = {
+        animate = {
+          enabled = false,
+        },
+        chunk = {
+          enabled = true,
+          char = {
+            corner_top = "╭",
+            corner_bottom = "╰",
+            horizontal = "─",
+            vertical = "│",
+            arrow = "─",
+          },
+        },
+      },
+    },
+  },
+  {
     "shellRaining/hlchunk.nvim",
-    lazt = true,
+    lazy = true,
+    enabled = false,
     opts = function()
       local c = require("config.colorscheme")
       return {

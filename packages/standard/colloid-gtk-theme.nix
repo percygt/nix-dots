@@ -19,13 +19,13 @@ let
 in
 stdenvNoCC.mkDerivation {
   inherit pname;
-  version = "2024-10-30";
+  version = "2024-12-14";
 
   src = fetchFromGitHub {
     owner = "vinceliuice";
     repo = "Colloid-gtk-theme";
-    rev = "2ef8de7aa6deffaa13d4078d7371c265589dc58b";
-    hash = "sha256-IFyTbi8cZwentnyurdXk2I/FdCzZCmobZHDKwNuPTQ0=";
+    rev = "b9f3d5200032242d808c93065e32f8dd7407ece4";
+    hash = "sha256-70HDn87acG0me+zbXk6AoGmakY6VLuawq1ubgGcRZVk=";
   };
 
   nativeBuildInputs = [
@@ -51,8 +51,7 @@ stdenvNoCC.mkDerivation {
     # opinionated install
     name= HOME="$TMPDIR" ./install.sh \
           --color dark \
-          --size compact \
-          --tweaks rimless ${scheme} \
+          --tweaks ${scheme} \
           --dest $out/share/themes
     jdupes --quiet --link-soft --recurse $out/share
     runHook postInstall

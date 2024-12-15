@@ -1,13 +1,12 @@
 {
   wayland.windowManager.sway.extraConfig = ''
     shadows enable
-    blur_radius 5
-    blur_passes 3
-    blur_noise 0.05
+    blur_radius 4
+    blur_passes 2
+    blur_noise 0.1
     blur_contrast 1
     blur enable
     corner_radius 12
-    default_dim_inactive 0.2
     scratchpad_minimize enable
     bindgesture swipe:4:right workspace prev
     bindgesture swipe:4:left workspace next

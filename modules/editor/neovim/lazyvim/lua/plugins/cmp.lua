@@ -1,6 +1,36 @@
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/coding.lua
 return {
   {
+    "saghen/blink.cmp",
+    -- enabled = false,
+    -- opts.signature = {
+    --   enabled = true,
+    -- }
+    opts = function(_, opts)
+      local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
+      opts.completion.menu.border = border
+      opts.completion.list = {
+        selection = "manual",
+      }
+      opts.completion.documentation.window = {
+        border = border,
+        winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+      }
+      opts.completion.ghost_text.enabled = false
+      opts.completion.menu.winhighlight = "Normal:Normal,FloatBorder:FloatBorder"
+      opts.keymap["<Tab>"] = {
+        "select_next",
+        LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
+        "fallback",
+      }
+      opts.keymap["<S-Tab>"] = {
+        "select_next",
+        "snippet_backward",
+        "fallback",
+      }
+    end,
+  },
+  {
     "hrsh7th/nvim-cmp",
     dependencies = {
       { "hrsh7th/cmp-path", enabled = false },
@@ -97,6 +127,7 @@ return {
   {
     "petertriho/cmp-git",
     "davidsierradz/cmp-conventionalcommits",
+    enabled = false,
     dependencies = {
       "hrsh7th/nvim-cmp",
     },
@@ -114,6 +145,7 @@ return {
   },
   {
     "hrsh7th/cmp-cmdline",
+    enabled = false,
     dependencies = { "hrsh7th/nvim-cmp" },
     event = "CmdlineEnter",
     config = function()

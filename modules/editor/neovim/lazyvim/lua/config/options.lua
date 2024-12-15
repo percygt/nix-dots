@@ -2,6 +2,9 @@ local g, opt = vim.g, vim.opt
 
 g.mapleader = " "
 
+g.lazyvim_picker = "telescope"
+g.lazyvim_blink_main = true
+
 opt.nu = true -- Show numberline
 opt.relativenumber = true -- Show number relative to the current cursor position
 

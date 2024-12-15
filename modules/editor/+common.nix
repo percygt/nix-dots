@@ -48,11 +48,13 @@ pkgs: with pkgs; [
   phpactor
 
   # rust
-  cargo
-  clippy
-  rustc
-  rustfmt
-  rust-analyzer
+  fenix.minimal.toolchain
+  rust-analyzer-nightly
+  # cargo
+  # clippy
+  # rustc
+  # rustfmt
+  # rust-analyzer
 
   # C, C++
   gcc

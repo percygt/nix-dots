@@ -31,8 +31,9 @@ return {
         TelescopeSelection = { fg = c.base05, bg = c.base02 },
         TelescopeMatching = { fg = c.base09 },
         TelescopeNormal = { fg = c.base04 },
+        SnacksIndent = { fg = c.base03 },
         MatchParen = { fg = c.base13, bold = true, bg = "NONE" },
-        CmpGhostText = { fg = c.base01 },
+        BlinkCmpDoc = { bg = c.base01 },
       },
       macchiato = function(colors)
         return {

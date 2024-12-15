@@ -25,33 +25,30 @@
                           "SCHEDULED: %^{Schedule:}t"
                           "DEADLINE: %^{Deadline:}t"
                           "%i %a"))
-              ("Journal" :keys "j"
-               :icon ("nf-fa-sticky_note" :set "faicon" :color "yellow")
+              ("j" :keys "j"
+               :icon ("nf-fa-calendar" :set "faicon" :color "pink")
                :file "Inbox.org"
-               :template "\n* %<%I:%M %p> - %^{Title} \n\n%?\n\n"
+               :template "\n* TODO %<%I:%M %p> | %^{Title}\n%i%?"
                :clock-in t
-               :tree-type week
                :clock-resume t
                :datetree t
-               :jump-to-captured t
-               :immediate-finish t
                )
               ("Note" :keys "n"
                :icon ("nf-fa-sticky_note" :set "faicon" :color "yellow")
                :file "Notes.org"
                :template ("* %?"
                           "%i %a"))
-              ("Journal" :keys "j"
-               :icon ("nf-fa-calendar" :set "faicon" :color "pink")
-               :type plain
-               :function (lambda ()
-                           (org-journal-new-entry t)
-                           (unless (eq org-journal-file-type 'daily)
-                             (org-narrow-to-subtree))
-                           (goto-char (point-max)))
-               :template "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
-               :jump-to-captured t
-               :immediate-finish t)
+              ;; ("Journal" :keys "j"
+              ;;  :icon ("nf-fa-calendar" :set "faicon" :color "pink")
+              ;;  :type plain
+              ;;  :function (lambda ()
+              ;;              (org-journal-new-entry t)
+              ;;              (unless (eq org-journal-file-type 'daily)
+              ;;                (org-narrow-to-subtree))
+              ;;              (goto-char (point-max)))
+              ;;  :template "** %(format-time-string org-journal-time-format)%^{Title}\n%i%?"
+              ;;  :jump-to-captured t
+              ;;  :immediate-finish t)
               ("Protocol" :keys "P"
                :icon ("nf-fa-link" :set "faicon" :color "blue")
                :file "Notes.org"

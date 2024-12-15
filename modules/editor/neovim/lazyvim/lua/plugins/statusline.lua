@@ -29,13 +29,13 @@ return {
         {
           function() return require("noice").api.status.command.get() end,
           cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-          color = function() return LazyVim.ui.fg("Statement") end,
+          color = function() return { fg = Snacks.util.color("Statement") } end,
         },
         -- stylua: ignore
         {
           function() return require("noice").api.status.mode.get() end,
           cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-          color = function() return LazyVim.ui.fg("Constant") end,
+          color = function() return { fg = Snacks.util.color("Constant") } end,
         },
         {
           "diagnostics",
@@ -71,12 +71,11 @@ return {
             end
           end,
         },
-
         -- stylua: ignore
         {
           function() return require("noice").api.status.search.get() end,
           cond = function() return package.loaded["noice"] and require("noice").api.status.search.has() end,
-          color = function() return LazyVim.ui.fg("Constant") end,
+          color = function() return { fg = Snacks.util.color("Constant") } end,
         },
         {
           "selectioncount",
@@ -90,17 +89,18 @@ return {
       }
 
       opts.sections.lualine_x = {
+        Snacks.profiler.status(),
         -- stylua: ignore
         {
           function() return "  " .. require("dap").status() end,
           cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-          color = function() return LazyVim.ui.fg("Debug") end,
+          color = function() return { fg = Snacks.util.color("Debug") } end,
         },
         -- stylua: ignore
         {
           require("lazy.status").updates,
           cond = require("lazy.status").has_updates,
-          color = function() return LazyVim.ui.fg("Special") end,
+          color = function() return { fg = Snacks.util.color("Special") } end,
         },
       }
       opts.sections.lualine_y = {
