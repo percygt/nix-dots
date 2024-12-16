@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    nur.repos.dagger.dagger
     duckdb
     teller # Cloud native secrets management for developers
     dive # A tool for exploring each layer in a docker image

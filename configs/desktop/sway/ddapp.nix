@@ -53,8 +53,9 @@
               swaymsg "for_window [class=$target] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
             fi
             swaymsg exec $command
+            export SCRATCHPAD_APPS="$app_id"
             visible_floating_win=$(echo $nodes |
-              jq -r "select(.visible) | .id")
+              jq -r "select(.visible and (.sticky|not)) | .id")
             if [ -n "$visible_floating_win" ]; then
               for id in $visible_floating_win; do
                 swaymsg "[con_id=$id] move window to scratchpad"

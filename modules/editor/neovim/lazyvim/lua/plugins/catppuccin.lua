@@ -19,7 +19,7 @@ return {
         WinSeparator = { fg = c.base0D },
         DropBarIconUISeparator = { fg = c.base16 },
         WinBar = { fg = c.base04 },
-        FloatBorder = { bg = "NONE", fg = c.base04 },
+        FloatBorder = { bg = "NONE", fg = c.base05 },
         TreesitterContext = { bg = "NONE", fg = c.base04 },
         TreesitterContextLineNumberBottom = { fg = c.base04, underline = true },
         TreesitterContextLineNumber = { fg = c.base04 },
