@@ -4,7 +4,6 @@
       org-archive-location (file-name-concat org-directory ".archive/%s::")
       org-agenda-files (list org-directory)
       +org-capture-notes-file "Notes.org"
-      +org-capture-todo-file "Todo.org"
       +org-capture-journal-file "Inbox.org")
 
 (map! :after org
@@ -15,14 +14,14 @@
 (custom-set-faces!
   '(org-document-title :height 1.5)
   '(org-ellipsis :foreground "DimGray" :height 0.6)
-  '(org-level-1 :inherit (outline-1 variable-pitch) :extend t :weight extra-bold :height 1.5)
-  '(org-level-2 :inherit (outline-2 variable-pitch) :extend t :weight bold :height 1.3)
-  '(org-level-3 :inherit (outline-3 variable-pitch) :extend t :weight bold :height 1.2)
-  '(org-level-4 :inherit (outline-4 variable-pitch) :extend t :weight bold :height 1.1)
-  '(org-level-5 :inherit (outline-5 variable-pitch) :extend t :weight semi-bold :height 1.1)
-  '(org-level-6 :inherit (outline-6 variable-pitch) :extend t :weight semi-bold :height 1.05)
-  '(org-level-7 :inherit (outline-7 variable-pitch) :extend t :weight semi-bold)
-  '(org-level-8 :inherit (outline-8 variable-pitch) :extend t :weight semi-bold)
+  '(org-level-1 :inherit (outline-1 variable-pitch) :extend t :weight bold :height 1.5)
+  '(org-level-2 :inherit (outline-2 variable-pitch) :extend t :height 1.1)
+  '(org-level-3 :inherit (outline-3 variable-pitch) :extend t :height 1.05)
+  '(org-level-4 :inherit (outline-4 variable-pitch) :extend t :height 1.0)
+  '(org-level-5 :inherit (outline-5 variable-pitch) :extend t :height 1.0)
+  '(org-level-6 :inherit (outline-6 variable-pitch) :extend t :height 1.0)
+  '(org-level-7 :inherit (outline-7 variable-pitch) :extend t)
+  '(org-level-8 :inherit (outline-8 variable-pitch) :extend t)
   '(org-block-begin-line :inherit fixed-pitch :height 0.8 :slant italic :background "unspecified")
   ;; Ensure that anything that should be fixed-pitch in org buffers appears that
   ;; way
@@ -46,7 +45,6 @@
 
 (after! org
   (load! "+org-modern.el")
-  ;; (load! "+visual-fill-column.el")
   (load! "+writeroom-mode.el")
   (load! "+org-keywords.el")
   (load! "+org-variables.el")

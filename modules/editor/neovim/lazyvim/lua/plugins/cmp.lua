@@ -1,37 +1,41 @@
--- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/coding.lua
 return {
   {
     "saghen/blink.cmp",
     -- enabled = false,
-    -- opts.signature = {
-    --   enabled = true,
-    -- }
     opts = function(_, opts)
       local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
-      opts.completion.menu.border = border
       opts.completion.list = {
-        selection = "manual",
+        selection = "auto_insert",
       }
+      opts.completion.documentation.auto_show = false
       opts.completion.documentation.window = {
         border = border,
-        winhighlight = "Normal:Normal,FloatBorder:FloatBorder",
+        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
       }
-      opts.completion.ghost_text.enabled = false
-      opts.completion.menu.winhighlight = "Normal:Normal,FloatBorder:FloatBorder"
+      opts.completion.menu.border = border
+      opts.completion.menu.winhighlight =
+        "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None"
+      opts.keymap["<C-l>"] = {
+        "snippet_forward",
+        "fallback",
+      }
+      opts.keymap["<C-h>"] = {
+        "snippet_backward",
+        "fallback",
+      }
       opts.keymap["<Tab>"] = {
         "select_next",
-        LazyVim.cmp.map({ "snippet_forward", "ai_accept" }),
         "fallback",
       }
       opts.keymap["<S-Tab>"] = {
         "select_next",
-        "snippet_backward",
         "fallback",
       }
     end,
   },
   {
     "hrsh7th/nvim-cmp",
+    enabled = false,
     dependencies = {
       { "hrsh7th/cmp-path", enabled = false },
       "FelipeLema/cmp-async-path",
