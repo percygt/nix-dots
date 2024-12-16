@@ -45,15 +45,8 @@
               swaymsg "$params resize set $height $width , move position center"
             fi
         else
-            if [ -n "$name" ]; then
-              swaymsg "for_window [app_id=$target title=$name] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
-              swaymsg "for_window [class=$target title=$name] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
-            else
-              swaymsg "for_window [app_id=$target] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
-              swaymsg "for_window [class=$target] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
-            fi
+            swaymsg "for_window [pid=$$] 'floating enable ; resize set $height $width ; move position center ; move to scratchpad ; scratchpad show'"
             swaymsg exec $command
-            export SCRATCHPAD_APPS="$app_id"
             visible_floating_win=$(echo $nodes |
               jq -r "select(.visible and (.sticky|not)) | .id")
             if [ -n "$visible_floating_win" ]; then
