@@ -13,6 +13,8 @@ key
 *bfg*
 *tmp
 test
+
+/.nrepl-port
 /.neoconf.json
 /.clj-kondo
 /.pre-commit-config.yaml

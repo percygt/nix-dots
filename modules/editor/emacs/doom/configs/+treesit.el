@@ -18,6 +18,7 @@
     (:orig-mode lua-mode :treesit-mode lua-ts-mode :org-src ("lua"))
     (:orig-mode css-mode :treesit-mode css-ts-mode :org-src ("css"))
     (:orig-mode go-mode :treesit-mode go-ts-mode :org-src ("go"))
+    (:orig-mode clojure-mode :treesit-mode clojure-ts-mode :org-src ("clj"))
     (:orig-mode csharp-mode :treesit-mode csharp-ts-mode :org-src ("csharp"))
     (:orig-mode dockerfile-mode :treesit-mode dockerfile-ts-mode :org-src ("dockerfile"))
     (:orig-mode java-mode :treesit-mode java-ts-mode :org-src ("java"))
@@ -54,5 +55,3 @@
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
 (add-to-list 'auto-mode-alist '("\\.y[a]?ml\\'" . yaml-ts-mode))
-
-

@@ -9,6 +9,9 @@ return {
   neocmake = {},
   clojure_lsp = {},
   clangd = {},
+  elixirls = {
+    cmd = { "elixir-ls" },
+  },
   nushell = {},
   nil_ls = {
     settings = {

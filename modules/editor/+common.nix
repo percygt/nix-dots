@@ -42,6 +42,10 @@ pkgs: with pkgs; [
   nil
   nixd
 
+  # Elixir
+  elixir
+  elixir_ls
+
   #php
   php.packages.php-cs-fixer
   php.packages.php-codesniffer

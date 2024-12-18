@@ -30,6 +30,7 @@
   :recipe (:host github :repo "progfolio/doct")
   :pin "5cab660dab653ad88c07b0493360252f6ed1d898")
 (package! org-modern)
+(package! org-ql)
 
 ;;; extra
 (package! lorem-ipsum)

@@ -18,10 +18,10 @@ return {
       modes = {
         n = {
           winhl = {
-            CursorLine = { bg = c.base01 },
-            CursorLineNr = { bg = c.base01, fg = c.base06, italic = true, bold = true },
-            CursorLineSign = { bg = c.base01 },
-            CursorLineFold = { bg = c.base01 },
+            CursorLine = { bg = c.base02 },
+            CursorLineNr = { bg = c.base02, fg = c.base06, italic = true, bold = true },
+            CursorLineSign = { bg = c.base02 },
+            CursorLineFold = { bg = c.base02 },
           },
         },
         no = {
@@ -90,10 +90,10 @@ return {
         },
         i = {
           winhl = {
-            CursorLine = { bg = c.base02 },
-            CursorLineNr = { bg = c.base02, fg = c.base03, italic = true, bold = true },
-            CursorLineSign = { bg = c.base02 },
-            CursorLineFold = { bg = c.base02 },
+            CursorLine = { bg = c.base01 },
+            CursorLineNr = { bg = c.base01, fg = c.base03, italic = true, bold = true },
+            CursorLineSign = { bg = c.base01 },
+            CursorLineFold = { bg = c.base01 },
           },
         },
       },

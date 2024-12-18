@@ -23,7 +23,7 @@
               :spawn_pos string?}})
 (cli-opts :id "emacs")
 (def cli-results (cli/parse-args *command-line-args* cli-opts))
-(prn ["It's" "me," "your" "wacky" "subconscious!"])
+
 (def opts (:opts cli-results))
 
 (def args (:args cli-results))

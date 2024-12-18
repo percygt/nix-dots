@@ -48,7 +48,6 @@ in
         "${mod}+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu}";
         "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C | xargs swaymsg exec --";
         "${mod}+Shift+p" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
-        "${mod}+f" = "exec $toggle_window --id yazi -- foot --app-id=yazi fish -c yazi ~";
 
         "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
         "${mod}+Tab" = "workspace back_and_forth";

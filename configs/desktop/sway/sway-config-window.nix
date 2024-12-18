@@ -14,7 +14,6 @@ in
           "org.gnome.Loupe"
           "org.keepassxc.KeePassXC"
           "btop"
-          "yazi"
           "backup"
           "system-software-update"
           "page.codeberg.Imaginer.Imaginer"

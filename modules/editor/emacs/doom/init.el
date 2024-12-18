@@ -43,6 +43,7 @@
        cc
        data
        emacs-lisp
+       (clojure +lsp)
        (java +lsp)
        (javascript +lsp)
        (json +lsp)

@@ -58,7 +58,7 @@
   (p/process ["swaymsg" (str/join " " (cons "exec" args))]))
 
 (defn focus []
-  (p/sh ["swaymsg" (str criteria " focus, move window to workspace current, " position-cmds)]))
+  (p/sh ["swaymsg" (str criteria " move window to workspace current, focus, " position-cmds)]))
 
 (defn hide []
   (p/sh ["swaymsg" (str criteria (if (:kill opts) " kill" " move scratchpad"))]))

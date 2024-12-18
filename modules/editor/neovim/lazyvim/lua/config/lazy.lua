@@ -28,6 +28,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.dot" },
     -- language support
     { import = "lazyvim.plugins.extras.lang.astro" },
+    { import = "lazyvim.plugins.extras.lang.elixir" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.vue" },
     { import = "lazyvim.plugins.extras.lang.svelte" },
@@ -41,7 +42,6 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.cmake" },
     { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.docker" },
-    { import = "lazyvim.plugins.extras.editor.navic" },
     { import = "plugins" },
     { "folke/persistence.nvim", enabled = false },
     { "folke/tokyonight.nvim", enabled = false },
