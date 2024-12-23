@@ -43,7 +43,7 @@
         // "calt": false
     },
     // The default font size for text in the editor
-    "buffer_font_size": 16,
+    "buffer_font_size": 18,
     // The weight of the editor font in standard CSS units from 100 to 900.
     "buffer_font_weight": 400,
     // Set the buffer's line height.
@@ -57,7 +57,7 @@
     //           "custom": 2
     //         },
     "buffer_line_height": {
-        "custom": 1.7
+        "custom": 1.75
     },
     // The name of a font to use for rendering text in the UI
     // You can set this to ".SystemUIFont" to use the system font
