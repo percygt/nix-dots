@@ -2,17 +2,15 @@ local keymap = require("utils")
 local silent = { silent = true }
 local nmap = keymap.nmap
 local vmap = keymap.vmap
-local imap = keymap.imap
 local xmap = keymap.xmap
-local cmap = keymap.cmap
 local nvmap = keymap.nvmap
 
 vmap("Q", "<nop>", silent)
 -- Quit
 nmap("QQ", ":q!<cr>", silent)
 -- Save
-nmap("WW", ":w!<cr>", silent)
-imap("WW", "<esc>:w!<cr>", silent)
+-- nmap("WW", ":w!<cr>", silent)
+-- imap("WW", "<esc>:w!<cr>", silent)
 -- Move back to the beginning of line
 nvmap("<C-b>", "^")
 -- Move forward to the end of line

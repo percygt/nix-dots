@@ -80,6 +80,8 @@ in
           return {
           	enable_wayland = true,
           	enable_kitty_graphics = true,
+            initial_cols = 189,
+            initial_rows = 33,
             check_for_updates = false,
           	color_scheme = "Syft",
           	font = wezterm.font("${f.name}", { weight = "DemiBold" }),

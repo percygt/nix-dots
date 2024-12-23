@@ -55,10 +55,11 @@
                 done
               fi
             fi
-            # swaymsg "$params move window to workspace current, focus, resize set height $height ppt width $width ppt, move position center"
             swaymsg "$params move window to workspace current"
             swaymsg "$params focus"
-            swaymsg "$params floating enable, resize set $height ppt $width ppt, move position center"
+            if [[ "$height" == 100 ]]; then
+              swaymsg "$params resize set $height ppt $width ppt, move position center"
+            fi
           fi
         else
           if [ -n "$name" ]; then

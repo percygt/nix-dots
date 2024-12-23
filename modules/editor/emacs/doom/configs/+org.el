@@ -3,7 +3,9 @@
 (setq org-directory orgDirectory
       org-archive-location (file-name-concat org-directory ".archive/%s::")
       org-agenda-files (list org-directory)
-      +org-capture-notes-file "Notes.org"
+      +org-capture-notes-file "Inbox.org"
+      +org-capture-todo-file "Home.org"
+      +org-capture-projects-file "Projects.org"
       +org-capture-journal-file "Inbox.org")
 
 (map! :after org

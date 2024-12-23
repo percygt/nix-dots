@@ -69,6 +69,8 @@
 
 (debug cli-results)
 
+(set-defaults)
+
 (if-let [node (get-node)]
   (if (:focused node)
     (hide)

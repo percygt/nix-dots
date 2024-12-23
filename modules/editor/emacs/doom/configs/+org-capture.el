@@ -40,8 +40,7 @@
 (setq org-capture-templates
       (doct `(("Tasks" :keys "t"
                :icon ("nf-oct-inbox" :set "octicon" :color "yellow")
-               :file "Home.org"
-               :headline "Home"
+               :file +org-capture-todo-file
                :type entry
                :prepend t
                :template ("* TODO %?"
@@ -72,7 +71,7 @@
 
               ("Interesting" :keys "i"
                :icon ("nf-fa-eye" :set "faicon" :color "lcyan")
-               :file "Inbox.org"
+               :file +org-capture-notes-file
                :prepend t
                :type entry
                :template ("* %? :interest:%{i-type}:"
@@ -94,7 +93,7 @@
                            :i-type "read:info")
                           ("Idea" :keys "I"
                            :icon ("nf-md-chart_bubble" :set "mdicon" :color "silver")
-                           :extra "%^G"
+                           :extra ""
                            :i-type "idea")))
 
               ("Project" :keys "p"
@@ -102,16 +101,48 @@
                :prepend t
                :type entry
                :headline "Inbox"
-               :template ("* %{keyword} %?"
-                          "%i %a")
-               :custom (:keyword "")
-               :children (("Task" :keys "t"
-                           :icon ("nf-cod-checklist" :set "codicon" :color "green")
-                           :keyword "TODO"
+               :template ("* %{time-or-todo} %?"
+                          "%i"
+                          "%a")
+               :file ""
+               :custom (:time-or-todo "")
+               :children (("Project-local todo" :keys "t"
+                           :icon ("nf-oct-checklist" :set "octicon" :color "green")
+                           :time-or-todo "TODO"
                            :file +org-capture-project-todo-file)
-                          ("Note" :keys "n"
+                          ("Project-local note" :keys "n"
                            :icon ("nf-fa-sticky_note" :set "faicon" :color "yellow")
-                           :keyword "%U"
-                           :file +org-capture-project-notes-file))))))
+                           :time-or-todo "%U"
+                           :file +org-capture-project-notes-file)
+                          ("Project-local changelog" :keys "c"
+                           :icon ("nf-fa-list" :set "faicon" :color "blue")
+                           :time-or-todo "%U"
+                           :heading "Unreleased"
+                           :file +org-capture-project-changelog-file)))
+              ("\tCentralised project templates"
+               :keys "o"
+               :type entry
+               :prepend t
+               :template ("* %{time-or-todo} %?"
+                          "%i"
+                          "%a")
+               :children (("Project todo"
+                           :keys "t"
+                           :prepend nil
+                           :time-or-todo "TODO"
+                           :heading "Tasks"
+                           :file +org-capture-central-project-todo-file)
+                          ("Project note"
+                           :keys "n"
+                           :time-or-todo "%U"
+                           :heading "Notes"
+                           :file +org-capture-central-project-notes-file)
+                          ("Project changelog"
+                           :keys "c"
+                           :time-or-todo "%U"
+                           :heading "Unreleased"
+                           :file +org-capture-central-project-changelog-file)))
+
+              )))
 
 (add-hook 'org-capture-mode-hook 'delete-other-windows)

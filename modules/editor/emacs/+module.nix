@@ -6,11 +6,14 @@
 }:
 let
   cfg = config.modules.editor.emacs;
-  extraPackages = (import ./extraPackages.nix { inherit pkgs; }) ++ [
-    (pkgs.emacs-lsp-booster.overrideAttrs (_: {
-      nativeCheckInputs = [ emacs ]; # override emacs pkg for tests/bytecode_test
-    }))
-  ];
+  extraPackages =
+    (import ../+common.nix pkgs)
+    ++ (import ./extraPackages.nix pkgs)
+    ++ [
+      (pkgs.emacs-lsp-booster.overrideAttrs (_: {
+        nativeCheckInputs = [ emacs ]; # override emacs pkg for tests/bytecode_test
+      }))
+    ];
 
   emacs = cfg.package;
   emacsWithExtraPackages = pkgs.runCommand "emacs" { nativeBuildInputs = [ pkgs.makeWrapper ]; } ''

@@ -1,12 +1,11 @@
 {
-  lib,
   inputs,
   pkgs,
   username,
   ...
 }:
 {
-  imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
+  imports = [ inputs.flatpaks.nixosModules.declarative-flatpak ];
   systemd.services = {
     "home-manager-${username}" = {
       serviceConfig.TimeoutStartSec = pkgs.lib.mkForce 1200;
@@ -16,57 +15,42 @@
   users.users.${username}.extraGroups = [ "flatpak" ];
   services.flatpak = {
     enable = true;
-    uninstallUnmanaged = true;
-    update = {
-      onActivation = false;
-      auto = {
-        enable = true;
-        onCalendar = "Sun 3:30";
-      };
-    };
     overrides = {
+      global = {
+        filesystems = [
+          "xdg-data/themes:ro"
+          "xdg-data/icons:ro"
+          "xdg-config/gtkrc:ro"
+          "xdg-config/gtkrc-2.0:ro"
+          "xdg-config/gtk-2.0:ro"
+          "xdg-config/gtk-3.0:ro"
+          "xdg-config/gtk-4.0:ro"
+          "/run/current-system/sw/bin:ro"
+          "/nix/store:ro"
+        ];
+      };
       "com.valvesoftware.Steam" = {
-        Environment = {
+        environment = {
           GDK_BACKEND = "wayland steam steam://rungameid/1973530";
         };
-        Context = {
-          filesystems = [
-            "xdg-data/steam"
-          ];
-        };
-      };
-      global = {
-        # Force Wayland by default
-        Context = {
-          filesystems = [
-            "xdg-data/themes:ro"
-            "xdg-data/icons:ro"
-            "xdg-config/gtkrc:ro"
-            "xdg-config/gtkrc-2.0:ro"
-            "xdg-config/gtk-2.0:ro"
-            "xdg-config/gtk-3.0:ro"
-            "xdg-config/gtk-4.0:ro"
-            "/run/current-system/sw/bin:ro"
-            "/nix/store:ro"
-          ];
-        };
+        filesystems = [
+          "xdg-data/steam"
+        ];
       };
       "org.libreoffice.LibreOffice" = {
-        Environment = {
+        environment = {
           GTK_THEME = "Yaru-bark-dark";
         };
       };
     };
-    remotes = lib.mkOptionDefault [
-      {
-        name = "flathub-beta";
-        location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo";
-      }
-    ];
+    remotes = {
+      "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+      "flathub-beta" = "https://dl.flathub.org/beta-repo/flathub-beta.flatpakrepo";
+    };
     packages = [
-      "com.valvesoftware.Steam"
-      "org.libreoffice.LibreOffice"
-      "io.github.zen_browser.zen"
+      "flathub:app/com.valvesoftware.Steam/x86_64/stable"
+      "flathub:app/org.libreoffice.LibreOffice/x86_64/stable"
+      "flathub:app/io.github.zen_browser.zen/x86_64/stable"
 
       # "org.audacityteam.Audacity "
       # "com.github.geigi.cozy"
@@ -81,7 +65,7 @@
       # "page.codeberg.Imaginer.Imaginer"
     ];
   };
-  fileSystems."/var/lib/flatpak".options = [ "exec" ];
+  # fileSystems."/var/lib/flatpak".options = [ "exec" ];
   modules.core.persist.systemData.directories = [ "/var/lib/flatpak" ];
   modules.core.persist.userData.directories = [
     ".var/app/com.valvesoftware.Steam"

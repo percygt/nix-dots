@@ -54,6 +54,12 @@ in
       })
       ++ [
         {
+          command = ''floating enable, resize set width 100ppt height 100ppt, move position center'';
+          criteria = {
+            app_id = "foot-ddterm";
+          };
+        }
+        {
           command = ''floating enable, resize set width 80ppt height 80ppt, move position center'';
           criteria = {
             title = "^Friends List$";

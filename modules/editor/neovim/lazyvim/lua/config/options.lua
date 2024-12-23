@@ -7,7 +7,6 @@ g.lazyvim_blink_main = true
 
 opt.nu = true -- Show numberline
 opt.relativenumber = true -- Show number relative to the current cursor position
-
 opt.termguicolors = true -- Enable 24-bit RGB color in the TUI
 opt.cursorline = true -- Highlight the text line of the cursor
 opt.hlsearch = true -- Highlighting search

@@ -18,8 +18,16 @@ in
         font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString f.size}";
         font-italic = "${f.name}:style=${builtins.elemAt f.style 2}:size=${builtins.toString f.size}";
         font-bold-italic = "${f.name}:style=${builtins.elemAt f.style 3}:size=${builtins.toString f.size}";
+        # initial-window-size-pixels = "700x500";
+        initial-window-size-chars = "189x33";
+        underline-offset = 1.1;
+        underline-thickness = 1;
         line-height = 23;
         pad = "10x8";
+      };
+      desktop-notifications = {
+        command = "notify-send --wait --app-name $\{app-id} --icon $\{app-id} --category $\{category} --urgency $\{urgency} --expire-time $\{expire-time} --hint STRING:image-path:$\{icon} --hint BOOLEAN:suppress-sound:$\{muted} --hint STRING:sound-name:$\{sound-name} --replace-id $\{replace-id} $\{action-argument} --print-id -- $\{title} $\{body}";
+        command-action-argument = "--action $\{action-name}=$\{action-label}";
       };
       url = {
         launch = "xdg-open $\{url}";

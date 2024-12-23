@@ -18,7 +18,7 @@ in
     shell = lib.getExe defaultShell;
     keyMode = "vi";
     sensibleOnTop = true;
-    terminal = "tmux-256color";
+    # terminal = "tmux-256color";
     aggressiveResize = true;
     mouse = true;
     customPaneNavigationAndResize = true;
@@ -28,7 +28,6 @@ in
     historyLimit = 1000000;
   };
   home = {
-    shellAliases.home = "tmux new -As home";
     # dependencies
     packages = with pkgs; [
       wl-clipboard

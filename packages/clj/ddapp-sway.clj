@@ -21,7 +21,7 @@
               :width (some-fn nil? pos?)
               :height (some-fn nil? pos?)
               :spawn_pos string?}})
-(cli-opts :id "emacs")
+
 (def cli-results (cli/parse-args *command-line-args* cli-opts))
 
 (def opts (:opts cli-results))
@@ -57,8 +57,8 @@
 (defn start []
   (p/process ["swaymsg" (str/join " " (cons "exec" args))]))
 
-(defn show []
-  (p/sh ["swaymsg" (str criteria " show, move window to workspace current, " position-cmds)]))
+(defn focus []
+  (p/sh ["swaymsg" (str criteria " move window to workspace current, focus, " position-cmds)]))
 
 (defn hide []
   (p/sh ["swaymsg" (str criteria (if (:kill opts) " kill" " move scratchpad"))]))
@@ -72,5 +72,5 @@
 (if-let [node (get-node)]
   (if (:focused node)
     (hide)
-    (show))
+    (focus))
   (start))

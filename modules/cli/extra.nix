@@ -6,9 +6,6 @@
 }:
 {
   config = lib.mkIf config.modules.cli.enable {
-    programs.newsboat = {
-      enable = true;
-    };
     programs = {
       btop = {
         enable = true;

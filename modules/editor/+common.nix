@@ -8,29 +8,6 @@ pkgs: with pkgs; [
       pylatexenc
     ]
   ))
-  nodejs
-  yarn
-  imagemagick
-  nodePackages.npm
-  nodePackages.pnpm
-  # nodePackages.neovim
-  vscode-extensions.vadimcn.vscode-lldb.adapter
-  fswatch
-  gnumake
-  cmake
-  git
-  mercurial
-
-  #dashboard
-  cowsay
-  fortune-kind
-
-  # Telescope dependencies
-  manix
-  fzf
-  ripgrep
-  fd
-
   # Lua
   lua-language-server
   stylua
@@ -59,6 +36,10 @@ pkgs: with pkgs; [
   # rustc
   # rustfmt
   # rust-analyzer
+
+  #zig
+  zig
+  zls
 
   # C, C++
   gcc
@@ -93,6 +74,8 @@ pkgs: with pkgs; [
   gofumpt
 
   #clj
+  clojure
+  cljfmt
   clojure-lsp
   leiningen
   babashka
@@ -112,6 +95,10 @@ pkgs: with pkgs; [
 
   # Additional
   yamllint
+  terraform
+  terraform-ls
+  libxml2
+  parallel
   bash-language-server
   yaml-language-server
   vscode-langservers-extracted
@@ -120,7 +107,6 @@ pkgs: with pkgs; [
   taplo-cli
   codespell
   gitlint
-  terraform-ls
   actionlint
   vscode-extensions.vadimcn.vscode-lldb.adapter
 ]

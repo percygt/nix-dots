@@ -5,6 +5,7 @@
 
 ;;; treesit-lang
 (package! nix-ts-mode)
+(package! clojure-ts-mode)
 
 ;;; eglot
 (package! eglot-booster

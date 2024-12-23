@@ -31,6 +31,8 @@
             nix-ts-mode
             lua-mode
             lua-ts-mode
+            clojure-mode
+            clojure-ts-mode
             python-mode
             python-ts-mode
             go-mode

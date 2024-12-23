@@ -14,8 +14,10 @@ in
 {
   imports = [ ./plugin.nix ];
   wayland.windowManager.sway = lib.mkIf swayCfg.enable {
-    config.keybindings = {
-      "${mod}+f" = "exec ddapp -t yazi -w 80 -h 80 -m false -c ${yazi-foot}";
+    config = {
+      keybindings = {
+        "${mod}+f" = "exec ddapp -t 'yazi' -w 80 -h 80 -m 'false' -c ${yazi-foot}";
+      };
     };
   };
   home = {
@@ -74,8 +76,8 @@ in
       pkgs.fetchFromGitHub {
         owner = "ndtoan96";
         repo = "ouch.yazi";
-        rev = "d13f7c08cdebcfaadf38c3eb9999639ddd89201c";
-        hash = "sha256-Ii0gowsx6fegFNaOtThAbKaKa2WF1uavgzeONRPaQGU=";
+        rev = "b8698865a0b1c7c1b65b91bcadf18441498768e6";
+        hash = "sha256-eRjdcBJY5RHbbggnMHkcIXUF8Sj2nhD/o7+K3vD3hHY=";
       }
     }/init.lua";
 
