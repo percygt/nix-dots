@@ -934,9 +934,6 @@
     // and change the value to `false`.
     // Different settings for specific languages.
     "languages": {
-        "Nix": {
-            "language_servers": ["nixd"]
-        },
         "Astro": {
             "language_servers": ["astro-language-server", "..."],
             "prettier": {
@@ -1140,16 +1137,10 @@
                 }
             }
         },
-        "json-language-server": {
+        "nix": {
             "binary": {
                 "path_lookup": true,
-                "arguments": ["--stdio"]
-            }
-        },
-        "nixd": {
-            "binary": {
-                "path_lookup": true,
-                "arguments": ["nil"]
+                "arguments": ["nixd"]
             }
         }
         // Specify the LSP name as a key here.

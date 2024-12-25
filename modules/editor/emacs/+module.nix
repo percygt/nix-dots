@@ -33,7 +33,7 @@ in
       enable = lib.mkEnableOption "Enable emacs systemwide";
       package = lib.mkOption {
         description = "Emacs package to use";
-        default = pkgs.emacs30-pgtk;
+        default = pkgs.emacs-pgtk;
         type = lib.types.package;
       };
       finalPackage = lib.mkOption {
