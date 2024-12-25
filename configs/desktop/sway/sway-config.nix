@@ -46,9 +46,9 @@ in
     colors = {
       focused = {
         background = c.base00;
-        border = c.base06;
-        childBorder = c.base05;
-        indicator = c.base05;
+        border = c.base17;
+        childBorder = c.base04;
+        indicator = c.base17;
         text = c.base05;
       };
       unfocused = {

@@ -11,7 +11,7 @@
       intel.enable = true;
       intel.gpu.driver = "xe";
       # nvidia.prime.enable = true;
-      printer.enable = true;
+      # printer.enable = true;
     };
     dev.enable = true;
     cli.enable = true;
@@ -35,12 +35,12 @@
       tailscale.enable = true;
       syncthing.enable = true;
     };
-    pentesting = {
-      wireless.enable = true;
-      malware.enable = true;
-      traffic.enable = true;
-      # proxies.enable = true;
-    };
+    # pentesting = {
+    #   wireless.enable = true;
+    #   malware.enable = true;
+    #   traffic.enable = true;
+    #   proxies.enable = true;
+    # };
     terminal = {
       xfce4-terminal.enable = true;
       tilix.enable = true;
@@ -49,7 +49,7 @@
     };
     virtualisation = {
       podman.enable = true;
-      kvm.enable = true;
+      # kvm.enable = true;
       vmvariant.enable = true;
     };
     utils = {

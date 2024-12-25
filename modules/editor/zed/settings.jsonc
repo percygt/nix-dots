@@ -548,7 +548,8 @@
     //     "autosave": "on_focus_change",
     // 4. Save when idle for a certain amount of time:
     //     "autosave": { "after_delay": {"milliseconds": 500} },
-    "autosave": "off",
+    // "autosave": "off",
+    "autosave": "on_focus_change",
     // Maximum number of tabs per pane. Unset for unlimited.
     "max_tabs": null,
     // Settings related to the editor's tab bar.
@@ -933,16 +934,14 @@
     // and change the value to `false`.
     // Different settings for specific languages.
     "languages": {
+        "Nix": {
+            "language_servers": ["nixd"]
+        },
         "Astro": {
             "language_servers": ["astro-language-server", "..."],
             "prettier": {
                 "allowed": true,
                 "plugins": ["prettier-plugin-astro"]
-            }
-        },
-        "Blade": {
-            "prettier": {
-                "allowed": true
             }
         },
         "C": {
@@ -967,9 +966,6 @@
         },
         "Elixir": {
             "language_servers": ["elixir-ls", "!next-ls", "!lexical", "..."]
-        },
-        "Erlang": {
-            "language_servers": ["erlang-ls", "!elp", "..."]
         },
         "Go": {
             "code_actions_on_format": {
@@ -1040,9 +1036,6 @@
                 "plugins": ["prettier-plugin-sql"]
             }
         },
-        "Starlark": {
-            "language_servers": ["starpls", "!buck2-lsp", "..."]
-        },
         "Svelte": {
             "language_servers": ["svelte-language-server", "..."],
             "prettier": {
@@ -1052,11 +1045,6 @@
         },
         "TSX": {
             "language_servers": ["!typescript-language-server", "vtsls", "..."],
-            "prettier": {
-                "allowed": true
-            }
-        },
-        "Twig": {
             "prettier": {
                 "allowed": true
             }
@@ -1124,6 +1112,46 @@
     },
     // LSP Specific settings.
     "lsp": {
+        "bash-language-server": {
+            "binary": {
+                "path_lookup": true
+            }
+        },
+        "clangd": {
+            "binary": {
+                "path_lookup": true,
+                "arguments": [
+                    "--background-index",
+                    "--compile-commands-dir=build"
+                ]
+            }
+        },
+        "rust-analyzer": {
+            "binary": {
+                "path_lookup": true,
+                "arguments": [
+                    "-c",
+                    "if [ -e flake.nix ]; then nix develop --command rust-analyzer; else rust-analyzer; fi"
+                ]
+            },
+            "initialization_options": {
+                "checkOnSave": {
+                    "command": "clippy"
+                }
+            }
+        },
+        "json-language-server": {
+            "binary": {
+                "path_lookup": true,
+                "arguments": ["--stdio"]
+            }
+        },
+        "nixd": {
+            "binary": {
+                "path_lookup": true,
+                "arguments": ["nil"]
+            }
+        }
         // Specify the LSP name as a key here.
         // "rust-analyzer": {
         //     // These initialization options are merged into Zed's defaults

@@ -19,12 +19,6 @@
     inherit username stateVersion homeDirectory;
   };
 
-  xdg.configFile."nixpkgs/config.nix".text = ''
-    {
-      allowUnfree = true;
-    }
-  '';
-
   manual = {
     html.enable = false;
     json.enable = false;

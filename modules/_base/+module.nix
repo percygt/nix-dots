@@ -48,7 +48,7 @@ in
       tilix.package = lib.mkOption {
         description = "Tilix terminal package";
         type = lib.types.package;
-        default = pkgs.tilix;
+        default = pkgs.stable.tilix;
       };
       xfce4-terminal.package = lib.mkOption {
         description = "Xfce4-terminal terminal package";

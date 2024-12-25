@@ -5,20 +5,6 @@ in
 rec {
   viewRebuildLogCmd = "foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service";
   viewBackupLogCmd = "foot --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service";
-  toggle-blur =
-    { pkgs }:
-    pkgs.writers.writeBash "toggle-blur" ''
-      BLUR_STATUS_FILE="/tmp/blur-status"
-      BLUR_STATUS=$(<"$BLUR_STATUS_FILE" :- 0)
-      # BLUR_STATUS=$(<"$BLUR_STATUS_FILE")
-      if [ ! -f "$BLUR_STATUS_FILE" ]; then
-          echo "1" > "$BLUR_STATUS_FILE"
-          swaymsg "blur 1"
-      else
-          swaymsg "blur $BLUR_STATUS"
-          echo $((1 - BLUR_STATUS)) > "$BLUR_STATUS_FILE"
-      fi
-    '';
   mkWorkspaceKeys =
     mod: workspaces:
     builtins.listToAttrs (

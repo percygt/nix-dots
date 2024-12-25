@@ -20,6 +20,27 @@ let
   foot-ddterm = pkgs.writers.writeBash "foot-ddterm" ''
     foot --app-id=foot-ddterm tmux-launch-session
   '';
+
+  toggle-blur = pkgs.writers.writeBash "toggle-blur" ''
+    BLUR_STATUS_FILE="/tmp/blur-status"
+    if [[ ! -f "$BLUR_STATUS_FILE" ]]; then
+        echo "disabled" > "$BLUR_STATUS_FILE"
+    fi
+    enable_blur() {
+        swaymsg blur enable
+        echo "enabled" > "$BLUR_STATUS_FILE"
+    }
+    disable_blur() {
+        swaymsg blur disable
+        echo "disabled" > "$BLUR_STATUS_FILE"
+    }
+    current_status=$(cat "$BLUR_STATUS_FILE")
+    if [[ "$current_status" == "enabled" ]]; then
+        disable_blur
+    else
+        enable_blur
+    fi
+  '';
 in
 {
   wayland.windowManager.sway = {
@@ -58,6 +79,7 @@ in
         XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
 
         "F11" = "fullscreen toggle";
+        "F10" = "exec ${toggle-blur}";
         "${mod}+Shift+q" = "kill";
         "${mod}+Shift+t" = "layout stacking";
         "${mod}+t" = "layout tabbed";

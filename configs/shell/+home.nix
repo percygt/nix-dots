@@ -10,5 +10,5 @@
     ./zoxide.nix
     ./eza.nix
   ];
-  home.packages = [ pkgs.inshellisense ];
+  home.packages = [ pkgs.stable.inshellisense ];
 }

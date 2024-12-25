@@ -14,9 +14,9 @@ in
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.nixos-cli.nixosModules.nixos-cli
-    ./home-manager.nix
     ./nixpkgs
     ./nix.nix
+    ./home-manager.nix
   ];
 
   environment.systemPackages = g.system.corePackages;

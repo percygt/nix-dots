@@ -89,7 +89,6 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    # nix-flatpak.url = "github:gmodena/nix-flatpak";
     flatpaks.url = "github:GermanBread/declarative-flatpak/stable-v3";
 
     sops-nix.url = "github:mic92/sops-nix";
