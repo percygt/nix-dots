@@ -49,6 +49,7 @@ in
 
   xdg.portal = {
     enable = true;
+    xdgOpenUsePortal = true;
     wlr = {
       enable = true;
       settings.screencast = {
@@ -58,7 +59,9 @@ in
         chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or -s '#99d1ce33'";
       };
     };
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+    ];
   };
 
   security = {
