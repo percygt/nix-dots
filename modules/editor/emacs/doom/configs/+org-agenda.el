@@ -95,12 +95,18 @@
                         ((org-ql-block-header "Interesting")
                          (org-super-agenda-groups
                           '(
-                            (:name "Read"
-                             :tag "read"
-                             :order 1)
                             (:name "Idea"
                              :tag "idea"
+                             :order 1)
+                            (:name "Info"
+                             :tag "idea"
                              :order 2)
+                            (:name "Read"
+                             :tag "read"
+                             :order 3)
+                            (:name "Watch"
+                             :tag "watch"
+                             :order 4)
                             )
                           )))
           ))))

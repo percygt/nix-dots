@@ -41,6 +41,7 @@
       (doct `(("Tasks" :keys "t"
                :icon ("nf-oct-inbox" :set "octicon" :color "yellow")
                :file +org-capture-todo-file
+               :headline "Tasks"
                :type entry
                :prepend t
                :template ("* TODO %?"
@@ -51,16 +52,14 @@
                :children (("General Task" :keys "t"
                            :icon ("nf-fa-tasks" :set "faicon" :color "yellow")
                            :extra "")
-                          ("Url"    :keys "u"
-                           :icon ("nf-md-web" :set "mdicon" :color "yellow")
-                           :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]"
-                           )
+                          ("Url" :keys "u"
+                           :icon ("nf-md-web" :set "mdicon" :color "blue")
+                           :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]")
                           ("Clipboard paste" :keys "c"
-                           :icon ("nf-fa-paste" :set "faicon" :color "yellow")
-                           :extra "%(simpleclip-get-contents)"
-                           )
+                           :icon ("nf-fa-paste" :set "faicon" :color "cyan")
+                           :extra "%(simpleclip-get-contents)")
                           ("Linked Task" :keys "l"
-                           :icon ("nf-fa-link" :set "faicon" :color "yellow")
+                           :icon ("nf-fa-link" :set "faicon" :color "magenta")
                            :extra "%i %a")
                           ("Task with deadline" :keys "d"
                            :icon ("nf-md-timer" :set "mdicon" :color "orange" :v-adjust -0.1)
@@ -70,8 +69,9 @@
                            :extra "SCHEDULED: %^{Start time:}t")))
 
               ("Interesting" :keys "i"
-               :icon ("nf-fa-eye" :set "faicon" :color "lcyan")
+               :icon ("nf-fa-eye" :set "faicon" :color "cyan")
                :file +org-capture-notes-file
+               :headline "Interesting"
                :prepend t
                :type entry
                :template ("* %? :interest:%{i-type}:"
@@ -83,10 +83,22 @@
                            :icon ("nf-fa-globe" :set "faicon" :color "green")
                            :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]"
                            :i-type "read:web")
+                          ("Video" :keys "v"
+                           :icon ("nf-oct-video" :set "octicon" :color "red")
+                           :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]"
+                           :i-type "watch:video")
+                          ("Repo" :keys "r"
+                           :icon ("nf-fa-git" :set "faicon" :color "orange")
+                           :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]"
+                           :i-type "read:repo")
                           ("Article" :keys "a"
                            :icon ("nf-fa-file_text_o" :set "faicon" :color "yellow")
                            :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]"
-                           :i-type "read:reaserch")
+                           :i-type "read:article")
+                          ("Book" :keys "b"
+                           :icon ("nf-fa-book" :set "faicon" :color "green")
+                           :extra "%i %a"
+                           :i-type "read:book")
                           ("Information" :keys "i"
                            :icon ("nf-fa-info_circle" :set "faicon" :color "blue")
                            :extra ""

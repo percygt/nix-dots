@@ -1,5 +1,6 @@
 ;;; +init.el -*- lexical-binding: t; -*-
 (load! "+keymaps.el")
+(load! "+org.el")
 (load! "+ui.el")
 (load! "+dired.el")
 (load! "+completion.el")
@@ -8,4 +9,3 @@
 (load! "+treesit-lang.el")
 (load! "+eglot.el")
 (load! "+tools.el")
-(load! "+org.el")

@@ -29,7 +29,7 @@
 (map! :after evil
       :mn "C-e" #'evil-end-of-line
       :mn "C-b" #'evil-beginning-of-line)
-(map! :mn "WW" #'save-buffer
+(map! :mn "C-s" #'save-buffer
       :mn "D" #'doom/save-and-kill-buffer
       :mn "M-<backspace>" #'doom/kill-buried-buffers)
 

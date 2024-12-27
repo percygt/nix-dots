@@ -8,10 +8,13 @@
       +org-capture-projects-file "Projects.org"
       +org-capture-journal-file "Inbox.org")
 
-(map! :after org
-      :leader
-      :prefix-map ("o" . "Org")
-      :desc "Org Capture" "c" #'org-capture)
+(map!
+ :leader
+ :prefix-map ("o" . "Org")
+ :desc "Org Capture" "c" #'org-capture)
+
+(map! :map org-mode-map
+      :ie [tab] #'corfu-next)
 
 (custom-set-faces!
   '(org-document-title :height 1.5)
@@ -56,7 +59,6 @@
   (load! "+org-agenda.el")
   (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
   (org-link-set-parameters "id" :complete 'org-id-complete-link)
-  (map! :leader :desc "Open today's journal" "j" #'org-journal-open-current-journal-file)
   (setq org-startup-folded nil ; do not start folded
         org-link-frame-setup '((file . find-file));; Opens links to other org file in same frame (rather than splitting) org-tags-column 80 ; the column to the right to align tags
         org-ellipsis " "
@@ -69,6 +71,9 @@
         org-use-property-inheritance t
         org-log-done 'time ; record the time when an element was marked done/checked
         org-log-into-drawer t
+        org-src-tab-acts-natively t
+        org-auto-align-tags nil
+        org-tags-column -1
         org-cycle-emulate-tab nil
         org-startup-folded 'content
         org-todo-repeat-to-state t

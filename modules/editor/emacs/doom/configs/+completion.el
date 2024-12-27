@@ -32,8 +32,7 @@
 
 (map! :after corfu
       :map corfu-map
-      "TAB" #'corfu-next
-      "S-<return>" #'corfu-insert)
+      :gi [tab] #'corfu-next)
 
 (map! :after vertico
       :map vertico-map

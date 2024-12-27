@@ -21,13 +21,16 @@ let
     emacs ${moduleEmacs}/doom -T "Doom Config"
   '';
   emacsquickfiles = pkgs.writers.writeBash "emacsquickfiles" ''
-    emacs --eval "(progn (dirvish-quick-access))" -T "Quick Files"
+    emacs --eval "(progn (dirvish-quick-access))" -t "quick files"
   '';
+  # emacscapture = pkgs.writers.writeBash "emacscapture" ''
+  #   emacs --eval "(progn (org-capture))" -T "Org Capture"
+  # '';
   emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
     emacs ${g.orgDirectory}/Inbox.org  -T "Notes"
   '';
   emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
-    emacsclient -c -e '(progn (org-agenda nil "r"))' -F '((name . "Agenda"))'
+    emacsclient -c -e '(progn (org-agenda nil "m"))' -F '((name . "Agenda"))'
   '';
 in
 {
@@ -38,7 +41,7 @@ in
           "${mod}+q" = "exec ddapp -t 'emacs' -n 'Quick.' -c ${emacsquickfiles}";
           "${mod}+n" = "exec ddapp -t 'emacs' -n 'Notes' -c ${emacsnotes}";
           "${mod}+Shift+e" = "exec ddapp -t 'emacs' -n 'Doom.' -c ${doomconfig}";
-          "${mod}+Shift+c" = "exec org-capture";
+          "${mod}+c" = "exec org-capture";
           "${mod}+e" = "exec ddapp -t 'emacs' -n 'Agenda' -c ${emacsagenda}";
         };
       };
