@@ -20,7 +20,7 @@ let
   doomconfig = pkgs.writers.writeBash "doomconfig" ''
     emacs ${moduleEmacs}/doom -T "Doom Config"
   '';
-  emacsquickfiles = pkgs.writers.writeBash "emacsquickfiles" ''
+  emacsquickfiles = pkgs.writers.writeBjash "emacsquickfiles" ''
     emacs --eval "(progn (dirvish-quick-access))" -t "quick files"
   '';
   # emacscapture = pkgs.writers.writeBash "emacscapture" ''
