@@ -8,7 +8,7 @@ let
 in
 {
   config = lib.mkIf config.modules.editor.emacs.enable {
-    environment.systemPackages = [ cfg.finalPackage ];
+    # environment.systemPackages = [ cfg.finalPackage ];
     services.emacs = {
       enable = true;
       package = cfg.finalPackage;
