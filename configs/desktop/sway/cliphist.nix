@@ -19,6 +19,6 @@ in
     libsixel
   ];
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-    "${mod}+v" = "exec ddapp -t 'clipboard' -n 'Clipboard' -w 90 -h 90 -k true -c ${cliphistFzfSixel}";
+    "${mod}+v" = "exec ddapp -t 'clipboard' -n 'Clipboard' -w 90 -h 90 -k true -m false -c ${cliphistFzfSixel}";
   };
 }

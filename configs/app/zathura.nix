@@ -1,3 +1,12 @@
+let
+  zathura = [ "org.pwmt.zathura.desktop" ];
+  assoc = {
+    "application/epub+zip" = zathura;
+    "application/pdf" = zathura;
+    "application/oxps" = zathura;
+    "application/x-fictionbook" = zathura;
+  };
+in
 {
   programs.zathura = {
     enable = true;
@@ -6,14 +15,6 @@
     };
   };
 
-  xdg.mimeApps.defaultApplications =
-    let
-      zathura = [ "org.pwmt.zathura.desktop" ];
-    in
-    {
-      "application/epub+zip" = zathura;
-      "application/pdf" = zathura;
-      "application/oxps" = zathura;
-      "application/x-fictionbook" = zathura;
-    };
+  xdg.mimeApps.defaultApplications = assoc;
+  xdg.mimeApps.associations.added = assoc;
 }

@@ -9,6 +9,7 @@
         height=100
         width=100
         minimize_auto=true
+        kill=false
 
         while getopts h:w:t:n:m:k:c: flag
         do
@@ -48,7 +49,7 @@
             )
           if [[ "$focused" == "true" ]]; then
             if [[ "$kill" == true ]]; then
-              swaymsg "$params move kill"
+              swaymsg "$params kill"
             else
               swaymsg "$params move window to scratchpad"
             fi

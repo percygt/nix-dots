@@ -15,7 +15,7 @@ in
   imports = [ ./plugin.nix ];
   wayland.windowManager.sway = lib.mkIf swayCfg.enable {
     config.keybindings = lib.mkOptionDefault {
-      "${mod}+f" = "exec ddapp -t 'yazi' -m 'false' -c ${yazi-foot}";
+      "${mod}+f" = "exec ddapp -t 'yazi' -c ${yazi-foot}";
     };
   };
   home = {
@@ -85,11 +85,32 @@ in
     enableFishIntegration = true;
     enableBashIntegration = true;
     settings = {
+      preview = {
+        max_width = 970;
+        max_height = 970;
+      };
+      opener = {
+        play = [
+          {
+            run = "mpv \"$@\"";
+            orphan = true;
+            for = "unix";
+          }
+        ];
+
+        edit = [
+          {
+            run = "$EDITOR \"$@\"";
+            block = true;
+            for = "unix";
+          }
+        ];
+      };
       manager = {
         ratio = [
           0
+          1
           2
-          3
         ];
         sort_by = "alphabetical";
         sort_dir_first = true;

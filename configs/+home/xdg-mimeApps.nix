@@ -3,9 +3,7 @@ let
   archiveManager = [ "org.gnome.FileRoller.desktop" ];
   textEditor = [ "neovim.desktop" ];
   fileManager = [ "org.gnome.Nautilus.desktop " ];
-in
-{
-  xdg.mimeApps.defaultApplications = {
+  assoc = {
     "application/http" = browser;
     "x-scheme-handler/http" = browser;
     "x-scheme-handler/https" = browser;
@@ -78,4 +76,8 @@ in
     "inode/directory" = fileManager;
     "x-scheme-handler/obsidian" = [ "obsidian.desktop" ];
   };
+in
+{
+  xdg.mimeApps.defaultApplications = assoc;
+  xdg.mimeApps.associations.added = assoc;
 }
