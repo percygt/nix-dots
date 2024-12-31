@@ -14,10 +14,8 @@ in
 {
   imports = [ ./plugin.nix ];
   wayland.windowManager.sway = lib.mkIf swayCfg.enable {
-    config = {
-      keybindings = {
-        "${mod}+f" = "exec ddapp -t 'yazi' -w 80 -h 80 -m 'false' -c ${yazi-foot}";
-      };
+    config.keybindings = lib.mkOptionDefault {
+      "${mod}+f" = "exec ddapp -t 'yazi' -m 'false' -c ${yazi-foot}";
     };
   };
   home = {

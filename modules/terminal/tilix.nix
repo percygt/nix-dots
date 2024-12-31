@@ -15,7 +15,7 @@ in
   config = lib.mkIf config.modules.terminal.tilix.enable (
     lib.mkMerge [
       (lib.mkIf (desktop == "sway") {
-        wayland.windowManager.sway.config.keybindings = {
+        wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
           "Ctrl+shift+return" = "exec ${lib.getExe g.terminal.tilix.package}";
         };
       })

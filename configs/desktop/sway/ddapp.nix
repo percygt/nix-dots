@@ -10,7 +10,7 @@
         width=100
         minimize_auto=true
 
-        while getopts h:w:t:n:m:c: flag
+        while getopts h:w:t:n:m:k:c: flag
         do
           case "''${flag}" in
             h) height=''${OPTARG};;
@@ -18,6 +18,7 @@
             t) target=''${OPTARG} ;;
             n) name=''${OPTARG} ;;
             m) minimize_auto=''${OPTARG} ;;
+            k) kill=''${OPTARG} ;;
             c) command=''${OPTARG};;
             *) notify-send "You f*cked up" "''${OPTARG}" ;;
           esac
@@ -46,7 +47,11 @@
               done
             )
           if [[ "$focused" == "true" ]]; then
-            swaymsg "$params move window to scratchpad"
+            if [[ "$kill" == true ]]; then
+              swaymsg "$params move kill"
+            else
+              swaymsg "$params move window to scratchpad"
+            fi
           else
             if [ "$minimize_auto" = true ] ; then
               if [ -n "$auto_minimize_win" ]; then

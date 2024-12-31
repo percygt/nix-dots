@@ -11,6 +11,7 @@ in
   systemd.user.services.nixos-rebuild = {
     Service = {
       Type = "exec";
+      X-RestartIfChanged = "false";
       ExecStart = lib.getExe (
         pkgs.writeShellApplication {
           name = "nixos-rebuild-exec-start";

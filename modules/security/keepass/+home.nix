@@ -12,10 +12,15 @@ in
 {
   imports = [
     ./keepfzf.nix
-    # ./module.nix
   ];
 
   config = lib.mkIf config.modules.security.keepass.enable {
+    modules.desktop.sway.floatingRules = [
+      {
+        command = ''resize set width 80ppt height 80ppt, move position center'';
+        criterias = [ { app_id = "org.keepassxc.KeePassXC"; } ];
+      }
+    ];
     home = {
       packages =
         [ g.security.keepass.package ]

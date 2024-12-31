@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   swayCfg = config.wayland.windowManager.sway;
   mod = swayCfg.config.modifier;
@@ -13,9 +18,7 @@ in
     chafa
     libsixel
   ];
-  wayland.windowManager.sway.config = {
-    keybindings = {
-      "${mod}+v" = "exec $toggle_window --width 90 --height 90 --kill true --id clipboard -- ${cliphistFzfSixel}";
-    };
+  wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+    "${mod}+v" = "exec ddapp -t 'clipboard' -n 'Clipboard' -w 90 -h 90 -k true -c ${cliphistFzfSixel}";
   };
 }

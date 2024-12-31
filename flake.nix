@@ -114,7 +114,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
     base.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     base.flake = false;
   };
@@ -124,12 +126,14 @@
       "https://nix-community.cachix.org"
       "https://pre-commit-hooks.cachix.org"
       "https://nix-on-droid.cachix.org"
+      "https://ghostty.cachix.org"
     ];
     extra-trusted-public-keys = [
       "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
       "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
+      "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
     ];
   };
 }

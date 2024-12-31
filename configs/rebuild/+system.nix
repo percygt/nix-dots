@@ -51,17 +51,20 @@ in
             stderr "Flake directory: $FLAKE is not valid"
             exit 1
           fi
+          CONFIGID=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 6)
+          CONFIGDIR="/tmp/nixosconfig$CONFIGID"
+
           # Execute the commands
           su ${username} -c \
             "nom build \
             $FLAKE#nixosConfigurations.${profile}.config.system.build.toplevel \
-            --out-link /tmp/nixos-configuration \
+            --out-link $CONFIGDIR \
             --accept-flake-config"
 
-          /tmp/nixos-configuration/bin/switch-to-configuration switch || exit 1
+          $CONFIGDIR/bin/switch-to-configuration switch || exit 1
 
           su ${username} -c \
-            "nvd diff /run/current-system /tmp/nixos-configuration"
+            "nvd diff /run/current-system $CONFIGDIR"
 
           su ${username} -c \
             "nh home switch $FLAKE -- --accept-flake-config"

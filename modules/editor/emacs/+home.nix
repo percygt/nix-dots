@@ -3,6 +3,7 @@
   lib,
   inputs,
   pkgs,
+  desktop,
   ...
 }:
 let
@@ -35,15 +36,13 @@ let
 in
 {
   config = lib.mkMerge [
-    (lib.mkIf (swayCfg.enable && cfg.enable) {
-      wayland.windowManager.sway.config = {
-        keybindings = {
-          "${mod}+q" = "exec ddapp -t 'emacs' -n 'Quick.' -c ${emacsquickfiles}";
-          "${mod}+n" = "exec ddapp -t 'emacs' -n 'Notes' -c ${emacsnotes}";
-          "${mod}+Shift+e" = "exec ddapp -t 'emacs' -n 'Doom.' -c ${doomconfig}";
-          "${mod}+c" = "exec org-capture";
-          "${mod}+e" = "exec ddapp -t 'emacs' -n 'Agenda' -c ${emacsagenda}";
-        };
+    (lib.mkIf (desktop == "sway" && cfg.enable) {
+      wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+        "${mod}+q" = "exec ddapp -t 'emacs' -n 'Quick.' -c ${emacsquickfiles}";
+        "${mod}+n" = "exec ddapp -t 'emacs' -n 'Notes' -c ${emacsnotes}";
+        "${mod}+Shift+e" = "exec ddapp -t 'emacs' -n 'Doom.' -c ${doomconfig}";
+        "${mod}+c" = "exec org-capture";
+        "${mod}+e" = "exec ddapp -t 'emacs' -n 'Agenda' -c ${emacsagenda}";
       };
     })
     (lib.mkIf cfg.enable {

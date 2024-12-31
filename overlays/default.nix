@@ -6,6 +6,7 @@
   emacs = inputs.emacs-overlay.overlays.default;
   fenix = inputs.fenix.overlays.default;
   nur = inputs.nur.overlays.default;
+  ghostty = inputs.ghostty.overlays.default;
   packageOverrides = _: prev: import ../packages/overrides.nix { inherit prev; };
   packageOverlays =
     final: _:

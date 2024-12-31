@@ -32,7 +32,7 @@ in
   config = lib.mkIf config.modules.terminal.xfce4-terminal.enable (
     lib.mkMerge [
       (lib.mkIf (desktop == "sway") {
-        wayland.windowManager.sway.config.keybindings = {
+        wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
           "Alt+shift+return" = "exec ${lib.getExe g.terminal.xfce4-terminal.package}";
         };
       })

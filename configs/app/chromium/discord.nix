@@ -1,4 +1,10 @@
 {
+  modules.desktop.sway.floatingRules = [
+    {
+      command = ''resize set width 80ppt height 80ppt, move position center'';
+      criterias = [ { app_id = "chrome-discord.com__channels_@me-WebApp-discord"; } ];
+    }
+  ];
   programs.chromium.webapps.discord = {
     enable = true;
     url = "https://discord.com/channels/@me";
