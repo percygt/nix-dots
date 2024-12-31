@@ -10,7 +10,6 @@ in
 {
   xdg = {
     enable = true;
-    mimeApps.enable = true;
     configHome = homeDirectory + "/.config";
     cacheHome = homeDirectory + "/.local/cache";
     dataHome = homeDirectory + "/.local/share";
