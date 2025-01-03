@@ -13,10 +13,8 @@ let
 in
 {
   imports = [ ./plugin.nix ];
-  wayland.windowManager.sway = lib.mkIf swayCfg.enable {
-    config.keybindings = lib.mkOptionDefault {
-      "${mod}+f" = "exec ddapp -t 'yazi' -c ${yazi-foot}";
-    };
+  wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+    "${mod}+f" = "exec ddapp -t 'yazi' -c ${yazi-foot}";
   };
   home = {
     shellAliases.y = "yazi";

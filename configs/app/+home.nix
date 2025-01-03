@@ -1,12 +1,23 @@
 {
   pkgs,
+  config,
+  lib,
   ...
 }:
+let
+  swayCfg = config.wayland.windowManager.sway;
+  nautilus = pkgs.writers.writeBash "nautilus-file-manager" ''
+    nautilus ~
+  '';
+  mod = swayCfg.config.modifier;
+in
 {
   imports = [
     ./quickemu.nix
   ];
-
+  wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+    "${mod}+shift+f" = "exec ddapp -t 'org.gnome.Nautilus' -c ${nautilus}";
+  };
   modules.desktop.sway.floatingRules = [
     {
       command = ''resize set width 30ppt height 60ppt, move position center'';
@@ -30,6 +41,7 @@
       ];
     }
   ];
+  xdg.configFile."swayimg/config".source = ./+assets/swayimgrc;
   xdg.mimeApps = {
     defaultApplications = import ./mimeApps.nix;
     associations.added = import ./mimeApps.nix;

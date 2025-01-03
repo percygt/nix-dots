@@ -1,11 +1,5 @@
 ;;; +ui.el -*- lexical-binding: t; -*-
 
-(setq doom-theme 'base16-nix-custom
-      doom-font (font-spec :family "VictorMono NFP" :size 20 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "Work Sans" :size 20 :weight 'light)
-      doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
-      doom-big-font (font-spec :family "VictorMono NPF" :size 24))
-
 (use-package! base16-theme)
 
 (setq evil-emacs-state-cursor   `("white" bar)
@@ -13,12 +7,12 @@
       evil-normal-state-cursor  `("white" box)
       evil-visual-state-cursor  `("PaleGoldenrod" box))
 
-(custom-theme-set-faces! 'base16-nix-custom
-  `(font-lock-comment-delimiter-face :foreground "DarkGrey" :slant italic)
-  `(font-lock-comment-face :foreground "DarkGrey" :slant italic)
-  `(show-paren-match :foreground "yellow" :bold t)
-  `(org-block-begin-line :inherit fixed-pitch :height 0.8 :slant italic :background "unspecified")
-  )
+; (custom-theme-set-faces! 'base16-nix-custom
+;   `(font-lock-comment-delimiter-face :foreground "DarkGrey" :slant italic)
+;   `(font-lock-comment-face :foreground "DarkGrey" :slant italic)
+;   `(show-paren-match :foreground "yellow" :bold t)
+;   `(org-block-begin-line :inherit fixed-pitch :height 0.8 :slant italic :background "unspecified")
+;   )
 
 (use-package! highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)

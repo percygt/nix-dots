@@ -69,11 +69,11 @@
           fi
         else
           if [ -n "$name" ]; then
-            swaymsg "for_window [app_id=$target title=$name] 'move to scratchpad ; scratchpad show ; floating enable ; resize set $height ppt $width ppt ; move position center'"
-            swaymsg "for_window [class=$target title=$name] 'move to scratchpad ; scratchpad show ; floating enable ; resize set $height ppt $width ppt ; move position center'"
+            swaymsg "for_window [app_id=$target title=$name] 'floating enable ; move to scratchpad ; scratchpad show ; resize set $height ppt $width ppt ; move position center'"
+            swaymsg "for_window [class=$target title=$name] 'floating enable ; move to scratchpad ; scratchpad show ; resize set $height ppt $width ppt ; move position center'"
           else
-            swaymsg "for_window [app_id=$target] 'move to scratchpad ; scratchpad show ; floating enable ; resize set $height ppt $width ppt ; move position center'"
-            swaymsg "for_window [class=$target] 'move to scratchpad ; scratchpad show ; floating enable ; resize set $height ppt $width ppt ; move position center'"
+            swaymsg "for_window [app_id=$target] 'floating enable ; move to scratchpad ; scratchpad show ; resize set $height ppt $width ppt ; move position center'"
+            swaymsg "for_window [class=$target] 'floating enable ; move to scratchpad ; scratchpad show ; resize set $height ppt $width ppt ; move position center'"
           fi
 
           if [ "$minimize_auto" = true ] ; then

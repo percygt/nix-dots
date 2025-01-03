@@ -185,9 +185,8 @@ return {
       p.buffers = {
         mappings = {
           n = {
-            ["<C-d>"] = actions.delete_buffer + actions.move_to_top,
             ["l"] = actions.select_default,
-            ["D"] = actions.delete_buffer + actions.move_to_top,
+            ["D"] = actions.delete_buffer + actions.move_to_bottom,
           },
         },
         ignore_current_buffer = true,

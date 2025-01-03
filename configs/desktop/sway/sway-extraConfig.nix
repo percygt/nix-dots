@@ -4,7 +4,7 @@
     blur enable
     blur_radius 7
     blur_passes 4
-    blur_noise 0.1
+    blur_noise 0.05
     corner_radius 12
     scratchpad_minimize enable
     bindgesture swipe:4:right workspace prev

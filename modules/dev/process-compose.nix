@@ -11,6 +11,14 @@
     ];
 
     xdg.configFile = {
+      "process-compose/theme.yaml".source = "${
+        pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "process-compose";
+          rev = "b0c48aa07244a8ed6a7d339a9b9265a3b561464d";
+          hash = "sha256-uqJR9OPrlbFVnWvI3vR8iZZyPSD3heI3Eky4aFdT0Qo=";
+        }
+      }/themes/catppuccin-macchiato.yaml";
       "process-compose/shortcuts.yaml".text =
         # yaml
         ''
@@ -20,34 +28,34 @@
               toggle_description: # optional description for toggle buttons. Will use default if not defined
                 false: Follow Off
                 true: Follow On
-              shortcut: F5 # shortcut to be used
+              shortcut: Ctrl-f # shortcut to be used
             log_screen:
               toggle_description:
                 false: Half Screen
                 true: Full Screen
-              shortcut: F4
+              shortcut: Ctrl-l
             log_wrap:
               toggle_description:
                 false: Wrap Off
                 true: Wrap On
-              shortcut: F6
+              shortcut: Ctrl-w
             process_restart:
               description: Restart # optional description for a button. Will use default if not defined
-              shortcut: Ctrl-R
+              shortcut: Ctrl-r
             process_screen:
               toggle_description:
                 false: Half Screen
                 true: Full Screen
-              shortcut: F8
+              shortcut: Ctrl-p
             process_start:
               description: Start
-              shortcut: F7
+              shortcut: Ctrl-s
             process_stop:
               description: Stop
-              shortcut: F9
+              shortcut: Ctrl-x
             quit:
               description: Quit
-              shortcut: F10
+              shortcut: q
         '';
     };
   };

@@ -1,29 +1,15 @@
 local keymap = require("utils")
 local silent = { silent = true }
 local nmap = keymap.nmap
-local vmap = keymap.vmap
 local xmap = keymap.xmap
 local nvmap = keymap.nvmap
 
-vmap("Q", "<nop>", silent)
 -- Quit
-nmap("QQ", ":q!<cr>", silent)
--- Save
--- nmap("WW", ":w!<cr>", silent)
--- imap("WW", "<esc>:w!<cr>", silent)
+nvmap("<C-q>", ":q!<cr>", silent)
 -- Move back to the beginning of line
 nvmap("<C-b>", "^")
 -- Move forward to the end of line
 nvmap("<C-e>", "$")
--- -- Insert and command motions
--- cmap("<C-h>", "<Left>")
--- cmap("<C-j>", "<Down>")
--- cmap("<C-k>", "<Up>")
--- cmap("<C-l>", "<Right>")
--- imap("<C-h>", "<Left>")
--- imap("<C-j>", "<Down>")
--- imap("<C-k>", "<Up>")
--- imap("<C-l>", "<Right>")
 -- -- Better vertical motions
 nmap("<C-d>", "<C-d>zz")
 nmap("<C-u>", "<C-u>zz")

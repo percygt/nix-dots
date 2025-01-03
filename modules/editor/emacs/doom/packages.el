@@ -18,6 +18,7 @@
 (package! simpleclip)
 
 ;;; ui
+(package! catppuccin-theme)
 (package! beacon)
 (package! base16-theme)
 (package! writeroom-mode)
@@ -44,6 +45,11 @@
 (package! flymake-popon :disable t)
 (package! lsp-mode :disable t)
 (package! lsp-sourcekit :disable t)
+(package! treemacs :disable t)
+(package! treemacs-projectile :disable t)
+(package! treemacs-evil :disable t)
+(package! treemacs-magit :disable t)
+(package! treemacs-nerd-icons :disable t)
 (package! smartparens-python :disable t)
 
 ;; (package! org :built-in t)

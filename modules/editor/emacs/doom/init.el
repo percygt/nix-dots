@@ -44,27 +44,21 @@
        data
        emacs-lisp
        (clojure +lsp)
-       (java +lsp)
        (javascript +lsp)
        (json +lsp)
        (latex +lsp +fold)
        (lua +lsp)
        (nix +lsp)
-       (ocaml +lsp)
-       (python +poetry)
        (rust +lsp)
        (sh +lsp)
-       web
        (yaml +lsp)
        (zig +lsp)
 
        :term
        eshell
-       vterm
 
        :tools
        direnv
-       (docker +lsp)
        editorconfig
        (eval +overlay)
        lookup
@@ -74,6 +68,9 @@
        pdf
        (terraform +lsp)
        tree-sitter
+
+       :os
+       (tty +osc)
 
        :ui
        doom

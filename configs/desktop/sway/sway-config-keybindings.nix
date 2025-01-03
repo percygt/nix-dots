@@ -24,15 +24,21 @@ let
         echo "disabled" > "$BLUR_STATUS_FILE"
     fi
     enable_blur() {
-        swaymsg blur enable
+        swaymsg 'blur enable, blur_radius 7, blur_passes 4, blur_noise 0.05'
         echo "enabled" > "$BLUR_STATUS_FILE"
     }
+    lighten_blur() {
+        swaymsg 'blur_radius 2, blur_passes 4, blur_noise 0'
+        echo "lightened" > "$BLUR_STATUS_FILE"
+    }
     disable_blur() {
-        swaymsg blur disable
+        swaymsg 'blur disable'
         echo "disabled" > "$BLUR_STATUS_FILE"
     }
     current_status=$(cat "$BLUR_STATUS_FILE")
     if [[ "$current_status" == "enabled" ]]; then
+        lighten_blur
+    elif [[ "$current_status" == "lightened" ]]; then
         disable_blur
     else
         enable_blur
@@ -68,7 +74,6 @@ in
       "${mod}+Tab" = "workspace back_and_forth";
       "${mod}+Backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
       "${mod}+Delete" = "exec swaylock";
-      "${mod}+Shift+f" = "exec $toggle_window --id org.gnome.Nautilus -- nautilus ~";
       XF86Calculator = "exec $toggle_window --id org.gnome.Calculator -- gnome-calculator";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
 
