@@ -1,19 +1,5 @@
 ;;; +ui.el -*- lexical-binding: t; -*-
 
-(use-package! base16-theme)
-
-(setq evil-emacs-state-cursor   `("white" bar)
-      evil-insert-state-cursor  `("Cyan" bar)
-      evil-normal-state-cursor  `("white" box)
-      evil-visual-state-cursor  `("PaleGoldenrod" box))
-
-; (custom-theme-set-faces! 'base16-nix-custom
-;   `(font-lock-comment-delimiter-face :foreground "DarkGrey" :slant italic)
-;   `(font-lock-comment-face :foreground "DarkGrey" :slant italic)
-;   `(show-paren-match :foreground "yellow" :bold t)
-;   `(org-block-begin-line :inherit fixed-pitch :height 0.8 :slant italic :background "unspecified")
-;   )
-
 (use-package! highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :config
@@ -24,11 +10,8 @@
   (highlight-indent-guides-responsive 'top)
   (highlight-indent-guides-method 'character))
 
-(use-package! beacon
-  :config (beacon-mode 1))
-
 (use-package! spacious-padding
-  :hook (doom-after-init . spacious-padding-mode))
+  :config (spacious-padding-mode))
 
 (use-package! page-break-lines
   :hook (doom-first-input . global-page-break-lines-mode)

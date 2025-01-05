@@ -18,9 +18,6 @@
        (corfu +icons +orderless +dabbrev)
        (vertico +icons)
 
-       :config
-       default
-
        :editor
        (evil +everywhere)
        file-templates
@@ -84,4 +81,7 @@
        (vc-gutter +pretty)
        vi-tilde-fringe
        ;; zen
+       :config
+       (default +bindings)
+
        )

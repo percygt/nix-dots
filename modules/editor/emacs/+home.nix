@@ -31,8 +31,13 @@ let
       emacs --daemon="capture"
       trap cleanup EXIT INT TERM
     fi
+    if [ -z "$1" ]; then
+      url=$( echo | dmenu -p "Enter URL:" )
+    else
+      url="$1"
+    fi
 
-    emacsclient -c -s "capture" -a "" -F "(quote (name . \"capture\"))" --no-wait -e "(+aiz-org-capture-frame)"
+    emacsclient -s "capture" -F "(quote (name . \"capture\"))" --no-wait -e "(+aiz-org-capture-frame)"
   '';
   emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
     emacs ${g.orgDirectory}/Inbox.org  -T "Notes"
@@ -104,67 +109,6 @@ in
 
             (provide 'nix)
             ;;; nix.el ends here
-          '';
-        "doom/themes/base16-nix-custom-theme.el".text =
-          # lisp
-          ''
-            ;; base16-nix-custom-theme.el -- A base16 colorscheme
-
-            ;;; Commentary:
-            ;; Base16: (https://github.com/tinted-theming/home)
-
-            ;;; Authors:
-            ;; Scheme: percygt (github.com/percygt)
-            ;; Template: PercyGT
-
-            ;;; Code:
-
-            (require 'base16-theme)
-
-            (defvar base16-nix-custom-theme-colors
-              '(:base00 "${c.base00}"
-                :base01 "${c.base01}"
-                :base02 "${c.base02}"
-                :base03 "${c.base03}"
-                :base04 "${c.base04}"
-                :base05 "${c.base05}"
-                :base06 "${c.base06}"
-                :base07 "${c.base07}"
-                :base08 "${c.base08}"
-                :base09 "${c.base09}"
-                :base0A "${c.base0A}"
-                :base0B "${c.base0B}"
-                :base0C "${c.base0C}"
-                :base0D "${c.base0D}"
-                :base0E "${c.base0E}"
-                :base0F "${c.base0F}")
-              "All colors for Base16 Nix Custom are defined here.")
-
-            (defvar base24-nix-custom-theme-colors (
-                      append
-                        base16-nix-custom-theme-colors
-                        '(:base10 "${c.base10}"
-                          :base11 "${c.base11}"
-                          :base12 "${c.base12}"
-                          :base13 "${c.base13}"
-                          :base14 "${c.base14}"
-                          :base15 "${c.base15}"
-                          :base16 "${c.base16}"
-                          :base17 "${c.base17}"))
-              "All colors for Base24 Nix Custom are defined here.")
-
-            ;; Define the theme
-            (deftheme base16-nix-custom)
-
-            ;; Add all the faces to the theme
-            (base16-theme-define 'base16-nix-custom base16-nix-custom-theme-colors)
-
-            ;; Mark the theme as provided
-            (provide-theme 'base16-nix-custom)
-
-            (provide 'base16-nix-custom-theme)
-
-            ;;; base16-nix-custom-theme.el ends here
           '';
       };
     };

@@ -1,4 +1,5 @@
 ;;; +org-capture.el -*- lexical-binding: t; -*-
+(require 'org-protocol-capture-html)
 (defun +org-capture/replace-brackets (link)
   (mapconcat
    (lambda (c)
@@ -23,7 +24,7 @@
   (call-interactively 'org-store-link)
   (org-capture nil "it"))
 
-(defun +aiz-org-capture-quick-paste ()
+(defun aiz-org-capture-quick-paste ()
   (interactive)
   (call-interactively 'org-store-link)
   (org-capture nil "rq"))
@@ -51,10 +52,12 @@
                           "%{extra}")
                :children (("General Task" :keys "t"
                            :icon ("nf-fa-tasks" :set "faicon" :color "yellow")
-                           :extra "")
+                           :after-finalize (lambda () (delete-frame))
+                           :extra  "")
                           ("Url" :keys "u"
                            :icon ("nf-md-web" :set "mdicon" :color "blue")
-                           :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]")
+                           :after-finalize (lambda () (delete-frame))
+                           :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]")
                           ("Clipboard paste" :keys "c"
                            :icon ("nf-fa-paste" :set "faicon" :color "cyan")
                            :extra "%(simpleclip-get-contents)")

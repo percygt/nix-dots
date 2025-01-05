@@ -32,8 +32,14 @@
 
 (map! :after corfu
       :map corfu-map
-      :gi [tab] #'corfu-next)
+      [tab] #'corfu-next
+      "TAB" #'corfu-next
+      [backtab] #'corfu-previous
+      "S-TAB" #'corfu-previous
+      )
 
+(map! :map org-mode-map
+      :ie [tab] #'corfu-next)
 (map! :after vertico
       :map vertico-map
       "C-j" #'vertico-next

@@ -2,21 +2,34 @@
 
 (load! "private" doom-user-dir t)
 (load! "nix" doom-user-dir t)
-(load! "configs/init.el")
-
-(setq doom-theme 'base16-tokyo-city-dark
+(setq doom-theme 'doom-city-lights
       doom-font (font-spec :family "VictorMono NFP" :size 20 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Work Sans" :size 20 :weight 'light)
       doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
       doom-big-font (font-spec :family "VictorMono NPF" :size 24))
 
-(defun set-background-for-terminal (&optional frame)
-  (or frame (setq frame (selected-frame)))
-  "unsets the background color in terminal mode"
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame)))
-(add-hook 'after-make-frame-functions 'set-background-for-terminal)
-(add-hook 'window-setup-hook 'set-background-for-terminal)
+(setq evil-emacs-state-cursor   `("white" bar)
+      evil-insert-state-cursor  `("Cyan" bar)
+      evil-normal-state-cursor  `("white" box)
+      evil-visual-state-cursor  `("PaleGoldenrod" box))
+
+(custom-theme-set-faces! 'doom-city-lights
+  `(mode-line-inactive :background "#00051a")
+  `(mode-line-active :background "#081028")
+  `(header-line :background "#081028")
+  `(org-modern-tag :foreground "color-246" :background "black" :height 0.6)
+  )
+
+(if (display-graphic-p)
+    (custom-theme-set-faces! 'doom-city-lights
+      `(default :background "#00051a")
+      )
+  (custom-theme-set-faces! 'doom-city-lights
+    `(default :background nil)
+    )
+  )
+
+(load! "configs/init.el")
 
 (setq shell-file-name (executable-find "bash"))
 (setq display-line-numbers-type 'relative)
