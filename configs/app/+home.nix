@@ -47,10 +47,8 @@ in
     associations.added = import ./mimeApps.nix;
   };
   home.packages = with pkgs; [
-    swayimg
-    gapless
+    swayimg # default image viewer
     mpv # default video player
-    # loupe # default image viewer
     zathura # default pdf viewer
     lollypop # default audio player
     gnome-calculator
@@ -60,7 +58,6 @@ in
     font-manager
     coulr
     pinta
-    boxbuddy
     # foliate
     # gimp
     # logseq

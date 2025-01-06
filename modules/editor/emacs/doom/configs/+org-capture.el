@@ -52,15 +52,16 @@
                           "%{extra}")
                :children (("General Task" :keys "t"
                            :icon ("nf-fa-tasks" :set "faicon" :color "yellow")
-                           :after-finalize (lambda () (delete-frame))
                            :extra  "")
                           ("Url" :keys "u"
                            :icon ("nf-md-web" :set "mdicon" :color "blue")
                            :after-finalize (lambda () (delete-frame))
-                           :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]")
+                           :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]"
+                           )
                           ("Clipboard paste" :keys "c"
                            :icon ("nf-fa-paste" :set "faicon" :color "cyan")
-                           :extra "%(simpleclip-get-contents)")
+                           :after-finalize (lambda () (delete-frame))
+                           :extra "%a")
                           ("Linked Task" :keys "l"
                            :icon ("nf-fa-link" :set "faicon" :color "magenta")
                            :extra "%i %a")
@@ -84,31 +85,38 @@
                           "%{extra}")
                :children (("Webpage" :keys "w"
                            :icon ("nf-fa-globe" :set "faicon" :color "green")
-                           :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]"
+                           :after-finalize (lambda () (delete-frame))
+                           :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]"
                            :i-type "read:web")
                           ("Video" :keys "v"
                            :icon ("nf-oct-video" :set "octicon" :color "red")
-                           :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]"
+                           :after-finalize (lambda () (delete-frame))
+                           :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]"
                            :i-type "watch:video")
                           ("Repo" :keys "r"
                            :icon ("nf-fa-git" :set "faicon" :color "orange")
-                           :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]"
+                           :after-finalize (lambda () (delete-frame))
+                           :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]"
                            :i-type "read:repo")
                           ("Article" :keys "a"
                            :icon ("nf-fa-file_text_o" :set "faicon" :color "yellow")
-                           :extra "[[%(simpleclip-get-contents)][%(+aiz-www-get-page-title (simpleclip-get-contents))]]"
+                           :after-finalize (lambda () (delete-frame))
+                           :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]"
                            :i-type "read:article")
                           ("Book" :keys "b"
                            :icon ("nf-fa-book" :set "faicon" :color "green")
                            :extra "%i %a"
+                           :after-finalize (lambda () (delete-frame))
                            :i-type "read:book")
                           ("Information" :keys "i"
                            :icon ("nf-fa-info_circle" :set "faicon" :color "blue")
                            :extra ""
+                           :after-finalize (lambda () (delete-frame))
                            :i-type "read:info")
                           ("Idea" :keys "I"
                            :icon ("nf-md-chart_bubble" :set "mdicon" :color "silver")
                            :extra ""
+                           :after-finalize (lambda () (delete-frame))
                            :i-type "idea")))
 
               ("Project" :keys "p"
@@ -124,14 +132,17 @@
                :children (("Project-local todo" :keys "t"
                            :icon ("nf-oct-checklist" :set "octicon" :color "green")
                            :time-or-todo "TODO"
+                           :after-finalize (lambda () (delete-frame))
                            :file +org-capture-project-todo-file)
                           ("Project-local note" :keys "n"
                            :icon ("nf-fa-sticky_note" :set "faicon" :color "yellow")
                            :time-or-todo "%U"
+                           :after-finalize (lambda () (delete-frame))
                            :file +org-capture-project-notes-file)
                           ("Project-local changelog" :keys "c"
                            :icon ("nf-fa-list" :set "faicon" :color "blue")
                            :time-or-todo "%U"
+                           :after-finalize (lambda () (delete-frame))
                            :heading "Unreleased"
                            :file +org-capture-project-changelog-file)))
               ("\tCentralised project templates"

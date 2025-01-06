@@ -27,7 +27,7 @@
   programs = {
     nautilus-open-any-terminal = {
       enable = true;
-      terminal = "foot";
+      terminal = "footclient";
     };
     seahorse.enable = true;
     gnome-disks.enable = true;

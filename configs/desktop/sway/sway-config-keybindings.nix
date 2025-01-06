@@ -15,7 +15,7 @@ let
     viewBackupLogCmd
     ;
   foot-ddterm = pkgs.writers.writeBash "foot-ddterm" ''
-    foot --app-id=foot-ddterm tmux-launch-session
+    footclient --app-id=foot-ddterm tmux-launch-session
   '';
 
   toggle-blur = pkgs.writers.writeBash "toggle-blur" ''
@@ -61,7 +61,6 @@ in
       "${mod}+w" = "exec ddapp -t 'foot-ddterm' -c ${foot-ddterm}";
       "${mod}+d" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
-      "${mod}+m" = "exec $toggle_window --id btop -- foot --title=SystemMonitor --app-id=btop btop";
       "${mod}+r" = "exec $toggle_window --id info.febvre.Komikku -- info.febvre.Komikku";
       "${mod}+Shift+i" = "exec $toggle_window --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
       "${mod}+Shift+d" = "exec $toggle_window --id gnome-disks -- gnome-disks";

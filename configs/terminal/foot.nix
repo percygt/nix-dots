@@ -6,6 +6,12 @@ let
   g = config._base;
 in
 {
+  wayland.windowManager.sway.config.startup = [
+    {
+      command = "foot --server";
+      always = true;
+    }
+  ];
   programs.foot = {
     enable = true;
     inherit (g.terminal.foot) package;

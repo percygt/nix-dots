@@ -1,12 +1,10 @@
 {
-  lib,
   pkgs,
   ...
 }:
 {
   environment.systemPackages = with pkgs; [ pavucontrol ];
   modules.core.persist.userData.directories = [ ".local/state/wireplumber" ];
-  hardware.pulseaudio.enable = lib.mkForce false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

@@ -4,8 +4,18 @@
   pkgs,
   ...
 }:
+let
+  swayCfg = config.wayland.windowManager.sway;
+  mod = swayCfg.config.modifier;
+  systemmonitor = pkgs.writers.writeBash "systemmonitor" ''
+    footclient --title='System Monitor' --app-id=btop btop";
+  '';
+in
 {
   config = lib.mkIf config.modules.cli.enable {
+    wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+      "${mod}+m" = "exec ddapp -t btop -m true -h 90 -w 90 -c ${systemmonitor}";
+    };
     programs = {
       btop = {
         enable = true;

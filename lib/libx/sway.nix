@@ -3,8 +3,8 @@ let
   wsToKey = ws: builtins.substring 0 1 ws;
 in
 rec {
-  viewRebuildLogCmd = "foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service";
-  viewBackupLogCmd = "foot --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service";
+  viewRebuildLogCmd = "footclient --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service";
+  viewBackupLogCmd = "footclient --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service";
   mkWorkspaceKeys =
     mod: workspaces:
     builtins.listToAttrs (

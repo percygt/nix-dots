@@ -52,7 +52,7 @@ in
           database = {
             database_1 = kpdb;
             pw_cache_period_min = 360;
-            terminal = "foot";
+            terminal = "footclient";
             editor = "nvim";
             type_library = "ydotool";
           };

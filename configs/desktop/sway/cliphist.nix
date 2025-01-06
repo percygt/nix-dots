@@ -8,7 +8,7 @@ let
   swayCfg = config.wayland.windowManager.sway;
   mod = swayCfg.config.modifier;
   cliphistFzfSixel = pkgs.writers.writeBash "cliphistFzfSixel" ''
-    foot --app-id=clipboard --title=Clipboard -- cliphist-fzf-sixel
+    footclient --app-id=clipboard --title=Clipboard -- cliphist-fzf-sixel
   '';
 in
 {

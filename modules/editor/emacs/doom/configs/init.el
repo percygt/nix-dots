@@ -8,5 +8,5 @@
 (load! "+treesit.el")
 (load! "+treesit-lang.el")
 (load! "+eglot.el")
-(load! "+tools.el")
-; (load! "+clipboard.el")
+;; (load! "+tools.el")
+                                        ; (load! "+clipboard.el")

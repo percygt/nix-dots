@@ -131,7 +131,7 @@ in
                 # Killing foot from sway results in non-zero exit code which triggers
                 # xdg-mime to use next valid entry, so we must always exit successfully
                 if [ "$SWAYSOCK" ]; then
-                  foot -- nvim "$1" || true
+                  footclient -- nvim "$1" || true
                 else
                   tilix -- nvim "$1" || true
                 fi
