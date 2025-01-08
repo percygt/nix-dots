@@ -2,21 +2,11 @@
   pkgs,
   lib,
   config,
-  libx,
   ...
 }:
 let
-
   cfg = config.wayland.windowManager.sway.config;
   mod = cfg.modifier;
-  inherit (libx) sway;
-  inherit (sway)
-    viewRebuildLogCmd
-    viewBackupLogCmd
-    ;
-  foot-ddterm = pkgs.writers.writeBash "foot-ddterm" ''
-    footclient --app-id=foot-ddterm tmux-launch-session
-  '';
 
   toggle-blur = pkgs.writers.writeBash "toggle-blur" ''
     BLUR_STATUS_FILE="/tmp/blur-status"
@@ -47,43 +37,26 @@ let
 in
 {
   wayland.windowManager.sway = {
-    extraConfigEarly = ''
-      set {
-        $toggle_window ${lib.getExe pkgs.toggle-sway-window}
-      }
-    '';
     config.keybindings = lib.mkOptionDefault {
-      "Ctrl+KP_Insert" = "exec $toggle_window --id system-software-update -- ${viewRebuildLogCmd}";
-      "Ctrl+KP_Delete" = "exec $toggle_window --id backup -- ${viewBackupLogCmd}";
-      "Ctrl+Shift+KP_Insert" = "exec systemctl --user start nixos-rebuild";
       "${mod}+s" = "exec swaync-client -t -sw";
       "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
-      "${mod}+w" = "exec ddapp -t 'foot-ddterm' -c ${foot-ddterm}";
       "${mod}+d" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
-      "${mod}+r" = "exec $toggle_window --id info.febvre.Komikku -- info.febvre.Komikku";
-      "${mod}+Shift+i" = "exec $toggle_window --id \"chrome-chatgpt.com__-WebApp-ai\" -- ${config.xdg.desktopEntries.ai.exec}";
-      "${mod}+Shift+d" = "exec $toggle_window --id gnome-disks -- gnome-disks";
-      "${mod}+b" = "exec $toggle_window --id .blueman-manager-wrapped -- blueman-manager";
       "${mod}+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu}";
       "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C | xargs swaymsg exec --";
       "${mod}+Shift+p" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
-
       "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
       "${mod}+Tab" = "workspace back_and_forth";
       "${mod}+Backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
       "${mod}+Delete" = "exec swaylock";
-      XF86Calculator = "exec $toggle_window --id org.gnome.Calculator -- gnome-calculator";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
 
-      "F12" = "exec $toggle_window --id org.pulseaudio.pavucontrol -- pavucontrol";
       "F11" = "fullscreen toggle";
-      "F10" = "exec ${toggle-blur}";
+      "F12" = "exec ${toggle-blur}";
+
       "${mod}+Shift+t" = "layout stacking";
       "${mod}+t" = "layout tabbed";
       "${mod}+Alt+s" = "layout toggle split";
-      "${mod}+Shift+s" = "splith";
-      "${mod}+Shift+v" = "splitv";
       "${mod}+Shift+r" = "reload";
 
       "${mod}+Shift+l" = "workspace next";

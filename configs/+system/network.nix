@@ -11,10 +11,6 @@ lib.mkMerge [
     sops.secrets."wireless.env".neededForUsers = true;
   }
   (lib.mkIf (!wpa) {
-    systemd = {
-      services.NetworkManager-wait-online.wantedBy = lib.mkForce [ ]; # Normally ["network-online.target"]
-      targets.network-online.wantedBy = lib.mkForce [ ]; # Normally ["multi-user.target"]
-    };
     programs.nm-applet = {
       enable = true;
       indicator = true;

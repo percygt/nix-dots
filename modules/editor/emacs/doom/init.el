@@ -41,7 +41,7 @@
        ;;tabs
        (vc-gutter +diff-hl +pretty)
        ;;window-select
-       ;workspaces
+                                        ;workspaces
        ;;zen
        vi-tilde-fringe
 
@@ -77,7 +77,7 @@
 
        :checkers
        syntax
-       (spell +aspell +everywhere)
+       (spell +everywhere)
        ;;grammar
 
        :tools

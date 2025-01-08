@@ -17,6 +17,7 @@ in
   ];
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
     "${mod}+shift+f" = "exec ddapp -t 'org.gnome.Nautilus' -c ${nautilus}";
+    XF86Calculator = "exec ddapp -t 'org.gnome.Calculator' -c gnome-calculator";
   };
   modules.desktop.sway.floatingRules = [
     {

@@ -22,7 +22,6 @@ rec {
       isDroid
       ;
   };
-
   homeDirectory = "/home/${username}";
 
   args = {

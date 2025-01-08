@@ -91,22 +91,61 @@
                              :order 90)
                             (:discard (:tag ("Chore" "Routine" "Daily")))
                             ))))
-          (org-ql-block '(tags "interest")
-                        ((org-ql-block-header "Interesting")
+          (org-ql-block '(tags "idea")
+                        ((org-ql-block-header "Ideas")
                          (org-super-agenda-groups
                           '(
-                            (:name "Idea"
-                             :tag "idea"
+                            (:name "Dev"
+                             :tag ("idea" "dev")
+                             )
+                            (:name "General"
+                             :tag ("idea" "general")
+                             )
+                            )
+                          )))
+          (org-ql-block '(tags "dev")
+                        ((org-ql-block-header "Interesting in Dev")
+                         (org-super-agenda-groups
+                          '(
+                            (:name "Repo"
+                             :tag "repo"
                              :order 1)
-                            (:name "Info"
-                             :tag "idea"
-                             :order 2)
-                            (:name "Read"
-                             :tag "read"
+                            (:name "Information"
+                             :tag "info"
                              :order 3)
-                            (:name "Watch"
-                             :tag "watch"
+                            (:name "Article"
+                             :tag "article"
                              :order 4)
+                            (:name "Web"
+                             :tag "web"
+                             :order 5)
+                            (:name "Video"
+                             :tag "video"
+                             :order 6)
+                            (:name "Book"
+                             :tag "book"
+                             :order 7)
+                            )
+                          )))
+          (org-ql-block '(tags "general")
+                        ((org-ql-block-header "Interesting in general")
+                         (org-super-agenda-groups
+                          '(
+                            (:name "Article"
+                             :tag "article"
+                             :order 1)
+                            (:name "Web"
+                             :tag "web"
+                             :order 2)
+                            (:name "Video"
+                             :tag "video"
+                             :order 3)
+                            (:name "Book"
+                             :tag "book"
+                             :order 4)
+                            (:name "Information"
+                             :tag "info"
+                             :order 5)
                             )
                           )))
           ))))

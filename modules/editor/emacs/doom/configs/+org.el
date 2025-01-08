@@ -4,7 +4,7 @@
       org-archive-location (file-name-concat org-directory ".archive/%s::")
       org-agenda-files (list org-directory)
       +org-capture-notes-file "Inbox.org"
-      +org-capture-todo-file "Home.org"
+      +org-capture-todo-file "Todo.org"
       +org-capture-projects-file "Projects.org"
       +org-capture-journal-file "Inbox.org")
 

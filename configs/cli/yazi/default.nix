@@ -8,7 +8,7 @@ let
   swayCfg = config.wayland.windowManager.sway;
   mod = swayCfg.config.modifier;
   yazi-foot = pkgs.writers.writeBash "yazi-foot" ''
-    foot --app-id=yazi fish -c yazi ~
+    footclient --app-id=yazi --title='Yazi' -- yazi ~
   '';
 in
 {

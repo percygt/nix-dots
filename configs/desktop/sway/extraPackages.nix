@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    tmux-launch-session
     (writeShellApplication {
       name = "ocr";
       runtimeInputs = with pkgs; [

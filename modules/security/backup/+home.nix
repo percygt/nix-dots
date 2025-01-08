@@ -6,9 +6,15 @@
 }:
 let
   g = config._base;
+  viewBackupLogCmd = pkgs.writers.writeBash "viewbackuplogcommand" ''
+    footclient --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service
+  '';
 in
 {
   config = lib.mkIf config.modules.security.backup.enable {
+    wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+      "Ctrl+KP_Delete" = "exec ddapp -t 'backup' -m false -h 90 -w 90 -c ${viewBackupLogCmd}";
+    };
     systemd.user.services.borgmatic = {
       Service = {
         Type = "exec";

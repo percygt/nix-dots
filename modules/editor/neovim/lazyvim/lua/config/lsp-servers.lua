@@ -15,6 +15,9 @@ return {
   nushell = {},
   nil_ls = {
     settings = {
+      formatting = {
+        command = { "nixfmt" },
+      },
       nil_ls = {
         nix = {
           flake = {

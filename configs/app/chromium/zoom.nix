@@ -1,10 +1,18 @@
 {
-  modules.desktop.sway.floatingRules = [
-    {
-      command = ''resize set width 80ppt height 80ppt, move position center'';
-      criterias = [ { app_id = "chrome-app.zoom.us__wc-WebApp-zoom"; } ];
-    }
-  ];
+  lib,
+  config,
+  ...
+}:
+let
+  swayCfg = config.wayland.windowManager.sway;
+  mod = swayCfg.config.modifier;
+in
+{
+  wayland.windowManager.sway = {
+    config.keybindings = lib.mkOptionDefault {
+      "${mod}+z" = "exec ddapp -t \"chrome-app.zoom.us__wc-WebApp-zoom\" -h 90 -w 90 -c ${config.xdg.desktopEntries.zoom.exec}";
+    };
+  };
 
   programs.chromium.webapps.zoom = {
     enable = true;

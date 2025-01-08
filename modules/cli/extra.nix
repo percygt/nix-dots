@@ -4,28 +4,8 @@
   pkgs,
   ...
 }:
-let
-  swayCfg = config.wayland.windowManager.sway;
-  mod = swayCfg.config.modifier;
-  systemmonitor = pkgs.writers.writeBash "systemmonitor" ''
-    footclient --title='System Monitor' --app-id=btop btop";
-  '';
-in
 {
   config = lib.mkIf config.modules.cli.enable {
-    wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-      "${mod}+m" = "exec ddapp -t btop -m true -h 90 -w 90 -c ${systemmonitor}";
-    };
-    programs = {
-      btop = {
-        enable = true;
-        settings = {
-          color_theme = "tokyo-night";
-          theme_background = false;
-          vim_keys = true;
-        };
-      };
-    };
     home.packages = with pkgs; [
       # tui
       tdf # Tui-based PDF viewer
@@ -41,7 +21,6 @@ in
       stable.visidata # interactive multitool for tabular data NOTE: dependency libolm tagged as insecure package
       wtf # personal information dashboard
       termshark
-      bluetuith
       jqp
       gpg-tui
       tailscale
@@ -75,7 +54,6 @@ in
       grc # Generic Colouriser
       xh # for sending HTTP requests
       trash-cli # Command Line Interface to FreeDesktop.org Trash
-      clipboard-jh # the clipboard manager
       chafa # cli graphics
       poppler # pdf rendering tool
     ];

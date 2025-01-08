@@ -58,28 +58,6 @@
     '';
   };
 
-  tmux-launch-session = pkgs.writeShellApplication {
-    name = "tmux-launch-session";
-    runtimeInputs = [
-      pkgs.tmux
-    ];
-    text = ''
-      if [ -d "$FLAKE" ]; then
-        tmux has-session -t nix-dots 2>/dev/null
-        if [ ! $? ]; then
-          tmux new-session -ds nix-dots -c "$FLAKE"
-        fi
-        tmux new-session -As nix-dots
-      else
-        tmux has-session -t home 2>/dev/null
-        if [ ! $? ]; then
-          tmux new-session -ds home -c "$HOME"
-        fi
-        tmux new-session -As home
-      fi
-    '';
-  };
-
   json2nix = pkgs.writeScriptBin "json2nix" ''
     ${pkgs.python3}/bin/python ${
       pkgs.fetchurl {

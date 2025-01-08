@@ -1,10 +1,18 @@
 {
-  modules.desktop.sway.floatingRules = [
-    {
-      command = ''resize set width 80ppt height 80ppt, move position center'';
-      criterias = [ { app_id = "chrome-chatgpt.com__-WebApp-ai"; } ];
-    }
-  ];
+  lib,
+  config,
+  ...
+}:
+let
+  swayCfg = config.wayland.windowManager.sway;
+  mod = swayCfg.config.modifier;
+in
+{
+  wayland.windowManager.sway = {
+    config.keybindings = lib.mkOptionDefault {
+      "${mod}+Shift+i" = "exec ddapp -t \"chrome-chatgpt.com__-WebApp-ai\" -h 90 -w 90 -c ${config.xdg.desktopEntries.ai.exec}";
+    };
+  };
 
   programs.chromium.webapps.ai = {
     enable = true;

@@ -2318,6 +2318,14 @@
           "nix-sources",
           "nixpkgs"
         ],
+        "nixpkgs-master": [
+          "nix-sources",
+          "nixpkgs-master"
+        ],
+        "nixpkgs-stable": [
+          "nix-sources",
+          "nixpkgs-stable"
+        ],
         "nur": "nur",
         "pre-commit-hooks": "pre-commit-hooks",
         "sops-nix": "sops-nix",

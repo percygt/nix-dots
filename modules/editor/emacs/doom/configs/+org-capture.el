@@ -52,6 +52,7 @@
                           "%{extra}")
                :children (("General Task" :keys "t"
                            :icon ("nf-fa-tasks" :set "faicon" :color "yellow")
+                           :after-finalize (lambda () (delete-frame))
                            :extra  "")
                           ("Url" :keys "u"
                            :icon ("nf-md-web" :set "mdicon" :color "blue")
@@ -64,12 +65,15 @@
                            :extra "%a")
                           ("Linked Task" :keys "l"
                            :icon ("nf-fa-link" :set "faicon" :color "magenta")
+                           :after-finalize (lambda () (delete-frame))
                            :extra "%i %a")
                           ("Task with deadline" :keys "d"
                            :icon ("nf-md-timer" :set "mdicon" :color "orange" :v-adjust -0.1)
+                           :after-finalize (lambda () (delete-frame))
                            :extra "DEADLINE: %^{Deadline:}t")
                           ("Scheduled Task" :keys "s"
                            :icon ("nf-oct-calendar" :set "octicon" :color "orange")
+                           :after-finalize (lambda () (delete-frame))
                            :extra "SCHEDULED: %^{Start time:}t")))
 
               ("Interesting" :keys "i"
@@ -78,7 +82,7 @@
                :headline "Interesting"
                :prepend t
                :type entry
-               :template ("* %? :interest:%{i-type}:"
+               :template ("* %? :%{i-type}:"
                           ":PROPERTIES:"
                           ":Created: %U"
                           ":END:"
@@ -87,37 +91,37 @@
                            :icon ("nf-fa-globe" :set "faicon" :color "green")
                            :after-finalize (lambda () (delete-frame))
                            :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]"
-                           :i-type "read:web")
+                           :i-type "read:web:%^{Type|dev|general}")
                           ("Video" :keys "v"
                            :icon ("nf-oct-video" :set "octicon" :color "red")
                            :after-finalize (lambda () (delete-frame))
                            :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]"
-                           :i-type "watch:video")
+                           :i-type "watch:video:%^{Type|dev|general}")
                           ("Repo" :keys "r"
                            :icon ("nf-fa-git" :set "faicon" :color "orange")
                            :after-finalize (lambda () (delete-frame))
                            :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]"
-                           :i-type "read:repo")
+                           :i-type "repo:dev")
                           ("Article" :keys "a"
                            :icon ("nf-fa-file_text_o" :set "faicon" :color "yellow")
                            :after-finalize (lambda () (delete-frame))
                            :extra "[[%:link][%(+aiz-www-get-page-title \"%:link\")]]"
-                           :i-type "read:article")
+                           :i-type "read:article:%^{Type|dev|general}")
                           ("Book" :keys "b"
                            :icon ("nf-fa-book" :set "faicon" :color "green")
                            :extra "%i %a"
                            :after-finalize (lambda () (delete-frame))
-                           :i-type "read:book")
+                           :i-type "read:book:%^{Type|dev|general}")
                           ("Information" :keys "i"
                            :icon ("nf-fa-info_circle" :set "faicon" :color "blue")
-                           :extra ""
+                           :extra "%a"
                            :after-finalize (lambda () (delete-frame))
-                           :i-type "read:info")
+                           :i-type "read:info:%^{Type|dev|general}")
                           ("Idea" :keys "I"
                            :icon ("nf-md-chart_bubble" :set "mdicon" :color "silver")
                            :extra ""
                            :after-finalize (lambda () (delete-frame))
-                           :i-type "idea")))
+                           :i-type "idea:%^{Type|dev|general}")))
 
               ("Project" :keys "p"
                :icon ("nf-oct-repo" :set "octicon" :color "silver")

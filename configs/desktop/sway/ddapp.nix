@@ -98,7 +98,7 @@
               done
             fi
           fi
-          swaymsg exec $command
+          swaymsg exec "$command"
         fi
       ''
     )

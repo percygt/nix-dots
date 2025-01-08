@@ -3,6 +3,7 @@
   lib,
   pkgs,
   username,
+  pkgs-stable,
   ...
 }:
 {
@@ -14,8 +15,8 @@
       udev.packages = [ pkgs.utsushi ];
       system-config-printer.enable = true;
       printing = {
+        drivers = [ pkgs-stable.epson-2014-w ];
         enable = true;
-        drivers = [ pkgs.epson-201401w ];
       };
     };
     hardware = {
