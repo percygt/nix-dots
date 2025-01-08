@@ -13,4 +13,12 @@
     import ../packages/overlays.nix {
       pkgs = final;
     };
+  other-nixpkgs = final: _: {
+    stable = import inputs.nixpkgs-stable {
+      inherit (final) system config;
+    };
+    master = import inputs.nixpkgs-master {
+      inherit (final) system config;
+    };
+  };
 }
