@@ -9,6 +9,12 @@ let
   inherit (g) flakeDirectory;
   c = config.modules.themes.colors.withHashtag;
   defaultShell = g.shell.default.package;
+  cfg = config.wayland.windowManager.sway.config;
+  mod = cfg.modifier;
+  foot-ddterm = pkgs.writers.writeBash "foot-ddterm" ''
+    footclient --app-id='foot-ddterm' -- tmux-launch-session;
+  '';
+
 in
 {
   imports = [ ./extraConfig.nix ];
@@ -27,9 +33,33 @@ in
     escapeTime = 0;
     historyLimit = 1000000;
   };
+  wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+    "${mod}+w" = "exec ddapp -t 'foot-ddterm' -c ${foot-ddterm}";
+  };
   home = {
     # dependencies
     packages = with pkgs; [
+      (writeShellApplication {
+        name = "tmux-launch-session";
+        runtimeInputs = [
+          pkgs.tmux
+        ];
+        text = ''
+          if [ -d "$FLAKE" ]; then
+            tmux has-session -t nix-dots 2>/dev/null
+            if [ ! $? ]; then
+              tmux new-session -ds nix-dots -c "$FLAKE"
+            fi
+            tmux new-session -As nix-dots
+          else
+            tmux has-session -t home 2>/dev/null
+            if [ ! $? ]; then
+              tmux new-session -ds home -c "$HOME"
+            fi
+            tmux new-session -As home
+          fi
+        '';
+      })
       wl-clipboard
       moreutils
       fzf

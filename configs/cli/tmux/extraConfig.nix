@@ -15,7 +15,7 @@ let
     sed -i ':a;N;$!ba;s|\[fish\] <defunct>\n||g' "$1"
   '';
   g = config._base;
-  tp = pkgs.stable.tmuxPlugins;
+  tp = pkgs.tmuxPlugins;
 in
 {
   programs.tmux.extraConfig =

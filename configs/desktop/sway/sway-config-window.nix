@@ -7,9 +7,6 @@
     {
       command = ''resize set width 80ppt height 80ppt, move position center'';
       criterias = [
-        { app_id = "btop"; }
-        { app_id = "backup"; }
-        { app_id = "system-software-update"; }
         { class = "\.?qemu-system-x86_64(-wrapped)?"; }
         { class = "Spotify"; }
         { title = "^Brave$"; }
