@@ -35,9 +35,9 @@ let
           template="ia"
           ;;
         esac
-        footclient -t foot-direct --app-id clipboard-capture-interest --title Emacs -- emacsclient -t -a "" "org-protocol://capture?url=$clipboard&template=$template"
+        footclient --app-id clipboard-capture-interest --title Emacs -- emacsclient -t -a "" "org-protocol://capture?url=$clipboard&template=$template"
       else
-        footclient -t foot-direct --app-id clipboard-capture --title Emacs -- emacsclient -t -a "" "org-protocol://capture?url=$clipboard&template=tu"
+        footclient --app-id clipboard-capture --title Emacs -- emacsclient -t -a "" "org-protocol://capture?url=$clipboard&template=tu"
       fi
     else
       if [[ $1 = "i" ]]; then
@@ -53,30 +53,36 @@ let
           template="iI"
           ;;
         esac
-        footclient -t foot-direct --app-id clipboard-capture-interest --title Emacs -- emacsclient -t -a "" "org-protocol://capture?body=$clipboard&template=$template"
+        footclient --app-id clipboard-capture-interest --title Emacs -- emacsclient -t -a "" "org-protocol://capture?body=$clipboard&template=$template"
       else
-        footclient -t foot-direct --app-id clipboard-capture --title Emacs -- emacsclient -t -a "" "org-protocol://capture?body=$clipboard&template=tc"
+        footclient --app-id clipboard-capture --title Emacs -- emacsclient -t -a "" "org-protocol://capture?body=$clipboard&template=tc"
       fi
     fi
   '';
   doomconfig = pkgs.writers.writeBash "doomconfig" ''
-    footclient -t foot-direct --app-id doom-config --title Emacs -- emacs -nw ${moduleEmacs}/doom
+    footclient --app-id doom-config --title Emacs -- emacs -nw ${moduleEmacs}/doom
   '';
   emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
-    footclient -t foot-direct --app-id notes --title Emacs -- emacs -nw ${g.orgDirectory}/Inbox.org
+    footclient --app-id notes --title Emacs -- emacs -nw ${g.orgDirectory}/Inbox.org
   '';
   emacscapture = pkgs.writers.writeBash "emacscapture" ''
-    footclient -t foot-direct --app-id capture --title Emacs -- emacsclient -t -a "" --eval '(progn (org-capture))'
+    footclient --app-id capture --title Emacs -- emacsclient -t -a "" --eval '(progn (org-capture))'
   '';
   emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
-    footclient -t foot-direct --app-id agenda --title Emacs -- emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
+    footclient --app-id agenda --title Emacs -- emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
   '';
+  termVar = "TERM=foot";
+  termInfoVar = "TERMINFO=${g.terminal.foot.package.terminfo}/share/terminfo";
 in
 {
   config = lib.mkIf cfg.enable {
     wayland.windowManager.sway.config.startup = [
       {
-        command = "emacs --daemon";
+        command = lib.concatStringsSep " " [
+          termVar
+          termInfoVar
+          "${cfg.finalPackage}/bin/emacs --fg-daemon"
+        ];
         always = true;
       }
     ];
@@ -89,6 +95,7 @@ in
       "${mod}+c" = "exec ddapp -t 'capture' -m false -h 90 -w 90 -c ${emacscapture}";
     };
     home = {
+      packages = [ cfg.finalPackage ];
       shellAliases.e = "emacs -nw";
       shellAliases = {
         doom-install = "${EMACSDIR}/bin/doom install --no-env --no-hooks";

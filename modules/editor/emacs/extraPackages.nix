@@ -11,6 +11,7 @@ pkgs: with pkgs; [
   eza
   binutils # native-comp needs 'as', provided by this
   ## Dependencies
+  libtool
   git
   ripgrep
   gnutls # for TLS connectivity

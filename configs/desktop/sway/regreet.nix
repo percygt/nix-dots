@@ -8,10 +8,12 @@ let
   t = config.modules.themes;
   f = config.modules.fonts.interface;
   g = config._base;
+  homeCfgs = config.home-manager.users;
   unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;
   xSessions = "${config.services.displayManager.sessionData.desktops}/share/xsessions";
   wlSessions = "${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
-  vars = ''SESSION_DIRS=${xSessions}:${wlSessions} GTK_USE_PORTAL=0'';
+  homeSharePaths = lib.mapAttrsToList (_: v: "${v.home.path}/share") homeCfgs;
+  vars = ''SESSION_DIRS=${xSessions}:${wlSessions} XDG_DATA_DIRS="$XDG_DATA_DIRS:${lib.concatStringsSep ":" homeSharePaths}" GTK_USE_PORTAL=0'';
 
   sway-kiosk =
     command:

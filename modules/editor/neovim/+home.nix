@@ -74,8 +74,8 @@ in
               HASH=$(nix-hash --flat $LOCK_FILE)
 
               if [ "$(cat $STATE_FILE)" != "$HASH" ]; then
-                echo "Syncing neovim plugins"
-                $DRY_RUN_CMD ${config.programs.neovim.finalPackage}/bin/nvim --headless "+Lazy! restore" +qa
+                $DRY_RUN_CMD echo "Syncing neovim plugins"
+                ${config.programs.neovim.finalPackage}/bin/nvim --headless "+Lazy! restore" +qa
                 $DRY_RUN_CMD echo $HASH >$STATE_FILE
               else
                 $VERBOSE_ECHO "Neovim plugins already synced, skipping"

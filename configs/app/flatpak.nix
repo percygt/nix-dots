@@ -51,6 +51,7 @@
       "flathub:app/com.valvesoftware.Steam/x86_64/stable"
       "flathub:app/org.libreoffice.LibreOffice/x86_64/stable"
       "flathub:app/io.github.zen_browser.zen/x86_64/stable"
+      "flathub:app/engineer.atlas.Nyxt/x86_64/stable"
 
       # "org.audacityteam.Audacity "
       # "com.github.geigi.cozy"

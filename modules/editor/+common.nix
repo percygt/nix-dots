@@ -45,6 +45,7 @@ pkgs: with pkgs; [
   gcc
   clang-tools
   cppcheck
+  cmake
 
   # Shell scripting
   shfmt

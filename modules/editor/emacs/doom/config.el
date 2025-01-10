@@ -31,7 +31,7 @@
   )
 
 
-(setq shell-file-name (executable-find "bash"))
+(setq shell-file-name (executable-find "nu"))
 (setq display-line-numbers-type 'relative)
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode)
 (global-subword-mode 1)                           ; Iterate through CamelCase words
