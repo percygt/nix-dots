@@ -19,9 +19,9 @@ let
 in
 {
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-    "${mod}+m" = "exec ddapp -t 'btop' -m false -h 90 -w 90 -c ${systemmonitor}";
-    "${mod}+b" = "exec ddapp -t 'bluetooth' -m false -h 50 -w 50 -c ${bluetoothmanager}";
-    "${mod}+v" = "exec ddapp -t 'volume' -m false -h 50 -w 50 -c ${volumecontrol}";
+    "${mod}+m" = "exec ddapp -t 'btop' -m false -h 90 -w 90 -- ${systemmonitor}";
+    "${mod}+b" = "exec ddapp -t 'bluetooth' -m false -h 50 -w 50 -- ${bluetoothmanager}";
+    "${mod}+v" = "exec ddapp -t 'volume' -m false -h 50 -w 50 -- ${volumecontrol}";
   };
   programs = {
     btop = {

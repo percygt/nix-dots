@@ -3,6 +3,7 @@
   config,
   lib,
   username,
+  pkgs,
   ...
 }:
 
@@ -45,12 +46,31 @@ in
         LOCAL_HASH=$(git rev-parse HEAD)
         REMOTE_HASH=$(git rev-parse @{u})
 
+        notify_success() {
+          notify-send -i emblem-default "System Rebuild" "NixOS rebuild successful"
+          { mpv ${pkgs.success-alert} || true; } &
+          exit 0
+        }
+        notify_failure() {
+          notify-send --urgency=critical -i emblem-error "System Rebuild" "NixOS rebuild failed!"
+          { mpv ${pkgs.failure-alert} || true; } &
+          exit 1
+        }
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
-          echo "Updates found, running nixos-rebuild..."
+          notify-send -i zen-icon "System Rebuild" "NixOS rebuild switch started"
           git pull
           exec systemctl start nixos-rebuild
+          while systemctl -q is-active nixos-rebuild.service; do
+            sleep 1
+          done
+          if systemctl -q is-failed nixos-rebuild.service; then
+            notify_failure
+          else
+            notify_success
+          fi
         else
           echo "No updates found. Exiting."
+          exit 0
         fi
       '';
     };

@@ -1,12 +1,11 @@
 return {
   {
     "saghen/blink.cmp",
-    -- enabled = false,
     opts = function(_, opts)
       local border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" }
-      -- opts.completion.list = {
-      --   selection = "auto_insert",
-      -- }
+      opts.completion.list = {
+        selection = { auto_insert = true, preselect = false },
+      }
       opts.completion.documentation.auto_show = false
       opts.completion.documentation.window = {
         border = border,

@@ -54,6 +54,7 @@
   (load! "+org-capture-prettify.el")
   (load! "+org-capture.el")
   (load! "+org-agenda.el")
+  (load! "+org-roam.el")
   (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
   (org-link-set-parameters "id" :complete 'org-id-complete-link)
   (setq org-startup-folded nil ; do not start folded

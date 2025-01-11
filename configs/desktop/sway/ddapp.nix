@@ -20,7 +20,7 @@
             n) name=''${OPTARG} ;;
             m) minimize_auto=''${OPTARG} ;;
             k) kill=''${OPTARG} ;;
-            c) command=''${OPTARG};;
+            # c) command=''${OPTARG};;
             *) notify-send "You f*cked up" "''${OPTARG}" ;;
           esac
         done
@@ -98,7 +98,21 @@
               done
             fi
           fi
-          swaymsg exec "$command"
+          after_double_dash=false
+          args_after_dash=()
+
+          for arg in "$@"; do
+            if [ "$after_double_dash" = true ]; then
+              args_after_dash+=("$arg")
+            fi
+
+            # Set the flag to true after '--'
+            if [ "$arg" == "--" ]; then
+              after_double_dash=true
+            fi
+          done
+
+          swaymsg exec "''${args_after_dash[@]}"
         fi
       ''
     )

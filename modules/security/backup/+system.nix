@@ -17,7 +17,6 @@ in
   # configured in home
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      pika-backup
       borgbackup
     ];
     modules.core.persist.userData.directories = [ configDir ];
@@ -29,7 +28,7 @@ in
         timerConfig = {
           Persistent = true;
           OnBootSec = "1min";
-          RandomizedDelaySec = "5min";
+          RandomizedDelaySec = "1min";
         };
       };
       services.poweroff_hdd = {
@@ -45,7 +44,7 @@ in
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "Mon..Sun *-*-* 5:00:00";
-          Persistent = true;
+          # Persistent = true;
           RandomizedDelaySec = "30min";
           OnBootSec = "30min";
         };

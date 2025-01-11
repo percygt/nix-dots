@@ -31,7 +31,7 @@
        (ligatures +extra)
        ;;minimap
        modeline
-       ;;nav-flash
+       nav-flash
        ;;neotree
        ophints
        (popup +defaults)
@@ -40,8 +40,8 @@
        ;;unicode
        ;;tabs
        (vc-gutter +diff-hl +pretty)
-       ;;window-select
-                                        ;workspaces
+       window-select
+       ;;workspaces
        ;;zen
        vi-tilde-fringe
 
@@ -107,7 +107,7 @@
        (tty +osc)               ; enable terminal integration
 
        :lang
-       (org +journal +dragndrop +roam2)
+       (org +roam2)
        cc
        data
        emacs-lisp

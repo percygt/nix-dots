@@ -34,7 +34,7 @@ in
     historyLimit = 1000000;
   };
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-    "${mod}+w" = "exec ddapp -t 'foot-ddterm' -c ${foot-ddterm}";
+    "${mod}+w" = "exec ddapp -t 'foot-ddterm' -- ${foot-ddterm}";
   };
   home = {
     # dependencies

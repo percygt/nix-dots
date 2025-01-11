@@ -51,8 +51,8 @@ in
             stderr "Flake directory: $FLAKE is not valid"
             exit 1
           fi
-          CONFIGID=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 6)
-          CONFIGDIR="/tmp/nixosconfig$CONFIGID"
+          CONFIGID=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8)
+          CONFIGDIR="/tmp/nr-$CONFIGID"
 
           # Execute the commands
           su ${username} -c \

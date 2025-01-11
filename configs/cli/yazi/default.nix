@@ -14,7 +14,7 @@ in
 {
   imports = [ ./plugin.nix ];
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-    "${mod}+f" = "exec ddapp -t 'yazi' -c ${yazi-foot}";
+    "${mod}+f" = "exec ddapp -t 'yazi' -- ${yazi-foot}";
   };
   home = {
     shellAliases.y = "yazi";

@@ -10,7 +10,7 @@ in
 {
   wayland.windowManager.sway = {
     config.keybindings = lib.mkOptionDefault {
-      "${mod}+z" = "exec ddapp -t \"chrome-app.zoom.us__wc-WebApp-zoom\" -h 90 -w 90 -c ${config.xdg.desktopEntries.zoom.exec}";
+      "${mod}+z" = "exec ddapp -t \"chrome-app.zoom.us__wc-WebApp-zoom\" -h 90 -w 90 -- ${config.xdg.desktopEntries.zoom.exec}";
     };
   };
 

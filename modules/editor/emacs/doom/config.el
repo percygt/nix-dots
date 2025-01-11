@@ -16,9 +16,12 @@
 
 (custom-theme-set-faces! 'doom-city-lights
   `(mode-line-inactive :background "#00051a")
+  `(vertical-border :background "#081028" :foreground "#081028")
+  `(fringe :background nil)
+  `(line-number :background nil)
   `(mode-line-active :background "#081028")
   `(header-line :background "#081028")
-  `(org-modern-tag :foreground "color-246" :background "black" :height 0.6)
+  `(org-modern-tag :foreground "gray40" :background "black" :height 0.6)
   )
 
 (if (display-graphic-p)
@@ -26,7 +29,7 @@
       `(default :background "#00051a")
       )
   (custom-theme-set-faces! 'doom-city-lights
-    `(default :background nil)
+    `(default :background unspecified)
     )
   )
 

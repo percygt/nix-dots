@@ -60,10 +60,10 @@ let
     fi
   '';
   doomconfig = pkgs.writers.writeBash "doomconfig" ''
-    footclient --app-id doom-config --title Emacs -- emacs -nw ${moduleEmacs}/doom
+    footclient --app-id doom-config --title Emacs -- emacsclient -t -a "" ${moduleEmacs}/doom/config.el
   '';
   emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
-    footclient --app-id notes --title Emacs -- emacs -nw ${g.orgDirectory}/Inbox.org
+    footclient --app-id notes --title Emacs -- emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
   '';
   emacscapture = pkgs.writers.writeBash "emacscapture" ''
     footclient --app-id capture --title Emacs -- emacsclient -t -a "" --eval '(progn (org-capture))'
@@ -87,12 +87,12 @@ in
       }
     ];
     wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-      "${mod}+n" = "exec ddapp -t 'notes' -c ${emacsnotes}";
-      "${mod}+Shift+e" = "exec ddapp -t 'doom-config' -c ${doomconfig}";
-      "${mod}+y" = "exec ddapp -t 'clipboard-capture' -m false -h 90 -w 90 -c ${clipboardcapture}";
-      "${mod}+Shift+y" = "exec ddapp -t 'clipboard-capture-interest' -m false -h 90 -w 90 -c '${clipboardcapture} i'";
-      "${mod}+e" = "exec ddapp -t 'agenda' -k true -c ${emacsagenda}";
-      "${mod}+c" = "exec ddapp -t 'capture' -m false -h 90 -w 90 -c ${emacscapture}";
+      "${mod}+n" = "exec ddapp -t 'notes' -- ${emacsnotes}";
+      "${mod}+Shift+e" = "exec ddapp -t 'doom-config' -- ${doomconfig}";
+      "${mod}+y" = "exec ddapp -t 'clipboard-capture' -m false -h 90 -w 90 -- ${clipboardcapture}";
+      "${mod}+Shift+y" = "exec ddapp -t 'clipboard-capture-interest' -m false -h 90 -w 90 -- '${clipboardcapture} i'";
+      "${mod}+e" = "exec ddapp -t 'agenda' -k true -- ${emacsagenda}";
+      "${mod}+c" = "exec ddapp -t 'capture' -m false -h 90 -w 90 -- ${emacscapture}";
     };
     home = {
       packages = [ cfg.finalPackage ];
@@ -120,7 +120,6 @@ in
         "doom/packages.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/packages.el";
         "doom/modules".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/modules";
         "doom/configs".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/configs";
-        "doom/autoload".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
         "doom/private.el".text = g.editor.emacs."private.el";
         "doom/nix.el".text =
           # lisp
