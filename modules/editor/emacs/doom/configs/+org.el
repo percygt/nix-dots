@@ -8,10 +8,10 @@
       +org-capture-projects-file "Projects.org"
       +org-capture-journal-file "Inbox.org")
 
-(map!
- :leader
- :prefix-map ("o" . "Org")
- :desc "Org Capture" "c" #'org-capture)
+;; (map!
+;;  :leader
+;;  :prefix-map ("o" . "org")
+;;  :desc "Org Capture" "c" #'org-capture)
 
 (custom-set-faces!
   '(org-document-title :height 1.5)

@@ -14,25 +14,23 @@
       evil-normal-state-cursor  `("white" box)
       evil-visual-state-cursor  `("PaleGoldenrod" box))
 
-(custom-theme-set-faces! 'doom-city-lights
-  `(mode-line-inactive :background "#00051a")
-  `(vertical-border :background "#081028" :foreground "#081028")
-  `(fringe :background nil)
-  `(line-number :background nil)
-  `(mode-line-active :background "#081028")
-  `(header-line :background "#081028")
-  `(org-modern-tag :foreground "gray40" :background "black" :height 0.6)
-  )
+(setq confirm-kill-emacs nil)
 
 (if (display-graphic-p)
-    (custom-theme-set-faces! 'doom-city-lights
-      `(default :background "#00051a")
-      )
-  (custom-theme-set-faces! 'doom-city-lights
-    `(default :background unspecified)
-    )
-  )
+    (custom-theme-set-faces! 'doom-city-lights `(default :background "#00051a")
+      (set-frame-parameter nil 'alpha-background 80) ; For current frame
+      (add-to-list 'default-frame-alist '(alpha-background . 80)) )
+  (custom-theme-set-faces! 'doom-city-lights `(default :background nil)))
 
+(custom-set-faces!
+  `(mode-line-inactive :background "#00051a")
+  `(fringe :background nil)
+  `(vertical-border :background "#081028")
+  `(line-number :background nil)
+  `(mode-line-active :background "#081028")
+  `(hl-line :background "#081028")
+  `(header-line :background "#081028")
+  `(org-modern-tag :foreground "gray40" :background "black" :height 0.9))
 
 (setq shell-file-name (executable-find "nu"))
 (setq display-line-numbers-type 'relative)
@@ -40,6 +38,8 @@
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (pixel-scroll-precision-mode t)
 (plist-put +popup-defaults :quit t)
+
+(load! "configs/init.el")
 
 (pushnew! vc-directory-exclusion-list
           "node_modules"
@@ -53,5 +53,3 @@
           ".drv"
           ".direnv/"
           ".git/")
-
-(load! "configs/init.el")

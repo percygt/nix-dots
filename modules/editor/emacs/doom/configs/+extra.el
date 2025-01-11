@@ -1,4 +1,4 @@
-;;; +ui.el -*- lexical-binding: t; -*-
+;;; +extra.el -*- lexical-binding: t; -*-
 
 (use-package! highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
@@ -11,7 +11,9 @@
   (highlight-indent-guides-method 'character))
 
 (use-package! spacious-padding
-  :config (spacious-padding-mode))
+  :if (display-graphic-p)
+  :config
+  (spacious-padding-mode))
 
 (use-package! page-break-lines
   :hook (doom-first-input . global-page-break-lines-mode)
@@ -22,19 +24,12 @@
                                  latex-mode
                                  help-mode
                                  special-mode)))
-;;
+;; ;; ;;
 ;; Auto adjust window size
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t)
-;;
-;; Transparent background
-(push '(alpha-background . 80) default-frame-alist)
-;;
 ;; Prevents some cases of Emacs flickering.
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-
-(setq-hook! (dired-mode org-mode treemacs-mode) display-line-numbers nil)
-
 
 (map! "C-c SPC" 'emojify-insert-emoji
       "C-x SPC" 'insert-char
