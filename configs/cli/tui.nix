@@ -35,7 +35,7 @@ in
   };
   home.packages = with pkgs; [
     # tui
-    tui-network
+    # tui-network
     impala
     ncpamixer # Terminal mixer for PulseAudio inspired by pavucontrol
     bluetui # UI for managing bluetooth on Linux

@@ -4,30 +4,29 @@
   (let ((inhibit-message t))
     (org-super-agenda-mode))
   )
-(use-package org-ql)
+(use-package! org-ql)
 (setq org-agenda-deadline-faces
       '((1.001 . error)
         (1.0 . org-warning)
         (0.5 . org-upcoming-deadline)
         (0.0 . org-upcoming-distant-deadline)))
 
-(setq org-agenda-start-with-log-mode t
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-block-separator nil
-      org-agenda-tags-column 100 ;; from testing this seems to be a good value
-      org-agenda-dim-blocked-tasks 'invisible
-      org-agenda-start-on-weekday nil
-      org-agenda-prefix-format '((agenda . " %-12:T%?-12t% s")
-                                 (todo . " %i %-12:c")
-                                 (tags . " %i %-12:c")
-                                 (search . " %i %-12:c"))
-      org-agenda-timegrid-use-ampm t
-      org-agenda-window-setup 'only-window
-      org-agenda-restore-windows-after-quit t
-      org-agenda-deadline-leaders '("Deadline:  " "In %2d d.: " "%2d d. ago: ")
-      org-agenda-block-separator ?-)
+;; (setq
+;;  org-agenda-start-with-log-mode t
+;;  org-agenda-skip-scheduled-if-done t
+;;  org-agenda-skip-deadline-if-done t
+;;  org-agenda-include-deadlines t
+;;  org-agenda-block-separator nil
+;;  org-agenda-dim-blocked-tasks 'invisible
+;;  org-agenda-prefix-format '((agenda . " %-12:T%?-12t% s")
+;;                             (todo . " %i %-12:c")
+;;                             (tags . " %i %-12:c")
+;;                             (search . " %i %-12:c"))
+;;  org-agenda-timegrid-use-ampm t
+;;  org-agenda-window-setup 'only-window
+;;  org-agenda-restore-windows-after-quit t
+;;  org-agenda-deadline-leaders '("Deadline:  " "In %2d d.: " "%2d d. ago: ")
+;;  org-agenda-block-separator ?_)
 
 (map! :map org-agenda-keymap "j" #'org-agenda-next-line)
 (map! :map org-agenda-mode-map "j" #'org-agenda-next-line)
@@ -38,26 +37,43 @@
 (map! :map org-super-agenda-header-map "k" #'org-agenda-previous-line)
 (map! :map org-super-agenda-header-map "k" #'org-agenda-previous-line)
 
-(defvar jib-org-columbia-productivity-ql-query
-  '(tags "read"))
-
 (setq org-agenda-custom-commands
       '(
+        ("," "Today"
+         ((agenda ""(
+                     (org-agenda-overriding-header "Today")
+                     (org-agenda-use-time-grid t)
+                     (org-agenda-clockreport-parameter-plist '(:compact t
+                                                               :link t
+                                                               :maxlevel 3
+                                                               :fileskip0 t
+                                                               :filetitle t)))
+                  )))
         ("m" "Main"
          (
-          (agenda "" ((org-agenda-span 'day)
+          (agenda "" (
+                      ;; (org-agenda-span 'day)
                       (org-agenda-sorting-strategy '(scheduled-up deadline-up priority-down))
-                      (org-super-agenda-groups '(
-                                                 (:name "Today"
-                                                  :scheduled t
-                                                  :order 2)
-                                                 (:name "Due Soon"
-                                                  :deadline future
-                                                  :order 3)
-                                                 (:name "Today's Schedule:"
-                                                  :time-grid t
-                                                  :discard (:deadline t)
-                                                  :order 4)))))
+                      ))
+          ;; (org-super-agenda-groups
+          ;;  '(
+          ;;    (:name "Agenda"
+          ;;     :time-grid t
+          ;;     :and (:scheduled today
+          ;;           :regexp ,org-ql-regexp-scheduled-with-time
+          ;;           :not (:todo ("DONE" "WAIT"))))
+          ;;    (:name "Remove anything else"
+          ;;     :discard (:anything t))
+          ;;    (:name "Today"
+          ;;     :scheduled t
+          ;;     :order 2)
+          ;;    (:name "Due Soon"
+          ;;     :deadline future
+          ;;     :order 3)
+          ;;    (:name "Today's Schedule:"
+          ;;     :time-grid t
+          ;;     :discard (:deadline t)
+          ;;     :order 4)))))
 
           (org-ql-block '(todo)
                         ((org-ql-block-header "Todos")
@@ -125,27 +141,6 @@
                             (:name "Book"
                              :tag "book"
                              :order 7)
-                            )
-                          )))
-          (org-ql-block '(tags "general")
-                        ((org-ql-block-header "Interesting in general")
-                         (org-super-agenda-groups
-                          '(
-                            (:name "Article"
-                             :tag "article"
-                             :order 1)
-                            (:name "Web"
-                             :tag "web"
-                             :order 2)
-                            (:name "Video"
-                             :tag "video"
-                             :order 3)
-                            (:name "Book"
-                             :tag "book"
-                             :order 4)
-                            (:name "Information"
-                             :tag "info"
-                             :order 5)
                             )
                           )))
           ))))

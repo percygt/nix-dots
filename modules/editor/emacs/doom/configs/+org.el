@@ -49,18 +49,19 @@
   (load! "+org-modern.el")
   (load! "+writeroom-mode.el")
   (load! "+org-keywords.el")
-  (load! "+org-variables.el")
+  ;; (load! "+org-variables.el")
   (load! "+org-capture-doct.el")
   (load! "+org-capture-prettify.el")
   (load! "+org-capture.el")
   (load! "+org-agenda.el")
   (load! "+org-roam.el")
+  (load! "+org-gtd.el")
   (defun stag-misanthropic-capture (&rest r)
     (delete-other-windows))
 
   (advice-add  #'org-capture-place-template :after 'stag-misanthropic-capture)
   (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
-  (org-link-set-parameters "id" :complete 'org-id-complete-link)
+  ;; (org-link-set-parameters "id" :complete 'org-id-complete-link)
   (setq org-startup-folded nil ; do not start folded
         org-link-frame-setup '((file . find-file));; Opens links to other org file in same frame (rather than splitting) org-tags-column 80 ; the column to the right to align tags
         org-ellipsis " "
@@ -79,10 +80,7 @@
         org-cycle-emulate-tab nil
         org-startup-folded 'content
         org-todo-repeat-to-state t
-        pdf-annot-activate-created-annotations nil ; do not open annotations after creating them
-        org-journal-find-file #'find-file-other-window
         org-startup-with-inline-images t
         org-image-actual-width 600
-        org-babel-default-header-args:sh '((:results . "verbatim"))
-        org-duration-format (quote h:mm)) ; display clock times as hours only
+        ) ; display clock times as hours only
   )
