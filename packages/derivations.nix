@@ -2,6 +2,8 @@
   pkgs ? (import ./nixpkgs.nix) { },
 }:
 {
+  ## Brave nightly derivation source: https://github.com/kcalvelli/nixos/blob/ed0a9bd1b12513e9dd67fb822351f742595123c3/pkgs/brave-browser-nightly/make-brave-nightly.nix
+  brave-nightly = pkgs.callPackage ./brave-nightly { };
   lazysql = pkgs.callPackage ./go/lazysql.nix { };
   pomo = pkgs.callPackage ./standard/pomo.nix { };
   nerdfonts-fontconfig = pkgs.callPackage ./standard/nerdfonts-fontconfig.nix { };

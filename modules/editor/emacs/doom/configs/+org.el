@@ -55,6 +55,10 @@
   (load! "+org-capture.el")
   (load! "+org-agenda.el")
   (load! "+org-roam.el")
+  (defun stag-misanthropic-capture (&rest r)
+    (delete-other-windows))
+
+  (advice-add  #'org-capture-place-template :after 'stag-misanthropic-capture)
   (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
   (org-link-set-parameters "id" :complete 'org-id-complete-link)
   (setq org-startup-folded nil ; do not start folded

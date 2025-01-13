@@ -2,7 +2,9 @@
 
 (load! "private" doom-user-dir t)
 (load! "nix" doom-user-dir t)
+
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
+
 (setq doom-theme 'doom-city-lights
       doom-font (font-spec :family "VictorMono NFP" :size 20 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Work Sans" :size 20 :weight 'light)
@@ -14,7 +16,6 @@
       evil-normal-state-cursor  `("white" box)
       evil-visual-state-cursor  `("PaleGoldenrod" box))
 
-(setq confirm-kill-emacs nil)
 
 (if (display-graphic-p)
     (custom-theme-set-faces! 'doom-city-lights `(default :background "#00051a")
@@ -34,6 +35,7 @@
 
 (setq shell-file-name (executable-find "nu"))
 (setq display-line-numbers-type 'relative)
+(setq confirm-kill-emacs nil)
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode)
 (global-subword-mode 1)                           ; Iterate through CamelCase words
 (pixel-scroll-precision-mode t)

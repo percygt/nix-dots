@@ -1,15 +1,16 @@
 {
   config,
   lib,
+  pkgs,
+  options,
   ...
 }:
 let
   inherit (lib) mkOption mkEnableOption;
   supportedBrowsers = [
     "chromium"
-    "google-chrome"
+    # "brave-nightly"
     "brave"
-    "vivaldi"
   ];
   webappModule = mkOption {
     default = { };
@@ -124,10 +125,68 @@ in
 {
   options.programs = {
     chromium.webapps = webappModule;
-    google-chrome.webapps = webappModule;
     brave.webapps = webappModule;
-    vivaldi.webapps = webappModule;
+    brave-nightly = options.programs.brave // {
+      package = lib.mkOption {
+        visible = false;
+        type = lib.types.package;
+        defaultText = lib.literalExpression "pkgs.brave-nightly";
+        description = "The Brave Browser Nightly package to use.";
+        default = pkgs.brave-nightly;
+      };
+    };
   };
 
-  config = lib.mkMerge (map webappConfig supportedBrowsers);
+  config =
+    let
+      cfg = config.programs.brave-nightly;
+      linuxDirs = {
+        brave = "BraveSoftware/Brave-Browser";
+        brave-nightly = "BraveSoftware/Brave-Browser-Nightly";
+      };
+      drvName = (builtins.parseDrvName cfg.package.name).name;
+      configDir = "${config.xdg.configHome}/" + (linuxDirs."${drvName}" or drvName);
+      extensionJson =
+        ext:
+        assert ext.crxPath != null -> ext.version != null;
+        with builtins;
+        {
+          name = "${configDir}/External Extensions/${ext.id}.json";
+          value.text = toJSON (
+            if ext.crxPath != null then
+              {
+                external_crx = ext.crxPath;
+                external_version = ext.version;
+              }
+            else
+              {
+                external_update_url = ext.updateUrl;
+              }
+          );
+        };
+
+      dictionary = pkg: {
+        name = "${configDir}/Dictionaries/${pkg.passthru.dictFileName}";
+        value.source = pkg;
+      };
+
+      package =
+        if cfg.commandLineArgs != [ ] then
+          cfg.package.override {
+            commandLineArgs = lib.concatStringsSep " " cfg.commandLineArgs;
+          }
+        else
+          cfg.package;
+    in
+    lib.mkMerge (
+      (map webappConfig supportedBrowsers)
+      ++ [
+        (lib.mkIf cfg.enable {
+          home.packages = [ package ];
+          home.file = lib.listToAttrs (
+            (map extensionJson cfg.extensions) ++ (map dictionary cfg.dictionaries)
+          );
+        })
+      ]
+    );
 }
