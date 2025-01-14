@@ -35,6 +35,7 @@
     (add-hook 'org-capture-after-finalize-hook '+aiz-delete-frame-after-capture)
     (+aiz-org-capture-place-template-dont-delete-windows 'org-capture nil))
 
+  (add-hook! 'org-capture-after-finalize-hook (delete-frame))
   (setq org-capture-templates
         (doct `(("Tasks" :keys "t"
                  :icon ("nf-oct-inbox" :set "octicon" :color "yellow")
@@ -43,10 +44,11 @@
                  :type entry
                  :prepend t
                  :template ("* TODO %?"
+                            "%{extra}"
                             ":PROPERTIES:"
                             ":Created: %U"
                             ":END:"
-                            "%{extra}")
+                            )
                  :children (("General Task" :keys "t"
                              :icon ("nf-fa-tasks" :set "faicon" :color "yellow")
                              :extra  "")

@@ -9,24 +9,29 @@
           (1.0 . org-warning)
           (0.5 . org-upcoming-deadline)
           (0.0 . org-upcoming-distant-deadline)))
-  (setq org-agenda-prefix-format
-        '((agenda . "  %?-12t")
-          (todo   . " ")
-          (tags   . " %i %-12:c")
-          (search . " %i %-12:c")))
+  (setq org-agenda-prefix-format '((agenda . " %-12:T%?-12t% s")
+                                   (todo . " %i %-12:c")
+                                   (tags . " %i %-12:c")
+                                   (search . " %i %-12:c")))
   (setq
+   ;; org-agenda-time-grid nil
+   org-deadline-warning-days 3
    org-agenda-start-with-log-mode t
    org-agenda-skip-scheduled-if-done t
    org-agenda-skip-deadline-if-done t
    org-agenda-include-deadlines t
-   org-agenda-block-separator nil
-   org-agenda-dim-blocked-tasks 'invisible
    org-agenda-timegrid-use-ampm t
    org-agenda-window-setup 'only-window
    org-agenda-restore-windows-after-quit t
+   org-agenda-restore-windows-after-quit t
+   org-time-stamp-custom-formats '("<%A, %B %d, %Y" . "<%m/%d/%y %a %I:%M %p>")
    org-agenda-deadline-leaders '("Deadline:  " "In %2d d.: " "%2d d. ago: ")
    org-agenda-block-separator ?_)
+  (add-hook 'org-agenda-mode-hook
+            #'(lambda () (setq-local line-spacing 3)))
 
+  (add-hook 'org-agenda-mode-hook
+            #'(lambda () (hide-mode-line-mode)))
   (setq org-agenda-custom-commands
         '(
           ("," "Today"
@@ -41,57 +46,42 @@
                     )))
           ("m" "Main"
            (
-            (agenda "" ((org-agenda-span 'day)
+            (agenda "" (
+                        (org-agenda-span 'day)
+                        (org-agenda-overriding-header "Today")
                         (org-agenda-start-day "+0d")  ;; don't include overdue entries in the time grid
-                        (org-agenda-entry-types '(:scheduled :deadline)) ;; don't include tasks in the time grid just because they're opened today
-                        (org-super-agenda-groups
-                         '((:name "Agenda"
-                            :time-grid t
-                            :and (:scheduled today
-                                  :regexp ,org-ql-regexp-scheduled-with-time
-                                  :not (:todo ("DONE" "WAIT"))))
-                           (:name "Remove anything else"
-                            :discard (:anything t))))))
-
-            ;; (org-super-agenda-groups
-            ;;  '(
-            ;;    (:name "Agenda"
-            ;;     :time-grid t
-            ;;     :and (:scheduled today
-            ;;           :regexp ,org-ql-regexp-scheduled-with-time
-            ;;           :not (:todo ("DONE" "WAIT"))))
-            ;;    (:name "Remove anything else"
-            ;;     :discard (:anything t))
-            ;;    (:name "Today"
-            ;;     :scheduled t
-            ;;     :order 2)
-            ;;    (:name "Due Soon"
-            ;;     :deadline future
-            ;;     :order 3)
-            ;;    (:name "Today's Schedule:"
-            ;;     :time-grid t
-            ;;     :discard (:deadline t)
-            ;;     :order 4)))))
+                        (org-super-agenda-groups '(
+                                                   (:name "Today:"
+                                                    :scheduled t
+                                                    :order 3)
+                                                   (:name "Deadlines:"
+                                                    :deadline t
+                                                    :order 4)
+                                                   (:name "Overdue:"
+                                                    :deadline past
+                                                    :scheduled past
+                                                    :face error
+                                                    :order 1)
+                                                   (:name "Today's Schedule:"
+                                                    :time-grid t
+                                                    :discard (:deadline t)
+                                                    :order 1)))
+                        ))
 
             (org-ql-block '(todo)
                           ((org-ql-block-header "Todos")
                            (org-super-agenda-groups
                             '(
-                              (:name "Overdue"
-                               :deadline past
-                               :scheduled past
-                               :face error
-                               :order 1)
                               (:name "Next to do"
                                :todo "NEXT"
-                               :order 2)
+                               :order 1)
                               (:name "Important"
                                :tag "Important"
                                :priority "A"
-                               :order 3)
+                               :order 2)
                               (:name "Todo"
                                :todo "TODO"
-                               :order 4)
+                               :order 3)
                               (:name "Issues"
                                :tag "issue"
                                :order 12)
