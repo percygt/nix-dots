@@ -66,7 +66,7 @@ let
     footclient --app-id notes --title Emacs -- emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
   '';
   emacscapture = pkgs.writers.writeBash "emacscapture" ''
-    footclient --app-id capture --title Emacs -- emacsclient -t -a "" --eval '(progn (org-capture))'
+    footclient --app-id capture --title Emacs -- emacsclient -t -a "" --eval '(+quick-capture)'
   '';
   emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
     footclient --app-id agenda --title Emacs -- emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'

@@ -30,13 +30,10 @@
 (package! doct
   :recipe (:host github :repo "progfolio/doct")
   :pin "5cab660dab653ad88c07b0493360252f6ed1d898")
-;; (package! doct-org-roam
-;;   :recipe (:repo "https://gist.github.com/vherrmann/f9b21eeea7d7c9123dc400a30599d50d"))
 (package! org-protocol-capture-html
   :recipe (:host github :repo "alphapapa/org-protocol-capture-html"))
 (package! org-modern)
 (package! org-ql)
-(package! org-gtd)
 
 ;;; extra
 (package! lorem-ipsum)

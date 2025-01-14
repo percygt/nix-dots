@@ -8,11 +8,6 @@
       +org-capture-projects-file "Projects.org"
       +org-capture-journal-file "Inbox.org")
 
-;; (map!
-;;  :leader
-;;  :prefix-map ("o" . "org")
-;;  :desc "Org Capture" "c" #'org-capture)
-
 (custom-set-faces!
   '(org-document-title :height 1.5)
   '(org-ellipsis :foreground "DimGray" :height 0.6)
@@ -29,39 +24,30 @@
   ;; way
   '(org-block :inherit fixed-pitch)
   '(org-code :inherit (shadow fixed-pitch)))
-
-(defun +aiz-org-mode-setup ()
-  (setq visual-fill-column-width 100
-        visual-fill-column-center-text t
-        display-fill-column-indicator nil
-        display-line-numbers nil)
-  (writeroom-mode t)
-  (visual-line-mode +1)
-  (auto-fill-mode 0)
-  (variable-pitch-mode)
-  )
-
-(defun org-id-complete-link (&optional arg)
-  "Create an id: link using completion"
-  (concat "id:" (org-id-get-with-outline-path-completion)))
-
 (after! org
-  (load! "+org-modern.el")
-  (load! "+writeroom-mode.el")
-  (load! "+org-keywords.el")
-  ;; (load! "+org-variables.el")
-  (load! "+org-capture-doct.el")
-  (load! "+org-capture-prettify.el")
-  (load! "+org-capture.el")
-  (load! "+org-agenda.el")
-  (load! "+org-roam.el")
-  (load! "+org-gtd.el")
-  (defun stag-misanthropic-capture (&rest r)
-    (delete-other-windows))
+  (add-hook! 'org-mode-hook
+    (setq display-fill-column-indicator nil
+          display-line-numbers nil)
+    (auto-fill-mode 0)
+    (variable-pitch-mode))
 
-  (advice-add  #'org-capture-place-template :after 'stag-misanthropic-capture)
-  (add-hook 'org-mode-hook #'+aiz-org-mode-setup)
-  ;; (org-link-set-parameters "id" :complete 'org-id-complete-link)
+  ;; ;; https://www.reddit.com/r/orgmode/comments/14bx0v4/open_orgcapture_frame_maximized_to_the_window/
+  ;; ;; needs to be inside after! org block
+  ;; (defun stag-misanthropic-capture (&rest r)
+  ;;   (delete-other-windows))
+  ;; (advice-add  #'org-capture-place-template :after 'stag-misanthropic-capture)
+
+  (defun org-id-complete-link (&optional arg)
+    "Create an id: link using completion"
+    (concat "id:" (org-id-get-with-outline-path-completion)))
+  (org-link-set-parameters "id" :complete 'org-id-complete-link)
+
+  (setq org-emphasis-alist
+        '(("*" (bold))
+          ("_" underline)
+          ("=" (:foreground "#8bd49c"))
+          ("~" (:foreground "#5ec4ff"))
+          ("+" (:strike-through t))))
   (setq org-startup-folded nil ; do not start folded
         org-link-frame-setup '((file . find-file));; Opens links to other org file in same frame (rather than splitting) org-tags-column 80 ; the column to the right to align tags
         org-ellipsis " "
@@ -81,6 +67,27 @@
         org-startup-folded 'content
         org-todo-repeat-to-state t
         org-startup-with-inline-images t
-        org-image-actual-width 600
-        ) ; display clock times as hours only
+        org-image-actual-width 600)
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "WAIT(w@/!)" "|" "DONE(d@/!)" "KILL(k@/!)"))
+        ;; The triggers break down to the following rules:
+
+        ;; - Moving a task to =KILLED= adds a =killed= tag
+        ;; - Moving a task to =WAIT= adds a =waiting= tag
+        ;; - Moving a task to a done state removes =WAIT= and =HOLD= tags
+        ;; - Moving a task to =TODO= removes all tags
+        ;; - Moving a task to =NEXT= removes all tags
+        ;; - Moving a task to =DONE= removes all tags
+        org-todo-state-tags-triggers
+        '(("KILL" ("killed" . t))
+          ("HOLD" ("hold" . t))
+          ("WAIT" ("waiting" . t))
+          (done ("waiting") ("hold"))
+          ("TODO" ("waiting") ("cancelled") ("hold"))
+          ("NEXT" ("waiting") ("cancelled") ("hold"))
+          ("DONE" ("waiting") ("cancelled") ("hold")))
+
+        ;; This settings allows to fixup the state of a todo item without
+        ;; triggering notes or log.
+        org-treat-S-cursor-todo-selection-as-state-change nil)
   )

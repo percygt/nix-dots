@@ -1,6 +1,17 @@
 ;;; +init.el -*- lexical-binding: t; -*-
 (load! "+keymaps.el")
+
 (load! "+org.el")
+(load! "+org-agenda.el")
+(load! "+org-modern.el")
+(load! "+org-capture.el")
+(load! "+org-capture-doct.el")
+(load! "+org-capture-prettify.el")
+(load! "+org-roam.el")
+(load! "+org-roam-capture.el")
+(load! "+visual-fill-column.el")
+(load! "+writeroom-mode.el")
+
 (load! "+dired.el")
 (load! "+completion.el")
 (load! "+minibuffer.el")

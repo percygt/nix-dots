@@ -16,7 +16,6 @@
       evil-normal-state-cursor  `("white" box)
       evil-visual-state-cursor  `("PaleGoldenrod" box))
 
-
 (if (display-graphic-p)
     (custom-theme-set-faces! 'doom-city-lights `(default :background "#00051a")
       (set-frame-parameter nil 'alpha-background 80) ; For current frame

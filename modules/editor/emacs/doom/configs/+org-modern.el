@@ -1,6 +1,6 @@
 ;;; +org-modern.el -*- lexical-binding: t; -*-
-
 (use-package! org-modern
+  :after org
   :preface
   (defun modify-org-done-face ()
     (setq org-fontify-done-headline t)

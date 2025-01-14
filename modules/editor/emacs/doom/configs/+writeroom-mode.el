@@ -1,5 +1,6 @@
 ;;; +writeroom-room.el -*- lexical-binding: t; -*-
 (use-package! writeroom-mode
+  :hook  (org-mode . writeroom-mode)
   :config
   (setq writeroom-maximize-window nil
         writeroom-mode-line nil

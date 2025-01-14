@@ -1,6 +1,6 @@
 ;;; +org-roam-capture.el -*- lexical-binding: t; -*-
-(require 'doct)
 (after! org-roam
+  (require 'doct)
   (defun doct-org-roam-convert (groups)
     "Convert GROUPS of templates to `org-roam' compatible templates."
     (setq doct-templates
@@ -53,10 +53,7 @@
         (`(:file ,file) (doct-org-roam--target-file file)))))
 
   (defun doct-org-roam--compose-entry (keys name parent)
-    "Return a template suitable for `org-roam-capture-templates'.
-  The list is of the form: (KEYS NAME type target template additional-options...).
-  `doct--current-plist' provides the type, target template and additional options.
-  If PARENT is non-nil, list is of the form (KEYS NAME)."
+    "Return a template suitable for `org-roam-capture-templates'."
     `(,keys ,name
       ,@(unless parent
           `(,(doct--entry-type)
@@ -69,12 +66,7 @@
                              `(:doct-custom ,custom)))))
 
   (defun doct-org-roam (declarations)
-    "Convert DECLARATIONS to `org-roam-capture-templates'.
-  DECLARATIONS must be of the same form that `doct' expects with
-  one addition: the :org-roam keyword.
-  The :org-roam keyword's value must be a plist mapping `org-roam''s
-  template syntax extensions (e.g. :file-name :head) to their appropriate values.
-  Note this does validate the :org-roam plist's values or keywords."
+    "Convert DECLARATIONS to `org-roam-capture-templates'."
 
     ;;TODO: we should preserve doct-after-conversion-functions
     ;;in case user already has other functions set.

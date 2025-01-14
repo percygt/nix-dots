@@ -6,5 +6,4 @@
   (add-to-list 'org-file-apps '("\\.pdf\\'" . emacs) t))
 
 (after! pdf-tools
-  (pdf-tools-install)
-  )
+  (pdf-tools-install))

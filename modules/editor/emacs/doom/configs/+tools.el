@@ -4,10 +4,10 @@
 (use-package! simpleclip
   :config
   (if (display-graphic-p)
-      (simpleclip-mode 1)
-    (defun jib/paste-in-minibuffer ()
-      (local-set-key (kbd "C-V") 'simpleclip-paste))
-    (add-hook 'minibuffer-setup-hook 'jib/paste-in-minibuffer)
+      ((simpleclip-mode 1)
+       (defun paste-in-minibuffer ()
+         (local-set-key (kbd "C-V") 'simpleclip-paste))
+       (add-hook 'minibuffer-setup-hook 'paste-in-minibuffer))
     ))
 (map! :after simpleclip
       :map simpleclip-mode-map
