@@ -93,13 +93,13 @@ all = yes
 ################################################################################
 [font]
 # Font name
-name = monospace
+name = VictorMono Nerd Font
 # Font size (pt)
-size = 14
+size = 12
 # Font color (RGBA)
 color = #ccccccff
 # Shadow color (RGBA)
-shadow = #000000a0
+# shadow = #000000a0
 
 ################################################################################
 # Image meta info scheme (format, size, EXIF, etc)

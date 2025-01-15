@@ -80,8 +80,6 @@ in
   };
   programs.yazi = {
     enable = true;
-    enableFishIntegration = true;
-    enableBashIntegration = true;
     settings = {
       preview = {
         max_width = 970;
@@ -120,57 +118,15 @@ in
       sixel_fraction = 12;
     };
 
-    theme =
-      (builtins.fromTOML (
-        builtins.readFile "${
-          pkgs.fetchFromGitHub {
-            owner = "catppuccin";
-            repo = "yazi";
-            rev = "54d868433a0c2f3e1651114136ea088eef72a4a7";
-            hash = "sha256-dMXSXS3Scj1LZZqqnvvC37VWSyjSQZg9thvjcm2iNSM=";
-          }
-        }/themes/macchiato/catppuccin-macchiato-teal.toml"
-      ))
-      // {
-        status = {
-          separator_open = "";
-          separator_close = "";
-        };
-        prepend_keymap = [
-          {
-            on = [
-              "f"
-              "g"
-            ];
-            run = "plugin fg";
-            desc = "find file by content";
-          }
-          {
-            on = [
-              "f"
-              "f"
-            ];
-            run = "plugin fg --args='fzf'";
-            desc = "find file by file name";
-          }
-        ];
-        manager = {
-          # preview_hovered = {
-          #   underline = false;
-          # };
-          folder_offset = [
-            1
-            0
-            1
-            0
-          ];
-          preview_offset = [
-            1
-            1
-            1
-            1
-          ];
-        };
-      };
+    theme = builtins.fromTOML (
+      builtins.readFile "${
+        pkgs.fetchFromGitHub {
+          owner = "yazi-rs";
+          repo = "flavors";
+          rev = "fc8eeaab9da882d0e77ecb4e603b67903a94ee6e";
+          hash = "sha256-wvxwK4QQ3gUOuIXpZvrzmllJLDNK6zqG5V2JAqTxjiY=";
+        }
+      }/catppuccin-macchiato.yazi/flavor.toml"
+    );
   };
 }

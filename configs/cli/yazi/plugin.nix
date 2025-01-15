@@ -17,27 +17,11 @@
       run = "exifaudio";
     }
     {
-      mime = "application/*zip";
+      mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}";
       run = "ouch";
     }
     {
-      mime = "application/x-tar";
-      run = "ouch";
-    }
-    {
-      mime = "application/x-bzip2";
-      run = "ouch";
-    }
-    {
-      mime = "application/x-7z-compressed";
-      run = "ouch";
-    }
-    {
-      mime = "application/x-rar";
-      run = "ouch";
-    }
-    {
-      mime = "application/x-xz";
+      mime = "application/{,g}zip";
       run = "ouch";
     }
   ];
