@@ -51,23 +51,33 @@ in
             stderr "Flake directory: $FLAKE is not valid"
             exit 1
           fi
-          CONFIGID=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 8)
-          CONFIGDIR="/tmp/nr-$CONFIGID"
+
+          NIXOSCONFIGDIR="/tmp/nrs-config"
+          HMCONFIGDIR="/tmp/hms-config"
 
           # Execute the commands
           su ${username} -c \
             "nom build \
             $FLAKE#nixosConfigurations.${profile}.config.system.build.toplevel \
-            --out-link $CONFIGDIR \
+            --out-link $NIXOSCONFIGDIR \
             --accept-flake-config"
 
-          $CONFIGDIR/bin/switch-to-configuration switch || exit 1
+          $NIXOSCONFIGDIR/bin/switch-to-configuration switch || exit 1
 
           su ${username} -c \
-            "nvd diff /run/current-system $CONFIGDIR"
+            "nvd diff /run/current-system $NIXOSCONFIGDIR"
 
           su ${username} -c \
-            "nh home switch $FLAKE -- --accept-flake-config"
+            "nom build \
+            $FLAKE#homeConfigurations.\"${username}@${profile}\".config.home.activationPackage \
+            --out-link $HMCONFIGDIR \
+            --accept-flake-config"
+
+          su ${username} -c \
+            "nvd diff /home/${username}/.local/state/nix/profiles/home-manager $HMCONFIGDIR"
+
+          su ${username} -c \
+            "$HMCONFIGDIR/bin/home-manager-generation"
         '';
     };
   };

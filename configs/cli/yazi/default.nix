@@ -18,7 +18,7 @@ in
   };
   home = {
     shellAliases.y = "yazi";
-    # dependencies
+    # dependences
     packages = with pkgs; [
       ripgrep
       jq

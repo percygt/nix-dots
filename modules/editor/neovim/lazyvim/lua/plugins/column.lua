@@ -12,6 +12,7 @@ return {
     opts = {
       colorcolumn = "100",
       { python = "120" },
+      { nix = "120" },
     },
   },
 }

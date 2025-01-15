@@ -95,6 +95,7 @@ return {
         { "<leader>sG", LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
         { "<leader>sF", LazyVim.pick("files"), desc = "Find (Root Dir)" },
         { "<leader>sf", LazyVim.pick("files", { root = false }), desc = "Find (cwd)" },
+        { "<leader><leader>", LazyVim.pick("files", { root = false }), desc = "Find (cwd)" },
         { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
         { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
         { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics" },

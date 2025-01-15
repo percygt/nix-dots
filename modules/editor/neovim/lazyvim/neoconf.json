@@ -6,8 +6,13 @@
     }
   },
   "neoconf": {
+    "live_reload": true,
+    "filetype_jsonc": true,
     "plugins": {
       "lua_ls": {
+        "enabled": true
+      },
+      "jsonls": {
         "enabled": true
       }
     }

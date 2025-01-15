@@ -23,7 +23,7 @@
        doom
        doom-dashboard
        ;;doom-quit
-       ;;(emoji +unicode)
+       ;; (emoji +unicode)
        ;;fill-column
        hl-todo
        ;;hydra
@@ -36,7 +36,6 @@
        ophints
        (popup +defaults)
        ;;treemacs
-       ;;tree-sitter
        ;;unicode
        ;;tabs
        (vc-gutter +diff-hl +pretty)
@@ -76,9 +75,9 @@
        vterm
 
        :checkers
-       syntax
-       (spell +everywhere)
-       ;;grammar
+       (syntax +flymake)
+       (spell +aspell +everywhere)
+       grammar
 
        :tools
        tree-sitter
@@ -98,7 +97,7 @@
        ;;pass                ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
+       rgb               ; creating color strings
        (terraform +lsp)    ; infrastructure as code
        tmux              ; an API for interacting with tmux
        ;;upload            ; map local to remote projects via ssh/ftp
@@ -128,11 +127,11 @@
        ;;(wanderlust +gmail) ; WIP
 
        :app
-       ;;calendar
+       calendar
        ;;everywhere
        ;;irc
        ;;(rss +org)
-       ;;ereader
+       ereader
 
        :config
        ;;literate

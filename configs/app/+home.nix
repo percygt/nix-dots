@@ -42,7 +42,7 @@ in
       ];
     }
   ];
-  xdg.configFile."swayimg/config".source = ./+assets/swayimgrc;
+  xdg.configFile."swayimg/config".source = ./+extras/swayimgrc;
   xdg.mimeApps = {
     defaultApplications = import ./mimeApps.nix;
     associations.added = import ./mimeApps.nix;

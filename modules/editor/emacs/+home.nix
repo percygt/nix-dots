@@ -10,7 +10,8 @@ let
   cfg = config.modules.editor.emacs;
   swayCfg = config.wayland.windowManager.sway;
   mod = swayCfg.config.modifier;
-  moduleEmacs = "${g.flakeDirectory}/modules/editor/emacs";
+  editorModules = "${g.flakeDirectory}/modules/editor";
+  moduleEmacs = "${editorModules}/emacs";
   DOOMLOCALDIR = "${config.xdg.dataHome}/doom";
   DOOMDIR = "${config.xdg.configHome}/doom";
   EMACSDIR = "${config.xdg.configHome}/emacs";
@@ -66,7 +67,7 @@ let
     footclient --app-id notes --title Emacs -- emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
   '';
   emacscapture = pkgs.writers.writeBash "emacscapture" ''
-    footclient --app-id capture --title Emacs -- emacsclient -t -a "" --eval '(+quick-capture)'
+    footclient --app-id capture --title Emacs -- emacsclient -t -a "" --eval '(+org-capture/quick-capture)'
   '';
   emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
     footclient --app-id agenda --title Emacs -- emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
@@ -119,6 +120,7 @@ in
         "doom/init.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/init.el";
         "doom/packages.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/packages.el";
         "doom/modules".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/modules";
+        "doom/autoload".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
         "doom/configs".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/configs";
         "doom/private.el".text = g.editor.emacs."private.el";
         "doom/nix.el".text =

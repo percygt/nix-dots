@@ -7,7 +7,7 @@
 let
   cfg = config.modules.editor.emacs;
   extraPackages =
-    (import ../+common.nix pkgs)
+    (import ../+extras/commonPackages.nix pkgs)
     ++ (import ./extraPackages.nix pkgs)
     ++ [
       (pkgs.emacs-lsp-booster.overrideAttrs (_: {
@@ -33,7 +33,7 @@ in
       enable = lib.mkEnableOption "Enable emacs systemwide";
       package = lib.mkOption {
         description = "Emacs package to use";
-        default = pkgs.emacs-pgtk;
+        default = pkgs.emacs-unstable;
         type = lib.types.package;
       };
       finalPackage = lib.mkOption {

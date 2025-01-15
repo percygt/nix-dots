@@ -15,10 +15,10 @@ return {
   nushell = {},
   nil_ls = {
     settings = {
-      formatting = {
-        command = { "nixfmt" },
-      },
-      nil_ls = {
+      ["nil"] = {
+        formatting = {
+          command = { "nixfmt" },
+        },
         nix = {
           flake = {
             autoArchive = true,

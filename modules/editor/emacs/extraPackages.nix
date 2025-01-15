@@ -24,7 +24,6 @@ pkgs: with pkgs; [
   # :email mu4e
   mu
   isync
-
   maim
   # :checkers spell
   (aspellWithDicts (

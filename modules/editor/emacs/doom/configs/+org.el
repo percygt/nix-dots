@@ -4,9 +4,15 @@
       org-archive-location (file-name-concat org-directory ".archive/%s::")
       org-agenda-files (list org-directory)
       +org-capture-notes-file "Inbox.org"
-      +org-capture-todo-file "Todo.org"
-      +org-capture-projects-file "Projects.org"
-      +org-capture-journal-file "Inbox.org")
+      +org-capture-todo-file "Tasks.org"
+      +org-capture-projects-file "Projects.org")
+
+(defvar +org-capture-calendar-file "Calendar.org"
+  "Default target for calendar entries.")
+(defun +org-capture-calendar-file ()
+  "Expand `+org-capture-calendar-file' from `org-directory'.
+If it is an absolute path return `+org-capture-calendar-file' verbatim."
+  (expand-file-name +org-capture-calendar-file org-directory))
 
 (custom-set-faces!
   '(org-document-title :height 1.5)

@@ -42,7 +42,6 @@ in
         builtins.toJSON {
           lspconfig.nixd.nixd = {
             nixpkgs.expr = ''import (${flake}).inputs.nixpkgs {}'';
-            formatting.command = [ "nixfmt" ];
             options = {
               nixos.expr = ''(${flake}).nixosConfigurations."${profile}".options'';
               home-manager.expr = ''(${flake}).homeConfigurations."${username}@${profile}".options'';

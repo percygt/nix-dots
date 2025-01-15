@@ -73,7 +73,8 @@ in
                 "+module.nix"
                 "+config.nix"
                 "+common.nix"
-                "+assets"
+                "+extras"
+                "+extras.nix"
               ]
             )
           )

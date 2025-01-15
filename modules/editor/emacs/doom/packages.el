@@ -16,6 +16,7 @@
 
 ;;; tools
 (package! simpleclip)
+(package! jinx)
 
 ;;; ui
 (package! base16-theme)
@@ -34,6 +35,8 @@
   :recipe (:host github :repo "alphapapa/org-protocol-capture-html"))
 (package! org-modern)
 (package! org-ql)
+(package! org-project-capture)
+(package! org-projectile)
 
 ;;; extra
 (package! lorem-ipsum)

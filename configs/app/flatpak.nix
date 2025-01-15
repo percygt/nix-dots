@@ -37,11 +37,11 @@
           "xdg-data/steam"
         ];
       };
-      "org.libreoffice.LibreOffice" = {
-        environment = {
-          GTK_THEME = "Yaru-bark-dark";
-        };
-      };
+      # "org.libreoffice.LibreOffice" = {
+      #   environment = {
+      #     GTK_THEME = "Yaru-bark-dark";
+      #   };
+      # };
     };
     remotes = {
       "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";
@@ -66,11 +66,10 @@
       # "page.codeberg.Imaginer.Imaginer"
     ];
   };
-  # fileSystems."/var/lib/flatpak".options = [ "exec" ];
   modules.core.persist.systemData.directories = [ "/var/lib/flatpak" ];
   modules.core.persist.userData.directories = [
     ".var/app/com.valvesoftware.Steam"
     ".var/app/org.libreoffice.LibreOffice"
-    ".var/app/io.github.zen_browser.zen"
+    ".var/app/app.zen_browser.zen"
   ];
 }

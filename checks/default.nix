@@ -36,9 +36,9 @@
         types = [ "symlink" ];
       };
 
-      nixfmt-rfc-style = {
-        enable = true;
-      };
+      # nixfmt-rfc-style = {
+      #   enable = true;
+      # };
       shfmt.enable = true;
 
       end-of-file-fixer.enable = true;

@@ -14,7 +14,6 @@
                                    (tags . " %i %-12:c")
                                    (search . " %i %-12:c")))
   (setq
-   ;; org-agenda-time-grid nil
    org-deadline-warning-days 3
    org-agenda-start-with-log-mode t
    org-agenda-skip-scheduled-if-done t
@@ -34,41 +33,31 @@
             #'(lambda () (hide-mode-line-mode)))
   (setq org-agenda-custom-commands
         '(
-          ("," "Today"
-           ((agenda ""(
-                       (org-agenda-overriding-header "Today")
-                       (org-agenda-use-time-grid t)
-                       (org-agenda-clockreport-parameter-plist '(:compact t
-                                                                 :link t
-                                                                 :maxlevel 3
-                                                                 :fileskip0 t
-                                                                 :filetitle t)))
-                    )))
           ("m" "Main"
-           (
-            (agenda "" (
+           ((agenda "" (
                         (org-agenda-span 'day)
                         (org-agenda-overriding-header "Today")
                         (org-agenda-start-day "+0d")  ;; don't include overdue entries in the time grid
-                        (org-super-agenda-groups '(
-                                                   (:name "Today:"
-                                                    :scheduled t
+                        (org-super-agenda-groups '((:name "Today:"
+                                                    :scheduled today
                                                     :order 3)
                                                    (:name "Deadlines:"
-                                                    :deadline t
+                                                    :deadline future
                                                     :order 4)
                                                    (:name "Overdue:"
                                                     :deadline past
                                                     :scheduled past
                                                     :face error
-                                                    :order 1)
+                                                    :order 2)
                                                    (:name "Today's Schedule:"
                                                     :time-grid t
                                                     :discard (:deadline t)
                                                     :order 1)))
                         ))
 
-            (org-ql-block '(todo)
+            (org-ql-block '(and (todo)
+                                (not (deadline))
+                                (not (scheduled)))
                           ((org-ql-block-header "Todos")
                            (org-super-agenda-groups
                             '(
@@ -93,7 +82,6 @@
                                :tag ("Trivial" "Unimportant")
                                :todo ("SOMEDAY" )
                                :order 90)
-                              (:discard (:tag ("Chore" "Routine" "Daily")))
                               ))))
             (org-ql-block '(tags "idea")
                           ((org-ql-block-header "Ideas")

@@ -38,7 +38,7 @@
           ripgrep
           fd
         ])
-        ++ (import ../+common.nix pkgs);
+        ++ (import ../+extras/commonPackages.nix pkgs);
     };
   };
 }

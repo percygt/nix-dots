@@ -24,7 +24,7 @@ in
       package = lib.mkPackageOption pkgs "zed-editor" { };
       extraPackages = lib.mkOption {
         type = with lib.types; listOf package;
-        default = import ../+common.nix pkgs;
+        default = import ../+extras/commonPackages.nix pkgs;
         example = lib.literalExpression "[ pkgs.nixd ]";
         description = "Extra packages available to Zed.";
       };

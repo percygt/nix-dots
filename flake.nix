@@ -68,7 +68,7 @@
     nixpkgs.follows = "nix-sources/nixpkgs";
     nixpkgs-master.follows = "nix-sources/nixpkgs-master";
     nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
-    emacs-overlay.follows = "nix-sources/emacs-overlay";
+
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
 

@@ -18,7 +18,8 @@
      )))
 
 (after! eglot
-  (eglot-booster-mode +1))
+  (eglot-booster-mode +1)
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nixd"))))
 
 (add-hook! (c-ts-base-mode
             bash-ts-mode

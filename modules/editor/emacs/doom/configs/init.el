@@ -18,6 +18,8 @@
 (load! "+treesit.el")
 (load! "+treesit-lang.el")
 (load! "+eglot.el")
+(load! "+spell.el")
 (load! "+extra.el")
+(load! "+org-project-capture.el")
 ;; (load! "+tools.el")
                                         ; (load! "+clipboard.el")

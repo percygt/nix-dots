@@ -4,17 +4,18 @@
 (load! "nix" doom-user-dir t)
 
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
-
 (setq doom-theme 'doom-city-lights
       doom-font (font-spec :family "VictorMono NFP" :size 20 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Work Sans" :size 20 :weight 'light)
       doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
       doom-big-font (font-spec :family "VictorMono NPF" :size 24))
 
-(setq evil-emacs-state-cursor   `("white" bar)
-      evil-insert-state-cursor  `("Cyan" bar)
+(setq evil-emacs-state-cursor   `("brightmagenta" bar)
+      evil-insert-state-cursor  `("cyan" bar)
       evil-normal-state-cursor  `("white" box)
-      evil-visual-state-cursor  `("PaleGoldenrod" box))
+      evil-visual-state-cursor  `("peachpuff" box))
+
+(setq evil-snipe-override-evil-repeat-keys nil)
 
 (if (display-graphic-p)
     (custom-theme-set-faces! 'doom-city-lights `(default :background "#00051a")
@@ -54,3 +55,22 @@
           ".drv"
           ".direnv/"
           ".git/")
+
+(defun +config-recursive-list-directories (dir max-level &optional level)
+  "Recursively list directory"
+  (let ((level (or level 0)))
+    (when (< level max-level)
+      (let ((subdirs (seq-filter #'file-directory-p
+                                 (directory-files dir t "^[^.]"))))
+        (append (mapcar (lambda (subdir) (concat subdir "/")) subdirs)
+                (apply #'append
+                       (mapcar (lambda (subdir)
+                                 (+config-recursive-list-directories subdir max-level (1+ level)))
+                               subdirs)))))))
+
+(if (require 'projectile nil 'noerror)
+    (projectile-discover-projects-in-directory dataDirectory 4)
+  (let ((project-dirs (+config-recursive-list-directories dataDirectory 4)))
+    (dolist (dir project-dirs)
+      (when-let ((proj (project-current nil dir)))
+        (project-remember-project proj)))))

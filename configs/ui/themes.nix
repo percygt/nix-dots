@@ -35,7 +35,7 @@ in
           gray2: "${c.base04}"
           bg: "${c.base00}
       ''
-      (lib.readFile ./+assets/vivid-theme.yml)
+      (lib.readFile ./+extras/vivid-theme.yml)
     ];
     dataFile = {
       "themes/Yaru-dark".source = "${pkgs.yaru-theme}/share/themes/Yaru-dark";
