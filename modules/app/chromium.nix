@@ -140,12 +140,7 @@ in
   config =
     let
       cfg = config.programs.brave-nightly;
-      linuxDirs = {
-        brave = "BraveSoftware/Brave-Browser";
-        brave-nightly = "BraveSoftware/Brave-Browser-Nightly";
-      };
-      drvName = (builtins.parseDrvName cfg.package.name).name;
-      configDir = "${config.xdg.configHome}/" + (linuxDirs."${drvName}" or drvName);
+      configDir = "${config.xdg.configHome}/BraveSoftware/Brave-Browser-Nightly";
       extensionJson =
         ext:
         assert ext.crxPath != null -> ext.version != null;
