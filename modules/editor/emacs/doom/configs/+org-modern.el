@@ -11,6 +11,7 @@
   :hook (org-mode . org-modern-mode)
   :custom-face
   (org-modern-todo ((nil (:inherit fixed-pitch :weight bold))))
+  (org-modern-tag ((nil (:foreground "gray40" :background "black" :height 0.9))))
   :config
   (setq org-modern-todo-faces
         `(

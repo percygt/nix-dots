@@ -110,6 +110,7 @@
        cc
        data
        emacs-lisp
+       common-lisp
        (clojure +lsp)
        (javascript +lsp)
        (json +lsp)

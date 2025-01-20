@@ -91,7 +91,8 @@ in
       "${mod}+n" = "exec ddapp -t 'notes' -- ${emacsnotes}";
       "${mod}+Shift+e" = "exec ddapp -t 'doom-config' -- ${doomconfig}";
       "${mod}+y" = "exec ddapp -t 'clipboard-capture' -m false -h 90 -w 90 -- ${clipboardcapture}";
-      "${mod}+Shift+y" = "exec ddapp -t 'clipboard-capture-interest' -m false -h 90 -w 90 -- '${clipboardcapture} i'";
+      "${mod}+Shift+y" =
+        "exec ddapp -t 'clipboard-capture-interest' -m false -h 90 -w 90 -- '${clipboardcapture} i'";
       "${mod}+e" = "exec ddapp -t 'agenda' -k true -- ${emacsagenda}";
       "${mod}+c" = "exec ddapp -t 'capture' -m false -h 90 -w 90 -- ${emacscapture}";
     };
@@ -112,6 +113,7 @@ in
           ;
       };
     };
+    home.file.ql = ${pkgs.sbclPackages.quicklisp-starter}";
     xdg = {
       configFile = {
         emacs.source = inputs.doom-emacs;

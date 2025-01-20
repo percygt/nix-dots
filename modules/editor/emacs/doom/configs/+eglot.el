@@ -13,8 +13,6 @@
 	         :yapf (:enabled :json-false)
 	         :autopep8 (:enabled :json-false)
 	         :black (:enabled :json-false))))
-     (:nil . (:nix
-              (:flake (:autoArchive t))))
      )))
 
 (after! eglot

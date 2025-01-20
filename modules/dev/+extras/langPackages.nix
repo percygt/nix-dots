@@ -1,13 +1,12 @@
 pkgs: with pkgs; [
-  (python3.withPackages (
-    ps: with ps; [
-      python-lsp-server
-      python-lsp-ruff
-      # pylsp-mypy
-      pip
-      pylatexenc
-    ]
-  ))
+
+  # Python
+  python3Packages.python-lsp-server
+  python3Packages.python-lsp-ruff
+  # python3Packages.pylsp-mypy
+  python3Packages.pip
+  python3Packages.pylatexenc
+
   # Lua
   lua-language-server
   stylua
@@ -82,11 +81,12 @@ pkgs: with pkgs; [
   babashka
 
   # Common lisp
-  (sbcl.withPackages (
-    ps: with ps; [
-      sbclPackages.quicklisp-starter
-    ]
-  ))
+  sbcl
+  # (clisp.withPackages (p: [ p.quicklisp-starter ]))
+  asdf
+  # (clisp.withPackages (p: [
+  #   p.quicklisp-starter
+  # ]))
   rlwrap
 
   #docker
@@ -106,8 +106,8 @@ pkgs: with pkgs; [
   yamllint
   terraform
   terraform-ls
+  moreutils # parallel
   libxml2
-  parallel
   bash-language-server
   yaml-language-server
   vscode-langservers-extracted

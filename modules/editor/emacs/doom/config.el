@@ -28,10 +28,10 @@
   `(fringe :background nil)
   `(vertical-border :background "#081028")
   `(line-number :background nil)
+  `(show-paren-match :background "#00051a" :foreground "yellow")
   `(mode-line-active :background "#081028")
   `(hl-line :background "#081028")
-  `(header-line :background "#081028")
-  `(org-modern-tag :foreground "gray40" :background "black" :height 0.9))
+  `(header-line :background "#081028"))
 
 (setq shell-file-name (executable-find "nu"))
 (setq display-line-numbers-type 'relative)
@@ -69,7 +69,9 @@
                                subdirs)))))))
 
 (if (require 'projectile nil 'noerror)
-    (projectile-discover-projects-in-directory dataDirectory 4)
+    (progn
+      (setq projectile-project-search-path dataDirectory)
+      (projectile-discover-projects-in-directory dataDirectory 4))
   (let ((project-dirs (+config-recursive-list-directories dataDirectory 4)))
     (dolist (dir project-dirs)
       (when-let ((proj (project-current nil dir)))

@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  self,
   ...
 }:
 {
@@ -38,7 +39,7 @@
           ripgrep
           fd
         ])
-        ++ (import ../+extras/commonPackages.nix pkgs);
+        ++ (import "${self}/modules/dev/+extras/langPackages.nix" pkgs);
     };
   };
 }

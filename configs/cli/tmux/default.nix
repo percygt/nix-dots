@@ -72,8 +72,10 @@ in
     in
     {
       "tmux/gitmux.yaml".source = config.lib.file.mkOutOfStoreSymlink "${moduleTmux}/gitmux.yaml";
-      "tmux/beforePlugins.conf".source = config.lib.file.mkOutOfStoreSymlink "${moduleTmux}/beforePlugins.conf";
-      "tmux/afterPlugins.conf".source = config.lib.file.mkOutOfStoreSymlink "${moduleTmux}/afterPlugins.conf";
+      "tmux/beforePlugins.conf".source =
+        config.lib.file.mkOutOfStoreSymlink "${moduleTmux}/beforePlugins.conf";
+      "tmux/afterPlugins.conf".source =
+        config.lib.file.mkOutOfStoreSymlink "${moduleTmux}/afterPlugins.conf";
       "tmux/.tmux-env".text = ''
         TMUX_TMPDIR="${config.home.sessionVariables.TMUX_TMPDIR}"
       '';

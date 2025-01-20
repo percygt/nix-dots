@@ -12,7 +12,9 @@ in
 {
   config = lib.mkIf config.modules.editor.zed.enable {
     home.packages = [ cfg.finalPackage ];
-    xdg.configFile."zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleZed}/settings.jsonc";
-    xdg.configFile."zed/keymap.json".source = config.lib.file.mkOutOfStoreSymlink "${moduleZed}/keymap.json";
+    xdg.configFile."zed/settings.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${moduleZed}/settings.jsonc";
+    xdg.configFile."zed/keymap.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${moduleZed}/keymap.json";
   };
 }

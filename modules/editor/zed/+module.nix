@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  self,
   ...
 }:
 let
@@ -24,7 +25,7 @@ in
       package = lib.mkPackageOption pkgs "zed-editor" { };
       extraPackages = lib.mkOption {
         type = with lib.types; listOf package;
-        default = import ../+extras/commonPackages.nix pkgs;
+        default = import "${self}/modules/dev/+extras/langPackages.nix" pkgs;
         example = lib.literalExpression "[ pkgs.nixd ]";
         description = "Extra packages available to Zed.";
       };

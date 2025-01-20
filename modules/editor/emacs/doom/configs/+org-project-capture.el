@@ -1,4 +1,9 @@
 ;;; +org-project-capture.el -*- lexical-binding: t; -*-
+
+(defvar +org-capture/created-property-string "
+:PROPERTIES:
+:CREATED: %U
+:END:")
 (use-package! org-project-capture
   :config
   (progn
@@ -11,15 +16,16 @@
                          :strategies (list (make-instance 'org-project-capture-single-file-strategy)
                                            (make-instance 'org-project-capture-per-project-strategy))))
     (setq org-project-capture-projects-file (expand-file-name "Project.org" org-directory)
-          org-project-capture-capture-template (format "%s%s" "* TODO %?" +org-capture-created-property-string)
           occ-auto-insert-category-heading t)
     (add-to-list 'org-capture-templates
                  (org-project-capture-project-todo-entry
                   :capture-character "l"
+                  :capture-template (format "%s%s" "* %?" +org-capture/created-property-string)
                   :capture-heading "Project Note"
                   ))
     (add-to-list 'org-capture-templates
                  (org-project-capture-project-todo-entry
+                  :capture-template (format "%s%s" "* TODO %?" +org-capture/created-property-string)
                   :capture-character "p"))
     (setq org-confirm-elisp-link-function nil)
     )
