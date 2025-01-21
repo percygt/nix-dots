@@ -113,7 +113,6 @@ in
           ;
       };
     };
-    home.file.ql = ${pkgs.sbclPackages.quicklisp-starter}";
     xdg = {
       configFile = {
         emacs.source = inputs.doom-emacs;

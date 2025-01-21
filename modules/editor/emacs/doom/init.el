@@ -64,6 +64,7 @@
        :emacs
        (dired +icons +dirvish)             ; making dired pretty [functional]
        ;; electric          ; smarter, keyword-based electric-indent
+       eww
        (ibuffer +icons)        ; interactive buffer management
        (undo +tree)
        vc
@@ -107,6 +108,7 @@
 
        :lang
        (org +roam2)
+       org-patch
        cc
        data
        emacs-lisp
@@ -131,7 +133,7 @@
        calendar
        ;;everywhere
        ;;irc
-       ;;(rss +org)
+       (rss +org)
        ereader
 
        :config

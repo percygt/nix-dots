@@ -1,4 +1,4 @@
-;;; +org.el -*- lexical-binding: t; -*-
+;;; lang/org-patch/config.el -*- lexical-binding: t; -*-
 
 (setq org-directory orgDirectory
       org-archive-location (file-name-concat org-directory ".archive/%s::")
@@ -31,6 +31,16 @@ If it is an absolute path return `+org-capture-calendar-file' verbatim."
   '(org-block :inherit fixed-pitch)
   '(org-code :inherit (shadow fixed-pitch)))
 (after! org
+  (load! "+org-agenda.el")
+  (load! "+org-modern.el")
+  (load! "+org-capture.el")
+  (load! "+org-capture-doct.el")
+  (load! "+org-capture-prettify.el")
+  (load! "+org-roam.el")
+  (load! "+org-roam-capture.el")
+  (load! "+org-project-capture.el")
+  (load! "+visual-fill-column.el")
+  (load! "+writeroom-mode.el")
   (add-hook! 'org-mode-hook
     (setq display-fill-column-indicator nil
           display-line-numbers nil)

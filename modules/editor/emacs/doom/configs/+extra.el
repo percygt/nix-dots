@@ -1,5 +1,4 @@
 ;;; +extra.el -*- lexical-binding: t; -*-
-
 (use-package! highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :config

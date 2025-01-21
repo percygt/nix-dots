@@ -82,11 +82,7 @@ pkgs: with pkgs; [
 
   # Common lisp
   sbcl
-  # (clisp.withPackages (p: [ p.quicklisp-starter ]))
-  asdf
-  # (clisp.withPackages (p: [
-  #   p.quicklisp-starter
-  # ]))
+  old.lispPackages.quicklisp
   rlwrap
 
   #docker

@@ -18,5 +18,11 @@
     master = import inputs.nixpkgs-master {
       inherit (final) system config;
     };
+    old = import inputs.nixpkgs-22-11 {
+      inherit (final) system config;
+    };
+    test = import inputs.nixpkgs-fish {
+      inherit (final) system config;
+    };
   };
 }
