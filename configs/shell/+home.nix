@@ -1,7 +1,7 @@
 { pkgs, pkgs-stable, ... }:
 {
   imports = [
-    ./fish.nix
+    # ./fish.nix
     ./bash.nix
     ./nushell
     ./atuin.nix

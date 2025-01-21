@@ -56,25 +56,25 @@ in
           HMCONFIGDIR="/tmp/hms-config"
 
           # Execute the commands
-          su ${username} -c \
+          su "${username}" -c \
             "nom build \
-            $FLAKE#nixosConfigurations.${profile}.config.system.build.toplevel \
-            --out-link $NIXOSCONFIGDIR \
+            $FLAKE#nixosConfigurations.\"${profile}\".config.system.build.toplevel \
+            --out-link \"$NIXOSCONFIGDIR\" \
             --accept-flake-config"
 
           $NIXOSCONFIGDIR/bin/switch-to-configuration switch || exit 1
 
           su ${username} -c \
-            "nvd diff /run/current-system $NIXOSCONFIGDIR"
+            "nvd diff /run/current-system \"$NIXOSCONFIGDIR\""
 
           su ${username} -c \
             "nom build \
             $FLAKE#homeConfigurations.\"${username}@${profile}\".config.home.activationPackage \
-            --out-link $HMCONFIGDIR \
+            --out-link \"$HMCONFIGDIR\" \
             --accept-flake-config"
 
           su ${username} -c \
-            "nvd diff /home/${username}/.local/state/nix/profiles/home-manager $HMCONFIGDIR"
+            "nvd diff /home/${username}/.local/state/nix/profiles/home-manager \"$HMCONFIGDIR\""
 
           su ${username} -c \
             "$HMCONFIGDIR/bin/home-manager-generation"
