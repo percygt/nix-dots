@@ -2,6 +2,9 @@ core:
   normal_text:
     foreground: gray2
 
+  file_with_capability:
+    background: gray2
+
   regular_file: {}
 
   reset_to_normal:
@@ -128,4 +131,4 @@ executable:
   foreground: green
 
 unimportant:
-  foreground: grey
+  foreground: gray1

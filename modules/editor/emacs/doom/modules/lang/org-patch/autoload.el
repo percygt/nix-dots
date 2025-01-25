@@ -1,12 +1,12 @@
 ;;; lang/org-patch/autoload.el -*- lexical-binding: t; -*-
-(defun +org-capture/replace-brackets (link)
-  (mapconcat
-   (lambda (c)
-     (pcase (key-description (vector c))
-       ("[" "(")
-       ("]" ")")
-       (_ (key-description (vector c)))))
-   link))
+;; (defun +org-capture/replace-brackets (link)
+;;   (mapconcat
+;;    (lambda (c)
+;;      (pcase (key-description (vector c))
+;;        ("[" "(")
+;;        ("]" ")")
+;;        (_ (key-description (vector c)))))
+;;    link))
 
 (defun +org-capture/www-get-page-title (url)
   (let ((title))

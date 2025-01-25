@@ -5,7 +5,7 @@
 (package! nix-ts-mode)
 (package! clojure-ts-mode)
 
-;;; eglot
+;;; lang
 (package! eglot-booster
   :recipe
   (:type git
@@ -19,6 +19,8 @@
 (package! spacious-padding)
 
 ;;; disabled
+(package! sly-stepper :disable t)
+(package! sly-quicklisp :disable t)
 (package! solaire-mode :disable t)
 (package! company-sourcekit :disable t)
 (package! avy :disable t)

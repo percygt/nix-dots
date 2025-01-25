@@ -108,7 +108,7 @@ in
 
               # Change previous prompts right side
               function starship_transient_rprompt_func
-                  echo -ne \033[0;34m(${pkgs.coreutils}/bin/date "+%I:%M:%S") \033[0;32m<
+                  echo -ne '\033[0;34m'(${pkgs.coreutils}/bin/date "+%I:%M:%S") '\033[0;32m<'
               end
 
               # ensure starship vars are set
@@ -161,7 +161,7 @@ in
           fish_color_selection 'white' '--bold' '--background=brblack'
           fish_color_status blue
           fish_color_user brgreen
-          fish_color_autosuggestion 'green'
+          fish_color_autosuggestion ${c.base06}
           fish_color_valid_path 'blue' '--underline'
           fish_pager_color_background
           fish_pager_color_completion normal

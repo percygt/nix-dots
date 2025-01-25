@@ -13,6 +13,7 @@ in
     yaru-theme
     hicolor-icon-theme
     humanity-icon-theme
+    vivid
   ];
   home.sessionVariables = {
     LS_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.themes.vividTheme})";
@@ -30,10 +31,11 @@ in
           purple: "${c.base0E}"
           cyan: "${c.base0C}"
           orange: "${c.base09}"
-          white: "${c.base05}"
-          gray1: "${c.base03}"
+          white: "${c.base07}"
+          gray1: "${c.base0C}"
           gray2: "${c.base04}"
-          bg: "${c.base00}
+          bg: "${c.base00}"
+          fg: "${c.base05}"
       ''
       (lib.readFile ./+extras/vivid-theme.yml)
     ];

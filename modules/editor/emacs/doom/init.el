@@ -3,7 +3,7 @@
 ;; This file controls what Doom modules are enabled and what order they load
 ;; in. Remember to run 'doom sync' after modifying it!
 
-(load! "private" doom-user-dir)
+(load! "private" doom-user-dir t)
 
 (setq doom-modules-dirs
       (list (file-name-concat doom-user-dir "modules/")

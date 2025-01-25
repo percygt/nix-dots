@@ -1,0 +1,4 @@
+* (+org-capture/get-project-name)
+** TODO
+
+[[file:~/data/nix-dots/modules/editor/emacs/doom/modules/lang/org-patch/+org-capture.el:::prepend t]]

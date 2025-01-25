@@ -1,5 +1,5 @@
-;;; lang/org-patch/packages.el -*- no-byte-compile: t; -*-
-(package! org :built-in t)
+;;; lang/org-patch/p
+(package! org-project-capture)
 (package! doct
   :recipe (:host github :repo "progfolio/doct")
   :pin "5cab660dab653ad88c07b0493360252f6ed1d898")
@@ -7,7 +7,7 @@
   :recipe (:host github :repo "alphapapa/org-protocol-capture-html"))
 (package! org-modern)
 (package! org-ql)
-(package! org-project-capture)
 (package! org-projectile)
 (package! writeroom-mode)
 (package! org-super-agenda)
+(package! org :built-in t)

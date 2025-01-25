@@ -7,6 +7,7 @@
       +org-capture-todo-file "Tasks.org"
       +org-capture-projects-file "Projects.org")
 
+
 (defvar +org-capture-calendar-file "Calendar.org"
   "Default target for calendar entries.")
 (defun +org-capture-calendar-file ()
@@ -30,15 +31,16 @@ If it is an absolute path return `+org-capture-calendar-file' verbatim."
   ;; way
   '(org-block :inherit fixed-pitch)
   '(org-code :inherit (shadow fixed-pitch)))
+
 (after! org
   (load! "+org-agenda.el")
   (load! "+org-modern.el")
-  (load! "+org-capture.el")
   (load! "+org-capture-doct.el")
   (load! "+org-capture-prettify.el")
+  (load! "+org-capture.el")
+  (load! "+org-project-capture.el")
   (load! "+org-roam.el")
   (load! "+org-roam-capture.el")
-  (load! "+org-project-capture.el")
   (load! "+visual-fill-column.el")
   (load! "+writeroom-mode.el")
   (add-hook! 'org-mode-hook

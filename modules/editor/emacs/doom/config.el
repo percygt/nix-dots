@@ -34,6 +34,9 @@
   `(header-line :background "#081028"))
 
 (setq shell-file-name (executable-find "bash"))
+(setq-default vterm-shell (executable-find "fish"))
+(setq-default explicit-shell-file-name (executable-find "fish"))
+
 (setq display-line-numbers-type 'relative)
 (setq confirm-kill-emacs nil)
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode)

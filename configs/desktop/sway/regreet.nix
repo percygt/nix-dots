@@ -64,7 +64,6 @@ in
     etc."greetd/environments".text = ''
       sway
       bash
-      fish
     '';
   };
 

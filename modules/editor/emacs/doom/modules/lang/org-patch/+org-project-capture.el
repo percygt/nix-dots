@@ -4,7 +4,9 @@
 :PROPERTIES:
 :CREATED: %U
 :END:")
+
 (use-package! org-project-capture
+  :defer 2
   :config
   (progn
     (if (require 'projectile nil 'noerror)
@@ -17,16 +19,17 @@
                                            (make-instance 'org-project-capture-per-project-strategy))))
     (setq org-project-capture-projects-file (expand-file-name "Project.org" org-directory)
           occ-auto-insert-category-heading t)
-    (add-to-list 'org-capture-templates
-                 (org-project-capture-project-todo-entry
-                  :capture-character "l"
-                  :capture-template (format "%s%s" "* %?" +org-capture/created-property-string)
-                  :capture-heading "Project Note"
-                  ))
-    (add-to-list 'org-capture-templates
-                 (org-project-capture-project-todo-entry
-                  :capture-template (format "%s%s" "* TODO %?" +org-capture/created-property-string)
-                  :capture-character "p"))
+    ;; (add-to-list 'org-capture-templates
+    ;;              (org-project-capture-project-todo-entry
+    ;;               :capture-character "l"
+    ;;               :capture-template (format "%s%s" "* %?" +org-capture/created-property-string)
+    ;;               :capture-heading "   Project Note"
+    ;;               ))
+    ;; (add-to-list 'org-capture-templates
+    ;;              (org-project-capture-project-todo-entry
+    ;;               :capture-heading "   Project Todo"
+    ;;               :capture-template (format "%s%s" "* TODO %?" +org-capture/created-property-string)
+    ;;               :capture-character "p"))
     (setq org-confirm-elisp-link-function nil)
     )
   )

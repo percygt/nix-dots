@@ -21,5 +21,10 @@ in
       bash.package
       fish.package
     ];
+    systemPackages = with g.shell; [
+      nushell.package
+      bash.package
+      fish.package
+    ];
   };
 }
