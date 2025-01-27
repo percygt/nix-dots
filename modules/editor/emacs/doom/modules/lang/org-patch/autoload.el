@@ -8,6 +8,78 @@
 ;;        (_ (key-description (vector c)))))
 ;;    link))
 
+(defun +org-capture/ensure-heading (headings &optional initial-level)
+  (if (not headings)
+      (widen)
+    (let ((initial-level (or initial-level 1)))
+      (if (and (re-search-forward (format org-complex-heading-regexp-format
+                                          (regexp-quote (car headings)))
+                                  nil t)
+               (= (org-current-level) initial-level))
+          (progn
+            (beginning-of-line)
+            (org-narrow-to-subtree))
+        (goto-char (point-max))
+        (unless (and (bolp) (eolp)) (insert "\n"))
+        (insert (make-string initial-level ?*)
+                " " (car headings) "\n")
+        (beginning-of-line 0))
+      (+org-capture/ensure-heading (cdr headings) (1+ initial-level)))))
+
+(defun +org-capture/open-project (project-root)
+  (if (require 'projectile nil 'noerror)
+      (projectile-switch-project-by-name project-root)
+    (project-switch-project project-root)
+    )
+  )
+(defun +org-capture/project-file ()
+  (let* (
+         (doct (org-capture-get :doct))
+         (file (expand-file-name +org-capture-projects-file org-directory))
+         (project-root
+          (projectile-completing-read "Project: " (projectile-relevant-known-projects))
+          )
+         (project-name
+          (file-name-nondirectory (directory-file-name project-root))
+          )
+
+         (project-link (org-link-make-string
+                        (format "elisp:(+org-capture/open-project \"%s\")" project-root)
+                        project-name))
+         )
+    (set-buffer (org-capture-target-buffer file))
+    (org-capture-put-target-region-and-position)
+    (widen)
+    (goto-char (point-min))
+    ;; Find or create the project headling
+    (+org-capture/ensure-heading
+     (append (org-capture-get :parents)
+             (list project-link
+                   (if doct
+                       (let ((heading (plist-get doct :heading))) heading)
+                     (org-capture-get :heading)
+                     )
+                   )))
+    ))
+
+(defun +org-capture/project-projectile()
+  (progn
+    (require 'org-project-capture)
+    (let* ((category
+            (org-projectile-completing-read
+             "Select which project:"))
+           (category-location
+            (apply 'occ-get-category-heading-location '(category)))
+           )
+      (if category-location
+          (progn
+            (goto-char category-location)
+            )
+        (occ-insert-at-end-of-file)
+        (org-set-property "CATEGORY" category)
+        (insert (org-project-capture-build-heading category))
+        )))
+  )
 (defun +org-capture/www-get-page-title (url)
   (let ((title))
     (with-current-buffer (url-retrieve-synchronously url)

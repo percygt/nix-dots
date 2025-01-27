@@ -3,9 +3,12 @@
 (after! org
   (require 'doct)
   (require 'org-protocol-capture-html)
-
+  (defcustom org-capture/project-file (expand-file-name +org-capture-projects-file org-directory)
+    "The path to the file in which project Note will be stored."
+    :type '(string)
+    )
   (defun +org-capture/created-property ()
-    (progn (org-set-property "CREATED" (format-time-string (org-time-stamp-format :long :inactive))))
+    (org-set-property "CREATED" (format-time-string (org-time-stamp-format :long :inactive)))
     (insert " ")
     (insert " ")
     (backward-char))
@@ -29,92 +32,33 @@
                         ("book"           . ?b)
                         ))
 
-  (add-hook! 'org-capture-after-finalize-hook (delete-frame))
-  (defun +org-capture/get-project-name ()
-    (let ((heading
-           (file-name-nondirectory (directory-file-name
-                                    (org-project-capture-location-for-project
-                                     (projectile-completing-read "Capture note for project:"
-        							 (occ-get-categories org-projectile-strategy))
-                                     )))
-           ))
-      (org-link-make-string
-       (format "elisp:(org-project-capture-open-project \"%s\") [/]" heading) heading))
-    )
-  ;; (setq org-capture-templates '(("t" "Task" entry (file+headline (lambda ()
-  ;;                                                                  (concat (org-project-capture-location-for-project
-  ;;                                                                           (+org-capture/get-category)
-  ;;                                                                           )
-  ;;       					                           "hey.org"))  (file-name-nondirectory (directory-file-name
-  ;;                                                                          (org-project-capture-location-for-project
-  ;;                                                                           (+org-capture/get-category)
+  ;; (add-hook! 'org-capture-after-finalize-hook (delete-frame))
 
-  ;;                                                                           ))))
-  ;;                                "* TODO %?\n %U\n %i\n  %a")
-  ;;                               ("n" "Note" entry (file+headline (lambda ()
-  ;;       			                                   (concat (org-projectile-location-for-project
-  ;;       				                                    (projectile-completing-read "Capture note for project:"
-  ;;       								                                (occ-get-categories org-projectile-strategy))) "note/note.org")) "Notes")
-  ;;                                "* %?\n %U\n %i\n  %a")
-  ;;                               ("g" "Gate" entry (file+headline (lambda ()
-  ;;       			                                   (concat (org-projectile-location-for-project
-  ;;       				                                    (projectile-completing-read "Capture gate for project:"
-  ;;       								                                (occ-get-categories org-projectile-strategy))) "note/note.org")) "Gates")
-  ;;                                "* %?\n %U\n %i\n  %a")))
-  (defun goto-end-of-subheading ()
-    "Move point to the end of the first subheading (level 2) under the current heading."
-    (org-forward-heading-same-level 1)  ;; Move to the first subheading at the same level
-    (if (org-at-heading-p)
-        (outline-next-heading)           ;; Move to the end of the subheading by going to the next heading
-      (error "No subheading found")))
   (setq org-capture-templates
         (doct `(
-                ("Centralised project templates"
+                ("\tCentralised project templates"
                  :keys "o"
                  :type entry
-                 :function (lambda ()
-                             (progn
-                               (require 'org-project-capture)
-                               (let* ((category
-                                       (org-projectile-completing-read
-                                        "Select which project:"))
-                                      (category-location
-                                       (apply 'occ-get-category-heading-location '(category)))
-                                      (heading-location (apply 'occ-get-category-heading-location '("Tasks"
-                                                                                                    :goto-subheading (lambda ()
-                                                                                                                       (org-forward-heading-same-level 1)
-                                                                                                                       )
-                                                                                                    )))
-                                      )
-                                 (if category-location
-                                     (progn
-                                       (goto-char category-location)
-                                       (goto-char heading-location)
-                                       ;; (goto-char "TASKS")
-                                       )
-                                   (occ-insert-at-end-of-file)
-                                   (org-set-property "CATEGORY" category)
-                                   (insert (org-project-capture-build-heading category))
-                                   (org-insert-subheading t)
-                                   (insert "Tasks")
-                                   )))
-                             )
-                 :template (
-                            "** %{time-or-todo} %?"
+                 :prepend t
+                 :template ("* %{time-or-todo} %?"
+                            "%i"
                             "%a")
                  :children (("Project todo"
                              :keys "t"
+                             :prepend nil
                              :time-or-todo "TODO"
-                             :file org-project-capture-projects-file)
+                             :heading "Tasks"
+                             :function +org-capture/project-file)
                             ("Project note"
                              :keys "n"
                              :time-or-todo "%U"
-                             :file org-project-capture-projects-file)
+                             :heading "Notes"
+                             :function +org-capture/project-file)
                             ("Project changelog"
                              :keys "c"
                              :time-or-todo "%U"
-                             :file org-project-capture-projects-file)
-                            ))
+                             :heading "Unreleased"
+                             :function +org-capture/project-file)))
                 ("Tasks" :keys "t"
                  :icon ("nf-oct-inbox" :set "octicon" :color "yellow")
                  :file +org-capture-todo-file
@@ -126,7 +70,8 @@
                                             (org-set-tags-command)))
                  :template ("* TODO %? "
                             "%{extra}")
-                 :children (("Default" :keys "t"
+                 :children (
+                            ("Default" :keys "t"
                              :icon ("nf-fa-tasks" :set "faicon" :color "yellow")
                              :hook +org-capture/created-property
                              :extra  "")
@@ -163,7 +108,8 @@
                                        (+org-capture/created-property)
                                        ))
                              :icon ("nf-oct-calendar" :set "octicon" :color "orange")
-                             )))
+                             )
+                            ))
                 ("Interesting" :keys "i"
                  :icon ("nf-fa-eye" :set "faicon" :color "cyan")
                  :file +org-capture-notes-file
