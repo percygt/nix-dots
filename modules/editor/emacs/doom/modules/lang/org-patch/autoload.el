@@ -8,10 +8,20 @@
 ;;        (_ (key-description (vector c)))))
 ;;    link))
 
-(defun +org-capture/ensure-heading (headings &optional initial-level)
-  (if (not headings)
+(defun +org-capture/created-property ()
+  (org-set-property "CREATED" (format-time-string (org-time-stamp-format :long :inactive)))
+  (insert " ")
+  (insert " ")
+  (backward-char)
+  )
+
+(defun +org-capture/ensure-heading (args &optional initial-level)
+  (if (not args)
       (widen)
-    (let ((initial-level (or initial-level 1)))
+    (let* (
+           (initial-level (or initial-level 1))
+           (headings (if (= initial-level 1) (cdr args) args))
+           )
       (if (and (re-search-forward (format org-complex-heading-regexp-format
                                           (regexp-quote (car headings)))
                                   nil t)
@@ -23,8 +33,12 @@
         (unless (and (bolp) (eolp)) (insert "\n"))
         (insert (make-string initial-level ?*)
                 " " (car headings) "\n")
+        (when (= initial-level 1)
+          (org-set-property "CATEGORY" (car args)))
         (beginning-of-line 0))
-      (+org-capture/ensure-heading (cdr headings) (1+ initial-level)))))
+
+      (+org-capture/ensure-heading (cdr headings) (1+ initial-level))
+      )))
 
 (defun +org-capture/open-project (project-root)
   (if (require 'projectile nil 'noerror)
@@ -42,7 +56,6 @@
          (project-name
           (file-name-nondirectory (directory-file-name project-root))
           )
-
          (project-link (org-link-make-string
                         (format "elisp:(+org-capture/open-project \"%s\")" project-root)
                         project-name))
@@ -54,7 +67,7 @@
     ;; Find or create the project headling
     (+org-capture/ensure-heading
      (append (org-capture-get :parents)
-             (list project-link
+             (list project-name project-link
                    (if doct
                        (let ((heading (plist-get doct :heading))) heading)
                      (org-capture-get :heading)
