@@ -21,7 +21,7 @@ let
     clipboard=$(wl-paste 2>/dev/null)
     if [[ $clipboard =~ $url_check ]]; then
       if [[ $1 = "i" ]]; then
-        interest=$(printf 'Webpage\nVideo\nRepo\nArticle' | tofi -c ${config.xdg.configHome}/tofi/config-mid --prompt-text "Templates: ")
+        interest=$(printf 'Webpage\nVideo\nRepo' | tofi -c ${config.xdg.configHome}/tofi/config-mid --prompt-text "Templates: ")
         case $interest in
         Webpage)
           template="iw"
@@ -42,13 +42,10 @@ let
       fi
     else
       if [[ $1 = "i" ]]; then
-        interest=$(printf 'Book\nInformation\nIdea' | tofi -c ${config.xdg.configHome}/tofi/config-mid --prompt-text "Templates: ")
+        interest=$(printf 'Book\nIdea' | tofi -c ${config.xdg.configHome}/tofi/config-mid --prompt-text "Templates: ")
         case $interest in
         Book)
           template="ib"
-          ;;
-        Information)
-          template="ii"
           ;;
         Idea)
           template="iI"
