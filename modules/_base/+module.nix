@@ -97,7 +97,7 @@ in
       keepass.package = lib.mkOption {
         description = "Keepass package";
         type = lib.types.package;
-        default = pkgs.old.keepassxc;
+        default = pkgs.keepassxc;
       };
       borgmatic.package = lib.mkOption {
         description = "Borgmatic package";

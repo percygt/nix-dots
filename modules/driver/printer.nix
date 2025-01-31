@@ -8,10 +8,10 @@
 {
   config = lib.mkIf config.modules.driver.printer.enable {
     # hardware.printers.ensurePrinters = [ g.localPrinter ];
-    environment.systemPackages = [ pkgs.old.epsonscan2 ];
+    environment.systemPackages = config.hardware.sane.extraBackends;
     programs.system-config-printer.enable = true;
     services = {
-      udev.packages = [ pkgs.utsushi ];
+      udev.packages = config.hardware.sane.extraBackends;
       system-config-printer.enable = true;
       printing = {
         enable = true;
@@ -22,8 +22,9 @@
       sane = {
         enable = true;
         extraBackends = [
-          pkgs.old.epsonscan2
-          pkgs.epkowa
+          (pkgs.epsonscan2.override {
+            withNonFreePlugins = true;
+          })
           pkgs.utsushi
         ];
       };

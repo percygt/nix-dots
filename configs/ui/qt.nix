@@ -5,7 +5,7 @@ in
 {
   qt = {
     enable = true;
-    platformTheme.name = "gtk";
+    platformTheme.name = "qt5ct";
     style.name = cfg.name;
   };
 

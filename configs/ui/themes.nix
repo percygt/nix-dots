@@ -16,7 +16,7 @@ in
     vivid
   ];
   home.sessionVariables = {
-    LS_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.themes.vividTheme})";
+    # LS_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.themes.vividTheme})";
     EZA_COLORS = "$(${lib.getExe pkgs.vivid} generate ${config.modules.themes.vividTheme})";
   };
   xdg = {

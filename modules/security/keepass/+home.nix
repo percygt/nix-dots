@@ -42,9 +42,9 @@ in
           ]
         );
       sessionVariables.KPDB = kpdb;
-      # file."${config.xdg.cacheHome}/keepassxc/keepassxc.ini".text = lib.generators.toINI { } {
-      #   General.LastActiveDatabase = kpdb;
-      # };
+      file."${config.xdg.cacheHome}/keepassxc/keepassxc.ini".text = lib.generators.toINI { } {
+        General.LastActiveDatabase = kpdb;
+      };
     };
     xdg.configFile =
       lib.optionalAttrs (desktop == "sway") {
