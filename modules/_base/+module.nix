@@ -65,7 +65,7 @@ in
       fish.package = lib.mkOption {
         description = "Fish shell package";
         type = lib.types.package;
-        default = pkgs.test.fish;
+        default = pkgs.fish;
       };
       nushell.package = lib.mkOption {
         description = "Nushell shell package";
@@ -97,7 +97,7 @@ in
       keepass.package = lib.mkOption {
         description = "Keepass package";
         type = lib.types.package;
-        default = pkgs.keepassxc;
+        default = pkgs.old.keepassxc;
       };
       borgmatic.package = lib.mkOption {
         description = "Borgmatic package";

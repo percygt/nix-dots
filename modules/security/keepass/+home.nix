@@ -8,6 +8,8 @@
 let
   g = config._base;
   kpdb = g.security.keepass.db;
+  cfg = config.wayland.windowManager.sway.config;
+  mod = cfg.modifier;
 in
 {
   imports = [
@@ -21,6 +23,12 @@ in
         criterias = [ { app_id = "org.keepassxc.KeePassXC"; } ];
       }
     ];
+    wayland.windowManager.sway = {
+      config.keybindings = lib.mkOptionDefault {
+        "${mod}+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu}";
+        "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C";
+      };
+    };
     home = {
       packages =
         [ g.security.keepass.package ]
@@ -34,9 +42,9 @@ in
           ]
         );
       sessionVariables.KPDB = kpdb;
-      file."${config.xdg.cacheHome}/keepassxc/keepassxc.ini".text = lib.generators.toINI { } {
-        General.LastActiveDatabase = kpdb;
-      };
+      # file."${config.xdg.cacheHome}/keepassxc/keepassxc.ini".text = lib.generators.toINI { } {
+      #   General.LastActiveDatabase = kpdb;
+      # };
     };
     xdg.configFile =
       lib.optionalAttrs (desktop == "sway") {

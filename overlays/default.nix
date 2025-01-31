@@ -11,17 +11,14 @@
     import ../packages/overlays.nix {
       pkgs = final;
     };
-  other-nixpkgs = final: _: {
+  nixpkgs-variants = final: _: {
     stable = import inputs.nixpkgs-stable {
       inherit (final) system config;
     };
     master = import inputs.nixpkgs-master {
       inherit (final) system config;
     };
-    old = import inputs.nixpkgs-22-11 {
-      inherit (final) system config;
-    };
-    test = import inputs.nixpkgs-fish {
+    old = import inputs.nixpkgs-old {
       inherit (final) system config;
     };
   };

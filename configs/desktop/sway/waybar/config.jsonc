@@ -30,7 +30,6 @@
       "pulseaudio#source",
       "custom/wlsunset",
       "idle_inhibitor",
-      // "network",
       "battery",
       "custom/menu"
     ],
@@ -69,6 +68,7 @@
     "cpu": {
       "format": "{usage:3}%",
       "align": 0,
+      "on-click": "ddapp -t 'btop' -m false -h 90 -w 90 -- 'footclient --title='SystemMonitor' --app-id=btop -- btop'",
       "interval": 1,
       "states": {
         "critical": 80,
@@ -124,7 +124,7 @@
     "memory": {
       "format": "󰆼{percentage:3}%  󰯎{swapPercentage:3}%",
       "interval": 30,
-      "on-click": "toggle-sway-window --id btop -- foot --app-id=btop btop",
+      "on-click": "ddapp -t 'btop' -m false -h 90 -w 90 -- 'footclient --title='SystemMonitor' --app-id=btop -- btop'",
       "tooltip": true,
       "tooltip-format": "{used:0.1f}G/{total:0.1f}G | {swapUsed:0.1f}G/{swapTotal:0.1f}G"
     },
@@ -145,15 +145,6 @@
         "paused": " "
       }
     },
-    // "network": {
-    //   "format-disconnected": "󰲛",
-    //   "format-ethernet": "󰈀",
-    //   "format-linked": "󰈀 (No IP)",
-    //   "format-wifi": "",
-    //   "max-length": 15,
-    //   // "on-click": "toggle-sway-window --id wpa_gui -- wpa_gui",
-    //   "tooltip-format": "{ifname} / {essid} ({signalStrength}%) / {ipaddr}"
-    // },
     "pulseaudio#source": {
       "format": "<span font='9'> {format_source}</span>",
       "format-source": "",
@@ -198,7 +189,7 @@
         "",
         ""
       ],
-      "on-click": "toggle-sway-window --id btop -- foot --app-id=btop btop",
+      "on-click": "ddapp -t 'btop' -m false -h 90 -w 90 -- 'footclient --title='SystemMonitor' --app-id=btop -- btop'",
       "thermal-zone": 7,
       "tooltip": false
     },
@@ -218,7 +209,7 @@
       "format-muted": " ",
       "max-volume": 100,
       "on-click": "pamixer --toggle-mute",
-      "on-click-right": "toggle-sway-window --id pavucontrol -- pavucontrol",
+      "on-click-right": "ddapp -t 'pavucontrol' -h 80 -w 80 -- pavucontrol",
       "scroll-step": 5,
       "tooltip-format": "{source_volume}% / {desc}"
     }
@@ -255,7 +246,6 @@
       "pulseaudio#source",
       "custom/wlsunset",
       "idle_inhibitor",
-      "network",
       "battery",
       "custom/menu"
     ],
@@ -286,6 +276,7 @@
     },
     "cpu": {
       "format": "{usage:3}%",
+      "on-click": "ddapp -t 'btop' -m false -h 90 -w 90 -- 'footclient --title='SystemMonitor' --app-id=btop -- btop'",
       "align": 0,
       "interval": 1,
       "states": {
@@ -320,7 +311,8 @@
       "interval": 2,
       "exec": "waybar-rebuild-exec",
       "max-length": 12,
-      "on-click": "toggle-sway-window --id=system-software-update  -- foot --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service",
+      "on-click": "ddapp -t 'system-software-update' -m false -h 90 -w 90 -- 'footclient --title=NixosRebuild --app-id=system-software-update -- journalctl -efo cat -u nixos-rebuild.service'",
+      "on-click-right": "ddapp -t 'backup' -m false -h 90 -w 90 -- 'footclient --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service'",
       "return-type": "json",
       "signal": 12
     },
@@ -341,7 +333,7 @@
     "memory": {
       "format": "󰆼{percentage:3}%  󰯎{swapPercentage:3}%",
       "interval": 30,
-      "on-click": "toggle-sway-window --id btop -- foot --app-id=btop btop",
+      "on-click": "ddapp -t 'btop' -m false -h 90 -w 90 -- 'footclient --title='SystemMonitor' --app-id=btop -- btop'",
       "tooltip": true,
       "tooltip-format": "{used:0.1f}G/{total:0.1f}G | {swapUsed:0.1f}G/{swapTotal:0.1f}G"
     },
@@ -361,15 +353,6 @@
       "status-icons": {
         "paused": ""
       }
-    },
-    "network": {
-      "format-disconnected": "󰲛",
-      "format-ethernet": "󰈀",
-      "format-linked": "󰈀 (No IP)",
-      "format-wifi": "",
-      "max-length": 15,
-      "on-click": "toggle-sway-window --id wpa_gui -- wpa_gui",
-      "tooltip-format": "{ifname} / {essid} ({signalStrength}%) / {ipaddr}"
     },
     "pulseaudio#source": {
       "format": "<span font='9'> {format_source}</span>",
@@ -415,7 +398,7 @@
         "",
         ""
       ],
-      "on-click": "toggle-sway-window --id btop -- foot --app-id=btop btop",
+      "on-click": "ddapp -t 'btop' -m false -h 90 -w 90 -- 'footclient --title='SystemMonitor' --app-id=btop -- btop'",
       "thermal-zone": 7,
       "tooltip": false
     },
@@ -435,7 +418,7 @@
       "format-muted": " ",
       "max-volume": 100,
       "on-click": "pamixer --toggle-mute",
-      "on-click-right": "toggle-sway-window --id pavucontrol -- pavucontrol",
+      "on-click-right": "ddapp -t 'pavucontrol' -h 80 -w 80 -- pavucontrol",
       "scroll-step": 5,
       "tooltip-format": "{source_volume}% / {desc}"
     }

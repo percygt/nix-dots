@@ -9,6 +9,13 @@
   :after '(evil-window-split evil-window-vsplit)
   (consult-buffer))
 
+(map!
+ "C-l"        nil
+ "C-h"        #'evil-window-left
+ "C-j"        #'evil-window-down
+ "C-k"        #'evil-window-up
+ "C-l"        #'evil-window-right
+ )
 (map! :map evil-window-map
       "SPC" #'rotate-layout
       ;; Navigation

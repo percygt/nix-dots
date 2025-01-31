@@ -40,10 +40,11 @@ in
     config.keybindings = lib.mkOptionDefault {
       "${mod}+s" = "exec swaync-client -t -sw";
       "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
-      "${mod}+d" = "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
+      "${mod}+d" =
+        "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
       "${mod}+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu}";
-      "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C | xargs swaymsg exec --";
+      "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C";
       "${mod}+Shift+p" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
       "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
       "${mod}+Tab" = "workspace back_and_forth";
@@ -62,8 +63,10 @@ in
       "${mod}+Shift+l" = "workspace next";
       "${mod}+Shift+h" = "workspace prev";
 
-      "${mod}+Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";
-      "Ctrl+Print" = "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png";
+      "${mod}+Print" =
+        "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";
+      "Ctrl+Print" =
+        "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp -d)\" - | ${pkgs.wl-clipboard}/bin/wl-copy -t image/png";
       "Alt+Print" = "exec ocr";
 
       # Backlight:

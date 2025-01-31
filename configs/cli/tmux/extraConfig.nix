@@ -39,9 +39,7 @@ in
       set -g @resurrect-processes 'nvim'
       set -g @resurrect-dir '${resurrectDirPath}'
       set -g @resurrect-hook-post-save-all '${resurrectPostSave} "${resurrectDirPath}/last"'
-      run-shell ${tp.resurrect.rtp}
-
-
+      run-shell "${tp.resurrect.rtp}"
 
       # ---------------------
       # tmuxplugin-tmux-switcher
@@ -51,34 +49,32 @@ in
       set -g @tmux-switcher-extras "find"
       unbind ,
       set -g @tmux-switcher-bind ","
-      run-shell ${tp.tmux-switcher.rtp}
+      run-shell "${tp.tmux-switcher.rtp}"
 
 
       # ---------------------
       # tmuxplugin-vim-tmux-navigator
       # ---------------------
-      run-shell ${tp.vim-tmux-navigator.rtp}
+      run-shell "${tp.vim-tmux-navigator.rtp}"
 
       # ---------------------
       # tmuxplugin-yank
       # ---------------------
 
-      run-shell ${pkgs.tmuxPlugins.yank.rtp}
+      run-shell "${tp.yank.rtp}"
 
       # ---------------------
       # tmuxplugin-extrakto
       # ---------------------
       set -g @extrakto_clip_tool 'wl-copy'
-      run-shell ${tp.extrakto.rtp}
+      run-shell "${tp.extrakto.rtp}"
 
       # ---------------------
       # tmuxplugin-continuum
       # ---------------------
       set -g @continuum-restore 'on'
       set -g @continuum-save-interval '10'
-      # set -g @continuum-boot 'on'
-      # set -g @continuum-systemd-start-cmd 'start-server'
-      run-shell ${tp.continuum.rtp}
+      run-shell "${tp.continuum.rtp}"
 
 
       # ---------------------

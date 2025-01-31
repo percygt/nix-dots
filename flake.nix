@@ -66,7 +66,7 @@
     nix-sources.url = "github:percygt/nix-sources";
     nix-stash.url = "github:percygt/nix-stash";
     nixpkgs.follows = "nix-sources/nixpkgs";
-    nixpkgs-22-11.follows = "nix-sources/nixpkgs-22-11";
+    nixpkgs-old.follows = "nix-sources/nixpkgs-old";
     nixpkgs-master.follows = "nix-sources/nixpkgs-master";
     nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
 
@@ -119,8 +119,6 @@
     };
     base.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     base.flake = false;
-    # fish ported to rust
-    nixpkgs-fish.url = "github:nixos/nixpkgs/fish";
   };
   nixConfig = {
     extra-substituters = [

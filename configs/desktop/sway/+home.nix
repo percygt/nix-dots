@@ -1,4 +1,9 @@
+{ lib, config, ... }:
+let
+  g = config._base;
+in
 {
+
   imports = [
     ./dconf.nix
     ./pomo.nix
@@ -23,11 +28,10 @@
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "sway";
     NIXOS_OZONE_WL = "1";
-    GTK_USE_PORTAL = "0";
   };
   wayland.windowManager.sway = {
     enable = true;
-    package = null;
+    inherit (g.desktop.sway) package;
     swaynag.enable = true;
     systemd.xdgAutostart = true;
     wrapperFeatures.gtk = true;

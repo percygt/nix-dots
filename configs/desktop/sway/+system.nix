@@ -23,7 +23,6 @@ in
     ];
     files = [ ".local/state/tofi-drun-history" ];
   };
-
   environment = {
     sessionVariables = {
       XDG_CURRENT_DESKTOP = "sway";
@@ -35,20 +34,18 @@ in
       enable = true;
       inherit (g.desktop.sway) package;
       wrapperFeatures.gtk = true;
-      extraOptions = [
-        (lib.optionalString unsupported-gpu "--unsupported-gpu")
-      ];
     };
   };
 
-  # Make sure to start the home-manager activation before I log in.
-  systemd.services."home-manager-${username}" = {
-    before = [ "display-manager.service" ];
-    wantedBy = [ "multi-user.target" ];
-  };
+  # # Make sure to start the home-manager activation before I log in.
+  # systemd.services."home-manager-${username}" = {
+  #   before = [ "display-manager.service" ];
+  #   wantedBy = [ "multi-user.target" ];
+  # };
 
   xdg.portal = {
     enable = true;
+    config.common.default = "*";
     wlr = {
       enable = true;
       settings.screencast = {

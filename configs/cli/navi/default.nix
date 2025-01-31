@@ -15,7 +15,7 @@
     };
   };
   programs.navi = {
-    enable = true;
+    enable = false;
     settings = {
       style = {
         tag = {

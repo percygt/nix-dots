@@ -7,21 +7,15 @@
 let
   swayCfg = config.wayland.windowManager.sway;
   mod = swayCfg.config.modifier;
-  systemmonitor = pkgs.writers.writeBash "systemmonitor" ''
-    footclient --title='SystemMonitor' --app-id=btop -- btop;
-  '';
-  bluetoothmanager = pkgs.writers.writeBash "bluetoothmanager" ''
-    footclient --title='BluetoothMonitor' --app-id=bluetooth -- bluetui;
-  '';
-  volumecontrol = pkgs.writers.writeBash "volumecontrol" ''
-    footclient --title='VolumeControl' --app-id=volume -- ncpamixer;
-  '';
 in
 {
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-    "${mod}+m" = "exec ddapp -t 'btop' -m false -h 90 -w 90 -- ${systemmonitor}";
-    "${mod}+b" = "exec ddapp -t 'bluetooth' -m false -h 50 -w 50 -- ${bluetoothmanager}";
-    "${mod}+v" = "exec ddapp -t 'volume' -m false -h 50 -w 50 -- ${volumecontrol}";
+    "${mod}+m" =
+      "exec ddapp -t 'btop' -m false -h 90 -w 90 -- 'footclient --title=SystemMonitor --app-id=btop -- btop'";
+    "${mod}+b" =
+      "exec ddapp -t 'bluetooth' -m false -h 50 -w 50 -- 'footclient --title=BluetoothMonitor --app-id=bluetooth -- bluetui'";
+    "${mod}+v" =
+      "exec ddapp -t 'volume' -m false -h 50 -w 50 -- 'footclient --title=VolumeControl --app-id=volume -- ncpamixer'";
   };
   programs = {
     btop = {
