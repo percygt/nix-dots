@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  swaymsg = "${config._base.desktop.sway.package}/bin/swaymsg";
+  swaymsg = "${config._base.desktop.sway.finalPackage}/bin/swaymsg";
 in
 {
   services.kanshi = {

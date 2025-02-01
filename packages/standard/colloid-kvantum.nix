@@ -13,13 +13,13 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "colloid-kde";
-  version = "unstable-2023-07-04";
+  version = "2025-02-01";
 
   src = fetchFromGitHub {
     owner = "vinceliuice";
     repo = pname;
-    rev = "0b79befdad9b442b5a8287342c4b7e47ff87d555";
-    hash = "sha256-AYH9fW20/p+mq6lxR1lcCV1BQ/kgcsjHncpMvYWXnWA=";
+    rev = "950da0fa52634f9414df351fab033073ab9c7b0b";
+    hash = "sha256-6qj28jj2Zqx61bClf9OYHA+RUTBj+6oQ4DmfimOlIKQ=";
   };
 
   installPhase = ''

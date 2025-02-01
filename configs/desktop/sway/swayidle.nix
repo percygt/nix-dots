@@ -6,7 +6,7 @@
 }:
 let
   g = config._base;
-  swaymsg = "${g.desktop.sway.package}/bin/swaymsg";
+  swaymsg = "${g.desktop.sway.finalPackage}/bin/swaymsg";
   swaylock = "${lib.getExe config.programs.swaylock.package}";
 in
 {
@@ -22,7 +22,7 @@ in
             name = "swayidle-after-resume";
             runtimeInputs = g.system.envPackages ++ [
               pkgs.pomo
-              g.desktop.sway.package
+              g.desktop.sway.finalPackage
             ];
             text = ''
               if [ -f "$HOME/.local/share/pomo" ]; then pomo start || true; fi

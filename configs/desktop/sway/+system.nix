@@ -32,7 +32,7 @@ in
   programs = {
     sway = {
       enable = true;
-      inherit (g.desktop.sway) package;
+      package = g.desktop.sway.finalPackage;
       wrapperFeatures.gtk = true;
     };
   };

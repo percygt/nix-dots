@@ -9,10 +9,6 @@ in
     style.name = cfg.name;
   };
 
-  home.sessionVariables = {
-    QT_STYLE_OVERRIDE = cfg.name;
-  };
-
   xdg.configFile = {
     "Kvantum" = {
       recursive = false;

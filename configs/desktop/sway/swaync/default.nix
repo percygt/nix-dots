@@ -20,7 +20,7 @@ let
       grim
       slurp
       swappy
-      g.desktop.sway.package
+      g.desktop.sway.finalPackage
     ]);
   swayncWithExtraPackages =
     pkgs.runCommand "swaync"

@@ -8,14 +8,14 @@ let
   t = config.modules.themes;
   f = config.modules.fonts.interface;
   g = config._base;
-  unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;
 
   sway-kiosk =
     command:
-    "${lib.getExe g.desktop.sway.package} ${lib.optionalString unsupported-gpu "--unsupported-gpu"} --config ${pkgs.writeText "kiosk.config" ''
+    "${lib.getExe g.desktop.sway.finalPackage} --config ${pkgs.writeText "kiosk.config" ''
       output * bg #000000 solid_color
       exec '${command}; swaymsg exit'
       include /etc/sway/config.d/*
+
       bindsym Mod4+shift+e exec swaynag \
       -t warning \
       -m 'What do you want to do?' \
@@ -51,11 +51,13 @@ in
   ];
 
   environment = {
-    etc."greetd/environments".text = ''
-      sway
-      bash
-      fish
-    '';
+    etc = {
+      "greetd/environments".text = ''
+        sway
+        bash
+        fish
+      '';
+    };
   };
 
   security.pam.services.greetd.enableGnomeKeyring = true;
@@ -63,7 +65,6 @@ in
     enable = true;
     settings.default_session = {
       command = sway-kiosk (lib.getExe config.programs.regreet.package);
-      user = "greeter";
     };
   };
 }

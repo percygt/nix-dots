@@ -31,7 +31,7 @@ in
   };
   wayland.windowManager.sway = {
     enable = true;
-    inherit (g.desktop.sway) package;
+    package = g.desktop.sway.finalPackage;
     swaynag.enable = true;
     systemd.xdgAutostart = true;
     wrapperFeatures.gtk = true;

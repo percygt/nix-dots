@@ -16,10 +16,40 @@ in
       type = lib.types.str;
     };
     desktop = {
-      sway.package = lib.mkOption {
-        description = "Sway package";
-        type = lib.types.package;
-        default = pkgs.swayfx-git;
+      sway = {
+        package = lib.mkOption {
+          description = "Sway package";
+          type = lib.types.package;
+          default = pkgs.swayfx;
+        };
+        finalPackage = lib.mkOption {
+          description = "Sway package";
+          type = lib.types.package;
+          default = cfg.desktop.sway.package.override {
+            swayfx-unwrapped = pkgs.swayfx-unwrapped.overrideAttrs (old: {
+              postInstall =
+                let
+                  swaySession = ''
+                    [Desktop Entry]
+                    Name=SwayNvidia
+                    Comment=An i3-compatible Wayland compositor
+                    Exec=sway --unsupported-gpu
+                    Type=Application
+                  '';
+                in
+                ''
+                  [ ! -d $out/share/wayland-sessions ] && mkdir -p $out/share/wayland-sessions
+                  echo "${swaySession}" > $out/share/wayland-sessions/sway-nvidia.desktop
+                '';
+
+              nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.cmake ];
+              providedSessions = [
+                pkgs.swayfx-unwrapped.meta.mainProgram
+                "sway-nvidia"
+              ];
+            });
+          };
+        };
       };
     };
     dev = {

@@ -22,7 +22,7 @@ in
             g.system.envPackages
             ++ [
               pkgs.pomo
-              g.desktop.sway.package
+              g.desktop.sway.finalPackage
               config.programs.swaylock.package
             ]
           )
