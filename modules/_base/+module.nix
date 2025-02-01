@@ -7,6 +7,7 @@
 }:
 let
   cfg = config._base;
+  unsupported-gpu = config.modules.driver.nvidia.prime.enable;
 in
 {
   options._base = {
@@ -17,6 +18,11 @@ in
     };
     desktop = {
       sway = {
+        command = lib.mkOption {
+          description = "Sway package";
+          type = lib.types.str;
+          default = "sway${lib.optionalString unsupported-gpu " --unsupported-gpu"}";
+        };
         package = lib.mkOption {
           description = "Sway package";
           type = lib.types.package;
@@ -31,22 +37,17 @@ in
                 let
                   swaySession = ''
                     [Desktop Entry]
-                    Name=SwayNvidia
+                    Name=Sway${lib.optionalString unsupported-gpu "Nvidia"}
                     Comment=An i3-compatible Wayland compositor
-                    Exec=sway --unsupported-gpu
+                    Exec=${cfg.desktop.sway.command}
                     Type=Application
                   '';
                 in
                 ''
                   [ ! -d $out/share/wayland-sessions ] && mkdir -p $out/share/wayland-sessions
-                  echo "${swaySession}" > $out/share/wayland-sessions/sway-nvidia.desktop
+                  echo "${swaySession}" > $out/share/wayland-sessions/sway.desktop
                 '';
-
-              nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.cmake ];
-              providedSessions = [
-                pkgs.swayfx-unwrapped.meta.mainProgram
-                "sway-nvidia"
-              ];
+              providedSessions = [ "sway" ];
             });
           };
         };

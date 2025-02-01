@@ -26,6 +26,7 @@
             withNonFreePlugins = true;
           })
           pkgs.utsushi
+          pkgs.simple-scan
         ];
       };
     };

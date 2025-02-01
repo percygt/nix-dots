@@ -11,8 +11,7 @@ let
 
   sway-kiosk =
     command:
-    "${lib.getExe g.desktop.sway.finalPackage} --config ${pkgs.writeText "kiosk.config" ''
-      output * bg #000000 solid_color
+    "${g.desktop.sway.command} --config ${pkgs.writeText "kiosk.config" ''
       exec '${command}; swaymsg exit'
       include /etc/sway/config.d/*
 

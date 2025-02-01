@@ -161,7 +161,7 @@ in
           fish_color_selection 'white' '--bold' '--background=brblack'
           fish_color_status blue
           fish_color_user brgreen
-          fish_color_autosuggestion ${c.base06}
+          fish_color_autosuggestion blue
           fish_color_valid_path 'blue' '--underline'
           fish_pager_color_background
           fish_pager_color_completion normal
