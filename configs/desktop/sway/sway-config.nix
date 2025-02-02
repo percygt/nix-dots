@@ -36,6 +36,7 @@ in
         tap = "enabled";
         accel_profile = "adaptive";
       };
+      "9011:26214:ydotoold_virtual_device".accel_profile = "flat";
     };
     seat.seat0 = {
       xcursor_theme = lib.mkIf (

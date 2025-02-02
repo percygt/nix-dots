@@ -9,7 +9,7 @@
   nerdfonts-fontconfig = pkgs.callPackage ./standard/nerdfonts-fontconfig.nix { };
   i3-quickterm = pkgs.python3Packages.callPackage ./python/i3-quickterm.nix { };
   tui-network = pkgs.python3Packages.callPackage ./python/tui-network.nix { };
-  hints = pkgs.python3Packages.callPackage ./python/hints.nix { };
+  hints = pkgs.python3Packages.callPackage ./python/hints/default.nix { };
   colloid-gtk-theme-catppuccin = pkgs.callPackage ./standard/colloid-gtk-theme.nix { };
   colloid-kvantum = pkgs.callPackage ./standard/colloid-kvantum.nix { };
   straight-el = pkgs.callPackage ./standard/straight-el.nix { };

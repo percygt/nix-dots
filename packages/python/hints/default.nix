@@ -6,6 +6,7 @@
   wrapGAppsHook3,
   at-spi2-core,
   libwnck,
+  gtk-layer-shell,
 }:
 python3.pkgs.buildPythonApplication {
   pname = "hints";
@@ -23,13 +24,18 @@ python3.pkgs.buildPythonApplication {
 
   build-system = with python3.pkgs; [ setuptools ];
 
-  dependencies = with python3.pkgs; [
-    pygobject3
-    pillow
-    pyscreenshot
-    opencv-python
-    pyatspi
-  ];
+  dependencies =
+    with python3.pkgs;
+    [
+      pygobject3
+      pillow
+      pyscreenshot
+      opencv-python
+      pyatspi
+    ]
+    ++ [
+      gtk-layer-shell
+    ];
 
   nativeBuildInputs = [
     gobject-introspection
@@ -40,6 +46,8 @@ python3.pkgs.buildPythonApplication {
     at-spi2-core
     libwnck # for X11
   ];
+
+  patches = [ ./get_window_system.diff ];
 
   makeWrapperArgs = [ "\${gappsWrapperArgs[@]}" ];
 

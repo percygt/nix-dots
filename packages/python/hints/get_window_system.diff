@@ -1,0 +1,13 @@
+diff --git a/hints/hints.py b/hints/hints.py
+index 9d55bdb..aaa3058 100644
+--- a/hints/hints.py
++++ b/hints/hints.py
+@@ -265,7 +265,7 @@ def get_window_system() -> Type[WindowSystem]:
+         wayland_wm = (
+             run(
+                 "ps -e -o comm | grep -m 1 -o -E "
+-                + " ".join([f"-e '^{wm}$'" for wm in supported_wayland_wms]),
++                + " ".join([f"-e '^.?{wm}.*$'" for wm in supported_wayland_wms]),
+                 capture_output=True,
+                 shell=True,
+             )
