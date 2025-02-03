@@ -5,7 +5,20 @@ return {
     arg = { "server" },
     filetypes = { "terraform", "tf", "terraform-vars" },
   },
-  pylsp = {},
+  ruff = {},
+  basedpyright = {
+    settings = {
+      basedpyright = {
+        analysis = {
+          typeCheckingMode = "basic",
+          autoSearchPaths = true,
+          diagnosticMode = "openFilesOnly",
+          useLibraryCodeForTypes = true,
+        },
+      },
+    },
+  },
+
   neocmake = {},
   clojure_lsp = {},
   clangd = {},
@@ -62,9 +75,5 @@ return {
   marksman = {},
   taplo = {},
   cssls = {},
-  lua_ls = {
-    init_options = {
-      documentFormatting = false,
-    },
-  },
+  lua_ls = {},
 }

@@ -1,4 +1,5 @@
 ;;; lang/org-patch/autoload.el -*- lexical-binding: t; -*-
+;;;
 ;; (defun +org-capture/replace-brackets (link)
 ;;   (mapconcat
 ;;    (lambda (c)
@@ -8,12 +9,6 @@
 ;;        (_ (key-description (vector c)))))
 ;;    link))
 
-(defun +org-capture/created-property ()
-  (org-set-property "CREATED" (format-time-string (org-time-stamp-format :long :inactive)))
-  (insert " ")
-  (insert " ")
-  (backward-char)
-  )
 
 (defun +org-capture/ensure-heading (args &optional initial-level)
   (if (not args)

@@ -1,8 +1,10 @@
 local g, opt = vim.g, vim.opt
 
 g.mapleader = " "
+g.maplocalleader = ","
 
 g.lazyvim_picker = "telescope"
+g.lazyvim_python_lsp = "basedpyright"
 g.lazyvim_blink_main = true
 
 opt.nu = true -- Show numberline

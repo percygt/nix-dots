@@ -25,8 +25,8 @@ in
     ];
     wayland.windowManager.sway = {
       config.keybindings = lib.mkOptionDefault {
-        "${mod}+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu}";
-        "${mod}+Alt+p" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C";
+        "${mod}+KP_Multiply" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu}";
+        "${mod}+Alt+KP_Multiply" = "exec pkill tofi || ${lib.getExe pkgs.keepmenu} -C";
       };
     };
     home = {

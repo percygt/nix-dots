@@ -34,7 +34,7 @@ return {
       lua = { "stylua" },
       go = { "goimports", "gofmt" },
       sh = { "shfmt" },
-      -- python = { "ruff_format", "ruff_fix" },
+      python = { "ruff_format", "ruff_fix" },
       ["_"] = { "trim_whitespace", "trim_newlines" },
     }
   end,

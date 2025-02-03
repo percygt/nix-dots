@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ config, ... }:
 let
   g = config._base;
 in

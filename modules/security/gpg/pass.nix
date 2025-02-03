@@ -7,6 +7,8 @@
 let
   g = config._base;
   PASSWORD_STORE_DIR = g.security.gpg.passDir;
+  cfg = config.wayland.windowManager.sway.config;
+  mod = cfg.modifier;
 in
 {
   config = lib.mkIf config.modules.security.gpg.pass.enable {
@@ -24,5 +26,10 @@ in
       wl-clipboard
       tofi-pass
     ];
+    wayland.windowManager.sway = {
+      config.keybindings = lib.mkOptionDefault {
+        "${mod}+Ctrl+KP_Multiply" = "exec pkill tofi || ${lib.getExe pkgs.tofi-pass}";
+      };
+    };
   };
 }
