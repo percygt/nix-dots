@@ -16,6 +16,16 @@ return {
           },
         },
       }
+      opts.lsp = {
+        signature = {
+          auto_open = {
+            trigger = false,
+          },
+        },
+        hover = {
+          enabled = false,
+        },
+      }
       opts.views = {
         split = {
           enter = true,
