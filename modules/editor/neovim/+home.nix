@@ -48,39 +48,6 @@ in
             };
           };
         };
-      activation = {
-        lazyRestore =
-          lib.hm.dag.entryAfter [ "linkGeneration" ]
-            # bash
-            ''
-              # setup lazy.nvim
-              LAZYNVIM_DIR="$XDG_DATA_HOME/nvim/lazy/lazy.nvim"
-              LAZYNVIM_URL="https://github.com/folke/lazy.nvim"
-              if [ ! -d $LAZYNVIM_DIR ];then
-                ${lib.getExe config._base.dev.git.package} clone --filter=blob:none --branch=stable "$LAZYNVIM_URL" "$LAZYNVIM_DIR"
-              fi
-
-              LOCK_FILE=$(readlink -f $XDG_CONFIG_HOME/nvim/lazy-lock.json)
-              echo $LOCK_FILE
-              [ ! -f "$LOCK_FILE" ] && echo "No lock file found, skipping" && exit 0
-
-              STATE_DIR=$XDG_STATE_HOME/nix/
-              STATE_FILE=$STATE_DIR/lazy-lock-checksum
-
-              [ ! -d $STATE_DIR ] && mkdir -p $STATE_DIR
-              [ ! -f $STATE_FILE ] && touch $STATE_FILE
-
-              HASH=$(nix-hash --flat $LOCK_FILE)
-
-              if [ "$(cat $STATE_FILE)" != "$HASH" ]; then
-                $DRY_RUN_CMD echo "Syncing neovim plugins"
-                ${config.programs.neovim.finalPackage}/bin/nvim --headless "+Lazy! restore" +qa
-                $DRY_RUN_CMD echo $HASH >$STATE_FILE
-              else
-                $VERBOSE_ECHO "Neovim plugins already synced, skipping"
-              fi
-            '';
-      };
     };
     xdg = {
       configFile = {
@@ -91,12 +58,18 @@ in
         "nvim/ftdetect".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/ftdetect";
         "nvim/lua/plugins".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/plugins";
         "nvim/lua/utils".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/utils";
-        "nvim/lua/config/autocmds.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/autocmds.lua";
-        "nvim/lua/config/icons.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/icons.lua";
-        "nvim/lua/config/lazy.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/lazy.lua";
-        "nvim/lua/config/lsp-servers.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/lsp-servers.lua";
-        "nvim/lua/config/options.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/options.lua";
-        "nvim/lua/config/keymaps.lua".source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/keymaps.lua";
+        "nvim/lua/config/autocmds.lua".source =
+          config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/autocmds.lua";
+        "nvim/lua/config/icons.lua".source =
+          config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/icons.lua";
+        "nvim/lua/config/lazy.lua".source =
+          config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/lazy.lua";
+        "nvim/lua/config/lsp-servers.lua".source =
+          config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/lsp-servers.lua";
+        "nvim/lua/config/options.lua".source =
+          config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/options.lua";
+        "nvim/lua/config/keymaps.lua".source =
+          config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lua/config/keymaps.lua";
         "nvim/lazyvim.json" = lib.mkIf cfg.lazyvim.enable {
           source = config.lib.file.mkOutOfStoreSymlink "${moduleNvim}/lazyvim.json";
         };
