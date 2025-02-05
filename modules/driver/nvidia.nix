@@ -18,8 +18,10 @@
         "bbswitch"
         "nvidiafb"
       ];
+      environment.systemPackages = with pkgs; [
+        vdpauinfo
+      ];
       services.xserver.videoDrivers = [ "nvidia" ];
-      systemd.services.supergfxd.path = [ pkgs.pciutils ];
       services = {
         supergfxd = {
           enable = true;
@@ -35,7 +37,7 @@
       };
 
       hardware.graphics.extraPackages = [
-        (if pkgs ? libva-vdpau-driver then pkgs.libva-vdpau-driver else pkgs.vaapiVdpau)
+        pkgs.vaapiVdpau
       ];
 
       hardware.nvidia = {

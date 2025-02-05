@@ -17,29 +17,32 @@
         (let* ((key (car template))  ;; Extract the capture key
                (value (cdr template))
                (doct-entry (plist-get (cdr template) :doct))  ;; Access the :doct plist
-               ;; (name-char (cdr (assoc :doct-name (cadr (assoc :doct name)))))
-               (parentkey (char-to-string (aref key 0)))
-               (entry (assoc parentkey keys-and-names))
+               (parent-key (char-to-string (aref key 0)))
+               (name-char (assoc parent-key keys-and-names))
                )
           (if doct-entry
               (let ((doct-name (plist-get doct-entry :doct-name)))  ;; Extract :doct-name
-                (setq keys-and-names (append keys-and-names (list(cons key doct-name))))
+                ;; (setq keys-and-names (append keys-and-names `(( ,doct-name . ((( name . ,doct-name)( key . ,key)))))))
+                ;; (print keys-and-names)
+                (if name-char
+                    (setq keys-and-names (append keys-and-names `(( ,parent-key . ( push (( name . ,doct-name)( key . ,key)) name-char)))))
+                  )
+                (setq keys-and-names (append keys-and-names `(( ,parent-key . ((( name . ,doct-name)( key . ,key)))))))
                 )
-            (setq keys-and-names (append keys-and-names (list(cons key ()))))
-            )
-          ))
-      (dolist (item (reverse keys-and-names))
-        (let ((key (car item))
-              (value (cdr item)))
-          ;; If no value, it's a single element (e.g., ("t"))
-          (if (not value)
-              (push (cons key nil) result)
-            (let ((prefix (substring key 0 1)))  ;; Get first letter as prefix
-              (let ((entry (assoc prefix result)))
-                (if entry
-                    (setcdr entry (cons (cons key value) (cdr entry)))  ;; Append to existing list
-                  (push (cons prefix (list (cons key value))) result)))))))
-      (json-encode result)
+            )))
+      ;; (dolist (item (reverse keys-and-names))
+      ;;   (let ((key (car item))
+      ;;         (value (cdr item)))
+      ;;     ;; If no value, it's a single element (e.g., ("t"))
+      ;;     (if (not value)
+      ;;         (push (cons key nil) result)
+      ;;       (let ((prefix (substring key 0 1)))  ;; Get first letter as prefix
+      ;;         (let ((entry (assoc prefix result)))
+      ;;           (if entry
+      ;;               (setcdr entry (cons (cons key value) (cdr entry)))  ;; Append to existing list
+      ;;             (push (cons prefix (list (cons key value))) result)))))))
+      ;; (json-encode result)
+      (json-encode keys-and-names)
       ))  ;; Reverse the alist and encode to JSON
 
   (+org-capture/templates-json)

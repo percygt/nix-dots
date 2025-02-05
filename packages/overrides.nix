@@ -2,6 +2,10 @@
 {
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
   borgmatic = prev.borgmatic.override { enableSystemd = false; };
+  btop = prev.btop.override {
+    cudaSupport = true;
+    rocmSupport = true;
+  };
   logseq = prev.logseq.overrideAttrs (oldAttrs: {
     postFixup = ''
       makeWrapper ${prev.electron}/bin/electron $out/bin/${oldAttrs.pname} \
