@@ -15,7 +15,11 @@
       system-config-printer.enable = true;
       printing = {
         enable = true;
-        drivers = [ pkgs.stable.epson-201401w ];
+        drivers = with pkgs.old; [
+          epson-201401w
+          epson_201207w
+          epson-201106w
+        ];
       };
     };
     hardware = {

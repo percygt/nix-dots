@@ -10,7 +10,7 @@
       bluetooth.enable = true;
       intel.enable = true;
       intel.gpu.driver = "xe";
-      nvidia.prime.enable = true;
+      # nvidia.prime.enable = true;
       printer.enable = true;
     };
     dev.enable = true;

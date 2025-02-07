@@ -12,7 +12,7 @@
     bindgesture swipe:3:right focus left
     bindgesture swipe:3:left focus right
     bindswitch lid:off output * power off
-    exec sleep 2 && exec swaymsg "workspace 2; exec brave --profile-directory=\"DevCtl\""
-    exec sleep 8 && exec swaymsg "workspace 1; exec brave --profile-directory=\"Default\""
+    exec --no-startup-id swaymsg "workspace 2; exec brave --profile-directory=\"DevCtl\""
+    exec --no-startup-id swaymsg "workspace 1; exec brave --profile-directory=\"Default\""
   '';
 }

@@ -33,5 +33,6 @@ in
     impala
     ncpamixer # Terminal mixer for PulseAudio inspired by pavucontrol
     bluetui # UI for managing bluetooth on Linux
+    lazyjournal # TUI for journalctl, file system logs, as well as Docker and Podman containers
   ];
 }

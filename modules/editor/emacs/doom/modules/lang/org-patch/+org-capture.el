@@ -11,41 +11,32 @@
     "Extract an alist with doct-names as keys and capture keys as values from org-capture-templates and return it as JSON."
     (let (
           (keys-and-names '())
-          (result '())
           )  ;; List to store the alist pairs
       (dolist (template org-capture-templates)
-        (let* ((key (car template))  ;; Extract the capture key
-               (value (cdr template))
-               (doct-entry (plist-get (cdr template) :doct))  ;; Access the :doct plist
-               (parent-key (char-to-string (aref key 0)))
-               (name-char (assoc parent-key keys-and-names))
+        (let* (
+               (key (car template))  ;; Extract the capture key
+               (name (replace-regexp-in-string "^[^\t]+\\\t" "" (car (cdr template))))
+               (doct-entry (plist-get (cdr template) :doct))
                )
-          (if doct-entry
-              (let ((doct-name (plist-get doct-entry :doct-name)))  ;; Extract :doct-name
-                ;; (setq keys-and-names (append keys-and-names `(( ,doct-name . ((( name . ,doct-name)( key . ,key)))))))
-                ;; (print keys-and-names)
-                (if name-char
-                    (setq keys-and-names (append keys-and-names `(( ,parent-key . ( push (( name . ,doct-name)( key . ,key)) name-char)))))
-                  )
-                (setq keys-and-names (append keys-and-names `(( ,parent-key . ((( name . ,doct-name)( key . ,key)))))))
-                )
-            )))
-      ;; (dolist (item (reverse keys-and-names))
-      ;;   (let ((key (car item))
-      ;;         (value (cdr item)))
-      ;;     ;; If no value, it's a single element (e.g., ("t"))
-      ;;     (if (not value)
-      ;;         (push (cons key nil) result)
-      ;;       (let ((prefix (substring key 0 1)))  ;; Get first letter as prefix
-      ;;         (let ((entry (assoc prefix result)))
-      ;;           (if entry
-      ;;               (setcdr entry (cons (cons key value) (cdr entry)))  ;; Append to existing list
-      ;;             (push (cons prefix (list (cons key value))) result)))))))
-      ;; (json-encode result)
+          (if (not doct-entry)
+              (push `( ,key . (( name . ,name)( key . ,key))) keys-and-names)
+            (let* (
+                   (pkey (char-to-string (aref key 0)))
+                   (entry (assoc pkey keys-and-names))
+                   (value (assoc 'value entry))
+                   )
+              (if entry
+                  (if value
+                      (setf (cdr value) (setcdr value (append (cdr value) `((( name . ,name)( key . ,key))))))
+                    (setf (cdr entry) (setcdr entry (append (cdr entry) `(( value . ((( name . ,name)( key . ,key))))))))
+                    )
+                ))
+            )
+          )
+        )
       (json-encode keys-and-names)
-      ))  ;; Reverse the alist and encode to JSON
-
-  (+org-capture/templates-json)
+      )
+    )
   (defun +org-capture/created-property ()
     (org-set-property "CREATED" (format-time-string (org-time-stamp-format :long :inactive)))
     (insert " ")
