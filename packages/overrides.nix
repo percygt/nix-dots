@@ -6,6 +6,13 @@
     cudaSupport = true;
     rocmSupport = true;
   };
+  revanced-cli = prev.revanced-cli.overrideAttrs (oldAttrs: rec {
+    version = "5.0.1";
+    src = prev.fetchurl {
+      url = "https://github.com/inotia00/revanced-cli/releases/download/v${version}/revanced-cli-${version}-all.jar";
+      hash = "sha256-1aSlYQ7utiLeqSZaBF7Nd8WYwBCMUDDKVgVir6YyT+U=";
+    };
+  });
   logseq = prev.logseq.overrideAttrs (oldAttrs: {
     postFixup = ''
       makeWrapper ${prev.electron}/bin/electron $out/bin/${oldAttrs.pname} \
@@ -25,22 +32,4 @@
     cavaSupport = false;
     hyprlandSupport = false;
   };
-  google-fonts =
-    (prev.google-fonts.overrideAttrs (oldAttrs: {
-      nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ prev.perl ];
-      installPhase =
-        (oldAttrs.installPhase or "")
-        + ''
-          skip=("NotoColorEmoji")
-          readarray -t fonts < <(find . -name '*.ttf' -exec basename '{}' \; | perl -pe 's/(.+?)[[.-].*/\1/g' | sort | uniq)
-          for font in "''${fonts[@]}"; do
-            [[ "_''${skip[*]}_" =~ _''${font}_ ]] && continue
-            find . -name "''${font}*.ttf" -exec install -m 444 -Dt $dest '{}' +
-          done
-        '';
-    })).override
-      {
-        # Don't install fonts in the original `installPhase`
-        fonts = [ "__NO_FONT__" ];
-      };
 }

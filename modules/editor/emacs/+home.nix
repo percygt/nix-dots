@@ -16,6 +16,7 @@ let
   DOOMDIR = "${config.xdg.configHome}/doom";
   EMACSDIR = "${config.xdg.configHome}/emacs";
   DOOMPROFILELOADFILE = "${config.xdg.dataHome}/doom/cache/profile-load.el";
+  capture = pkgs.writers.writePython3 "capture" { } builtins.readFile ./capture.py;
   clipboardcapture = pkgs.writers.writeBash "clipboardcapture" ''
     url_check='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
     clipboard=$(wl-paste 2>/dev/null)

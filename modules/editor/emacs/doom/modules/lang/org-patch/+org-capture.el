@@ -207,15 +207,15 @@
                  :prepare-finalize (lambda () (org-set-tags-command))
                  :type entry
                  :template ("* %?" "%{extra}")
-                 :children (("Webpage" :keys "w"
+                 :children (("Webpage Url" :keys "w"
                              :icon ("nf-fa-globe" :set "faicon" :color "green")
                              :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
                              :hook (lambda ()(progn (org-set-tags "web") (+org-capture/created-property))))
-                            ("Video" :keys "v"
+                            ("Video Url" :keys "v"
                              :icon ("nf-oct-video" :set "octicon" :color "red")
                              :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
                              :hook (lambda ()(progn (org-set-tags "video") (+org-capture/created-property))))
-                            ("Repo" :keys "r"
+                            ("Repo Url" :keys "r"
                              :icon ("nf-fa-git" :set "faicon" :color "orange")
                              :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
                              :hook (lambda ()(progn (org-set-tags "repo") (+org-capture/created-property))))

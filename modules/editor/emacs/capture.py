@@ -4,6 +4,8 @@ import json
 import sys
 import traceback
 import argparse
+import re
+
 # Define the command to be executed
 
 
@@ -28,43 +30,79 @@ def get_value_by_name(data: dict, target_name: str):
     return None  # Return None if no match found
 
 
+def isUrl(string):
+    # findall() has been used
+    # with valid conditions for urls in string
+    regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
+    return re.match(regex, string) is not None
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="initiate emacs org-capture")
-    parser.add_argument("-C", "--clipboard-params", metavar="clipboard-params")
+    parser.add_argument(
+        "-w",
+        "--wclass",
+        type=str,
+        default="org-capture",
+    )
+
     args = parser.parse_args(argv)
+    print(args.wclass)
     result = subprocess.run(
         ["emacsclient", "-e", "(+org-capture/templates-json)"],
         capture_output=True,
         text=True,
         check=True,
     )
-    emacs_output = json.loads(json.loads(result.stdout))
-    top_level_names = [category["name"] for category in emacs_output.values()]
-    selected_top_name = tofi("Select the type capture template: ", top_level_names)
-    # values = get_value_by_name(emacs_output, selected_top_name)
-    values = [
-        category["value"]
-        for category in emacs_output.values()
-        if category["name"] == selected_top_name
-    ]
-    second_level_names = [category["name"] for category in values[0]]
-    second = tofi("Select the capture template: ", second_level_names)
-    key = [category["key"] for category in values[0] if category["name"] == second]
-
     clipboard = subprocess.run(
         ["wl-paste"],
         capture_output=True,
         text=True,
         check=True,
     )
+
+    emacs_output = json.loads(json.loads(result.stdout))
+
+    top_selected_name = tofi(
+        "Select the type capture template: ",
+        [category["name"] for category in emacs_output.values()],
+    )
+    selected_name_values = [
+        category["value"]
+        for category in emacs_output.values()
+        if category["name"] == top_selected_name
+    ]
+
+    filter_names = (
+        [category["name"] for category in selected_name_values[0]]
+        if isUrl(clipboard.stdout)
+        else [
+            category["name"]
+            for category in selected_name_values[0]
+            if "url" not in category["name"].lower()
+        ]
+    )
+
+    final_selected_name = tofi("Select the capture template: ", filter_names)
+
+    final_names_key = [
+        category["key"]
+        for category in selected_name_values[0]
+        if category["name"] == final_selected_name
+    ]
     emacs_cmd = (
-        "org-protocol://capture?url='" + clipboard.stdout + "'&template=" + key[0]
+        "org-protocol://capture?"
+        + ("url" if isUrl(clipboard.stdout) else "body")
+        + "="
+        + clipboard.stdout
+        + "&template="
+        + final_names_key[0]
     )
     subprocess.run(
         [
             "footclient",
             "--app-id",
-            "org-capture",
+            args.wclass,
             "--title",
             "Emacs",
             "--",

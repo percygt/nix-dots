@@ -1,4 +1,7 @@
 { pkgs, ... }:
 {
-  # home.packages = [ pkgs.hints ];
+  home.packages = with pkgs; [
+    hints
+    revanced-cli
+  ];
 }
