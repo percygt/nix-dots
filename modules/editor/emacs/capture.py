@@ -47,7 +47,6 @@ def main(argv=None):
     )
 
     args = parser.parse_args(argv)
-    print(args.wclass)
     result = subprocess.run(
         ["emacsclient", "-e", "(+org-capture/templates-json)"],
         capture_output=True,

@@ -16,8 +16,8 @@ python3.pkgs.buildPythonApplication {
   src = fetchFromGitHub {
     owner = "AlfredoSequeida";
     repo = "hints";
-    rev = "28bdbc1ef6d4df654a20a481a6429da07dccecc9";
-    hash = "sha256-rbYfRlH8Sgz7g1IV6duaMym06mxHBHaySNjs6bLs1so=";
+    rev = "f1d2aff2f5849f81927fc9ef23e448d8080d9973";
+    hash = "sha256-9Ae2dUvUCFavF59jAlHgRohPMF2zf5W+O+71NtSGJaE=";
   };
 
   disabled = python3.pkgs.pythonOlder "3.10";
@@ -33,9 +33,15 @@ python3.pkgs.buildPythonApplication {
       opencv-python
       pyatspi
     ]
-    ++ [
-      gtk-layer-shell
-    ];
+    ++ (
+      if pkgs.stdenv.isLinux && builtins.getEnv "XDG_SESSION_TYPE" == "wayland" then
+        [
+          gtk-layer-shell
+          grim
+        ]
+      else
+        [ ]
+    );
 
   nativeBuildInputs = [
     gobject-introspection
