@@ -2,13 +2,13 @@
   lib,
   config,
   pkgs,
-  self,
   ...
 }:
 let
   cfg = config.modules.editor.emacs;
+  devCfg = config.modules.dev.editorExtraPackages;
   extraPackages =
-    (import "${self}/modules/dev/+extras/langPackages.nix" pkgs)
+    devCfg
     ++ (import ./extraPackages.nix pkgs)
     ++ [
       (pkgs.emacs-lsp-booster.overrideAttrs (_: {

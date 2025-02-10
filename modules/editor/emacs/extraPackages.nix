@@ -40,7 +40,7 @@ pkgs: with pkgs; [
   sqlite
   # :lang beancount
   beancount
-  fava
+  stable.fava
   # :lang nix
   age
   # :lang latex

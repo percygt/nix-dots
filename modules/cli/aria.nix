@@ -11,7 +11,7 @@ let
   aria2-bin = "${pkgs.aria2}/bin/aria2c";
   coreutils-bin = "${pkgs.coreutils}/bin";
   sessionFile = "${dataHome}/aria2/session";
-  aria2p-tui = pkgs.python3.withPackages (
+  aria2p-tui = pkgs.stable.python3.withPackages (
     ps: with ps; [ aria2p ] ++ aria2p.optional-dependencies.tui
   );
 in

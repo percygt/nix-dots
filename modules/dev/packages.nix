@@ -16,6 +16,6 @@
         babashka
         bfg-repo-cleaner # Git history cleaner
       ])
-      ++ (import ./+extras/langPackages.nix pkgs);
+      ++ config.modules.dev.editorExtraPackages;
   };
 }

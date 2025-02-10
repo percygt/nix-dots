@@ -5,7 +5,6 @@
 }:
 let
   g = config._base;
-  f = config.modules.fonts.shell;
   cfg = config.modules.editor.zed;
   moduleZed = "${g.flakeDirectory}/modules/editor/zed";
 in

@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  self,
   ...
 }:
 {
@@ -21,8 +20,7 @@
           imagemagick
           nodePackages.npm
           nodePackages.pnpm
-          # nodePackages.neovim
-          vscode-extensions.vadimcn.vscode-lldb.adapter
+          stable.vscode-extensions.vadimcn.vscode-lldb.adapter
           fswatch
           gnumake
           cmake
@@ -39,7 +37,7 @@
           ripgrep
           fd
         ])
-        ++ (import "${self}/modules/dev/+extras/langPackages.nix" pkgs);
+        ++ config.modules.dev.editorExtraPackages;
     };
   };
 }

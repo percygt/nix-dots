@@ -18,12 +18,11 @@ in
     home.shellAliases.v = "nvim";
     programs.neovim = {
       enable = true;
-      inherit (cfg) package;
       defaultEditor = true;
       vimdiffAlias = true;
       vimAlias = true;
       viAlias = true;
-      withNodeJs = true;
+      # withNodeJs = true;
       withPython3 = true;
       withRuby = false;
       extraLuaConfig = lib.concatStringsSep "\n" [

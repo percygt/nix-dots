@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  self,
   ...
 }:
 let
@@ -14,7 +13,7 @@ let
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/zeditor \
-        --suffix PATH : ${lib.makeBinPath cfg.extraPackages}
+        --suffix PATH : ${lib.makeBinPath config.modules.dev.editorExtraPackages}
     '';
   };
 in
@@ -23,12 +22,6 @@ in
     zed = {
       enable = lib.mkEnableOption "Zed, the high performance, multiplayer code editor from the creators of Atom and Tree-sitter";
       package = lib.mkPackageOption pkgs "zed-editor" { };
-      extraPackages = lib.mkOption {
-        type = with lib.types; listOf package;
-        default = import "${self}/modules/dev/+extras/langPackages.nix" pkgs;
-        example = lib.literalExpression "[ pkgs.nixd ]";
-        description = "Extra packages available to Zed.";
-      };
 
       finalPackage = lib.mkOption {
         description = "Emacs final package to use";

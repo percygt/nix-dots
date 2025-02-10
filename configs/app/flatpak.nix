@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   username,
+  homeDirectory,
   ...
 }:
 {
@@ -37,11 +38,12 @@
           "xdg-data/steam"
         ];
       };
-      # "org.libreoffice.LibreOffice" = {
-      #   environment = {
-      #     GTK_THEME = "Yaru-bark-dark";
-      #   };
-      # };
+      "app.zen_browser.zen" = {
+        filesystems = [
+          "xdg-data:ro"
+          "${homeDirectory}/downloads"
+        ];
+      };
     };
     remotes = {
       "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";

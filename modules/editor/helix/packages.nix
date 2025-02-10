@@ -15,8 +15,6 @@
           imagemagick
           nodePackages.npm
           nodePackages.pnpm
-          # nodePackages.neovim
-          vscode-extensions.vadimcn.vscode-lldb.adapter
           fswatch
           gnumake
           cmake
@@ -27,7 +25,8 @@
           ripgrep
           fd
         ])
-        ++ (import "${self}/modules/dev/+extras/langPackages.nix" pkgs);
+        # ++ (import "${self}/modules/dev/+extras/langPackages.nix" pkgs);
+        ++ config.modules.dev.editorExtraPackages;
     };
   };
 }
