@@ -6,7 +6,7 @@
 let
   g = config._base;
   a = config.modules.themes.assets;
-  f = config.modules.fonts.interface;
+  f = config.modules.fonts.app;
   c = config.modules.themes.colors.withHashtag;
 in
 {

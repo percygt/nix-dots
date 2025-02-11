@@ -5,13 +5,15 @@ import traceback
 import argparse
 import re
 
-# Define the command to be executed
-
 
 # Run the first command to get the output from emacsclient
-def tofi(prompt: str, choices: list):
+def tofi(prompt: str, choices: list, config=None):
+    tofi_config = []
+    if config:
+        tofi_config = ["--config", config]
+
     r = subprocess.run(
-        ["tofi", "--prompt-text", prompt],
+        ["tofi", "--prompt-text", prompt] + tofi_config,
         input="\n".join(choices),
         capture_output=True,
         text=True,
@@ -29,7 +31,7 @@ def get_value_by_name(data: dict, target_name: str):
     return None  # Return None if no match found
 
 
-def isUrl(string):
+def isUrl(string: str):
     # findall() has been used
     # with valid conditions for urls in string
     regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
@@ -43,6 +45,11 @@ def main(argv=None):
         "--wclass",
         type=str,
         default="org-capture",
+    )
+    parser.add_argument(
+        "-t",
+        "--tofi_config",
+        type=str,
     )
 
     args = parser.parse_args(argv)
@@ -64,6 +71,7 @@ def main(argv=None):
     top_selected_name = tofi(
         "Select the type capture template: ",
         [category["name"] for category in emacs_output.values()],
+        args.tofi_config,
     )
     selected_name_values = [
         category["value"]
@@ -81,7 +89,11 @@ def main(argv=None):
         ]
     )
 
-    final_selected_name = tofi("Select the capture template: ", filter_names)
+    final_selected_name = tofi(
+        "Select the capture template: ",
+        filter_names,
+        args.tofi_config,
+    )
 
     final_names_key = [
         category["key"]
