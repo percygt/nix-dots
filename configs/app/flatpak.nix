@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   username,
-  homeDirectory,
   ...
 }:
 {
@@ -38,10 +37,20 @@
           "xdg-data/steam"
         ];
       };
+      "org.libreoffice.LibreOffice" = {
+        filesystems = [
+          "xdg-config/gtk-4.0"
+          "xdg-config/gtk-3.0"
+          "xdg-data/themes"
+        ];
+        environment = {
+          GTK_THEME = "Yaru-wartybrown-dark";
+        };
+      };
       "app.zen_browser.zen" = {
         filesystems = [
-          "xdg-data:ro"
-          "${homeDirectory}/downloads"
+          "xdg-config:ro"
+          "xdg-downloads"
         ];
       };
     };
@@ -52,26 +61,12 @@
     packages = [
       "flathub:app/com.valvesoftware.Steam/x86_64/stable"
       "flathub:app/org.libreoffice.LibreOffice/x86_64/stable"
-      "flathub:app/io.github.zen_browser.zen/x86_64/stable"
+      "flathub:app/app.zen_browser.zen/x86_64/stable"
+      "flathub:app/dev.vencord.Vesktop/x86_64/stable"
+      "flathub:app/com.github.tchx84.Flatseal/x86_64/stable"
       "flathub:app/engineer.atlas.Nyxt/x86_64/stable"
-
-      # "org.audacityteam.Audacity "
-      # "com.github.geigi.cozy"
-      # "com.obsproject.Studio"
-      # "org.kde.kdenlive"
-      # "com.rafaelmardojai.SharePreview"
-      # "org.mozilla.Thunderbird"
-      # "com.github.muriloventuroso.pdftricks"
-      # "com.slack.Slack"
-      # "io.beekeeperstudio.Studio"
-      # "md.obsidian.Obsidian"
-      # "page.codeberg.Imaginer.Imaginer"
     ];
   };
   modules.core.persist.systemData.directories = [ "/var/lib/flatpak" ];
-  modules.core.persist.userData.directories = [
-    ".var/app/com.valvesoftware.Steam"
-    ".var/app/org.libreoffice.LibreOffice"
-    ".var/app/app.zen_browser.zen"
-  ];
+  modules.core.persist.userData.directories = [ ".var/app" ];
 }

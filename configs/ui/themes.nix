@@ -41,11 +41,11 @@ in
     ];
     dataFile = {
       "themes/Yaru-dark".source = "${pkgs.yaru-theme}/share/themes/Yaru-dark";
-      "themes/Yaru-bark".source = "${pkgs.yaru-theme}/share/themes/Yaru-bark";
-      "themes/Yaru-bark-dark".source = "${pkgs.yaru-theme}/share/themes/Yaru-bark-dark";
+      "themes/Yaru-wartybrown".source = "${pkgs.yaru-theme}/share/themes/Yaru-wartybrown";
+      "themes/Yaru-wartybrown-dark".source = "${pkgs.yaru-theme}/share/themes/Yaru-wartybrown-dark";
       "icons/Yaru-dark".source = "${pkgs.yaru-theme}/share/icons/Yaru-dark";
-      "icons/Yaru-bark".source = "${pkgs.yaru-theme}/share/icons/Yaru-bark";
-      "icons/Yaru-bark-dark".source = "${pkgs.yaru-theme}/share/icons/Yaru-bark-dark";
+      "icons/Yaru-wartybrown".source = "${pkgs.yaru-theme}/share/icons/Yaru-wartybrown-bark";
+      "icons/Yaru-wartybrown-dark".source = "${pkgs.yaru-theme}/share/icons/Yaru-wartybrown-dark";
       "icons/Adwaita".source = "${pkgs.adwaita-icon-theme}/share/icons/Adwaita";
       "icons/hicolor".source = "${pkgs.hicolor-icon-theme}/share/icons/hicolor";
       "icons/Humanity".source = "${pkgs.humanity-icon-theme}/share/icons/Humanity";

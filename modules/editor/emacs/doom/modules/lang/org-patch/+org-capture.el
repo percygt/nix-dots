@@ -180,7 +180,7 @@
                              :hook +org-capture/created-property
                              :icon ("nf-fa-tasks" :set "faicon" :color "yellow"))
                             ("Url" :keys "u"
-                             :extra "[[%:link][%(+org-capture/www-get-page-title '%:link')]]"
+                             :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
                              :hook (lambda () (progn (org-set-tags "url") (+org-capture/created-property)))
                              :icon ("nf-md-web" :set "mdicon" :color "blue"))
                             ("Clipboard paste" :keys "c"

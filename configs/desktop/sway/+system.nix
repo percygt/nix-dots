@@ -58,6 +58,15 @@ in
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
+  environment = {
+    systemPackages = with pkgs; [
+      xdg-desktop-portal
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+      xdg-utils
+    ];
+  };
+
   security = {
     polkit.enable = true;
     pam.services.swaylock.text = "auth include login";

@@ -32,8 +32,6 @@ def get_value_by_name(data: dict, target_name: str):
 
 
 def isUrl(string: str):
-    # findall() has been used
-    # with valid conditions for urls in string
     regex = r"(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))"
     return re.match(regex, string) is not None
 
