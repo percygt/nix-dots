@@ -54,17 +54,16 @@ in
 
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
           git pull || exit 1
-          sleep 5
           if systemctl start nixos-rebuild.service; then
             while systemctl -q is-active nixos-rebuild.service; do
               sleep 1
             done
-            sleep 1
             if systemctl -q is-failed nixos-rebuild.service; then
               exit 1
             else
-              [ "$git_push" == "true" ] && git push || exit 1
-              sleep 5
+              if [ "$git_push" == "true" ]; then
+                git push || exit 1
+              fi
               notify-send -i system-software-update "Nixos Upgrade Service" "System upgrade was completed successfully."
             fi
           else
