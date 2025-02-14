@@ -40,22 +40,39 @@ in
       script = ''
         export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/''${UID}/bus"
         cd ${flakeDirectory}
-        git fetch
+        git fetch || exit 1
         echo "Pulling latest version..."
+        git_push="false"
         if ! [[ $(git status) =~ "working tree clean" ]]; then
           git add .
           git commit -m "auto commit"
+          git_push="true"
         fi
         # Get the current local commit hash and the latest remote commit hash
         LOCAL_HASH=$(git rev-parse HEAD)
         REMOTE_HASH=$(git rev-parse @{u})
 
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
-          git pull && \
-            systemctl start nixos-rebuild.service && \
+          git pull || exit 1
+          sleep 5
+          if systemctl start nixos-rebuild.service; then
+            while systemctl -q is-active nixos-rebuild.service; do
+              sleep 1
+            done
+            sleep 1
+            if systemctl -q is-failed nixos-rebuild.service; then
+              exit 1
+            else
+              [ "git_push" == "true" ] && git push || exit 1
+              sleep 5
               notify-send -i system-software-update "Nixos Upgrade Service" "System upgrade was completed successfully."
+            fi
+          else
+            exit 1
+          fi
         else
           notify-send -i system-software-update "Nixos Upgrade Service" "No updates found. Exiting."
+          exit 0
         fi
       '';
     };
