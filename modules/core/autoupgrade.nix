@@ -63,7 +63,7 @@ in
             if systemctl -q is-failed nixos-rebuild.service; then
               exit 1
             else
-              [ "git_push" == "true" ] && git push || exit 1
+              [ "$git_push" == "true" ] && git push || exit 1
               sleep 5
               notify-send -i system-software-update "Nixos Upgrade Service" "System upgrade was completed successfully."
             fi
@@ -72,7 +72,6 @@ in
           fi
         else
           notify-send -i system-software-update "Nixos Upgrade Service" "No updates found. Exiting."
-          exit 0
         fi
       '';
     };
