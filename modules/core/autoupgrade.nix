@@ -34,7 +34,7 @@ in
       path = g.system.envPackages;
       preStart = ''
         export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/''${UID}/bus"
-        notify-send -i system-software-update 'Nixos Upgrade Service' 'Nixos upgrade is about to start.'
+        notify-send -i zen-icon 'Nixos Upgrade Service' 'Nixos upgrade is about to start.'
         sleep 10
       '';
       script = ''
@@ -64,13 +64,13 @@ in
               if [ "$git_push" == "true" ]; then
                 git push || exit 1
               fi
-              notify-send -i system-software-update "Nixos Upgrade Service" "System upgrade was completed successfully."
+              notify-send -i emblem-default "Nixos Upgrade Service" "System upgrade was completed successfully."
             fi
           else
             exit 1
           fi
         else
-          notify-send -i system-software-update "Nixos Upgrade Service" "No updates found. Exiting."
+          notify-send -i emblem-default "Nixos Upgrade Service" "No updates found. Exiting."
         fi
       '';
     };

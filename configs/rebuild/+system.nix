@@ -49,7 +49,7 @@ in
       preStart = ''
         uid=$(id -u ${username})
         export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
-        su "${username}" -c "notify-send -i zen-icon 'Nixos Rebuild Service' 'Nixos rebuild is about to start'"
+        su "${username}" -c "notify-send -i artsbuilder 'Nixos Rebuild Service' 'Nixos rebuild is about to start'"
         sleep 10
       '';
       script = ''
