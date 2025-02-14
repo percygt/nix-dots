@@ -2,7 +2,6 @@
   config,
   profile,
   username,
-  pkgs,
   ...
 }:
 let
@@ -70,7 +69,6 @@ in
           su "${username}" -c "$1"
         }
 
-        # Execute the commands
         user_exec \
           "nom build \
           $FLAKE#nixosConfigurations.\"${profile}\".config.system.build.toplevel \

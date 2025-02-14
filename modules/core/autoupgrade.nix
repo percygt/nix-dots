@@ -3,7 +3,6 @@
   config,
   lib,
   username,
-  pkgs,
   ...
 }:
 
@@ -32,20 +31,17 @@ in
         inherit (config.environment.sessionVariables) SSH_AUTH_SOCK;
       };
       onFailure = [ "notify-failure@%i.service" ];
-      onSuccess = [ "notify-success@%i.service" ];
       path = g.system.envPackages;
       preStart = ''
-        uid=$(id -u ${username})
-        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
-        su "${username}" -c "notify-send -i system-software-update 'Nixos Upgrade Service' 'Starting nixos upgrade and rebuild'"
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/''${UID}/bus"
+        notify-send -i system-software-update 'Nixos Upgrade Service' 'Upgrade is about to start.'
         sleep 10
       '';
       script = ''
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/''${UID}/bus"
         cd ${flakeDirectory}
-        # Check if there are changes from Git.
         git fetch
         echo "Pulling latest version..."
-
         if ! [[ $(git status) =~ "working tree clean" ]]; then
           git add .
           git commit -m "auto commit"
@@ -55,13 +51,11 @@ in
         REMOTE_HASH=$(git rev-parse @{u})
 
         if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
-          echo "Updates found, running nixos-rebuild..."
-          git pull
-          exec systemctl start nixos-rebuild
+          git pull && \
+            systemctl start nixos-rebuild.service && \
+              notify-send -i system-software-update "Nixos Upgrade Service" "System upgrade was completed successfully."
         else
-          echo "No updates found. Exiting."
-          export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
-          su "${username}" -c "notify-send -i zen-icon 'Nixos Upgrade Service' 'No updates found. Exiting.'"
+          notify-send -i system-software-update "Nixos Upgrade Service" "No updates found. Exiting."
         fi
       '';
     };
