@@ -34,7 +34,7 @@ in
       path = g.system.envPackages;
       preStart = ''
         export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/''${UID}/bus"
-        notify-send -i system-software-update 'Nixos Upgrade Service' 'Upgrade is about to start.'
+        notify-send -i system-software-update 'Nixos Upgrade Service' 'Nixos upgrade is about to start.'
         sleep 10
       '';
       script = ''
