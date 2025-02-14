@@ -62,7 +62,7 @@ in
         preStart = ''
           uid=$(id -u ${username})
           export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
-          su ${username} -c "notify-send -i zen-icon 'Borgmatic Service' 'Borgmatic backup is about to start'"
+          su ${username} -c "notify-send -i backup 'Borgmatic Service' 'Borgmatic backup is about to start.'"
           sleep 1m
         '';
         serviceConfig = {

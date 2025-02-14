@@ -184,7 +184,7 @@
                              :hook (lambda () (progn (org-set-tags "url") (+org-capture/created-property)))
                              :icon ("nf-md-web" :set "mdicon" :color "blue"))
                             ("Clipboard paste" :keys "c"
-                             :extra "%a"
+                             :extra "%(simpleclip-get-contents)"
                              :hook +org-capture/created-property
                              :icon ("nf-fa-paste" :set "faicon" :color "cyan"))
                             ("Linked Task" :keys "l"

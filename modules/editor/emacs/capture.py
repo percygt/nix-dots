@@ -98,14 +98,9 @@ def main(argv=None):
         for category in selected_name_values[0]
         if category["name"] == final_selected_name
     ]
-    emacs_cmd = (
-        "org-protocol://capture?"
-        + ("url" if isUrl(clipboard.stdout) else "body")
-        + "="
-        + clipboard.stdout
-        + "&template="
-        + final_names_key[0]
-    )
+    emacs_cmd = f"org-protocol://capture?{'url' if isUrl(clipboard.stdout) else 'body'}={clipboard.stdout}&template={final_names_key[0]}"
+
+    print(emacs_cmd)
     subprocess.run(
         [
             "footclient",

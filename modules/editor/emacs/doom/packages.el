@@ -12,6 +12,8 @@
    :host github
    :repo "jdtsmith/eglot-booster"))
 
+;;; tools
+(package! simpleclip)
 ;;; ui
 (package! base16-theme)
 (package! highlight-indent-guides)
