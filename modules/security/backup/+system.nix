@@ -1,55 +1,36 @@
 {
   config,
-  lib,
   pkgs,
+  lib,
   ...
 }:
+let
+  g = config._base;
+  bak = g.security.borgmatic;
+  backupMountPath = bak.mountPath;
+in
 {
   imports = [ ./borgmatic.nix ];
-  # services.borgbackup.jobs = lib.mapAttrs (name: _job: {
-  #   repo = lib.mkForce "borg@${name}.r:/zdata/borg/${config.networking.hostName}";
-  #   preHook = lib.optionalString config.networking.networkmanager.enable ''
-  #     # wait until network is available and not metered
-  #     while ! ${pkgs.networkmanager}/bin/nm-online --quiet || ${pkgs.networkmanager}/bin/nmcli --terse --fields GENERAL.METERED dev show 2>/dev/null | grep --quiet "yes"; do
-  #       sleep 60
-  #     done
+  # services.borgbackup.jobs.data = {
+  #   repo = "${backupMountPath}/borg/data";
+  #   paths = g.dataDirectory;
+  #   removableDevice = true;
+  #   encryption.mode = "keyfile-blake2";
+  #   encryption.passCommand = "cat ${config.sops.secrets."borgmatic/encryption".path}";
+  #   preHook = lib.mkBefore ''
+  #     ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/bind &>/dev/null
+  #     until ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do :; done
   #   '';
   #   postHook = ''
-  #     cat > /var/log/telegraf/borgbackup-job-${config.networking.hostName}.service <<EOF
-  #     task,frequency=daily last_run=$(date +%s)i,state="$([[ $exitStatus == 0 ]] && echo ok || echo fail)"
-  #     EOF
+  #     echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null
   #   '';
+  #   compression = "auto,zstd";
+  #   startAt = "daily";
   #   exclude = [
-  #     "*.pyc"
-  #     "*.o"
-  #     "*/node_modules/*"
-  #     "/home/*/go/"
-  #     "/home/*/.direnv"
-  #     "/home/*/.cache"
-  #     "/home/*/.cargo"
-  #     "/home/*/.npm"
-  #     "/home/*/.m2"
-  #     "/home/*/.gradle"
-  #     "/home/*/.opam"
-  #     "/home/*/.clangd"
-  #     "/home/*/.config/Ferdium/Partitions"
-  #     "/home/*/.mozilla/firefox/*/storage"
-  #     "/home/*/Android"
-  #     "/var/lib/containerd"
-  #     # already included in database backup
-  #     "/var/lib/postgresql"
-  #     "/var/lib/docker/"
-  #     "/var/log/journal"
-  #     "/var/lib/containerd"
-  #     "/var/lib/systemd" # not so interesting state so far
-  #     "/var/lib/private/dendrite/searchindex"
-  #     "/var/cache"
-  #     "/var/tmp"
-  #     "/var/log"
-  #
-  #     "/home/joerg/sync"
-  #     "/home/joerg/Videos"
-  #     "/home/joerg/mnt"
+  #     "*.img"
+  #     "*.iso"
+  #     "*.qcow"
+  #     "${g.dataDirectory}/.Trash-*"
   #   ];
-  # }) config.clan.borgbackup.destinations;
+  # };
 }

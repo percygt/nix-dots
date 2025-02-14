@@ -44,6 +44,5 @@
     xdg-utils
     xwayland
     stable.wl-screenrec
-    libnotify
   ];
 }

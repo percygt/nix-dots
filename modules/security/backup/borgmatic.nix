@@ -3,6 +3,7 @@
   config,
   lib,
   homeDirectory,
+  username,
   ...
 }:
 let
@@ -14,7 +15,6 @@ let
   cfg = config.modules.security.backup;
 in
 {
-  # configured in home
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       borgbackup
@@ -53,8 +53,26 @@ in
         description = "Run borgmatic backup";
         after = [ "udisks2.service" ];
         requires = [ "udisks2.service" ];
-        unitConfig.ConditionACPower = true;
+        onFailure = [ "notify-failure@%i.service" ];
+        onSuccess = [ "notify-success@%i.service" ];
+        unitConfig = {
+          ConditionACPower = true;
+        };
+        path = g.system.envPackages;
+        preStart = ''
+          uid=$(id -u ${username})
+          export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
+          su ${username} -c "notify-send -i zen-icon 'Borgmatic Service' 'Borgmatic backup is about to start'"
+          sleep 1m
+        '';
         serviceConfig = {
+          ExecStart = pkgs.writers.writeBash "borgmaticInit" ''
+            systemd-inhibit \
+              --who="borgmatic" \
+              --what="sleep:shutdown" \
+              --why="Prevent interrupting scheduled backup" \
+              ${g.security.borgmatic.package}/bin/borgmatic --verbosity -2 --syslog-verbosity 1
+          '';
           Type = "oneshot";
           LockPersonality = true;
           MemoryDenyWriteExecute = "no";
@@ -82,14 +100,6 @@ in
           IOWeight = 100;
           Restart = "no";
           LogRateLimitIntervalSec = 0;
-          ExecStartPre = "${pkgs.coreutils-full}/bin/sleep 1m";
-          ExecStart = pkgs.writers.writeBash "borgmaticInit" ''
-            systemd-inhibit \
-              --who="borgmatic" \
-              --what="sleep:shutdown" \
-              --why="Prevent interrupting scheduled backup" \
-              ${g.security.borgmatic.package}/bin/borgmatic --verbosity -2 --syslog-verbosity 1
-          '';
         };
       };
     };
@@ -102,7 +112,10 @@ in
             path = g.backupDirectory;
           }
         ];
-        source_directories = [ g.dataDirectory ];
+        source_directories = [
+          g.dataDirectory
+          "${homeDirectory}/.config"
+        ];
         exclude_caches = true;
         exclude_patterns = [
           "*.img"
@@ -113,10 +126,11 @@ in
         exclude_if_present = [ ".nobackup" ];
         borgmatic_source_directory = "${homeDirectory}/${configDir}";
         encryption_passcommand = "cat ${config.sops.secrets."borgmatic/encryption".path}";
-        keep_daily = 7;
+        keep_daily = 30;
+        keep_weekly = 4;
+        keep_monthly = 6;
         before_backup = [
           (pkgs.writers.writeBash "beforeBackup" ''
-            [ -f "~/.var" ] && grep -q "$(date +%F)" "${flagFile}"
             if [ -f "${flagFile}" ] && grep -q "$(date +%F)" "${flagFile}"; then
                 ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null
                 exit 75
@@ -130,8 +144,10 @@ in
         ];
 
         before_actions = [
-          "${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/bind &>/dev/null"
-          "sleep 15"
+          (pkgs.writers.writeBash "beforeActions" ''
+            ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/bind &>/dev/null
+            until ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do :; done
+          '')
         ];
 
         after_actions = [

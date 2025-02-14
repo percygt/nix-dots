@@ -2,6 +2,7 @@
   config,
   profile,
   username,
+  pkgs,
   ...
 }:
 let
@@ -14,7 +15,7 @@ in
       ''
         // Log authorization checks
         polkit.addRule(function(action, subject) {
-         polkit.log("user " +  subject.user + " is attempting action " + action.id + " from PID " + subject.pid);
+          polkit.log("user " +  subject.user + " is attempting action " + action.id + " from PID " + subject.pid);
         });
         // Allow rebuilds for admin user without password
         polkit.addRule(function(action, subject) {
@@ -35,6 +36,8 @@ in
     services.nixos-rebuild = {
       restartIfChanged = false;
       path = g.system.envPackages;
+      onFailure = [ "notify-failure@%i.service" ];
+      onSuccess = [ "notify-success@%i.service" ];
       environment =
         config.nix.envVars
         // config.networking.proxy.envVars
@@ -44,41 +47,53 @@ in
         Type = "exec";
         User = "root";
       };
-      script = # bash
-        ''
-          stderr() { printf "%s\n" "$*" >&2; }
-          if [ ! -d "$FLAKE" ] || [ ! -f "$FLAKE/flake.nix" ]; then
-            stderr "Flake directory: $FLAKE is not valid"
-            exit 1
-          fi
+      preStart = ''
+        uid=$(id -u ${username})
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
+        su "${username}" -c "notify-send -i zen-icon 'Nixos Rebuild Service' 'NixOS rebuild is about to start'"
+        sleep 10
+      '';
+      script = ''
+        stderr() { printf "%s\n" "$*" >&2; }
+        if [ ! -d "$FLAKE" ] || [ ! -f "$FLAKE/flake.nix" ]; then
+          stderr "Flake directory: $FLAKE is not valid"
+          exit 1
+        fi
 
-          NIXOSCONFIGDIR="/tmp/nrs-config"
-          HMCONFIGDIR="/tmp/hms-config"
+        uid=$(id -u ${username})
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
 
-          # Execute the commands
-          su "${username}" -c \
-            "nom build \
-            $FLAKE#nixosConfigurations.\"${profile}\".config.system.build.toplevel \
-            --out-link \"$NIXOSCONFIGDIR\" \
-            --accept-flake-config"
+        NIXOSCONFIGDIR="/tmp/nrs-config"
+        HMCONFIGDIR="/tmp/hms-config"
 
-          $NIXOSCONFIGDIR/bin/switch-to-configuration switch || exit 1
+        user_exec() {
+          su "${username}" -c "$1"
+        }
 
-          su ${username} -c \
-            "nvd diff /run/current-system \"$NIXOSCONFIGDIR\""
+        # Execute the commands
+        user_exec \
+          "nom build \
+          $FLAKE#nixosConfigurations.\"${profile}\".config.system.build.toplevel \
+          --out-link \"$NIXOSCONFIGDIR\" \
+          --accept-flake-config"
 
-          su ${username} -c \
-            "nom build \
-            $FLAKE#homeConfigurations.\"${username}@${profile}\".config.home.activationPackage \
-            --out-link \"$HMCONFIGDIR\" \
-            --accept-flake-config"
+        $NIXOSCONFIGDIR/bin/switch-to-configuration switch || exit 1
 
-          su ${username} -c \
-            "nvd diff /home/${username}/.local/state/nix/profiles/home-manager \"$HMCONFIGDIR\""
+        user_exec \
+          "nvd diff /run/current-system \"$NIXOSCONFIGDIR\""
 
-          su ${username} -c \
-            "$HMCONFIGDIR/bin/home-manager-generation"
-        '';
+        user_exec \
+          "nom build \
+          $FLAKE#homeConfigurations.\"${username}@${profile}\".config.home.activationPackage \
+          --out-link \"$HMCONFIGDIR\" \
+          --accept-flake-config"
+
+        user_exec \
+          "nvd diff /home/${username}/.local/state/nix/profiles/home-manager \"$HMCONFIGDIR\""
+
+        user_exec \
+          "$HMCONFIGDIR/bin/home-manager-generation"
+      '';
     };
   };
 }

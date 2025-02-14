@@ -14,6 +14,7 @@ in
     defaultUserShell = g.shell.default.package;
     mutableUsers = false;
     users.${username} = {
+      uid = 1000;
       isNormalUser = true;
       hashedPasswordFile = config.sops.secrets.userHashedPassword.path;
       packages = [ pkgs.home-manager ];

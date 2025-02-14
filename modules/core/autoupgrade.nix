@@ -3,6 +3,7 @@
   config,
   lib,
   username,
+  pkgs,
   ...
 }:
 
@@ -30,7 +31,15 @@ in
       environment = {
         inherit (config.environment.sessionVariables) SSH_AUTH_SOCK;
       };
+      onFailure = [ "notify-failure@%i.service" ];
+      onSuccess = [ "notify-success@%i.service" ];
       path = g.system.envPackages;
+      preStart = ''
+        uid=$(id -u ${username})
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
+        su "${username}" -c "notify-send -i system-software-update 'Nixos Upgrade Service' 'Starting nixos upgrade and rebuild'"
+        sleep 10
+      '';
       script = ''
         cd ${flakeDirectory}
         # Check if there are changes from Git.
@@ -51,6 +60,8 @@ in
           exec systemctl start nixos-rebuild
         else
           echo "No updates found. Exiting."
+          export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus"
+          su "${username}" -c "notify-send -i zen-icon 'Nixos Upgrade Service' 'No updates found. Exiting.'"
         fi
       '';
     };
