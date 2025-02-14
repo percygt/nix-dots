@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   g = config._base;
 in
@@ -53,8 +58,9 @@ in
 
     signing = {
       signByDefault = true;
+      format = "openpgp";
       key = g.security.gpg.signingKey;
-      gpgPath = "${g.security.gpg.package}/bin/gpg";
+      signer = lib.getExe g.security.gpg.package;
     };
   };
 }
