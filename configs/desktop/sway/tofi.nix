@@ -6,7 +6,28 @@ in
 {
   home.packages = with pkgs; [ tofi ];
   xdg.configFile = {
-    "tofi/config-mid".text = ''
+    "tofi/config-dropdown".text = ''
+      # vim: set ft=dosini :
+      font = ${f.name}
+      font-size = 12
+      font-variations = "wght 700"
+      border-width = 1
+      outline-width = 0
+      num-results = 9
+      hide-cursor = true
+      width = 90%
+      height = 90%
+      result-spacing = 10
+      selection-color = ${c.base05}
+      selection-match-color = ${c.base09}
+      prompt-color =  ${c.base0D}
+      text-color = ${c.base04}
+      background-color = ${c.base00}
+      outline-color = ${c.base17}
+      border-color = ${c.base17}
+      corner-radius = 6
+    '';
+    "tofi/config-horizontal-mid".text = ''
       # vim: set ft=dosini :
       font = ${f.name}
       font-size = 15

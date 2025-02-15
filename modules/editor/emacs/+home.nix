@@ -92,8 +92,7 @@ in
       "${mod}+Shift+y" =
         "exec ddapp -t 'clipboard-capture-interest' -m false -h 90 -w 90 -- '${clipboardcapture} i'";
       "${mod}+e" = "exec ddapp -t 'agenda' -k true -- ${emacsagenda}";
-      "${mod}+c" =
-        "exec ddapp -t 'org-capture' -m false -h 90 -w 90 -- '${capture} -w org-capture -t ${config.xdg.configHome}/tofi/config-mid'";
+      "${mod}+c" = "exec ddapp -t 'org-capture' -m false -h 90 -w 90 -- '${capture} -w org-capture'";
     };
     home = {
       packages = [ cfg.finalPackage ];

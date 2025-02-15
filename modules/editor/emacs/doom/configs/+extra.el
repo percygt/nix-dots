@@ -1,5 +1,4 @@
 ;;; +extra.el -*- lexical-binding: t; -*-
-(use-package! simpleclip :config (simpleclip-mode 1))
 (use-package! highlight-indent-guides
   :hook (prog-mode . highlight-indent-guides-mode)
   :config

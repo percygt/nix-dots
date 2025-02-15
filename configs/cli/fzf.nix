@@ -16,6 +16,7 @@ in
     --prompt="  "
     --scrollbar="▌▐"
     --info=right
+    --bind="tab:up"
     --border-label-pos=0:bottom
     --border-label=" Result "
     --color=bg:-1,bg+:${c.base02}
