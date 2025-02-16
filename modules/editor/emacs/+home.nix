@@ -17,47 +17,6 @@ let
   EMACSDIR = "${config.xdg.configHome}/emacs";
   DOOMPROFILELOADFILE = "${config.xdg.dataHome}/doom/cache/profile-load.el";
   capture = pkgs.writers.writePython3 "capture" { doCheck = false; } (builtins.readFile ./capture.py);
-  clipboardcapture = pkgs.writers.writeBash "clipboardcapture" ''
-    url_check='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
-    clipboard=$(wl-paste 2>/dev/null)
-    if [[ $clipboard =~ $url_check ]]; then
-      if [[ $1 = "i" ]]; then
-        interest=$(printf 'Webpage\nVideo\nRepo' | tofi -c ${config.xdg.configHome}/tofi/config-mid --prompt-text "Templates: ")
-        case $interest in
-        Webpage)
-          template="iw"
-          ;;
-        Video)
-          template="iv"
-          ;;
-        Repo)
-          template="ir"
-          ;;
-        Article)
-          template="ia"
-          ;;
-        esac
-        footclient --app-id clipboard-capture-interest --title Emacs -- emacsclient -t -a "" "org-protocol://capture?url=$clipboard&template=$template"
-      else
-        footclient --app-id clipboard-capture --title Emacs -- emacsclient -t -a "" "org-protocol://capture?url=$clipboard&template=tu"
-      fi
-    else
-      if [[ $1 = "i" ]]; then
-        interest=$(printf 'Book\nIdea' | tofi -c ${config.xdg.configHome}/tofi/config-mid --prompt-text "Templates: ")
-        case $interest in
-        Book)
-          template="ib"
-          ;;
-        Idea)
-          template="iI"
-          ;;
-        esac
-        footclient --app-id clipboard-capture-interest --title Emacs -- emacsclient -t -a "" "org-protocol://capture?body=$clipboard&template=$template"
-      else
-        footclient --app-id clipboard-capture --title Emacs -- emacsclient -t -a "" "org-protocol://capture?body=$clipboard&template=tc"
-      fi
-    fi
-  '';
   doomconfig = pkgs.writers.writeBash "doomconfig" ''
     footclient --app-id doom-config --title Emacs -- emacsclient -t -a "" ${moduleEmacs}/doom/config.el
   '';
@@ -88,11 +47,12 @@ in
     wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
       "${mod}+n" = "exec ddapp -t 'notes' -- ${emacsnotes}";
       "${mod}+Shift+e" = "exec ddapp -t 'doom-config' -- ${doomconfig}";
-      "${mod}+y" = "exec ddapp -t 'clipboard-capture' -m false -h 90 -w 90 -- ${clipboardcapture}";
-      "${mod}+Shift+y" =
-        "exec ddapp -t 'clipboard-capture-interest' -m false -h 90 -w 90 -- '${clipboardcapture} i'";
+      # "${mod}+y" = "exec ddapp -t 'clipboard-capture' -m false -h 90 -w 90 -- ${clipboardcapture}";
+      # "${mod}+Shift+y" =
+      #   "exec ddapp -t 'clipboard-capture-interest' -m false -h 90 -w 90 -- '${clipboardcapture} i'";
       "${mod}+e" = "exec ddapp -t 'agenda' -k true -- ${emacsagenda}";
       "${mod}+c" = "exec ddapp -t 'org-capture' -m false -h 90 -w 90 -- '${capture} -w org-capture'";
+      "${mod}+q" = "exec ddapp -t 'capture' -m false -h 90 -w 90 -- ${emacscapture}";
     };
     home = {
       packages = [ cfg.finalPackage ];

@@ -3,19 +3,18 @@ import json
 import sys
 import traceback
 import argparse
+import logging
 import re
 import os
 import urllib.parse
 
-tofiConfigDir = f"{os.getenv('XDG_CONFIG_HOME')}/tofi"
-tofiDropdown = f"{tofiConfigDir}/config-dropdown"
-tofiHorizontal = f"{tofiConfigDir}/config-horizontal-mid"
+tofi_config = f"{os.getenv('XDG_CONFIG_HOME')}/tofi/config-horizontal-mid"
 
 
 # Run the first command to get the output from emacsclient
 def tofi(prompt: str, choices: list):
     r = subprocess.run(
-        ["tofi", "--prompt-text", prompt, "--config", tofiHorizontal],
+        ["tofi", "--prompt-text", prompt, "--config", tofi_config],
         input="\n".join(choices),
         capture_output=True,
         text=True,
@@ -57,38 +56,56 @@ def main(argv=None):
     )
 
     args = parser.parse_args(argv)
-    result = subprocess.run(
+
+    subprocess.run(
+        f"footclient --app-id {args.wclass} --title Clipboard -- cliphist-fzf-sixel",
+        shell=True,
+    )
+
+    r = subprocess.run(
         ["emacsclient", "-e", "(+org-capture/templates-json)"],
         capture_output=True,
         text=True,
         check=True,
     )
-    cb_content = subprocess.run(
+
+    cb = subprocess.run(
         ["wl-paste"],
         capture_output=True,
-        text=True,
         check=True,
-    ).stdout.strip()
+    ).stdout
 
-    emacs_output = json.loads(json.loads(result.stdout))
+    cb_content = ""
+
+    try:
+        cb_content = cb.decode().strip()
+    except UnicodeDecodeError as e:
+        logging.error(e)
+    except Exception as e:
+        logging.error(e)
+
+    emacs_output = json.loads(json.loads(r.stdout))
 
     top_selected_name = tofi(
         "Select the type capture template: ",
         [category["name"] for category in emacs_output.values()],
     )
-    selected_name_values = [
-        category["value"]
-        for category in emacs_output.values()
-        if category["name"] == top_selected_name
-    ]
+    selected_name_value = next(
+        (
+            category["value"]
+            for category in emacs_output.values()
+            if category["name"] == top_selected_name
+        ),
+    )
 
     is_cb_url = is_url(cb_content)
+
     filter_names = (
-        [category["name"] for category in selected_name_values[0]]
+        [category["name"] for category in selected_name_value]
         if is_cb_url
         else [
             category["name"]
-            for category in selected_name_values[0]
+            for category in selected_name_value
             if "url" not in category["name"].lower()
         ]
     )
@@ -98,16 +115,20 @@ def main(argv=None):
         filter_names,
     )
 
-    final_names_key = [
-        category["key"]
-        for category in selected_name_values[0]
-        if category["name"] == final_selected_name
-    ]
+    final_names_key = next(
+        (
+            category["key"]
+            for category in selected_name_value
+            if category["name"] == final_selected_name
+        )
+    )
 
     parsed_cb_text = urllib.parse.quote(cb_content)
     cb_type = "url" if is_url(cb_content) else "body"
 
-    emacs_cmd = f"org-protocol://capture?template={final_names_key[0]}&{cb_type}={parsed_cb_text}"
+    emacs_cmd = (
+        f"org-protocol://capture?template={final_names_key}&{cb_type}={parsed_cb_text}"
+    )
 
     subprocess.run(
         [
