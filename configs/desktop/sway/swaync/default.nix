@@ -68,6 +68,7 @@ in
         @define-color bg-close-hover rgba(255, 255, 255, 0.15);
         * {
           font-family: '${f.name}, ${i.name}';
+          outline: none;
         }
       '';
   };

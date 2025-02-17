@@ -1,7 +1,6 @@
 import subprocess
 import json
 import sys
-import traceback
 import argparse
 import logging
 import re
@@ -9,19 +8,39 @@ import os
 import urllib.parse
 
 tofi_config = f"{os.getenv('XDG_CONFIG_HOME')}/tofi/config-horizontal-mid"
+parser = argparse.ArgumentParser(description="initiate emacs org-capture")
+parser.add_argument(
+    "-w",
+    "--wclass",
+    type=str,
+    default="org-capture",
+)
+parser.add_argument(
+    "-t",
+    "--tofi_config",
+    type=str,
+)
+
+args = parser.parse_args()
 
 
-# Run the first command to get the output from emacsclient
-def tofi(prompt: str, choices: list):
-    r = subprocess.run(
-        ["tofi", "--prompt-text", prompt, "--config", tofi_config],
-        input="\n".join(choices),
-        capture_output=True,
-        text=True,
-    ).stdout[:-1]
-    if r == "":
-        exit()
-    return r
+def tofi_run(prompt: str, choices: list) -> str:
+    """Runs tofi with the given prompt and choices."""
+    try:
+        result = subprocess.run(
+            ["tofi", "--prompt-text", prompt, "--config", tofi_config],
+            input="\n".join(choices),
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        output = result.stdout.strip()
+        if not output:
+            sys.exit(0)  # Exit gracefully if no selection
+        return output
+    except subprocess.CalledProcessError as e:
+        print(f"Error running tofi: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 def get_value_by_name(data: dict, target_name: str):
@@ -41,22 +60,44 @@ def is_url(string: str):
     return re.match(regex, string) is not None
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(description="initiate emacs org-capture")
-    parser.add_argument(
-        "-w",
-        "--wclass",
-        type=str,
-        default="org-capture",
+def sample():
+    r = subprocess.run(
+        ["emacsclient", "-e", "(+org-capture/templates-json)"],
+        capture_output=True,
+        text=True,
+        check=True,
     )
-    parser.add_argument(
-        "-t",
-        "--tofi_config",
-        type=str,
-    )
+    data = json.loads(json.loads(r.stdout))
+    # Loop through the outer dictionary and extract names from each section (including nested lists)
+    combined_values = []
+    for category in data.values():
+        if "value" in category:
+            combined_values.extend(category["value"])
+    return combined_values
 
-    args = parser.parse_args(argv)
 
+def combine_all_values(data: dict):
+    """Combine all 'value' lists from the dictionary."""
+    combined_values = []
+    for category in data.values():
+        if "value" in category:
+            combined_values.extend(category["value"])
+    return combined_values
+
+
+def extract_names_from_values(combined_values: list):
+    """Extract the 'name' field from each entry in the combined values list."""
+    return [category["name"] for category in combined_values]
+
+
+def chain_functions(data: dict):
+    """Chain the functions to get combined values and then extract names."""
+    combined_values = combine_all_values(data)  # First, combine all values
+    names = extract_names_from_values(combined_values)  # Then, extract names
+    return names
+
+
+def main():
     subprocess.run(
         f"footclient --app-id {args.wclass} --title Clipboard -- cliphist-fzf-sixel",
         shell=True,
@@ -86,7 +127,7 @@ def main(argv=None):
 
     emacs_output = json.loads(json.loads(r.stdout))
 
-    top_selected_name = tofi(
+    top_selected_name = tofi_run(
         "Select the type capture template: ",
         [category["name"] for category in emacs_output.values()],
     )
@@ -110,7 +151,7 @@ def main(argv=None):
         ]
     )
 
-    final_selected_name = tofi(
+    final_selected_name = tofi_run(
         "Select the capture template: ",
         filter_names,
     )
@@ -150,9 +191,10 @@ def main(argv=None):
     )
 
 
-if __name__ == "__main__":
-    try:
-        sys.exit(main(sys.argv[1:]))
-    except Exception:
-        print(traceback.format_exc(), file=sys.stderr)
-        sys.exit(1)
+#
+# if __name__ == "__main__":
+#     try:
+#         sys.exit(main())
+#     except Exception:
+#         print(traceback.format_exc(), file=sys.stderr)
+#         sys.exit(1)

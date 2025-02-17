@@ -21,6 +21,7 @@ in
           lib.makeBinPath (
             g.system.envPackages
             ++ [
+              pkgs.libnotify
               pkgs.pomo
               g.desktop.sway.finalPackage
               config.programs.swaylock.package
@@ -43,7 +44,7 @@ in
         if ${pkgs.procps}/bin/pgrep sway 2>&1 > /dev/null; then
           echo "Sway detected"
           # Only lock if pomo is still running
-          test -f $HOME/.local/share/pomo && ${config.programs.swaylock.package}/bin/swaylock -C ${config.xdg.configHome}/swaylock/config
+          test -f $HOME/.local/share/pomo && ${config.programs.swaylock.package}/bin/swaylock
           # Only restart pomo if pomo is still running
           test -f $HOME/.local/share/pomo && ${pkgs.pomo}/bin/pomo start
         fi
@@ -67,9 +68,9 @@ in
               exit 1
           fi
       }
-      XDG_RUNTIME_DIR=/run/user/$(id -u)
-      SWAYSOCK=$XDG_RUNTIME_DIR/sway-ipc.$(id -u).$(pgrep -x sway).sock
-      WAYLAND_DISPLAY=wayland-1
+      # XDG_RUNTIME_DIR=/run/user/$(id -u)
+      # SWAYSOCK=$XDG_RUNTIME_DIR/sway-ipc.$(id -u).$(pgrep -x sway).sock
+      # WAYLAND_DISPLAY=wayland-1
       POMO_MSG_CALLBACK="custom_notify"
       POMO_WORK_TIME=30
       POMO_BREAK_TIME=5

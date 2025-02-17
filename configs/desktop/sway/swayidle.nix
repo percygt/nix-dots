@@ -12,7 +12,6 @@ in
 {
   services.swayidle = {
     enable = true;
-    extraArgs = [ "-w" ];
     systemdTarget = "sway-session.target";
     events = [
       {
@@ -26,34 +25,30 @@ in
             ];
             text = ''
               if [ -f "$HOME/.local/share/pomo" ]; then pomo start || true; fi
-              ${swaymsg} 'output * dpms on'
+              ${swaymsg} 'output * power on'
               ${swaymsg} 'reload'
             '';
           }
         );
       }
-      {
-        event = "unlock";
-        command = "pkill -SIGUSR1 swaylock";
-      }
+      # {
+      #   event = "unlock";
+      #   command = "pkill -SIGUSR1 swaylock";
+      # }
       {
         event = "before-sleep";
         command = swaylock;
-      }
-      {
-        event = "lock";
-        command = "${swaylock} --grace 0";
       }
     ];
 
     timeouts = [
       {
-        timeout = 15 * 60;
-        command = "${swaymsg} 'output * dpms off'";
-        resumeCommand = "${swaymsg} 'output * dpms on'";
+        timeout = 30 * 60;
+        command = "${swaymsg} 'output * power off'";
+        resumeCommand = "${swaymsg} 'output * power on'";
       }
       {
-        timeout = 45 * 60;
+        timeout = 60 * 60;
         command = swaylock;
       }
     ];

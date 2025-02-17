@@ -52,9 +52,9 @@ in
       "F11" = "fullscreen toggle";
       "F12" = "exec ${toggle-blur}";
 
-      "${mod}+Shift+t" = "layout stacking";
-      "${mod}+t" = "layout tabbed";
-      "${mod}+Alt+s" = "layout toggle split";
+      "${mod}+Ctrl+t" = "layout stacking";
+      "${mod}+Shift+t" = "layout tabbed";
+      "${mod}+Ctrl+s" = "layout toggle split";
       "${mod}+Shift+r" = "reload";
 
       "${mod}+Shift+l" = "workspace next";

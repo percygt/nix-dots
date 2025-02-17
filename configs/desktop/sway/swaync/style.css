@@ -216,6 +216,7 @@
 }
 
 .widget-title button:hover {
+  border: none;
   color: @text-light;
 }
 
@@ -253,36 +254,69 @@
 
 .widget-backlight {
   background-color: @bg-alt;
-  padding: 8px 16px 16px 16px;
+  padding: 0px 8px 0px 16px;
   margin: 0px 15px 15px 15px;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 14px 14px;
+}
+.widget-backlight trough {
+  background: @bg;
+  margin: 0 6px;
 }
 
+.widget-backlight trough highlight {
+  background: @text-light;
+  border: unset;
+}
+
+.widget-backlight button {
+  padding: 0;
+}
 .widget-volume {
-  border-top: 1px solid @border;
   background-color: @bg-alt;
-  padding: 16px 8px 8px 16px;
+  padding: 0px 8px 0px 16px;
   margin: 10px 15px 0px 15px;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 14px 14px 0px 0px;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.3),
     0 1px 3px 1px rgba(0, 0, 0, 0.7),
     0 2px 6px 2px rgba(0, 0, 0, 0.3);
 }
 
-.widget-buttons-grid {
-  color: @blue;
-  background-color: @transparent;
+.widget-volume trough {
+  background: @bg;
+  margin: 0 6px;
 }
 
-.widget-buttons-grid > flowbox > flowboxchild > button {
-  background: @bg-hover;
-  border: 1px solid @border;
-  margin: 0px 6px;
-  padding: 5px 10px;
-  font-size: 16px;
-  border-radius: 16px;
-  /* margin: 4px; */
+.widget-volume trough highlight {
+  background: @text-light;
+  border: unset;
+}
+.widget-volume button {
+  padding: 0;
+}
+
+progressbar,
+progress,
+trough {
+  border-radius: 20px;
+}
+
+progressbar {
+  background-color: red;
+}
+
+trough highlight {
+  padding: 6px;
+  background: @bg;
+  border-radius: 20px;
+}
+
+trough highlight:hover {
+  background: @purple;
+}
+
+trough slider {
+  all: unset;
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:hover {
@@ -290,25 +324,24 @@
 }
 
 .topbar-buttons {
-  padding: 5px;
-  margin: 15px 10px 10px;
+  all: unset;
+  padding: 15px 12px;
+  margin: 20px 15px 10px 15px;
   font-size: 18px;
-  background-color: @transparent;
-}
-
-.topbar-buttons > button {
-  margin: 0 5px;
-  padding: 8px 20px;
-  color: @blue;
   background: @bg-alt;
-  border-top: 1px solid @grey;
-  border-radius: 30px;
+  border-radius: 14px;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.3),
     0 1px 3px 1px rgba(0, 0, 0, 0.7),
     0 2px 6px 2px rgba(0, 0, 0, 0.3);
 }
+
+.topbar-buttons > button {
+  all: unset;
+  margin: 0 12px;
+  padding: 0 16px;
+  color: @text-light;
+}
 .topbar-buttons > button:hover {
-  background: @purple;
-  color: @text-dark;
+  color: @purple;
 }
