@@ -5,16 +5,16 @@ return {
       local c = require("config.colorscheme")
       local custom = {
         inactive = {
-          a = { fg = c.base03, bg = c.base01 },
+          a = { fg = c.base03, bg = c.base02 },
           b = { bg = c.base00 },
           c = { bg = c.base00 },
         },
         normal = {
-          a = { fg = c.base15, bg = c.base02 },
-          b = { bg = c.base10 },
-          c = { bg = c.base10 },
+          a = { fg = c.base00, bg = c.base16 },
+          b = { bg = c.base01 },
+          c = { bg = c.base01 },
         },
-        visual = { a = { fg = c.base10, bg = c.base16 } },
+        visual = { a = { fg = c.base01, bg = c.base16 } },
         insert = { a = { fg = c.base05, bg = c.base03 } },
       }
       local icons = LazyVim.config.icons

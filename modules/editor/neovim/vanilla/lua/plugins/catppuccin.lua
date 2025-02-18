@@ -36,7 +36,7 @@ return {
             TreesitterContext = { bg = "NONE", fg = c.base04 },
             TreesitterContextLineNumberBottom = { fg = c.base04, underline = true },
             TreesitterContextLineNumber = { fg = c.base04 },
-            LineNrNC = { fg = c.base03 },
+            LineNrNC = { fg = c.base02 },
             CursorLine = { bg = c.base01 },
             CursorLineNr = { bg = c.base01, fg = c.base06, italic = true, bold = true },
             CursorLineSign = { bg = c.base01 },

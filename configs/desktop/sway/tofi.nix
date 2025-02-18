@@ -22,7 +22,7 @@ in
       selection-match-color = ${c.base09}
       prompt-color =  ${c.base0D}
       text-color = ${c.base04}
-      background-color = ${c.base00}
+      background-color = ${c.base01}
       outline-color = ${c.base17}
       border-color = ${c.base17}
       corner-radius = 6
@@ -42,7 +42,7 @@ in
       selection-match-color = ${c.base09}
       prompt-color =  ${c.base0D}
       text-color = ${c.base04}
-      background-color = ${c.base00}
+      background-color = ${c.base01}
       outline-color = ${c.base17}
       border-color = ${c.base17}
       corner-radius = 6

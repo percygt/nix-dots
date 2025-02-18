@@ -12,19 +12,18 @@
     0 2px 6px 2px rgba(0, 0, 0, 0.3);
 }
 
-.control-center-list {
-  background: transparent;
-}
-.control-center .notification-row:focus,
-.control-center .notification-row:hover {
-  opacity: 1;
-  background: @bg-darker;
-}
+/* .control-center-list { background: transparent; */
+/* } */
+/* .control-center .notification-row:focus, */
+/* .control-center .notification-row:hover { */
+/*   opacity: 1; */
+/*   background: @bg-darker; */
+/* } */
 
 .notification-row {
   outline: none;
-  margin: 0px;
-  padding: 5px 0;
+  margin: 0;
+  padding: 0;
 }
 
 .notification-row:focus,
@@ -43,18 +42,28 @@
     0 2px 6px 2px rgba(0, 0, 0, 0.3);
 }
 
-.critical {
+/* Notifications  */
+.control-center .notification-row .notification-background,
+.control-center
+  .notification-row
+  .notification-background
+  .notification.critical {
+  background-color: @bg-darker;
+  border-radius: 16px;
+}
+critical {
   background-color: @red;
   border-bottom: 1px solid @red;
-  border-radius: 6px;
 }
 
-.notification-content {
+.control-center
+  .notification-row
+  .notification-background
+  .notification
+  .notification-content {
   background: transparent;
-  padding: 10px;
   border-radius: 6px;
 }
-
 .close-button {
   background: @bg-close;
   text-shadow: none;
@@ -322,10 +331,13 @@ trough slider {
 .widget-buttons-grid > flowbox > flowboxchild > button:hover {
   background: @bg-darker;
 }
-
+.widgets-menu-bar {
+  padding: 15px 12px;
+  background: yellow;
+}
 .topbar-buttons {
   all: unset;
-  padding: 15px 12px;
+  padding: 20px;
   margin: 20px 15px 10px 15px;
   font-size: 18px;
   background: @bg-alt;

@@ -55,7 +55,6 @@
   "widget-config": {
     "menubar": {
       "buttons#topbar-buttons": {
-        "position": "left",
         "actions": [
           {
             "label": "",

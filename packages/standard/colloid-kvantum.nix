@@ -6,9 +6,9 @@
   writeText,
   border ? "6e738d",
   bg ? "081028",
-  bg-dark ? "00051a",
+  bg-alt ? "00051a",
   bg-accent ? "00081e",
-  bg-black ? "030205",
+  black ? "030205",
 }:
 
 stdenvNoCC.mkDerivation rec {
@@ -24,8 +24,8 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     runHook preInstall
-    sed -i s/475061/${bg-dark}/g ./Kvantum/ColloidNord/ColloidNordDark.svg
-    sed -i s/475061/${bg-dark}/g ./Kvantum/ColloidNord/ColloidNordDark.kvconfig
+    sed -i s/475061/${bg-alt}/g ./Kvantum/ColloidNord/ColloidNordDark.svg
+    sed -i s/475061/${bg-alt}/g ./Kvantum/ColloidNord/ColloidNordDark.kvconfig
     sed -i s/71,80,97/0,5,26/g ./color-schemes/ColloidDarkNord.colors
 
     sed -i s/3a4150/${border}/g ./Kvantum/ColloidNord/ColloidNordDark.svg
@@ -40,8 +40,8 @@ stdenvNoCC.mkDerivation rec {
     sed -i s/242932/${bg}/g ./Kvantum/ColloidNord/ColloidNordDark.kvconfig
     sed -i s/36,41,50/8,16,40/g ./color-schemes/ColloidDarkNord.colors
 
-    sed -i s/1e222a/${bg-black}/g ./Kvantum/ColloidNord/ColloidNordDark.svg
-    sed -i s/1e222a/${bg-black}/g ./Kvantum/ColloidNord/ColloidNordDark.kvconfig
+    sed -i s/1e222a/${black}/g ./Kvantum/ColloidNord/ColloidNordDark.svg
+    sed -i s/1e222a/${black}/g ./Kvantum/ColloidNord/ColloidNordDark.kvconfig
     sed -i s/30,34,42/3,2,5/g ./color-schemes/ColloidDarkNord.colors
 
     mkdir -p $out/share/Kvantum

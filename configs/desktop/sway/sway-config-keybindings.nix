@@ -11,15 +11,15 @@ let
   toggle-blur = pkgs.writers.writeBash "toggle-blur" ''
     BLUR_STATUS_FILE="/tmp/blur-status"
     if [[ ! -f "$BLUR_STATUS_FILE" ]]; then
-        echo "disabled" > "$BLUR_STATUS_FILE"
+        echo "normal" > "$BLUR_STATUS_FILE"
     fi
     enable_blur() {
         swaymsg 'blur enable, blur_radius 7, blur_passes 4, blur_noise 0.05'
         echo "enabled" > "$BLUR_STATUS_FILE"
     }
-    lighten_blur() {
+    normal_blur() {
         swaymsg 'blur_radius 2, blur_passes 4, blur_noise 0'
-        echo "lightened" > "$BLUR_STATUS_FILE"
+        echo "normal" > "$BLUR_STATUS_FILE"
     }
     disable_blur() {
         swaymsg 'blur disable'
@@ -27,8 +27,8 @@ let
     }
     current_status=$(cat "$BLUR_STATUS_FILE")
     if [[ "$current_status" == "enabled" ]]; then
-        lighten_blur
-    elif [[ "$current_status" == "lightened" ]]; then
+        normal_blur
+    elif [[ "$current_status" == "normal" ]]; then
         disable_blur
     else
         enable_blur

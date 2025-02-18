@@ -13,6 +13,7 @@ let
   configDir = ".config/borgmatic.d";
   flagFile = "${homeDirectory}/${configDir}/last_run";
   cfg = config.modules.security.backup;
+  lockFile = "${g.backupDirectory}/lock.exclusive";
 in
 {
   config = lib.mkIf cfg.enable {
@@ -129,13 +130,20 @@ in
         keep_daily = 30;
         keep_weekly = 4;
         keep_monthly = 6;
-        before_backup = [
-          (pkgs.writers.writeBash "beforeBackup" ''
+
+        before_actions = [
+          (pkgs.writers.writeBash "beforeActions" ''
             if [ -f "${flagFile}" ] && grep -q "$(date +%F)" "${flagFile}"; then
                 ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null
                 exit 75
             fi
+            ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/bind &>/dev/null
           '')
+        ];
+
+        before_backup = [
+          "until ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do :; done"
+          "sleep 5"
         ];
 
         after_backup = [
@@ -143,17 +151,11 @@ in
           "sync"
         ];
 
-        before_actions = [
-          (pkgs.writers.writeBash "beforeActions" ''
-            ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/bind &>/dev/null
-            until ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do :; done
-          '')
-        ];
-
         after_actions = [
-          "sleep 15"
+          "sleep 5"
           "echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null"
         ];
+
       };
     };
   };

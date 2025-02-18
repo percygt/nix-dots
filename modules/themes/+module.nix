@@ -97,10 +97,10 @@ in
         type = lib.types.package;
         default = pkgs.colloid-kvantum.override {
           border = c.base04;
-          bg = c.base01;
-          bg-dark = c.base00;
-          bg-accent = c.base10;
-          bg-black = c.base11;
+          bg = c.base00;
+          bg-alt = c.base01;
+          bg-accent = c.base02;
+          black = c.base11;
         };
       };
     };
@@ -116,10 +116,10 @@ in
         type = lib.types.package;
         default = pkgs.colloid-gtk-theme-catppuccin.override {
           border = c.base04;
-          bg = c.base01;
-          bg-dark = c.base00;
-          bg-accent = c.base10;
-          bg-black = c.base11;
+          bg = c.base00;
+          bg-alt = c.base01;
+          bg-accent = c.base02;
+          black = c.base11;
         };
       };
     };

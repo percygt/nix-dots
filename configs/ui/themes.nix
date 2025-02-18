@@ -23,7 +23,7 @@ in
     configFile."vivid/themes/custom-vivid.yml".text = lib.concatStringsSep "\n" [
       ''
         colors:
-          black: "${c.base01}"
+          black: "${c.base11}"
           red: "${c.base08}"
           green: "${c.base0B}"
           yellow: "${c.base0A}"

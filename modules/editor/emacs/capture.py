@@ -99,7 +99,7 @@ def chain_functions(data: dict):
 
 def main():
     subprocess.run(
-        f"footclient --app-id {args.wclass} --title Clipboard -- cliphist-fzf-sixel",
+        f"footclient --app-id {args.wclass} --title Clipboard -- cliphist-fzf",
         shell=True,
     )
 

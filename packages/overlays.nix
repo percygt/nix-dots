@@ -2,14 +2,19 @@
 (import ./derivations.nix { inherit pkgs; })
 // {
   success-alert = pkgs.fetchurl {
-    # https://freesound.org/people/martcraft/sounds/651624/
-    url = "https://cdn.freesound.org/previews/651/651624_14258856-lq.mp3";
-    sha256 = "urNwmGEG2YJsKOtqh69n9VHdj9wSV0UPYEQ3caEAF2c=";
+    # https://freesound.org/people/Rob_Marion/sounds/541981/
+    url = "https://cdn.freesound.org/previews/541/541981_6856600-lq.mp3";
+    sha256 = "042snm79z71djc862b2vy3wxdl0jhcbj3dx6hxf0wcyjqrrkwv1l";
+  };
+  normal-alert = pkgs.fetchurl {
+    # https://freesound.org/people/yfjesse/sounds/235911/
+    url = "https://cdn.freesound.org/previews/235/235911_2391840-lq.mp3";
+    sha256 = "149jb8b61ax9a8yk1hx8kmy9i5yi0csv4jka508zw1gsgmx1zg2b";
   };
   failure-alert = pkgs.fetchurl {
-    # https://freesound.org/people/martcraft/sounds/651625/
-    url = "https://cdn.freesound.org/previews/651/651625_14258856-lq.mp3";
-    sha256 = "XAEJAts+KUNVRCFLXlGYPIJ06q4EjdT39G0AsXGbT2M=";
+    # https://freesound.org/people/rhodesmas/sounds/342756/
+    url = "https://cdn.freesound.org/previews/342/342756_5260872-lq.mp3";
+    sha256 = "1kklbi5sxp7capkf9z3f85nrly14lg6kn822qv3gpiskcnfxqsii";
   };
   pomo-alert = pkgs.fetchurl {
     # https://freesound.org/people/dersinnsspace/sounds/421829/

@@ -21,7 +21,6 @@ in
           lib.makeBinPath (
             g.system.envPackages
             ++ [
-              pkgs.libnotify
               pkgs.pomo
               g.desktop.sway.finalPackage
               config.programs.swaylock.package
@@ -57,23 +56,18 @@ in
               echo "End of work period"
               notify-send -i kronometer 'Pomodoro' 'End of a work period. Locking Screen!'
               ${pkgs.playerctl}/bin/playerctl --all-players pause
-              ${pkgs.mpv}/bin/mpv ${pkgs.pomo-alert} || sleep 10
               lock_screen &
           elif [[ $block_type -eq 1 ]]; then
               echo "End of break period"
               notify-send -i kronometer 'Pomodoro' 'End of a break period. Time for work!'
-              ${pkgs.mpv}/bin/mpv ${pkgs.pomo-alert}
           else
               echo "Unknown block type"
               exit 1
           fi
       }
-      # XDG_RUNTIME_DIR=/run/user/$(id -u)
-      # SWAYSOCK=$XDG_RUNTIME_DIR/sway-ipc.$(id -u).$(pgrep -x sway).sock
-      # WAYLAND_DISPLAY=wayland-1
       POMO_MSG_CALLBACK="custom_notify"
-      POMO_WORK_TIME=30
-      POMO_BREAK_TIME=5
+      POMO_WORK_TIME=1
+      POMO_BREAK_TIME=1
     '';
   };
 }

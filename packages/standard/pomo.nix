@@ -2,7 +2,6 @@
   stdenv,
   lib,
   fetchFromGitHub,
-  makeWrapper,
   coreutils,
   libnotify,
 }:
@@ -21,7 +20,10 @@ stdenv.mkDerivation {
   dontConfigure = true;
   dontBuild = true;
 
-  nativeBuildInputs = [ makeWrapper ];
+  dependencies = [
+    coreutils
+    libnotify
+  ];
 
   installPhase = ''
     runHook preInstall
@@ -30,15 +32,6 @@ stdenv.mkDerivation {
     install -Dm755 pomo.sh $out/bin/pomo
 
     runHook postInstall
-  '';
-
-  postFixup = ''
-    wrapProgram $out/bin/pomo --prefix PATH : ${
-      lib.makeBinPath [
-        coreutils
-        libnotify
-      ]
-    }
   '';
 
   meta = {
