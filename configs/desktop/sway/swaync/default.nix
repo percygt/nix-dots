@@ -47,28 +47,25 @@ in
     "swaync/nix.css".text =
       # css
       ''
-        @define-color bg ${c.base00};
-        @define-color bg-lighter ${c.base10};
-        @define-color bg-darker ${c.base11};
-        @define-color bg-alt ${c.base02};
-        @define-color grey ${c.base03};
-        @define-color grey-alt ${c.base04};
-        @define-color border ${c.base03};
-        @define-color text-dark ${c.base01};
-        @define-color text-light ${c.base05};
-        @define-color green ${c.base0B};
-        @define-color blue ${c.base0D};
-        @define-color red ${c.base08};
-        @define-color purple ${c.base0E};
-        @define-color orange ${c.base0F};
-        @define-color transparent rgba(0,0,0,0);
-        @define-color bg-hover rgba(255, 255, 255, 0.1);
-        @define-color bg-focus rgba(255, 255, 255, 0.1);
-        @define-color bg-close rgba(255, 255, 255, 0.1);
-        @define-color bg-close-hover rgba(255, 255, 255, 0.15);
+        @define-color bg                  ${c.base00};
+        @define-color bg-alt              ${c.base02};
+        @define-color grey                ${c.base03};
+        @define-color grey-alt            ${c.base04};
+        @define-color border              ${c.base04};
+        @define-color text-dark           ${c.base01};
+        @define-color text-light          ${c.base05};
+        @define-color black               ${c.base11};
+        @define-color green               ${c.base0B};
+        @define-color blue                ${c.base0D};
+        @define-color red                 ${c.base08};
+        @define-color purple              ${c.base0E};
+        @define-color orange              ${c.base0F};
+        @define-color bg-hover            alpha(@black, 0.2);
+        @define-color bg-focus            alpha(@black, 0.1);
+        @define-color bg-close            alpha(@black, 0.2);
+        @define-color bg-close-hover      alpha(@black, 0.15);
         * {
           font-family: '${f.name}, ${i.name}';
-          outline: none;
         }
       '';
   };

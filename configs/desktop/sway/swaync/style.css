@@ -1,4 +1,4 @@
-@import url("./nix.css");
+@import url("nix.css");
 
 .control-center {
   background-color: @bg;
@@ -12,28 +12,35 @@
     0 2px 6px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* .control-center-list { background: transparent; */
-/* } */
-/* .control-center .notification-row:focus, */
-/* .control-center .notification-row:hover { */
-/*   opacity: 1; */
-/*   background: @bg-darker; */
-/* } */
+.control-center-list {
+  background: transparent;
+}
+.control-center .notification-row:focus,
+.control-center .notification-row:hover {
+  opacity: 1;
+  background: @black;
+}
 
 .notification-row {
   outline: none;
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 5px 0;
 }
 
 .notification-row:focus,
 .notification-row:hover {
   background: @bg-hover;
 }
+.floating-notifications.background
+  .notification-row
+  .notification-background
+  .notification {
+  border: 1px solid @border;
+}
 
 .notification {
-  background: @bg;
-  border: 1px solid @border;
+  background: @bg-alt;
+  border: none;
   border-radius: 6px;
   margin: 0px -2px 3px 0px;
   box-shadow:
@@ -42,28 +49,19 @@
     0 2px 6px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Notifications  */
-.control-center .notification-row .notification-background,
 .control-center
   .notification-row
   .notification-background
   .notification.critical {
-  background-color: @bg-darker;
-  border-radius: 16px;
-}
-critical {
-  background-color: @red;
   border-bottom: 1px solid @red;
-}
-
-.control-center
-  .notification-row
-  .notification-background
-  .notification
-  .notification-content {
-  background: transparent;
   border-radius: 6px;
 }
+.notification-content {
+  background: transparent;
+  padding: 10px;
+  border-radius: 6px;
+}
+
 .close-button {
   background: @bg-close;
   text-shadow: none;
@@ -89,7 +87,7 @@ critical {
   padding: 0px;
   box-shadow: none;
   background: @bg-alt;
-  border: 1px solid @border;
+  border: 1px solid @bg-alt;
   /* color: @text-light; */
 }
 
@@ -127,7 +125,7 @@ critical {
 
 .body-image {
   margin-top: 6px;
-  background-color: @bg-dark;
+  background-color: @bg-alt;
   border-radius: 6px;
 }
 
@@ -136,8 +134,7 @@ critical {
 }
 
 .inline-reply-entry {
-  background: @bg-darker;
-  /* color: @text-light; */
+  background: @black;
   caret-color: @text-light;
   border: 1px solid @border;
   border-radius: 6px;
@@ -219,7 +216,7 @@ critical {
 }
 
 .widget-title button label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   margin-right: 5px;
 }
@@ -263,18 +260,20 @@ critical {
 
 .widget-backlight {
   background-color: @bg-alt;
-  padding: 0px 8px 0px 16px;
+  padding: 0px 8px 5px 16px;
   margin: 0px 15px 15px 15px;
-  border-radius: 0px 0px 14px 14px;
+  border-radius: 0px 0px 12px 12px;
 }
 .widget-backlight trough {
   background: @bg;
   margin: 0 6px;
 }
-
 .widget-backlight trough highlight {
   background: @text-light;
   border: unset;
+}
+.widget-backlight trough slider {
+  all: unset;
 }
 
 .widget-backlight button {
@@ -282,13 +281,9 @@ critical {
 }
 .widget-volume {
   background-color: @bg-alt;
-  padding: 0px 8px 0px 16px;
+  padding: 5px 8px 0px 16px;
   margin: 10px 15px 0px 15px;
-  border-radius: 14px 14px 0px 0px;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.3),
-    0 1px 3px 1px rgba(0, 0, 0, 0.7),
-    0 2px 6px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 12px 12px 0px 0px;
 }
 
 .widget-volume trough {
@@ -299,6 +294,9 @@ critical {
 .widget-volume trough highlight {
   background: @text-light;
   border: unset;
+}
+.widget-volume trough slider {
+  all: unset;
 }
 .widget-volume button {
   padding: 0;
@@ -324,28 +322,20 @@ trough highlight:hover {
   background: @purple;
 }
 
-trough slider {
-  all: unset;
-}
+/* trough slider { */
+/*   all: unset; */
+/* } */
 
-.widget-buttons-grid > flowbox > flowboxchild > button:hover {
-  background: @bg-darker;
-}
 .widgets-menu-bar {
   padding: 15px 12px;
   background: yellow;
 }
 .topbar-buttons {
-  all: unset;
-  padding: 20px;
+  padding: 18px;
   margin: 20px 15px 10px 15px;
   font-size: 18px;
   background: @bg-alt;
-  border-radius: 14px;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.3),
-    0 1px 3px 1px rgba(0, 0, 0, 0.7),
-    0 2px 6px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
 }
 
 .topbar-buttons > button {

@@ -53,7 +53,7 @@ in
 
       colors = {
         alpha = t.opacity;
-        background = c.base01;
+        background = c.base00;
         foreground = c.base05;
 
         ## Normal/regular colors (color palette 0-7)

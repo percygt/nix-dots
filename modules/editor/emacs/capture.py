@@ -73,7 +73,7 @@ def sample():
     for category in data.values():
         if "value" in category:
             combined_values.extend(category["value"])
-    return combined_values
+    return [category["name"] for category in combined_values]
 
 
 def combine_all_values(data: dict):
@@ -191,7 +191,6 @@ def main():
     )
 
 
-#
 # if __name__ == "__main__":
 #     try:
 #         sys.exit(main())
