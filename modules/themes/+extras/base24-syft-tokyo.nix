@@ -2,9 +2,9 @@
   slug = "syft-tokyo";
   scheme = "Syft Tokyo";
   author = "Percy";
-  base00 = "050a0f"; # [#050a0f] eclipse     bG
-  base01 = "0a0f14"; # [#0a0f14] midnight
-  base02 = "14191e"; # [#14191e] abyss       brightBlack
+  base00 = "050514"; # [#050514] eclipse     bG
+  base01 = "0f0f19"; # [#0f0f19] midnight
+  base02 = "141428"; # [#141428] abyss       brightBlack
   base03 = "232d37"; # [#232d37] plum
   base04 = "6e738d"; # [#6e738d] stormySky
   base05 = "d8e2ec"; # [#d8e2ec] aqua        fG

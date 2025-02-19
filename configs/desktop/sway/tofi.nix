@@ -71,7 +71,7 @@ in
       selection-match-color = ${c.base09}
       prompt-color =  ${c.base0D}
       text-color = ${c.base04}
-      background-color = ${c.base10}
+      background-color = ${c.base01}
       prompt-padding = 2
       anchor = top
       width = 0
