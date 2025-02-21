@@ -167,7 +167,7 @@
 
   (setq org-capture-templates
         (doct `(
-                ("Default" :keys "d"
+                ("Tasks" :keys "t"
                  :icon ("nf-oct-inbox" :set "octicon" :color "yellow")
                  :file +org-capture-todo-file
                  :headline "Tasks"
@@ -175,23 +175,24 @@
                  :prepend t
                  :prepare-finalize (lambda () (progn (org-priority) (org-set-tags-command)))
                  :template ("* TODO %? " "%{extra}")
-                 :children (("Task" :keys "d"
+                 :children (("Task Default" :keys "t"
                              :extra  ""
                              :hook +org-capture/created-property
                              :icon ("nf-fa-tasks" :set "faicon" :color "yellow"))
-                            ("Task Url" :keys "u"
+                            ("Task w/ url" :keys "u"
                              :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
+                             :category "org-protocol"
                              :hook (lambda () (progn (org-set-tags "url") (+org-capture/created-property)))
                              :icon ("nf-md-web" :set "mdicon" :color "blue"))
-                            ("Task clip/link " :keys "c"
+                            ("Task w/ copied text/link" :keys "c"
                              :extra "%i %a"
                              :hook +org-capture/created-property
                              :icon ("nf-fa-paste" :set "faicon" :color "cyan"))
-                            ("Task with deadline" :keys "d"
+                            ("Task w/ deadline" :keys "d"
                              :extra "DEADLINE: %^{Deadline:}t"
                              :hook +org-capture/created-property
                              :icon ("nf-md-timer" :set "mdicon" :color "orange" :v-adjust -0.1))
-                            ("Scheduled Task" :keys "s"
+                            ("Task Scheduled" :keys "s"
                              :extra "SCHEDULED: %^{Start time:}t"
                              :hook +org-capture/created-property
                              :icon ("nf-oct-calendar" :set "octicon" :color "orange"))))
@@ -203,23 +204,23 @@
                  :prepare-finalize (lambda () (org-set-tags-command))
                  :type entry
                  :template ("* %?" "%{extra}")
-                 :children (("Webpage Url" :keys "w"
+                 :children (("Reference web url" :keys "w"
                              :icon ("nf-fa-globe" :set "faicon" :color "green")
                              :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
                              :hook (lambda ()(progn (org-set-tags "web") (+org-capture/created-property))))
-                            ("Video Url" :keys "v"
+                            ("Reference video url" :keys "v"
                              :icon ("nf-oct-video" :set "octicon" :color "red")
                              :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
                              :hook (lambda ()(progn (org-set-tags "video") (+org-capture/created-property))))
-                            ("Repo Url" :keys "r"
+                            ("Reference repo Url" :keys "r"
                              :icon ("nf-fa-git" :set "faicon" :color "orange")
                              :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
                              :hook (lambda ()(progn (org-set-tags "repo") (+org-capture/created-property))))
-                            ("Book" :keys "b"
+                            ("Reference book" :keys "b"
                              :icon ("nf-fa-book" :set "faicon" :color "green")
                              :extra "%i %a"
                              :hook (lambda ()(progn (org-set-tags "book") (+org-capture/created-property))))
-                            ("Idea" :keys "I"
+                            ("Reference idea" :keys "I"
                              :icon ("nf-md-chart_bubble" :set "mdicon" :color "silver")
                              :extra ""
                              :hook (lambda ()(progn (org-set-tags "idea") (+org-capture/created-property))))
@@ -233,42 +234,42 @@
                  :function +org-capture/project-file
                  :heading "Project"
                  :template ("* %{time-or-todo} %?" "%{extra}")
-                 :children (("Todo default" :keys "t"
+                 :children (("Project Todo" :keys "t"
                              :extra ""
                              :time-or-todo "TODO"
                              :hook +org-capture/created-property
                              :icon ("nf-fa-tasks" :set "faicon" :color "yellow"))
-                            ("Todo url" :keys "u"
+                            ("Project todo w/ url" :keys "u"
                              :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
                              :time-or-todo "TODO"
                              :hook (lambda () (progn (org-set-tags "url") (+org-capture/created-property)))
                              :icon ("nf-md-web" :set "mdicon" :color "blue"))
-                            ("Todo clip/link" :keys "c"
+                            ("Project todo w/ clip/link" :keys "c"
                              :extra "%i %a"
                              :time-or-todo "TODO"
                              :hook +org-capture/created-property
                              :icon ("nf-fa-paste" :set "faicon" :color "cyan"))
-                            ("Todo with deadline" :keys "d"
+                            ("Project todo w/ deadline" :keys "d"
                              :extra "DEADLINE: %^{Deadline:}t"
                              :time-or-todo "TODO"
                              :hook +org-capture/created-property
                              :icon ("nf-md-timer" :set "mdicon" :color "orange" :v-adjust -0.1))
-                            ("Todo scheduled" :keys "s"
+                            ("Project todo scheduled" :keys "s"
                              :extra "SCHEDULED: %^{Start time:}t"
                              :time-or-todo "TODO"
                              :hook +org-capture/created-property
                              :icon ("nf-oct-calendar" :set "octicon" :color "orange"))
-                            ("Note default" :keys "n"
+                            ("Project note" :keys "n"
                              :extra  ""
                              :time-or-todo "%U"
                              :hook +org-capture/created-property
                              :icon ("nf-fa-tasks" :set "faicon" :color "yellow"))
-                            ("Note url" :keys "U"
+                            ("Project note w/ url" :keys "U"
                              :extra "[[%:link][%(+org-capture/www-get-page-title \"%:link\")]]"
                              :time-or-todo "%U"
                              :hook (lambda () (progn (org-set-tags "url") (+org-capture/created-property)))
                              :icon ("nf-md-web" :set "mdicon" :color "blue"))
-                            ("Note clip/link" :keys "C"
+                            ("Project note w/ copied text/link" :keys "C"
                              :extra "%i %a"
                              :time-or-todo "%U"
                              :hook +org-capture/created-property
