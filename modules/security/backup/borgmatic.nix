@@ -141,10 +141,10 @@ in
           '')
         ];
 
-        before_backup = [
-          "until ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do :; done"
-          "sleep 5"
-        ];
+        # before_backup = [
+        #   "until ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do :; done"
+        #   "sleep 5"
+        # ];
 
         after_backup = [
           "echo $(date +%F) > '${flagFile}'"

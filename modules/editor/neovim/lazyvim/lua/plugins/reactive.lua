@@ -66,10 +66,10 @@ return {
         -- visual
         [{ "v", "V", "\x16" }] = {
           winhl = {
-            Visual = { bg = c.base16, fg = c.base01 },
-            CursorLineNr = { bg = c.base16, fg = c.base01, italic = true, bold = true },
-            CursorLineSign = { bg = c.base16 },
-            CursorLineFold = { bg = c.base16 },
+            Visual = { bg = c.base15, fg = c.base01 },
+            CursorLineNr = { bg = c.base15, fg = c.base01, italic = true, bold = true },
+            CursorLineSign = { bg = c.base15 },
+            CursorLineFold = { bg = c.base15 },
           },
         },
         [{ "s", "S", "\x13" }] = {
@@ -90,10 +90,10 @@ return {
         },
         i = {
           winhl = {
-            CursorLine = { bg = c.base01 },
-            CursorLineNr = { bg = c.base01, fg = c.base03, italic = true, bold = true },
-            CursorLineSign = { bg = c.base01 },
-            CursorLineFold = { bg = c.base01 },
+            CursorLine = { bg = c.base11 },
+            CursorLineNr = { bg = c.base11, fg = c.base05, italic = true, bold = true },
+            CursorLineSign = { bg = c.base11 },
+            CursorLineFold = { bg = c.base11 },
           },
         },
       },
