@@ -1,7 +1,7 @@
 {
   modules = {
     core = {
-      battery.enable = true;
+      powermanagement.enable = true;
       ephemeral.enable = true;
       autoupgrade.enable = true;
     };

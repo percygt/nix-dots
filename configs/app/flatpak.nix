@@ -60,7 +60,6 @@
     };
     packages = [
       "flathub:app/com.valvesoftware.Steam/x86_64/stable"
-      "flathub:app/org.gnome.PowerStats/x86_64/stable"
       "flathub:app/org.libreoffice.LibreOffice/x86_64/stable"
       "flathub:app/app.zen_browser.zen/x86_64/stable"
       "flathub:app/dev.vencord.Vesktop/x86_64/stable"

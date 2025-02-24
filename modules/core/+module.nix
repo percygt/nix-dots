@@ -1,8 +1,8 @@
 { lib, config, ... }:
 {
   options.modules.core = {
-    ## wpa_supplicant
-    wpa_supplicant.enable = lib.mkEnableOption "Enable wpa";
+    ## wpasupplicant
+    wpasupplicant.enable = lib.mkEnableOption "Enable wpa";
 
     ## ephemeral
     ephemeral = {
@@ -74,20 +74,7 @@
       };
 
     ## battery
-    battery = {
-      enable = lib.mkEnableOption "Enable battery";
-
-      chargeUpto = lib.mkOption {
-        description = "Maximum level of charge for your battery, as a percentage.";
-        default = 80;
-        type = lib.types.int;
-      };
-      enableChargeUptoScript = lib.mkOption {
-        description = "Whether to add charge-upto to environment.systemPackages. `charge-upto 75` temporarily sets the charge limit to 75%.";
-        type = lib.types.bool;
-        default = config.modules.core.battery.enable;
-      };
-    };
+    powermanagement.enable = lib.mkEnableOption "Enable powermanagement services";
 
     ## autoupgrade
     autoupgrade = {

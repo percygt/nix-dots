@@ -4,7 +4,7 @@
   ...
 }:
 let
-  wpa = config.modules.core.wpa_supplicant.enable;
+  wpa = config.modules.core.wpasupplicant.enable;
 in
 lib.mkMerge [
   {

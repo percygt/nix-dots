@@ -6,14 +6,14 @@
 }:
 let
   g = config._base;
-  cfg = config.modules.core.wpa_supplicant;
+  cfg = config.modules.core.wpasupplicant;
 in
 {
   config = lib.mkIf cfg.enable {
     users.groups.network = { };
     users.users.${username}.extraGroups = [ "network" ];
     services.avahi.enable = lib.mkForce false;
-    systemd.services.wpa_supplicant = {
+    systemd.services.wpasupplicant = {
       preStart = "touch /etc/wpa_supplicant.conf";
       serviceConfig.TimeoutSec = "10";
     };
