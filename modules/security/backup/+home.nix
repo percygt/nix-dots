@@ -14,7 +14,7 @@ in
   config = lib.mkIf config.modules.security.backup.enable {
     wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
       "Ctrl+KP_Delete" = "exec ddapp -t 'backup' -m false -h 90 -w 90 -- ${viewBackupLogCmd}";
-      "Ctrl+Shift+KP_Delete" = "exec systemctl start brgmatic";
+      "Ctrl+Shift+KP_Delete" = "exec systemctl start borgmatic";
     };
     sops.secrets."backup/key" = { };
     services.udiskie.settings.device_config = [
