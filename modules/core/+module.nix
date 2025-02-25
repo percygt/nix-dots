@@ -74,7 +74,19 @@
       };
 
     ## battery
-    powermanagement.enable = lib.mkEnableOption "Enable powermanagement services";
+    powermanagement = {
+      enable = lib.mkEnableOption "Enable powermanagement services";
+      chargeUpto = lib.mkOption {
+        description = "Maximum level of charge for your battery, as a percentage.";
+        default = 80;
+        type = lib.types.int;
+      };
+      enableChargeUptoScript = lib.mkOption {
+        description = "Whether to add charge-upto to environment.systemPackages. `charge-upto 75` temporarily sets the charge limit to 75%.";
+        type = lib.types.bool;
+        default = config.modules.core.powermanagement.enable;
+      };
+    };
 
     ## autoupgrade
     autoupgrade = {
