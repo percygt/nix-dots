@@ -24,7 +24,7 @@ pkgs: with pkgs; [
   # :email mu4e
   mu
   isync
-  maim
+  pkgs.stable.maim
   # :checkers spell
   (aspellWithDicts (
     dicts: with dicts; [
@@ -45,28 +45,5 @@ pkgs: with pkgs; [
   age
   # :lang latex
   graphviz
-  (texlive.combine {
-    inherit (pkgs.texlive)
-      dvisvgm
-      dvipng # for preview and export as html
-      wrapfig
-      amsmath
-      ulem
-      hyperref
-      capt-of
-      scheme-minimal
-      latex-bin
-      latexmk
-      tools
-      pgf
-      epstopdf-pkg
-      nicematrix
-      infwarerr
-      grfext
-      kvdefinekeys
-      kvsetkeys
-      kvoptions
-      ltxcmds
-      ;
-  })
+  # pkgs.stable.texlive.combined.scheme-medium
 ]

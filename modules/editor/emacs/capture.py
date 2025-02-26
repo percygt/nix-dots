@@ -7,25 +7,32 @@ import re
 import os
 import urllib.parse
 
-tofi_config = f"{os.getenv('XDG_CONFIG_HOME')}/tofi/config-horizontal-mid"
-parser = argparse.ArgumentParser(description="initiate emacs org-capture")
-parser.add_argument(
-    "-w",
-    "--wclass",
-    type=str,
-    default="org-capture",
-)
-parser.add_argument(
-    "-t",
-    "--tofi_config",
-    type=str,
-)
 
-args = parser.parse_args()
+def get_args():
+    parser = argparse.ArgumentParser(description="initiate emacs org-capture")
+    parser.add_argument(
+        "-c",
+        "--clipboard",
+        type=str,
+    )
+    parser.add_argument(
+        "-w",
+        "--wclass",
+        type=str,
+        default="org-capture",
+    )
+    parser.add_argument(
+        "-t",
+        "--tofi_config",
+        type=str,
+    )
+
+    return parser.parse_args()
 
 
 def tofi_run(prompt: str, choices: list) -> str:
     """Runs tofi with the given prompt and choices."""
+    tofi_config = f"{os.getenv('XDG_CONFIG_HOME')}/tofi/config-horizontal-mid"
     try:
         result = subprocess.run(
             ["tofi", "--prompt-text", prompt, "--config", tofi_config],
@@ -60,20 +67,14 @@ def is_url(string: str):
     return re.match(regex, string) is not None
 
 
-def sample():
+def get_capture_data():
     r = subprocess.run(
         ["emacsclient", "-e", "(+org-capture/templates-json)"],
         capture_output=True,
         text=True,
         check=True,
     )
-    data = json.loads(json.loads(r.stdout))
-    # Loop through the outer dictionary and extract names from each section (including nested lists)
-    combined_values = []
-    for category in data.values():
-        if "value" in category:
-            combined_values.extend(category["value"])
-    return [category["name"] for category in combined_values]
+    return json.loads(json.loads(r.stdout))
 
 
 def combine_all_values(data: dict):
@@ -85,19 +86,28 @@ def combine_all_values(data: dict):
     return combined_values
 
 
-def extract_names_from_values(combined_values: list):
+def all_templates():
     """Extract the 'name' field from each entry in the combined values list."""
+    combined_values = combine_all_values(get_capture_data())
     return [category["name"] for category in combined_values]
 
 
-def chain_functions(data: dict):
-    """Chain the functions to get combined values and then extract names."""
-    combined_values = combine_all_values(data)  # First, combine all values
-    names = extract_names_from_values(combined_values)  # Then, extract names
-    return names
+def clipboard_templates():
+    return [name for name in all_templates() if "url" in name or "text/link" in name]
+
+
+def url_templates():
+    return [name for name in all_templates() if "url" in name]
+
+
+def default_templates():
+    return [
+        name for name in all_templates() if "url" not in name or "text/link" not in name
+    ]
 
 
 def main():
+    args = get_args()
     subprocess.run(
         f"footclient --app-id {args.wclass} --title Clipboard -- cliphist-fzf",
         shell=True,

@@ -135,14 +135,14 @@
 .inline-reply-entry {
   background: @black;
   caret-color: @text-light;
-  /* border: 1px solid @border; */
+  border-top: 1px solid @border;
   border-radius: 6px;
 }
 
 .inline-reply-button {
   margin-left: 4px;
   background: @bg;
-  /* border: 1px solid @border; */
+  border-top: 1px solid @border;
   border-radius: 6px;
   color: @text-light;
 }

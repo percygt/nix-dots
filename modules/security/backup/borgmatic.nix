@@ -146,6 +146,7 @@ in
             while ! ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do
               sleep 1
             done
+            sleep 10
           '')
         ];
 
