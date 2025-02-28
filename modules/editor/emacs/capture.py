@@ -77,10 +77,10 @@ def get_capture_data():
     return json.loads(json.loads(r.stdout))
 
 
-def combine_all_values(data: dict):
+def combine_all_values():
     """Combine all 'value' lists from the dictionary."""
     combined_values = []
-    for category in data.values():
+    for category in get_capture_data().values():
         if "value" in category:
             combined_values.extend(category["value"])
     return combined_values
@@ -88,7 +88,7 @@ def combine_all_values(data: dict):
 
 def all_templates():
     """Extract the 'name' field from each entry in the combined values list."""
-    combined_values = combine_all_values(get_capture_data())
+    combined_values = combine_all_values()
     return [category["name"] for category in combined_values]
 
 

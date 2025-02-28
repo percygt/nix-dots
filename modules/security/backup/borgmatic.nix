@@ -137,16 +137,16 @@ in
                 ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null && echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null
                 exit 75
             fi
-            ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/bind &>/dev/null
           '')
         ];
 
         before_backup = [
           (pkgs.writers.writeBash "beforeBackup" ''
-            while ! ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do
-              sleep 1
-            done
-            sleep 10
+            ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/bind &>/dev/null
+            # while ! ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do
+            #   sleep 1
+            # done
+            sleep 15
           '')
         ];
 
@@ -159,7 +159,6 @@ in
           "sleep 5"
           "echo '${bak.usbId}' | tee /sys/bus/usb/drivers/usb/unbind &>/dev/null"
         ];
-
       };
     };
   };
