@@ -13,7 +13,6 @@ let
   configDir = ".config/borgmatic.d";
   flagFile = "${homeDirectory}/${configDir}/last_run";
   cfg = config.modules.security.backup;
-  lockFile = "${g.backupDirectory}/lock.exclusive";
 in
 {
   config = lib.mkIf cfg.enable {
@@ -122,7 +121,7 @@ in
           "*.img"
           "*.iso"
           "*.qcow"
-          "${g.dataDirectory}/.Trash-*"
+          ".*\.Trash-[^/]+"
         ];
         exclude_if_present = [ ".nobackup" ];
         borgmatic_source_directory = "${homeDirectory}/${configDir}";
@@ -143,9 +142,6 @@ in
         before_backup = [
           (pkgs.writers.writeBash "beforeBackup" ''
             ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null || echo "${bak.usbId}" | tee /sys/bus/usb/drivers/usb/bind &>/dev/null
-            # while ! ${pkgs.util-linux}/bin/findmnt ${backupMountPath} >/dev/null; do
-            #   sleep 1
-            # done
             sleep 15
           '')
         ];
