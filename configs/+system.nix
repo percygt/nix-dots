@@ -41,7 +41,6 @@ in
 
   system.stateVersion = stateVersion;
   swapDevices = [ ];
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   nix =

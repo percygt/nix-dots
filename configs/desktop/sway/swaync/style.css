@@ -1,8 +1,10 @@
 @import url("nix.css");
 
 .control-center {
+  all: unset;
   background-color: @bg;
   padding: 0px;
+  border: 1px solid @grey;
   border-radius: 10px 0px 0px 10px;
   margin: 0px;
   box-shadow:
@@ -260,8 +262,8 @@
 .widget-backlight {
   background-color: @bg-alt;
   padding: 0px 8px 5px 16px;
-  margin: 0px 15px 15px 15px;
-  border-radius: 0px 0px 12px 12px;
+  margin: 0px 0px 15px 15px;
+  border-radius: 0px 0px 0px 12px;
 }
 .widget-backlight trough {
   background: @bg;
@@ -281,8 +283,8 @@
 .widget-volume {
   background-color: @bg-alt;
   padding: 5px 8px 0px 16px;
-  margin: 10px 15px 0px 15px;
-  border-radius: 12px 12px 0px 0px;
+  margin: 10px 0px 0px 15px;
+  border-radius: 12px 0px 0px 0px;
 }
 
 .widget-volume trough {
@@ -330,17 +332,17 @@ trough highlight:hover {
   background: yellow;
 }
 .topbar-buttons {
-  padding: 18px;
-  margin: 20px 15px 10px 15px;
+  padding: 20px;
+  margin: 18px 0px 10px 15px;
   font-size: 18px;
   background: @bg-alt;
-  border-radius: 12px;
+  border-radius: 8px 0 0 8px;
 }
 
 .topbar-buttons > button {
   all: unset;
-  margin: 0 12px;
-  padding: 0 16px;
+  margin: 0 10px;
+  padding: 0 18px;
   color: @text-light;
 }
 .topbar-buttons > button:hover {
