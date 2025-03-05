@@ -35,12 +35,13 @@
       tailscale.enable = true;
       syncthing.enable = true;
     };
-    # pentesting = {
-    #   wireless.enable = true;
-    #   malware.enable = true;
-    #   traffic.enable = true;
-    #   proxies.enable = true;
-    # };
+    pentesting = {
+      wireless.enable = true;
+      malware.enable = true;
+      traffic.enable = true;
+      proxies.enable = true;
+      terminals.enable = true;
+    };
     terminal = {
       xfce4-terminal.enable = true;
       tilix.enable = true;

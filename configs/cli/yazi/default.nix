@@ -72,8 +72,8 @@ in
       pkgs.fetchFromGitHub {
         owner = "ndtoan96";
         repo = "ouch.yazi";
-        rev = "b8698865a0b1c7c1b65b91bcadf18441498768e6";
-        hash = "sha256-eRjdcBJY5RHbbggnMHkcIXUF8Sj2nhD/o7+K3vD3hHY=";
+        rev = "ce6fb75431b9d0d88efc6ae92e8a8ebb9bc1864a";
+        hash = "sha256-oUEUGgeVbljQICB43v9DeEM3XWMAKt3Ll11IcLCS/PA=";
       }
     }/init.lua";
 
