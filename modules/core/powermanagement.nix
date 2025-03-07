@@ -9,12 +9,12 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    powerManagement.powertop.enable = true;
     powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+    powerManagement.powertop.enable = true;
     services = {
       thermald.enable = true;
       power-profiles-daemon.enable = false;
-      system76-scheduler.settings.cfsProfiles.enable = true;
+      system76-scheduler.enable = true;
       tlp = {
         enable = true;
         settings = {
@@ -29,6 +29,7 @@ in
           CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
           START_CHARGE_THRESH_BAT0 = 75;
           STOP_CHARGE_THRESH_BAT0 = 81;
+          USB_AUTOSUSPEND = 0;
         };
       };
     };
