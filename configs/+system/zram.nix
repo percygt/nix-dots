@@ -14,7 +14,7 @@
   # Enable zramSwap
   zramSwap = {
     algorithm = "lz4";
-    memoryPercent = 100;
+    memoryPercent = 40;
     enable = true;
   };
 }

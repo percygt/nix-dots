@@ -1,37 +1,69 @@
 {
   config,
   lib,
-  # pkgs,
+  pkgs,
   ...
 }:
 let
   cfg = config.modules.core.powermanagement;
+  MHz = x: x * 1000;
+  p = pkgs.writeScriptBin "charge-upto" ''
+    echo ''${0:-100} > /sys/class/power_supply/BAT?/charge_control_end_threshold
+  '';
 in
 {
   config = lib.mkIf cfg.enable {
-    powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-    powerManagement.powertop.enable = true;
+    environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [ p ];
+    systemd.services.battery-charge-threshold = {
+      wantedBy = [
+        "local-fs.target"
+        "suspend.target"
+      ];
+      after = [
+        "local-fs.target"
+        "suspend.target"
+      ];
+      description = "Set the battery charge threshold to ${toString cfg.chargeUpto}%";
+      startLimitBurst = 5;
+      startLimitIntervalSec = 1;
+      serviceConfig = {
+        Type = "oneshot";
+        Restart = "on-failure";
+        ExecStart = "${pkgs.runtimeShell} -c 'echo ${toString cfg.chargeUpto} > /sys/class/power_supply/BAT?/charge_control_end_threshold'";
+      };
+    };
+    hardware.acpilight.enable = false;
     services = {
+      acpid.enable = true;
       thermald.enable = true;
-      power-profiles-daemon.enable = false;
-      system76-scheduler.enable = true;
-      tlp = {
+      upower = {
+        enable = true;
+        percentageLow = 15;
+        percentageCritical = 12;
+        percentageAction = 8;
+        criticalPowerAction = "Suspend";
+        allowRiskyCriticalPowerAction = true;
+      };
+      auto-cpufreq = {
         enable = true;
         settings = {
-          # sudo tlp-stat or tlp-stat -s or sudo tlp-stat -p
-          CPU_BOOST_ON_AC = 1;
-          CPU_BOOST_ON_BAT = 0;
-          CPU_HWP_DYN_BOOST_ON_AC = 1;
-          CPU_HWP_DYN_BOOST_ON_BAT = 0;
-          CPU_SCALING_GOVERNOR_ON_AC = "performance";
-          CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-          CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-          CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_power";
-          START_CHARGE_THRESH_BAT0 = 75;
-          STOP_CHARGE_THRESH_BAT0 = 81;
-          USB_AUTOSUSPEND = 0;
-          USB_EXCLUDE_BTUSB = 1;
-          USB_EXCLUDE_PHONE = 1;
+          charger = {
+            governor = "performance";
+            energy_performance_preference = "performance";
+            scaling_min_freq = lib.mkDefault (MHz 1800);
+            scaling_max_freq = lib.mkDefault (MHz 3800);
+            turbo = "auto";
+          };
+          battery = {
+            governor = "powersave";
+            energy_performance_preference = "power";
+            scaling_min_freq = lib.mkDefault (MHz 1200);
+            scaling_max_freq = lib.mkDefault (MHz 1800);
+            turbo = "never";
+            enable_thresholds = true;
+            start_threshold = 40;
+            stop_threshold = 80;
+          };
         };
       };
     };
