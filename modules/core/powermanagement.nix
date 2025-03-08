@@ -30,6 +30,8 @@ in
           START_CHARGE_THRESH_BAT0 = 75;
           STOP_CHARGE_THRESH_BAT0 = 81;
           USB_AUTOSUSPEND = 0;
+          USB_EXCLUDE_BTUSB = 1;
+          USB_EXCLUDE_PHONE = 1;
         };
       };
     };
