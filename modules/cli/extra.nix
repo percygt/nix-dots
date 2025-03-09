@@ -19,7 +19,7 @@
       atac # based on well-known clients such as Postman, Insomnia
       stable.termscp # file transfer and explorer, with support for SCP/SFTP/FTP/S3
       stable.visidata # interactive multitool for tabular data NOTE: dependency libolm tagged as insecure package
-      wtf # personal information dashboard
+      wtfutil # personal information dashboard
       termshark
       jqp
       gpg-tui
