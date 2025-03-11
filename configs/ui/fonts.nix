@@ -11,7 +11,7 @@
       ];
       package = pkgs.nerd-fonts.victor-mono;
       typeface = "monospace";
-      size = 14.0;
+      size = 13.0;
     };
     interface = {
       name = "Iosevka Aile";

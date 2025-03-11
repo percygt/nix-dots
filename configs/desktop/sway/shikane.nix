@@ -28,7 +28,7 @@ in
           output = [
             {
               search = "HDMI-A-1";
-              mode = "1920x1080@60Hz";
+              mode = "1920x1080@99.999Hz";
               position = "0,0";
               enable = true;
             }

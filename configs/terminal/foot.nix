@@ -31,7 +31,7 @@ in
         # initial-window-size-pixels = "700x500";
         underline-offset = 1.1;
         underline-thickness = 1;
-        line-height = 23;
+        line-height = 22;
         pad = "10x8";
       };
 

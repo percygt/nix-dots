@@ -13,6 +13,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
     environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [ p ];
     systemd.services.battery-charge-threshold = {
       wantedBy = [
@@ -36,6 +37,7 @@ in
     services = {
       acpid.enable = true;
       thermald.enable = true;
+      system76-scheduler.enable = true;
       upower = {
         enable = true;
         percentageLow = 15;
@@ -44,14 +46,15 @@ in
         criticalPowerAction = "Suspend";
         allowRiskyCriticalPowerAction = true;
       };
+      power-profiles-daemon.enable = false;
       auto-cpufreq = {
         enable = true;
         settings = {
           charger = {
             governor = "performance";
             energy_performance_preference = "performance";
-            scaling_min_freq = lib.mkDefault (MHz 1800);
-            scaling_max_freq = lib.mkDefault (MHz 3800);
+            # scaling_min_freq = lib.mkDefault (MHz 1800);
+            # scaling_max_freq = lib.mkDefault (MHz 3800);
             turbo = "auto";
           };
           battery = {
@@ -60,9 +63,6 @@ in
             scaling_min_freq = lib.mkDefault (MHz 1200);
             scaling_max_freq = lib.mkDefault (MHz 1800);
             turbo = "never";
-            enable_thresholds = true;
-            start_threshold = 40;
-            stop_threshold = 80;
           };
         };
       };
