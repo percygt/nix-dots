@@ -31,10 +31,14 @@ in
           }
         );
       }
-      # {
-      #   event = "unlock";
-      #   command = "pkill -SIGUSR1 swaylock";
-      # }
+      {
+        event = "lock";
+        command = "swaylock --grace 0";
+      }
+      {
+        event = "unlock";
+        command = "pkill -SIGUSR1 swaylock";
+      }
       {
         event = "before-sleep";
         command = swaylock;
@@ -44,11 +48,11 @@ in
     timeouts = [
       {
         timeout = 30 * 60;
-        command = "${swaymsg} 'output * power off'";
-        resumeCommand = "${swaymsg} 'output * power on'";
+        command = "${swaymsg} 'output * dpms off'";
+        resumeCommand = "${swaymsg} 'output * dpms on'";
       }
       {
-        timeout = 60 * 60;
+        timeout = 15 * 60;
         command = swaylock;
       }
     ];

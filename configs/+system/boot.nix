@@ -19,6 +19,7 @@
     initrd.verbose = false;
     kernelParams = [
       "quiet"
+      "splash"
       "loglevel=0"
       "udev.log_level=3"
       "rd.udev.log_level=3"

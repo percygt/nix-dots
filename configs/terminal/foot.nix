@@ -28,11 +28,11 @@ in
         font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString f.size}";
         font-italic = "${f.name}:style=${builtins.elemAt f.style 2}:size=${builtins.toString f.size}";
         font-bold-italic = "${f.name}:style=${builtins.elemAt f.style 3}:size=${builtins.toString f.size}";
-        # initial-window-size-pixels = "700x500";
-        underline-offset = 1.1;
+        underline-offset = 1.2;
         underline-thickness = 1;
+        resize-by-cells = "no";
         line-height = 22;
-        pad = "10x8";
+        pad = "10x12";
       };
 
       cursor = {

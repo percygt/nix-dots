@@ -13,7 +13,12 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+    boot.kernelParams = [ "intel_pstate=disable" ];
+    powerManagement = {
+      enable = true;
+      powertop.enable = true;
+      cpuFreqGovernor = "powersave";
+    };
     environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [ p ];
     systemd.services.battery-charge-threshold = {
       wantedBy = [
@@ -33,20 +38,13 @@ in
         ExecStart = "${pkgs.runtimeShell} -c 'echo ${toString cfg.chargeUpto} > /sys/class/power_supply/BAT?/charge_control_end_threshold'";
       };
     };
-    hardware.acpilight.enable = false;
     services = {
-      acpid.enable = true;
       thermald.enable = true;
-      system76-scheduler.enable = true;
-      upower = {
-        enable = true;
-        percentageLow = 15;
-        percentageCritical = 12;
-        percentageAction = 8;
-        criticalPowerAction = "Suspend";
-        allowRiskyCriticalPowerAction = true;
-      };
       power-profiles-daemon.enable = false;
+      system76-scheduler = {
+        enable = true;
+        useStockConfig = true;
+      };
       auto-cpufreq = {
         enable = true;
         settings = {
