@@ -7,6 +7,8 @@
 
     printer.enable = lib.mkEnableOption "Enable printers";
 
+    inputremapper.enable = lib.mkEnableOption "Enable inputremapper";
+
     intel = {
       enable = lib.mkEnableOption "Enable intel graphics";
       gpu.driver = lib.mkOption {
