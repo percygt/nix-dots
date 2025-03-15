@@ -12,6 +12,7 @@
       intel.gpu.driver = "xe";
       # nvidia.prime.enable = true;
       printer.enable = true;
+      inputremapper.enable = true;
     };
     dev.enable = true;
     cli.enable = true;

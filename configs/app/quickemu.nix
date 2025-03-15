@@ -1,11 +1,14 @@
 {
-  pkgs,
-  homeDirectory,
   lib,
+  config,
   ...
 }:
+let
+  g = config._base;
+  kvmEnable = config.modules.virtualisation.kvm.enable;
+in
 {
-  xdg = {
+  xdg = lib.mkIf kvmEnable {
     configFile."spicy/settings".text = lib.generators.toINI { } {
       general = {
         grab-keyboard = true;
@@ -21,9 +24,9 @@
         statusbar = false;
       };
     };
-    desktopEntries."quickemu-win10" = {
+    desktopEntries."quickemu-win10" = lib.mkIf kvmEnable {
       name = "Windows 10";
-      exec = "${pkgs.stable.quickemu}/bin/quickemu --vm ${homeDirectory}/windows/windows-10.conf --display spice";
+      exec = "quickemu --vm ${g.windowsDirectory}/windows-10.conf --display spice";
       terminal = false;
       icon = "qemu";
       type = "Application";
