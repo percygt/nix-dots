@@ -5,7 +5,7 @@
   nixd = inputs.nixd.overlays.default;
   fenix = inputs.fenix.overlays.default;
   nur = inputs.nur.overlays.default;
-  packageOverrides = _: prev: import ../packages/overrides.nix { inherit prev; };
+  packageOverrides = _: prev: import ../packages/overrides.nix { inherit prev inputs; };
   packageOverlays =
     final: _:
     import ../packages/overlays.nix {

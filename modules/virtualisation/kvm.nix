@@ -18,7 +18,7 @@
       virtiofsd
       quickemu
       quickgui
-      qemu
+      qemu_full
       kmod
       pciutils
     ];
@@ -36,7 +36,7 @@
       ];
       groups.qemu = { };
     };
-    # services.spice-vdagentd.enable = true;
+    services.spice-vdagentd.enable = true;
     virtualisation = {
       spiceUSBRedirection.enable = true;
       # libvirtd = {

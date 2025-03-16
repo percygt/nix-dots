@@ -105,6 +105,9 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
+    quickemu.url = "github:TuxVinyards/quickemu/freespirit-next";
+    quickemu.inputs.nixpkgs.follows = "nixpkgs";
+
     base16.url = "github:SenchoPens/base16.nix";
 
     nur.url = "github:nix-community/NUR";

@@ -697,6 +697,20 @@
         "type": "github"
       }
     },
+    "flake-schemas": {
+      "locked": {
+        "lastModified": 1721999734,
+        "narHash": "sha256-G5CxYeJVm4lcEtaO87LKzOsVnWeTcHGKbKxNamNWgOw=",
+        "rev": "0a5c42297d870156d9c57d8f99e476b738dcd982",
+        "revCount": 75,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/DeterminateSystems/flake-schemas/0.1.5/0190ef2f-61e0-794b-ba14-e82f225e55e6/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/DeterminateSystems/flake-schemas/%2A.tar.gz"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_5"
@@ -2234,6 +2248,28 @@
         "type": "github"
       }
     },
+    "quickemu": {
+      "inputs": {
+        "flake-schemas": "flake-schemas",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1741941885,
+        "narHash": "sha256-cQLGOKRXyS7yJeAwf0H0M4CYAQmt6M/0NxhSlDpupYI=",
+        "owner": "TuxVinyards",
+        "repo": "quickemu",
+        "rev": "61333a3150c8748b57c112f38030ce4276b9f19e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "TuxVinyards",
+        "ref": "freespirit-next",
+        "repo": "quickemu",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "base": "base",
@@ -2267,6 +2303,7 @@
         ],
         "nur": "nur",
         "pre-commit-hooks": "pre-commit-hooks",
+        "quickemu": "quickemu",
         "sops-nix": "sops-nix",
         "vscode-server": "vscode-server",
         "wayland-pipewire-idle-inhibit": "wayland-pipewire-idle-inhibit",

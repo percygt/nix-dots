@@ -1,4 +1,4 @@
-{ prev }:
+{ prev, inputs }:
 {
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
   borgmatic = prev.borgmatic.override { enableSystemd = false; };
@@ -6,6 +6,9 @@
     cudaSupport = true;
     rocmSupport = true;
   };
+  quickemu = prev.quickemu.overrideAttrs (oldAttrs: {
+    src = inputs.quickemu;
+  });
   revanced-cli = prev.revanced-cli.overrideAttrs (oldAttrs: rec {
     version = "5.0.1";
     src = prev.fetchurl {

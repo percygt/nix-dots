@@ -24,9 +24,9 @@ in
         statusbar = false;
       };
     };
-    desktopEntries."quickemu-win10" = lib.mkIf kvmEnable {
-      name = "Windows 10";
-      exec = "quickemu --vm ${g.windowsDirectory}/windows-10.conf --display spice";
+    desktopEntries."quickemu-win11" = lib.mkIf kvmEnable {
+      name = "Windows 11";
+      exec = "quickemu --vm ${g.windowsDirectory}/windows-11.conf --display spice --public-dir ${g.windowsDirectory}/sharedData";
       terminal = false;
       icon = "qemu";
       type = "Application";
