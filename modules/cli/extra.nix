@@ -35,6 +35,7 @@
       entr # Run arbitrary commands when files change
       glances # Cross-platform curses-based monitoring tool
       cointop # The fastest and most interactive terminal based UI application for tracking cryptocurrencies
+      mop # Simple stock tracker implemented in go
       ddgr # Search DuckDuckGo from the terminal
       buku # Private cmdline bookmark manager
       mutt # A small but very powerful text-based mail client

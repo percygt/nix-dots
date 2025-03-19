@@ -51,8 +51,6 @@ in
           charger = {
             governor = "performance";
             energy_performance_preference = "performance";
-            # scaling_min_freq = lib.mkDefault (MHz 1800);
-            # scaling_max_freq = lib.mkDefault (MHz 3800);
             turbo = "auto";
           };
           battery = {

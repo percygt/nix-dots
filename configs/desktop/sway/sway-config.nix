@@ -28,6 +28,7 @@ in
     terminal = lib.getExe g.terminal.default.package;
     menu = "tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
     output."*".bg = "${a.wallpaper} fill";
+    output."*".adaptive_sync = "on";
     gaps.inner = 4;
     input = {
       "type:keyboard".xkb_layout = "us";
