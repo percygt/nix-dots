@@ -14,11 +14,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     boot.kernelParams = [ "intel_pstate=disable" ];
-    powerManagement = {
-      enable = true;
-      powertop.enable = true;
-      cpuFreqGovernor = "powersave";
-    };
+    powerManagement.cpuFreqGovernor = "powersave";
     environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [ p ];
     systemd.services.battery-charge-threshold = {
       wantedBy = [
@@ -40,7 +36,6 @@ in
     };
     services = {
       thermald.enable = true;
-      power-profiles-daemon.enable = false;
       system76-scheduler = {
         enable = true;
         useStockConfig = true;

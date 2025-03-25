@@ -16,7 +16,8 @@ let
   DOOMDIR = "${config.xdg.configHome}/doom";
   EMACSDIR = "${config.xdg.configHome}/emacs";
   DOOMPROFILELOADFILE = "${config.xdg.dataHome}/doom/cache/profile-load.el";
-  capture = pkgs.writers.writePython3 "capture" { doCheck = false; } (builtins.readFile ./capture.py);
+  # capture = pkgs.writers.writePython3 "capture" { doCheck = false; } (builtins.readFile ./capture.py);
+  capture = "python $DOOMDIR/capture.py";
   doomconfig = pkgs.writers.writeBash "doomconfig" ''
     footclient --app-id doom-config --title Emacs -- emacsclient -t -a "" ${moduleEmacs}/doom/config.el
   '';
@@ -81,6 +82,7 @@ in
         "doom/modules".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/modules";
         "doom/autoload".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
         "doom/configs".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/configs";
+        "doom/capture.py".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/capture.py";
         "doom/private.el".text = g.editor.emacs."private.el";
         "doom/nix.el".text =
           # lisp
