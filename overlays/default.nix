@@ -5,12 +5,6 @@
   nixd = inputs.nixd.overlays.default;
   fenix = inputs.fenix.overlays.default;
   nur = inputs.nur.overlays.default;
-  packageOverrides = _: prev: import ../packages/overrides.nix { inherit prev inputs; };
-  packageOverlays =
-    final: _:
-    import ../packages/overlays.nix {
-      pkgs = final;
-    };
   nixpkgs-variants = final: _: {
     stable = import inputs.nixpkgs-stable {
       inherit (final) system config;
@@ -22,4 +16,10 @@
       inherit (final) system config;
     };
   };
+  packageOverrides = _: prev: import ../packages/overrides.nix { inherit prev inputs; };
+  packageOverlays =
+    final: _:
+    import ../packages/overlays.nix {
+      pkgs = final;
+    };
 }

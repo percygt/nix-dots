@@ -1,6 +1,6 @@
 {
   programs.brave-nightly = {
-    enable = true;
+    enable = false;
     commandLineArgs = [
       "--password-store=basic"
     ];

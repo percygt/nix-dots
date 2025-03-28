@@ -23,6 +23,7 @@
           stable.vscode-extensions.vadimcn.vscode-lldb.adapter
           fswatch
           gnumake
+          curl
           cmake
           git
           mercurial

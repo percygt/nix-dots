@@ -6,6 +6,7 @@
     cudaSupport = true;
     rocmSupport = true;
   };
+  auto-cpufreq = prev.stable.auto-cpufreq;
   quickemu = prev.quickemu.overrideAttrs (oldAttrs: {
     src = inputs.quickemu;
   });

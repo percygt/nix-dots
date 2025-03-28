@@ -23,9 +23,8 @@ return {
     -- enabled = false,
     event = "VeryLazy",
     dependencies = {
-      -- FIX: https://github.com/nvimtools/hydra.nvim/pull/47
-      -- "nvimtools/hydra.nvim",
-      "Cathyprime/hydra.nvim",
+      "nvimtools/hydra.nvim",
+      -- "Cathyprime/hydra.nvim",
     },
     cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
     opts = {
