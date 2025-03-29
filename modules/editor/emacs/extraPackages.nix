@@ -24,7 +24,7 @@ pkgs: with pkgs; [
   # :email mu4e
   mu
   isync
-  pkgs.stable.maim
+  stable.maim
   # :checkers spell
   (aspellWithDicts (
     dicts: with dicts; [

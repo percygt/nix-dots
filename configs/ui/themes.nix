@@ -44,7 +44,7 @@ in
       "themes/Yaru-wartybrown".source = "${pkgs.yaru-theme}/share/themes/Yaru-wartybrown";
       "themes/Yaru-wartybrown-dark".source = "${pkgs.yaru-theme}/share/themes/Yaru-wartybrown-dark";
       "icons/Yaru-dark".source = "${pkgs.yaru-theme}/share/icons/Yaru-dark";
-      "icons/Yaru-wartybrown".source = "${pkgs.yaru-theme}/share/icons/Yaru-wartybrown-bark";
+      "icons/Yaru-wartybrown".source = "${pkgs.yaru-theme}/share/icons/Yaru-wartybrown";
       "icons/Yaru-wartybrown-dark".source = "${pkgs.yaru-theme}/share/icons/Yaru-wartybrown-dark";
       "icons/Adwaita".source = "${pkgs.adwaita-icon-theme}/share/icons/Adwaita";
       "icons/hicolor".source = "${pkgs.hicolor-icon-theme}/share/icons/hicolor";

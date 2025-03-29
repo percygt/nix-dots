@@ -44,7 +44,7 @@
           "xdg-data/themes"
         ];
         environment = {
-          GTK_THEME = "Yaru-wartybrown-dark";
+          GTK_THEME = "Yaru-dark";
         };
       };
       "app.zen_browser.zen" = {

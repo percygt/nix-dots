@@ -36,13 +36,18 @@ in
 
   xdg = {
     configFile = {
-      "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-      "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-      "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
+      "gtk-4.0/assets".source =
+        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+      "gtk-4.0/gtk.css".source =
+        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+      "gtk-4.0/gtk-dark.css".source =
+        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
     };
     dataFile = {
-      "themes/${config.gtk.theme.name}".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
-      "icons/${config.gtk.iconTheme.name}".source = "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}";
+      "themes/${config.gtk.theme.name}".source =
+        "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
+      "icons/${config.gtk.iconTheme.name}".source =
+        "${config.gtk.iconTheme.package}/share/icons/${config.gtk.iconTheme.name}";
     };
   };
 
