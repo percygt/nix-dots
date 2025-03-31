@@ -27,18 +27,34 @@ in
           exec = [ "${swaymsg} bar bar-1 mode invisible" ];
           output = [
             {
-              search = "HDMI-A-1";
-              mode = "1920x1080@99.999Hz";
+              search = "DP-4";
               position = "0,0";
               enable = true;
             }
             {
               search = "eDP-1";
-              position = "0,1080";
+              position = "1920,0";
               enable = true;
             }
           ];
         }
+        # {
+        #   name = "with-monitor";
+        #   exec = [ "${swaymsg} bar bar-1 mode invisible" ];
+        #   output = [
+        #     {
+        #       search = "HDMI-A-1";
+        #       mode = "1920x1080@99.999Hz";
+        #       position = "0,0";
+        #       enable = true;
+        #     }
+        #     {
+        #       search = "eDP-1";
+        #       position = "0,1080";
+        #       enable = true;
+        #     }
+        #   ];
+        # }
       ];
     };
   };
