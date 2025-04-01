@@ -47,12 +47,12 @@
           GTK_THEME = "Yaru-dark";
         };
       };
-      "app.zen_browser.zen" = {
-        filesystems = [
-          "xdg-config:ro"
-          "xdg-downloads"
-        ];
-      };
+      # "app.zen_browser.zen" = {
+      #   filesystems = [
+      #     "xdg-config:ro"
+      #     "xdg-downloads"
+      #   ];
+      # };
     };
     remotes = {
       "flathub" = "https://dl.flathub.org/repo/flathub.flatpakrepo";
