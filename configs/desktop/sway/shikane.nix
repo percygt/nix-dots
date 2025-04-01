@@ -29,6 +29,7 @@ in
             {
               search = "DP-4";
               position = "0,0";
+              mode = "1920x1080@99.999Hz";
               enable = true;
             }
             {

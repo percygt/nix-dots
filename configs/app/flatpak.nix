@@ -61,7 +61,7 @@
     packages = [
       "flathub:app/com.valvesoftware.Steam/x86_64/stable"
       "flathub:app/org.libreoffice.LibreOffice/x86_64/stable"
-      "flathub:app/app.zen_browser.zen/x86_64/stable"
+      # "flathub:app/app.zen_browser.zen/x86_64/stable"
       "flathub:app/dev.vencord.Vesktop/x86_64/stable"
       "flathub:app/com.github.tchx84.Flatseal/x86_64/stable"
       "flathub:app/engineer.atlas.Nyxt/x86_64/stable"
