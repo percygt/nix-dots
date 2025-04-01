@@ -1,3 +1,7 @@
 {
-  imports = [ ./ollama.nix ];
+  imports = [
+    ./ollama.nix
+    ./keyd.nix
+    ./xremap.nix
+  ];
 }
