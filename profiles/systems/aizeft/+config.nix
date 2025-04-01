@@ -1,5 +1,6 @@
 {
   modules = {
+    app.zen.enable = true;
     core = {
       powermanagement.enable = true;
       ephemeral.enable = true;

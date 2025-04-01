@@ -17,7 +17,7 @@
       spice-protocol
       virtiofsd
       quickemu
-      quickgui
+      # quickgui
       qemu_full
       kmod
       pciutils
