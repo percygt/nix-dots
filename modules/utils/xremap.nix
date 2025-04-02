@@ -7,7 +7,7 @@
 {
   imports = [ inputs.xremap.nixosModules.default ];
   services.xremap = {
-    inherit (!config.modules.utils.keyd) enable;
+    enable = !config.modules.utils.xremap.enable;
     withGnome = desktop == "gnome";
     withWlroots = desktop == "sway";
     config.modmap = [
