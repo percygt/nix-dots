@@ -27,7 +27,7 @@ in
           exec = [ "${swaymsg} bar bar-1 mode invisible" ];
           output = [
             {
-              search = "DP-4";
+              search = "HDMI-A-1";
               position = "0,0";
               mode = "1920x1080@99.999Hz";
               enable = true;

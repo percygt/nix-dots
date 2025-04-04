@@ -26,6 +26,7 @@
       "cpu",
       "memory",
       "temperature",
+      "custom/auto-cpufreq",
       "wireplumber",
       "pulseaudio#source",
       "custom/wlsunset",
@@ -96,6 +97,13 @@
       "on-click": "swaync-client -t -sw",
       "on-click-right": "swaync-client -d -sw",
       "escape": true
+    },
+    "custom/auto-cpufreq": {
+      "format": "{}",
+      "tooltip": true,
+      "escape": true,
+      "exec": "auto-cpufreq-governor-exec",
+      "interval": 10
     },
     "custom/rebuild": {
       "format": "{}",
@@ -242,6 +250,7 @@
       "cpu",
       "memory",
       "temperature",
+      "custom/auto-cpufreq",
       "wireplumber",
       "pulseaudio#source",
       "custom/wlsunset",
@@ -306,6 +315,14 @@
       "on-click-right": "swaync-client -d -sw",
       "escape": true
     },
+    "custom/auto-cpufreq": {
+      "format": "{}",
+      "tooltip": false,
+      "exec": "auto-cpufreq-governor-exec",
+      "on-click": "toggle-service wlsunset; pkill -SIGRTMIN+8 waybar",
+      "signal": 7,
+      "interval": 10
+    },
     "custom/rebuild": {
       "format": "{}",
       "interval": 2,
@@ -321,6 +338,7 @@
       "format": "{}",
       "on-click": "toggle-service wlsunset; pkill -SIGRTMIN+8 waybar",
       "signal": 8,
+      "interval": 10,
       "tooltip": false
     },
     "idle_inhibitor": {

@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   desktop,
   ...
@@ -7,7 +6,6 @@
 {
   imports = [ inputs.xremap.nixosModules.default ];
   services.xremap = {
-    enable = !config.modules.utils.xremap.enable;
     withGnome = desktop == "gnome";
     withWlroots = desktop == "sway";
     config.modmap = [
@@ -17,6 +15,7 @@
           "CAPSLOCK" = {
             held = [ "CONTROL_L" ];
             alone = [ "ESC" ];
+            alone_timeout_millis = 1000; # Optional
           };
         };
       }
