@@ -7,6 +7,7 @@
   at-spi2-core,
   libwnck,
   gtk-layer-shell,
+  grim,
 }:
 python3.pkgs.buildPythonApplication {
   pname = "hints";
@@ -16,14 +17,19 @@ python3.pkgs.buildPythonApplication {
   src = fetchFromGitHub {
     owner = "AlfredoSequeida";
     repo = "hints";
-    rev = "f1d2aff2f5849f81927fc9ef23e448d8080d9973";
-    hash = "sha256-9Ae2dUvUCFavF59jAlHgRohPMF2zf5W+O+71NtSGJaE=";
+    rev = "8ae81d866a991a7751b3818014a0cad015b6a440";
+    hash = "sha256-c46EmdIVyAYmDhRgVc8Roump/DwHynKpj2/7mzxaNiY=";
   };
 
   disabled = python3.pkgs.pythonOlder "3.10";
 
-  build-system = with python3.pkgs; [ setuptools ];
-
+  build-system = [
+    python3.pkgs.setuptools
+    gtk-layer-shell
+  ];
+  preBuild = ''
+    export HINTS_EXPECTED_BIN_DIR="$out"
+  '';
   dependencies =
     with python3.pkgs;
     [
@@ -33,15 +39,7 @@ python3.pkgs.buildPythonApplication {
       opencv-python
       pyatspi
     ]
-    ++ (
-      if pkgs.stdenv.isLinux && builtins.getEnv "XDG_SESSION_TYPE" == "wayland" then
-        [
-          gtk-layer-shell
-          grim
-        ]
-      else
-        [ ]
-    );
+    ++ [ grim ];
 
   nativeBuildInputs = [
     gobject-introspection
@@ -52,8 +50,6 @@ python3.pkgs.buildPythonApplication {
     at-spi2-core
     libwnck # for X11
   ];
-
-  patches = [ ./get_window_system.diff ];
 
   makeWrapperArgs = [ "\${gappsWrapperArgs[@]}" ];
 

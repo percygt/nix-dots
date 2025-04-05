@@ -15,7 +15,7 @@
           "CAPSLOCK" = {
             held = [ "CONTROL_L" ];
             alone = [ "ESC" ];
-            alone_timeout_millis = 1000; # Optional
+            alone_timeout_millis = 1000;
           };
         };
       }

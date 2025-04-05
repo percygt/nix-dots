@@ -26,11 +26,11 @@
       "cpu",
       "memory",
       "temperature",
-      "custom/auto-cpufreq",
       "wireplumber",
       "pulseaudio#source",
       "custom/wlsunset",
       "idle_inhibitor",
+      "custom/auto-cpufreq",
       "battery",
       "custom/menu"
     ],
@@ -100,9 +100,9 @@
     },
     "custom/auto-cpufreq": {
       "format": "{}",
-      "tooltip": true,
-      "escape": true,
+      "tooltip": false,
       "exec": "auto-cpufreq-governor-exec",
+      "on-click": "ddapp -t 'auto-cpufreq' -m false -h 50 -w 50  -- auto-cpufreq-gtk",
       "interval": 10
     },
     "custom/rebuild": {
@@ -250,11 +250,11 @@
       "cpu",
       "memory",
       "temperature",
-      "custom/auto-cpufreq",
       "wireplumber",
       "pulseaudio#source",
       "custom/wlsunset",
       "idle_inhibitor",
+      "custom/auto-cpufreq",
       "battery",
       "custom/menu"
     ],
@@ -319,8 +319,7 @@
       "format": "{}",
       "tooltip": false,
       "exec": "auto-cpufreq-governor-exec",
-      "on-click": "toggle-service wlsunset; pkill -SIGRTMIN+8 waybar",
-      "signal": 7,
+      "on-click": "ddapp -t 'auto-cpufreq' -m false -h 50 -w 50  -- auto-cpufreq-gtk",
       "interval": 10
     },
     "custom/rebuild": {

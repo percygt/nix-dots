@@ -109,9 +109,11 @@ button {
   min-width: 40px;
 }
 
+#custom-menu {
+  padding: 2px;
+}
 #cpu,
 #tray,
-#custom-menu,
 #bluetooth,
 #temperature,
 #memory,
@@ -134,6 +136,7 @@ button {
   color: @green;
 }
 
+#custom-auto-cpufreq,
 #custom-wlsunset,
 #battery,
 #network,
