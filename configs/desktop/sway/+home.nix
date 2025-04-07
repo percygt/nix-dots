@@ -15,7 +15,6 @@ in
     ./wayland-pipewire-idle-inhibit.nix
     ./polkit-gnome-authentication.nix
     ./ddapp.nix
-    ./kanshi.nix
     ./extraPackages.nix
     ./swayidle.nix
     ./swaylock.nix

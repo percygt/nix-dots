@@ -24,6 +24,7 @@ let
 in
 {
   options.modules.desktop.sway = {
+    kanshi.enable = lib.mkEnableOption "Enable kanshi";
     floatingRules = mkOption {
       type = types.listOf windowCommandModule;
       default = [ ];

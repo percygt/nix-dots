@@ -33,7 +33,6 @@
     brightnessctl
     autotiling
     grim
-    kanshi
     libnotify
     pamixer
     wev

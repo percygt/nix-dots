@@ -8,7 +8,6 @@ let
   g = config._base;
   swaymsg = "${g.desktop.sway.finalPackage}/bin/swaymsg";
   swaylock = "${lib.getExe config.programs.swaylock.package}";
-  loginctl = "${pkgs.systemd}/bin/loginctl";
 in
 {
   services.swayidle = {
@@ -54,7 +53,7 @@ in
       }
       {
         timeout = 15 * 60;
-        command = "${loginctl} lock-session";
+        command = swaylock;
       }
     ];
   };
