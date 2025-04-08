@@ -13,9 +13,11 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    boot.kernelParams = [ "intel_pstate=disable" ];
+    # boot.kernelParams = [ "intel_pstate=disable" ];
     powerManagement.cpuFreqGovernor = "powersave";
-    environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [ p ];
+    environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [
+      p
+    ];
     systemd.services.battery-charge-threshold = {
       wantedBy = [
         "local-fs.target"

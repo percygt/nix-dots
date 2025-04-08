@@ -9,7 +9,7 @@ in
     ./pomo.nix
     ./waybar
     ./cliphist.nix
-    ./shikane.nix
+    ./kanshi.nix
     ./swaync
     ./wlsunset.nix
     ./wayland-pipewire-idle-inhibit.nix

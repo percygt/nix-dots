@@ -48,12 +48,12 @@ in
     wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
       "${mod}+n" = "exec ddapp -t 'notes' -- ${emacsnotes}";
       "${mod}+Shift+e" = "exec ddapp -t 'doom-config' -- ${doomconfig}";
-      # "${mod}+y" = "exec ddapp -t 'clipboard-capture' -m false -h 90 -w 90 -- ${clipboardcapture}";
+      # "${mod}+y" = "exec ddapp -t 'clipboard-capture' -h 90 -w 90 -- ${clipboardcapture}";
       # "${mod}+Shift+y" =
-      #   "exec ddapp -t 'clipboard-capture-interest' -m false -h 90 -w 90 -- '${clipboardcapture} i'";
+      #   "exec ddapp -t 'clipboard-capture-interest' -h 90 -w 90 -- '${clipboardcapture} i'";
       "${mod}+e" = "exec ddapp -t 'agenda' -k true -- ${emacsagenda}";
-      "${mod}+c" = "exec ddapp -t 'org-capture' -m false -h 90 -w 90 -- '${capture} -w org-capture'";
-      "${mod}+q" = "exec ddapp -t 'capture' -m false -h 90 -w 90 -- ${emacscapture}";
+      "${mod}+c" = "exec ddapp -t 'org-capture' -h 90 -w 90 -- '${capture} -w org-capture'";
+      "${mod}+q" = "exec ddapp -t 'capture' -h 90 -w 90 -- ${emacscapture}";
     };
     home = {
       packages = [ cfg.finalPackage ];

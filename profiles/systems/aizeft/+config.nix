@@ -6,7 +6,6 @@
       ephemeral.enable = true;
       autoupgrade.enable = true;
     };
-    desktop.sway.kanshi.enable = true;
     driver = {
       adb.enable = true;
       bluetooth.enable = true;
