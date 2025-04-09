@@ -44,9 +44,8 @@ in
         "exec pkill tofi-drun || tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
       "${mod}+x" = "exec pkill tofi-run || tofi-run --prompt-text=\"Run: \"| xargs swaymsg exec --";
       "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
+      "${mod}+Tab" = "workspace back_and_forth";
       "${mod}+Backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
-      "${mod}+Delete" = "exec swaylock";
-      "Alt+Tab" = "workspace back_and_forth";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
 
       "F11" = "fullscreen toggle";
@@ -57,8 +56,8 @@ in
       "${mod}+Ctrl+s" = "layout toggle split";
       "${mod}+Shift+r" = "reload";
 
-      "${mod}+Shift+l" = "workspace next";
-      "${mod}+Shift+h" = "workspace prev";
+      "${mod}+Ctrl+l" = "workspace next";
+      "${mod}+Ctrl+h" = "workspace prev";
 
       "${mod}+Print" =
         "exec ${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -";

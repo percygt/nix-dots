@@ -43,7 +43,7 @@
       pkgs.systemd
     ];
     text = ''
-      case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Lock" "Log Out" | tofi --prompt-text="Power Menu: ") in
+      case $(printf "%s\n" "Power Off" "Restart" "Suspend" "Log Out" | tofi --prompt-text="Power Menu: ") in
       "Power Off")
         systemctl poweroff
         ;;
@@ -52,9 +52,6 @@
         ;;
       "Suspend")
         systemctl suspend
-        ;;
-      "Lock")
-        swaylock
         ;;
       "Log Out")
         swaymsg exit

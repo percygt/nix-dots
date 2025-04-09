@@ -23,7 +23,6 @@ in
             ++ [
               pkgs.pomo
               g.desktop.sway.finalPackage
-              config.programs.swaylock.package
             ]
           )
         }";
@@ -39,26 +38,18 @@ in
     '';
     source = pkgs.writeShellScript "pomo-cfg" ''
       # This file gets sourced by pomo.sh at startup
-      function lock_screen {
-        if ${pkgs.procps}/bin/pgrep sway 2>&1 > /dev/null; then
-          echo "Sway detected"
-          # Only lock if pomo is still running
-          test -f $HOME/.local/share/pomo && ${config.programs.swaylock.package}/bin/swaylock
-          # Only restart pomo if pomo is still running
-          test -f $HOME/.local/share/pomo && ${pkgs.pomo}/bin/pomo start
-        fi
-      }
-
       function custom_notify {
           # send_msg is defined in the pomo.sh source
           block_type=$1
           if [[ $block_type -eq 0 ]]; then
               echo "End of work period"
-              notify-send -i kronometer 'Pomodoro' 'End of a work period. Locking Screen!'
+              notify-send -i kronometer 'Pomodoro' 'End of a work period. Take a break!'
+              ${pkgs.mpv}/bin/mpv ${pkgs.pomo-alert} || sleep 10
               ${pkgs.playerctl}/bin/playerctl --all-players pause
-              lock_screen &
+              test -f $HOME/.local/share/pomo && ${pkgs.pomo}/bin/pomo start
           elif [[ $block_type -eq 1 ]]; then
               echo "End of break period"
+              ${pkgs.mpv}/bin/mpv ${pkgs.pomo-alert} || sleep 10
               notify-send -i kronometer 'Pomodoro' 'End of a break period. Time for work!'
           else
               echo "Unknown block type"
@@ -66,8 +57,8 @@ in
           fi
       }
       POMO_MSG_CALLBACK="custom_notify"
-      POMO_WORK_TIME=1
-      POMO_BREAK_TIME=1
+      POMO_WORK_TIME=30
+      POMO_BREAK_TIME=5
     '';
   };
 }

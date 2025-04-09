@@ -3,7 +3,7 @@ let
   swaymsg = "${config._base.desktop.sway.finalPackage}/bin/swaymsg";
 in
 {
-  wayland.windowManager.sway.config.startup = [
+  wayland.windowManager.sway.config.startup = lib.mkIf config.services.kanshi.enable [
     {
       command = "kanshi";
       always = true;

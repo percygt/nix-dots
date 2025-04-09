@@ -1,13 +1,10 @@
 {
   pkgs,
   config,
-  username,
-  lib,
   ...
 }:
 let
   g = config._base;
-  unsupported-gpu = lib.elem "nvidia" config.services.xserver.videoDrivers;
 in
 {
   imports = [
@@ -37,12 +34,6 @@ in
     };
   };
 
-  # # Make sure to start the home-manager activation before I log in.
-  # systemd.services."home-manager-${username}" = {
-  #   before = [ "display-manager.service" ];
-  #   wantedBy = [ "multi-user.target" ];
-  # };
-
   xdg.portal = {
     enable = true;
     config.common.default = "*";
@@ -67,10 +58,7 @@ in
     ];
   };
 
-  security = {
-    polkit.enable = true;
-    pam.services.swaylock.text = "auth include login";
-  };
+  security.polkit.enable = true;
 
   services = {
     dbus = {

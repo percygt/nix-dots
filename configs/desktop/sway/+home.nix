@@ -17,7 +17,6 @@ in
     ./ddapp.nix
     ./extraPackages.nix
     ./swayidle.nix
-    ./swaylock.nix
     ./swappy.nix
     ./tofi.nix
     ./sway-config.nix
