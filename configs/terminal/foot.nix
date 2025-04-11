@@ -25,14 +25,16 @@ in
         login-shell = "no";
         shell = lib.getExe g.shell.default.package;
         font = "${f.name}:style=${builtins.elemAt f.style 0}:size=${builtins.toString f.size}";
-        font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString f.size}";
+        font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString (f.size + 0.5)}";
         font-italic = "${f.name}:style=${builtins.elemAt f.style 2}:size=${builtins.toString f.size}";
-        font-bold-italic = "${f.name}:style=${builtins.elemAt f.style 3}:size=${builtins.toString f.size}";
+        font-bold-italic = "${f.name}:style=${builtins.elemAt f.style 3}:size=${
+          builtins.toString (f.size + 0.5)
+        }";
         underline-offset = 1.2;
         underline-thickness = 1;
         resize-by-cells = "no";
-        line-height = 22;
-        pad = "10x12";
+        line-height = 20;
+        pad = "10x6";
       };
 
       cursor = {

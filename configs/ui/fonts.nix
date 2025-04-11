@@ -4,14 +4,14 @@
     shell = {
       name = "VictorMono Nerd Font";
       style = [
-        "SemiBold"
+        "Bold"
         "Bold"
         "SemiBold Italic"
         "Bold Italic"
       ];
       package = pkgs.nerd-fonts.victor-mono;
       typeface = "monospace";
-      size = 13.0;
+      size = 12.0;
     };
     interface = {
       name = "Iosevka Aile";

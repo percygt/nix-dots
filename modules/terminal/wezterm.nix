@@ -84,7 +84,7 @@ in
             initial_rows = 33,
             check_for_updates = false,
           	color_scheme = "Syft",
-          	font = wezterm.font("${f.name}", { weight = "DemiBold" }),
+          	font = wezterm.font("${f.name}", { weight = "Regular" }),
           	font_size = tonumber("${builtins.toString f.size}"),
             allow_square_glyphs_to_overflow_width = "Always",
             animation_fps = 30,

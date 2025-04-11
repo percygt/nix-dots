@@ -1,7 +1,5 @@
 { prev, inputs }:
 {
-  # Overriding to stable globally for these packages
-  # auto-cpufreq = prev.stable.auto-cpufreq; # BUG: unstable failing to compile, python stuff error
   libnotify = prev.stable.libnotify; # BUG: notify-send unstable not showing icons
 
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
@@ -34,7 +32,6 @@
     ];
   });
   waybar = prev.waybar.override {
-    experimentalPatches = true;
     swaySupport = true;
     cavaSupport = false;
     hyprlandSupport = false;

@@ -1,6 +1,6 @@
 {
   imports = [
-    ./xremap.nix
+    ./keyd.nix
     ./ydotool.nix
   ];
 }

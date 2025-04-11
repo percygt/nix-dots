@@ -58,7 +58,6 @@
     utils = {
       uad.enable = true;
       ollama.enable = true;
-      # keyd.enable = true;
     };
   };
 
