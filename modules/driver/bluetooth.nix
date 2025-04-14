@@ -10,7 +10,7 @@
     # bluetooth
     hardware.bluetooth = {
       enable = true;
-      package = pkgs.stable.bluez;
+      package = pkgs.bluez5-experimental;
       powerOnBoot = true;
       settings = {
         General = {
