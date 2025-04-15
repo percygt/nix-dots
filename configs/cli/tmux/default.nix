@@ -24,7 +24,6 @@ in
     shell = lib.getExe defaultShell;
     keyMode = "vi";
     sensibleOnTop = true;
-    # terminal = "tmux-256color";
     aggressiveResize = true;
     mouse = true;
     customPaneNavigationAndResize = true;
@@ -42,7 +41,7 @@ in
       (writeShellApplication {
         name = "tmux-launch-session";
         runtimeInputs = [
-          pkgs.tmux
+          config.programs.tmux.package
         ];
         text = ''
           if [ -d "$FLAKE" ]; then
@@ -76,9 +75,6 @@ in
         config.lib.file.mkOutOfStoreSymlink "${moduleTmux}/beforePlugins.conf";
       "tmux/afterPlugins.conf".source =
         config.lib.file.mkOutOfStoreSymlink "${moduleTmux}/afterPlugins.conf";
-      "tmux/.tmux-env".text = ''
-        TMUX_TMPDIR="${config.home.sessionVariables.TMUX_TMPDIR}"
-      '';
       "tmux/variables.conf".text = ''
         set -g @BORDER '${c.base02}'
         set -g @BORDER_ACTIVE '${c.base0A}'

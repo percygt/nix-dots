@@ -39,7 +39,7 @@ in
       set -g @resurrect-processes 'nvim'
       set -g @resurrect-dir '${resurrectDirPath}'
       set -g @resurrect-hook-post-save-all '${resurrectPostSave} "${resurrectDirPath}/last"'
-      run-shell "${pkgs.stable.tmuxPlugins.resurrect.rtp}"
+      run-shell "${pkgs.tmuxPlugins.resurrect.rtp}"
 
       # ---------------------
       # tmuxplugin-tmux-switcher
@@ -56,6 +56,7 @@ in
       # tmuxplugin-vim-tmux-navigator
       # ---------------------
       run-shell "${tp.vim-tmux-navigator.rtp}"
+
 
       # ---------------------
       # tmuxplugin-yank

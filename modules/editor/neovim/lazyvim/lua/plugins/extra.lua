@@ -1,7 +1,13 @@
 return {
   {
+    "aserowy/tmux.nvim",
+    enabled = false,
+    config = function()
+      return require("tmux").setup()
+    end,
+  },
+  {
     "christoomey/vim-tmux-navigator",
-    lazy = true,
     cmd = {
       "TmuxNavigateLeft",
       "TmuxNavigateDown",
