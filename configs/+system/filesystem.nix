@@ -1,7 +1,15 @@
 {
+  config,
+  ...
+}:
+let
+  g = config._base;
+in
+{
   services = {
     btrfs.autoScrub = {
       enable = true;
+      fileSystems = [ "${g.dataDirectory}" ];
       interval = "weekly";
     };
     udisks2 = {
