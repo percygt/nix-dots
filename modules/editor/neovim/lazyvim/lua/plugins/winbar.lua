@@ -2,7 +2,6 @@ return {
   {
     "Bekaboo/dropbar.nvim",
     event = "LazyFile",
-    enabled = false,
     dependencies = {
       "nvim-telescope/telescope-fzf-native.nvim",
     },
@@ -60,7 +59,7 @@ return {
   {
     "utilyre/barbecue.nvim",
     name = "barbecue",
-    -- enabled = false,
+    enabled = false,
     version = "*",
     dependencies = {
       "SmiteshP/nvim-navic",
