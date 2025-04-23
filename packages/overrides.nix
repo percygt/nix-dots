@@ -1,6 +1,8 @@
 { prev, inputs }:
 {
   libnotify = prev.stable.libnotify; # BUG: notify-send unstable not showing icons
+  chromium = prev.stable.chromium;
+  qemu = prev.stable.qemu;
 
   ripgrep = prev.ripgrep.override { withPCRE2 = true; };
   borgmatic = prev.borgmatic.override { enableSystemd = false; };

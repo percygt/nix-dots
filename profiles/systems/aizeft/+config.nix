@@ -28,7 +28,7 @@
     editor = {
       neovim.enable = true;
       emacs.enable = true;
-      zed.enable = true;
+      # zed.enable = true;
       helix.enable = true;
       # vscode.enable = true;
     };
@@ -51,7 +51,7 @@
     };
     virtualisation = {
       podman.enable = true;
-      kvm.enable = true;
+      # kvm.enable = true;
       waydroid.enable = true;
       vmvariant.enable = true;
     };
