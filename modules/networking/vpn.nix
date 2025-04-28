@@ -14,7 +14,7 @@ in
     { modules.core.wpasupplicant.enable = lib.mkForce false; }
     (mkIf cfg.enable {
       environment.systemPackages = with pkgs; [
-        protonvpn-gui
+        stable.protonvpn-gui
       ];
     })
     (mkIf cfg.wireguard.enable {
