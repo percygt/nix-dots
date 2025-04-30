@@ -13,7 +13,7 @@
       manga-tui # Terminal-based manga reader and downloader with image support
       fx # Terminal JSON viewer
       htmlq # Like jq, but for HTML
-      tabiew # CSV viewer
+      stable.tabiew # CSV viewer
       serpl # Simple terminal UI for search and replace, ala VS Code
       sshs # Terminal user interface for SSH.
       atac # based on well-known clients such as Postman, Insomnia
