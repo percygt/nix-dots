@@ -26,7 +26,8 @@ return {
     },
   },
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
+    version = "1.11.0",
     opts = function()
       return {
         ensure_installed = {},
@@ -34,7 +35,8 @@ return {
     end,
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
+    version = "1.32.0",
     opts = function(_, opts)
       opts.automatic_installation = false
     end,
