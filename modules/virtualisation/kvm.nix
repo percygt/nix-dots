@@ -18,7 +18,7 @@
       virtiofsd
       quickemu
       # quickgui
-      # qemu_full
+      qemu_full
       kmod
       pciutils
     ];
