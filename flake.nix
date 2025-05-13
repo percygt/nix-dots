@@ -23,6 +23,9 @@
         aizeft = bldr.buildSystem {
           profile = "aizeft";
         };
+        vm-lvm = bldr.buildSystem {
+          profile = "vm-lvm";
+        };
         minimal = bldr.buildSystem {
           profile = "minimal";
           isIso = true;
