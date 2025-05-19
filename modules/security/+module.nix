@@ -1,7 +1,6 @@
 { lib, config, ... }:
 {
   options.modules.security = {
-    backup.enable = lib.mkEnableOption "Enable backup";
     gpg = {
       enable = lib.mkEnableOption "Enable gpg";
       sshSupport.enable = lib.mkOption {
@@ -20,6 +19,7 @@
         description = "Enable gpg pass";
       };
     };
+    backup.enable = lib.mkEnableOption "Enable backup";
     keepass.enable = lib.mkEnableOption "Enable keepass";
     sops.enable = lib.mkEnableOption "Enable sops";
     ssh.enable = lib.mkEnableOption "Enable ssh";

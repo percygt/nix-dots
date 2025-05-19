@@ -6,7 +6,7 @@
       defaultUsername = "percygt";
       defaultDesktop = "sway";
       defaultSystem = "x86_64-linux";
-      stateVersion = "24.11";
+      stateVersion = "25.05";
       bldr = import ./lib {
         inherit
           self
@@ -81,7 +81,7 @@
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
 
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-cli.url = "github:water-sucks/nixos";

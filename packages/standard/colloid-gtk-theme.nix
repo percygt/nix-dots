@@ -19,13 +19,13 @@ let
 in
 stdenvNoCC.mkDerivation {
   inherit pname;
-  version = "2024-12-14";
+  version = "2025-05-20";
 
   src = fetchFromGitHub {
     owner = "vinceliuice";
     repo = "Colloid-gtk-theme";
-    rev = "b9f3d5200032242d808c93065e32f8dd7407ece4";
-    hash = "sha256-70HDn87acG0me+zbXk6AoGmakY6VLuawq1ubgGcRZVk=";
+    rev = "1f09381660f00c565c3eca9853839cdab79a7f08";
+    hash = "sha256-TyDCEd6iNaiUc+6ToxbTX2vgxBKc17g7fCVnoHIEe5w=";
   };
 
   nativeBuildInputs = [

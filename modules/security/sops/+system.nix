@@ -10,6 +10,7 @@ in
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
+    ./user.nix
     # ./module.nix
   ];
   config = lib.mkIf config.modules.security.sops.enable {
