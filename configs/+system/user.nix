@@ -14,6 +14,7 @@ in
     users.${username} = {
       uid = 1000;
       isNormalUser = true;
+      initialPassword = username;
       packages = [ pkgs.home-manager ];
       extraGroups = [
         "storage"

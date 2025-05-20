@@ -7,6 +7,8 @@
 }:
 let
   g = config._base;
+  cfg = config.modules.desktop.sway;
+
 in
 {
   home.packages = [ pkgs.pomo ];
@@ -22,7 +24,7 @@ in
             g.system.envPackages
             ++ [
               pkgs.pomo
-              g.desktop.sway.finalPackage
+              cfg.finalPackage
             ]
           )
         }";

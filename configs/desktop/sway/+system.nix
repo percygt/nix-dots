@@ -4,7 +4,7 @@
   ...
 }:
 let
-  g = config._base;
+  cfg = config.modules.desktop.sway;
 in
 {
   imports = [
@@ -29,7 +29,7 @@ in
   programs = {
     sway = {
       enable = true;
-      package = g.desktop.sway.finalPackage;
+      package = cfg.finalPackage;
       wrapperFeatures.gtk = true;
     };
   };

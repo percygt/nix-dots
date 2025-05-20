@@ -1,6 +1,7 @@
 { config, ... }:
 let
   g = config._base;
+  cfg = config.modules.desktop.sway;
 in
 {
 
@@ -29,7 +30,7 @@ in
   };
   wayland.windowManager.sway = {
     enable = true;
-    package = g.desktop.sway.finalPackage;
+    package = cfg.finalPackage;
     swaynag.enable = true;
     systemd.xdgAutostart = true;
     wrapperFeatures.gtk = true;

@@ -7,11 +7,10 @@
 let
   t = config.modules.themes;
   f = config.modules.fonts.interface;
-  g = config._base;
-
+  cfg = config.modules.desktop.sway;
   sway-kiosk =
     command:
-    "${g.desktop.sway.command} --config ${pkgs.writeText "kiosk.config" ''
+    "${cfg.command} --config ${pkgs.writeText "kiosk.config" ''
       output * bg #000000 solid_color
       exec '${command}; swaymsg exit'
       include /etc/sway/config.d/*

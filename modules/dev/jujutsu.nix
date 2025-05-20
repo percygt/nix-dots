@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  config = lib.mkIf config.modules.dev.enable {
+  config = lib.mkIf config.modules.dev.jujutsu.enable {
     programs.jujutsu = {
       enable = true;
       settings = {

@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.modules.dev.enable {
+  config = lib.mkIf config.modules.dev.tools.enable {
     programs.go = {
       enable = true;
       goPath = ".local/share/go";
@@ -16,6 +16,6 @@
         babashka
         bfg-repo-cleaner # Git history cleaner
       ])
-      ++ config.modules.dev.editorExtraPackages;
+      ++ config.modules.dev.tools.editorExtraPackages;
   };
 }

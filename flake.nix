@@ -25,6 +25,7 @@
         };
         vm-lvm = bldr.buildSystem {
           profile = "vm-lvm";
+          desktop = "xfce";
         };
         minimal = bldr.buildSystem {
           profile = "minimal";

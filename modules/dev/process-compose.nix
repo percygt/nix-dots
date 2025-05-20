@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.modules.dev.enable {
+  config = lib.mkIf config.modules.dev.process-compose.enable {
     home.packages = with pkgs; [
       process-compose # Simple and flexible scheduler and orchestrator to manage non-containerized applications
     ];

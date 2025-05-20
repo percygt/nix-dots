@@ -38,7 +38,7 @@
           ripgrep
           fd
         ])
-        ++ config.modules.dev.editorExtraPackages;
+        ++ config.modules.dev.tools.editorExtraPackages;
     };
   };
 }

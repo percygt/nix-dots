@@ -10,6 +10,7 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
+    sops.secrets."wireless.env".neededForUsers = true;
     users.groups.network = { };
     users.users.${username}.extraGroups = [ "network" ];
     services.avahi.enable = lib.mkForce false;

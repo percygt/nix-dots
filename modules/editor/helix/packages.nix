@@ -26,7 +26,7 @@
           fd
         ])
         # ++ (import "${self}/modules/dev/+extras/langPackages.nix" pkgs);
-        ++ config.modules.dev.editorExtraPackages;
+        ++ config.modules.dev.tools.editorExtraPackages;
     };
   };
 }

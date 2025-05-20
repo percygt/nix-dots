@@ -15,7 +15,14 @@
       printer.enable = true;
       inputremapper.enable = true;
     };
-    dev.enable = true;
+    dev = {
+      gh.enable = true;
+      ghq.enable = true;
+      gitsigning.enable = true;
+      glab.enable = true;
+      process-compose.enable = true;
+      tools.enable = true;
+    };
     cli.enable = true;
     security = {
       extraPackages.enable = true;

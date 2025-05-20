@@ -7,7 +7,6 @@
 }:
 let
   cfg = config._base;
-  unsupported-gpu = config.modules.driver.nvidia.prime.enable;
 in
 {
   options._base = {
@@ -15,43 +14,6 @@ in
       description = "Flake directory";
       default = "${homeDirectory}/nix-dots";
       type = lib.types.str;
-    };
-    desktop = {
-      sway = {
-        command = lib.mkOption {
-          description = "Sway package";
-          type = lib.types.str;
-          default = "sway${lib.optionalString unsupported-gpu " --unsupported-gpu"}";
-        };
-        package = lib.mkOption {
-          description = "Sway package";
-          type = lib.types.package;
-          default = pkgs.swayfx;
-        };
-        finalPackage = lib.mkOption {
-          description = "Sway package";
-          type = lib.types.package;
-          default = cfg.desktop.sway.package.override {
-            swayfx-unwrapped = pkgs.swayfx-unwrapped.overrideAttrs (old: {
-              postInstall =
-                let
-                  swaySession = ''
-                    [Desktop Entry]
-                    Name=Sway${lib.optionalString unsupported-gpu "Nvidia"}
-                    Comment=An i3-compatible Wayland compositor
-                    Exec=${cfg.desktop.sway.command}
-                    Type=Application
-                  '';
-                in
-                ''
-                  [ ! -d $out/share/wayland-sessions ] && mkdir -p $out/share/wayland-sessions
-                  echo "${swaySession}" > $out/share/wayland-sessions/sway.desktop
-                '';
-              providedSessions = [ "sway" ];
-            });
-          };
-        };
-      };
     };
     dev = {
       git.package = lib.mkOption {

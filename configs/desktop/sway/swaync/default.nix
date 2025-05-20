@@ -6,6 +6,7 @@
 }:
 let
   g = config._base;
+  cfg = config.modules.desktop.sway;
   moduleSwaync = "${g.flakeDirectory}/configs/desktop/sway/swaync";
   c = config.modules.themes.colors.withHashtag;
   f = config.modules.fonts.app;
@@ -20,7 +21,7 @@ let
       grim
       slurp
       swappy
-      g.desktop.sway.finalPackage
+      cfg.finalPackage
     ]);
   swayncWithExtraPackages =
     pkgs.runCommand "swaync"
