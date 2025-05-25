@@ -119,7 +119,7 @@ let
           X-MultipleArgs = "false"; # Consider enabling, don't know what this does
           StartupWMClass = "WebApp-${name}";
         };
-      }) (filterAttrs (_: webapp: webapp.enable) config.programs.${browser}.webapps);
+      }) config.programs.${browser}.webapps;
     };
 in
 {
