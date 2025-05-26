@@ -2,6 +2,7 @@
   pkgs,
   config,
   username,
+  lib,
   ...
 }:
 let
@@ -14,7 +15,7 @@ in
     users.${username} = {
       uid = 1000;
       isNormalUser = true;
-      initialPassword = username;
+      initialPassword = lib.mkIf (config.users.users.${username}.hashedPasswordFile == null) username;
       packages = [ pkgs.home-manager ];
       extraGroups = [
         "storage"
