@@ -39,7 +39,7 @@ in
             {
               criteria = "eDP-1";
               position = "1920,0";
-              scale = 1.25;
+              # scale = 1.25;
               status = "enable";
             }
           ];
