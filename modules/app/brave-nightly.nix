@@ -1,7 +1,6 @@
 { lib, config, ... }:
 {
-  config = lib.mkIf config.modules.app.chromium.webapps.zoom.enable {
-
+  config = lib.mkIf config.modules.app.brave-nightly.enable {
     programs.brave-nightly = {
       enable = true;
       commandLineArgs = [

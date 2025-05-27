@@ -1,7 +1,1 @@
-{ desktop, ... }:
-if (builtins.pathExists ./${desktop}) then
-  {
-    imports = [ ./${desktop} ];
-  }
-else
-  { }
+{ libx, ... }: libx.importPaths.all ./.
