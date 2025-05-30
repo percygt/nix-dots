@@ -9,7 +9,7 @@ let
 in
 {
 
-  config = lib.mkIf config.modules.app.chromium.webapps.zoom.enable {
+  config = lib.mkIf config.modules.app.chromium-webapps.zoom.enable {
     wayland.windowManager.sway = {
       config.keybindings = lib.mkOptionDefault {
         "${mod}+z" =

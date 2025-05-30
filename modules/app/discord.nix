@@ -1,6 +1,6 @@
 { lib, config, ... }:
 {
-  config = lib.mkIf config.modules.app.chromium.webapps.discord.enable {
+  config = lib.mkIf config.modules.app.chromium-webapps.discord.enable {
     modules.desktop.sway.floatingRules = [
       {
         command = ''resize set width 80ppt height 80ppt, move position center'';

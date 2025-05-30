@@ -1,6 +1,20 @@
 {
   modules = {
-    app.zen.enable = true;
+    app = {
+      zen.enable = true;
+      librewolf.enable = true;
+      brave.enable = true;
+      # brave-nightly.enable = true;
+      quickemu.enable = true;
+      flatpak.enable = true;
+      chromium.enable = true;
+      chromium-webapps = {
+        ai.enable = true;
+        discord.enable = true;
+        element.enable = true;
+        zoom.enable = true;
+      };
+    };
     core = {
       powermanagement.enable = true;
       ephemeral.enable = true;

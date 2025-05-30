@@ -12,9 +12,9 @@ let
   mod = swayCfg.config.modifier;
 in
 {
-  imports = [
-    ./quickemu.nix
-  ];
+  # imports = [
+  #   ./quickemu.nix
+  # ];
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
     "${mod}+shift+f" = "exec ddapp -t 'org.gnome.Nautilus' -- ${nautilus}";
     XF86Calculator = "exec ddapp -t 'org.gnome.Calculator' -- gnome-calculator";

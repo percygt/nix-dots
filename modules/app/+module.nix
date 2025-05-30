@@ -5,7 +5,10 @@
     zen.enable = lib.mkEnableOption "Enable zen";
     brave.enable = lib.mkEnableOption "Enable brave";
     brave-nightly.enable = lib.mkEnableOption "Enable brave-nightly";
-    chromium.webapps = {
+    quickemu.enable = lib.mkEnableOption "Enable quickemu";
+    flatpak.enable = lib.mkEnableOption "Enable flatpak";
+    chromium.enable = lib.mkEnableOption "Enable chromium";
+    chromium-webapps = {
       ai.enable = lib.mkEnableOption "Enable ai webapp";
       discord.enable = lib.mkEnableOption "Enable discord webappp";
       element.enable = lib.mkEnableOption "Enable element webappp";

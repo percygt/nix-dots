@@ -8,7 +8,7 @@ let
   mod = swayCfg.config.modifier;
 in
 {
-  config = lib.mkIf config.modules.app.chromium.webapps.ai.enable {
+  config = lib.mkIf config.modules.app.chromium-webapps.ai.enable {
     wayland.windowManager.sway = {
       config.keybindings = lib.mkOptionDefault {
         "${mod}+Shift+i" =
