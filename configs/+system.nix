@@ -22,7 +22,7 @@ in
   environment.systemPackages = g.system.corePackages;
   environment.variables.FLAKE = config.programs.nh.flake;
   programs = {
-    # command-not-found.enable = false;
+    command-not-found.enable = false;
     # nix-index.enable = true;
     nh = {
       enable = true;

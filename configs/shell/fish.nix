@@ -100,7 +100,7 @@ in
               end
             ''
           ]
-          ++ [
+          ++ lib.optionals (g.shell.default.package == fishShellPkg) [
             ''
               function starship_transient_prompt_func
                  starship module character
@@ -113,7 +113,10 @@ in
 
               # ensure starship vars are set
               set -gx STARSHIP_CONFIG "${config.xdg.configHome}/starship.toml"
-
+            ''
+          ]
+          ++ [
+            ''
               set fish_cursor_default     block      blink
               set fish_cursor_insert      line       blink
               set fish_cursor_replace_one underscore blink
