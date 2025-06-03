@@ -30,7 +30,7 @@ in
     swayoutputs = "swaymsg -t get_outputs | nvim -R";
     nix-repl-flake = "nix repl --expr \"(builtins.getFlake (toString ${flakeDirectory})).nixosConfigurations.$hostname\"";
     lsblk = "lsblk -o NAME,SIZE,TYPE,FSTYPE,FSVER,MOUNTPOINTS";
-    cleanup-results = "sh -c \"find . -type l -name 'result*' -exec echo 'unlinking {}' ; -exec unlink {}\"";
-    gcstore = "sh -c \"nix-env --delete-generations +3 ; nix store gc --verbose ; nix store optimise --verbose\"";
+    cleanup-results = "bash -c \"find . -type l -name 'result*' -exec echo 'unlinking {}' ; -exec unlink {}\"";
+    gcstore = "bash -c \"nix-env --delete-generations +3 ; nix store gc --verbose ; nix store optimise --verbose\"";
   };
 }

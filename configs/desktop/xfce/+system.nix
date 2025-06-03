@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 {
 
   # X configuration
   services.xserver.enable = true;
   services.xserver.xkb.layout = "us";
 
-  services.displayManager.autoLogin.user = "guest";
+  services.displayManager.autoLogin.user = username;
   services.xserver.desktopManager.xfce.enable = true;
   services.xserver.desktopManager.xfce.enableScreensaver = false;
 
