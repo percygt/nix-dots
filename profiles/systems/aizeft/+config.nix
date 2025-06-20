@@ -19,6 +19,7 @@
       powermanagement.enable = true;
       ephemeral.enable = true;
       autoupgrade.enable = true;
+      # wpasupplicant.enable = true;
     };
     driver = {
       adb.enable = true;
@@ -72,7 +73,7 @@
     };
     virtualisation = {
       podman.enable = true;
-      kvm.enable = true;
+      # kvm.enable = true;
       waydroid.enable = true;
       vmvariant.enable = true;
     };

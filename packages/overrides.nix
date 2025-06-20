@@ -29,9 +29,4 @@
       "--disable-ssh-agent"
     ];
   });
-  waybar = prev.waybar.override {
-    swaySupport = true;
-    cavaSupport = false;
-    hyprlandSupport = false;
-  };
 }

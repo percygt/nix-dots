@@ -16,8 +16,6 @@
       spice-gtk
       spice-protocol
       virtiofsd
-      quickemu
-      # quickgui
       qemu
       kmod
       pciutils
