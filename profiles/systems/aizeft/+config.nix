@@ -74,7 +74,7 @@
     virtualisation = {
       podman.enable = true;
       # kvm.enable = true;
-      waydroid.enable = true;
+      # waydroid.enable = true;
       vmvariant.enable = true;
     };
     utils = {
