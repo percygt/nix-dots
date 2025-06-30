@@ -1,6 +1,5 @@
 { config, ... }:
 let
-  g = config._base;
   cfg = config.modules.desktop.sway;
 in
 {
@@ -20,9 +19,9 @@ in
     ./swayidle.nix
     ./swappy.nix
     ./tofi.nix
-    ./sway-config.nix
-    ./sway-extraConfig.nix
-    ./sway-extraSessionCommands.nix
+    ./config.nix
+    ./extraConfig.nix
+    ./extraSessionCommands.nix
   ];
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "sway";
