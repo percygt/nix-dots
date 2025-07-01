@@ -27,6 +27,35 @@ rec {
       system: function inputs.nixpkgs.legacyPackages.${system}
     );
 
+  buildNewSystem =
+    {
+      profile,
+      isIso ? false,
+      system ? defaultSystem,
+      desktop ? defaultDesktop,
+      username ? defaultUsername,
+    }:
+    let
+      inherit (inputs.nixpkgs.lib) nixosSystem;
+      mkArgs = import ./mkArgs.nix {
+        inherit
+          inputs
+          outputs
+          self
+          desktop
+          profile
+          isIso
+          username
+          stateVersion
+          ;
+      };
+    in
+    nixosSystem {
+      inherit system modules;
+      specialArgs = {
+        homeArgs = mkArgs.args;
+      } // mkArgs.args;
+    };
   buildSystem =
     {
       profile,
