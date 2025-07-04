@@ -1,0 +1,28 @@
+{
+  programs.git.ignores = [
+    ".aws"
+    ".envrc"
+    ".devenv"
+    ".lsp.lua"
+    "**/*.neoconf.json"
+    ".vim"
+    "*~"
+    "*.DS_Store"
+    "*.swp"
+    "*result*"
+    "node_modules"
+    ".direnv"
+    ".venv"
+    ".yarn"
+    ".yarnrc"
+    "Session.vim"
+    "target"
+    "tmp"
+    "typings"
+    "**__pycache__**"
+    "logs"
+    "*.env"
+    "venv"
+    ".vscode"
+  ];
+}

@@ -32,14 +32,14 @@ in
           outputs = [
             {
               criteria = "HDMI-A-1";
+              position = "1920,0";
               mode = "1920x1080@99.999Hz";
-              position = "0,0";
               status = "enable";
             }
             {
               criteria = "eDP-1";
-              position = "1920,0";
-              # scale = 1.25;
+              position = "0,0";
+              scale = 1.1;
               status = "enable";
             }
           ];

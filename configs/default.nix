@@ -1,8 +1,8 @@
 {
-  libx,
   isGeneric,
   isIso,
   isDroid,
+  username,
   ...
 }:
 if isIso then
@@ -12,4 +12,17 @@ else if isDroid then
 else if isGeneric then
   { imports = [ ./generic ]; }
 else
-  libx.importPaths.default ./.
+  {
+    imports = [
+      ./+system
+      ./+system.nix
+      ./+common.nix
+    ];
+    home-manager.users.${username} = {
+      imports = [
+        ./+home
+        ./+home.nix
+        ./+common.nix
+      ];
+    };
+  }

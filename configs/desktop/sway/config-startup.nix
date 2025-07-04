@@ -6,10 +6,10 @@
       command = "tmux start-server";
       always = true;
     }
-    {
-      command = "wl-paste -t text --watch clipman store --no-persist --unix --max-items=1000 1>> $HOME/.local/cache/clipman.log 2>&1";
-      always = true;
-    }
+    # {
+    #   command = "wl-paste -t text --watch clipman store --no-persist --unix --max-items=1000 1>> $HOME/.local/cache/clipman.log 2>&1";
+    #   always = true;
+    # }
     # {
     #   command = "shikane";
     #   always = true;

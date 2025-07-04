@@ -7,6 +7,7 @@
   defaultUsername,
   ...
 }:
+with inputs.nixpkgs.lib;
 let
   inherit (self) outputs;
   modules = [
@@ -14,6 +15,28 @@ let
     "${self}/configs"
     outputs.nixosModules.default
     (builtins.toString inputs.base)
+  ];
+  match = flip getAttr;
+  read_dir_recursively =
+    dir:
+    concatMapAttrs (
+      this:
+      match {
+        # directory = { };
+        directory = mapAttrs' (subpath: nameValuePair "${this}/${subpath}") (
+          read_dir_recursively "${dir}/${this}"
+        );
+        regular = {
+          ${this} = "${dir}/${this}";
+        };
+        symlink = { };
+      }
+    ) (builtins.readDir dir);
+  read-all-modules = flip pipe [
+    read_dir_recursively
+    (filterAttrs (flip (const (hasSuffix "+home.nix"))))
+    (mapAttrs (const import))
+    # (mapAttrs (const (flip toFunction params)))
   ];
 in
 rec {

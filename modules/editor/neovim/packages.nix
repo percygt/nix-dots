@@ -20,7 +20,7 @@
           imagemagick
           nodePackages.npm
           nodePackages.pnpm
-          stable.vscode-extensions.vadimcn.vscode-lldb.adapter
+          vscode-extensions.vadimcn.vscode-lldb.adapter
           fswatch
           gnumake
           curl

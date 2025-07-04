@@ -23,10 +23,20 @@
         aizeft = bldr.buildSystem {
           profile = "aizeft";
         };
-        vm-lvm = bldr.buildSystem {
-          profile = "vm-lvm";
-          desktop = "xfce";
+        vm = inputs.nixpkgs.lib.nixosSystem {
+          system = defaultSystem;
+          modules = [
+            inputs.home-manager.nixosModules.home-manager
+            ./vm
+          ];
+          specialArgs = rec {
+            inherit inputs stateVersion;
+            username = defaultUsername;
+            profile = "vm";
+            homeDirectory = "/home/${username}";
+          };
         };
+
         minimal = bldr.buildSystem {
           profile = "minimal";
           isIso = true;

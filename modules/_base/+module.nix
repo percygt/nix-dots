@@ -3,6 +3,8 @@
   config,
   pkgs,
   homeDirectory,
+  username,
+  profile,
   ...
 }:
 let
@@ -22,6 +24,43 @@ in
         default = pkgs.git;
       };
     };
+    editor = {
+      nvim = {
+        "system.lua" = lib.mkOption {
+          description = "System Configs";
+          default =
+            # lua
+            ''
+              return {
+                username = "${username}",
+                profile = "${profile}",
+                homeDirectory = "${homeDirectory}",
+                flakeDirectory = "${config._base.flakeDirectory}",
+              }
+            '';
+          type = lib.types.lines;
+        };
+      };
+      emacs = {
+        "system.el" = lib.mkOption {
+          description = "System Configs";
+          default =
+            # lisp
+            ''
+              ;;; system.el --- System settings -*- lexical-binding: t -*-
+              ;;; Commentary:
+              ;;; Code:
+              (defvar flakeDirectory
+                "${config._base.flakeDirectory}"
+                "Flake directory.")
+              (provide 'system)
+              ;;; system.el ends here
+            '';
+          type = lib.types.lines;
+        };
+      };
+    };
+
     terminal = {
       default.package = lib.mkOption {
         description = "Default terminal package";

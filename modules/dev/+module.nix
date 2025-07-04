@@ -19,7 +19,7 @@
           # python3Packages.pylsp-mypy
           python3Packages.pip
           python3Packages.pylatexenc
-          stable.basedpyright
+          basedpyright
           ruff
 
           # Lua
@@ -43,8 +43,8 @@
           phpactor
 
           # rust
-          fenix.minimal.toolchain
-          rust-analyzer-nightly
+          # fenix.minimal.toolchain
+          # rust-analyzer-nightly
           # cargo
           # clippy
           # rustc
@@ -96,9 +96,9 @@
           babashka
 
           # Common lisp
-          sbcl
-          old.lispPackages.quicklisp
-          rlwrap
+          # sbcl
+          # old.lispPackages.quicklisp
+          # rlwrap
 
           #docker
           hadolint
@@ -108,7 +108,7 @@
           marksman
 
           #sql
-          stable.sqlfluff
+          sqlfluff
 
           # tailwind
           tailwindcss-language-server
