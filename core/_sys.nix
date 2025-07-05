@@ -5,7 +5,6 @@
   config,
   inputs,
   stateVersion,
-  username,
   ...
 }:
 let
@@ -14,12 +13,17 @@ in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./nixpkgs
-    ./nix.nix
-    ./home-manager.nix
+    ./boot.sys.nix
+    ./locale.sys.nix
+    ./console.sys.nix
+    ./ntp.sys.nix
+    ./systemd.sys.nix
+    ./user.sys.nix
+    ./nixpkgs.cmn.nix
+    ./nix.cmn.nix
+    ./home-manager.sys.nix
   ];
 
-  home-manager.users.${username} = { };
   environment.systemPackages = g.system.corePackages;
   environment.variables.FLAKE = config.programs.nh.flake;
   programs = {

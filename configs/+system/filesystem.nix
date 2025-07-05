@@ -18,6 +18,5 @@ in
     };
     hardware.bolt.enable = true;
     fstrim.enable = true;
-    gvfs.enable = true;
   };
 }

@@ -39,7 +39,7 @@
       # nixfmt-rfc-style = {
       #   enable = true;
       # };
-      shfmt.enable = true;
+      # shfmt.enable = true;
 
       end-of-file-fixer.enable = true;
     };

@@ -7,7 +7,9 @@
 let
   cfg = config.wayland.windowManager.sway.config;
   mod = cfg.modifier;
-
+  foot-ddterm = pkgs.writers.writeBash "foot-ddterm" ''
+    footclient --app-id='foot-ddterm' -- tmux-launch-session;
+  '';
   toggle-blur = pkgs.writers.writeBash "toggle-blur" ''
     BLUR_STATUS_FILE="/tmp/blur-status"
     if [[ ! -f "$BLUR_STATUS_FILE" ]]; then
@@ -38,6 +40,7 @@ in
 {
   wayland.windowManager.sway = {
     config.keybindings = lib.mkOptionDefault {
+      "${mod}+w" = "exec ddapp -t 'foot-ddterm' -- ${foot-ddterm}";
       "${mod}+s" = "exec swaync-client -t -sw";
       "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
       "${mod}+d" =

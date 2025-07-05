@@ -7,8 +7,11 @@
 }:
 {
   imports = [
-    ./nixpkgs
-    ./nix.nix
+    ./xdg.hm.nix
+    ./sessionVariables.hm.nix
+    ./shellAliases.hm.nix
+    ./nixpkgs.cmn.nix
+    ./nix.cmn.nix
   ];
 
   programs.home-manager.enable = true;
