@@ -12,6 +12,7 @@ key
 *key
 *bfg*
 *tmp
+*.spl
 test*
 
 /.nrepl-port
