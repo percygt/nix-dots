@@ -21,10 +21,6 @@
     ];
   };
   services.gvfs.enable = true;
-  xdg = {
-    mime.defaultApplications = import ./mimeApps.nix;
-    mime.addedAssociations = import ./mimeApps.nix;
-  };
   programs = {
     nautilus-open-any-terminal = {
       enable = true;
