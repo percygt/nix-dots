@@ -32,7 +32,7 @@ in
     };
   };
 
-  modules.core.persist.systemData.directories = [
+  modules.fileSystem.persist.systemData.directories = [
     {
       directory = "/var/cache/tuigreet";
       user = "greeter";

@@ -25,7 +25,7 @@ in
     down = "j";
     left = "h";
     right = "l";
-    terminal = lib.getExe g.terminal.default.package;
+    terminal = lib.getExe g.terminal.defaultPackage;
     menu = "tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
     output."*".bg = "${a.wallpaper} fill";
     gaps.inner = 4;

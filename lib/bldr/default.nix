@@ -13,6 +13,9 @@ let
   modules = [
     "${self}/profiles"
     "${self}/configs"
+    "${self}/core"
+    "${self}/dev"
+
     outputs.nixosModules.default
     (builtins.toString inputs.base)
   ];

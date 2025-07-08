@@ -2,7 +2,6 @@
 {
   imports =
     [
-      ./dev
       ./cli
       ./shell
       ./rebuild
@@ -10,7 +9,6 @@
     ]
     ++ lib.optionals (desktop != null) [
       ./app
-      ./terminal
       ./desktop
       ./ui
     ];

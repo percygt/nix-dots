@@ -40,7 +40,7 @@ in
     };
   };
 
-  modules.core.persist.systemData.directories = [
+  modules.fileSystem.persist.systemData.directories = [
     {
       directory = "/var/lib/regreet";
       user = "greeter";

@@ -6,7 +6,7 @@ let
   g = config._base;
 in
 {
-  modules.core.persist.userData = {
+  modules.fileSystem.persist.userData = {
     directories = [
       ".local/share/fish"
       ".local/share/nushell"

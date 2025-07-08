@@ -8,7 +8,7 @@ with lib;
 let
   cfg = config.modules.desktop.sway;
   criteriaModule = types.attrsOf (types.either types.str types.bool);
-  unsupported-gpu = config.modules.driver.nvidia.prime.enable;
+  unsupported-gpu = config.modules.graphics.nvidia.prime.enable;
   windowCommandModule = types.submodule {
     options = {
       command = mkOption {

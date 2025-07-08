@@ -7,13 +7,13 @@
   imports = [ ./flatpak.nix ];
   config = lib.mkMerge [
     (lib.mkIf config.modules.app.zen.enable {
-      modules.core.persist.userData.directories = [ ".zen" ];
+      modules.fileSystem.persist.userData.directories = [ ".zen" ];
     })
     (lib.mkIf config.modules.app.brave.enable {
-      modules.core.persist.userData.directories = [ ".config/BraveSoftware/Brave-Browser" ];
+      modules.fileSystem.persist.userData.directories = [ ".config/BraveSoftware/Brave-Browser" ];
     })
     (lib.mkIf config.modules.app.chromium.enable {
-      modules.core.persist.userData.directories = [ ".config/chromium" ];
+      modules.fileSystem.persist.userData.directories = [ ".config/chromium" ];
       programs.chromium = {
         enable = true; # only enables polices to be put in etc, doesn't install chromium
         initialPrefs = {
@@ -99,7 +99,7 @@
           SearchSuggestEnabled = false;
           ShoppingListEnabled = false;
           SpellcheckEnabled = false;
-          SyncDisabled = true;
+          # SyncDisabled = true;
           # https://chromeenterprise.google/policies/#URLBlocklist
           UserAgentReduction = 2;
         };

@@ -20,6 +20,6 @@
       openFirewall = true;
       useRoutingFeatures = lib.mkDefault "client";
     };
-    modules.core.persist.systemData.directories = [ "/var/lib/tailscale" ];
+    modules.fileSystem.persist.systemData.directories = [ "/var/lib/tailscale" ];
   };
 }

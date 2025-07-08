@@ -1,5 +1,5 @@
 {
-  modules.core.persist.userData.directories = [
+  modules.fileSystem.persist.userData.directories = [
     ".local/share/tmux"
     ".local/share/navi"
     ".local/share/zoxide"

@@ -4,17 +4,17 @@
   ...
 }:
 let
-  g = config._base;
+  cfg = config.modules.terminal.wezterm;
   t = config.modules.themes;
   f = config.modules.fonts.shell;
   c = t.colors.withHashtag;
 in
 {
 
-  config = lib.mkIf config.modules.terminal.wezterm.enable {
+  config = lib.mkIf cfg.enable {
     programs.wezterm = {
       enable = true;
-      inherit (g.terminal.wezterm) package;
+      inherit (cfg) package;
       colorSchemes = {
         Syft = {
           ansi = [

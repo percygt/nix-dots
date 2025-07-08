@@ -12,9 +12,6 @@ let
   mod = swayCfg.config.modifier;
 in
 {
-  # imports = [
-  #   ./quickemu.nix
-  # ];
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
     "${mod}+shift+f" = "exec ddapp -t 'org.gnome.Nautilus' -- ${nautilus}";
     XF86Calculator = "exec ddapp -t 'org.gnome.Calculator' -- gnome-calculator";
@@ -44,12 +41,14 @@ in
   ];
   xdg.configFile."swayimg/config".source = ./+extras/swayimgrc;
   xdg.mimeApps = {
+    enable = true;
     defaultApplications = import ./mimeApps.nix;
     associations.added = import ./mimeApps.nix;
   };
   home.packages = with pkgs; [
     swayimg # default image viewer
     mpv # default video player
+    vlc
     zathura # default pdf viewer
     lollypop # default audio player
     gnome-calculator
@@ -59,6 +58,8 @@ in
     font-manager
     coulr
     pinta
+    devtoolbox
+    clapgrep
     # foliate
     # gimp
     # logseq

@@ -12,7 +12,7 @@ in
     # ./tuigreet.nix
   ];
 
-  modules.core.persist.userData = {
+  modules.fileSystem.persist.userData = {
     directories = [
       ".local/share/keyrings"
       ".config/goa-1.0"

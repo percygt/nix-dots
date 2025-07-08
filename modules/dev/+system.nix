@@ -1,5 +1,5 @@
 {
-  modules.core.persist.userData.directories = [
+  modules.fileSystem.persist.userData.directories = [
     ".config/clojure"
   ];
 }

@@ -19,7 +19,6 @@ in
       serviceConfig.TimeoutSec = "10";
     };
     networking = {
-      networkmanager.enable = lib.mkForce false;
       wireless = {
         enable = true;
         secretsFile = config.sops.secrets."wireless.env".path;

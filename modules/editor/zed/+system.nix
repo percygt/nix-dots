@@ -5,7 +5,7 @@
 }:
 {
   config = lib.mkIf config.modules.editor.zed.enable {
-    modules.core.persist.userData.directories = [
+    modules.fileSystem.persist.userData.directories = [
       ".local/share/zed"
     ];
   };

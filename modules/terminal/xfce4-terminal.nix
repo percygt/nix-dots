@@ -8,6 +8,7 @@ let
   c = t.colors.withHashtag;
   f = config.modules.fonts.shell;
   g = config._base;
+  cfg = config.modules.terminal.xfce4-terminal;
   color-palette = builtins.concatStringsSep ";" [
     c.base01
     c.base08
@@ -28,11 +29,11 @@ let
   ];
 in
 {
-  config = lib.mkIf config.modules.terminal.xfce4-terminal.enable {
+  config = lib.mkIf cfg.enable {
     wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-      "Alt+shift+return" = "exec ${lib.getExe g.terminal.xfce4-terminal.package}";
+      "Alt+shift+return" = "exec ${lib.getExe cfg.package}";
     };
-    home.packages = [ g.terminal.xfce4-terminal.package ];
+    home.packages = [ cfg.package ];
     xfconf.settings = {
       xfce4-terminal = {
         inherit color-palette;

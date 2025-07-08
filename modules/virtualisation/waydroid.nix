@@ -2,6 +2,6 @@
 {
   config = lib.mkIf config.modules.virtualisation.waydroid.enable {
     virtualisation.waydroid.enable = true;
-    modules.core.persist.systemData.directories = [ "/var/lib/waydroid" ];
+    modules.fileSystem.persist.systemData.directories = [ "/var/lib/waydroid" ];
   };
 }

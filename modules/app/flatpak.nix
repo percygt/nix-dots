@@ -72,7 +72,7 @@
         "flathub:app/engineer.atlas.Nyxt/x86_64/stable"
       ];
     };
-    modules.core.persist.systemData.directories = [ "/var/lib/flatpak" ];
-    modules.core.persist.userData.directories = [ ".var/app" ];
+    modules.fileSystem.persist.systemData.directories = [ "/var/lib/flatpak" ];
+    modules.fileSystem.persist.userData.directories = [ ".var/app" ];
   };
 }

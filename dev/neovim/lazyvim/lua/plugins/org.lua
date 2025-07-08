@@ -1,4 +1,4 @@
-local org_dir = require("config.private").orgDirectory
+local org_dir = require("config.system").orgDirectory
 return {
   {
     "chipsenkbeil/org-roam.nvim",

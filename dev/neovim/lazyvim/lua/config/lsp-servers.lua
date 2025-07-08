@@ -26,20 +26,20 @@ return {
     cmd = { "elixir-ls" },
   },
   nushell = {},
-  -- nil_ls = {
-  --   settings = {
-  --     ["nil"] = {
-  --       formatting = {
-  --         command = { "nixfmt" },
-  --       },
-  --       nix = {
-  --         flake = {
-  --           autoArchive = true,
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
+  nil_ls = {
+    settings = {
+      ["nil"] = {
+        formatting = {
+          command = { "nixfmt" },
+        },
+        nix = {
+          flake = {
+            autoArchive = true,
+          },
+        },
+      },
+    },
+  },
   nixd = {
     cmd = { "nixd" },
     on_init = function(client, _)

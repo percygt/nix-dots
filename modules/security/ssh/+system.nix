@@ -8,8 +8,8 @@ let
 in
 {
   config = lib.mkIf config.modules.security.ssh.enable {
-    modules.core.persist.systemData.directories = [ "/etc/ssh" ];
-    modules.core.persist.userData.directories = [
+    modules.fileSystem.persist.systemData.directories = [ "/etc/ssh" ];
+    modules.fileSystem.persist.userData.directories = [
       {
         directory = ".ssh";
         mode = "0700";

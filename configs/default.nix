@@ -1,28 +1,22 @@
 {
-  isGeneric,
-  isIso,
-  isDroid,
   username,
+  isGeneric,
+  lib,
+  homeMarker,
   ...
 }:
-if isIso then
-  { imports = [ ./iso ]; }
-else if isDroid then
-  { imports = [ ./droid ]; }
-else if isGeneric then
-  { imports = [ ./generic ]; }
-else
+if (!isGeneric && !homeMarker) then
   {
     imports = [
-      ./+system
-      ./+system.nix
+      # ./+system
+      # ./+system.nix
       ./+common.nix
     ];
     home-manager.users.${username} = {
-      imports = [
-        ./+home
-        ./+home.nix
-        ./+common.nix
-      ];
+      imports = lib.optionals homeMarker [ ./+common.nix ];
     };
+  }
+else
+  {
+    imports = lib.optionals homeMarker [ ./+common.nix ];
   }

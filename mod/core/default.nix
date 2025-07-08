@@ -1,3 +1,0 @@
-{
-  import = [ ./_sys.nix ];
-}

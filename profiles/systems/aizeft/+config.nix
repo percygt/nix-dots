@@ -1,5 +1,16 @@
 {
   modules = {
+    fileSystem = {
+      udisks.enable = true;
+      btrfsAutoscrub.enable = true;
+      ephemeral.enable = true;
+      persist.enable = true;
+    };
+    graphics = {
+      intel.enable = true;
+      intel.gpu.driver = "xe";
+      # nvidia.prime.enable = true;
+    };
     app = {
       zen.enable = true;
       librewolf.enable = true;
@@ -17,18 +28,16 @@
     };
     core = {
       powermanagement.enable = true;
-      ephemeral.enable = true;
       autoupgrade.enable = true;
+      audio.enable = true;
+      networkmanager.enable = true;
+      zram.enable = true;
       # wpasupplicant.enable = true;
     };
-    driver = {
+    drivers = {
       adb.enable = true;
       bluetooth.enable = true;
-      intel.enable = true;
-      intel.gpu.driver = "xe";
-      # nvidia.prime.enable = true;
       printer.enable = true;
-      inputremapper.enable = true;
     };
     dev = {
       gh.enable = true;
@@ -48,7 +57,6 @@
       ssh.enable = true;
     };
     editor = {
-      neovim.enable = true;
       emacs.enable = true;
       # zed.enable = true;
       helix.enable = true;
@@ -67,6 +75,7 @@
       terminals.enable = true;
     };
     terminal = {
+      foot.enable = true;
       xfce4-terminal.enable = true;
       tilix.enable = true;
       wezterm.enable = true;
@@ -77,9 +86,10 @@
       # waydroid.enable = true;
       vmvariant.enable = true;
     };
-    utils = {
+    misc = {
       uad.enable = true;
       ollama.enable = true;
+      rrnoise.enable = true;
     };
   };
 

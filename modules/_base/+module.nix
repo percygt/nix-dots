@@ -24,7 +24,7 @@ in
         default = pkgs.git;
       };
     };
-    editor = {
+    textEditor = {
       nvim = {
         "system.lua" = lib.mkOption {
           description = "System Configs";
@@ -60,32 +60,11 @@ in
         };
       };
     };
-
     terminal = {
-      default.package = lib.mkOption {
+      defaultPackage = lib.mkOption {
         description = "Default terminal package";
         type = lib.types.package;
-        default = cfg.terminal.foot.package;
-      };
-      foot.package = lib.mkOption {
-        description = "Foot terminal package";
-        type = lib.types.package;
-        default = pkgs.foot;
-      };
-      wezterm.package = lib.mkOption {
-        description = "Wezterm terminal package";
-        type = lib.types.package;
-        default = pkgs.wezterm;
-      };
-      tilix.package = lib.mkOption {
-        description = "Tilix terminal package";
-        type = lib.types.package;
-        default = pkgs.stable.tilix;
-      };
-      xfce4-terminal.package = lib.mkOption {
-        description = "Xfce4-terminal terminal package";
-        type = lib.types.package;
-        default = pkgs.xfce.xfce4-terminal;
+        default = config.modules.terminal.foot.package;
       };
     };
     shell = {

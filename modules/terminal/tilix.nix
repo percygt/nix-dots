@@ -4,18 +4,18 @@
   ...
 }:
 let
-  g = config._base;
   t = config.modules.themes;
   c = t.colors.withHashtag;
   f = config.modules.fonts.shell;
+  cfg = config.modules.terminal.tilix;
 in
 {
 
-  config = lib.mkIf config.modules.terminal.tilix.enable {
+  config = lib.mkIf cfg.enable {
     wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-      "Ctrl+shift+return" = "exec ${lib.getExe g.terminal.tilix.package}";
+      "Ctrl+shift+return" = "exec ${lib.getExe cfg.package}";
     };
-    home.packages = [ g.terminal.tilix.package ];
+    home.packages = [ cfg.package ];
     dconf.settings = {
       "com/gexperts/Tilix" = {
         enable-wide-handle = true;

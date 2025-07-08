@@ -31,7 +31,7 @@ let
     footclient --app-id agenda --title Emacs -- emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
   '';
   termVar = "TERM=foot";
-  termInfoVar = "TERMINFO=${g.terminal.foot.package.terminfo}/share/terminfo";
+  termInfoVar = "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo";
 in
 {
   config = lib.mkIf cfg.enable {
@@ -83,7 +83,7 @@ in
         "doom/autoload".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
         "doom/configs".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/configs";
         "doom/capture.py".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/capture.py";
-        "doom/private.el".text = g.editor.emacs."private.el";
+        "doom/system.el".text = g.textEditor.emacs."system.el";
         "doom/nix.el".text =
           # lisp
           ''

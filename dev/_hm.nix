@@ -2,11 +2,11 @@
   imports = [
     ./neovim
     ./tmux
-    ./delta.nix
-    ./direnv.nix
-    ./git.nix
-    ./gitaliases.nix
-    ./gitignores.nix
-    ./lazygit.nix
+    ./delta.hm.nix
+    ./direnv.hm.nix
+    ./git.hm.nix
+    ./gitaliases.hm.nix
+    ./gitignores.hm.nix
+    ./lazygit.hm.nix
   ];
 }
