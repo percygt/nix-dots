@@ -250,11 +250,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751854533,
-        "narHash": "sha256-U/OQFplExOR1jazZY4KkaQkJqOl59xlh21HP9mI79Vc=",
+        "lastModified": 1752113600,
+        "narHash": "sha256-7LYDxKxZgBQ8LZUuolAQ8UkIB+jb4A2UmiR+kzY9CLI=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "16b74a1e304197248a1bc663280f2548dbfcae3c",
+        "rev": "79264292b7e3482e5702932949de9cbb69fedf6d",
         "type": "github"
       },
       "original": {
@@ -340,11 +340,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1752043172,
-        "narHash": "sha256-Gv1Cyx744MnV7lpGS6u15MxYDfT+uXYXiND/6ZhCo3c=",
+        "lastModified": 1752216262,
+        "narHash": "sha256-OO7SPN6DfXK8TG62AKWHUYc6D8kVNaKgAStGhDBEcBc=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "84802dd540bd6e41380aeae57713de334f0626b2",
+        "rev": "1b96480284e9b3f76fb1f68dc2be246c8ae90e13",
         "type": "github"
       },
       "original": {
@@ -1062,11 +1062,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752093218,
-        "narHash": "sha256-+3rXu8ewcNDi65/2mKkdSGrivQs5zEZVp5aYszXC0d0=",
+        "lastModified": 1752265577,
+        "narHash": "sha256-YhnBM3oknReSFTAuc2SMwekwjl9nDd5PUhcar4DsefM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "206ed3c71418b52e176f16f58805c96e84555320",
+        "rev": "3976e0507edc9a5f332cb2be93fa20e646d22374",
         "type": "github"
       },
       "original": {
@@ -1443,11 +1443,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751923969,
-        "narHash": "sha256-QNo234SxSB2lLavaT2d+g+Z2WB7o7w29vYkM6zfRLi4=",
+        "lastModified": 1752249768,
+        "narHash": "sha256-wKqMvhTqMgTKM/CdTH/ihq9eLZM95qpU0FG7cvTBFJg=",
         "owner": "nix-community",
         "repo": "naersk",
-        "rev": "0473954e399eec0081ee816f3430c17d1f7e5a42",
+        "rev": "35aa63738857c40f98ecb04db52887d664836e74",
         "type": "github"
       },
       "original": {
@@ -1726,11 +1726,11 @@
         "yaml2nix": "yaml2nix"
       },
       "locked": {
-        "lastModified": 1752077382,
-        "narHash": "sha256-1QjGKUbPKV+5BhOPS6ttITaVboE80b4Ua2rPyuHMvfs=",
+        "lastModified": 1752250324,
+        "narHash": "sha256-kjc8hKm1mnUJyt4GuXhFIWvX+P6zyG089ylDSSvcbKk=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "50639a43d5d012a197b6e530339f907b322a65eb",
+        "rev": "30b24472d897eb640261e3536e52c9bfd410cd83",
         "type": "github"
       },
       "original": {
@@ -2346,11 +2346,11 @@
         "nixpkgs": "nixpkgs_11"
       },
       "locked": {
-        "lastModified": 1752097683,
-        "narHash": "sha256-gu5BGZ7oGXy/mDr8QIiXgQ7MrUGkNNPPfasduYaEa/Y=",
+        "lastModified": 1752271509,
+        "narHash": "sha256-DgufzDU620kp2WSt1y8CVHlS7j3VpcfztgpmmUUuKd0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "00fb900a250797fa11f84190b40ca0e4115f7e22",
+        "rev": "71e5fcae6f4782187276720bbb33bc0ecd6c21c1",
         "type": "github"
       },
       "original": {
@@ -2482,11 +2482,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1751953978,
-        "narHash": "sha256-lLVWfzqaO9ijT8XOJMOPQUF6EDwhHfrleSPVLjcRYgM=",
+        "lastModified": 1752182378,
+        "narHash": "sha256-bKzsGh+1AWSpL2Q2/0FKgNchTJOmYpQH2BS9dCyKXaI=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "9a1fc3cdb8bff55c3094c4d81c75ad2e57aa69a1",
+        "rev": "e2c8cefa63bd4cafb66978867c0f1ec2ba14bb03",
         "type": "github"
       },
       "original": {
@@ -3052,11 +3052,11 @@
         "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
-        "lastModified": 1739081365,
-        "narHash": "sha256-KSufvuzWONO6KuE/N7hQCEfrdgFUp2k9fUWKOvtOolc=",
+        "lastModified": 1752125182,
+        "narHash": "sha256-VhwYt/XJ6D/ZzW1/p6iSygbGGPyYGEtAx7yXStVjrsA=",
         "owner": "rafaelrc7",
         "repo": "wayland-pipewire-idle-inhibit",
-        "rev": "952aef94b0d8a48c028b1ba7c3a9209fe0c64e46",
+        "rev": "87da9e8715a1de885324834660bf256d222a64c8",
         "type": "github"
       },
       "original": {
