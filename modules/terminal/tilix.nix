@@ -12,9 +12,6 @@ in
 {
 
   config = lib.mkIf cfg.enable {
-    wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-      "Ctrl+shift+return" = "exec ${lib.getExe cfg.package}";
-    };
     home.packages = [ cfg.package ];
     dconf.settings = {
       "com/gexperts/Tilix" = {

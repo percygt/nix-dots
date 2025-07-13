@@ -12,7 +12,8 @@ let
   inherit (self) outputs;
   modules = [
     "${self}/profiles"
-    "${self}/configs"
+    # "${self}/configs"
+    "${self}/desktop"
     "${self}/core"
     "${self}/dev"
 

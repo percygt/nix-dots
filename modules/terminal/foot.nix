@@ -12,12 +12,6 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    wayland.windowManager.sway.config.startup = [
-      {
-        command = "foot --server";
-        always = true;
-      }
-    ];
     programs.foot = {
       enable = true;
       inherit (cfg) package;
@@ -25,7 +19,7 @@ in
         main = {
           term = "foot";
           login-shell = "no";
-          shell = lib.getExe g.shell.default.package;
+          shell = lib.getExe g.shell.defaultPackage;
           font = "${f.name}:style=${builtins.elemAt f.style 0}:size=${builtins.toString f.size}";
           font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString (f.size + 0.5)}";
           font-italic = "${f.name}:style=${builtins.elemAt f.style 2}:size=${builtins.toString f.size}";

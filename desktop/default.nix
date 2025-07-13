@@ -1,0 +1,7 @@
+{ desktop, ... }:
+{
+  imports = [
+    ./common
+    ./${desktop}
+  ];
+}

@@ -4,7 +4,11 @@
     ghq.enable = lib.mkEnableOption "Enable ghq";
     glab.enable = lib.mkEnableOption "Enable glab";
     gh.enable = lib.mkEnableOption "Enable gh";
-    gitsigning.enable = lib.mkEnableOption "Enable gitsigning";
+    git.package = lib.mkOption {
+      description = "Git package";
+      type = lib.types.package;
+      default = pkgs.git;
+    };
     process-compose.enable = lib.mkEnableOption "Enable process-compose";
     jujutsu.enable = lib.mkEnableOption "Enable jujutsu";
     tools = {

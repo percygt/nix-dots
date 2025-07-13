@@ -152,7 +152,7 @@ in
           with pkgs;
           [
             config.nix.package.out
-            shell.default.package
+            shell.defaultPackage
             shell.bash.package
             security.gpg.package
             security.ssh.package

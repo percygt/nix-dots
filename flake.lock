@@ -88,10 +88,10 @@
     "base": {
       "flake": false,
       "locked": {
-        "lastModified": 1751935765,
-        "narHash": "sha256-UTTUMnLzChpO3B68tORvdzGk0hP2Mq7wUvMvmoLzOks=",
+        "lastModified": 1752201596,
+        "narHash": "sha256-YLWvtmxKCa4P0GDSNBtlBTO1+LN7Q9MYnK9jKHHvu0s=",
         "ref": "main",
-        "rev": "2c8a6484ab9780cc7cf3a4501ae2130ecf4b70e3",
+        "rev": "41e1e87cfbfae2cf8c4b5a16cc042437329f00c0",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@gitlab.com/percygt/sikreto.git"

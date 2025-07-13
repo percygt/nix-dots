@@ -25,9 +25,6 @@ in
     tsd = "tailscale down";
     noms = "nom shell";
     nomd = "nom develop";
-    swaytree = "swaymsg -t get_tree | nvim -R";
-    swayinputs = "swaymsg -t get_inputs | nvim -R";
-    swayoutputs = "swaymsg -t get_outputs | nvim -R";
     nix-repl-flake = "nix repl --expr \"(builtins.getFlake (toString ${flakeDirectory})).nixosConfigurations.$hostname\"";
     lsblk = "lsblk -o NAME,SIZE,TYPE,FSTYPE,FSVER,MOUNTPOINTS";
     cleanup-results = "bash -c \"find . -type l -name 'result*' -exec echo 'unlinking {}' ; -exec unlink {}\"";

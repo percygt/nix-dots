@@ -28,7 +28,7 @@
     };
     core = {
       powermanagement.enable = true;
-      autoupgrade.enable = true;
+      # autoupgrade.enable = true;
       audio.enable = true;
       networkmanager.enable = true;
       zram.enable = true;
@@ -42,17 +42,15 @@
     dev = {
       gh.enable = true;
       ghq.enable = true;
-      gitsigning.enable = true;
       glab.enable = true;
       process-compose.enable = true;
       tools.enable = true;
     };
-    cli.enable = true;
     security = {
       extraPackages.enable = true;
       gpg.enable = true;
       keepass.enable = true;
-      backup.enable = true;
+      borgmatic.enable = true;
       sops.enable = true;
       ssh.enable = true;
     };
@@ -89,8 +87,11 @@
     misc = {
       uad.enable = true;
       ollama.enable = true;
-      rrnoise.enable = true;
+      aria.enable = true;
+      atuin.enable = true;
+      extraClis.enable = true;
+      ncmpcpp.enable = true;
+      yazi.enable = true;
     };
   };
-
 }

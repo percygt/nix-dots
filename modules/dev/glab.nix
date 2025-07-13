@@ -4,11 +4,8 @@
   lib,
   ...
 }:
-let
-  gitsigning = config.modules.dev.gitsigning.enable;
-in
 {
-  config = lib.mkIf (config.modules.dev.glab.enable && gitsigning) {
+  config = lib.mkIf config.modules.dev.glab.enable {
     home.packages = [ pkgs.glab ];
     sops.secrets = {
       "git/glab-cli/config.yml" = {

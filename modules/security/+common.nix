@@ -4,6 +4,6 @@
     ./ssh
     ./gpg
     ./sops
-    ./backup
+    ./borgmatic
   ];
 }

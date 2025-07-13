@@ -3,11 +3,8 @@
   lib,
   ...
 }:
-let
-  gitsigning = config.modules.dev.gitsigning.enable;
-in
 {
-  config = lib.mkIf (config.modules.dev.gh.enable && gitsigning) {
+  config = lib.mkIf config.modules.dev.gh.enable {
     programs.gh = {
       enable = true;
       settings = {

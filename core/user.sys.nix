@@ -10,7 +10,7 @@ let
 in
 {
   users = {
-    defaultUserShell = g.shell.default.package;
+    defaultUserShell = g.shell.defaultPackage;
     mutableUsers = false;
     users.${username} = {
       uid = 1000;

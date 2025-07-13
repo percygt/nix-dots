@@ -14,8 +14,8 @@ in
   options._base = {
     flakeDirectory = lib.mkOption {
       description = "Flake directory";
-      default = "${homeDirectory}/nix-dots";
       type = lib.types.str;
+      default = "${homeDirectory}/nix-dots";
     };
     dev = {
       git.package = lib.mkOption {
@@ -66,56 +66,150 @@ in
         type = lib.types.package;
         default = config.modules.terminal.foot.package;
       };
+      defaultCmd = lib.mkOption {
+        description = "Default terminal command";
+        type = lib.types.str;
+        default = config.modules.terminal.foot.cmd;
+      };
     };
     shell = {
-      default.package = lib.mkOption {
+      defaultPackage = lib.mkOption {
         description = "Default shell package";
-        type = lib.types.package;
-        default = cfg.shell.fish.package;
-      };
-      fish.package = lib.mkOption {
-        description = "Fish shell package";
         type = lib.types.package;
         default = pkgs.fish;
       };
-      nushell.package = lib.mkOption {
-        description = "Nushell shell package";
-        type = lib.types.package;
-        default = pkgs.nushell;
-      };
-      bash.package = lib.mkOption {
-        description = "Bash shell package";
-        type = lib.types.package;
-        default = pkgs.bash;
-      };
     };
     security = {
-      gpg.package = lib.mkOption {
-        description = "Gpg package";
-        type = lib.types.package;
-        default = pkgs.gnupg;
+      borgmatic = {
+        mountUuid = lib.mkOption {
+          description = "Backup mount uuid";
+          type = lib.types.str;
+          default = "";
+        };
+        usbId = lib.mkOption {
+          description = "The bus and device id of the usb device e.g. 2-2 acquired from lsusb command 'Bus 002 Device 002'";
+          type = lib.types.str;
+          default = "";
+        };
+        mountPath = lib.mkOption {
+          description = "Backup mount path";
+          default = "";
+          type = lib.types.str;
+        };
       };
-      ssh.package = lib.mkOption {
-        description = "Ssh package";
-        type = lib.types.package;
-        default = pkgs.openssh;
-      };
-      sops.package = lib.mkOption {
-        description = "Sops package";
-        type = lib.types.package;
-        default = pkgs.sops;
-      };
-      keepass.package = lib.mkOption {
-        description = "Keepass package";
-        type = lib.types.package;
-        default = pkgs.keepassxc;
-      };
-      borgmatic.package = lib.mkOption {
-        description = "Borgmatic package";
-        type = lib.types.package;
-        default = pkgs.borgmatic;
+      gpg = {
+        signingKey = lib.mkOption {
+          description = "Gpg signing key";
+          default = "";
+          type = lib.types.str;
+        };
       };
     };
+    dataDirectory = lib.mkOption {
+      description = "Home directory";
+      default = "";
+      type = lib.types.str;
+    };
+    secretsDirectory = lib.mkOption {
+      description = "Home directory";
+      default = "";
+      type = lib.types.str;
+    };
+    syncthingDirectory = lib.mkOption {
+      description = "Home directory";
+      default = "";
+      type = lib.types.str;
+    };
+    orgDirectory = lib.mkOption {
+      description = "Org directory";
+      default = "";
+      type = lib.types.str;
+    };
+    windowsDirectory = lib.mkOption {
+      description = "Windows directory";
+      default = "";
+      type = lib.types.str;
+    };
+    backupDirectory = lib.mkOption {
+      description = "Backup mount path";
+      default = "";
+      type = lib.types.str;
+    };
+    network = {
+      syncthing = {
+        devices.phone.id = lib.mkOption {
+          description = "Phone ID";
+          default = "";
+          type = lib.types.str;
+        };
+        guiAddress = lib.mkOption {
+          description = "Gui Address";
+          default = "";
+          type = lib.types.str;
+        };
+      };
+      wifi = lib.mkOption {
+        description = "Wifi home";
+        default = "";
+        type = lib.types.str;
+      };
+      wireguard = {
+        name = lib.mkOption {
+          description = "Name";
+          default = "nixos";
+          type = lib.types.str;
+        };
+        publicKey = lib.mkOption {
+          description = "Public Key";
+          default = "";
+          type = lib.types.str;
+        };
+        address = lib.mkOption {
+          description = "IP address";
+          default = "";
+          type = lib.types.str;
+        };
+        dnsIp = lib.mkOption {
+          description = "DNS IP";
+          default = "";
+          type = lib.types.str;
+        };
+        endpointIp = lib.mkOption {
+          description = "Endpoint IP";
+          default = "";
+          type = lib.types.str;
+        };
+        port = lib.mkOption {
+          description = "Endpoint Port";
+          default = 8888;
+          type = lib.types.port;
+        };
+      };
+    };
+
+    systemInstall = {
+      targetUser = lib.mkOption {
+        description = "targetUser";
+        default = username;
+        type = lib.types.str;
+      };
+      mountDevice = lib.mkOption {
+        description = "Mount device";
+        default = "";
+        type = lib.types.str;
+      };
+      luksDevice = lib.mkOption {
+        description = "Luks device";
+        default = "";
+        type = lib.types.str;
+      };
+    };
+    localPrinter = lib.mkOption {
+      description = "Keepass database";
+      type = lib.types.attrs;
+      default = { };
+    };
+
     system = {
       envPackages = lib.mkOption {
         description = "Environment packages";
@@ -123,19 +217,16 @@ in
         default =
           let
             inherit (cfg)
-              security
               shell
-              dev
               ;
           in
           with pkgs;
           [
             config.nix.package.out
-            shell.default.package
-            shell.bash.package
-            security.gpg.package
-            security.ssh.package
-            dev.git.package
+            shell.defaultPackage
+            config.modules.security.gpg.package
+            config.modules.security.ssh.package
+            config.modules.dev.git.package
             nh
             nfs-utils
             iputils
