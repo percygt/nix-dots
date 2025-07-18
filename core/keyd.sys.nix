@@ -10,13 +10,23 @@
           # The main layer, if you choose to declare it in Nix
           main = {
             capslock = "overload(control, esc)";
-            # shift = "oneshot(shift)";
-            # meta = "oneshot(meta)";
-            # control = "oneshot(control)";
-            #
-            # leftalt = "oneshot(alt)";
-            # rightalt = "oneshot(altgr)";
-            # insert = "S-insert";
+            # space = "overloadi(space, shift, 400)";
+            # space = "lettermod(shift, space, 150, 200)";
+            a = "lettermod(shift, a, 150, 200)";
+            s = "lettermod(alt, s, 150, 200)";
+            d = "lettermod(control, d, 150, 200)";
+            f = "lettermod(meta, f, 150, 200)";
+
+            j = "lettermod(meta, j, 150, 200)";
+            k = "lettermod(control, k, 150, 200)";
+            l = "lettermod(alt, l, 150, 200)";
+            ";" = "lettermod(shift, ;, 150, 200)";
+
+            # capslock = "tab";
+            leftalt = "escape";
+            # leftshift = "noop";
+            rightalt = "backspace";
+            # tab = "noop";
           };
           #   otherlayer = { };
         };

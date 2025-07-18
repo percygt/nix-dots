@@ -42,7 +42,7 @@ return {
       width_preview = 125,
     }
     opts.mappings = {
-      close = "q",
+      close = "<esc>",
       go_in = "L",
       go_in_plus = "l",
     }

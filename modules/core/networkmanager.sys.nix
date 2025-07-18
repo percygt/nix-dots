@@ -2,6 +2,7 @@
   lib,
   config,
   desktop,
+  pkgs,
   ...
 }:
 let
@@ -34,6 +35,16 @@ in
         enable = true;
         dns = "none";
         wifi.backend = "iwd";
+        plugins = with pkgs; [
+          networkmanager-fortisslvpn
+          networkmanager-iodine
+          networkmanager-l2tp
+          networkmanager-openconnect
+          networkmanager-openvpn
+          networkmanager-sstp
+          networkmanager-strongswan
+          networkmanager-vpnc
+        ];
       };
     };
   };
