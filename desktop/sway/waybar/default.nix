@@ -71,13 +71,14 @@ let
       ''
         makeWrapper ${pkgs.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
       '';
-  inherit (config._base) flakeDirectory;
-  moduleWaybar = "${flakeDirectory}/desktop/sway/waybar";
+  # inherit (config._base) flakeDirectory;
+  # moduleWaybar = "${flakeDirectory}/desktop/sway/waybar";
   c = config.modules.themes.colors.withHashtag;
   f = config.modules.fonts.interface;
   i = config.modules.fonts.icon;
   cfg = config.wayland.windowManager.sway.config;
   mod = cfg.modifier;
+  defaultSettings = import ./settings.nix;
 in
 {
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
@@ -88,10 +89,19 @@ in
   programs.waybar = {
     enable = true;
     package = waybarWithExtraPackages;
+    settings = {
+      "bar-1" = defaultSettings // {
+        id = "bar-1";
+        ipc = true;
+        output = "eDP-1";
+      };
+      "bar-2" = defaultSettings // {
+        output = "!eDP-1";
+      };
+    };
+    style = lib.readFile ./style.css;
   };
   xdg.configFile = {
-    "waybar/config.jsonc".source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/config.jsonc";
-    "waybar/style.css".source = config.lib.file.mkOutOfStoreSymlink "${moduleWaybar}/style.css";
     "waybar/nix.css".text =
       # css
       ''

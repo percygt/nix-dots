@@ -33,6 +33,7 @@
     extraFonts =
       (with pkgs; [
         (iosevka-bin.override { variant = "Aile"; })
+        cryptofont
         emacs-all-the-icons-fonts
         noto-fonts
         noto-fonts-cjk-sans

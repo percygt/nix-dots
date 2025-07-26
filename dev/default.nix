@@ -2,22 +2,17 @@
   username,
   isGeneric,
   homeMarker,
+  libx,
   ...
 }:
 if (!isGeneric && !homeMarker) then
   {
-    imports = [
-      ./_sys.nix
-    ];
+    imports = libx.import_nixosmodules ./.;
     home-manager.users.${username} = {
-      imports = [
-        ./_hm.nix
-      ];
+      imports = libx.import_hmmodules ./.;
     };
   }
 else
   {
-    imports = [
-      ./_hm.nix
-    ];
+    imports = libx.import_hmmodules ./.;
   }

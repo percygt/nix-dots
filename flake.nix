@@ -111,7 +111,7 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    flatpaks.url = "github:GermanBread/declarative-flatpak/stable-v3";
+    flatpaks.url = "github:in-a-dil-emma/declarative-flatpak/stable-v3";
 
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs = {
@@ -120,6 +120,9 @@
 
     wayland-pipewire-idle-inhibit.url = "github:rafaelrc7/wayland-pipewire-idle-inhibit";
     wayland-pipewire-idle-inhibit.inputs.nixpkgs.follows = "nixpkgs";
+
+    way-edges.url = "github:way-edges/way-edges";
+    way-edges.inputs.nixpkgs.follows = "nixpkgs";
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";

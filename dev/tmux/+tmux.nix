@@ -11,7 +11,6 @@ let
   defaultShell = g.shell.defaultPackage;
 in
 {
-  imports = [ ./extraConfig.nix ];
   programs.tmux = {
     enable = true;
     baseIndex = 1;

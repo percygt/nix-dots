@@ -1,12 +1,16 @@
 {
   inputs,
-  isGeneric,
-  isDroid,
-  homeMarker,
+  isGeneric ? false,
+  isDroid ? false,
+  homeMarker ? false,
   username,
 }:
 let
   lib = inputs.home-manager.lib // inputs.nixpkgs.lib;
+  inherit (builtins) filter map toString;
+  inherit (lib) pipe;
+  inherit (lib.filesystem) listFilesRecursive;
+  inherit (lib.strings) hasSuffix hasPrefix;
 in
 {
   sway = import ./sway.nix { inherit lib; };
@@ -15,6 +19,24 @@ in
     _type = "literal";
     inherit value;
   };
+  import_hmmodules =
+    rootDir:
+    pipe rootDir [
+      listFilesRecursive
+      (map toString)
+      (filter (hasSuffix "nix"))
+      (filter (n: !hasSuffix "default.nix" n))
+      (filter (n: (hasPrefix "+" (baseNameOf n) || (hasPrefix "_" (baseNameOf n)))))
+    ];
+  import_nixosmodules =
+    rootDir:
+    pipe rootDir [
+      listFilesRecursive
+      (map toString)
+      (filter (hasSuffix "nix"))
+      (filter (n: !hasSuffix "default.nix" n))
+      (filter (n: !hasPrefix "+" (baseNameOf n)))
+    ];
 
   colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; };
   importPaths =

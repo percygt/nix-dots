@@ -12,7 +12,6 @@ let
   configNvim = "${g.flakeDirectory}/dev/neovim/lazyvim";
 in
 {
-  imports = [ ./packages.nix ];
   home.shellAliases.v = "nvim";
   programs.neovim = {
     enable = true;

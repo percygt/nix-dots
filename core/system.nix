@@ -13,20 +13,9 @@ in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./boot.sys.nix
-    ./shell.sys.nix
-    ./locale.sys.nix
-    ./console.sys.nix
-    ./ntp.sys.nix
-    ./systemd.sys.nix
-    ./user.sys.nix
-    ./keyd.sys.nix
-    ./nixpkgs.cmn.nix
-    ./nix.cmn.nix
-    ./fonts.cmn.nix
-    ./home-manager.sys.nix
   ];
 
+  home-manager.backupFileExtension = ".backup";
   environment.systemPackages = g.system.corePackages;
   environment.variables.FLAKE = config.programs.nh.flake;
   programs = {

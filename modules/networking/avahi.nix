@@ -4,8 +4,10 @@
     # network discovery, mDNS
     services.avahi = {
       enable = true;
-      openFirewall = true;
+      # openFirewall = true;
+      reflector = true;
       nssmdns4 = true;
+      nssmdns6 = true;
       publish = {
         enable = true;
         addresses = true;

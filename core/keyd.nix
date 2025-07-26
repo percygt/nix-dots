@@ -2,7 +2,7 @@
   services.keyd = {
     enable = true;
     keyboards = {
-      # The name is just the name of the configuration file, it does not really matter
+      # rebuildThe name is just the name of the configuration file, it does not really matter
       default = {
         ids = [ "*" ]; # what goes into the [id] section, here we select all keyboards
         # Everything but the ID section:
@@ -11,21 +11,21 @@
           main = {
             capslock = "overload(control, esc)";
             # space = "overloadi(space, shift, 400)";
-            # space = "lettermod(shift, space, 150, 200)";
-            a = "lettermod(shift, a, 150, 200)";
-            s = "lettermod(alt, s, 150, 200)";
-            d = "lettermod(control, d, 150, 200)";
-            f = "lettermod(meta, f, 150, 200)";
-
-            j = "lettermod(meta, j, 150, 200)";
-            k = "lettermod(control, k, 150, 200)";
-            l = "lettermod(alt, l, 150, 200)";
-            ";" = "lettermod(shift, ;, 150, 200)";
+            # space = "overload(shift, space)";
+            # a = "overload(shift, a)";
+            # s = "overload(alt, s)";
+            # d = "overload(control, d)";
+            # f = "overload(meta, f)";
+            #
+            # j = "overload(meta, j)";
+            # k = "overload(control, k)";
+            # l = "overload(alt, l)";
+            # ";" = "overload(shift, ;)";
 
             # capslock = "tab";
-            leftalt = "escape";
+            # leftalt = "escape";
             # leftshift = "noop";
-            rightalt = "backspace";
+            # rightalt = "backspace";
             # tab = "noop";
           };
           #   otherlayer = { };

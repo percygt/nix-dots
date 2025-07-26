@@ -7,40 +7,15 @@
   defaultUsername,
   ...
 }:
-with inputs.nixpkgs.lib;
 let
   inherit (self) outputs;
   modules = [
     "${self}/profiles"
-    # "${self}/configs"
     "${self}/desktop"
-    "${self}/core"
-    "${self}/dev"
-
+    # "${self}/core"
+    # "${self}/dev"
     outputs.nixosModules.default
     (builtins.toString inputs.base)
-  ];
-  match = flip getAttr;
-  read_dir_recursively =
-    dir:
-    concatMapAttrs (
-      this:
-      match {
-        # directory = { };
-        directory = mapAttrs' (subpath: nameValuePair "${this}/${subpath}") (
-          read_dir_recursively "${dir}/${this}"
-        );
-        regular = {
-          ${this} = "${dir}/${this}";
-        };
-        symlink = { };
-      }
-    ) (builtins.readDir dir);
-  read-all-modules = flip pipe [
-    read_dir_recursively
-    (filterAttrs (flip (const (hasSuffix "+home.nix"))))
-    (mapAttrs (const import))
-    # (mapAttrs (const (flip toFunction params)))
   ];
 in
 rec {
@@ -53,36 +28,6 @@ rec {
     inputs.nixpkgs.lib.genAttrs supportedSystems (
       system: function inputs.nixpkgs.legacyPackages.${system}
     );
-
-  buildNewSystem =
-    {
-      profile,
-      isIso ? false,
-      system ? defaultSystem,
-      desktop ? defaultDesktop,
-      username ? defaultUsername,
-    }:
-    let
-      inherit (inputs.nixpkgs.lib) nixosSystem;
-      mkArgs = import ./mkArgs.nix {
-        inherit
-          inputs
-          outputs
-          self
-          desktop
-          profile
-          isIso
-          username
-          stateVersion
-          ;
-      };
-    in
-    nixosSystem {
-      inherit system modules;
-      specialArgs = {
-        homeArgs = mkArgs.args;
-      } // mkArgs.args;
-    };
   buildSystem =
     {
       profile,
@@ -105,9 +50,32 @@ rec {
           stateVersion
           ;
       };
+      libx = import "${self}/lib/libx" {
+        inherit
+          inputs
+          username
+          ;
+      };
     in
     nixosSystem {
-      inherit system modules;
+      inherit system;
+      modules =
+        [ inputs.home-manager.nixosModules.home-manager ]
+        ++ modules
+        ++ libx.import_nixosmodules "${self}/core"
+        ++ libx.import_nixosmodules "${self}/dev"
+        ++ [
+          {
+            home-manager = {
+              users.${username}.imports =
+                libx.import_hmmodules "${self}/core"
+                ++ libx.import_hmmodules "${self}/dev";
+              extraSpecialArgs = mkArgs.args // {
+                inherit (mkArgs) args;
+              };
+            };
+          }
+        ];
       specialArgs = {
         homeArgs = mkArgs.args;
       } // mkArgs.args;
@@ -123,6 +91,12 @@ rec {
     }:
     let
       inherit (inputs.home-manager.lib) homeManagerConfiguration;
+      libx = import "${self}/lib/libx" {
+        inherit
+          inputs
+          username
+          ;
+      };
       mkArgs = import ./mkArgs.nix {
         inherit
           inputs
@@ -139,7 +113,18 @@ rec {
     in
     homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
-      inherit modules;
+      modules =
+        modules
+        ++ libx.import_hmmodules "${self}/core"
+        ++ libx.import_hmmodules "${self}/dev"
+        ++ [
+          (
+            { pkgs, ... }:
+            {
+              nix.package = pkgs.nix;
+            }
+          )
+        ];
       extraSpecialArgs = mkArgs.args;
     };
 

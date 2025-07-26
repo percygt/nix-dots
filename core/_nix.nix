@@ -1,12 +1,9 @@
 {
   lib,
-  pkgs,
-  homeMarker,
   ...
 }:
 {
   nix = {
-    package = lib.mkIf homeMarker pkgs.nix;
     settings = {
       experimental-features = [
         "pipe-operators"

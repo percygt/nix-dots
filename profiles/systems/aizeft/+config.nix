@@ -62,6 +62,7 @@
     };
     networking = {
       vpn.enable = true;
+      avahi.enable = true;
       tailscale.enable = true;
       syncthing.enable = true;
     };

@@ -19,7 +19,14 @@ in
       "/etc/NetworkManager/system-connections"
     ];
     networking = {
-      wireless.iwd.settings.Settings.AutoConnect = true;
+      wireless.iwd.settings = {
+        IPv6 = {
+          Enabled = true;
+        };
+        Settings = {
+          AutoConnect = true;
+        };
+      };
       # These options are unnecessary when managing DNS ourselves
       useDHCP = false;
       dhcpcd.enable = false;

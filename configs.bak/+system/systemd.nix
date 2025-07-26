@@ -4,7 +4,7 @@
   ...
 }:
 {
-  environment.systemPackages = [ pkgs.isd ];
+  environment.systemPackages = [ pkgs.stable.isd ];
   services = {
     # Use power button to sleep instead of poweroff
     logind.powerKey = "suspend";

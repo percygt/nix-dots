@@ -5,6 +5,10 @@
   };
   modules.desktop.sway.floatingRules = [
     {
+      command = ''border none, floating enable'';
+      criterias = [ { class = ".scrcpy-wrapped"; } ];
+    }
+    {
       command = ''resize set width 30ppt height 60ppt, move position center'';
       criterias = [ { app_id = "org.gnome.Calculator"; } ];
     }

@@ -1,6 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    scrcpy
+    go-chromecast
     yaml2json
     duf # Disk Usage/Free Utility
     yq-go # portable command-line YAML, JSON and XML processor

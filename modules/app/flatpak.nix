@@ -7,7 +7,7 @@
   ...
 }:
 {
-  imports = [ inputs.flatpaks.nixosModules.declarative-flatpak ];
+  imports = [ inputs.flatpaks.nixosModule ];
   config = lib.mkIf config.modules.app.flatpak.enable {
     systemd.services = {
       "home-manager-${username}" = {
@@ -63,6 +63,7 @@
         "flathub-beta" = "https://dl.flathub.org/beta-repo/flathub-beta.flatpakrepo";
       };
       packages = [
+        "flathub:app/com.rustdesk.RustDesk/x86_64/stable"
         "flathub:app/com.valvesoftware.Steam/x86_64/stable"
         "flathub:app/org.libreoffice.LibreOffice/x86_64/stable"
         "flathub:app/org.gnome.gitlab.YaLTeR.VideoTrimmer/x86_64/stable"

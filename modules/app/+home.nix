@@ -9,6 +9,7 @@
     ./discord.nix
     ./element.nix
     ./zoom.nix
+    ./chromium.nix
     ./quickemu.nix
   ];
 }
