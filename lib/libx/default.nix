@@ -9,10 +9,11 @@ let
   lib = inputs.home-manager.lib // inputs.nixpkgs.lib;
   inherit (builtins) filter map toString;
   inherit (lib) pipe;
+  inherit (lib.lists) flatten forEach;
   inherit (lib.filesystem) listFilesRecursive;
   inherit (lib.strings) hasSuffix hasPrefix;
 in
-{
+rec {
   sway = import ./sway.nix { inherit lib; };
   toRasi = import ./toRasi.nix { inherit lib; };
   mkLiteral = value: {
@@ -27,6 +28,7 @@ in
       (filter (n: !hasPrefix "." (baseNameOf n)))
       (filter (n: (hasSuffix ".hm.nix" n) || (hasSuffix ".c.nix" n) || (hasSuffix "_options.nix" n)))
     ];
+  importHomeForEachDir = dirs: (flatten (forEach dirs import_hmmodules));
   import_nixosmodules =
     rootDir:
     pipe rootDir [
@@ -36,6 +38,7 @@ in
       (filter (n: !hasPrefix "." (baseNameOf n)))
       (filter (n: !hasSuffix ".hm.nix" n))
     ];
+  importNixosForEachDir = dirs: (flatten (forEach dirs import_nixosmodules));
 
   colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; };
   importPaths =

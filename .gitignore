@@ -14,7 +14,7 @@ key
 *.spl
 *tmp
 test*
-
+*.bak
 /.nrepl-port
 /.neoconf.json
 /.clj-kondo

@@ -11,10 +11,12 @@ let
   inherit (self) outputs;
   modules = [
     "${self}/profiles"
-    "${self}/desktop"
-    # "${self}/core"
-    # "${self}/dev"
+    # "${self}/desktop"
     (builtins.toString inputs.base)
+  ];
+  configsDir = [
+    "${self}/core"
+    "${self}/dev"
   ];
 in
 rec {
@@ -61,16 +63,25 @@ rec {
       modules =
         [ inputs.home-manager.nixosModules.home-manager ]
         ++ modules
-        ++ libx.import_nixosmodules "${self}/core"
-        ++ libx.import_nixosmodules "${self}/dev"
-        ++ libx.import_nixosmodules outputs.nixosModules.default
+        ++ libx.importNixosForEachDir (
+          configsDir
+          ++ [
+            "${self}/desktop/common"
+            "${self}/desktop/${desktop}"
+            outputs.nixosModules.default
+          ]
+        )
         ++ [
           {
             home-manager = {
-              users.${username}.imports =
-                libx.import_hmmodules "${self}/core"
-                ++ libx.import_hmmodules "${self}/dev"
-                ++ libx.import_hmmodules outputs.nixosModules.default;
+              users.${username}.imports = libx.importHomeForEachDir (
+                configsDir
+                ++ [
+                  "${self}/desktop/common"
+                  "${self}/desktop/${desktop}"
+                  outputs.nixosModules.default
+                ]
+              );
               extraSpecialArgs = mkArgs.args // {
                 inherit (mkArgs) args;
               };
@@ -116,9 +127,14 @@ rec {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       modules =
         modules
-        ++ libx.import_hmmodules "${self}/core"
-        ++ libx.import_hmmodules "${self}/dev"
-        ++ libx.import_hmmodules outputs.nixosModules.default
+        ++ libx.importHomeForEachDir (
+          configsDir
+          ++ [
+            "${self}/desktop/common"
+            "${self}/desktop/${desktop}"
+            outputs.nixosModules.default
+          ]
+        )
         ++ [
           (
             { pkgs, ... }:
