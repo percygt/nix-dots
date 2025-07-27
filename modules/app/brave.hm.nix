@@ -1,6 +1,6 @@
 { lib, config, ... }:
 {
-  config = lib.mkIf config.modules.app.chromium-webapps.zoom.enable {
+  config = lib.mkIf config.modules.app.brave.enable {
     # disable NativeMessagingHosts symlink
     home.file."${config.xdg.configHome}/BraveSoftware/Brave-Browser/NativeMessagingHosts".enable =
       false;

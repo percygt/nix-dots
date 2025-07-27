@@ -9,7 +9,7 @@ let
   inherit (lib) mkOption mkEnableOption;
   supportedBrowsers = [
     "chromium"
-    # "brave-nightly"
+    "brave-nightly"
     "brave"
   ];
   webappModule = mkOption {

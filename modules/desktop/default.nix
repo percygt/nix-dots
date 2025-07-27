@@ -1,1 +1,0 @@
-{ libx, ... }: libx.importPaths.all ./.

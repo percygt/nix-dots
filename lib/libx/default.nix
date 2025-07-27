@@ -24,18 +24,17 @@ in
     pipe rootDir [
       listFilesRecursive
       (map toString)
-      (filter (hasSuffix "nix"))
-      (filter (n: !hasSuffix "default.nix" n))
-      (filter (n: (hasPrefix "+" (baseNameOf n) || (hasPrefix "_" (baseNameOf n)))))
+      (filter (n: !hasPrefix "." (baseNameOf n)))
+      (filter (n: (hasSuffix ".hm.nix" n) || (hasSuffix ".c.nix" n) || (hasSuffix "_options.nix" n)))
     ];
   import_nixosmodules =
     rootDir:
     pipe rootDir [
       listFilesRecursive
       (map toString)
-      (filter (hasSuffix "nix"))
-      (filter (n: !hasSuffix "default.nix" n))
-      (filter (n: !hasPrefix "+" (baseNameOf n)))
+      (filter (hasSuffix ".nix"))
+      (filter (n: !hasPrefix "." (baseNameOf n)))
+      (filter (n: !hasSuffix ".hm.nix" n))
     ];
 
   colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; };

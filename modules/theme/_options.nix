@@ -43,7 +43,7 @@ in
     colorscheme = lib.mkOption {
       description = "Current colorscheme";
       type = with lib.types; either attrs path;
-      default = import ./+extras/base24-syft-tokyo.nix;
+      default = import ./.base24-syft-tokyo.nix;
     };
     colors = lib.mkOption {
       description = "Base24 colors";

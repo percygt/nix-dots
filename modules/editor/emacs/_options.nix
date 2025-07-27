@@ -9,7 +9,7 @@ let
   devCfg = config.modules.dev.tools.editorExtraPackages;
   extraPackages =
     devCfg
-    ++ (import ./extraPackages.nix pkgs)
+    ++ (import ./.extraPackages.nix pkgs)
     ++ [
       (pkgs.emacs-lsp-booster.overrideAttrs (_: {
         nativeCheckInputs = [ emacs ]; # override emacs pkg for tests/bytecode_test

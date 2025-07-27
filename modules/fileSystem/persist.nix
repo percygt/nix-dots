@@ -26,7 +26,6 @@ in
             group = "colord";
             mode = "u=rwx,g=rx,o=";
           }
-          # files = [ "/etc/machine-id" ];
         ] ++ cfg.systemData.directories;
       };
       # My user persistence

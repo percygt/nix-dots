@@ -14,7 +14,6 @@ let
     "${self}/desktop"
     # "${self}/core"
     # "${self}/dev"
-    outputs.nixosModules.default
     (builtins.toString inputs.base)
   ];
 in
@@ -64,12 +63,14 @@ rec {
         ++ modules
         ++ libx.import_nixosmodules "${self}/core"
         ++ libx.import_nixosmodules "${self}/dev"
+        ++ libx.import_nixosmodules outputs.nixosModules.default
         ++ [
           {
             home-manager = {
               users.${username}.imports =
                 libx.import_hmmodules "${self}/core"
-                ++ libx.import_hmmodules "${self}/dev";
+                ++ libx.import_hmmodules "${self}/dev"
+                ++ libx.import_hmmodules outputs.nixosModules.default;
               extraSpecialArgs = mkArgs.args // {
                 inherit (mkArgs) args;
               };
@@ -117,6 +118,7 @@ rec {
         modules
         ++ libx.import_hmmodules "${self}/core"
         ++ libx.import_hmmodules "${self}/dev"
+        ++ libx.import_hmmodules outputs.nixosModules.default
         ++ [
           (
             { pkgs, ... }:

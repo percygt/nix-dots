@@ -17,13 +17,6 @@ in
       type = lib.types.str;
       default = "${homeDirectory}/nix-dots";
     };
-    dev = {
-      git.package = lib.mkOption {
-        description = "Git package";
-        type = lib.types.package;
-        default = pkgs.git;
-      };
-    };
     textEditor = {
       nvim = {
         "system.lua" = lib.mkOption {
