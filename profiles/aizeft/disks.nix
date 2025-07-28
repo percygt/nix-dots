@@ -1,5 +1,6 @@
-{ lib, ... }:
+{ lib, inputs, ... }:
 {
+  imports = [ inputs.disko.nixosModules.disko ];
   environment.etc = {
     "crypttab".text = ''
       data  /dev/disk/by-partlabel/disk-home-data  /persist/system/keys/data.keyfile

@@ -9,132 +9,113 @@
 }:
 let
   inherit (self) outputs;
-  modules = [
-    "${self}/profiles"
-    # "${self}/desktop"
-    (builtins.toString inputs.base)
-  ];
-  configsDir = [
-    "${self}/core"
-    "${self}/dev"
-  ];
-in
-rec {
+  lib = inputs.home-manager.lib // inputs.nixpkgs.lib;
+  libx = import "${self}/lib/libx" { inherit lib; };
+  defaultDirs =
+    {
+      desktop,
+      profile,
+      extraModules,
+    }:
+    (
+      [
+        "${self}/core"
+        "${self}/dev"
+        "${self}/profiles/${profile}"
+        self.outputs.nixosModules.default
+      ]
+      ++ extraModules
+      ++ lib.optionals (desktop != null) [
+        "${self}/desktop/common"
+        "${self}/desktop/${desktop}"
+      ]
+    );
   supportedSystems = [
     "x86_64-linux"
     "aarch64-linux"
   ];
+
+in
+{
   forAllSystems =
-    function:
-    inputs.nixpkgs.lib.genAttrs supportedSystems (
-      system: function inputs.nixpkgs.legacyPackages.${system}
-    );
+    function: lib.genAttrs supportedSystems (system: function inputs.nixpkgs.legacyPackages.${system});
+
   buildSystem =
     {
       profile,
-      isIso ? false,
       system ? defaultSystem,
       desktop ? defaultDesktop,
       username ? defaultUsername,
+      extraModules ? [ ],
     }:
     let
-      inherit (inputs.nixpkgs.lib) nixosSystem;
-      mkArgs = import ./mkArgs.nix {
+      inherit (lib) nixosSystem;
+      homeDirectory = "/home/${username}";
+      args = {
         inherit
+          self
           inputs
           outputs
-          self
-          desktop
           profile
-          isIso
           username
+          libx
+          homeDirectory
           stateVersion
-          ;
-      };
-      libx = import "${self}/lib/libx" {
-        inherit
-          inputs
-          username
+          desktop
           ;
       };
     in
     nixosSystem {
       inherit system;
       modules =
-        [ inputs.home-manager.nixosModules.home-manager ]
-        ++ modules
-        ++ libx.importNixosForEachDir (
-          configsDir
-          ++ [
-            "${self}/desktop/common"
-            "${self}/desktop/${desktop}"
-            outputs.nixosModules.default
-          ]
-        )
+        libx.importNixosForEachDir (defaultDirs {
+          inherit desktop profile extraModules;
+        })
         ++ [
+          inputs.home-manager.nixosModules.home-manager
           {
             home-manager = {
-              users.${username}.imports = libx.importHomeForEachDir (
-                configsDir
-                ++ [
-                  "${self}/desktop/common"
-                  "${self}/desktop/${desktop}"
-                  outputs.nixosModules.default
-                ]
-              );
-              extraSpecialArgs = mkArgs.args // {
-                inherit (mkArgs) args;
-              };
+              users.${username}.imports = libx.importHomeForEachDir (defaultDirs {
+                inherit desktop profile extraModules;
+              });
+              extraSpecialArgs = args;
             };
           }
         ];
-      specialArgs = {
-        homeArgs = mkArgs.args;
-      } // mkArgs.args;
+      specialArgs = args;
     };
 
   buildHome =
     {
       profile,
-      isGeneric ? false,
       system ? defaultSystem,
       desktop ? defaultDesktop,
       username ? defaultUsername,
+      extraModules ? [ ],
     }:
     let
-      inherit (inputs.home-manager.lib) homeManagerConfiguration;
-      libx = import "${self}/lib/libx" {
+      inherit (lib) homeManagerConfiguration;
+      homeDirectory = "/home/${username}";
+      args = {
         inherit
-          inputs
-          username
-          ;
-      };
-      mkArgs = import ./mkArgs.nix {
-        inherit
+          self
           inputs
           outputs
-          self
-          desktop
           profile
-          isGeneric
           username
+          libx
+          homeDirectory
           stateVersion
+          desktop
           ;
-        homeMarker = true;
       };
     in
     homeManagerConfiguration {
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       modules =
-        modules
-        ++ libx.importHomeForEachDir (
-          configsDir
-          ++ [
-            "${self}/desktop/common"
-            "${self}/desktop/${desktop}"
-            outputs.nixosModules.default
-          ]
-        )
+        libx.importHomeForEachDir (defaultDirs {
+          inherit desktop profile extraModules;
+        })
         ++ [
           (
             { pkgs, ... }:
@@ -143,42 +124,6 @@ rec {
             }
           )
         ];
-      extraSpecialArgs = mkArgs.args;
-    };
-
-  buildDroid =
-    {
-      username ? defaultUsername,
-    }:
-    let
-      inherit (inputs.nix-on-droid.lib) nixOnDroidConfiguration;
-      mkArgs = import ./mkArgs.nix {
-        inherit
-          inputs
-          outputs
-          self
-          username
-          stateVersion
-          ;
-        isDroid = true;
-      };
-    in
-    nixOnDroidConfiguration {
-      pkgs = import inputs.nixpkgs {
-        system = "aarch64-linux";
-        overlays = builtins.attrValues outputs.overlays ++ [
-          inputs.nix-on-droid.overlays.default
-        ];
-      };
-      # inherit modules;
-      modules = [
-        # "${self}/profiles"
-        "${self}/configs"
-        outputs.nixosModules.default
-        # (builtins.toString inputs.base)
-      ];
-      extraSpecialArgs = {
-        homeArgs = mkArgs.args;
-      } // mkArgs.args;
+      extraSpecialArgs = args;
     };
 }

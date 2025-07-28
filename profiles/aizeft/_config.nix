@@ -1,9 +1,5 @@
-{ lib, inputs, ... }:
+{ lib, ... }:
 {
-  imports = [
-    inputs.disko.nixosModules.disko
-    ./disks.nix
-  ];
   boot = {
     initrd.availableKernelModules = [
       "xhci_pci"

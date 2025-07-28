@@ -22,6 +22,7 @@
       nixosConfigurations = {
         aizeft = bldr.buildSystem {
           profile = "aizeft";
+          extraModules = [ (builtins.toString inputs.base) ];
         };
         vm = inputs.nixpkgs.lib.nixosSystem {
           system = defaultSystem;
@@ -37,28 +38,12 @@
           };
         };
 
-        minimal = bldr.buildSystem {
-          profile = "minimal";
-          isIso = true;
-          username = "nixos";
-        };
-        graphical = bldr.buildSystem {
-          profile = "graphical";
-          isIso = true;
-          username = "nixos";
-        };
       };
       homeConfigurations = {
         "percygt@aizeft" = bldr.buildHome {
           profile = "aizeft";
         };
-        fates = bldr.buildHome {
-          profile = "fates";
-          desktop = "gnome";
-          isGeneric = true;
-        };
       };
-      nixOnDroidConfigurations.default = bldr.buildDroid { };
       nixosModules.default = ./modules;
       packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
       formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
