@@ -1,0 +1,29 @@
+{
+  slug = "syft";
+  scheme = "Syft";
+  author = "Percy";
+  base00 = "00051a"; # [#00051A] eclipse     bG
+  base01 = "081028"; # [#081028] midnight    Black
+  base02 = "08103a"; # [#08103a] navyNight   brightBlack
+  base03 = "292538"; # [#292538] plum
+  base04 = "6e738d"; # [#6e738d] stormySky
+  base05 = "71e3d1"; # [#71e3d1] aqua        fG
+  base06 = "fffae5"; # [#fffae5] cream       white
+  base07 = "939ab7"; # [#939ab7] lavender    brightWhite
+  base08 = "4e2a1b"; # [#4E2A1B] redwood
+  base09 = "f1a573"; # [#f1a573] peach       orange
+  base0A = "f9e2af"; # [#f9e2af] butter      yellow
+  base0B = "439448"; # [#439448] green       green
+  base0C = "81c8be"; # [#81c8be] teal        cyan
+  base0D = "8caaee"; # [#8caaee] azure       blue
+  base0E = "d279ff"; # [#d279ff] magenta     magenta
+  base0F = "3f0a0a"; # [#3F0A0A] mahogany    brown
+  base10 = "041026"; # [#041026] abyss
+  base11 = "030205"; # [#030205] obsidian
+  base12 = "e34234"; # [#e34234] vermilion
+  base13 = "d9a145"; # [#d9a145] marigold
+  base14 = "2ee874"; # [#2ee874] mintGreen
+  base15 = "81ebe6"; # [#81ebe6] breeze
+  base16 = "00a3e0"; # [#00A3E0] periwinkle  blue
+  base17 = "ad26f6"; # [#ad26f6] amethyst
+}
