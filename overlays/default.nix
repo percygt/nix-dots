@@ -5,6 +5,7 @@
   nixd = inputs.nixd.overlays.default;
   fenix = inputs.fenix.overlays.default;
   nur = inputs.nur.overlays.default;
+  niri = inputs.niri.overlays.niri;
   nixpkgs-variants = final: _: {
     stable = import inputs.nixpkgs-stable {
       inherit (final) system config;

@@ -4,7 +4,6 @@
     { self, ... }@inputs:
     let
       defaultUsername = "percygt";
-      defaultDesktop = "sway";
       defaultSystem = "x86_64-linux";
       stateVersion = "25.05";
       bldr = import ./lib {
@@ -13,7 +12,6 @@
           inputs
           stateVersion
           defaultSystem
-          defaultDesktop
           defaultUsername
           ;
       };
@@ -22,6 +20,7 @@
       nixosConfigurations = {
         aizeft = bldr.buildSystem {
           profile = "aizeft";
+          desktop = "sway";
           extraModules = [ (builtins.toString inputs.base) ];
         };
         vm = inputs.nixpkgs.lib.nixosSystem {
@@ -42,6 +41,8 @@
       homeConfigurations = {
         "percygt@aizeft" = bldr.buildHome {
           profile = "aizeft";
+          desktop = "sway";
+          extraModules = [ (builtins.toString inputs.base) ];
         };
       };
       nixosModules.default = ./modules;

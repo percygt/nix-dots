@@ -3,7 +3,6 @@
   self,
   stateVersion,
   defaultSystem,
-  defaultDesktop,
   defaultUsername,
   ...
 }:
@@ -44,7 +43,7 @@ in
     {
       profile,
       system ? defaultSystem,
-      desktop ? defaultDesktop,
+      desktop ? null,
       username ? defaultUsername,
       extraModules ? [ ],
     }:
@@ -89,7 +88,7 @@ in
     {
       profile,
       system ? defaultSystem,
-      desktop ? defaultDesktop,
+      desktop ? null,
       username ? defaultUsername,
       extraModules ? [ ],
     }:

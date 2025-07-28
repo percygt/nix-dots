@@ -31,5 +31,4 @@ rec {
   importNixosForEachDir = dirs: (flatten (forEach dirs importNixosModules));
 
   colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; };
-
 }

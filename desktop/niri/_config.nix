@@ -4,14 +4,9 @@
   ...
 }:
 let
-  g = config._base;
+  cfg = config.modules.desktop.sway;
 in
 {
-  imports = [
-    ./regreet.nix
-    # ./tuigreet.nix
-  ];
-
   modules.fileSystem.persist.userData = {
     directories = [
       ".local/share/keyrings"
@@ -29,7 +24,7 @@ in
   programs = {
     sway = {
       enable = true;
-      package = g.desktop.sway.finalPackage;
+      package = cfg.finalPackage;
       wrapperFeatures.gtk = true;
     };
   };
@@ -68,6 +63,8 @@ in
       packages = with pkgs; [
         dconf
         xfce.xfconf
+        gcr
+        gnome-settings-daemon
       ];
     };
     gnome = {
