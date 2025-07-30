@@ -44,7 +44,7 @@ in
         wifi.backend = "iwd";
         plugins = with pkgs; [
           networkmanager-fortisslvpn
-          networkmanager-iodine
+          # networkmanager-iodine
           networkmanager-l2tp
           networkmanager-openconnect
           networkmanager-openvpn

@@ -38,8 +38,8 @@
           nixd
 
           # Elixir
-          elixir
-          elixir_ls
+          stable.elixir
+          stable.elixir_ls
 
           #php
           # php.packages.php-cs-fixer
@@ -75,7 +75,7 @@
           vtsls
           prettierd
           eslint_d
-          nodePackages.prettier
+          stable.nodePackages.prettier
           # NOTE: Handled by Mason-Lspconfig
           # astro-language-server
           # svelte-language-server

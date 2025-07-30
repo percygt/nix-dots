@@ -36,7 +36,6 @@ in
         cursor = {
           blink = "yes";
           style = "beam";
-          color = "${c.base01} ${c.base05}";
         };
 
         mouse.hide-when-typing = "yes";
@@ -50,6 +49,7 @@ in
         };
 
         colors = {
+          cursor = "${c.base01} ${c.base05}";
           alpha = t.opacity;
           background = c.base00;
           foreground = c.base05;

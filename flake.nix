@@ -20,7 +20,7 @@
       nixosConfigurations = {
         aizeft = bldr.buildSystem {
           profile = "aizeft";
-          desktop = "sway";
+          desktop = "niri";
           extraModules = [ (builtins.toString inputs.base) ];
         };
         vm = inputs.nixpkgs.lib.nixosSystem {
@@ -41,7 +41,7 @@
       homeConfigurations = {
         "percygt@aizeft" = bldr.buildHome {
           profile = "aizeft";
-          desktop = "sway";
+          desktop = "niri";
           extraModules = [ (builtins.toString inputs.base) ];
         };
       };

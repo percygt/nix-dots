@@ -17,7 +17,7 @@
       inherit (final) system config;
     };
   };
-  packageOverrides = _: prev: import ../packages/overrides.nix { inherit prev inputs; };
+  packageOverrides = final: prev: import ../packages/overrides.nix { inherit final prev; };
   packageOverlays =
     final: _:
     import ../packages/overlays.nix {
