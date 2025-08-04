@@ -4,14 +4,14 @@
     shell = {
       name = "VictorMono Nerd Font";
       style = [
+        "SemiBold"
         "Bold"
-        "Bold"
-        "SemiBold Italic"
+        "Italic"
         "Bold Italic"
       ];
       package = pkgs.nerd-fonts.victor-mono;
       typeface = "monospace";
-      size = 12.0;
+      size = 11.0;
     };
     interface = {
       name = "Iosevka Aile";
@@ -46,7 +46,6 @@
         ubuntu_font_family
       ])
       ++ (with pkgs.nerd-fonts; [
-        martian-mono
         monaspace
         geist-mono
         jetbrains-mono

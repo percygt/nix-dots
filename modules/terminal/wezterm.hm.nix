@@ -97,6 +97,7 @@ in
           	disable_default_key_bindings = true,
           	window_close_confirmation = "NeverPrompt",
             line_height = 1.2,
+            max_fps = 120,
             window_padding = {
               left = 5,
               right = 5,

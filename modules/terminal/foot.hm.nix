@@ -26,10 +26,9 @@ in
           font-bold-italic = "${f.name}:style=${builtins.elemAt f.style 3}:size=${
             builtins.toString (f.size + 0.5)
           }";
-          underline-offset = 1.2;
+          underline-offset = 2.2;
           underline-thickness = 1;
-          resize-by-cells = "no";
-          line-height = 20;
+          line-height = 18;
           pad = "10x6";
         };
 
@@ -41,7 +40,7 @@ in
         mouse.hide-when-typing = "yes";
 
         csd = {
-          preferred = "server";
+          preferred = "none";
           color = "ff000000";
           size = 1;
           border-width = 1;

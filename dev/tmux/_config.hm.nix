@@ -70,9 +70,9 @@ in
         set -g @BORDER_ACTIVE '${c.base0A}'
         set -g @FG_PREFIX '${c.base14}'
         set -g @FG_PREFIX_ACTIVE '${c.base13}'
-        set -g @FG_WINDOW_ACTIVE '${c.base16}'
+        set -g @FG_WINDOW_ACTIVE '${c.base06}'
         set -g @FG_WINDOW_PREV '${c.base08}'
-        set -g @FG_STATUS '${c.base05}'
+        set -g @FG_STATUS '${c.base03}'
       '';
     };
 }

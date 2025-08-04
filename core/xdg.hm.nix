@@ -10,7 +10,7 @@
     cacheHome = homeDirectory + "/.local/cache";
     dataHome = homeDirectory + "/.local/share";
     stateHome = homeDirectory + "/.local/state";
-    userDirs = {
+    userDirs = rec {
       enable = true;
       createDirectories = lib.mkDefault true;
 
@@ -23,6 +23,7 @@
       publicShare = homeDirectory;
       templates = homeDirectory;
       videos = homeDirectory;
+      extraConfig.XDG_SCREENSHOTS_DIR = pictures + "/screenshots";
     };
   };
 }

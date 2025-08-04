@@ -46,47 +46,45 @@ in
       };
   };
   xdg = {
-    configFile = {
-      "nvim/lua/config/system.lua".text = g.textEditor.nvim."system.lua";
-      "nvim/lazy-lock.json".source = config.lib.file.mkOutOfStoreSymlink "${configNvim}/lazy-lock.json";
-      "nvim/neoconf.json".source = config.lib.file.mkOutOfStoreSymlink "${configNvim}/neoconf.json";
-      "nvim/spell".source = config.lib.file.mkOutOfStoreSymlink "${configNvim}/spell";
-      "nvim/ftdetect".source = config.lib.file.mkOutOfStoreSymlink "${configNvim}/ftdetect";
-      "nvim/lua/plugins".source = config.lib.file.mkOutOfStoreSymlink "${configNvim}/lua/plugins";
-      "nvim/lua/utils".source = config.lib.file.mkOutOfStoreSymlink "${configNvim}/lua/utils";
-      "nvim/lua/config/autocmds.lua".source =
-        config.lib.file.mkOutOfStoreSymlink "${configNvim}/lua/config/autocmds.lua";
-      "nvim/lua/config/icons.lua".source =
-        config.lib.file.mkOutOfStoreSymlink "${configNvim}/lua/config/icons.lua";
-      "nvim/lua/config/lazy.lua".source =
-        config.lib.file.mkOutOfStoreSymlink "${configNvim}/lua/config/lazy.lua";
-      "nvim/lua/config/lsp-servers.lua".source =
-        config.lib.file.mkOutOfStoreSymlink "${configNvim}/lua/config/lsp-servers.lua";
-      "nvim/lua/config/options.lua".source =
-        config.lib.file.mkOutOfStoreSymlink "${configNvim}/lua/config/options.lua";
-      "nvim/lua/config/keymaps.lua".source =
-        config.lib.file.mkOutOfStoreSymlink "${configNvim}/lua/config/keymaps.lua";
-      "nvim/lazyvim.json".source = config.lib.file.mkOutOfStoreSymlink "${configNvim}/lazyvim.json";
-      # Nixd LSP configuration
-      "nvim/lua/config/colorscheme.lua" =
-        let
-          colorschemeLua =
-            pkgs.runCommand "colorscheme.lua" { }
-              #bash
-              ''
-                ${pkgs.yq-go}/bin/yq -o=lua 'del(.scheme) |
-                    del(.author) |
-                    del(.name) |
-                    del(.slug) |
-                    del(.system) |
-                    del(.variant) |
-                    .[] |= "#" + .' ${config.modules.themes.colors} > $out
-              '';
-        in
-        {
-          text = builtins.readFile colorschemeLua;
-        };
-    };
+    configFile =
+      let
+        symlink = file: config.lib.file.mkOutOfStoreSymlink file;
+      in
+      {
+        "nvim/lua/config/system.lua".text = g.textEditor.nvim."system.lua";
+        "nvim/lazy-lock.json".source = symlink "${configNvim}/lazy-lock.json";
+        "nvim/neoconf.json".source = symlink "${configNvim}/neoconf.json";
+        "nvim/spell".source = symlink "${configNvim}/spell";
+        "nvim/ftdetect".source = symlink "${configNvim}/ftdetect";
+        "nvim/lua/plugins".source = symlink "${configNvim}/lua/plugins";
+        "nvim/lua/utils".source = symlink "${configNvim}/lua/utils";
+        "nvim/lua/config/autocmds.lua".source = symlink "${configNvim}/lua/config/autocmds.lua";
+        "nvim/lua/config/icons.lua".source = symlink "${configNvim}/lua/config/icons.lua";
+        "nvim/lua/config/lazy.lua".source = symlink "${configNvim}/lua/config/lazy.lua";
+        "nvim/lua/config/lsp-servers.lua".source = symlink "${configNvim}/lua/config/lsp-servers.lua";
+        "nvim/lua/config/options.lua".source = symlink "${configNvim}/lua/config/options.lua";
+        "nvim/lua/config/keymaps.lua".source = symlink "${configNvim}/lua/config/keymaps.lua";
+        "nvim/lazyvim.json".source = symlink "${configNvim}/lazyvim.json";
+        # Nixd LSP configuration
+        "nvim/lua/config/colorscheme.lua" =
+          let
+            colorschemeLua =
+              pkgs.runCommand "colorscheme.lua" { }
+                #bash
+                ''
+                  ${pkgs.yq-go}/bin/yq -o=lua 'del(.scheme) |
+                      del(.author) |
+                      del(.name) |
+                      del(.slug) |
+                      del(.system) |
+                      del(.variant) |
+                      .[] |= "#" + .' ${config.modules.themes.colors} > $out
+                '';
+          in
+          {
+            text = builtins.readFile colorschemeLua;
+          };
+      };
     desktopEntries = {
       neovim = lib.mkIf (desktop != null) {
         name = "Neovim";

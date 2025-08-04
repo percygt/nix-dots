@@ -3,24 +3,48 @@
 // Check the wiki for a full description of the configuration:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 
-// Input device configuration.
-// Find the full list of options on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+debug {
+    // preview-render "screencast"
+    // preview-render "screen-capture"
+    // dbus-interfaces-in-non-session-instances
+    // wait-for-frame-completion-before-queueing
+    // enable-overlay-planes
+    // disable-cursor-plane
+    // disable-direct-scanout
+    // restrict-primary-scanout-to-matching-format
+    // render-drm-device "/dev/dri/renderD129"
+    // render-drm-device "/dev/dri/renderD128"
+    // render-drm-device "/dev/dri/card0"
+    // render-drm-device "/dev/dri/card2"
+    // force-pipewire-invalid-modifier
+    // emulate-zero-presentation-time
+    // disable-transactions
+    // disable-resize-throttling
+    // keep-laptop-panel-on-when-lid-is-closed
+    // disable-monitor-names
+    // strict-new-window-focus-policy
+
+    wait-for-frame-completion-in-pipewire
+}
+prefer-no-csd
 input {
     keyboard {
         xkb {
             layout "us"
         }
+        repeat-delay 250
+        repeat-rate 35
     }
     touchpad {
         // off
         tap
-        // dwt
+        dwt
         // dwtp
         // drag false
         // drag-lock
         natural-scroll
-        // accel-speed 0.2
+        accel-speed 0.4
+        click-method "clickfinger"
         // accel-profile "flat"
         // scroll-method "two-finger"
         // disabled-on-external-mouse
@@ -29,7 +53,7 @@ input {
     mouse {
         // off
         // natural-scroll
-        // accel-speed 0.2
+        accel-speed 0.1
         // accel-profile "flat"
         // scroll-method "no-scroll"
     }
@@ -38,16 +62,18 @@ input {
         // off
         // natural-scroll
         // accel-speed 0.2
-        accel-profile "adaptive"
+        // accel-profile "adaptive"
         // scroll-method "on-button-down"
         // scroll-button 273
         // scroll-button-lock
         // middle-emulation
     }
 
-    focus-follows-mouse
+    focus-follows-mouse max-scroll-amount="0%"
 }
-
+overview {
+    backdrop-color "#0E0825"
+}
 // You can configure outputs by their name, which you can find
 // by running `niri msg outputs` while inside a niri instance.
 // The built-in laptop monitor is usually called "eDP-1".
@@ -90,7 +116,9 @@ input {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
 layout {
     gaps 12
-    center-focused-column "never"
+    // center-focused-column "never"
+    // center-focused-column "always"
+    background-color "transparent"
 
     preset-column-widths {
         proportion 0.33333
@@ -104,11 +132,18 @@ layout {
         proportion 0.66667
         proportion 1.0
     }
-
+    shadow {
+        on
+        softness 20
+        spread 5
+        offset x=5 y=5
+        draw-behind-window false
+        color "#000000aa"
+    }
     // default-column-width { proportion 0.5; }
     // If you leave the brackets empty, the windows themselves will decide their initial width.
-    default-column-width {}
-
+    // default-column-width {}
+    default-column-width { proportion 0.75; }
     // By default focus ring and border are rendered as a solid background rectangle
     // behind windows. That is, they will show up through semitransparent windows.
     // This is because windows using client-side decorations can have an arbitrary shape.
@@ -122,14 +157,23 @@ layout {
 
     // You can change how the focus ring looks.
     focus-ring {
-        width 2
-        active-color "#d8dadd"
-        inactive-color "#0b0b0c"
+        // off
+        // width 10000
+        active-color "#00000055"
+        // inactive-color "blue"
     }
-
+    insert-hint {
+        // off
+        color "#ffc87f80"
+        gradient from="#f38ba880" to="#f9e2af80" angle=45 relative-to="workspace-view"
+        // gradient from="#ff000080" to="#ffa50080" angle=45 relative-to="workspace-view" in="oklch longer hue"
+    }
     // You can also add a border. It's similar to the focus ring, but always visible.
     border {
         off
+        // width 1
+        // active-color "#d8dadd"
+        // inactive-color "#0b0b0c"
     }
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
     // You can think of them as a kind of outer gaps. They are set in logical pixels.
@@ -142,7 +186,6 @@ layout {
         top 0
         bottom 0
     }
-    background-color "transparent"
 }
 
 // Add lines like this to spawn processes at startup.
@@ -177,13 +220,223 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 // The wiki explains how to configure individual animations:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
 animations {
-    // Uncomment to turn off all animations.
     // off
-
-    // Slow down all animations by this factor. Values below 1 speed them up instead.
+    // slowdown 100.0
+    // slowdown 10.0
+    // slowdown 4.0
     // slowdown 3.0
+    // slowdown 2.0
+    // slowdown 1.5
+
+    workspace-switch {
+        // off
+        // duration-ms 2500
+        // curve "ease-out-cubic"
+        spring damping-ratio=0.8 stiffness=200 epsilon=0.0001
+    }
+
+    window-open {
+        // off
+        duration-ms 400
+        curve "ease-out-cubic"
+        // spring damping-ratio=0.8 stiffness=1000 epsilon=0.0001
+        // duration-ms 1000
+        // curve "linear"
+
+
+    // expand and translate downwards
+        custom-shader r"
+float map(float value, float min1, float max1, float min2, float max2) {
+    return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
 }
 
+vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+    float cur = niri_clamped_progress;
+    vec3 coord = vec3(
+        coords_geo.x,
+        map(coords_geo.y, 0.0, cur, 0.0, 1.0),
+        coords_geo.z
+    );
+    coord.y += 1.0 * (1.0 - cur);
+    return texture2D(niri_tex, (niri_geo_to_tex * coord).st);
+}
+"
+        // custom-shader r"
+        //     vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+        //         vec3 coords_tex = niri_geo_to_tex * coords_geo;
+        //         vec4 color = texture2D(niri_tex, coords_tex.st);
+        //
+        //         vec2 coords = (coords_geo.xy - vec2(0.5, 0.5)) * size_geo.xy * 2.0;
+        //         coords = coords / length(size_geo.xy);
+        //         float p = niri_clamped_progress;
+        //         if (p * p <= dot(coords, coords))
+        //             color = vec4(0.0);
+        //
+        //         return color;
+        //     }
+        // "
+
+        // custom-shader r"
+        //     vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+        //         // Scale up the window.
+        //         float scale = max(0.0, (niri_progress / 2.0 + 0.5));
+        //         coords_geo = vec3((coords_geo.xy - vec2(0.5)) / scale + vec2(0.5), 1.0);
+        //
+        //         // Get color from the window texture.
+        //         vec3 coords_tex = niri_geo_to_tex * coords_geo;
+        //         vec4 color = texture2D(niri_tex, coords_tex.st);
+        //
+        //         // Make the window opaque.
+        //         color *= niri_clamped_progress;
+        //
+        //         return color;
+        //     }
+        // "
+        // custom-shader r"
+        //     vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+        //         vec3 coords_tex = niri_geo_to_tex * coords_geo;
+        //         vec4 color = texture2D(niri_tex, coords_tex.st);
+        //
+        //         return color;
+        //     }
+        // "
+    }
+
+    window-close {
+        // off
+        // duration-ms 2500
+        // duration-ms 3000
+        duration-ms 400
+        // spring damping-ratio=0.8 stiffness=100 epsilon=0.001
+        // spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
+
+    // collapse and translate downwards
+        custom-shader r"
+float map(float value, float min1, float max1, float min2, float max2) {
+    return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+}
+
+vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+    float cur = niri_clamped_progress;
+    vec3 coord = vec3(
+        coords_geo.x,
+        // 0.2,
+        map(coords_geo.y, cur, 1.0, 0.0, 1.0),
+        coords_geo.z
+    );
+    coord.y -= 1.0 * cur;
+    return texture2D(niri_tex, (niri_geo_to_tex * coord).st);
+}
+        "
+
+//         custom-shader r"
+// vec4 fall_and_rotate(vec3 coords_geo, vec3 size_geo) {
+//     float progress = niri_clamped_progress * niri_clamped_progress;
+//     vec2 coords = (coords_geo.xy - vec2(0.5, 1.0)) * size_geo.xy;
+//     coords.y -= progress * 200.0;
+//     float random = (niri_random_seed - 0.5) / 2.0;
+//     random = sign(random) - random;
+//     float max_angle = 0.05 * random;
+//     float angle = progress * max_angle;
+//     mat2 rotate = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+//     coords = rotate * coords;
+//     coords_geo = vec3(coords / size_geo.xy + vec2(0.5, 1.0), 1.0);
+//     vec3 coords_tex = niri_geo_to_tex * coords_geo;
+//     vec4 color = texture2D(niri_tex, coords_tex.st);
+//     return color * (1.0 - niri_clamped_progress);
+// }
+// vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+//     // You can pick one of the example functions or write your own.
+//     return fall_and_rotate(coords_geo, size_geo);
+// }
+//         "
+
+        /-custom-shader r"
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                vec3 coords_tex = niri_geo_to_tex * coords_geo;
+                vec4 color = texture2D(niri_tex, coords_tex.st);
+
+                return color;
+            }
+        "
+    }
+
+    horizontal-view-movement {
+        // off
+        // duration-ms 500
+        // curve "ease-out-cubic"
+        spring damping-ratio=1.0 stiffness=300 epsilon=0.00001
+        // spring damping-ratio=10.0 stiffness=800 epsilon=0.0001
+    }
+
+    window-movement {
+        // off
+        // duration-ms 750
+        // curve "ease-out-cubic"
+        spring damping-ratio=1.0 stiffness=200 epsilon=0.00001
+        // spring damping-ratio=0.2 stiffness=800 epsilon=0.0001
+    }
+
+    /-window-resize {
+        // off
+        // duration-ms 500
+        // duration-ms 2500
+        // curve "ease-out-cubic"
+        // spring damping-ratio=0.2 stiffness=800 epsilon=0.0001
+    }
+
+    config-notification-open-close {
+        // off
+        // duration-ms 250
+        // curve "ease-out-cubic"
+        // spring damping-ratio=0.1 stiffness=1000 epsilon=0.001
+    }
+
+    /-screenshot-ui-open {
+        // off
+        // duration-ms 200
+        // curve "ease-out-quad"
+    }
+}
+
+layer-rule {
+    // match namespace="swww"
+    // match namespace="ags-backdrop"
+
+    place-within-backdrop true
+}
+
+window-rule {
+  draw-border-with-background false
+  // geometry-corner-radius 12
+  clip-to-geometry true
+  // open-fullscreen true
+}
+
+
+window-rule {
+  match title=r#"^(Open File)(.*)$"#
+  match title=r#"^(Select a File)(.*)$"#
+  match title=r#"^(Choose wallpaper)(.*)$"#
+  match title=r#"^(Open Folder)(.*)$"#
+  match title=r#"^(Save As)(.*)$"#
+  match title=r#"^(Library)(.*)$"#
+
+  // image
+  match app-id="imv"
+
+  // zen browser video
+  match title="Picture-in-Picture"
+
+  match app-id="mpv"
+
+  open-floating true
+}
+window-rule {
+  match is-focused=false
+
+  opacity 0.98
+}
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
@@ -198,18 +451,10 @@ window-rule {
     default-column-width {}
 }
 
-// Open the Firefox picture-in-picture player as floating by default.
-window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-    open-floating true
-}
 
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
     match app-id=r#"^org\.gnome\.World\.Secrets$"#
 
@@ -219,12 +464,6 @@ window-rule {
     // block-out-from "screencast"
 }
 
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
-/-window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
-}
 
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name

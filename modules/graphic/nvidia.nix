@@ -13,8 +13,7 @@ in
       boot.kernelParams = [
         "mem_sleep_default=deep"
         "nouveau.modeset=0"
-        "ipv6.disable=1"
-      ]; # Oddly, ipv6 was horribly buggy and causing problems for me in other areas
+      ];
       boot.blacklistedKernelModules = [
         "nouveau"
         "bbswitch"
@@ -34,22 +33,13 @@ in
         };
         nvidia = {
           prime = {
-            sync.enable = false;
-            offload.enable = true;
-            offload.enableOffloadCmd = true;
-            intelBusId = "PCI:0:2:0";
-            nvidiaBusId = "PCI:2:0:0";
+            inherit (cfg.prime)
+              intelBusId
+              nvidiaBusId
+              ;
           };
-
           modesetting.enable = true;
-
-          powerManagement = {
-            enable = false;
-            finegrained = false;
-          };
-
           open = false;
-          nvidiaSettings = true; # gui app
           package = config.boot.kernelPackages.nvidiaPackages.latest;
         };
       };
@@ -62,6 +52,22 @@ in
         __GLX_VENDOR_LIBRARY_NAME = "nvidia";
         # Hardware cursors are currently broken on nvidia
         WLR_NO_HARDWARE_CURSORS = "1";
+      };
+
+    })
+    (lib.mkIf (cfg.prime.enable && cfg.prime.batterySaverSpecialisation) {
+      specialisation = {
+        battery-saver.configuration = {
+          system.nixos.tags = [ "battery-saver" ];
+          modules.graphics.nvidia.bye = true;
+          hardware.nvidia = {
+            prime.offload.enable = lib.mkForce false;
+            powerManagement = {
+              enable = lib.mkForce false;
+              finegrained = lib.mkForce false;
+            };
+          };
+        };
       };
     })
     (lib.mkIf cfg.bye {

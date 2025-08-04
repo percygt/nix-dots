@@ -116,6 +116,7 @@ in
           inherit desktop profile extraModules;
         })
         ++ [
+          inputs.niri.homeModules.niri
           (
             { pkgs, ... }:
             {

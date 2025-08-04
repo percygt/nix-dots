@@ -10,6 +10,7 @@
       intel.enable = true;
       intel.gpu.driver = "xe";
       # nvidia.prime.enable = true;
+      # nvidia.prime.batterySaverSpecialisation = true;
     };
     app = {
       zen.enable = true;
@@ -77,6 +78,7 @@
       foot.enable = true;
       xfce4-terminal.enable = true;
       tilix.enable = true;
+      ghostty.enable = true;
       wezterm.enable = true;
     };
     virtualisation = {

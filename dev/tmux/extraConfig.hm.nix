@@ -21,66 +21,62 @@ in
   programs.tmux.extraConfig =
     # tmux
     ''
-      # ---------------------
-      # Config before plugins
-      # ---------------------
+      # ============================================= #
+      # Config before plugins                         #
+      # ============================================= #
       source ${config.xdg.configHome}/tmux/variables.conf
       source ${config.xdg.configHome}/tmux/beforePlugins.conf
 
+
       # ============================================= #
-      # Load plugins with Home Manager                #
+      # Plugins                                       #
       # ============================================= #
 
-
-      # ---------------------
-      # tmuxplugin-resurrect
-      # ---------------------
+      # ============================================= #
+      # tmuxplugin-resurrect                          #
+      # ============================================= #
       set -g @resurrect-capture-pane-contents 'on'
       set -g @resurrect-processes 'nvim'
       set -g @resurrect-dir '${resurrectDirPath}'
       set -g @resurrect-hook-post-save-all '${resurrectPostSave} "${resurrectDirPath}/last"'
       run-shell "${pkgs.tmuxPlugins.resurrect.rtp}"
 
-      # ---------------------
-      # tmuxplugin-tmux-switcher
-      # ---------------------
-
+      # ============================================= #
+      # tmuxplugin-tmux-switcher                      #
+      # ============================================= #
       set -g @tmux-switcher-find-base "${g.dataDirectory}:1:4,${homeDirectory}:1:1"
       set -g @tmux-switcher-extras "find"
       unbind ,
       set -g @tmux-switcher-bind ","
       run-shell "${tp.tmux-switcher.rtp}"
 
-
-      # ---------------------
-      # tmuxplugin-vim-tmux-navigator
-      # ---------------------
+      # ============================================= #
+      # tmuxplugin-vim-tmux-navigator                 #
+      # ============================================= #
       run-shell "${tp.vim-tmux-navigator.rtp}"
 
-
-      # ---------------------
-      # tmuxplugin-yank
-      # ---------------------
-
+      # ============================================= #
+      # tmuxplugin-yank                               #
+      # ============================================= #
       run-shell "${tp.yank.rtp}"
 
-      # ---------------------
-      # tmuxplugin-extrakto
-      # ---------------------
+      # ============================================= #
+      # tmuxplugin-extrakto                           #
+      # ============================================= #
       set -g @extrakto_clip_tool 'wl-copy'
       run-shell "${tp.extrakto.rtp}"
 
-      # ---------------------
-      # tmuxplugin-continuum
-      # ---------------------
+      # ============================================= #
+      # tmuxplugin-continuum                          #
+      # ============================================= #
       set -g @continuum-restore 'on'
       set -g @continuum-save-interval '10'
       run-shell "${tp.continuum.rtp}"
 
 
-      # ---------------------
-      # Config after plugins
-      # ---------------------
+      # ============================================= #
+      # Config after plugins                          #
+      # ============================================= #
       source ${config.xdg.configHome}/tmux/afterPlugins.conf
     '';
 }

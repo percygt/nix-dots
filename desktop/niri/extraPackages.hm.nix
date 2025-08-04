@@ -28,6 +28,7 @@
         rm /tmp/ocr-"$id".png -vf
       '';
     })
+    hyprlock
     brightnessctl
     autotiling
     grim

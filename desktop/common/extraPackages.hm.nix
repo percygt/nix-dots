@@ -28,10 +28,8 @@
         rm /tmp/ocr-"$id".png -vf
       '';
     })
-    polkit_gnome
     swayidle
     brightnessctl
-    autotiling
     grim
     libnotify
     pamixer

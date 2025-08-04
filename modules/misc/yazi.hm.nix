@@ -4,18 +4,8 @@
   lib,
   ...
 }:
-let
-  swayCfg = config.wayland.windowManager.sway;
-  mod = swayCfg.config.modifier;
-  yazi-foot = pkgs.writers.writeBash "yazi-foot" ''
-    footclient --app-id=yazi --title='Yazi' -- yazi ~
-  '';
-in
 {
   config = lib.mkIf config.modules.misc.yazi.enable {
-    wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-      "${mod}+f" = "exec ddapp -t 'yazi' -- ${yazi-foot}";
-    };
     home = {
       shellAliases.y = "yazi";
       # dependences

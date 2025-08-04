@@ -41,12 +41,19 @@ let
   viewBackupLogCmd = pkgs.writers.writeBash "viewbackuplogcommand" ''
     footclient --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service
   '';
+  cliphistFzfSixel = pkgs.writers.writeBash "cliphistFzfSixel" ''
+    footclient --app-id=clipboard --title=Clipboard -- cliphist-fzf-sixel
+  '';
+  yazi-foot = pkgs.writers.writeBash "yazi-foot" ''
+    footclient --app-id=yazi --title='Yazi' -- yazi ~
+  '';
 in
 {
   wayland.windowManager.sway = {
     config.keybindings = lib.mkOptionDefault {
       "${mod}+m" =
         "exec ddapp -t 'btop' -h 90 -w 90 -- 'footclient --title=SystemMonitor --app-id=btop -- btop'";
+      "${mod}+f" = "exec ddapp -t 'yazi' -- ${yazi-foot}";
       "${mod}+KP_Multiply" =
         lib.mkIf secMod.keepass.enable "exec pkill tofi || ${lib.getExe pkgs.keepmenu}";
       "${mod}+Alt+KP_Multiply" =
@@ -67,6 +74,9 @@ in
       "${mod}+Shift+Tab" = "exec ${lib.getExe pkgs.cycle-sway-output}";
       "${mod}+Tab" = "workspace back_and_forth";
       "${mod}+Backslash" = "exec ${lib.getExe pkgs.cycle-sway-scale}";
+
+      "${mod}+shift+v" =
+        "exec ddapp -t 'clipboard' -n 'Clipboard' -w 90 -h 90 -k true -- ${cliphistFzfSixel}";
       XF86Launch1 = "exec ${lib.getExe pkgs.toggle-service} wlsunset";
 
       "F11" = "fullscreen toggle";
