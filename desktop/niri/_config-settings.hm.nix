@@ -31,6 +31,15 @@ in
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         SDL_VIDEODRIVER = "wayland";
       };
+      workspaces = {
+        main = {
+          open-on-output = "HDMI-A-1";
+        };
+        scratchpad = {
+
+          open-on-output = "HDMI-A-1";
+        };
+      };
       spawn-at-startup = [
         { command = [ "waybar" ]; }
         # { command = [ "hyprlock" ]; }

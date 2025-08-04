@@ -2,6 +2,13 @@
   programs.niri.settings = {
     window-rules = [
       {
+        matches = [ { app-id = "r#\"^dd*\"#"; } ];
+        default-column-width = {
+          proportion = 0.9;
+        };
+        open-on-workspace = "scratchpad";
+      }
+      {
         geometry-corner-radius =
           let
             radius = 0.0;

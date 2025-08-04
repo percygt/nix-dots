@@ -12,8 +12,8 @@
   ];
   modules-left = [
     "custom/rebuild"
-    "sway/workspaces"
-    "sway/window"
+    "niri/workspaces"
+    "niri/window"
   ];
   modules-right = [
     "mpris"
@@ -166,16 +166,13 @@
     on-click = "pamixer --default-source -t";
     tooltip-format = "{source_volume}% / {desc}";
   };
-  "sway/mode" = {
-    format = "<span style=\"italic\">{}</span>";
-  };
-  "sway/window" = {
+  "niri/window" = {
     all-outputs = true;
     format = "{}";
     icon = true;
     icon-size = 12;
   };
-  "sway/workspaces" = {
+  "niri/workspaces" = {
     disable-scroll = true;
     format = "{icon}";
     format-icons = {
