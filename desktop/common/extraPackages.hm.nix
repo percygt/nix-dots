@@ -28,7 +28,8 @@
         rm /tmp/ocr-"$id".png -vf
       '';
     })
-    swayidle
+    backlight-set
+    dimland
     brightnessctl
     grim
     libnotify
@@ -39,7 +40,6 @@
     wl-clipboard
     ydotool
     xdg-utils
-    xwayland
     stable.wl-screenrec
   ];
 }

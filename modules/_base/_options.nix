@@ -28,7 +28,7 @@ in
                 username = "${username}",
                 profile = "${profile}",
                 homeDirectory = "${homeDirectory}",
-                flakeDirectory = "${config._base.flakeDirectory}",
+                flakeDirectory = "${cfg.flakeDirectory}",
               }
             '';
           type = lib.types.lines;
@@ -202,8 +202,26 @@ in
       type = lib.types.attrs;
       default = { };
     };
-
     system = {
+      envVars = lib.mkOption {
+        description = "Environment variables";
+        type = lib.types.attrs;
+        default = {
+          FLAKE = cfg.flakeDirectory;
+          MANPAGER = "nvim +Man!";
+          LANG = "en_US.UTF-8";
+          LC_ALL = "en_US.UTF-8";
+          LC_CTYPE = "en_US.UTF-8";
+          CLUTTER_BACKEND = "wayland";
+          GDK_BACKEND = "wayland,x11";
+          MOZ_ENABLE_WAYLAND = "1";
+          NIXOS_OZONE_WL = "1";
+          _JAVA_AWT_WM_NONREPARENTING = "1";
+          QT_QPA_PLATFORM = "wayland,xcb";
+          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+          SDL_VIDEODRIVER = "wayland";
+        };
+      };
       envPackages = lib.mkOption {
         description = "Environment packages";
         type = with lib.types; listOf package;
@@ -221,6 +239,9 @@ in
             config.modules.security.ssh.package
             config.modules.dev.git.package
             nh
+            gawk
+            gnugrep
+            gnused
             nfs-utils
             iputils
             coreutils
@@ -228,6 +249,8 @@ in
             pciutils
             usbutils
             util-linux
+            nettools
+            kmod
             acpi
             procps
             systemd
@@ -263,7 +286,6 @@ in
             tree
             traceroute
             cryptsetup
-            procps
             unzip
             gzip
             unrar-free

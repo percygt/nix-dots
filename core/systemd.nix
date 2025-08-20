@@ -36,10 +36,9 @@
         ${pkgs.libnotify}/bin/notify-send -i emblem-default "$TITLE Service" "Successfully started."
       '';
     };
-    extraConfig = ''
-      [Manager]
-      DefaultTimeoutStopSec=10
-      DefaultTimeoutAbortSec=10
-    '';
+    settings.Manager = {
+      DefaultTimeoutStopSec = 10;
+      DefaultTimeoutAbortSec = 10;
+    };
   };
 }

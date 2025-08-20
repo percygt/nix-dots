@@ -25,6 +25,9 @@ return {
   elixirls = {
     cmd = { "elixir-ls" },
   },
+  qmlls = {
+    root_markers = { "shell.qml" },
+  },
   nushell = {},
   -- nil_ls = {
   --   settings = {

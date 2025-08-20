@@ -9,21 +9,20 @@
     with config.lib.niri.actions;
     let
       playerctl = spawn "${lib.getExe pkgs.playerctl}";
-      cliphist-clipboard = pkgs.writers.writeBash "cliphist-clipboard" ''
-        footclient --app-id=clipboard --title=Clipboard -- cliphist-fzf-sixel
+      secMod = config.modules.security;
+      cycle-brightness = pkgs.writers.writeBash "cycle-brightness" ''
+        state_file="$XDG_CACHE_HOME/brightness_cycle_state"
+        values=(80 55 30 15 0 100)
+        if [[ -f "$state_file" ]]; then
+          current_index=$(cat "$state_file")
+        else
+          current_index=-1
+        fi
+        next_index=$(( (current_index + 1) % ''${#values[@]} ))
+        brightness=''${values[$next_index]}
+        echo "$next_index" > "$state_file"
+        backlightset "$brightness"
       '';
-      tmux-session-term = pkgs.writers.writeBash "tmux-session-term" ''
-        footclient --app-id='foot-ddterm' -- tmux-launch-session;
-      '';
-      yazi-filemanager = pkgs.writers.writeBash "yazi-filemanager" ''
-        footclient --app-id=yazi --title='Yazi' -- yazi ~
-      '';
-      dropdown-term = pkgs.writers.writePython3 "dropdown-term" {
-        flakeIgnore = [
-          "E501"
-          "E265"
-        ];
-      } (lib.readFile ./.dropdown-term.py);
     in
     {
       # Audio:
@@ -44,19 +43,26 @@
       "Print".action.screenshot-screen = {
         write-to-disk = true;
       };
+      "Mod+Shift+B".action = spawn "${cycle-brightness}";
+
       "Mod+Shift+Alt+S".action = screenshot-window;
       "Mod+Shift+S".action.screenshot = {
         show-pointer = false;
       };
 
-      "Mod+D".action = spawn "tofi-drun" "--drun-launch=true" "--prompt-text=Apps: ";
-      "Mod+Return".action = spawn "${dropdown-term}" "footclient" "-a" "ddterm";
-      "Mod+Y".action = spawn "${yazi-filemanager}";
-      "Mod+T".action = spawn "${tmux-session-term}";
-      "Mod+V".action = spawn "${cliphist-clipboard}";
+      "Mod+S".action = spawn "swaync-client" "-t" "-sw";
+      "Mod+D".action = spawn "sh" "-c" "pkill tofi || tofi-drun --drun-launch=true --prompt-text=Apps: ";
+      "Mod+Y".action = spawn "footpad" "--app-id=yazi" "--" "yazi" "~";
+      "Mod+A".action = spawn "footpad" "--app-id=tmux" "--" "tmux-launch-session";
+      "Mod+V".action = spawn "footpad" "--app-id=clipboard" "--title=Clipboard" "--" "cliphist-fzf-sixel";
+      "Mod+M".action = spawn "footpad" "--title=SystemMonitor" "--app-id=btop" "--" "btop";
       "Ctrl+Alt+L".action = spawn "hyprlock";
-
-      # "Mod+U".action = spawn "env XDG_CURRENT_DESKTOP=gnome gnome-control-center";
+      "Mod+KP_Multiply" = lib.mkIf secMod.keepass.enable {
+        action = spawn "sh" "-c" "pkill tofi || ${lib.getExe pkgs.keepmenu}";
+      };
+      "Mod+Alt+KP_Multiply" = lib.mkIf secMod.keepass.enable {
+        action = spawn "sh" "-c" "pkill tofi || ${lib.getExe pkgs.keepmenu} -C";
+      };
 
       "Mod+O".action = toggle-overview;
       "Mod+Q".action = close-window;
@@ -70,6 +76,7 @@
       "Mod+4".action = set-column-width "100%";
       "Mod+Shift+F".action = fullscreen-window;
       # "Mod+Shift+F".action = expand-column-to-available-width;
+      "Mod+Alt+Space".action = spawn "sh" "-c" "pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
       "Mod+Space".action = toggle-window-floating;
       "Mod+Shift+Space".action = switch-focus-between-floating-and-tiling;
 

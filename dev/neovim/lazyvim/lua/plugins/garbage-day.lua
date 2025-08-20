@@ -4,7 +4,7 @@ return {
   enabled = false,
   event = "VeryLazy",
   opts = {
-    excluded_lsp_clients = { "nixd" },
+    -- excluded_lsp_clients = { "nixd" },
     notifications = true,
   },
 }

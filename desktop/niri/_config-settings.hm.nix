@@ -3,10 +3,11 @@
   pkgs,
   inputs,
   homeDirectory,
+  lib,
   ...
 }:
 let
-  cfg = config.modules.desktop.sway;
+  cfg = config.modules.desktop.niri;
   g = config._base;
   a = config.modules.themes.assets;
   f = config.modules.fonts.app;
@@ -20,29 +21,32 @@ in
 {
   programs.niri = {
     settings = {
-      environment = {
-        CLUTTER_BACKEND = "wayland";
+      environment = g.system.envVars // {
         DISPLAY = null;
-        GDK_BACKEND = "wayland,x11";
-        MOZ_ENABLE_WAYLAND = "1";
-        NIXOS_OZONE_WL = "1";
-        _JAVA_AWT_WM_NONREPARENTING = "1";
-        QT_QPA_PLATFORM = "wayland;xcb";
-        QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-        SDL_VIDEODRIVER = "wayland";
       };
-      workspaces = {
-        main = {
-          open-on-output = "HDMI-A-1";
-        };
-        scratchpad = {
-
-          open-on-output = "HDMI-A-1";
-        };
-      };
+      # workspaces = {
+      #   main = {
+      #     open-on-output = "HDMI-A-1";
+      #   };
+      #   scratchpad = {
+      #
+      #     open-on-output = "HDMI-A-1";
+      #   };
+      # };
       spawn-at-startup = [
-        { command = [ "waybar" ]; }
-        # { command = [ "hyprlock" ]; }
+        {
+          command = [
+            "hyprlock"
+          ];
+        }
+        {
+          command = [
+            "systemctl"
+            "--user"
+            "reset-failed"
+            "waybar.service"
+          ];
+        }
         {
           command = [
             "foot"
@@ -53,6 +57,17 @@ in
           command = [
             "tmux"
             "start-server"
+          ];
+        }
+        {
+          command = [
+            "backlightset"
+            "max"
+          ];
+        }
+        {
+          command = [
+            "xwayland-satellite"
           ];
         }
       ];
@@ -118,7 +133,7 @@ in
         focus-ring.enable = false;
         border = {
           enable = true;
-          width = 4;
+          width = 2;
           active.color = "#ED61D730";
           inactive.color = "#B8149F30";
         };
@@ -172,8 +187,8 @@ in
         };
         window-open = {
           kind.easing = {
-            duration-ms = 400;
-            curve = "ease-out-cubic";
+            duration-ms = 200;
+            curve = "ease-out-quad";
           };
           custom-shader = ''
             float map(float value, float min1, float max1, float min2, float max2) {
@@ -182,34 +197,29 @@ in
 
             vec4 open_color(vec3 coords_geo, vec3 size_geo) {
                 float cur = niri_clamped_progress;
-                vec3 coord = vec3(
-                    coords_geo.x,
-                    map(coords_geo.y, 0.0, cur, 0.0, 1.0),
-                    coords_geo.z
-                );
-                coord.y += 1.0 * (1.0 - cur);
+                if (coords_geo.x > cur) {
+                    return vec4(0.0);
+                }
+                vec3 coord = vec3(map(coords_geo.x,0.0, cur, 0.0, 1.0 ), coords_geo.y, coords_geo.z);
                 return texture2D(niri_tex, (niri_geo_to_tex * coord).st);
             }
           '';
         };
         window-close = {
           kind.easing = {
-            duration-ms = 400;
-            curve = "ease-out-cubic";
+            duration-ms = 200;
+            curve = "ease-out-quad";
           };
           custom-shader = ''
             float map(float value, float min1, float max1, float min2, float max2) {
                 return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
             }
-
-            vec4 open_color(vec3 coords_geo, vec3 size_geo) {
-                float cur = niri_clamped_progress;
-                vec3 coord = vec3(
-                    coords_geo.x,
-                    map(coords_geo.y, 0.0, cur, 0.0, 1.0),
-                    coords_geo.z
-                );
-                coord.y += 1.0 * (1.0 - cur);
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                float cur = 1.0-niri_clamped_progress;
+                if (coords_geo.x > cur) {
+                    return vec4(0.0);
+                }
+                vec3 coord = vec3(map(coords_geo.x,0.0, cur, 0.0, 1.0), coords_geo.y, coords_geo.z);
                 return texture2D(niri_tex, (niri_geo_to_tex * coord).st);
             }
           '';

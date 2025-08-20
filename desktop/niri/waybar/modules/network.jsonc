@@ -1,0 +1,16 @@
+{
+  "network": {
+    "tooltip": true,
+    "format-wifi": "{icon} ",
+    "format-icons": ["󰤟", "󰤢", "󰤥"],
+    //  "format-wifi": "<i class='fa-solid fa-wifi-slash'></i>",
+    "rotate": 0,
+    "format-ethernet": "󰈀 ",
+    "tooltip-format": "Network: <big><b>{essid}</b></big>\nSignal strength: <b>{signaldBm}dBm ({signalStrength}%)</b>\nFrequency: <b>{frequency}MHz</b>\nInterface: <b>{ifname}</b>\nIP: <b>{ipaddr}/{cidr}</b>\nGateway: <b>{gwaddr}</b>\nNetmask: <b>{netmask}</b>",
+    "format-linked": "󰈀 {ifname} (No IP)",
+    "format-disconnected": " ",
+    "tooltip-format-disconnected": "Disconnected",
+    "on-click": "/usr/local/bin/ags -t ControlPanel",
+    "interval": 2
+  }
+}

@@ -47,21 +47,20 @@ let
       echo "''${output}"
     '';
   };
-  extraPackages =
-    [
-      autoCpufreqGovernor
-      nixosRebuild
-    ]
-    ++ g.system.envPackages
-    ++ (with pkgs; [
-      toggle-service
-      toggle-sway-window
-      swaynotificationcenter
-      wlsunset
-      foot
-      pomo
-      networkmanagerapplet
-    ]);
+  extraPackages = [
+    autoCpufreqGovernor
+    nixosRebuild
+  ]
+  ++ g.system.envPackages
+  ++ (with pkgs; [
+    toggle-service
+    toggle-sway-window
+    swaynotificationcenter
+    wlsunset
+    foot
+    pomo
+    networkmanagerapplet
+  ]);
   waybarWithExtraPackages =
     pkgs.runCommand "waybar"
       {

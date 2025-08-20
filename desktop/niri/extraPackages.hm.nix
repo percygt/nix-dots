@@ -1,46 +1,71 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   home.packages = with pkgs; [
     (writeShellApplication {
-      name = "ocr";
-      runtimeInputs = with pkgs; [
-        tesseract
-        grim
-        slurp
-        coreutils
+      name = "footpad";
+      runtimeInputs = [
+        config.modules.terminal.foot.package
       ];
       text = ''
-        echo "Generating a random ID..."
-        id=$(tr -dc 'a-zA-Z0-9' </dev/urandom | fold -w 6 | head -n 1 || true)
-        echo "Image ID: $id"
+        APP_ID=""
+        TITLE=""
+        COMMAND=()
 
-        echo "Taking screenshot..."
-        grim -g "$(slurp -w 0 -b eebebed2)" /tmp/ocr-"$id".png
+        pgrep -x foot || foot --server &
 
-        echo "Running OCR..."
-        tesseract /tmp/ocr-"$id".png - | wl-copy
-        echo -en "File saved to /tmp/ocr-'$id'.png\n"
+        while [[ $# -gt 0 ]]; do
+          case "$1" in
+            --app-id=*)
+              APP_ID="''${1#*=}"
+              shift
+              ;;
+            --app-id)
+              APP_ID="$2"
+              shift 2
+              ;;
+            --title=*)
+              TITLE="''${1#*=}"
+              shift
+              ;;
+            --title)
+              TITLE="$2"
+              shift 2
+              ;;
+            --)
+              shift
+              COMMAND=("$@")
+              break
+              ;;
+            *)
+              echo "Unknown option: $1"
+              exit 1
+              ;;
+          esac
+        done
 
-        echo "Sending notification..."
-        notify-send -i diodon "OCR " "Text copied!"
+        if [[ -z "$APP_ID" ]]; then
+          echo "Error: Provide app_id parameter"
+          exit 1
+        fi
 
-        echo "Cleaning up..."
-        rm /tmp/ocr-"$id".png -vf
+        FOOT_OPTS=(--app-id="$APP_ID")
+        if [[ -n "$TITLE" ]]; then
+          FOOT_OPTS+=(--title="$TITLE")
+        fi
+
+        if [[ ''${#COMMAND[@]} -gt 0 ]]; then
+          WINDOW_ID=$(niri msg -j windows | jq -r ".[] | select(.app_id==\"$APP_ID\") | .id")
+          if [ -n "$WINDOW_ID" ]; then
+            niri msg action focus-window --id "$WINDOW_ID"
+            niri msg action close-window
+          else
+            exec footclient "''${FOOT_OPTS[@]}" -- "''${COMMAND[@]}"
+          fi
+        else
+          echo "No command provided after '--'."
+        fi
       '';
     })
     hyprlock
-    brightnessctl
-    autotiling
-    grim
-    libnotify
-    pamixer
-    wev
-    slurp
-    wdisplays
-    wl-clipboard
-    ydotool
-    xdg-utils
-    xwayland
-    stable.wl-screenrec
   ];
 }

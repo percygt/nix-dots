@@ -25,6 +25,7 @@ in
       # Config before plugins                         #
       # ============================================= #
       source ${config.xdg.configHome}/tmux/variables.conf
+      source ${config.xdg.configHome}/tmux/hooks.conf
       source ${config.xdg.configHome}/tmux/beforePlugins.conf
 
 
@@ -78,5 +79,6 @@ in
       # Config after plugins                          #
       # ============================================= #
       source ${config.xdg.configHome}/tmux/afterPlugins.conf
+      source ${config.xdg.configHome}/tmux/binds.conf
     '';
 }

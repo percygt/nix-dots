@@ -1,0 +1,43 @@
+{
+  "battery": {
+    "rotate": 270,
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon}",
+    "format-charging": "<b>{icon} </b>",
+    // "format-plugged": "<b>{icon} 󰟧</b>",
+    "format-full": "<span color='#82A55F'><b>{icon}</b></span>",
+    "format-icons": [
+      "󰁻",
+      "󰁼",
+      "󰁾",
+      "󰂀",
+      "󰂂",
+      "󰁹"
+    ],
+    "tooltip-format": "{timeTo} {capacity} % | {power} W"
+  }
+  // "battery": {
+  //   "format": "{icon} {capacity}%",
+  //   "format-alt": "{icon} {time}",
+  //   "format-charging": " {capacity}%",
+  //   "format-full": "{icon} {capacity}%",
+  //   "format-good": "{icon} {capacity}%",
+  //   "format-icons": [
+  //     "",
+  //     "",
+  //     "",
+  //     "",
+  //     ""
+  //   ],
+  //   "format-plugged": "󰟧",
+  //   "states": {
+  //     "critical": 10,
+  //     "warning": 20,
+  //     "good": 95
+  //   }
+  // },
+}

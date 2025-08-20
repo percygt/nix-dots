@@ -18,12 +18,14 @@ in
       initialPassword = lib.mkIf (config.users.users.${username}.hashedPasswordFile == null) "guest";
       packages = [ pkgs.home-manager ];
       extraGroups = [
+        "audio"
         "storage"
         "users"
         "video"
         "wheel"
         "input"
         "git"
+        "i2c"
       ];
     };
   };

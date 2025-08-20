@@ -53,7 +53,7 @@ in
     opacity = lib.mkOption {
       description = "Background opacity";
       type = lib.types.float;
-      default = 0.7;
+      default = 0.95;
     };
     cursorTheme = {
       name = lib.mkOption {

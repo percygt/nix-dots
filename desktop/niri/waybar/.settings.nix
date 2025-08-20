@@ -173,20 +173,20 @@
     icon-size = 12;
   };
   "niri/workspaces" = {
-    disable-scroll = true;
+    # disable-scroll = true;
     format = "{icon}";
-    format-icons = {
-      "0-home" = "󰋜";
-    };
+    # format-icons = {
+    #   "0-home" = "󰋜";
+    # };
     on-click = "activate";
-    persistent-workspaces = {
-      "1" = [ ];
-      "2" = [ ];
-      "3" = [ ];
-      "4" = [ ];
-      "5" = [ ];
-      "0-home" = [ "eDP-1" ];
-    };
+    # persistent-workspaces = {
+    #   "1" = [ ];
+    #   "2" = [ ];
+    #   "3" = [ ];
+    #   "4" = [ ];
+    #   "5" = [ ];
+    #   "0-home" = [ "eDP-1" ];
+    # };
   };
   temperature = {
     critical-threshold = 80;

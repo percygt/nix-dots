@@ -17,13 +17,13 @@ in
 
   home-manager.backupFileExtension = ".backup";
   environment.systemPackages = g.system.corePackages;
-  environment.variables.FLAKE = config.programs.nh.flake;
+  environment.variables = g.system.envVars;
   programs = {
     command-not-found.enable = false;
     # nix-index.enable = true;
     nh = {
       enable = true;
-      flake = g.flakeDirectory;
+      flake = g.system.envVars.FLAKE;
       clean = {
         enable = true;
         extraArgs = "--keep-since 7d --keep 3";
@@ -37,6 +37,7 @@ in
   };
 
   services.fwupd.enable = true;
+  hardware.i2c.enable = true;
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   swapDevices = [ ];

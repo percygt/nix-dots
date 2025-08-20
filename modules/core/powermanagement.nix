@@ -38,6 +38,7 @@ in
     };
     services = {
       thermald.enable = true;
+      upower.enable = lib.mkDefault true;
       system76-scheduler = {
         enable = true;
         useStockConfig = true;

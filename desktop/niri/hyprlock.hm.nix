@@ -1,9 +1,13 @@
 {
   config,
+  lib,
+  pkgs,
   ...
 }:
 let
   a = config.modules.themes.assets;
+  f = config.modules.fonts.interface;
+  date = lib.getExe' pkgs.coreutils "date";
 in
 {
   programs.hyprlock = {
@@ -11,7 +15,6 @@ in
 
     settings = {
       general = {
-        disable_loading_bar = true;
         immediate_render = true;
         hide_cursor = false;
       };
@@ -32,7 +35,7 @@ in
 
       input-field = [
         {
-          monitor = "eDP-1";
+          monitor = "";
 
           size = "300, 50";
           valign = "bottom";
@@ -50,7 +53,6 @@ in
 
           dots_spacing = 0.2;
           dots_center = true;
-          dots_fade_time = 100;
 
           shadow_color = "rgba(5, 7, 5, 0.1)";
           shadow_size = 7;
@@ -62,10 +64,10 @@ in
         {
           monitor = "";
           text = ''
-            cmd[update:1000] echo "<span font-weight='light' >$(date +'%H %M %S')</span>"
+            cmd[update:1000] echo "<span font-weight='light' >$(${date} +'%I %M %S')</span>"
           '';
-          font_size = 300;
-          font_family = "Adwaita Sans Thin";
+          font_size = 200;
+          font_family = f.name;
 
           color = "rgb(8a9e6b)";
 

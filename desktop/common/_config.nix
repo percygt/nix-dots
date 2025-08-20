@@ -4,6 +4,11 @@
   ...
 }:
 {
+  modules.fileSystem.persist = {
+    userData = {
+      files = [ ".config/QtProject.conf" ];
+    };
+  };
   environment = {
     sessionVariables.NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
     pathsToLink = [
@@ -16,7 +21,10 @@
       nautilus
     ];
   };
-  services.gvfs.enable = true;
+  services = {
+    gvfs.enable = true;
+    tumbler.enable = true;
+  };
   xdg = {
     mime.defaultApplications = import ./.mimeApps.nix;
     mime.addedAssociations = import ./.mimeApps.nix;

@@ -45,6 +45,7 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.docker" },
     { import = "plugins" },
     { "folke/persistence.nvim", enabled = false },
+    { "aserowy/tmux.nvim", enabled = false },
     { "folke/tokyonight.nvim", enabled = false },
     { "akinsho/bufferline.nvim", enabled = false },
     { "nvim-neo-tree/neo-tree.nvim", enabled = false },

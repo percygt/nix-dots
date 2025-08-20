@@ -24,17 +24,17 @@ return {
     },
   },
   { "brenoprata10/nvim-highlight-colors", event = "BufReadPost", opts = { render = "virtual" } },
-  {
-    "max397574/better-escape.nvim",
-    enabled = false,
-    opts = {
-      mappings = {
-        v = {
-          j = {
-            k = false,
-          },
-        },
-      },
-    },
-  },
+  -- {
+  --   "max397574/better-escape.nvim",
+  --   enabled = false,
+  --   opts = {
+  --     mappings = {
+  --       v = {
+  --         j = {
+  --           k = false,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 }

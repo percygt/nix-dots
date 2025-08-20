@@ -7,10 +7,8 @@
 let
   t = config.modules.themes;
   f = config.modules.fonts.interface;
+  niri = config.modules.desktop.niri.package;
   logincfg = pkgs.writeText "niri-login.conf" ''
-    animations {
-      off
-    }
     hotkey-overlay {
       skip-at-startup
     }
@@ -47,15 +45,14 @@ in
   ];
 
   security.pam.services.greetd.enableGnomeKeyring = true;
-  services.displayManager.defaultSession = "niri";
   services.greetd = {
     enable = true;
     settings.default_session = {
       command = lib.concatStringsSep " " [
         "${lib.getExe' pkgs.dbus "dbus-run-session"} --"
-        "${lib.getExe pkgs.niri} -c ${logincfg} --"
-        "${lib.getExe pkgs.greetd.regreet};"
-        "${lib.getExe pkgs.niri} msg action quit --skip-confirmation"
+        "${lib.getExe niri} -c ${logincfg} --"
+        "${lib.getExe pkgs.regreet};"
+        "${lib.getExe niri} msg action quit --skip-confirmation"
       ];
     };
   };

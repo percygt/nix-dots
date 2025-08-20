@@ -1,0 +1,8 @@
+{
+  "cpu": {
+    "interval": 1,
+    "rotate": 90,
+    "format": "{icon}",
+    "format-icons": ["󰝦", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"]
+  }
+}

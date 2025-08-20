@@ -25,6 +25,7 @@ rec {
       listFilesRecursive
       (map toString)
       (filter (hasSuffix ".nix"))
+      (filter (n: (!hasSuffix "default.nix" n) || (!hasSuffix "flake.nix" n)))
       (filter (n: !hasPrefix "." (baseNameOf n)))
       (filter (n: !hasSuffix ".hm.nix" n))
     ];

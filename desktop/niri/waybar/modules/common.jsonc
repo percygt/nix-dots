@@ -1,0 +1,42 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "passthrough": false,
+  "fixed-center": true,
+  "spacing": 10,
+  "margin": 5,
+  "include": [
+    "~/.config/waybar/modules/niri.jsonc",
+    "~/.config/waybar/modules/battery.jsonc",
+    "~/.config/waybar/modules/clock.jsonc",
+    "~/.config/waybar/modules/cpu.jsonc",
+    "~/.config/waybar/modules/memory.jsonc",
+    "~/.config/waybar/modules/pulseaudio.jsonc",
+    "~/.config/waybar/modules/wireplumber.jsonc",
+    "~/.config/waybar/modules/network.jsonc",
+    "~/.config/waybar/modules/mpris.jsonc",
+    "~/.config/waybar/modules/tray.jsonc",
+    "~/.config/waybar/modules/custom-autocpufreq.jsonc"
+  ],
+  "modules-left": [
+    "niri/workspaces",
+    "niri/window"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    // "mpris",
+    // "network",
+    // "temperature",
+    // "wireplumber",
+    // "pulseaudio#source",
+    // "custom/wlsunset",
+    // "idle_inhibitor",
+    "custom/auto-cpufreq",
+    "tray",
+    "cpu",
+    "memory",
+    "battery"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "pulseaudio#source": {
+    "format": "<span font='9'> {format_source}</span>",
+    "format-source": "",
+    "format-source-muted": "",
+    "on-click": "pamixer --default-source -t",
+    "tooltip-format": "{source_volume}% / {desc}"
+  }
+}

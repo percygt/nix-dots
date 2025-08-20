@@ -1,4 +1,8 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 {
   options.modules.dev = {
     ghq.enable = lib.mkEnableOption "Enable ghq";
@@ -60,6 +64,7 @@
           zls
 
           # C, C++
+          cli11
           gcc
           clang-tools
           cppcheck
@@ -101,7 +106,7 @@
 
           # Common lisp
           sbcl
-          old.lispPackages.quicklisp
+          # old.lispPackages.quicklisp
           rlwrap
 
           #docker
@@ -116,6 +121,9 @@
 
           # tailwind
           tailwindcss-language-server
+
+          #gtk
+          nur.repos.shackra.gtkcsslanguageserver
 
           # Additional
           yamllint

@@ -1,0 +1,16 @@
+{
+  "niri/workspaces": {
+    "enable-bar-scroll": true,
+    "format": "{icon}",
+    "format-icons": {
+      "default": "",
+      "active": ""
+    }
+  },
+  "niri/window": {
+    "separate-outputs": true,
+    "format": "{}",
+    "icon": true,
+    "icon-size": 12
+  }
+}

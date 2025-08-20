@@ -1,0 +1,11 @@
+#mpris {
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  animation: repeat;
+  animation-name: blink;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}

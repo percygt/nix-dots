@@ -22,7 +22,6 @@ in
     dconf-editor
     gnome-terminal
   ];
-  home.sessionVariables.QT_QPA_PLATFORM = "xcb;wayland";
   xdg.extraConfig.XDG_SCREENSHOTS_DIR = "${homeDirectory}/pictures/screenshots";
   gtk.gtk3 = {
     bookmarks = [

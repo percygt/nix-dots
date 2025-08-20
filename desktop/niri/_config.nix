@@ -2,8 +2,13 @@
   pkgs,
   lib,
   inputs,
+  config,
+  username,
   ...
 }:
+let
+  cfg = config.modules.desktop.niri;
+in
 {
   imports = [ inputs.niri.nixosModules.niri ];
   modules.fileSystem.persist = {
@@ -18,45 +23,59 @@
 
   programs.niri = {
     enable = true;
-    package = pkgs.niri-stable;
+    inherit (cfg) package;
   };
 
+  security = {
+    # allow wayland lockers to unlock the screen
+    pam.services.hyprlock.text = "auth include login";
+  };
   systemd.user.services.niri-flake-polkit.enable = lib.mkForce false;
   security.polkit.enable = true;
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
-    config = {
-      common = {
-        default = [
-          "gnome"
-          "gtk"
-        ];
-        "org.freedesktop.impl.portal.ScreenCast" = "gnome";
-        "org.freedesktop.impl.portal.Screenshot" = "gnome";
-        "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
+    config =
+      let
+        common = {
+          default = [
+            "gnome"
+            "gtk"
+          ];
+          "org.freedesktop.impl.portal.ScreenCast" = "gnome";
+          "org.freedesktop.impl.portal.Screenshot" = "gnome";
+          "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
+          "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+        };
+      in
+      {
+        inherit common;
+        niri = common;
       };
-    };
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-gnome
-    ];
+    configPackages = [ config.modules.desktop.niri.package ];
   };
   environment = {
     systemPackages = with pkgs; [
       xdg-desktop-portal
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gnome
       xdg-utils
       wl-clipboard
       wayland-utils
       libsecret
-      cage
-      gamescope
       xwayland-satellite-unstable
     ];
   };
-  services.displayManager.defaultSession = "niri";
+  # services = {
+  #   displayManager = {
+  #     autoLogin.enable = true;
+  #     autoLogin.user = username;
+  #     defaultSession = "niri";
+  #     sessionPackages = lib.mkForce [
+  #       config.modules.desktop.niri.package
+  #     ];
+  #   };
+  # };
   services = {
     dbus = {
       enable = true;
@@ -66,6 +85,8 @@
         dconf
         xfce.xfconf
         gcr
+        gnome-settings-daemon
+        libsecret
       ];
     };
   };

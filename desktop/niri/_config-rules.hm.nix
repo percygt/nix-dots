@@ -2,16 +2,9 @@
   programs.niri.settings = {
     window-rules = [
       {
-        matches = [ { app-id = "r#\"^dd*\"#"; } ];
-        default-column-width = {
-          proportion = 0.9;
-        };
-        open-on-workspace = "scratchpad";
-      }
-      {
         geometry-corner-radius =
           let
-            radius = 0.0;
+            radius = 10.0;
           in
           {
             bottom-left = radius;
@@ -56,37 +49,114 @@
         };
       }
       {
-        matches = [ { app-id = "org.telegram.desktop"; } ];
-        block-out-from = "screencast";
-      }
-      {
-        matches = [ { app-id = "app.drey.PaperPlane"; } ];
-        block-out-from = "screencast";
-      }
-      {
         matches = [
-          { app-id = "zen"; }
-          { app-id = "firefox"; }
-          { app-id = "chromium-browser"; }
-          { app-id = "xdg-desktop-portal-gtk"; }
+          { app-id = "org.keepassxc.KeePassXC"; }
+          { app-id = "app.drey.PaperPlane"; }
+          { app-id = "org.telegram.desktop"; }
         ];
-        scroll-factor = 0.5;
+        block-out-from = "screencast";
+      }
+      {
+        matches = [
+          { app-id = "tmux"; }
+        ];
+        open-floating = true;
+        default-column-width = {
+          proportion = 1.00;
+        };
+        default-window-height = {
+          proportion = 1.00;
+        };
+      }
+      {
+        matches = [
+          { app-id = ".scrcpy-wrapped"; }
+          { app-id = "pavucontrol"; }
+          { app-id = "pavucontrol-qt"; }
+          { app-id = "com.saivert.pwvucontrol"; }
+          { app-id = "dialog"; }
+          { app-id = "popup"; }
+          { app-id = "task_dialog"; }
+          { app-id = "gcr-prompter"; }
+          { app-id = "file-roller"; }
+          { app-id = "org.gnome.FileRoller"; }
+          { app-id = "nm-connection-editor"; }
+          { app-id = "blueman-manager"; }
+          { app-id = "xdg-desktop-portal-gtk"; }
+          { app-id = "org.kde.polkit-kde-authentication-agent-1"; }
+          { app-id = "pinentry"; }
+          { title = "Progress"; }
+          { title = "File Operations"; }
+          { title = "Copying"; }
+          { title = "Moving"; }
+          { title = "Properties"; }
+          { title = "Downloads"; }
+          { title = "file progress"; }
+          { title = "Confirm"; }
+          { title = "Authentication Required"; }
+          { title = "Notice"; }
+          { title = "Warning"; }
+          { title = "Error"; }
+        ];
+        open-floating = true;
+      }
+      {
+        matches = [
+          { app-id = "org.keepassxc.KeePassXC"; }
+          { app-id = "gnome-disks"; }
+          { app-id = "lollypop"; }
+          { app-id = "io.github.dvlv.boxbuddyrs"; }
+          { app-id = "org.gnome.Firmware"; }
+          { app-id = "\.?qemu-system-x86_64(-wrapped)?"; }
+          { app-id = "Spotify"; }
+          { title = "^Brave$"; }
+          { app-id = "yazi"; }
+          { app-id = "clipboard"; }
+          { app-id = "btop"; }
+          {
+            title = "^Friends List$";
+            app-id = "steam";
+          }
+        ];
+        open-floating = true;
+        default-column-width = {
+          proportion = 0.80;
+        };
+        default-window-height = {
+          proportion = 0.80;
+        };
+      }
+      {
+        matches = [
+          { app-id = "wpa_gui"; }
+          {
+            app-id = "org.gnome.Nautilus";
+            title = "^Properties$";
+          }
+          { app-id = "nm-connection-editor"; }
+          { app-id = "udiskie"; }
+        ];
+        open-floating = true;
+        default-column-width = {
+          proportion = 0.50;
+        };
+        default-window-height = {
+          proportion = 0.50;
+        };
       }
       {
         matches = [
           { app-id = "zen"; }
           { app-id = "firefox"; }
+          { app-id = "brave-browser"; }
           { app-id = "chromium-browser"; }
-          { app-id = "edge"; }
         ];
         open-maximized = true;
       }
       {
         matches = [
-          {
-            app-id = "firefox";
-            title = "Picture-in-Picture";
-          }
+          { title = "^Picture-in-Picture$"; }
+          { title = "^Picture in picture$"; }
         ];
         open-floating = true;
         default-floating-position = {
@@ -99,35 +169,6 @@
         };
         default-window-height = {
           fixed = 270;
-        };
-      }
-      {
-        matches = [
-          {
-            app-id = "zen";
-            title = "Picture-in-Picture";
-          }
-        ];
-        open-floating = true;
-        default-floating-position = {
-          x = 32;
-          y = 32;
-          relative-to = "bottom-right";
-        };
-        default-column-width = {
-          fixed = 480;
-        };
-        default-window-height = {
-          fixed = 270;
-        };
-      }
-      {
-        matches = [ { title = "Picture in picture"; } ];
-        open-floating = true;
-        default-floating-position = {
-          x = 32;
-          y = 32;
-          relative-to = "bottom-right";
         };
       }
       {
@@ -138,114 +179,6 @@
           y = 32;
           relative-to = "bottom-right";
         };
-      }
-      {
-        matches = [ { app-id = "pavucontrol"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "pavucontrol-qt"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "com.saivert.pwvucontrol"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "io.github.fsobolev.Cavalier"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "dialog"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "popup"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "task_dialog"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "gcr-prompter"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "file-roller"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "org.gnome.FileRoller"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "nm-connection-editor"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "blueman-manager"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "xdg-desktop-portal-gtk"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "org.kde.polkit-kde-authentication-agent-1"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { app-id = "pinentry"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Progress"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "File Operations"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Copying"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Moving"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Properties"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Downloads"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "file progress"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Confirm"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Authentication Required"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Notice"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Warning"; } ];
-        open-floating = true;
-      }
-      {
-        matches = [ { title = "Error"; } ];
-        open-floating = true;
       }
     ];
     layer-rules = [

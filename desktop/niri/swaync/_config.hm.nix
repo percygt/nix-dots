@@ -7,15 +7,13 @@
 let
   g = config._base;
   cfg = config.modules.desktop.sway;
-  moduleSwaync = "${g.flakeDirectory}/desktop/sway/swaync";
+  moduleSwaync = "${g.flakeDirectory}/desktop/niri/swaync";
   c = config.modules.themes.colors.withHashtag;
   f = config.modules.fonts.app;
   i = config.modules.fonts.icon;
   extraPackages =
     g.system.envPackages
     ++ (with pkgs; [
-      toggle-service
-      toggle-sway-window
       wlsunset
       foot
       grim

@@ -16,6 +16,9 @@ return {
     },
     highlight_overrides = {
       all = {
+        MiniFilesTitleFocused = { bg = "NONE" },
+        FloatTitle = { bg = "NONE" },
+        NormalFloat = { bg = "NONE" },
         WinSeparator = { fg = c.base0D },
         DropBarIconUISeparator = { fg = c.base16 },
         WinBar = { fg = c.base04 },

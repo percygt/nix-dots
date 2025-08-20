@@ -206,7 +206,6 @@
 
 .widget-title label {
   margin-left: 10px;
-  font-size: 16px;
   font-weight: 600;
 }
 
@@ -217,7 +216,7 @@
 }
 
 .widget-title button label {
-  font-size: 12px;
+  font-size: 30px;
   font-weight: 400;
   margin-right: 5px;
 }
@@ -328,6 +327,7 @@ trough highlight:hover {
 /* } */
 
 .widgets-menu-bar {
+  font-size: 20px;
   padding: 15px 12px;
   background: yellow;
 }

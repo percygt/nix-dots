@@ -1,0 +1,33 @@
+{
+  "mpris": {
+    "rotate": 90,
+    "format": "{player_icon} {dynamic}",
+    "format-paused": "<span color='grey'>{status_icon} {dynamic}</span>",
+    "max-length": 50,
+    "player-icons": {
+      "default": "⏸",
+      "mpv": "🎵"
+    },
+    "status-icons": {
+      "paused": "▶"
+    }
+  }
+  // "mpris": {
+  //   "rotate": 90,
+  //   "dynamic-len": 45,
+  //   "dynamic-order": [
+  //     "artist",
+  //     "title",
+  //     "album"
+  //   ],
+  //   "format": "<span font='9'>{player_icon}</span> <span>{dynamic}</span>",
+  //   "format-paused": "<span font='9'>{status_icon}</span> <span>{dynamic}</span>",
+  //   "max-length": 100,
+  //   "player-icons": {
+  //     "default": "󰏤 "
+  //   },
+  //   "status-icons": {
+  //     "paused": " "
+  //   }
+  // },
+}

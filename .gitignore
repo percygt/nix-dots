@@ -15,6 +15,7 @@ key
 *tmp
 test*
 *.bak
+.qmlls.ini
 /.nrepl-port
 /.neoconf.json
 /.clj-kondo

@@ -8,6 +8,7 @@ let
   f = config.modules.fonts.app;
 in
 {
+  dconf.settings = import ./.dconf.nix { inherit config; };
   gtk = {
     enable = true;
 

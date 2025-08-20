@@ -14,9 +14,9 @@
       size = 11.0;
     };
     interface = {
-      name = "Iosevka Aile";
-      typeface = "sansSerif";
-      package = pkgs.iosevka-bin.override { variant = "Aile"; };
+      name = "IosevkaTerm Nerd Font Propo";
+      package = pkgs.nerd-fonts.iosevka-term;
+      typeface = "monospace";
       size = 14.0;
     };
     app = {
@@ -34,6 +34,8 @@
       (with pkgs; [
         (iosevka-bin.override { variant = "Aile"; })
         cryptofont
+        material-symbols
+        noto-fonts-tagalog-sans
         emacs-all-the-icons-fonts
         noto-fonts
         noto-fonts-cjk-sans
