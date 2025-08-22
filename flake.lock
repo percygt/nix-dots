@@ -108,11 +108,11 @@
         "fromYaml": "fromYaml"
       },
       "locked": {
-        "lastModified": 1746562888,
-        "narHash": "sha256-YgNJQyB5dQiwavdDFBMNKk1wyS77AtdgDk/VtU6wEaI=",
+        "lastModified": 1755819240,
+        "narHash": "sha256-qcMhnL7aGAuFuutH4rq9fvAhCpJWVHLcHVZLtPctPlo=",
         "owner": "SenchoPens",
         "repo": "base16.nix",
-        "rev": "806a1777a5db2a1ef9d5d6f493ef2381047f2b89",
+        "rev": "75ed5e5e3fce37df22e49125181fa37899c3ccd6",
         "type": "github"
       },
       "original": {
@@ -1142,11 +1142,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755625756,
-        "narHash": "sha256-t57ayMEdV9g1aCfHzoQjHj1Fh3LDeyblceADm2hsLHM=",
+        "lastModified": 1755810213,
+        "narHash": "sha256-QdenO8f0PTg+tC6HuSvngKcbRZA5oZKmjUT+MXKOLQg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "dd026d86420781e84d0732f2fa28e1c051117b59",
+        "rev": "6911d3e7f475f7b3558b4f5a6aba90fa86099baa",
         "type": "github"
       },
       "original": {
@@ -1809,11 +1809,11 @@
         "yaml2nix": "yaml2nix"
       },
       "locked": {
-        "lastModified": 1755706307,
-        "narHash": "sha256-zcW31pCuMBt4EA4lZeeA5j8A5nmcAjUv9xy+zm3+iBg=",
+        "lastModified": 1755879064,
+        "narHash": "sha256-t2hDz9aEEXM5o8tqKFJdTn601D8hzo/WzuQEmBZfuiA=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "84fb081c7e39edf27f406de5703c752722df2dfc",
+        "rev": "6a21daf1eab9516353023a4c7bdcdc2a48634afe",
         "type": "github"
       },
       "original": {
@@ -2425,11 +2425,11 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1755726207,
-        "narHash": "sha256-epLTLtD6Ps765AnKvTN6fBWntzOt2iZotm+xqfzU4Gs=",
+        "lastModified": 1755899065,
+        "narHash": "sha256-HDrFKpvhInmRkULdlYmeh5WTlQQQiznY0eKT/hD8W4I=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "4a013d0ea53aff0c936d90a68cd134390305b66e",
+        "rev": "9a69f0ed994e781be342df887eb85b067fae8210",
         "type": "github"
       },
       "original": {
@@ -2730,11 +2730,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755632443,
-        "narHash": "sha256-qGD5MWR6atccNYUH/41/eSbsdCZ05nO5HUfpGys9ur8=",
+        "lastModified": 1755872873,
+        "narHash": "sha256-6fifJSTLP0QApQ5DdPm7J3PjfdVmWGikTFErOdOX2EY=",
         "owner": "estin",
         "repo": "simple-completion-language-server",
-        "rev": "948333b037cccef0b6c58351c1cbd2f667833643",
+        "rev": "f5dee3ba410d5c59acfe3c4e60f81529ed175a4a",
         "type": "github"
       },
       "original": {
