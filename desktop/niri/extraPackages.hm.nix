@@ -1,6 +1,8 @@
 { pkgs, config, ... }:
 {
   home.packages = with pkgs; [
+    swaybg
+    xwayland-satellite
     (writeShellApplication {
       name = "footpad";
       runtimeInputs = [
@@ -66,6 +68,5 @@
         fi
       '';
     })
-    hyprlock
   ];
 }

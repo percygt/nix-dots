@@ -10,23 +10,21 @@ let
     name = "auto-cpufreq-governor-exec";
     text = ''
       governor=$(cpufreqctl.auto-cpufreq -g | tr ' ' '\n' | head -n 1)
-
-      output=""
+      output="󱠇"
       case $governor in
           "performance")
-              output=""
+              output="󱠇"
               ;;
           "balance_power")
-              output=""
+              output="󱎖"
               ;;
           "powersave")
-              output=""
+              output="󱤅"
               ;;
           *)
               :
               ;;
       esac
-
       echo "''${output}"
     '';
   };
@@ -55,6 +53,7 @@ let
   c = config.modules.themes.colors.withHashtag;
   f = config.modules.fonts.interface;
   i = config.modules.fonts.icon;
+  p = config.modules.fonts.propo;
 in
 {
   services.playerctld.enable = true;
@@ -69,37 +68,26 @@ in
     in
     {
       "waybar/config.jsonc".source = symlink "${moduleWaybar}/config.jsonc";
-      # "waybar/common.jsonc".source = symlink "${moduleWaybar}/common.jsonc";
       "waybar/modules".source = symlink "${moduleWaybar}/modules";
       "waybar/styles".source = symlink "${moduleWaybar}/styles";
       "waybar/style.css".text =
         # css
         ''
-          @define-color bg ${c.base00};
-          @define-color bg-alt ${c.base01};
-          @define-color grey ${c.base03};
-          @define-color grey-alt ${c.base04};
-          @define-color border ${c.base03};
+          @define-color background ${c.base00};
+          @define-color background-alt ${c.base01};
           @define-color text-dark ${c.base11};
           @define-color text-light ${c.base05};
           @define-color black ${c.base11};
           @define-color green ${c.base0B};
+          @define-color peach ${c.base09};
+          @define-color teal ${c.base0C};
           @define-color blue ${c.base0D};
+          @define-color yellow ${c.base0A};
           @define-color red ${c.base08};
           @define-color purple ${c.base0E};
           @define-color orange ${c.base0F};
-          @define-color bg-hover rgba(255, 255, 255, 0.1);
-          @define-color bg-focus rgba(255, 255, 255, 0.1);
-          @define-color bg-close rgba(255, 255, 255, 0.1);
-          @define-color bg-close-hover rgba(255, 255, 255, 0.15);
           @import url("./styles/main.css");
           @import url("./extra.css");
-          * {
-            font-family: '${f.name}, ${i.name}';
-            font-size: ${toString f.size}px;
-            font-weight: 600;
-            min-height: 0px;
-          }
         '';
     };
 }

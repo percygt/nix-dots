@@ -1,7 +1,7 @@
 {
   "niri/workspaces": {
     "enable-bar-scroll": true,
-    "format": "{icon}",
+    "format": "<span font='13'>{icon}</span>",
     "format-icons": {
       "default": "",
       "active": ""
@@ -11,6 +11,6 @@
     "separate-outputs": true,
     "format": "{}",
     "icon": true,
-    "icon-size": 12
+    "icon-size": 20
   }
 }

@@ -1,9 +1,43 @@
 {
-  "pulseaudio#source": {
-    "format": "<span font='9'> {format_source}</span>",
-    "format-source": "",
+  "group/pulseaudio-expand": {
+    "orientation": "vertical",
+    "spacing": 5,
+    "drawer": {
+      "transition-duration": 800,
+      "children-class": "pulseaudio-group",
+      "transition-left-to-right": false
+    },
+    "modules": ["pulseaudio", "pulseaudio/slider"]
+  },
+  "pulseaudio": {
+    "format": "<span font='14'>{icon}</span>",
+    "format-muted": "󰝟",
+    "tooltip-format": "{icon} {desc} // {volume}%",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "󱡏",
+      "default": "󰓃"
+    }
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "rotate": 0,
+    "format-source": "",
     "format-source-muted": "",
-    "on-click": "pamixer --default-source -t",
-    "tooltip-format": "{source_volume}% / {desc}"
+    "on-click": "pavucontrol -t 4",
+    "on-click-middle": "volumecontrol.sh -i m",
+    "on-scroll-up": "volumecontrol.sh -i i",
+    "on-scroll-down": "volumecontrol.sh -i d",
+    "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
+    "scroll-step": 5
+  },
+  "pulseaudio/slider": {
+    "min": 5,
+    "max": 100,
+    "orientation": "vertical",
+    "device": "pulseaudio",
+    "scroll-step": 1
   }
 }

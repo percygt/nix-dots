@@ -1,16 +1,26 @@
 {
-  "clock": {
-    "format": "{:%m\n%d\n-\n%I\n%M}",
-    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+  "clock#clock": {
+    "format": "{:%I\n%M}",
+    "tooltip-format": "<tt>{:%I:%M %p}</tt>"
+  },
+  "clock#calendar": {
+    "format": "{:%m\n%d}",
+    "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {
-      "mode": "month",
-      "mode-mon-col": 3,
       "weeks-pos": "right",
       "on-scroll": 1,
-      "on-click-right": "mode",
       "format": {
-        "today": "<span color='#a6e3a1'><b><u>{}</u></b></span>"
+        "months": "<span color='#ffffff'><b>{}</b></span>",
+        "days": "<span color='#ffffff'><b>{}</b></span>",
+        "weeks": "<span color='#555555'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#448844'><b><u>{}</u></b></span>"
       }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_down",
+      "on-scroll-down": "shift_up"
     }
   }
 }

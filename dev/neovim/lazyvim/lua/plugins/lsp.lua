@@ -18,9 +18,6 @@ end
 return {
   {
     "neovim/nvim-lspconfig",
-    keys = {
-      { "ck", "<cmd>LspStop<cr>", desc = "Disable currenly running LSP" },
-    },
     opts = {
       inlay_hints = {
         enabled = false,

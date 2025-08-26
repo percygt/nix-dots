@@ -206,21 +206,32 @@ in
       envVars = lib.mkOption {
         description = "Environment variables";
         type = lib.types.attrs;
-        default = {
-          FLAKE = cfg.flakeDirectory;
-          MANPAGER = "nvim +Man!";
-          LANG = "en_US.UTF-8";
-          LC_ALL = "en_US.UTF-8";
-          LC_CTYPE = "en_US.UTF-8";
-          CLUTTER_BACKEND = "wayland";
-          GDK_BACKEND = "wayland,x11";
-          MOZ_ENABLE_WAYLAND = "1";
-          NIXOS_OZONE_WL = "1";
-          _JAVA_AWT_WM_NONREPARENTING = "1";
-          QT_QPA_PLATFORM = "wayland,xcb";
-          QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-          SDL_VIDEODRIVER = "wayland";
-        };
+        default =
+          let
+            inherit (config.modules.themes)
+              cursorTheme
+              iconTheme
+              gtkTheme
+              ;
+          in
+          {
+            FLAKE = cfg.flakeDirectory;
+            MANPAGER = "nvim +Man!";
+            LANG = "en_US.UTF-8";
+            LC_ALL = "en_US.UTF-8";
+            LC_CTYPE = "en_US.UTF-8";
+            SDL_VIDEODRIVER = "wayland";
+            MOZ_ENABLE_WAYLAND = "1";
+            NIXOS_OZONE_WL = "1";
+            _JAVA_AWT_WM_NONREPARENTING = "1";
+            QT_QPA_PLATFORM = "wayland";
+            QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+            GTK_THEME = gtkTheme.name;
+            GTK_CURSOR = cursorTheme.name;
+            XCURSOR_THEME = cursorTheme.name;
+            XCURSOR_SIZE = "${toString cursorTheme.size}";
+            GTK_ICON = iconTheme.name;
+          };
       };
       envPackages = lib.mkOption {
         description = "Environment packages";

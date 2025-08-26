@@ -2,7 +2,7 @@
   "cpu": {
     "interval": 1,
     "rotate": 90,
-    "format": "{icon}",
+    "format": "<span font='15'>{icon}</span>",
     "format-icons": ["󰝦", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"]
   }
 }

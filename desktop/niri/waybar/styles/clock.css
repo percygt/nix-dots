@@ -1,12 +1,5 @@
 #clock {
-  color: #a1bdce;
-  font-size: 15px;
-  font-weight: 900;
-  font-family: "JetBrains Mono Nerd Font";
-  background: rgba(23, 23, 23, 0);
-  opacity: 1;
-  margin: 3px 0px 0px 0px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border: none;
+  color: @text-light;
+  font-size: 20px;
+  font-family: "IosevkaTerm Nerd Font Propo";
 }

@@ -5,6 +5,12 @@ let
   fsize = builtins.toString f.size;
 in
 {
+  qt = {
+    enable = true;
+    platformTheme.name = "qtct";
+    style.name = t.qtTheme.name;
+  };
+
   xdg.configFile = {
     "Kvantum" = {
       recursive = false;

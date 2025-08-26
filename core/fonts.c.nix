@@ -13,11 +13,17 @@
       typeface = "monospace";
       size = 11.0;
     };
-    interface = {
+    propo = {
       name = "IosevkaTerm Nerd Font Propo";
       package = pkgs.nerd-fonts.iosevka-term;
       typeface = "monospace";
       size = 14.0;
+    };
+    interface = {
+      name = "Iosevka Aile";
+      typeface = "sansSerif";
+      package = pkgs.iosevka-bin.override { variant = "Aile"; };
+      size = 12.0;
     };
     app = {
       name = "Geist";
@@ -26,15 +32,14 @@
       size = 12.0;
     };
     icon = {
-      name = "Font Awesome 6 Free";
-      package = pkgs.font-awesome;
+      name = "Symbols Nerd Font";
+      package = pkgs.nerd-fonts.symbols-only;
       size = 12.0;
     };
     extraFonts =
       (with pkgs; [
         (iosevka-bin.override { variant = "Aile"; })
         cryptofont
-        material-symbols
         noto-fonts-tagalog-sans
         emacs-all-the-icons-fonts
         noto-fonts
@@ -48,6 +53,7 @@
         ubuntu_font_family
       ])
       ++ (with pkgs.nerd-fonts; [
+        iosevka-term
         monaspace
         geist-mono
         jetbrains-mono

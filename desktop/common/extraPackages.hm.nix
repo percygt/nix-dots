@@ -1,6 +1,10 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    hunspell
+    xdg-utils
+    wayland-utils
+    libsecret
     (writeShellApplication {
       name = "ocr";
       runtimeInputs = with pkgs; [
@@ -15,7 +19,7 @@
         echo "Image ID: $id"
 
         echo "Taking screenshot..."
-        grim -g "$(slurp -w 0 -b eebebed2)" /tmp/ocr-"$id".png
+        grim -g "$(slurp -w 0 -b eebebe20)" /tmp/ocr-"$id".png
 
         echo "Running OCR..."
         tesseract /tmp/ocr-"$id".png - | wl-copy
@@ -28,6 +32,7 @@
         rm /tmp/ocr-"$id".png -vf
       '';
     })
+    swayosd
     backlight-set
     dimland
     brightnessctl

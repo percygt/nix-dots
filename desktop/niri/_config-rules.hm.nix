@@ -17,9 +17,26 @@
       }
       {
         matches = [
+          { app-id = "tmux"; }
+        ];
+        geometry-corner-radius =
+          let
+            radius = 0.0;
+          in
+          {
+            bottom-left = radius;
+            bottom-right = radius;
+            top-left = radius;
+            top-right = radius;
+          };
+        border.enable = false;
+      }
+      {
+        matches = [
           { is-focused = false; }
         ];
-        opacity = 0.95;
+        opacity = 0.98;
+        shadow.enable = false;
       }
       {
         matches = [

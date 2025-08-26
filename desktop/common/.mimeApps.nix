@@ -4,7 +4,7 @@ let
   textEditor = "neovim.desktop";
   fileManager = "org.gnome.Nautilus.desktop";
   pdfViewer = "org.pwmt.zathura.desktop";
-  videoPlayer = "vlc.desktop";
+  videoPlayer = "mpv.desktop";
   imageViewer = "swayimg.desktop";
   musicPlayer = "org.gnome.Lollypop.desktop";
 in

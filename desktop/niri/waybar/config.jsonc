@@ -3,24 +3,30 @@
   {
     "id": "bar-1",
     "output": "eDP-1",
-    "width": 20,
+    "width": 45,
     "position": "left",
     "include": [
       "~/.config/waybar/modules/common.jsonc"
     ],
     "niri/window": {
       "rotate": 90
+    },
+    "mpris": {
+      "rotate": 90
     }
   },
   {
     "output": "!eDP-1",
-    "width": 20,
+    "width": 45,
     "position": "right",
     "include": [
       "~/.config/waybar/modules/common.jsonc"
       // "~/.config/waybar/extra.jsonc"
     ],
     "niri/window": {
+      "rotate": 270
+    },
+    "mpris": {
       "rotate": 270
     }
   }

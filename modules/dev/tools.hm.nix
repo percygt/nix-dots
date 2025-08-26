@@ -13,6 +13,7 @@
     };
     home.packages =
       (with pkgs; [
+        uv
         babashka
         bfg-repo-cleaner # Git history cleaner
         # nur.repos.dagger.dagger

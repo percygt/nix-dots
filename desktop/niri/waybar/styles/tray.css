@@ -1,17 +1,27 @@
 #tray {
-  border-radius: 10px;
+  color: #a1bdce;
+  padding: 10px;
+  /* font-family: "Martian Mono"; */
 }
+
 #tray menu {
   border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2px;
 }
 #tray menu * {
-  min-height: 16px;
+  min-height: 18px;
   font-weight: bold;
-  /* font-size: 13px; */
-  padding: 4px;
+  font-size: 15px;
+  /* background: transparent; */
   /* color: #9488e3; */
+  padding: 2px;
 }
 
 #tray menu separator {
-  min-height: 2px;
+  min-height: 5px;
+}
+
+.tray-group {
+  background: @background-alt;
+  min-width: 15px;
 }

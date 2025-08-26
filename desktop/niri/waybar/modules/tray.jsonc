@@ -1,6 +1,23 @@
 {
   "tray": {
-    "icon-size": 15,
-    "spacing": 5
+    "icon-size": 19,
+    "rotate": 0,
+    "spacing": 10
+  },
+
+  "group/tray-expand": {
+    "orientation": "vertical",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group",
+      "transition-to-left": true
+      //  "click-to-reveal": true
+    },
+    "modules": ["custom/carret", "tray"]
+  },
+
+  "custom/carret": {
+    "format": "󰅃"
+    // "rotate": 90
   }
 }

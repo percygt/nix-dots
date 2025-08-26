@@ -1,12 +1,17 @@
 {
   "mpris": {
-    "rotate": 90,
     "format": "{player_icon} {dynamic}",
     "format-paused": "<span color='grey'>{status_icon} {dynamic}</span>",
+    "dynamic-order": [
+      "artist",
+      "title",
+      "album"
+    ],
     "max-length": 50,
     "player-icons": {
       "default": "⏸",
-      "mpv": "🎵"
+      "mpv": "🎵",
+      "brave": ""
     },
     "status-icons": {
       "paused": "▶"

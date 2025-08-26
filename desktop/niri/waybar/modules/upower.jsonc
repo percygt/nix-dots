@@ -1,0 +1,28 @@
+{
+  "upower": {
+    "icon-size": 20,
+    "rotate": 90,
+    "format": "",
+    "format-alt": "{}<span color='orange'>[{time}]</span>",
+    "tooltip": true,
+    "tooltip-spacing": 20
+    // "on-click-right": "pkill waybar & hyprctl dispatch exec waybar"
+  },
+  "upower#headset": {
+    "format": " {percentage}",
+    "native-path": "/org/bluez/hci0/dev_18_9C_2C_2D_B0_48",
+    "show-icon": false,
+    "tooltip": false
+  },
+
+  "group/upower-expand": {
+    "orientation": "vertical",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-upower",
+      "transition-to-left": true
+      // "click-to-reveal": true
+    },
+    "modules": ["upower", "upower/headset"]
+  }
+}

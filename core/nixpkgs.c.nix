@@ -12,6 +12,7 @@
       allowUnfreePredicate = _: true;
       permittedInsecurePackages = [
         "electron"
+        "olm-3.2.16"
       ];
     };
   };

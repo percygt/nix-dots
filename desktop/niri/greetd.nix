@@ -9,7 +9,6 @@
   services = {
     displayManager = {
       autoLogin.enable = true;
-      defaultSession = "niri";
       autoLogin.user = username;
     };
     greetd =

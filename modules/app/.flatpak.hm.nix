@@ -49,11 +49,6 @@
           filesystems = [ "xdg-data/steam" ];
         };
         "org.libreoffice.LibreOffice" = {
-          filesystems = [
-            "xdg-config/gtk-4.0"
-            "xdg-config/gtk-3.0"
-            "xdg-data/themes"
-          ];
           environment.GTK_THEME = "Yaru-dark";
         };
       };

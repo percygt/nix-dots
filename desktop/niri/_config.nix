@@ -3,7 +3,6 @@
   lib,
   inputs,
   config,
-  username,
   ...
 }:
 let
@@ -11,30 +10,31 @@ let
 in
 {
   imports = [ inputs.niri.nixosModules.niri ];
-  modules.fileSystem.persist = {
-    userData = {
-      directories = [
-        ".local/share/keyrings"
-        ".config/goa-1.0"
-      ];
-      files = [ ".local/state/tofi-drun-history" ];
-    };
-  };
 
   programs.niri = {
     enable = true;
     inherit (cfg) package;
   };
 
+  modules.fileSystem.persist = {
+    userData = {
+      directories = [ ".local/share/keyrings" ];
+      files = [ ".local/state/tofi-drun-history" ];
+    };
+  };
   security = {
-    # allow wayland lockers to unlock the screen
     pam.services.hyprlock.text = "auth include login";
+    sudo.wheelNeedsPassword = false;
+    polkit.enable = true;
   };
   systemd.user.services.niri-flake-polkit.enable = lib.mkForce false;
-  security.polkit.enable = true;
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk
+    ];
     config =
       let
         common = {
@@ -45,7 +45,7 @@ in
           "org.freedesktop.impl.portal.ScreenCast" = "gnome";
           "org.freedesktop.impl.portal.Screenshot" = "gnome";
           "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
-          "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+          "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
         };
       in
       {
@@ -54,33 +54,19 @@ in
       };
     configPackages = [ config.modules.desktop.niri.package ];
   };
-  environment = {
-    systemPackages = with pkgs; [
-      xdg-desktop-portal
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-gnome
-      xdg-utils
-      wl-clipboard
-      wayland-utils
-      libsecret
-      xwayland-satellite-unstable
-    ];
-  };
-  # services = {
-  #   displayManager = {
-  #     autoLogin.enable = true;
-  #     autoLogin.user = username;
-  #     defaultSession = "niri";
-  #     sessionPackages = lib.mkForce [
-  #       config.modules.desktop.niri.package
-  #     ];
-  #   };
-  # };
+  environment.systemPackages = with pkgs; [
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-gnome
+    xdg-utils
+    wl-clipboard
+    wayland-utils
+    libsecret
+  ];
   services = {
     dbus = {
       enable = true;
       implementation = "broker";
-      # implementation = "dbus";
       packages = with pkgs; [
         dconf
         xfce.xfconf
@@ -88,6 +74,10 @@ in
         gnome-settings-daemon
         libsecret
       ];
+    };
+    gnome = {
+      # gnome-settings-daemon.enable = true;
+      gnome-keyring.enable = true;
     };
   };
 }

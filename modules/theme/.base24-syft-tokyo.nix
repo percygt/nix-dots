@@ -12,7 +12,7 @@
   base07 = "fbfbfd"; # [#fbfbfd]             brightWhite
   base08 = "f7768e"; # [#f7768e] redwood
   base09 = "ff9e64"; # [#ff9e64] peach       orange
-  base0A = "b7c5d3"; # [#b7c5d3] butter      yellow
+  base0A = "f9e2af"; # [#f9e2af] butter      yellow
   base0B = "9ece6a"; # [#9ece6a] green       green
   base0C = "89ddff"; # [#89ddff] teal        cyan
   base0D = "7aa2f7"; # [#7aa2f7] azure       blue

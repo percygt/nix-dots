@@ -1,24 +1,32 @@
 {
   config,
-  pkgs,
-  inputs,
   ...
 }:
 let
-  cfg = config.modules.desktop.sway;
   g = config._base;
-  a = config.modules.themes.assets;
-  f = config.modules.fonts.app;
-  c = config.modules.themes.colors.withHashtag;
-  pointer = config.home.pointerCursor;
-  makeCommand = command: {
-    command = [ command ];
-  };
+  inherit (config.modules.themes)
+    cursorTheme
+    ;
+  screenshotsDir = config.xdg.userDirs.extraConfig.XDG_SCREENSHOTS_DIR;
 in
 {
-
-  # xdg.configFile = {
-  #   "niri/config.kdl".source =
-  #     config.lib.file.mkOutOfStoreSymlink "${g.flakeDirectory}/desktop/niri/config.kdl";
-  # };
+  programs.niri.settings = {
+    prefer-no-csd = true;
+    hotkey-overlay.skip-at-startup = true;
+    overview = {
+      workspace-shadow.enable = false;
+      backdrop-color = "#0f0f0f";
+    };
+    gestures = {
+      hot-corners.enable = true;
+    };
+    cursor = {
+      inherit (cursorTheme) size;
+      theme = "${cursorTheme.name}";
+    };
+    screenshot-path = screenshotsDir + "/%Y-%m-%d-%H%M%S.png";
+    environment = g.system.envVars // {
+      DISPLAY = null;
+    };
+  };
 }

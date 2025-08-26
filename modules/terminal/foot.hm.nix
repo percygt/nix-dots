@@ -29,7 +29,7 @@ in
           underline-offset = 2.2;
           underline-thickness = 1;
           line-height = 18;
-          pad = "10x6";
+          pad = "10x10";
         };
 
         cursor = {

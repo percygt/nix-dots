@@ -84,6 +84,8 @@
           dimland stop
         elif [[ -n "$display" ]]; then
           dimland -a "$dim_opacity" -o "$display"
+        else
+          dimland -a "$dim_opacity" -o "HDMI-A-1"
         fi
       done < "$bus_file"
 

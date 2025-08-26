@@ -1,5 +1,4 @@
 #cpu {
-  font-weight: normal;
-  font-size: 22px;
-  color: #915caf;
+  color: @purple;
+  margin-right: -2px;
 }

@@ -15,6 +15,15 @@ in
   config = lib.mkIf cfg.enable {
     # boot.kernelParams = [ "intel_pstate=disable" ];
     powerManagement.cpuFreqGovernor = "powersave";
+    powerManagement = {
+      powerDownCommands = ''
+        # Lock all sessions
+        loginctl lock-sessions
+
+        # Wait for lockscreen(s) to be up
+        sleep 1
+      '';
+    };
     environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [
       p
     ];

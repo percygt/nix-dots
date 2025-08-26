@@ -1,9 +1,23 @@
 #backlight {
-  color: #2096c0;
-  background: rgba(23, 23, 23, 0);
+  color: @yellow;
   font-weight: normal;
   font-size: 19px;
-  margin: 1px 0px 0px 0px;
-  padding-left: 0px;
-  padding-right: 2px;
+  margin-right: -2px;
+}
+
+#backlight-slider slider {
+  background: @teal;
+}
+
+#backlight-slider trough {
+  min-width: 10px;
+  min-height: 80px;
+  margin-right: -2px;
+  border-radius: 8px;
+}
+
+#backlight-slider highlight {
+  min-width: 10px;
+  border-radius: 8px;
+  background-color: @blue;
 }

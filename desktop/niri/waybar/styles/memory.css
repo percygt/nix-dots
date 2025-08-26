@@ -1,5 +1,4 @@
 #memory {
-  font-weight: normal;
-  font-size: 22px;
-  color: #e4c9af;
+  color: @peach;
+  margin-right: -2px;
 }

@@ -113,17 +113,18 @@ in
           	window_background_opacity = ${builtins.toString t.opacity},
           	text_background_opacity = 1,
           	keys = {
-          		{ key = "0",      mods = "CTRL|SHIFT",  action = wezterm.action.ResetFontSize },
-          		{ key = "-",      mods = "CTRL",  action = wezterm.action.DecreaseFontSize },
-          		{ key = "=",      mods = "CTRL",  action = wezterm.action.IncreaseFontSize },
-          		{ key = "V",      mods = "CTRL",  action = wezterm.action.PasteFrom("Clipboard") },
-          		{ key = "Copy",   mods = "NONE",  action = wezterm.action.CopyTo("Clipboard") },
-          		{ key = "Paste",  mods = "NONE",  action = wezterm.action.PasteFrom("Clipboard") },
-              { key = "*",      mods = "CTRL|SHIFT",  action = wezterm.action.EmitEvent("toggle-opacity") },
-          		{ key = "F11",    mods = "NONE",  action = wezterm.action.ToggleFullScreen },
-          		{ key = "F12",    mods = "NONE",  action = wezterm.action.ActivateCommandPalette },
+              { mods = "CTRL|SHIFT",  key = "0",      action = wezterm.action.ResetFontSize },
+          		{ mods = "CTRL",        key = "-",      action = wezterm.action.DecreaseFontSize },
+          		{ mods = "CTRL",        key = "=",      action = wezterm.action.IncreaseFontSize },
+          		{ mods = "CTRL",        key = "V",      action = wezterm.action.PasteFrom("Clipboard") },
+          		{ mods = "NONE",        key = "Copy",   action = wezterm.action.CopyTo("Clipboard") },
+          		{ mods = "NONE",        key = "Paste",  action = wezterm.action.PasteFrom("Clipboard") },
+              { mods = "CTRL|SHIFT",  key = "*",      action = wezterm.action.EmitEvent("toggle-opacity") },
+          		{ mods = "NONE",        key = "F11",    action = wezterm.action.ToggleFullScreen },
+          		{ mods = "NONE",        key = "F12",    action = wezterm.action.ActivateCommandPalette },
+              { mods = "LEADER",      key = "-",      action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },
+              { mods = "LEADER",      key = "=",      action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' } },
           	},
-            -- default_gui_startup_args = {'start', '--always-new-process'},
           }
         '';
     };

@@ -23,30 +23,48 @@
         echo "$next_index" > "$state_file"
         backlightset "$brightness"
       '';
+      sh = spawn "sh" "-c";
     in
     {
       # Audio:
-      "XF86AudioMute".action = spawn "pamixer" "--toggle-mute";
-      "XF86AudioMicMute".action = spawn "pamixer" "--default-source" "-t";
-
+      # "XF86AudioMute".action = spawn "pamixer" "--toggle-mute";
+      # "XF86AudioMicMute".action = spawn "pamixer" "--default-source" "-t";
+      "XF86AudioMicMute".action = sh "swayosd-client --input-volume=mute-toggle";
+      "XF86AudioMute".action = sh "swayosd-client --output-volume=mute-toggle";
+      "XF86AudioRaiseVolume".action = sh "swayosd-client --output-volume=raise";
+      "XF86AudioLowerVolume".action = sh "swayosd-client --output-volume=lower";
+      "XF86MonBrightnessUp".action = sh "swayosd-client --brightness=raise";
+      "XF86MonBrightnessDown".action = sh "swayosd-client --brightness=lower";
       "XF86AudioPlay".action = playerctl "play-pause";
       "XF86AudioStop".action = playerctl "pause";
       "XF86AudioPrev".action = playerctl "previous";
       "XF86AudioNext".action = playerctl "next";
-      "XF86AudioRaiseVolume".action = spawn "pamixer" "--increase" "5";
-      "XF86AudioLowerVolume".action = spawn "pamixer" "--decrease" "5";
+
+      # "XF86AudioRaiseVolume".action = spawn "pamixer" "--increase" "5";
+      # "XF86AudioLowerVolume".action = spawn "pamixer" "--decrease" "5";
 
       # Backlight:
-      "XF86MonBrightnessUp".action = spawn "brightnessctl" "set" "5%+";
-      "XF86MonBrightnessDown".action = spawn "brightnessctl" "set" "5%-";
+      # "XF86MonBrightnessUp".action = spawn "brightnessctl" "set" "5%+";
+      # "XF86MonBrightnessDown".action = spawn "brightnessctl" "set" "5%-";
 
+      "Mod+Shift+B".action = spawn "${cycle-brightness}";
+
+      "Mod+Insert".action = set-dynamic-cast-window;
+      "Mod+Shift+Insert".action = set-dynamic-cast-monitor;
+      "Mod+Delete".action = clear-dynamic-cast-target;
+
+      "Alt+Print".action = spawn "ocr";
+      "Ctrl+Print".action.screenshot-screen = {
+        write-to-disk = false;
+      };
+      "Mod+Ctrl+Print".action.screenshot-window = {
+        write-to-disk = false;
+      };
       "Print".action.screenshot-screen = {
         write-to-disk = true;
       };
-      "Mod+Shift+B".action = spawn "${cycle-brightness}";
-
-      "Mod+Shift+Alt+S".action = screenshot-window;
-      "Mod+Shift+S".action.screenshot = {
+      "Mod+Print".action = screenshot-window;
+      "Mod+Shift+Print".action.screenshot = {
         show-pointer = false;
       };
 
@@ -113,5 +131,6 @@
       "Mod+Shift+Ctrl+L".action = move-column-to-monitor-right;
 
       "Mod+Shift+P".action = power-off-monitors;
+
     };
 }
