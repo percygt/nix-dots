@@ -1142,11 +1142,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1756261190,
-        "narHash": "sha256-eiy0klFK5EVJLNilutR7grsZN/7Itj9DyD75eyOf83k=",
+        "lastModified": 1756496801,
+        "narHash": "sha256-IYIsnPy+cJxe8RbDHBrCtfJY0ry2bG2H7WvMcewiGS8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "77f348da3176dc68b20a73dab94852a417daf361",
+        "rev": "77a71380c38fb2a440b4b5881bbc839f6230e1cb",
         "type": "github"
       },
       "original": {
@@ -1809,11 +1809,11 @@
         "yaml2nix": "yaml2nix"
       },
       "locked": {
-        "lastModified": 1756311085,
-        "narHash": "sha256-n1KjsO9sG7/Ae5jCLi8ehMjU0wg2uJ3N5wk0c1S3E5w=",
+        "lastModified": 1756483863,
+        "narHash": "sha256-yevQdMX5pzIL4ROKsNftDtjbRcJcCyeOgXo9BzQadJw=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "9a287cc8d9ab324e48b6f3d26cb4449169d62782",
+        "rev": "0c9cb4549a0878d63875ed3e8b38e305de52ae15",
         "type": "github"
       },
       "original": {
@@ -2367,11 +2367,11 @@
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1756266583,
-        "narHash": "sha256-cr748nSmpfvnhqSXPiCfUPxRz2FJnvf/RjJGvFfaCsM=",
+        "lastModified": 1756386758,
+        "narHash": "sha256-1wxxznpW2CKvI9VdniaUnTT2Os6rdRJcRUf65ZK9OtE=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "8a6d5427d99ec71c64f0b93d45778c889005d9c2",
+        "rev": "dfb2f12e899db4876308eba6d93455ab7da304cd",
         "type": "github"
       },
       "original": {
@@ -2425,11 +2425,11 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1756332267,
-        "narHash": "sha256-SBiHiR+Y074U9OZhnIrIgu/6iLZPxYhlBOmnP7ymBME=",
+        "lastModified": 1756500280,
+        "narHash": "sha256-EkK0WioBdO+r9Hg7x3jcr4Dm7ll1Rz2fJCOb5cqiDRI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "1f693539e1da901a6da002555d5480e887a5adc1",
+        "rev": "e52eff6b35a0c45ab6d6da89f63d887c6303b760",
         "type": "github"
       },
       "original": {
@@ -2730,11 +2730,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1756208614,
-        "narHash": "sha256-KC4oVh5DCc62JUapccuskfjnsk53dxEx3W7evveGoOY=",
+        "lastModified": 1756361957,
+        "narHash": "sha256-832SdXMt4vLC7lLUg7Sww0k9nM6heeQqUOmnPRt1izg=",
         "owner": "estin",
         "repo": "simple-completion-language-server",
-        "rev": "c4c80f17d33d645b71c5a5a9445086039099be93",
+        "rev": "66fb8fce073f70c136c3e494eb6463f6385fb680",
         "type": "github"
       },
       "original": {
