@@ -51,6 +51,9 @@
     },
     "backlight/slider": {
       "device": "ddcci1"
+    },
+    "battery": {
+      "on-click-right": "systemctl --user restart waybar"
     }
   }
 ]

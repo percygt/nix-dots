@@ -27,20 +27,20 @@ in
       # battery info
       upower = {
         enable = true;
-        percentageLow = 30;
+        percentageLow = 20;
         allowRiskyCriticalPowerAction = true;
         criticalPowerAction = "Suspend";
       };
       thermald.enable = true;
-      # system76-scheduler = {
-      #   enable = true;
-      #   useStockConfig = true;
-      # };
-      ananicy = {
+      system76-scheduler = {
         enable = true;
-        package = pkgs.ananicy-cpp;
-        rulesProvider = pkgs.ananicy-rules-cachyos;
+        useStockConfig = true;
       };
+      # ananicy = {
+      #   enable = true;
+      #   package = pkgs.ananicy-cpp;
+      #   rulesProvider = pkgs.ananicy-rules-cachyos;
+      # };
     };
     powerManagement = {
       powerDownCommands = ''

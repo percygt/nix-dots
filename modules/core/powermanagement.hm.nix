@@ -53,6 +53,8 @@ let
       local status capacity
       status=$(cat "$BAT_STATUS")
       capacity=$(cat "$BAT_CAP")
+      profile=$(powerprofilesctl get)
+
 
       if [[ "$status" == "Discharging" ]]; then
         if [[ "$capacity" -gt $LOW_BAT_PERCENT ]]; then
@@ -61,7 +63,7 @@ let
           echo "$LOW_BAT_PROFILE"
         fi
       else
-        echo "$AC_PROFILE"
+        echo "$profile"
       fi
     }
 
@@ -114,7 +116,7 @@ in
         Type = "simple";
         ExecStart = script;
         Restart = "on-failure";
-        RestartSec = "5s";
+        RestartSec = "60s";
       };
 
       Install.WantedBy = [ "default.target" ];

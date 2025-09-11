@@ -6,40 +6,16 @@
 }:
 let
   g = config._base;
-  autoCpufreqGovernor = pkgs.writeShellApplication {
-    name = "auto-cpufreq-governor-exec";
-    text = ''
-      governor=$(cpufreqctl.auto-cpufreq -g | tr ' ' '\n' | head -n 1)
-      output="<span color='${c.red}'>󱠇</span>"
-      case $governor in
-          "performance")
-              output="<span color='${c.red}'>󱠇</span>"
-              ;;
-          "balance_power")
-              output="<span color='${c.cyan}'>󱎖</span>"
-              ;;
-          "powersave")
-              output="<span color='${c.green}'>󱤅</span>"
-              ;;
-          *)
-              :
-              ;;
-      esac
-      echo "''${output}"
-    '';
-  };
-  extraPackages = [
-    autoCpufreqGovernor
-  ]
-  ++ g.system.envPackages
-  ++ (with pkgs; [
-    swaynotificationcenter
-    foot
-    pomo
-    iwmenu
-    # walker
-    networkmanagerapplet
-  ]);
+  extraPackages =
+    g.system.envPackages
+    ++ (with pkgs; [
+      swaynotificationcenter
+      foot
+      pomo
+      iwmenu
+      walker
+      networkmanagerapplet
+    ]);
   waybarWithExtraPackages =
     pkgs.runCommand "waybar"
       {
@@ -52,9 +28,6 @@ let
   inherit (config._base) flakeDirectory;
   moduleWaybar = "${flakeDirectory}/desktop/niri/waybar";
   c = config.modules.themes.colors.withHashtag;
-  f = config.modules.fonts.interface;
-  i = config.modules.fonts.icon;
-  p = config.modules.fonts.propo;
 in
 {
   services.playerctld.enable = true;
