@@ -8,7 +8,7 @@
     package = lib.mkOption {
       description = "Niri package";
       type = lib.types.package;
-      default = pkgs.niri;
+      default = pkgs.niri-stable;
     };
   };
 }

@@ -1,17 +1,15 @@
 #workspaces {
-  /* background: rgba(23, 23, 23, 0); */
-  color: #888789;
+  color: @cyan;
   box-shadow: none;
   text-shadow: none;
   border-radius: 9px;
   transition: 0.2s ease;
-  /* padding-left: 4px; */
-  /* padding-right: 4px; */
+  padding: 2px;
 }
 
 #workspaces button {
-  background: rgba(23, 23, 23, 0);
-  color: #a1bdce;
+  all: unset;
+  color: @text-light;
   box-shadow: none;
   text-shadow: none;
   border-radius: 9px;
@@ -20,13 +18,13 @@
 }
 
 #workspaces button.active {
-  color: #a1bdce;
+  color: @text-light;
   transition: all 0.3s ease;
 }
 
 #workspaces button:hover {
   background: none;
-  color: #72d792;
+  color: @yellow;
   animation: ws_hover 20s ease-in-out 1;
   transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.682);
 }

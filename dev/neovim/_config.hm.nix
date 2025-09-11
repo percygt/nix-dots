@@ -54,6 +54,7 @@ in
         "nvim/lua/config/system.lua".text = g.textEditor.nvim."system.lua";
         "nvim/lazy-lock.json".source = symlink "${configNvim}/lazy-lock.json";
         "nvim/neoconf.json".source = symlink "${configNvim}/neoconf.json";
+        "nvim/lazyvim.json".source = symlink "${configNvim}/lazyvim.json";
         "nvim/spell".source = symlink "${configNvim}/spell";
         "nvim/ftdetect".source = symlink "${configNvim}/ftdetect";
         "nvim/lua/plugins".source = symlink "${configNvim}/lua/plugins";
@@ -64,26 +65,27 @@ in
         "nvim/lua/config/lsp-servers.lua".source = symlink "${configNvim}/lua/config/lsp-servers.lua";
         "nvim/lua/config/options.lua".source = symlink "${configNvim}/lua/config/options.lua";
         "nvim/lua/config/keymaps.lua".source = symlink "${configNvim}/lua/config/keymaps.lua";
-        "nvim/lazyvim.json".source = symlink "${configNvim}/lazyvim.json";
-        # Nixd LSP configuration
-        "nvim/lua/config/colorscheme.lua" =
-          let
-            colorschemeLua =
-              pkgs.runCommand "colorscheme.lua" { }
-                #bash
-                ''
-                  ${pkgs.yq-go}/bin/yq -o=lua 'del(.scheme) |
-                      del(.author) |
-                      del(.name) |
-                      del(.slug) |
-                      del(.system) |
-                      del(.variant) |
-                      .[] |= "#" + .' ${config.modules.themes.colors} > $out
-                '';
-          in
-          {
-            text = builtins.readFile colorschemeLua;
-          };
+        "nvim/lua/config/palette.lua".source = symlink "${configNvim}/lua/config/palette.lua";
+        # "nvim/lua/config/colorscheme.lua" =
+        #   let
+        #     colors = config.modules.themes.colors;
+        #     yq = lib.getExe' pkgs.yq-go "yq";
+        #     colorschemeLua =
+        #       pkgs.runCommand "colorscheme.lua" { }
+        #         #bash
+        #         ''
+        #           ${yq} -o=lua --lua-unquoted 'del(.scheme) |
+        #               del(.author) |
+        #               del(.name) |
+        #               del(.slug) |
+        #               del(.system) |
+        #               del(.variant) |
+        #               .[] |= "#" + .' ${colors} > $out
+        #         '';
+        #   in
+        #   {
+        #     text = builtins.readFile colorschemeLua;
+        #   };
       };
     desktopEntries = {
       neovim = lib.mkIf (desktop != null) {

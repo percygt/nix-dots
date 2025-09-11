@@ -18,6 +18,13 @@ let
   };
   nu_scripts = "${pkgs.nu_scripts}/share/nu_scripts";
   defaultShell = g.shell.defaultPackage;
+  completions =
+    let
+      completion = name: ''
+        source ${pkgs.nu_scripts}/share/nu_scripts/custom-completions/${name}/${name}-completions.nu
+      '';
+    in
+    names: builtins.foldl' (prev: str: "${prev}\n${str}") "" (map completion names);
 in
 {
   programs = {
@@ -32,13 +39,23 @@ in
   programs.nushell = {
     enable = true;
     package = nushellPkg;
-    envFile.source = ./nushell/env.nu;
-    configFile.source = ./nushell/config.nu;
+    envFile.source = ./env.nu;
+    configFile.source = ./config.nu;
     extraConfig = ''
       # custom-menus
       use ${nu_scripts}/custom-menus/zoxide-menu.nu
       # modules
       use ${nu_scripts}/modules/nix/nix.nu *
+      # completions
+      ${completions [
+        "git"
+        "nix"
+        "gh"
+        "npm"
+        "pnpm"
+        "rg"
+        "uv"
+      ]}
     '';
     extraEnv =
       #nu

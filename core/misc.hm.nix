@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   home.packages = with pkgs; [
     scrcpy
@@ -13,29 +16,11 @@
     gping # Ping, but with a graph
     xcp # An extended cp
     dogdns # Command-line DNS client
+    lm_sensors
 
     impala # Network
     lazyjournal # TUI for journalctl, file system logs, as well as Docker and Podman containers
-
-    #nix stuff
-    nixos-shell
-    devenv
-    nixfmt-rfc-style
-    deadnix
-    statix
-    nurl
-    nix-tree
-    nix-your-shell
-    cachix
-    json2nix
-    nix-output-monitor
-    nvd
-    nix-search-cli
-    nix-inspect
-    nix-prefetch-scripts
-    nix-prefetch-github
   ];
-
   programs = {
     bat = {
       enable = true;

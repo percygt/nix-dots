@@ -25,7 +25,6 @@ in
         "wheel"
         "input"
         "git"
-        "i2c"
       ];
     };
   };

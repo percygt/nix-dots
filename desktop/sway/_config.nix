@@ -64,6 +64,7 @@ in
         dconf
         xfce.xfconf
         gcr
+        libsecret
         gnome-settings-daemon
       ];
     };

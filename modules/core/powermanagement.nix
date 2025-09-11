@@ -6,15 +6,42 @@
 }:
 let
   cfg = config.modules.core.powermanagement;
-  MHz = x: x * 1000;
   p = pkgs.writeScriptBin "charge-upto" ''
     echo ''${0:-100} > /sys/class/power_supply/BAT?/charge_control_end_threshold
   '';
 in
 {
   config = lib.mkIf cfg.enable {
-    # boot.kernelParams = [ "intel_pstate=disable" ];
-    powerManagement.cpuFreqGovernor = "powersave";
+    services = {
+      logind = {
+        settings = {
+          Login = {
+            HandleLidSwitchExternalPower = "lock";
+            HandlePowerKey = "suspend";
+            HandleLidSwitch = "suspend";
+          };
+        };
+      };
+
+      power-profiles-daemon.enable = true;
+      # battery info
+      upower = {
+        enable = true;
+        percentageLow = 30;
+        allowRiskyCriticalPowerAction = true;
+        criticalPowerAction = "Suspend";
+      };
+      thermald.enable = true;
+      # system76-scheduler = {
+      #   enable = true;
+      #   useStockConfig = true;
+      # };
+      ananicy = {
+        enable = true;
+        package = pkgs.ananicy-cpp;
+        rulesProvider = pkgs.ananicy-rules-cachyos;
+      };
+    };
     powerManagement = {
       powerDownCommands = ''
         # Lock all sessions
@@ -43,31 +70,6 @@ in
         Type = "oneshot";
         Restart = "on-failure";
         ExecStart = "${pkgs.runtimeShell} -c 'echo ${toString cfg.chargeUpto} > /sys/class/power_supply/BAT?/charge_control_end_threshold'";
-      };
-    };
-    services = {
-      thermald.enable = true;
-      upower.enable = lib.mkDefault true;
-      system76-scheduler = {
-        enable = true;
-        useStockConfig = true;
-      };
-      auto-cpufreq = {
-        enable = true;
-        settings = {
-          charger = {
-            governor = "performance";
-            energy_performance_preference = "performance";
-            turbo = "auto";
-          };
-          battery = {
-            governor = "powersave";
-            energy_performance_preference = "power";
-            scaling_min_freq = lib.mkDefault (MHz 1200);
-            scaling_max_freq = lib.mkDefault (MHz 1800);
-            turbo = "never";
-          };
-        };
       };
     };
   };

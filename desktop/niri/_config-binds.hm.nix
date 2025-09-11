@@ -9,45 +9,19 @@
     with config.lib.niri.actions;
     let
       playerctl = spawn "${lib.getExe pkgs.playerctl}";
-      secMod = config.modules.security;
-      cycle-brightness = pkgs.writers.writeBash "cycle-brightness" ''
-        state_file="$XDG_CACHE_HOME/brightness_cycle_state"
-        values=(80 55 30 15 0 100)
-        if [[ -f "$state_file" ]]; then
-          current_index=$(cat "$state_file")
-        else
-          current_index=-1
-        fi
-        next_index=$(( (current_index + 1) % ''${#values[@]} ))
-        brightness=''${values[$next_index]}
-        echo "$next_index" > "$state_file"
-        backlightset "$brightness"
-      '';
-      sh = spawn "sh" "-c";
     in
     {
       # Audio:
-      # "XF86AudioMute".action = spawn "pamixer" "--toggle-mute";
-      # "XF86AudioMicMute".action = spawn "pamixer" "--default-source" "-t";
-      "XF86AudioMicMute".action = sh "swayosd-client --input-volume=mute-toggle";
-      "XF86AudioMute".action = sh "swayosd-client --output-volume=mute-toggle";
-      "XF86AudioRaiseVolume".action = sh "swayosd-client --output-volume=raise";
-      "XF86AudioLowerVolume".action = sh "swayosd-client --output-volume=lower";
-      "XF86MonBrightnessUp".action = sh "swayosd-client --brightness=raise";
-      "XF86MonBrightnessDown".action = sh "swayosd-client --brightness=lower";
+      "XF86AudioMicMute".action = spawn "swayosd-client" "--input-volume=mute-toggle";
+      "XF86AudioMute".action = spawn "swayosd-client" "--output-volume=mute-toggle";
+      "XF86AudioRaiseVolume".action = spawn "swayosd-client" "--output-volume=raise";
+      "XF86AudioLowerVolume".action = spawn "swayosd-client" "--output-volume=lower";
+      "XF86MonBrightnessUp".action = spawn "swayosd-client" "--brightness=raise";
+      "XF86MonBrightnessDown".action = spawn "swayosd-client" "--brightness=lower";
       "XF86AudioPlay".action = playerctl "play-pause";
       "XF86AudioStop".action = playerctl "pause";
       "XF86AudioPrev".action = playerctl "previous";
       "XF86AudioNext".action = playerctl "next";
-
-      # "XF86AudioRaiseVolume".action = spawn "pamixer" "--increase" "5";
-      # "XF86AudioLowerVolume".action = spawn "pamixer" "--decrease" "5";
-
-      # Backlight:
-      # "XF86MonBrightnessUp".action = spawn "brightnessctl" "set" "5%+";
-      # "XF86MonBrightnessDown".action = spawn "brightnessctl" "set" "5%-";
-
-      "Mod+Shift+B".action = spawn "${cycle-brightness}";
 
       "Mod+Insert".action = set-dynamic-cast-window;
       "Mod+Shift+Insert".action = set-dynamic-cast-monitor;
@@ -69,18 +43,18 @@
       };
 
       "Mod+S".action = spawn "swaync-client" "-t" "-sw";
-      "Mod+D".action = spawn "sh" "-c" "pkill tofi || tofi-drun --drun-launch=true --prompt-text=Apps: ";
+      "Mod+D".action = spawn-sh "pkill tofi || tofi-drun --drun-launch=true --prompt-text=Apps: ";
       "Mod+Y".action = spawn "footpad" "--app-id=yazi" "--" "yazi" "~";
       "Mod+A".action = spawn "footpad" "--app-id=tmux" "--" "tmux-launch-session";
-      "Mod+V".action = spawn "footpad" "--app-id=clipboard" "--title=Clipboard" "--" "cliphist-fzf-sixel";
+      "Mod+P".action = spawn "footpad" "--app-id=clipboard" "--title=Clipboard" "--" "cliphist-fzf-sixel";
       "Mod+M".action = spawn "footpad" "--title=SystemMonitor" "--app-id=btop" "--" "btop";
-      "Ctrl+Alt+L".action = spawn "hyprlock";
-      "Mod+KP_Multiply" = lib.mkIf secMod.keepass.enable {
-        action = spawn "sh" "-c" "pkill tofi || ${lib.getExe pkgs.keepmenu}";
+      "Mod+B".action = spawn "footpad" "--title=Bluetooth" "--app-id=bluetui" "--" "bluetui";
+      "Mod+Alt+L" = {
+        action = spawn-sh "niri msg action do-screen-transition && hyprlock --immediate";
+        allow-when-locked = true;
       };
-      "Mod+Alt+KP_Multiply" = lib.mkIf secMod.keepass.enable {
-        action = spawn "sh" "-c" "pkill tofi || ${lib.getExe pkgs.keepmenu} -C";
-      };
+      # "Mod+Grave".action = spawn-sh "pkill tofi || ${lib.getExe pkgs.keepmenu}";
+      # "Mod+Shift+Grave".action = spawn-sh "pkill tofi || ${lib.getExe pkgs.keepmenu} -C";
 
       "Mod+O".action = toggle-overview;
       "Mod+Q".action = close-window;
@@ -88,13 +62,32 @@
       "Mod+Shift+R".action = switch-preset-window-height;
       "Mod+F".action = maximize-column;
 
-      "Mod+1".action = set-column-width "25%";
-      "Mod+2".action = set-column-width "50%";
-      "Mod+3".action = set-column-width "75%";
-      "Mod+4".action = set-column-width "100%";
+      "Mod+0".action.focus-workspace = 10;
+      "Mod+1".action.focus-workspace = 1;
+      "Mod+2".action.focus-workspace = 2;
+      "Mod+3".action.focus-workspace = 3;
+      "Mod+4".action.focus-workspace = 4;
+      "Mod+5".action.focus-workspace = 5;
+      "Mod+6".action.focus-workspace = 6;
+      "Mod+7".action.focus-workspace = 7;
+      "Mod+8".action.focus-workspace = 8;
+      "Mod+9".action.focus-workspace = 9;
+
+      "Mod+Shift+0".action.move-column-to-workspace = 10;
+      "Mod+Shift+1".action.move-column-to-workspace = 1;
+      "Mod+Shift+2".action.move-column-to-workspace = 2;
+      "Mod+Shift+3".action.move-column-to-workspace = 3;
+      "Mod+Shift+4".action.move-column-to-workspace = 4;
+      "Mod+Shift+5".action.move-column-to-workspace = 5;
+      "Mod+Shift+6".action.move-column-to-workspace = 6;
+      "Mod+Shift+7".action.move-column-to-workspace = 7;
+      "Mod+Shift+8".action.move-column-to-workspace = 8;
+      "Mod+Shift+9".action.move-column-to-workspace = 9;
+
       "Mod+Shift+F".action = fullscreen-window;
+      "Mod+Ctrl+F".action = toggle-windowed-fullscreen;
       # "Mod+Shift+F".action = expand-column-to-available-width;
-      "Mod+Alt+Space".action = spawn "sh" "-c" "pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
+      "Mod+Alt+Space".action = spawn-sh "pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";
       "Mod+Space".action = toggle-window-floating;
       "Mod+Shift+Space".action = switch-focus-between-floating-and-tiling;
 
@@ -131,6 +124,5 @@
       "Mod+Shift+Ctrl+L".action = move-column-to-monitor-right;
 
       "Mod+Shift+P".action = power-off-monitors;
-
     };
 }

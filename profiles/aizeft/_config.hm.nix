@@ -10,6 +10,7 @@ in
 {
   gtk.gtk3 = {
     bookmarks = [
+      "file://${g.flakeDirectory}"
       "file://${g.dataDirectory}"
       "file://${homeDirectory}/windows"
       "file://${g.dataDirectory}/codebox"

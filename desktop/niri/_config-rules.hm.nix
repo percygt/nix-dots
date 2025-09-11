@@ -1,3 +1,8 @@
+{ config, ... }:
+let
+
+  t = config.modules.themes;
+in
 {
   programs.niri.settings = {
     window-rules = [
@@ -17,25 +22,9 @@
       }
       {
         matches = [
-          { app-id = "tmux"; }
-        ];
-        geometry-corner-radius =
-          let
-            radius = 0.0;
-          in
-          {
-            bottom-left = radius;
-            bottom-right = radius;
-            top-left = radius;
-            top-right = radius;
-          };
-        border.enable = false;
-      }
-      {
-        matches = [
           { is-focused = false; }
         ];
-        opacity = 0.98;
+        # opacity = 0.98;
         shadow.enable = false;
       }
       {
@@ -76,19 +65,58 @@
       {
         matches = [
           { app-id = "tmux"; }
+          { app-id = "swayimg"; }
         ];
         open-floating = true;
-        default-column-width = {
-          proportion = 1.00;
+        default-column-width.proportion = 1.00;
+        default-window-height.proportion = 1.00;
+        geometry-corner-radius =
+          let
+            radius = 0.0;
+          in
+          {
+            bottom-left = radius;
+            bottom-right = radius;
+            top-left = radius;
+            top-right = radius;
+          };
+        border.enable = false;
+      }
+      {
+        matches = [
+          { app-id = "tmux"; }
+        ];
+        inherit (t) opacity;
+      }
+      {
+        matches = [
+          { app-id = "clipboard"; }
+        ];
+        default-floating-position = {
+          x = 0;
+          y = 0;
+          relative-to = "bottom-right";
         };
-        default-window-height = {
-          proportion = 1.00;
-        };
+        geometry-corner-radius =
+          let
+            radius = 0.0;
+          in
+          {
+            bottom-left = radius;
+            bottom-right = radius;
+            top-left = radius;
+            top-right = radius;
+          };
+        open-floating = true;
+        border.enable = false;
+        default-column-width.proportion = 1.00;
+        default-window-height.proportion = 0.50;
       }
       {
         matches = [
           { app-id = ".scrcpy-wrapped"; }
           { app-id = "pavucontrol"; }
+          { app-id = "ncpamixer"; }
           { app-id = "pavucontrol-qt"; }
           { app-id = "com.saivert.pwvucontrol"; }
           { app-id = "dialog"; }
@@ -102,6 +130,7 @@
           { app-id = "xdg-desktop-portal-gtk"; }
           { app-id = "org.kde.polkit-kde-authentication-agent-1"; }
           { app-id = "pinentry"; }
+          { app-id = "bluetui"; }
           { title = "Progress"; }
           { title = "File Operations"; }
           { title = "Copying"; }
@@ -127,8 +156,6 @@
           { app-id = "\.?qemu-system-x86_64(-wrapped)?"; }
           { app-id = "Spotify"; }
           { title = "^Brave$"; }
-          { app-id = "yazi"; }
-          { app-id = "clipboard"; }
           { app-id = "btop"; }
           {
             title = "^Friends List$";
@@ -200,9 +227,15 @@
     ];
     layer-rules = [
       {
-        matches = [ { namespace = "^swww$"; } ];
-        place-within-backdrop = true;
+        matches = [
+          { namespace = "waybar"; }
+        ];
+        shadow.enable = true;
       }
+      # {
+      #   matches = [ { namespace = "^wallpaper$"; } ];
+      #   place-within-backdrop = true;
+      # }
     ];
   };
 }

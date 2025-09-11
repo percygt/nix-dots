@@ -9,7 +9,7 @@
 let
   inherit (self) outputs;
   lib = inputs.home-manager.lib // inputs.nixpkgs.lib;
-  libx = import "${self}/lib/libx" { inherit lib; };
+  libx = import "${self}/lib/libx" { inherit lib inputs; };
   defaultDirs =
     {
       desktop,
@@ -33,7 +33,7 @@ let
     "x86_64-linux"
     "aarch64-linux"
   ];
-
+  colorize = inputs.nix-colorizer;
 in
 {
   forAllSystems =
@@ -61,6 +61,7 @@ in
           homeDirectory
           stateVersion
           desktop
+          colorize
           ;
       };
     in
@@ -106,6 +107,7 @@ in
           homeDirectory
           stateVersion
           desktop
+          colorize
           ;
       };
     in

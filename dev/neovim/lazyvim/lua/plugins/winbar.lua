@@ -2,6 +2,7 @@ return {
   {
     "Bekaboo/dropbar.nvim",
     event = "LazyFile",
+    enabled = false,
     dependencies = {
       "nvim-telescope/telescope-fzf-native.nvim",
     },
@@ -59,7 +60,6 @@ return {
   {
     "utilyre/barbecue.nvim",
     name = "barbecue",
-    enabled = false,
     version = "*",
     dependencies = {
       "SmiteshP/nvim-navic",
@@ -74,7 +74,7 @@ return {
       vim.opt.updatetime = 200
     end,
     opts = function()
-      local c = require("config.colorscheme")
+      local c = require("config.palette")
       return {
         create_autocmd = false, -- prevent barbecue from updating itself automatically
         attach_navic = false,

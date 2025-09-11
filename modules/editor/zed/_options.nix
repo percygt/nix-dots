@@ -13,7 +13,7 @@ let
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/zeditor \
-        --suffix PATH : ${lib.makeBinPath config.modules.dev.tools.editorExtraPackages}
+        --suffix PATH : ${lib.makeBinPath config.modules.dev.tools.codingPackages}
     '';
   };
 in

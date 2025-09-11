@@ -1,4 +1,4 @@
-local c = require("config.colorscheme")
+local c = require("config.palette")
 return {
   "catppuccin/nvim",
   name = "catppuccin",

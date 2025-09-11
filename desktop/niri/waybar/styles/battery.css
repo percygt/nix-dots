@@ -1,10 +1,11 @@
 #battery {
-  font-size: 19px;
-  margin-right: -2px;
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
 }
 #battery.charging,
 #battery.plugged {
-  color: @green;
+  color: @yellow;
 }
 
 #battery.critical:not(.charging) {

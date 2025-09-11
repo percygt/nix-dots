@@ -7,13 +7,17 @@
       "children-class": "pulseaudio-group",
       "transition-left-to-right": false
     },
-    "modules": ["pulseaudio", "pulseaudio/slider"]
+    "modules": ["pulseaudio", "pulseaudio/slider", "pulseaudio#mic"]
   },
   "pulseaudio": {
-    "format": "<span font='14'>{icon}</span>",
+    "format": "<span font='16'>{icon}</span>",
     "format-muted": "󰝟",
     "tooltip-format": "{icon} {desc} // {volume}%",
     "scroll-step": 5,
+    "on-click": "footpad --app-id=ncpamixer -- ncpamixer -t output",
+    "on-click-middle": "swayosd-client --output-volume=mute-toggle",
+    "on-scroll-up": "swayosd-client --output-volume=raise",
+    "on-scroll-down": "swayosd-client --output-volume=lower",
     "format-icons": {
       "headphone": "",
       "hands-free": "",
@@ -21,15 +25,12 @@
       "default": "󰓃"
     }
   },
-  "pulseaudio#microphone": {
-    "format": "{format_source}",
+  "pulseaudio#mic": {
+    "format": "<span font='16'>{format_source}</span>",
     "rotate": 0,
     "format-source": "",
     "format-source-muted": "",
-    "on-click": "pavucontrol -t 4",
-    "on-click-middle": "volumecontrol.sh -i m",
-    "on-scroll-up": "volumecontrol.sh -i i",
-    "on-scroll-down": "volumecontrol.sh -i d",
+    "on-click": "footpad --app-id=ncpamixer -- ncpamixer -t input",
     "tooltip-format": "{format_source} {source_desc} // {source_volume}%",
     "scroll-step": 5
   },

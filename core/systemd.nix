@@ -4,11 +4,13 @@
   ...
 }:
 {
-  environment.systemPackages = [ pkgs.isd ];
+  environment.systemPackages = [ pkgs.stable.isd ];
   services = {
     # Use power button to sleep instead of poweroff
-    logind.powerKey = "suspend";
-    logind.powerKeyLongPress = "poweroff";
+    logind.settings.Login = {
+      HandlePowerKey = "suspend";
+      HandlePowerKeyLongPress = "poweroff";
+    };
     journald = {
       extraConfig = "SystemMaxUse=50M\nSystemMaxFiles=5";
       rateLimitBurst = 500;
@@ -36,9 +38,9 @@
         ${pkgs.libnotify}/bin/notify-send -i emblem-default "$TITLE Service" "Successfully started."
       '';
     };
-    settings.Manager = {
-      DefaultTimeoutStopSec = 10;
-      DefaultTimeoutAbortSec = 10;
-    };
+    # settings.Manager = {
+    #   DefaultTimeoutStopSec = 10;
+    #   DefaultTimeoutAbortSec = 10;
+    # };
   };
 }

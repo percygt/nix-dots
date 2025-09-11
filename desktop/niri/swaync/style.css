@@ -1,5 +1,3 @@
-@import url("nix.css");
-
 .control-center {
   all: unset;
   background-color: @bg;

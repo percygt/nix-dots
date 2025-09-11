@@ -42,7 +42,7 @@ in
     sensibleOnTop = true;
     aggressiveResize = true;
     mouse = true;
-    customPaneNavigationAndResize = true;
+    customPaneNavigationAndResize = false;
     disableConfirmationPrompt = true;
     prefix = "C-a";
     escapeTime = 0;
@@ -107,11 +107,9 @@ in
       "tmux/hooks.conf".text = ''
         set-hook -g client-session-changed 'run-shell "${saveSessionHistory} #{session_name}"'
       '';
-      "tmux/binds.conf".text =
-        #tmux
-        ''
-          # persistent `switchc -l`
-          bind . run-shell "${switchToPrev}"
-        '';
+      "tmux/binds.conf".text = ''
+        # persistent `switchc -l`
+        bind . run-shell "${switchToPrev}"
+      '';
     };
 }

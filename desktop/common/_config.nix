@@ -30,8 +30,11 @@
     gnome.sushi.enable = true;
   };
   xdg = {
-    mime.defaultApplications = import ./.mimeApps.nix;
-    mime.addedAssociations = import ./.mimeApps.nix;
+    mime = {
+      defaultApplications = import ./__mimeApps.nix;
+      addedAssociations = import ./__mimeApps.nix;
+      removedAssociations = import ./__removedMime.nix;
+    };
   };
   programs = {
     nautilus-open-any-terminal = {

@@ -28,6 +28,7 @@ in
       };
     };
     "HDMI-A-1" = {
+      focus-at-startup = true;
       mode = {
         width = 1920;
         height = 1080;

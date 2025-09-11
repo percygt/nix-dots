@@ -69,8 +69,8 @@
     nixpkgs-master.follows = "nix-sources/nixpkgs-master";
     nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
 
-    niri.url = "github:sodiboo/niri-flake";
-    niri.inputs.nixpkgs.follows = "nixpkgs";
+    niri.follows = "nix-sources/niri";
+    walker.follows = "nix-stash/walker";
 
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
@@ -94,8 +94,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    flatpaks.url = "github:in-a-dil-emma/declarative-flatpak/stable-v3";
-    # nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    # flatpaks.url = "github:in-a-dil-emma/declarative-flatpak/stable-v3";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -110,6 +110,7 @@
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
     base16.url = "github:SenchoPens/base16.nix";
+    nix-colorizer.url = "github:percygt/nix-colorizer";
 
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
@@ -117,13 +118,8 @@
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-on-droid = {
-      url = "github:t184256/nix-on-droid";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
-    walker.url = "github:abenz1267/walker?ref=363e4a5c8c5fabd9ab35e1ef342d141a84de0fc7";
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     base.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     base.flake = false;
@@ -133,15 +129,11 @@
       "https://percygtdev.cachix.org"
       "https://nix-community.cachix.org"
       "https://pre-commit-hooks.cachix.org"
-      "https://niri.cachix.org"
-      "https://walker-git.cachix.org"
     ];
     extra-trusted-public-keys = [
       "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
-      "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
-      "walker-git.cachix.org-1:vmC0ocfPWh0S/vRAQGtChuiZBTAe4wiKDeyyXM0/7pM="
     ];
   };
 }

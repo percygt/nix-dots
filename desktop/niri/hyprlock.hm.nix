@@ -12,16 +12,15 @@ in
 {
   programs.hyprlock = {
     enable = true;
-
     settings = {
       general = {
-        immediate_render = true;
         hide_cursor = false;
+        ignore_empty_input = true;
       };
 
       background = [
         {
-          monitor = "";
+          monitor = "eDP-1";
           path = "${a.wallpaper}";
           blur_passes = 3;
           blur_size = 12;
@@ -29,6 +28,17 @@ in
           contrast = "1.3";
           brightness = "0.2";
           vibrancy = "0.5";
+          vibrancy_darkness = "0.3";
+        }
+        {
+          monitor = "HDMI-A-1";
+          path = "${a.wallpaper}";
+          blur_passes = 3;
+          blur_size = 12;
+          noise = "0.1";
+          contrast = "0.8";
+          brightness = "0.1";
+          vibrancy = "0.2";
           vibrancy_darkness = "0.3";
         }
       ];

@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.modules.editor.emacs;
-  devCfg = config.modules.dev.tools.editorExtraPackages;
+  devCfg = config.modules.dev.tools.codingPackages;
   extraPackages =
     devCfg
     ++ (import ./.extraPackages.nix pkgs)

@@ -1,5 +1,132 @@
 return {
   {
+    "folke/snacks.nvim",
+    opts = {
+      picker = {
+        layout = {
+          cycle = false,
+          --- Use the default layout or vertical if the window is too narrow
+          preset = function()
+            return vim.o.columns >= 120 and "ivy" or "vertical"
+          end,
+        },
+        layouts = {
+          vertical = {
+            layout = {
+              backdrop = false,
+              width = 0.8,
+              min_width = 80,
+              height = 0.8,
+              min_height = 30,
+              box = "vertical",
+              border = "rounded",
+              title = "{title} {live} {flags}",
+              title_pos = "center",
+              { win = "input", height = 1, border = "bottom" },
+              { win = "list", border = "none" },
+              { win = "preview", title = "{preview}", height = 0.4, border = "top" },
+            },
+          },
+          ivy = {
+            reverse = true,
+            layout = {
+              box = "vertical",
+              backdrop = false,
+              row = -1,
+              width = 0,
+              height = 0.5,
+              border = "top",
+              {
+                box = "horizontal",
+                { win = "list", border = "none" },
+                { win = "preview", title = "{preview}", width = 0.5, border = "left" },
+              },
+              {
+                win = "input",
+                height = 1,
+                border = "top",
+                title_pos = "left",
+                title = "{title} {live} {flags}",
+              },
+            },
+          },
+          custom = {
+            reverse = true,
+            layout = {
+              box = "vertical",
+              backdrop = false,
+              width = 0.3,
+              height = 0.3,
+              border = "rounded",
+              { win = "list" },
+              {
+                win = "input",
+                height = 1,
+                border = "top",
+                title = "{title} {live} {flags}",
+              },
+            },
+          },
+        },
+        sources = {
+          yanky = {
+            on_show = function()
+              vim.cmd.stopinsert()
+            end,
+          },
+          cliphist = {
+            on_show = function()
+              vim.cmd.stopinsert()
+            end,
+          },
+          files = {
+            layout = "custom",
+          },
+          smart = {
+            layout = "custom",
+          },
+          buffers = {
+            on_show = function()
+              vim.cmd.stopinsert()
+            end,
+            current = false,
+            layout = "custom",
+            win = {
+              input = {
+                keys = {
+                  ["d"] = { "bufdelete", mode = { "n", "i" } },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    -- stylua: ignore
+    keys =  {
+        -- search
+        { "<leader>fB", false },
+        { "<leader>fb", false },
+        { "<leader>fc", false },
+        { "<leader>ff", false },
+        { "<leader>fF", false },
+        { "<leader>fg", false },
+        { "<leader>fp", false },
+        { "<leader>fr", false },
+        { "<leader>fR", false },
+        { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+        { "<leader>P", function() Snacks.picker.cliphist() end, desc = "Cliphist" },
+        { "<leader>/",  LazyVim.pick("live_grep", { root = false }), desc = "Grep (cwd)" },
+        { "<leader>sb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+        { "<leader>sb", function() Snacks.picker.buffers() end, desc = "Buffers" },
+        { "<leader>sB", function() Snacks.picker.buffers({ hidden = true, nofile = true }) end, desc = "Buffers (all)" },
+        { "<leader>sx", LazyVim.pick.config_files(), desc = "Find Config File" },
+        { "<leader>sf", LazyVim.pick("files"), desc = "Find Files (Root Dir)" },
+        { "<leader>sF", LazyVim.pick("files", { root = false }), desc = "Find Files (cwd)" },
+        { "<leader>sP", function() Snacks.picker.projects() end, desc = "Projects" },
+    },
+  },
+  {
     "ibhagwan/fzf-lua",
     enabled = false,
     opts = function(_, opts)
@@ -81,6 +208,7 @@ return {
   -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/plugins/extras/editor/telescope.lua
   {
     "nvim-telescope/telescope.nvim",
+    enabled = false,
     keys = function()
       return {
         {

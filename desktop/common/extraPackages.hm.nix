@@ -33,8 +33,6 @@
       '';
     })
     swayosd
-    backlight-set
-    dimland
     brightnessctl
     grim
     libnotify
@@ -45,6 +43,5 @@
     wl-clipboard
     ydotool
     xdg-utils
-    stable.wl-screenrec
   ];
 }

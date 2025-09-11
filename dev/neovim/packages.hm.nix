@@ -10,6 +10,7 @@
         jsregexp
         magick
         luacheck
+        lyaml
       ];
     extraPackages =
       (with pkgs; [
@@ -36,6 +37,6 @@
         ripgrep
         fd
       ])
-      ++ config.modules.dev.tools.editorExtraPackages;
+      ++ config.modules.dev.tools.codingPackages;
   };
 }

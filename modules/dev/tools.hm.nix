@@ -13,8 +13,9 @@
     };
     home.packages =
       (with pkgs; [
-        uv
-        babashka
+        gitu
+        bunster # Compile shell scripts to static binaries
+        babashka # Clojure babushka for the grey areas of Bash
         bfg-repo-cleaner # Git history cleaner
         # nur.repos.dagger.dagger
         duckdb
@@ -30,6 +31,6 @@
         just
         go-task
       ])
-      ++ config.modules.dev.tools.editorExtraPackages;
+      ++ config.modules.dev.tools.codingPackages;
   };
 }

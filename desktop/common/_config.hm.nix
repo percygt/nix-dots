@@ -6,8 +6,9 @@
   xdg.configFile."swayimg/config".source = ./swayimgrc;
   xdg.mimeApps = {
     enable = true;
-    defaultApplications = import ./.mimeApps.nix;
-    associations.added = import ./.mimeApps.nix;
+    defaultApplications = import ./__mimeApps.nix;
+    associations.added = import ./__mimeApps.nix;
+    associations.removed = import ./__removedMime.nix;
   };
   programs.nheko.enable = true;
   home.packages = with pkgs; [

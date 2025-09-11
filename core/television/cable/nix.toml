@@ -1,0 +1,43 @@
+[metadata]
+description = "Search nix options and packages"
+name = "nix"
+
+[preview]
+command = "nix-search-tv preview {}"
+
+[source]
+command = "nix-search-tv print"
+
+[keybindings]
+ctrl-o = "actions:homepage"
+ctrl-s = "actions:source"
+ctrl-w = "actions:searchgithub"
+ctrl-i = "actions:nixshell"
+# ctrl-n = "actions:nixosfilter"
+# ctrl-g = "actions:homemanagerfilter"
+
+[actions.homemanagerfilter]
+description = "Home-manager modules"
+command = 'nix-search-tv print --indexes "home-manager" | tv'
+mode = "execute"
+
+[actions.nixosfilter]
+description = "Nixos modules"
+command = 'nix-search-tv print --indexes "nixos"'
+
+[actions.homepage]
+description = "Open homepage"
+command = "nix-search-tv homepage {} | xargs xdg-open"
+
+[actions.source]
+description = "Open source"
+command = "nix-search-tv source {} | xargs xdg-open"
+
+[actions.searchgithub]
+description = "search github for snippets"
+command = "echo '{}' | awk '{ if ($2) { print $2 } else print $1 }' | xargs printf 'https://github.com/search?type=code&q=lang:nix+%s' $1 | xargs xdg-open"
+
+[actions.nixshell]
+description = "View files with less"
+command = "nix shell {split:/ :..|join:#}"
+mode = "execute"

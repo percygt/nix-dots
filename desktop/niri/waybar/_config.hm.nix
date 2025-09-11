@@ -10,16 +10,16 @@ let
     name = "auto-cpufreq-governor-exec";
     text = ''
       governor=$(cpufreqctl.auto-cpufreq -g | tr ' ' '\n' | head -n 1)
-      output="󱠇"
+      output="<span color='${c.red}'>󱠇</span>"
       case $governor in
           "performance")
-              output="󱠇"
+              output="<span color='${c.red}'>󱠇</span>"
               ;;
           "balance_power")
-              output="󱎖"
+              output="<span color='${c.cyan}'>󱎖</span>"
               ;;
           "powersave")
-              output="󱤅"
+              output="<span color='${c.green}'>󱤅</span>"
               ;;
           *)
               :
@@ -34,9 +34,10 @@ let
   ++ g.system.envPackages
   ++ (with pkgs; [
     swaynotificationcenter
-    wlsunset
     foot
     pomo
+    iwmenu
+    # walker
     networkmanagerapplet
   ]);
   waybarWithExtraPackages =
@@ -59,8 +60,8 @@ in
   services.playerctld.enable = true;
   programs.waybar = {
     enable = true;
-    package = waybarWithExtraPackages;
     systemd.enable = true;
+    package = waybarWithExtraPackages;
   };
   xdg.configFile =
     let
@@ -78,14 +79,14 @@ in
           @define-color text-dark ${c.base11};
           @define-color text-light ${c.base05};
           @define-color black ${c.base11};
-          @define-color green ${c.base0B};
-          @define-color peach ${c.base09};
-          @define-color teal ${c.base0C};
-          @define-color blue ${c.base0D};
-          @define-color yellow ${c.base0A};
-          @define-color red ${c.base08};
-          @define-color purple ${c.base0E};
-          @define-color orange ${c.base0F};
+          @define-color green ${c.green};
+          @define-color orange ${c.orange};
+          @define-color cyan ${c.cyan};
+          @define-color blue ${c.blue};
+          @define-color yellow ${c.yellow};
+          @define-color red ${c.red};
+          @define-color magenta ${c.magenta};
+          @define-color brown ${c.brown};
           @import url("./styles/main.css");
           @import url("./extra.css");
         '';

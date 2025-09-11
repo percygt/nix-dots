@@ -5,10 +5,9 @@
       "warning": 30,
       "critical": 20
     },
-    "rotate": 270,
-    "format": "{icon}",
-    "format-charging": "<span color='#a6d189'>󰂄</span>",
-    "format-plugged": "󰟩",
+    "format": "<span font='16'>{icon}</span>",
+    "format-charging": "<span color='yellow'>󰂄</span>",
+    "format-plugged": "󰠠",
     "format-icons": [
       "󰁻",
       "󰁼",
@@ -18,6 +17,6 @@
       "󰁹"
     ],
     "tooltip-format": "{timeTo} | {capacity} % | {power} W",
-    "on-click-right": "systemctl --user restart waybar"
+    "on-click-left": "systemctl --user restart waybar"
   }
 }

@@ -24,7 +24,7 @@ return {
     lazy = true,
     enabled = false,
     opts = function()
-      local c = require("config.colorscheme")
+      local c = require("config.palette")
       return {
         chunk = {
           enable = true,
@@ -90,7 +90,7 @@ return {
       },
     },
     config = function(_, opts)
-      local c = require("config.colorscheme")
+      local c = require("config.palette")
       local hooks = require("ibl.hooks")
       hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
         vim.api.nvim_set_hl(0, "IndentBlack", { fg = c.base03 })

@@ -1,27 +1,31 @@
 #pulseaudio {
-  font-weight: normal;
-  color: #6f8fdb;
-  margin-right: -3px;
-  /* background: rgba(22, 19, 32, 0); */
-  /* opacity: 1; */
+  color: @magenta;
+}
+#pulseaudio.mic {
+  color: darker(@text-light);
+  background: @background-alt;
+  padding-bottom: 10px;
+}
+
+#pulseaudio.mic:hover {
+  color: @text-light;
+}
+
+#pulseaudio-slider {
+  padding-top: 10px;
+  background-color: @background-alt;
 }
 
 #pulseaudio-slider slider {
-  background: #a1bdce;
-  /* background-color: transparent; */
-  box-shadow: none;
+  min-width: 12px;
 }
 
 #pulseaudio-slider trough {
-  /* min-width: 10px; */
-  min-height: 80px;
-  margin-right: -2px;
+  min-height: 60px;
   border-radius: 8px;
-  /* background: #343434; */
 }
 
 #pulseaudio-slider highlight {
-  /* min-width: 10px; */
+  background-color: @blue;
   border-radius: 8px;
-  background-color: #2096c0;
 }

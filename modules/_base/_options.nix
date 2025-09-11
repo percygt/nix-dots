@@ -12,6 +12,7 @@ let
 in
 {
   options._base = {
+
     flakeDirectory = lib.mkOption {
       description = "Flake directory";
       type = lib.types.str;
@@ -222,6 +223,7 @@ in
             LC_CTYPE = "en_US.UTF-8";
             SDL_VIDEODRIVER = "wayland";
             MOZ_ENABLE_WAYLAND = "1";
+            NIXPKGS_ALLOW_UNFREE = "1";
             NIXOS_OZONE_WL = "1";
             _JAVA_AWT_WM_NONREPARENTING = "1";
             QT_QPA_PLATFORM = "wayland";

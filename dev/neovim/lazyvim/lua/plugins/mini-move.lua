@@ -1,5 +1,5 @@
 return {
-  "echasnovski/mini.move",
+  "nvim-mini/mini.move",
   opts = {
     -- Module mappings. Use `''` (empty string) to disable one.
     mappings = {

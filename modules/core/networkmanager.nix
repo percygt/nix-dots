@@ -18,39 +18,34 @@ in
     modules.fileSystem.persist.systemData.directories = [
       "/etc/NetworkManager/system-connections"
     ];
+    services = {
+      # DNS resolver
+      resolved = {
+        enable = true;
+        dnsovertls = "opportunistic";
+      };
+    };
     networking = {
       wireless.iwd.settings = {
-        IPv6 = {
-          Enabled = true;
-        };
-        Settings = {
-          AutoConnect = true;
-        };
+        IPv6.Enabled = true;
+        Settings.AutoConnect = true;
       };
-      # These options are unnecessary when managing DNS ourselves
       useDHCP = false;
-      dhcpcd.enable = false;
-      # Configure DNS servers manually (this example uses Cloudflare and Google DNS)
-      # IPv6 DNS servers can be used here as well.
-      nameservers = [
-        "1.1.1.1"
-        "1.0.0.1"
-        "8.8.8.8"
-        "8.8.4.4"
-      ];
+      nftables.enable = true;
       networkmanager = {
+        dns = "systemd-resolved";
         enable = true;
-        dns = "none";
+        wifi.powersave = false;
         wifi.backend = "iwd";
         plugins = with pkgs; [
-          networkmanager-fortisslvpn
+          # networkmanager-fortisslvpn
           # networkmanager-iodine
-          networkmanager-l2tp
-          networkmanager-openconnect
+          # networkmanager-l2tp
+          # networkmanager-openconnect
           networkmanager-openvpn
-          networkmanager-sstp
-          networkmanager-strongswan
-          networkmanager-vpnc
+          # networkmanager-sstp
+          # networkmanager-strongswan
+          # networkmanager-vpnc
         ];
       };
     };

@@ -65,6 +65,8 @@ in
         "exec ddapp -t 'org.gnome.Nautilus' -- ${pkgs.writers.writeBash "nautilus-file-manager" ''nautilus ~''}";
       XF86Calculator = "exec ddapp -t 'org.gnome.Calculator' -- gnome-calculator";
       "Ctrl+shift+return" = lib.mkIf termMod.tilix.enable "exec ${lib.getExe termMod.tilix.package}";
+      "${mod}+v" =
+        "exec ddapp -t 'volume' -h 50 -w 50 -- 'footclient --title=VolumeControl --app-id=volume -- ncpamixer'";
       "${mod}+w" = "exec ddapp -t 'foot-ddterm' -- ${foot-ddterm}";
       "${mod}+s" = "exec swaync-client -t -sw";
       "${mod}+Alt+Space" = "exec pkill tofi || ${lib.getExe pkgs.tofi-power-menu}";

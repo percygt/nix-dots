@@ -116,6 +116,7 @@ in
         disabled = false;
         format = "in [ $name](fg:white) ";
         impure_msg = "";
+        heuristic = true;
       };
       package = {
         format = "is [󰏗 $version](fg:bright-blue) ";

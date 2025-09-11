@@ -10,7 +10,7 @@ let
   gtk4SrcTheme = "${srcTheme}/gtk-4.0";
 in
 {
-  dconf.settings = import ./.dconf.nix { inherit config; };
+  dconf.settings = import ./__dconf.nix { inherit config; };
   gtk = {
     enable = true;
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";

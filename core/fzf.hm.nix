@@ -20,7 +20,7 @@ in
     --border-label-pos=0:bottom
     --border-label=" Result "
     --color=bg:-1,bg+:${c.base02}
-    --color=fg:${c.base04},fg+:${c.base05}
+    --color=fg:${c.base05},fg+:${c.base07}
     --color=hl:${c.base16},hl+:${c.base16}
     --color=border:${c.base04},gutter:${c.base00}
     --color=info:${c.base09},separator:${c.base04}

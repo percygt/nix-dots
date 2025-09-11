@@ -2,7 +2,7 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
-      local c = require("config.colorscheme")
+      local c = require("config.palette")
       local custom = {
         inactive = {
           a = { fg = c.base03, bg = c.base01 },

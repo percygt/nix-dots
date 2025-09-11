@@ -1,7 +1,11 @@
 {
   lib,
+  inputs,
   ...
 }:
+let
+  flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+in
 {
   nix = {
     settings = {
@@ -12,24 +16,22 @@
         "ca-derivations"
         "auto-allocate-uids"
       ];
+      accept-flake-config = false;
       use-xdg-base-directories = true;
-      builders-use-substitutes = true;
-      auto-optimise-store = lib.mkDefault true;
+      auto-optimise-store = true;
       warn-dirty = false;
       trusted-users = [
-        "@wheel"
         "root"
+        "@wheel"
       ];
-      # Opinionated: disable global registry
-      flake-registry = "";
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = "nixpkgs=flake:nixpkgs";
+      flake-registry = ""; # Disable global flake registry
       keep-outputs = true;
+      nix-path = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
+
       # Do not create a bunch of nixbld users
       auto-allocate-uids = true;
       max-jobs = "auto";
-      # http-connections = 128;
-      # max-substitution-jobs = 128;
+      substituters = [ "https://cache.nixos.org" ];
       trusted-substituters = [
         "https://percygtdev.cachix.org"
         "https://nix-community.cachix.org"

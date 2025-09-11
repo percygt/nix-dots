@@ -1,4 +1,4 @@
 #cpu {
-  color: @purple;
-  margin-right: -2px;
+  color: darker(@blue);
+  margin: 2px;
 }

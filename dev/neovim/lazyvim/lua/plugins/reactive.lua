@@ -2,7 +2,7 @@ return {
   "rasulomaroff/reactive.nvim",
   event = "VeryLazy",
   config = function()
-    local c = require("config.colorscheme")
+    local c = require("config.palette")
     require("reactive").add_preset({
       name = "cusorline",
       static = {

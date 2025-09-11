@@ -5,17 +5,15 @@
       "transition-duration": 800,
       "children-class": "backlight-group",
       "transition-left-to-right": false
-      // "click-to-reveal": true
     },
     "modules": ["backlight", "backlight/slider"]
   },
 
   "backlight": {
-    "device": "intel_backlight",
     "rotate": 0,
-    "format": "<span font='15'>󰌵</span>",
-    "scroll-step": 5.0,
-    // "min-length": 2,
+    "format": "<span font='16'>{icon}</span>",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "scroll-step": 10.0,
     "tooltip-format": "{percent}%"
   },
 
@@ -23,7 +21,6 @@
     "min": 5,
     "max": 100,
     "orientation": "vertical",
-    "device": "intel_backlight",
-    "scroll-step": 1.0
+    "scroll-step": 10.0
   }
 }

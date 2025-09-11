@@ -1,27 +1,27 @@
 #tray {
-  color: #a1bdce;
+  color: @cyan;
   padding: 10px;
-  /* font-family: "Martian Mono"; */
 }
 
 #tray menu {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  background: @background;
 }
 #tray menu * {
-  min-height: 18px;
   font-weight: bold;
   font-size: 15px;
-  /* background: transparent; */
-  /* color: #9488e3; */
-  padding: 2px;
+  background: @background;
+}
+#tray > .needs-attention {
+  animation-name: blink-active;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 #tray menu separator {
   min-height: 5px;
-}
-
-.tray-group {
   background: @background-alt;
-  min-width: 15px;
 }

@@ -9,6 +9,8 @@ let
   c = t.colors;
   g = config._base;
   cfg = config.modules.terminal.foot;
+  fs = num: builtins.elemAt f.style num;
+  str = char: builtins.toString char;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -20,16 +22,14 @@ in
           term = "foot";
           login-shell = "no";
           shell = lib.getExe g.shell.defaultPackage;
-          font = "${f.name}:style=${builtins.elemAt f.style 0}:size=${builtins.toString f.size}";
-          font-bold = "${f.name}:style=${builtins.elemAt f.style 1}:size=${builtins.toString (f.size + 0.5)}";
-          font-italic = "${f.name}:style=${builtins.elemAt f.style 2}:size=${builtins.toString f.size}";
-          font-bold-italic = "${f.name}:style=${builtins.elemAt f.style 3}:size=${
-            builtins.toString (f.size + 0.5)
-          }";
+          font = "${f.name}:style=${fs 0}:size=${str f.size}";
+          font-bold = "${f.name}:style=${fs 1}:size=${str (f.size + 0.5)}";
+          font-italic = "${f.name}:style=${fs 2}:size=${str f.size}";
+          font-bold-italic = "${f.name}:style=${fs 3}:size=${str (f.size + 0.5)}";
           underline-offset = 2.2;
           underline-thickness = 1;
           line-height = 18;
-          pad = "10x10";
+          pad = "9x0";
         };
 
         cursor = {
@@ -49,7 +49,7 @@ in
 
         colors = {
           cursor = "${c.base01} ${c.base05}";
-          alpha = t.opacity;
+          # alpha = t.opacity;
           background = c.base00;
           foreground = c.base05;
 

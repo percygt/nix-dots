@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
 }:
 let
   inherit (builtins) filter map toString;
@@ -16,6 +17,7 @@ rec {
       listFilesRecursive
       (map toString)
       (filter (n: !hasPrefix "." (baseNameOf n)))
+      (filter (n: !hasPrefix "__" (baseNameOf n)))
       (filter (n: (hasSuffix ".hm.nix" n) || (hasSuffix ".c.nix" n) || (hasSuffix "_options.nix" n)))
     ];
   importHomeForEachDir = dirs: (flatten (forEach dirs importHomeModules));
@@ -27,9 +29,13 @@ rec {
       (filter (hasSuffix ".nix"))
       (filter (n: (!hasSuffix "default.nix" n) || (!hasSuffix "flake.nix" n)))
       (filter (n: !hasPrefix "." (baseNameOf n)))
+      (filter (n: !hasPrefix "__" (baseNameOf n)))
       (filter (n: !hasSuffix ".hm.nix" n))
     ];
   importNixosForEachDir = dirs: (flatten (forEach dirs importNixosModules));
+  colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; } // {
+    hex = {
 
-  colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; };
+    };
+  };
 }

@@ -35,7 +35,6 @@ in
       material-icons
       wl-clipboard
       cliphist
-      ddcutil
       matugen
     ]
     ++ [

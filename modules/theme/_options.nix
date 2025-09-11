@@ -2,11 +2,11 @@
   lib,
   config,
   pkgs,
-  self,
+  colorize,
   ...
 }:
 let
-  c = config.modules.themes.colors;
+  c = config.modules.themes.colors.withHashtag;
 in
 {
   options.modules.themes = {
@@ -22,8 +22,10 @@ in
             package
           ];
         default = pkgs.fetchurl {
-          url = "https://images.unsplash.com/photo-1520264914976-a1ddb24d2114?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=michael-aleo-FDhds8oz8bA-unsplash.jpg";
-          sha256 = "1dwy2619vmgca430m0vsq50289bwqi5nc5m0c02bri5phdmfxj6i";
+          # url = "https://images.unsplash.com/photo-1520264914976-a1ddb24d2114?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=michael-aleo-FDhds8oz8bA-unsplash.jpg";
+          # sha256 = "1dwy2619vmgca430m0vsq50289bwqi5nc5m0c02bri5phdmfxj6i";
+          url = "https://images.unsplash.com/photo-1614850523527-08bd62441994?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=codioful-formerly-gradienta-uDaW2aMISB4-unsplash.jpg";
+          sha256 = "14428s1xpfvi87bxf6acwwv5i7pjjclaanhx4z60s7g3y94kn31s";
         };
       };
       nix-logo = lib.mkOption {
@@ -36,8 +38,8 @@ in
             package
           ];
         default = pkgs.fetchurl {
-          url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/raw/branch/master/png/gruvbox-light-rainbow-square.png";
-          sha256 = "1b7n1kskxzbk1w81pi78brwyjwkavyqs4hqa579xri8k3rx2r0fw";
+          url = "https://imgur.com/X5zKxvp";
+          sha256 = "0aynmicxlqx4a1bf6d0wl8mk56pm1djk2gh0mnb3150zz4jk3in2";
         };
       };
     };
@@ -100,7 +102,7 @@ in
           border = c.base04;
           bg = c.base00;
           bg-alt = c.base01;
-          bg-accent = c.base02;
+          bg-accent = colorize.hex.lighten c.base00 0.05;
           black = c.base11;
         };
       };
@@ -119,7 +121,7 @@ in
           border = c.base04;
           bg = c.base00;
           bg-alt = c.base01;
-          bg-accent = c.base02;
+          bg-accent = colorize.hex.lighten c.base00 0.05;
           black = c.base11;
         };
       };

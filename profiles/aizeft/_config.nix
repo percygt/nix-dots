@@ -15,5 +15,6 @@
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
   };
+  # services.asusd.enable = true;
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

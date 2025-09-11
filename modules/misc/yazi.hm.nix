@@ -4,6 +4,14 @@
   lib,
   ...
 }:
+let
+  yazi-repo = pkgs.fetchFromGitHub {
+    owner = "yazi-rs";
+    repo = "plugins";
+    rev = "d7588f6d29b5998733d5a71ec312c7248ba14555";
+    hash = "sha256-9+58QhdM4HVOAfEC224TrPEx1N7F2VLGMxKVLAM4nJw=";
+  };
+in
 {
   config = lib.mkIf config.modules.misc.yazi.enable {
     home = {
@@ -67,7 +75,7 @@
           hash = "sha256-oUEUGgeVbljQICB43v9DeEM3XWMAKt3Ll11IcLCS/PA=";
         }
       }/init.lua";
-
+      "yazi/plugins/smart-enter.yazi/main.lua".source = "${yazi-repo}/smart-enter.yazi/main.lua";
     };
     programs.yazi = {
       enable = true;
@@ -76,24 +84,23 @@
           max_width = 970;
           max_height = 970;
         };
-        # opener = {
-        #   play = [
-        #     {
-        #       run = "mpv \"$@\"";
-        #       orphan = true;
-        #       for = "unix";
-        #     }
-        #   ];
-        #
-        #   edit = [
-        #     {
-        #       run = "$EDITOR \"$@\"";
-        #       block = true;
-        #       for = "unix";
-        #     }
-        #   ];
-        # };
-        manager = {
+        input = {
+          prepend.keymap = [
+            {
+              on = "<esc>";
+              run = "close";
+              desc = "cancel input";
+            }
+          ];
+        };
+        mgr = {
+          prepend.keymap = [
+            {
+              on = "l";
+              run = "plugin smart-enter";
+              desc = "Enter the child directory, or open the file";
+            }
+          ];
           ratio = [
             0
             1
@@ -114,8 +121,8 @@
           pkgs.fetchFromGitHub {
             owner = "yazi-rs";
             repo = "flavors";
-            rev = "fc8eeaab9da882d0e77ecb4e603b67903a94ee6e";
-            hash = "sha256-wvxwK4QQ3gUOuIXpZvrzmllJLDNK6zqG5V2JAqTxjiY=";
+            rev = "9cd2ac4510755f3fb6bfec271827497f2db0dc4e";
+            hash = "sha256-xMaZoWSetXHg772cwqBTEcdXdnGYQVaiUDcjKk9r53w=";
           }
         }/catppuccin-macchiato.yazi/flavor.toml"
       );

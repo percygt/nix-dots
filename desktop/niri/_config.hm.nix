@@ -1,5 +1,6 @@
 {
   config,
+  colorize,
   ...
 }:
 let
@@ -7,6 +8,8 @@ let
   inherit (config.modules.themes)
     cursorTheme
     ;
+
+  c = config.modules.themes.colors.withHashtag;
   screenshotsDir = config.xdg.userDirs.extraConfig.XDG_SCREENSHOTS_DIR;
 in
 {
@@ -15,7 +18,7 @@ in
     hotkey-overlay.skip-at-startup = true;
     overview = {
       workspace-shadow.enable = false;
-      backdrop-color = "#0f0f0f";
+      backdrop-color = colorize.hex.lighten c.base00 0.05;
     };
     gestures = {
       hot-corners.enable = true;

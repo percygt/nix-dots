@@ -16,8 +16,9 @@
     "~/.config/waybar/modules/network.jsonc",
     "~/.config/waybar/modules/mpris.jsonc",
     "~/.config/waybar/modules/tray.jsonc",
+    "~/.config/waybar/modules/temperature.jsonc",
     "~/.config/waybar/modules/custom-menu.jsonc",
-    "~/.config/waybar/modules/custom-autocpufreq.jsonc"
+    "~/.config/waybar/modules/power-profiles-daemon.jsonc"
   ],
   "modules-left": [
     "niri/workspaces",
@@ -30,17 +31,15 @@
   ],
   "modules-right": [
     "mpris",
-    "network",
-    // "temperature",
-    // "custom/wlsunset",
-    // "idle_inhibitor",
+    // "network",
     // "wireplumber",
     "group/tray-expand",
-    "group/backlight-expand",
     "group/pulseaudio-expand",
+    "group/backlight-expand",
     "cpu",
     "memory",
-    "custom/auto-cpufreq",
+    "temperature",
+    "power-profiles-daemon",
     "battery"
   ]
 }

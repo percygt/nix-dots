@@ -1,5 +1,5 @@
 return {
-  "echasnovski/mini.files",
+  "nvim-mini/mini.files",
   init = function()
     -- delete lazygit keymap for file history
     vim.api.nvim_create_autocmd("User", {

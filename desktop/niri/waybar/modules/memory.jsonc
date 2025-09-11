@@ -2,7 +2,7 @@
   "memory": {
     "interval": 1,
     "rotate": 90,
-    "format": "<span font='15'>{icon}</span>",
+    "format": "<span font='16'>{icon}</span>",
     "format-icons": ["󰝦", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"]
   }
 }

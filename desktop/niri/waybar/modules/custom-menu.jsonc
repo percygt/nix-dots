@@ -1,7 +1,7 @@
 {
   "custom/menu": {
     "tooltip": false,
-    "format": "<span font='15' rise='+3333'>{icon}</span>",
+    "format": "<span font='14'>{icon}</span>",
     "format-icons": {
       "notification": "<span foreground='mediumslateblue'></span>",
       "none": "<span foreground='cornflowerblue'></span>",

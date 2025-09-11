@@ -9,6 +9,13 @@ let
   cfg = config.modules.desktop.niri;
 in
 {
+  modules.fileSystem.persist = {
+    userData = {
+      directories = [ ".local/share/keyrings" ];
+      files = [ ".local/state/tofi-drun-history" ];
+    };
+  };
+
   imports = [ inputs.niri.nixosModules.niri ];
 
   programs.niri = {
@@ -16,18 +23,14 @@ in
     inherit (cfg) package;
   };
 
-  modules.fileSystem.persist = {
-    userData = {
-      directories = [ ".local/share/keyrings" ];
-      files = [ ".local/state/tofi-drun-history" ];
-    };
-  };
   security = {
     pam.services.hyprlock.text = "auth include login";
     sudo.wheelNeedsPassword = false;
     polkit.enable = true;
   };
+
   systemd.user.services.niri-flake-polkit.enable = lib.mkForce false;
+
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
@@ -42,6 +45,9 @@ in
             "gnome"
             "gtk"
           ];
+          "org.freedesktop.impl.portal.Access" = "gtk";
+          "org.freedesktop.impl.portal.FileChooser" = "gtk";
+          "org.freedesktop.impl.portal.Notification" = "gtk";
           "org.freedesktop.impl.portal.ScreenCast" = "gnome";
           "org.freedesktop.impl.portal.Screenshot" = "gnome";
           "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
