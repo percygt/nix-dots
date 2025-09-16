@@ -6,7 +6,7 @@
   ...
 }:
 let
-  cfg = config.modules.core.powermanagement;
+  cfg = config.modules.core.powermanagement.powermonitor;
   script = pkgs.writeShellScript "power_monitor.sh" ''
     set -euo pipefail
 

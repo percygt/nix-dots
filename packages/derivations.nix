@@ -15,4 +15,5 @@
   colloid-gtk-theme-catppuccin = pkgs.callPackage ./standard/colloid-gtk-theme.nix { };
   colloid-kvantum = pkgs.callPackage ./standard/colloid-kvantum.nix { };
   straight-el = pkgs.callPackage ./standard/straight-el.nix { };
+  tuya-ipc-terminal = pkgs.callPackage ./standard/tuya-ipc-terminal.nix { };
 }

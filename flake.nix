@@ -97,6 +97,9 @@
     # flatpaks.url = "github:in-a-dil-emma/declarative-flatpak/stable-v3";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
+    nix-snapd.url = "github:nix-community/nix-snapd";
+    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
+
     sops-nix.url = "github:mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 

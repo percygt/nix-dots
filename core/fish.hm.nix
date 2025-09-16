@@ -24,9 +24,7 @@ in
           ++ lib.optionals (g.shell.defaultPackage == fishShellPkg) [
             # fish
             ''
-              bind --mode insert \cr _fzf_search_history
-              bind \cr _fzf_search_history
-              fzf_configure_bindings --directory=\cf --variables=\ev --git_status=\cs --git_log=\cg
+              bind \ev 'tv env'
               check_directory_for_new_repository
             ''
           ]
@@ -56,7 +54,7 @@ in
                 [ "$current_repository" != "$last_repository" ]
                 ${lib.getExe pkgs.onefetch}
               end
-              set -gx last_repository $current_repository
+              set -Ux last_repository $current_repository
             '';
           };
         };
@@ -64,30 +62,6 @@ in
       {
         package = fishShellPkg;
         enable = true;
-        plugins = with pkgs.fishPlugins; [
-          {
-            name = "fzf";
-            inherit (fzf-fish) src;
-          }
-          {
-            name = "zoxide";
-            src = pkgs.fetchFromGitHub {
-              owner = "kidonng";
-              repo = "zoxide.fish";
-              rev = "bfd5947bcc7cd01beb23c6a40ca9807c174bba0e";
-              hash = "sha256-Hq9UXB99kmbWKUVFDeJL790P8ek+xZR5LDvS+Qih+N4=";
-            };
-          }
-          {
-            name = "fish-ghq";
-            src = pkgs.fetchFromGitHub {
-              owner = "decors";
-              repo = "fish-ghq";
-              rev = "cafaaabe63c124bf0714f89ec715cfe9ece87fa2";
-              hash = "sha256-6b1zmjtemNLNPx4qsXtm27AbtjwIZWkzJAo21/aVZzM=";
-            };
-          }
-        ];
         shellInit = lib.concatStringsSep "\n" (
           # fish
           lib.optionals (g.shell.defaultPackage == fishShellPkg) [
@@ -122,14 +96,6 @@ in
             ''
           ]
         );
-        shellAliases = {
-          ls = "${lib.getExe config.programs.eza.package} --long";
-          ll = "ls --group-directories-first --group --header --binary --icons";
-          la = "ll --all";
-          date-sortable = "date +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with local timezone
-          date-sortable-utc = "date -u +%Y-%m-%dT%H:%M:%S%Z"; # ISO 8601 date format with UTC timezone
-          tmp = "pushd $(mktemp -d)";
-        };
       }
     ];
   };
