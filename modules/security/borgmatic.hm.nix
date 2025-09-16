@@ -13,7 +13,7 @@ in
     sops.secrets."backup/key" = { };
     services.udiskie = {
       enable = true;
-      tray = "auto";
+      tray = "always";
       notify = true;
       automount = true;
       settings = {

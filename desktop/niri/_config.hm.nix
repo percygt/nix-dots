@@ -1,6 +1,8 @@
 {
   config,
   colorize,
+  lib,
+  pkgs,
   ...
 }:
 let
@@ -28,8 +30,7 @@ in
       theme = "${cursorTheme.name}";
     };
     screenshot-path = screenshotsDir + "/%Y-%m-%d-%H%M%S.png";
-    environment = g.system.envVars // {
-      DISPLAY = null;
-    };
+    xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
+    environment = g.system.envVars;
   };
 }

@@ -42,6 +42,8 @@
     wdisplays
     wl-clipboard
     ydotool
+    cctv-viewer
+    tuya-ipc-terminal
     xdg-utils
   ];
 }

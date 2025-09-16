@@ -54,12 +54,7 @@ in
       # ============================================= #
       # tmuxplugin-vim-tmux-navigator                 #
       # ============================================= #
-      run-shell "${tp.vim-tmux-navigator.rtp}"
-
-      # ============================================= #
-      # tmuxplugin-yank                               #
-      # ============================================= #
-      run-shell "${tp.yank.rtp}"
+      # run-shell "${tp.vim-tmux-navigator.rtp}"
 
       # ============================================= #
       # tmuxplugin-extrakto                           #
