@@ -6,7 +6,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   moduleQuickshell = "${g.flakeDirectory}/desktop/niri/quickshell/quickshell";
 in
 {

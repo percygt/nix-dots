@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   nushellPkg = pkgs.nushell;
   configNu = "${g.flakeDirectory}/core/nushell";
   t = config.modules.themes;

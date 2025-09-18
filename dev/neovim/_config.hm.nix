@@ -8,7 +8,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   configNvim = "${g.flakeDirectory}/dev/neovim/lazyvim";
 in
 {

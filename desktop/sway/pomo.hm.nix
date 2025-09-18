@@ -6,7 +6,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   cfg = config.modules.desktop.sway;
 
 in

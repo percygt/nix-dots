@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   extraPackages =
     g.system.envPackages
     ++ (with pkgs; [
@@ -25,7 +25,7 @@ let
       ''
         makeWrapper ${pkgs.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
       '';
-  inherit (config._base) flakeDirectory;
+  inherit (config._global) flakeDirectory;
   moduleWaybar = "${flakeDirectory}/desktop/niri/waybar";
   c = config.modules.themes.colors.withHashtag;
 in

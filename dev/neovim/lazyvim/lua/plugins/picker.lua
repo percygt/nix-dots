@@ -94,7 +94,8 @@ return {
             win = {
               input = {
                 keys = {
-                  ["d"] = { "bufdelete", mode = { "n", "i" } },
+                  ["d"] = { "bufdelete", mode = { "n" } },
+                  ["<C-d>"] = { "bufdelete", mode = { "i" } },
                 },
               },
             },

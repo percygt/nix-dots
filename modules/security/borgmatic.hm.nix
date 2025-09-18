@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   cfg = config.modules.security.borgmatic;
 in
 {

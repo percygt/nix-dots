@@ -3,7 +3,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
 in
 {
   programs.git = {

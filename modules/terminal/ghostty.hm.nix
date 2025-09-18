@@ -7,7 +7,7 @@ let
   f = config.modules.fonts.shell;
   t = config.modules.themes;
   c = t.colors;
-  g = config._base;
+  g = config._global;
   cfg = config.modules.terminal.ghostty;
 in
 {

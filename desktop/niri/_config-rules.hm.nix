@@ -66,6 +66,7 @@ in
         matches = [
           { app-id = "tmux"; }
           { app-id = "swayimg"; }
+          { app-id = "nix-search"; }
         ];
         open-floating = true;
         default-column-width.proportion = 1.00;
@@ -109,8 +110,8 @@ in
           };
         open-floating = true;
         border.enable = false;
-        default-column-width.proportion = 1.00;
-        default-window-height.proportion = 0.50;
+        default-column-width.proportion = 0.50;
+        default-window-height.proportion = 1.00;
       }
       {
         matches = [

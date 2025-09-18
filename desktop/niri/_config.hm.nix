@@ -6,7 +6,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   inherit (config.modules.themes)
     cursorTheme
     ;

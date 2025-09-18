@@ -6,13 +6,16 @@
       false;
     programs.brave = {
       enable = true;
-      commandLineArgs = [
-        "--password-store=basic"
-      ];
-      extensions = [
-        { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
-        { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # vimium
-      ];
+      commandLineArgs = [ "--password-store=basic" ];
+      extensions =
+        let
+          ids = [
+            "ficfmibkjjnpogdcfhfokmihanoldbfe" # File Icons for GitHub and GitLab
+            "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+            "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
+          ];
+        in
+        builtins.map (id: { inherit id; }) ids;
     };
   };
 }

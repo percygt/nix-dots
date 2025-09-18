@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   cfg = config.modules.desktop.sway;
   moduleSwaync = "${g.flakeDirectory}/desktop/niri/swaync";
   c = config.modules.themes.colors.withHashtag;

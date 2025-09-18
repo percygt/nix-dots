@@ -9,7 +9,7 @@ in
 {
   "org/gnome/desktop/wm/preferences".button-layout = ":appmenu";
   "org/gnome/terminal/legacy".default-show-menubar = false;
-  "org/cinnamon/desktop/default-applications/terminal".exec = config._base.terminal.defaultCmd;
+  "org/cinnamon/desktop/default-applications/terminal".exec = config._global.terminal.defaultCmd;
   "org/cinnamon/desktop/default-applications/terminal".exec-arg = "";
   "org/virt-manager/virt-manager/connections" = {
     autoconnect = [ "qemu:///system" ];

@@ -7,7 +7,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   moduleVscode = "${g.flakeDirectory}/modules/editor/vscode";
 in
 {

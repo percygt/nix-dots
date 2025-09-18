@@ -1,12 +1,12 @@
 [metadata]
-description = "Search nixos option"
-name = "nixos"
+description = "Nix search tv"
+name = "nix-search"
 
 [preview]
-command = "nix-search-tv preview --indexes nixos '{}'"
+command = "nix-search-tv preview  --indexes flake '{}'"
 
 [source]
-command = "nix-search-tv print --indexes nixos"
+command = "nix-search-tv print --indexes flake"
 
 [keybindings]
 ctrl-h = "actions:homepage"
@@ -16,11 +16,11 @@ enter = "actions:source"
 
 [actions.homepage]
 description = "Open homepage"
-command = "nix-search-tv homepage --indexes nixos '{}' | xargs -I {} bash -c '[[ \"{}\" != *\"https\" ]] && xdg-open \"{}\"'"
+command = "nix-search-tv homepage '{}' | xargs -I {} bash -c '[[ \"{}\" != *\"https\" ]] && xdg-open \"{}\"'"
 
 [actions.source]
 description = "Open source"
-command = "nix-search-tv source --indexes nixos '{}' | xargs xdg-open"
+command = "nix-search-tv source '{}' | xargs xdg-open"
 
 [actions.searchgithub]
 description = "search github for snippets"

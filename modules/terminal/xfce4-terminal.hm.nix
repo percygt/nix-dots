@@ -7,7 +7,7 @@ let
   t = config.modules.themes;
   c = t.colors.withHashtag;
   f = config.modules.fonts.shell;
-  g = config._base;
+  g = config._global;
   cfg = config.modules.terminal.xfce4-terminal;
   color-palette = builtins.concatStringsSep ";" [
     c.base01
