@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   configTv = "${g.flakeDirectory}/core/television";
   tvPackage = pkgs.television;
 in

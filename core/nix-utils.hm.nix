@@ -6,7 +6,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   ns =
     {
       url = "https://raw.githubusercontent.com/3timeslazy/nix-search-tv/refs/heads/main/nixpkgs.sh";

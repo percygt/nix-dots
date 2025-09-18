@@ -2,9 +2,9 @@
 let
   brightnessctl = lib.getExe pkgs.brightnessctl;
   # timeouts
-  toDim = 60 * 15; # 5 minutes
-  toLock = 60 * 30; # 15 minutes
-  toScreenOff = 60 * 45; # 30 minutes
+  toDim = 60 * 15; # 15 minutes
+  toLock = 60 * 30; # 30 minutes
+  toScreenOff = 60 * 45; # 45 minutes
   toSuspend = 60 * 60; # 60 minutes
   cmdDim = "${pkgs.writers.writeBash "backlight_dim" ''
     ${brightnessctl} -d intel_backlight -s

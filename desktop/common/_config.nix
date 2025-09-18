@@ -20,8 +20,6 @@
       nautilus-python
       gnome-disk-utility
       nautilus
-      libheif
-      libheif.out
     ];
   };
   services = {
@@ -39,7 +37,7 @@
   programs = {
     nautilus-open-any-terminal = {
       enable = true;
-      terminal = config._base.terminal.defaultCmd;
+      terminal = config._global.terminal.defaultCmd;
     };
     seahorse.enable = true;
     gnome-disks.enable = true;

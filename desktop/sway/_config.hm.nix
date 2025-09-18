@@ -5,7 +5,7 @@
 }:
 let
   cfg = config.modules.desktop.sway;
-  g = config._base;
+  g = config._global;
   a = config.modules.themes.assets;
   f = config.modules.fonts.app;
   c = config.modules.themes.colors.withHashtag;

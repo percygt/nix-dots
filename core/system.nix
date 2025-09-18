@@ -8,7 +8,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
 in
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];

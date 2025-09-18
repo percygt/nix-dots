@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   nixosRebuild = pkgs.writeShellApplication {
     name = "waybar-rebuild-exec";
     runtimeInputs = g.system.envPackages;
@@ -70,7 +70,7 @@ let
       ''
         makeWrapper ${pkgs.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
       '';
-  # inherit (config._base) flakeDirectory;
+  # inherit (config._global) flakeDirectory;
   # moduleWaybar = "${flakeDirectory}/desktop/sway/waybar";
   c = config.modules.themes.colors.withHashtag;
   f = config.modules.fonts.interface;

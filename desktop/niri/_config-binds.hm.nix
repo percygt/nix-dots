@@ -49,6 +49,7 @@
       "Mod+P".action = spawn "footpad" "--app-id=clipboard" "--title=Clipboard" "--" "cliphist-fzf-sixel";
       "Mod+M".action = spawn "footpad" "--title=SystemMonitor" "--app-id=btop" "--" "btop";
       "Mod+B".action = spawn "footpad" "--title=Bluetooth" "--app-id=bluetui" "--" "bluetui";
+      "Mod+T".action = spawn-sh "footpad --title='Nix Search' --app-id=nix-search -- tv nix";
       "Mod+Alt+L" = {
         action = spawn-sh "niri msg action do-screen-transition && hyprlock --immediate";
         allow-when-locked = true;

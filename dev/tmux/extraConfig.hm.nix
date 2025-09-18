@@ -14,7 +14,7 @@ let
     sed -i 's|fish	:\[fish\] <defunct>|fish	:|g' "$1"
     sed -i ':a;N;$!ba;s|\[fish\] <defunct>\n||g' "$1"
   '';
-  g = config._base;
+  g = config._global;
   tp = pkgs.tmuxPlugins;
 in
 {

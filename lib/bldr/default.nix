@@ -21,7 +21,7 @@ let
         "${self}/core"
         "${self}/dev"
         "${self}/profiles/${profile}"
-        self.outputs.nixosModules.default
+        "${self}/modules"
       ]
       ++ extraModules
       ++ lib.optionals (desktop != null) [
@@ -72,6 +72,7 @@ in
           inherit desktop profile extraModules;
         })
         ++ [
+          self.outputs.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -118,6 +119,7 @@ in
           inherit desktop profile extraModules;
         })
         ++ [
+          self.outputs.homeManagerModules.default
           inputs.niri.homeModules.niri
           (
             { pkgs, ... }:

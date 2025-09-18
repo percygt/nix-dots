@@ -6,6 +6,8 @@
       defaultUsername = "percygt";
       defaultSystem = "x86_64-linux";
       stateVersion = "25.05";
+      lib = inputs.home-manager.lib // inputs.nixpkgs.lib;
+      libx = import "${self}/lib/libx" { inherit lib inputs; };
       bldr = import ./lib {
         inherit
           self
@@ -13,6 +15,8 @@
           stateVersion
           defaultSystem
           defaultUsername
+          lib
+          libx
           ;
       };
     in
@@ -21,30 +25,20 @@
         aizeft = bldr.buildSystem {
           profile = "aizeft";
           desktop = "niri";
-          extraModules = [ (builtins.toString inputs.base) ];
-        };
-        vm = inputs.nixpkgs.lib.nixosSystem {
-          system = defaultSystem;
-          modules = [
-            inputs.home-manager.nixosModules.home-manager
-            ./vm
-          ];
-          specialArgs = rec {
-            inherit inputs stateVersion;
-            username = defaultUsername;
-            profile = "vm";
-            homeDirectory = "/home/${username}";
-          };
+          extraModules = [ (builtins.toString inputs.personal) ];
         };
       };
       homeConfigurations = {
         "percygt@aizeft" = bldr.buildHome {
           profile = "aizeft";
           desktop = "niri";
-          extraModules = [ (builtins.toString inputs.base) ];
+          extraModules = [ (builtins.toString inputs.personal) ];
         };
       };
-      nixosModules.default = ./modules;
+
+      nixosModules.default.imports = libx.importNixosForEachDir [ ./modules ];
+      homeManagerModules.default.imports = libx.importHomeForEachDir [ ./modules ];
+
       packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
       formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
       overlays = import ./overlays { inherit inputs; };
@@ -124,8 +118,11 @@
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
-    base.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
-    base.flake = false;
+    unf.url = "git+https://git.atagen.co/atagen/unf";
+    unf.inputs.nixpkgs.follows = "nixpkgs";
+
+    personal.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
+    personal.flake = false;
   };
   nixConfig = {
     extra-substituters = [

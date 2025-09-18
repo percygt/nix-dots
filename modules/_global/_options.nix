@@ -8,19 +8,128 @@
   ...
 }:
 let
-  cfg = config._base;
+  cfg = config._global;
+  inherit (lib) mkOption types;
 in
 {
-  options._base = {
-
-    flakeDirectory = lib.mkOption {
+  options._global = {
+    flakeDirectory = mkOption {
       description = "Flake directory";
-      type = lib.types.str;
+      type = types.str;
       default = "${homeDirectory}/nix-dots";
+    };
+    dataDirectory = mkOption {
+      description = "Home directory";
+      default = "";
+      type = types.str;
+    };
+    secretsDirectory = mkOption {
+      description = "Home directory";
+      default = "";
+      type = types.str;
+    };
+    syncthingDirectory = mkOption {
+      description = "Home directory";
+      default = "";
+      type = types.str;
+    };
+    orgDirectory = mkOption {
+      description = "Org directory";
+      default = "";
+      type = types.str;
+    };
+    windowsDirectory = mkOption {
+      description = "Windows directory";
+      default = "";
+      type = types.str;
+    };
+    backupDirectory = mkOption {
+      description = "Backup mount path";
+      default = "";
+      type = types.str;
+    };
+    xdg = {
+      userDirs = rec {
+        download = mkOption {
+          type = with types; nullOr (coercedTo path toString str);
+          default = homeDirectory + "/downloads";
+          description = "The Downloads directory.";
+        };
+        music = mkOption {
+          type = with types; nullOr (coercedTo path toString str);
+          default = homeDirectory + "/music";
+          description = "The Music directory.";
+        };
+        pictures = mkOption {
+          type = with types; nullOr (coercedTo path toString str);
+          default = homeDirectory + "/pictures";
+          description = "The Pictures directory.";
+        };
+        videos = mkOption {
+          type = with types; nullOr (coercedTo path toString str);
+          default = homeDirectory;
+          description = "The Videos directory.";
+        };
+        desktop = mkOption {
+          type = with types; nullOr (coercedTo path toString str);
+          default = homeDirectory;
+          description = "The Desktop directory.";
+        };
+        documents = mkOption {
+          type = with types; nullOr (coercedTo path toString str);
+          default = homeDirectory;
+          description = "The Documents directory.";
+        };
+        publicShare = mkOption {
+          type = with types; nullOr (coercedTo path toString str);
+          default = homeDirectory;
+          description = "The Public share directory.";
+        };
+        templates = mkOption {
+          type = with types; nullOr (coercedTo path toString str);
+          default = homeDirectory;
+          description = "The Templates directory.";
+        };
+        extraConfig = mkOption {
+          type = with types; attrsOf (coercedTo path toString str);
+          default = {
+            XDG_SCREENSHOTS_DIR = pictures + "/screenshots";
+          };
+          description = "Other user directories.";
+        };
+      };
+      configHome = mkOption {
+        description = ''
+          Absolute path to directory holding application configurations.
+        '';
+        default = homeDirectory + "/.config";
+        type = types.str;
+      };
+      dataHome = mkOption {
+        description = ''
+          Absolute path to directory holding application data.
+        '';
+        default = homeDirectory + "/.local/share";
+        type = types.str;
+      };
+      cacheHome = mkOption {
+        description = ''
+          Absolute path to directory holding application caches.
+        '';
+        default = homeDirectory + "/.local/cache";
+        type = types.str;
+      };
+      stateHome = mkOption {
+        description = ''
+          Absolute path to directory holding application states.
+        '';
+        default = homeDirectory + "/.local/state";
+        type = types.str;
+      };
     };
     textEditor = {
       nvim = {
-        "system.lua" = lib.mkOption {
+        "system.lua" = mkOption {
           description = "System Configs";
           default =
             # lua
@@ -32,11 +141,11 @@ in
                 flakeDirectory = "${cfg.flakeDirectory}",
               }
             '';
-          type = lib.types.lines;
+          type = types.lines;
         };
       };
       emacs = {
-        "system.el" = lib.mkOption {
+        "system.el" = mkOption {
           description = "System Configs";
           default =
             # lisp
@@ -45,168 +154,138 @@ in
               ;;; Commentary:
               ;;; Code:
               (defvar flakeDirectory
-                "${config._base.flakeDirectory}"
+                "${config._global.flakeDirectory}"
                 "Flake directory.")
               (provide 'system)
               ;;; system.el ends here
             '';
-          type = lib.types.lines;
+          type = types.lines;
         };
       };
     };
     terminal = {
-      defaultPackage = lib.mkOption {
+      defaultPackage = mkOption {
         description = "Default terminal package";
-        type = lib.types.package;
+        type = types.package;
         default = config.modules.terminal.foot.package;
       };
-      defaultCmd = lib.mkOption {
+      defaultCmd = mkOption {
         description = "Default terminal command";
-        type = lib.types.str;
+        type = types.str;
         default = config.modules.terminal.foot.cmd;
       };
     };
     shell = {
-      defaultPackage = lib.mkOption {
+      defaultPackage = mkOption {
         description = "Default shell package";
-        type = lib.types.package;
+        type = types.package;
         default = pkgs.fish;
       };
     };
     security = {
       borgmatic = {
-        mountUuid = lib.mkOption {
+        mountUuid = mkOption {
           description = "Backup mount uuid";
-          type = lib.types.str;
+          type = types.str;
           default = "";
         };
-        usbId = lib.mkOption {
+        usbId = mkOption {
           description = "The bus and device id of the usb device e.g. 2-2 acquired from lsusb command 'Bus 002 Device 002'";
-          type = lib.types.str;
+          type = types.str;
           default = "";
         };
-        mountPath = lib.mkOption {
+        mountPath = mkOption {
           description = "Backup mount path";
           default = "";
-          type = lib.types.str;
+          type = types.str;
         };
       };
       gpg = {
-        signingKey = lib.mkOption {
+        signingKey = mkOption {
           description = "Gpg signing key";
           default = "";
-          type = lib.types.str;
+          type = types.str;
         };
       };
-    };
-    dataDirectory = lib.mkOption {
-      description = "Home directory";
-      default = "";
-      type = lib.types.str;
-    };
-    secretsDirectory = lib.mkOption {
-      description = "Home directory";
-      default = "";
-      type = lib.types.str;
-    };
-    syncthingDirectory = lib.mkOption {
-      description = "Home directory";
-      default = "";
-      type = lib.types.str;
-    };
-    orgDirectory = lib.mkOption {
-      description = "Org directory";
-      default = "";
-      type = lib.types.str;
-    };
-    windowsDirectory = lib.mkOption {
-      description = "Windows directory";
-      default = "";
-      type = lib.types.str;
-    };
-    backupDirectory = lib.mkOption {
-      description = "Backup mount path";
-      default = "";
-      type = lib.types.str;
     };
     network = {
       syncthing = {
-        devices.phone.id = lib.mkOption {
+        devices.phone.id = mkOption {
           description = "Phone ID";
           default = "";
-          type = lib.types.str;
+          type = types.str;
         };
-        guiAddress = lib.mkOption {
+        guiAddress = mkOption {
           description = "Gui Address";
           default = "";
-          type = lib.types.str;
+          type = types.str;
         };
       };
-      wifi = lib.mkOption {
+      wifi = mkOption {
         description = "Wifi home";
         default = "";
-        type = lib.types.str;
+        type = types.str;
       };
       wireguard = {
-        name = lib.mkOption {
+        name = mkOption {
           description = "Name";
           default = "nixos";
-          type = lib.types.str;
+          type = types.str;
         };
-        publicKey = lib.mkOption {
+        publicKey = mkOption {
           description = "Public Key";
           default = "";
-          type = lib.types.str;
+          type = types.str;
         };
-        address = lib.mkOption {
+        address = mkOption {
           description = "IP address";
           default = "";
-          type = lib.types.str;
+          type = types.str;
         };
-        dnsIp = lib.mkOption {
+        dnsIp = mkOption {
           description = "DNS IP";
           default = "";
-          type = lib.types.str;
+          type = types.str;
         };
-        endpointIp = lib.mkOption {
+        endpointIp = mkOption {
           description = "Endpoint IP";
           default = "";
-          type = lib.types.str;
+          type = types.str;
         };
-        port = lib.mkOption {
+        port = mkOption {
           description = "Endpoint Port";
           default = 8888;
-          type = lib.types.port;
+          type = types.port;
         };
       };
     };
 
     systemInstall = {
-      targetUser = lib.mkOption {
+      targetUser = mkOption {
         description = "targetUser";
         default = username;
-        type = lib.types.str;
+        type = types.str;
       };
-      mountDevice = lib.mkOption {
+      mountDevice = mkOption {
         description = "Mount device";
         default = "";
-        type = lib.types.str;
+        type = types.str;
       };
-      luksDevice = lib.mkOption {
+      luksDevice = mkOption {
         description = "Luks device";
         default = "";
-        type = lib.types.str;
+        type = types.str;
       };
     };
-    localPrinter = lib.mkOption {
-      description = "Keepass database";
-      type = lib.types.attrs;
+    localPrinter = mkOption {
+      description = "Local printer";
+      type = types.attrs;
       default = { };
     };
     system = {
-      envVars = lib.mkOption {
+      envVars = mkOption {
         description = "Environment variables";
-        type = lib.types.attrs;
+        type = types.attrs;
         default =
           let
             inherit (config.modules.themes)
@@ -235,9 +314,9 @@ in
             GTK_ICON = iconTheme.name;
           };
       };
-      envPackages = lib.mkOption {
+      envPackages = mkOption {
         description = "Environment packages";
-        type = with lib.types; listOf package;
+        type = with types; listOf package;
         default =
           let
             inherit (cfg)
@@ -279,9 +358,9 @@ in
             xz.bin
           ];
       };
-      corePackages = lib.mkOption {
+      corePackages = mkOption {
         description = "Core Packages";
-        type = with lib.types; listOf package;
+        type = with types; listOf package;
         default =
           with pkgs;
           [

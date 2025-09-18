@@ -9,7 +9,7 @@ let
     symbol = icon;
     format = "via [$symbol $version](${color}) ";
   };
-  g = config._base;
+  g = config._global;
   defaultShell = g.shell.defaultPackage;
 in
 {

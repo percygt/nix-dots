@@ -4,7 +4,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   kvmEnable = config.modules.virtualisation.kvm.enable;
 in
 {

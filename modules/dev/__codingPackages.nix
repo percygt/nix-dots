@@ -89,7 +89,7 @@ pkgs: with pkgs; [
 
   #docker
   hadolint
-  dockerfile-language-server-nodejs
+  dockerfile-language-server
 
   #markdown
   marksman

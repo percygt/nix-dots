@@ -6,7 +6,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   cfg = config.modules.editor.emacs;
   swayCfg = config.wayland.windowManager.sway;
   mod = swayCfg.config.modifier;

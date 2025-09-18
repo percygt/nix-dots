@@ -12,6 +12,7 @@ command = "nix-search-tv print --indexes home-manager"
 ctrl-h = "actions:homepage"
 ctrl-s = "actions:source"
 ctrl-g = "actions:searchgithub"
+enter = "actions:source"
 
 [actions.homepage]
 description = "Open homepage"
