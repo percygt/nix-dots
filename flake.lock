@@ -266,11 +266,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757508292,
-        "narHash": "sha256-7lVWL5bC6xBIMWWDal41LlGAG+9u2zUorqo3QCUL4p4=",
+        "lastModified": 1758287904,
+        "narHash": "sha256-IGmaEf3Do8o5Cwp1kXBN1wQmZwQN3NLfq5t4nHtVtcU=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "146f45bee02b8bd88812cfce6ffc0f933788875a",
+        "rev": "67ff9807dd148e704baadbd4fd783b54282ca627",
         "type": "github"
       },
       "original": {
@@ -305,11 +305,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1758118578,
-        "narHash": "sha256-hlU/RS5siZGna4iH0OCBZ1xvNp7FhqyzQYh7B5Diu1U=",
+        "lastModified": 1758181421,
+        "narHash": "sha256-VrEHrnUlle5FNx3CnXZ27eXKPOKd7Dui2SvqZPnjiwA=",
         "owner": "abenz1267",
         "repo": "elephant",
-        "rev": "2cd7a567c1ce497fd17df5c23eeee4bc6be6174b",
+        "rev": "8587db832a2e0946e3e7aa6049e257ac7e87b278",
         "type": "github"
       },
       "original": {
@@ -378,11 +378,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1758091097,
-        "narHash": "sha256-p2FIwAaUCoKY9mZSPAMQYQ7CwwhfvGC4VIfLapAdfOE=",
+        "lastModified": 1758264155,
+        "narHash": "sha256-sgg1sd/pYO9C7ccY9tAvR392CDscx8sqXrHkxspjIH0=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "b60fe116b9495df516f57837bb04a4f89f3aa7ed",
+        "rev": "a7d9df0179fcc48259a68b358768024f8e5a6372",
         "type": "github"
       },
       "original": {
@@ -1214,11 +1214,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758119172,
-        "narHash": "sha256-LnVuGLf0PJHqqIHroxEzwXS57mjAdHSrXi0iODKbbiU=",
+        "lastModified": 1758296614,
+        "narHash": "sha256-l60D1i0aaSqemy9dL7wP0ePMfcv/oZbeKpvUMY+q0kQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "9f408dc51c8e8216a94379e6356bdadbe8b4fef9",
+        "rev": "55b1f5b7b191572257545413b98e37abab2fdb00",
         "type": "github"
       },
       "original": {
@@ -2130,11 +2130,11 @@
         "walker": "walker"
       },
       "locked": {
-        "lastModified": 1758125503,
-        "narHash": "sha256-Xl7T/bFoLvKTbYV91tx6zocdym0zv/4PGCXbEfIQT+U=",
+        "lastModified": 1758298265,
+        "narHash": "sha256-QGQ2GCxWmfGbSt0xcl+kYoRYXirRdE9diPWFfk+LmFo=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "95e6bf09127e32c9bd2728c5b811a9c8ec90a6ff",
+        "rev": "c9dfeefd17b96c825b4160bb08f501a80cf3045e",
         "type": "github"
       },
       "original": {
@@ -2772,11 +2772,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758144108,
-        "narHash": "sha256-fq/Fd89pUrdVcFmw8aNVQoF9UPq7L5gtS/0ioPTUNKg=",
+        "lastModified": 1758314668,
+        "narHash": "sha256-UeSA8UbYgBeeI/r6YRlkwKrBMhnE2ZliSFb7QB7p4zQ=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "47a4f8514d9aecd033d53a84f698a115b3074f2b",
+        "rev": "180ae0f66d4d50d36c01e750bd7c05f49ff8f24b",
         "type": "github"
       },
       "original": {
@@ -2909,11 +2909,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1757362324,
-        "narHash": "sha256-/PAhxheUq4WBrW5i/JHzcCqK5fGWwLKdH6/Lu1tyS18=",
+        "lastModified": 1758224093,
+        "narHash": "sha256-buZMH6NgzSLowTda+aArct5ISsMR/S888EdFaqUvbog=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "9edc9cbe5d8e832b5864e09854fa94861697d2fd",
+        "rev": "958a8d06e3e5ba7dca7cc23b0639335071d65f2a",
         "type": "github"
       },
       "original": {
@@ -3638,11 +3638,11 @@
         "systems": "systems_15"
       },
       "locked": {
-        "lastModified": 1758118261,
-        "narHash": "sha256-CqzwUYXcUyh3V10ZqHEE1KXBMErtjcs1at04FlIYtg8=",
+        "lastModified": 1758207157,
+        "narHash": "sha256-iybZBPIl1Ky0FKLHUfrl6AhVavWdlI0FLTMDg8zmyT8=",
         "owner": "abenz1267",
         "repo": "walker",
-        "rev": "5e593e5afb04ea0f7b4e29308fabca94361715a6",
+        "rev": "985fe8bfb9b25dc452c141df8319c5b3c175deee",
         "type": "github"
       },
       "original": {
