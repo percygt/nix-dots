@@ -6,7 +6,7 @@
 }:
 let
   g = config._global;
-  x = config.xdg;
+  x = g.xdg;
   u = x.userDirs;
 in
 {

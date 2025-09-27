@@ -1,0 +1,31 @@
+#pulseaudio {
+  color: @magenta;
+}
+#pulseaudio.mic {
+  color: darker(@text-light);
+  background: @background-alt;
+  padding-bottom: 10px;
+}
+
+#pulseaudio.mic:hover {
+  color: @text-light;
+}
+
+#pulseaudio-slider {
+  padding-top: 10px;
+  background-color: @background-alt;
+}
+
+#pulseaudio-slider slider {
+  min-width: 12px;
+}
+
+#pulseaudio-slider trough {
+  min-height: 60px;
+  border-radius: 8px;
+}
+
+#pulseaudio-slider highlight {
+  background-color: @blue;
+  border-radius: 8px;
+}

@@ -44,7 +44,6 @@ in
         text-blink-mode = "TERMINAL_TEXT_BLINK_MODE_ALWAYS";
         color-cursor = "${c.base05}";
         color-foreground = "${c.base05}";
-        background-darkness = 1 - t.opacity;
         misc-menubar-default = false;
         misc-borders-default = false;
         misc-toolbar-default = false;

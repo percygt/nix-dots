@@ -1,0 +1,22 @@
+{
+  "battery": {
+    "states": {
+      "good": 80,
+      "warning": 30,
+      "critical": 20
+    },
+    "format": "<span font='16'>{icon}</span>",
+    "format-charging": "<span color='yellow'>󰂄</span>",
+    "format-plugged": "󰠠",
+    "format-icons": [
+      "󰁻",
+      "󰁼",
+      "󰁾",
+      "󰂀",
+      "󰂂",
+      "󰁹"
+    ],
+    "tooltip-format": "{timeTo} | {capacity} % | {power} W",
+    "on-click-left": "systemctl --user restart waybar"
+  }
+}

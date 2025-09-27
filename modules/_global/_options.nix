@@ -49,7 +49,7 @@ in
       type = types.str;
     };
     xdg = {
-      userDirs = rec {
+      userDirs = {
         download = mkOption {
           type = with types; nullOr (coercedTo path toString str);
           default = homeDirectory + "/downloads";
@@ -93,7 +93,7 @@ in
         extraConfig = mkOption {
           type = with types; attrsOf (coercedTo path toString str);
           default = {
-            XDG_SCREENSHOTS_DIR = pictures + "/screenshots";
+            XDG_SCREENSHOTS_DIR = cfg.xdg.userDirs.pictures + "/screenshots";
           };
           description = "Other user directories.";
         };

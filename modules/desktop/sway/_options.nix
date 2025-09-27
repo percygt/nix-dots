@@ -8,7 +8,6 @@ with lib;
 let
   cfg = config.modules.desktop.sway;
   criteriaModule = types.attrsOf (types.either types.str types.bool);
-  unsupported-gpu = config.modules.graphics.nvidia.prime.enable;
   windowCommandModule = types.submodule {
     options = {
       command = mkOption {
@@ -39,7 +38,7 @@ in
     command = lib.mkOption {
       description = "Sway package";
       type = lib.types.str;
-      default = "sway${lib.optionalString unsupported-gpu " --unsupported-gpu"}";
+      default = "sway";
     };
     finalPackage = lib.mkOption {
       description = "Sway package";
@@ -50,7 +49,7 @@ in
             let
               swaySession = ''
                 [Desktop Entry]
-                Name=Sway${lib.optionalString unsupported-gpu "Nvidia"}
+                Name=Sway
                 Comment=An i3-compatible Wayland compositor
                 Exec=${cfg.command}
                 Type=Application

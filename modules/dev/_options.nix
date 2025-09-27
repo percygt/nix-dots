@@ -21,6 +21,7 @@
         description = "Extrapackages for editor";
         type = lib.types.listOf lib.types.package;
         default = import ./__codingPackages.nix pkgs;
+        # default = [ ];
       };
     };
   };

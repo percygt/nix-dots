@@ -19,7 +19,7 @@ in
     environment.systemPackages = with pkgs; [
       borgbackup
     ];
-    modules.fileSystem.persist.userData.directories = [ configDir ];
+    persistHome.directories = [ configDir ];
     sops.secrets."borgmatic/encryption" = { };
     systemd = {
       timers.poweroff_hdd = {

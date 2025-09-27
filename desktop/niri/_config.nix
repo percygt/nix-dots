@@ -9,11 +9,9 @@ let
   cfg = config.modules.desktop.niri;
 in
 {
-  modules.fileSystem.persist = {
-    userData = {
-      directories = [ ".local/share/keyrings" ];
-      files = [ ".local/state/tofi-drun-history" ];
-    };
+  persistHome = {
+    directories = [ ".local/share/keyrings" ];
+    files = [ ".local/state/tofi-drun-history" ];
   };
 
   imports = [ inputs.niri.nixosModules.niri ];

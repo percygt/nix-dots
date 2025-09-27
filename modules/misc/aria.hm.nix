@@ -5,9 +5,10 @@
   ...
 }:
 let
+  g = config._global;
   inherit (lib) concatStringsSep;
   inherit (pkgs) runtimeShell writeScript;
-  inherit (config.xdg) configHome dataHome;
+  inherit (g.xdg) configHome dataHome userDirs;
   aria2-bin = "${pkgs.aria2}/bin/aria2c";
   coreutils-bin = "${pkgs.coreutils}/bin";
   sessionFile = "${dataHome}/aria2/session";
@@ -22,7 +23,7 @@ in
       enable = true;
       settings = {
         # Download directory
-        dir = "${config.xdg.userDirs.download}/aria";
+        dir = "${userDirs.download}/aria";
         check-integrity = true;
 
         ## General optimization

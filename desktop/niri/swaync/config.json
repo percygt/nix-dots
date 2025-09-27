@@ -5,13 +5,13 @@
   "layer-shell": true,
   "layer-shell-cover-screen": false,
 
-  "positionX": "center",
+  "positionX": "right",
   "positionY": "top",
   "notification-2fa-action": true,
-  "notification-inline-replies": false,
+  "notification-inline-replies": true,
   "notification-body-image-height": 100,
   "notification-body-image-width": 200,
-  "notification-window-width": 300,
+  "notification-window-width": 320,
   "notification-grouping": true,
 
   "control-center-positionX": "center",
@@ -38,56 +38,33 @@
   "text-empty": "No Notifications",
   "script-fail-notify": true,
   "cssPriority": "user",
-
-  "scripts": {
-    "example-script": {
-      "exec": "echo 'Do something...'",
-      "urgency": "Normal"
-    }
-  },
-  "notification-visibility": {
-    "example-name": {
-      "state": "muted",
-      "urgency": "Low",
-      "app-name": "Spotify"
-    }
-  },
   "widgets": [
+    "buttons-grid",
     "title",
     "notifications"
   ],
   "widget-config": {
-    "menubar": {
-      "buttons#topbar-buttons": {
-        "actions": [
-          {
-            "label": "",
-            "command": "swaymsg exit"
-          },
-          {
-            "label": "",
-            "command": "swaymsg exec swaylock"
-          },
-          {
-            "label": "",
-            "command": "systemctl reboot"
-          },
-          {
-            "label": "",
-            "command": "systemctl poweroff"
-          }
-        ]
-      }
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "",
+          "command": "niri msg action do-screen-transition && hyprlock --immediate"
+        },
+        {
+          "label": "",
+          "command": "systemctl reboot"
+        },
+        {
+          "label": "",
+          "command": "systemctl poweroff"
+        }
+      ]
     },
-    "backlight": {
-      "label": "󰃟",
-      "device": "intel_backlight",
-      "min": 10
+    "notifications": {
+      "vexpand": false
     },
-    "volume": {
-      "label": "󰕾",
-      "expand-button-label": "",
-      "collapse-button-label": ""
+    "dnd": {
+      "text": "Do Not Disturb"
     },
     "title": {
       "text": "Notifications",

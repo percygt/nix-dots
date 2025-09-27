@@ -22,6 +22,6 @@
     };
     hardware.enableAllFirmware = true;
     services.blueman.enable = true;
-    modules.fileSystem.persist.systemData.directories = [ "/var/lib/bluetooth" ];
+    persistSystem.directories = [ "/var/lib/bluetooth" ];
   };
 }

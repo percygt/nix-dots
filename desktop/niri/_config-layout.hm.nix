@@ -1,16 +1,11 @@
 {
   config,
-  pkgs,
-  inputs,
-  lib,
+  colorize,
   ...
 }:
 let
-  cfg = config.modules.desktop.niri;
-  g = config._global;
-  a = config.modules.themes.assets;
-  f = config.modules.fonts.app;
   c = config.modules.themes.colors.withHashtag;
+  h = colorize.hex;
 in
 {
   programs.niri.settings.layout = {
@@ -18,8 +13,8 @@ in
     border = {
       enable = true;
       width = 2;
-      active.color = "#ED61D730";
-      inactive.color = "#B8149F30";
+      active.color = h.setAlpha c.magenta 0.2;
+      inactive.color = h.setAlpha (h.darken c.magenta 0.2) 0.2;
     };
     shadow = {
       enable = true;

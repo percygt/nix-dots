@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  colorize,
   ...
 }:
 let
@@ -9,6 +10,7 @@ let
   cfg = config.modules.desktop.sway;
   moduleSwaync = "${g.flakeDirectory}/desktop/niri/swaync";
   c = config.modules.themes.colors.withHashtag;
+  h = colorize.hex;
   f = config.modules.fonts.app;
   i = config.modules.fonts.icon;
   extraPackages =
@@ -44,15 +46,14 @@ in
     in
     {
       "swaync/config.json".source = lib.mkForce (symlink "${moduleSwaync}/config.json");
-      "swaync/styles".source = symlink "${moduleSwaync}/styles";
-      # "swaync/style.css".source = symlink "${moduleSwaync}/style.css";
+      "swaync/main.css".source = symlink "${moduleSwaync}/main.css";
       "swaync/style.css".text =
         # css
         ''
           @define-color background ${c.base00};
           @define-color background-alt ${c.base01};
           @define-color text-dark ${c.base11};
-          @define-color text-light ${c.base05};
+          @define-color text ${c.base05};
           @define-color black ${c.base11};
           @define-color green ${c.green};
           @define-color orange ${c.orange};
@@ -62,7 +63,10 @@ in
           @define-color red ${c.red};
           @define-color magenta ${c.magenta};
           @define-color brown ${c.brown};
-          @import url("./styles/main.css");
+          * {
+            font-family: '${f.name}, ${i.name}';
+          }
+          @import url("./main.css");
         '';
     };
 }

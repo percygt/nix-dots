@@ -4,11 +4,7 @@
   ...
 }:
 {
-  modules.fileSystem.persist = {
-    userData = {
-      files = [ ".config/QtProject.conf" ];
-    };
-  };
+  persistHome.files = [ ".config/QtProject.conf" ];
   environment = {
     sessionVariables.NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
     pathsToLink = [

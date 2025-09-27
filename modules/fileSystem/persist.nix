@@ -6,9 +6,18 @@
 }:
 let
   cfg = config.modules.fileSystem.persist;
+  inherit (lib)
+    mkAliasOptionModule
+    mkIf
+    ;
 in
 {
-  config = lib.mkIf (cfg.enable && config.modules.fileSystem.ephemeral.enable) {
+  # Actually create the aliases options.
+  imports = [
+    (mkAliasOptionModule [ "persistSystem" ] [ "modules" "fileSystem" "persist" "systemData" ])
+    (mkAliasOptionModule [ "persistHome" ] [ "modules" "fileSystem" "persist" "userData" ])
+  ];
+  config = mkIf (cfg.enable && config.modules.fileSystem.ephemeral.enable) {
     fileSystems.${cfg.prefix}.neededForBoot = true;
     environment.etc."machine-id".source = "${cfg.systemPrefix}/etc/machine-id";
     environment.persistence = {
@@ -20,13 +29,8 @@ in
           "/var/lib/systemd/coredump"
           "/var/lib/nixos"
           "/srv"
-          {
-            directory = "/var/lib/colord";
-            user = "colord";
-            group = "colord";
-            mode = "u=rwx,g=rx,o=";
-          }
-        ] ++ cfg.systemData.directories;
+        ]
+        ++ cfg.systemData.directories;
       };
       # My user persistence
       ${cfg.prefix}.users.${username} = {
@@ -35,7 +39,8 @@ in
           ".local/share/nix"
           ".local/state/nix"
           ".local/state/home-manager"
-        ] ++ cfg.userData.directories;
+        ]
+        ++ cfg.userData.directories;
       };
     };
   };

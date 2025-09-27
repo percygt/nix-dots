@@ -5,6 +5,8 @@ let
     iconTheme
     gtkTheme
     ;
+
+  g = config._global;
   f = config.modules.fonts.app;
   srcTheme = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}";
   gtk4SrcTheme = "${srcTheme}/gtk-4.0";
@@ -13,7 +15,7 @@ in
   dconf.settings = import ./__dconf.nix { inherit config; };
   gtk = {
     enable = true;
-    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+    gtk2.configLocation = "${g.xdg.configHome}/gtk-2.0/gtkrc";
     font = { inherit (f) name size package; };
     cursorTheme = { inherit (cursorTheme) name size package; };
     iconTheme = { inherit (iconTheme) name package; };

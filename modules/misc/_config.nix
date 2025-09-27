@@ -6,12 +6,12 @@
 {
   config = lib.mkMerge [
     (lib.mkIf config.modules.misc.atuin.enable {
-      modules.fileSystem.persist.userData.directories = [
+      persistHome.directories = [
         ".local/share/atuin"
       ];
     })
     (lib.mkIf config.modules.misc.aria.enable {
-      modules.fileSystem.persist.userData.directories = [
+      persistHome.directories = [
         ".local/share/aria2"
       ];
     })

@@ -6,6 +6,7 @@
   ...
 }:
 let
+  g = config._global;
   inherit (lib) mkOption mkEnableOption;
   supportedBrowsers = [
     "chromium"
@@ -140,7 +141,7 @@ in
   config =
     let
       cfg = config.programs.brave-nightly;
-      configDir = "${config.xdg.configHome}/BraveSoftware/Brave-Browser-Nightly";
+      configDir = "${g.xdg.configHome}/BraveSoftware/Brave-Browser-Nightly";
       extensionJson =
         ext:
         assert ext.crxPath != null -> ext.version != null;
