@@ -7,7 +7,7 @@
 
 (setq doom-modules-dirs
       (list (file-name-concat doom-user-dir "modules/")
-            (file-name-concat orgDirectory "modules/")
+            ; (file-name-concat orgDirectory "modules/")
             doom-modules-dir))
 
 (doom! :completion

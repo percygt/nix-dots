@@ -18,7 +18,6 @@ in
     [
       brightnessctl
       app2unit
-      networkmanager
       lm_sensors
       aubio
       grim
@@ -27,15 +26,22 @@ in
       inotify-tools
       bluez
       bash
-      coreutils
-      findutils
       file
       fira-code
       cava
       material-icons
-      wl-clipboard
       cliphist
+      bluez
+      brightnessctl
+      coreutils
+      ddcutil
+      findutils
+      libnotify
       matugen
+      networkmanager
+      wlsunset
+      wl-clipboard
+      gpu-screen-recorder
     ]
     ++ [
       (inputs.quickshell.packages.${pkgs.system}.default.override {

@@ -1,0 +1,19 @@
+{
+  "wireplumber": {
+    "rotate": 90,
+    "format": "<span font='9'>{icon}</span>{volume:3}% {node_name}",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "format-muted": " ",
+    "max-volume": 100,
+    "on-click": "pamixer --toggle-mute",
+    // "on-click-right": "ddapp -t 'pavucontrol' -h 80 -w 80 -- pavucontrol",
+    "scroll-step": 5,
+    "tooltip-format": "{source_volume}% / {desc}"
+  }
+}

@@ -17,5 +17,9 @@
         workstation = true;
       };
     };
+    services.resolved.extraConfig = lib.mkForce ''
+      MulticastDNS=false
+    '';
+    networking.networkmanager.connectionConfig."connection.mdns" = 1;
   };
 }

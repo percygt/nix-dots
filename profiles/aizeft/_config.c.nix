@@ -6,12 +6,6 @@
       ephemeral.enable = true;
       persist.enable = true;
     };
-    graphics = {
-      intel.enable = true;
-      intel.gpu.driver = "xe";
-      # nvidia.prime.enable = true;
-      # nvidia.prime.batterySaverSpecialisation = true;
-    };
     app = {
       zen.enable = true;
       librewolf.enable = true;
@@ -29,11 +23,10 @@
     };
     core = {
       powermanagement.enable = true;
+      wifi.enable = true;
       # autoupgrade.enable = true;
       audio.enable = true;
-      networkmanager.enable = true;
       zram.enable = true;
-      # wpasupplicant.enable = true;
     };
     drivers = {
       adb.enable = true;
@@ -63,7 +56,7 @@
     };
     networking = {
       vpn.enable = true;
-      avahi.enable = true;
+      # avahi.enable = true;
       tailscale.enable = true;
       syncthing.enable = true;
     };

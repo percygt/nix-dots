@@ -60,8 +60,8 @@
       };
     };
     users.users.${username}.extraGroups = [ "flatpak" ];
-    modules.fileSystem.persist.systemData.directories = [ "/var/lib/flatpak" ];
-    modules.fileSystem.persist.userData.directories = [
+    persistSystem.directories = [ "/var/lib/flatpak" ];
+    persistHome.directories = [
       # ".local/share/flatpak"
       ".var/app"
     ];

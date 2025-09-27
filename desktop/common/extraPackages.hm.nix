@@ -42,8 +42,10 @@
     wdisplays
     wl-clipboard
     ydotool
+    ffmpeg-full
     cctv-viewer
     tuya-ipc-terminal
     xdg-utils
+    vlc
   ];
 }

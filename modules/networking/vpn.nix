@@ -11,7 +11,6 @@ let
 in
 {
   config = lib.mkMerge [
-    { modules.core.wpasupplicant.enable = lib.mkForce false; }
     (mkIf cfg.enable {
       environment.systemPackages = with pkgs; [
         protonvpn-gui

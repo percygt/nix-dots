@@ -14,7 +14,6 @@ pkgs: with pkgs; [
 
   # Nix
   statix
-  # alejandra
   nixfmt-rfc-style
   nil
   nixd
@@ -25,6 +24,7 @@ pkgs: with pkgs; [
 
   #php
   # php.packages.php-cs-fixer
+  pretty-php
   php.packages.php-codesniffer
   phpactor
 
@@ -59,10 +59,9 @@ pkgs: with pkgs; [
   prettierd
   eslint_d
   stable.nodePackages.prettier
-  # NOTE: Handled by Mason-Lspconfig
-  # astro-language-server
+  # nodePackages."@vue/language-server"
+  # nodePackages."@astrojs/language-server"
   # svelte-language-server
-  # vue-language-server
 
   # Go
   go
@@ -118,4 +117,5 @@ pkgs: with pkgs; [
   codespell
   gitlint
   actionlint
+  tree-sitter
 ]

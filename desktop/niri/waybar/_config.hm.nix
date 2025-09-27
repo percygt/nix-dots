@@ -11,6 +11,7 @@ let
     ++ (with pkgs; [
       swaynotificationcenter
       foot
+      television
       pomo
       iwmenu
       walker
@@ -25,8 +26,7 @@ let
       ''
         makeWrapper ${pkgs.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
       '';
-  inherit (config._global) flakeDirectory;
-  moduleWaybar = "${flakeDirectory}/desktop/niri/waybar";
+  moduleWaybar = "${g.flakeDirectory}/desktop/niri/waybar";
   c = config.modules.themes.colors.withHashtag;
 in
 {
@@ -44,6 +44,19 @@ in
       "waybar/config.jsonc".source = symlink "${moduleWaybar}/config.jsonc";
       "waybar/modules".source = symlink "${moduleWaybar}/modules";
       "waybar/styles".source = symlink "${moduleWaybar}/styles";
+      "waybar/extra/nix-logo.png".source = config.modules.themes.assets.nix-logo;
+      "waybar/extra/nix.jsonc".text =
+        #jsonc
+        ''
+          {
+            "image#nix": {
+              "path": "${g.xdg.configHome}/waybar/extra/nix-logo.png",
+              "size": 38,
+              "on-click": "footpad --app-id=tmux -- tmux-launch-session",
+              "on-click-right": "swaync-client -t -sw"
+            }
+          }
+        '';
       "waybar/style.css".text =
         # css
         ''

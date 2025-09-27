@@ -7,7 +7,7 @@
 }:
 {
   config = lib.mkIf config.modules.core.audio.enable {
-    modules.fileSystem.persist.userData.directories = [ ".local/state/wireplumber" ];
+    persistHome.directories = [ ".local/state/wireplumber" ];
     environment.systemPackages = lib.mkIf (desktop != null) (
       with pkgs;
       [

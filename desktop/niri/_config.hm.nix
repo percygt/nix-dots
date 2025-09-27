@@ -12,7 +12,7 @@ let
     ;
 
   c = config.modules.themes.colors.withHashtag;
-  screenshotsDir = config.xdg.userDirs.extraConfig.XDG_SCREENSHOTS_DIR;
+  screenshotsDir = g.xdg.userDirs.extraConfig.XDG_SCREENSHOTS_DIR;
 in
 {
   programs.niri.settings = {
@@ -30,7 +30,9 @@ in
       theme = "${cursorTheme.name}";
     };
     screenshot-path = screenshotsDir + "/%Y-%m-%d-%H%M%S.png";
-    xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite-unstable}";
-    environment = g.system.envVars;
+    xwayland-satellite.path = "${lib.getExe pkgs.xwayland-satellite}";
+    environment = g.system.envVars // {
+      DISPLAY = null;
+    };
   };
 }

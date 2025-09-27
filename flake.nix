@@ -25,14 +25,18 @@
         aizeft = bldr.buildSystem {
           profile = "aizeft";
           desktop = "niri";
-          extraModules = [ (builtins.toString inputs.personal) ];
+          extraModulesDir = [
+            (builtins.toString inputs.personal)
+          ];
         };
       };
       homeConfigurations = {
         "percygt@aizeft" = bldr.buildHome {
           profile = "aizeft";
           desktop = "niri";
-          extraModules = [ (builtins.toString inputs.personal) ];
+          extraModulesDir = [
+            (builtins.toString inputs.personal)
+          ];
         };
       };
 
@@ -88,6 +92,8 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     # flatpaks.url = "github:in-a-dil-emma/declarative-flatpak/stable-v3";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
@@ -100,8 +106,8 @@
     wayland-pipewire-idle-inhibit.url = "github:rafaelrc7/wayland-pipewire-idle-inhibit";
     wayland-pipewire-idle-inhibit.inputs.nixpkgs.follows = "nixpkgs";
 
-    # quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
-    # quickshell.inputs.nixpkgs.follows = "nixpkgs";
+    quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+    quickshell.inputs.nixpkgs.follows = "nixpkgs";
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
@@ -120,6 +126,12 @@
 
     unf.url = "git+https://git.atagen.co/atagen/unf";
     unf.inputs.nixpkgs.follows = "nixpkgs";
+
+    system76-scheduler-niri.url = "github:Kirottu/system76-scheduler-niri";
+    system76-scheduler-niri.inputs.nixpkgs.follows = "nixpkgs";
+
+    ironbar.url = "github:JakeStanger/ironbar";
+    ironbar.inputs.nixpkgs.follows = "nixpkgs";
 
     personal.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     personal.flake = false;

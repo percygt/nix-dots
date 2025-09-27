@@ -1,0 +1,9 @@
+{
+  "custom/auto-cpufreq": {
+    "format": "{}",
+    "tooltip": false,
+    "exec": "auto-cpufreq-governor-exec",
+    "on-click": "auto-cpufreq-gtk",
+    "interval": 10
+  }
+}

@@ -1,9 +1,11 @@
 { lib, config, ... }:
+let
+  g = config._global;
+in
 {
   config = lib.mkIf config.modules.app.brave.enable {
     # disable NativeMessagingHosts symlink
-    home.file."${config.xdg.configHome}/BraveSoftware/Brave-Browser/NativeMessagingHosts".enable =
-      false;
+    home.file."${g.xdg.configHome}/BraveSoftware/Brave-Browser/NativeMessagingHosts".enable = false;
     programs.brave = {
       enable = true;
       commandLineArgs = [ "--password-store=basic" ];

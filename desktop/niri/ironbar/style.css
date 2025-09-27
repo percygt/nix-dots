@@ -1,0 +1,11 @@
+.workspaces label {
+  font-size: 0.9rem;
+}
+.workspaces > .item.focused {
+  color: dodgerblue;
+  transition: all 0.8s ease;
+}
+.workspaces > .item {
+  all: unset;
+  color: darkslategrey;
+}

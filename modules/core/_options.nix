@@ -3,10 +3,7 @@
   options.modules.core = {
     audio.enable = lib.mkEnableOption "Enable audio";
     zram.enable = lib.mkEnableOption "Enable zram";
-    networkmanager.enable = lib.mkEnableOption "Enable networkmanager";
-    ## wpasupplicant
-    wpasupplicant.enable = lib.mkEnableOption "Enable wpa";
-
+    wifi.enable = lib.mkEnableOption "Enable wifi";
     ## battery
     powermanagement = {
       enable = lib.mkEnableOption "Enable powermanagement services";

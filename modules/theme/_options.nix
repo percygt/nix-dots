@@ -38,8 +38,8 @@ in
             package
           ];
         default = pkgs.fetchurl {
-          url = "https://imgur.com/X5zKxvp";
-          sha256 = "0aynmicxlqx4a1bf6d0wl8mk56pm1djk2gh0mnb3150zz4jk3in2";
+          url = "https://i.imgur.com/X5zKxvp.png";
+          sha256 = "0idw7j5jz77la9asp6x87ivzxvxp5ddkyy5f7dr507r25300a790";
         };
       };
     };

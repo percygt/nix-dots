@@ -12,10 +12,10 @@ let
   mod = swayCfg.config.modifier;
   editorModules = "${g.flakeDirectory}/modules/editor";
   moduleEmacs = "${editorModules}/emacs";
-  DOOMLOCALDIR = "${config.xdg.dataHome}/doom";
-  DOOMDIR = "${config.xdg.configHome}/doom";
-  EMACSDIR = "${config.xdg.configHome}/emacs";
-  DOOMPROFILELOADFILE = "${config.xdg.dataHome}/doom/cache/profile-load.el";
+  DOOMLOCALDIR = "${g.xdg.dataHome}/doom";
+  DOOMDIR = "${g.xdg.configHome}/doom";
+  EMACSDIR = "${g.xdg.configHome}/emacs";
+  DOOMPROFILELOADFILE = "${g.xdg.dataHome}/doom/cache/profile-load.el";
   # capture = pkgs.writers.writePython3 "capture" { doCheck = false; } (builtins.readFile ./capture.py);
   capture = "python $DOOMDIR/capture.py";
   doomconfig = pkgs.writers.writeBash "doomconfig" ''
@@ -80,7 +80,7 @@ in
         "doom/init.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/init.el";
         "doom/packages.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/packages.el";
         "doom/modules".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/modules";
-        "doom/autoload".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
+        # "doom/autoload".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
         "doom/configs".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/configs";
         "doom/capture.py".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/capture.py";
         "doom/system.el".text = g.textEditor.emacs."system.el";

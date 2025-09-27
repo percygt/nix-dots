@@ -5,7 +5,7 @@
 }:
 {
   config = lib.mkIf config.modules.editor.vscode.enable {
-    modules.fileSystem.persist.userData.directories = [
+    persistHome.directories = [
       ".vscode"
     ];
   };
