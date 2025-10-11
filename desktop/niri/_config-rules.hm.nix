@@ -65,6 +65,7 @@ in
       {
         matches = [
           { app-id = "tmux"; }
+          { app-id = "yazi"; }
           { app-id = "swayimg"; }
           { app-id = "nix-search"; }
         ];
@@ -86,6 +87,7 @@ in
       {
         matches = [
           { app-id = "tmux"; }
+          { app-id = "yazi"; }
         ];
         inherit (t) opacity;
       }
