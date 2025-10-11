@@ -103,6 +103,9 @@ pkgs: with pkgs; [
   nur.repos.shackra.gtkcsslanguageserver
 
   # Additional
+  lemminx
+  libxml2
+  xmlstarlet
   yamllint
   terraform
   terraform-ls

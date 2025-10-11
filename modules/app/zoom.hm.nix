@@ -21,8 +21,9 @@ in
     programs.chromium.webapps.zoom = {
       enable = true;
       url = "https://app.zoom.us/wc";
+      icon = "zoom-desktop";
       comment = "Zoom Video Conference";
-      genericName = "Zoom Client";
+      name = "Zoom Client";
       categories = [
         "Network"
         "InstantMessaging"

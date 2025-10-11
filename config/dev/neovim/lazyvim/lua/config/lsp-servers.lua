@@ -79,4 +79,5 @@ return {
   taplo = {},
   cssls = {},
   lua_ls = {},
+  lemminx = {},
 }

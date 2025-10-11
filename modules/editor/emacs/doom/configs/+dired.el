@@ -1,7 +1,7 @@
 ;;; +dired.el -*- lexical-binding: t; -*-
 ;;; :emacs dired
 (map! :leader
-      :desc "Files" "f"   #'dirvish-side)
+      :desc "Files" "f"   #'dirvish)
 
 (map! :map dirvish-mode-map
       :n "<escape>"  #'dirvish-quit
@@ -13,7 +13,7 @@
 
 (after! dirvish
   (setq dirvish-side-auto-close 'true)
-  (setq dirvish-default-layout '(0 0.4 0.6))
+  (setq dirvish-default-layout '(0 0.25 0.75))
   (with-eval-after-load 'nerd-icons
     (setq dirvish-path-separators (list (format "  %s " (nerd-icons-codicon "nf-cod-home"))
                                         (format "  %s " (nerd-icons-codicon "nf-cod-root_folder"))

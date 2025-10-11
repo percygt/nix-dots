@@ -10,7 +10,10 @@ let
 in
 {
   persistHome = {
-    directories = [ ".local/share/keyrings" ];
+    directories = [
+      ".local/share/keyrings"
+      ".local/cache/elephant"
+    ];
     files = [ ".local/state/tofi-drun-history" ];
   };
 

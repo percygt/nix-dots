@@ -90,12 +90,18 @@ let
     browser:
     let
       inherit (builtins) stringLength substring;
-      inherit (lib.attrsets) mapAttrs filterAttrs;
+      inherit (lib.attrsets) mapAttrs;
       inherit (lib.strings) concatStringsSep toUpper;
     in
     {
       xdg.desktopEntries = mapAttrs (name: cfg: {
-        inherit (cfg) prefersNonDefaultGPU;
+        inherit (cfg)
+          prefersNonDefaultGPU
+          icon
+          genericName
+          categories
+          comment
+          ;
         name =
           if cfg.name == null then
             (toUpper (substring 0 1 name)) + (substring 1 (stringLength name) name)

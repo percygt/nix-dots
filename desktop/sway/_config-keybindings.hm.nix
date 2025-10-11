@@ -38,6 +38,9 @@ let
   '';
   termMod = config.modules.terminal;
   secMod = config.modules.security;
+  g = config._global;
+  editorModules = "${g.flakeDirectory}/modules/editor";
+  moduleEmacs = "${editorModules}/emacs";
   viewBackupLogCmd = pkgs.writers.writeBash "viewbackuplogcommand" ''
     footclient --title=BorgmaticBackup --app-id=backup -- journalctl -efo cat -u borgmatic.service
   '';
@@ -47,10 +50,32 @@ let
   yazi-foot = pkgs.writers.writeBash "yazi-foot" ''
     footclient --app-id=yazi --title='Yazi' -- yazi ~
   '';
+  # capture = pkgs.writers.writePython3 "capture" { doCheck = false; } (builtins.readFile ./capture.py);
+  capture = "python $DOOMDIR/capture.py";
+  doomconfig = pkgs.writers.writeBash "doomconfig" ''
+    footclient --app-id doom-config --title Emacs -- emacsclient -t -a "" ${moduleEmacs}/doom/config.el
+  '';
+  emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
+    footclient --app-id notes --title Emacs -- emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
+  '';
+  emacscapture = pkgs.writers.writeBash "emacscapture" ''
+    footclient --app-id capture --title Emacs -- emacsclient -t -a "" --eval '(+org-capture/quick-capture)'
+  '';
+  emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
+    footclient --app-id agenda --title Emacs -- emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
+  '';
 in
 {
   wayland.windowManager.sway = {
     config.keybindings = lib.mkOptionDefault {
+      "${mod}+n" = "exec ddapp -t 'notes' -- ${emacsnotes}";
+      "${mod}+Shift+e" = "exec ddapp -t 'doom-config' -- ${doomconfig}";
+      # "${mod}+y" = "exec ddapp -t 'clipboard-capture' -h 90 -w 90 -- ${clipboardcapture}";
+      # "${mod}+Shift+y" =
+      #   "exec ddapp -t 'clipboard-capture-interest' -h 90 -w 90 -- '${clipboardcapture} i'";
+      "${mod}+e" = "exec ddapp -t 'agenda' -k true -- ${emacsagenda}";
+      "${mod}+c" = "exec ddapp -t 'org-capture' -h 90 -w 90 -- '${capture} -w org-capture'";
+      "${mod}+q" = "exec ddapp -t 'capture' -h 90 -w 90 -- ${emacscapture}";
       "${mod}+m" =
         "exec ddapp -t 'btop' -h 90 -w 90 -- 'footclient --title=SystemMonitor --app-id=btop -- btop'";
       "${mod}+f" = "exec ddapp -t 'yazi' -- ${yazi-foot}";

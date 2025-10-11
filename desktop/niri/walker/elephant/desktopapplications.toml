@@ -1,0 +1,6 @@
+show_actions = true
+show_generic = true
+show_actions_without_query = false
+history = true
+history_when_empty = false
+icon_placeholder = "applications-other"

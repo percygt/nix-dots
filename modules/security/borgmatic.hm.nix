@@ -22,10 +22,6 @@ in
         };
         device_config = [
           {
-            id_uuid = "cbba3a5a-81e5-4146-8895-641602b712a5";
-            automount = false;
-          }
-          {
             id_uuid = g.security.borgmatic.mountUuid;
             keyfile = config.sops.secrets."backup/key".path;
             options = [

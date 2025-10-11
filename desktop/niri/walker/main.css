@@ -1,0 +1,156 @@
+:root {
+  --border-radius: 10px;
+  --bg-color: @background;
+  --bg-accent-color: @blue;
+  --text-color: @text;
+  --text-color-disabled: @text-dark;
+  --border: 1px solid rgba(255, 255, 255, 0.2);
+  --shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  --font-size-body: 14px;
+  --font-size-summary: 15px;
+}
+
+@define-color window_bg_color #1f1f28;
+@define-color accent_bg_color #54546d;
+
+.normal-icons {
+  -gtk-icon-size: 16px;
+}
+
+.large-icons {
+  -gtk-icon-size: 32px;
+}
+
+scrollbar {
+  opacity: 0;
+}
+
+.box-wrapper {
+  box-shadow: var(--shadow);
+  background: darker(var(--bg-color));
+  padding: 20px;
+  border-radius: var(--border-radius);
+  border: var(--border);
+}
+
+.preview-box,
+.elephant-hint,
+.placeholder {
+  color: var(--text-color);
+}
+
+.box {
+}
+
+.search-container {
+  border-radius: var(--border-radius);
+}
+
+.input placeholder {
+  opacity: 0.5;
+}
+
+.input {
+  caret-color: var(--text-color);
+  border: var(--border);
+  border-radius: var(--border-radius);
+  background: lighter(var(--bg-color));
+  padding: 10px;
+  color: var(--text-color);
+}
+
+.input:focus,
+.input:active {
+}
+
+.content-container {
+}
+
+.placeholder {
+}
+
+.scroll {
+}
+
+.list {
+  color: var(--text-color);
+}
+
+child {
+}
+
+.item-box {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.item-quick-activation {
+  /* margin-left: 10px; */
+  min-width: 20px;
+  font-size: 10px;
+  font-weight: 500;
+  opacity: 0.5;
+  /* background: alpha(var(--bg-accent-color), 0.25); */
+  /* border-radius: 5px; */
+  /* padding: 10px; */
+}
+
+child:hover .item-box,
+child:selected .item-box {
+  background: alpha(var(--bg-accent-color), 0.25);
+}
+
+.item-text-box {
+}
+
+.item-text {
+}
+
+.item-subtext {
+  font-size: 12px;
+  opacity: 0.5;
+}
+
+.item-image {
+  margin-right: 10px;
+}
+
+.keybind-hints {
+  font-size: 12px;
+  opacity: 0.5;
+  color: var(--text-color);
+}
+
+.preview {
+  border: var(--border);
+  padding: 10px;
+  border-radius: 10px;
+  color: var(--text-color);
+}
+
+.calc .item-text {
+  font-size: 24px;
+}
+
+.calc .item-subtext {
+}
+
+.symbols .item-image {
+  font-size: 24px;
+}
+
+.todo.done .item-text-box {
+  opacity: 0.25;
+}
+
+.todo.urgent {
+  font-size: 24px;
+}
+
+.todo.active {
+  font-weight: bold;
+}
+
+.preview .large-icons {
+  -gtk-icon-size: 64px;
+}

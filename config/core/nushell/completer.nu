@@ -17,32 +17,28 @@ let zoxide_completer = {|spans|
 }
 
 let carapace_completer = {|spans: list<string>|
-  let completion = carapace $spans.0 nushell ...$spans
-    if $completion != "" {
-      let parsed_completion = $completion | from json
-      if ($parsed_completion | where value == $"($spans | last)ERR" | is-empty) {
-        return $parsed_completion
-      }
-    }
+    carapace $spans.0 nushell ...$spans
+    | from json
+    | if ($in | default [] | where value == $"($spans | last)ERR" | is-empty) { $in } else { null }
 }
+let external_completer = {|spans|
+    let expanded_alias = scope aliases
+    | where name == $spans.0
+    | get -o 0.expansion
 
-let external_completer = {|spans: list<string>|
-  let expanded_alias = (scope aliases | where name == $spans.0 | get 0 | get expansion)
-
-  let spans = if $expanded_alias != null {
-    $spans
-      | skip 1
-      | prepend ($expanded_alias | split row ' ' | take 1)
-  } else {
-    $spans
-  }
-
-  match $spans.0 {
-      # carapace completions are incorrect for nu
-      nu => $fish_completer
-      __zoxide_z | __zoxide_zi => $zoxide_completer
-      _ => $carapace_completer
-  } | do $in $spans
+    let spans = if $expanded_alias != null {
+        $spans
+        | skip 1
+        | prepend ($expanded_alias | split row ' ' | take 1)
+    } else {
+        $spans
+    }
+    match $spans.0 {
+        # carapace completions are incorrect for nu
+        nu => $fish_completer
+        __zoxide_z | __zoxide_zi => $zoxide_completer
+        _ => $carapace_completer
+    } | do $in $spans
 }
 $env.config = ($env.config?
   | default {}

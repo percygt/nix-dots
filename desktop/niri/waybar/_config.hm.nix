@@ -14,7 +14,6 @@ let
       television
       pomo
       iwmenu
-      walker
       networkmanagerapplet
     ]);
   waybarWithExtraPackages =

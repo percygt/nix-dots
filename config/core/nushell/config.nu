@@ -9,5 +9,4 @@ $env.config = {
         vi_normal: blink_block # block, underscore, line, blink_block, blink_underscore, blink_line, inherit to skip setting cursor shape (underscore is the default)
     }
 }
-
 source config-extra.nu

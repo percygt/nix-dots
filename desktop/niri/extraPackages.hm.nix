@@ -11,6 +11,7 @@
       ];
       text = ''
         APP_ID=""
+        TERM=""
         TITLE=""
         COMMAND=()
 
@@ -18,6 +19,14 @@
 
         while [[ $# -gt 0 ]]; do
           case "$1" in
+            --term=*)
+              TERM="''${1#*=}"
+              shift
+              ;;
+            --term)
+              TERM="$2"
+              shift 2
+              ;;
             --app-id=*)
               APP_ID="''${1#*=}"
               shift
@@ -52,6 +61,9 @@
         fi
 
         FOOT_OPTS=(--app-id="$APP_ID")
+        if [[ -n "$TERM" ]]; then
+          FOOT_OPTS+=(--term="$TERM")
+        fi
         if [[ -n "$TITLE" ]]; then
           FOOT_OPTS+=(--title="$TITLE")
         fi

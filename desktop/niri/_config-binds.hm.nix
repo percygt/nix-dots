@@ -43,7 +43,8 @@
       };
 
       "Mod+S".action = spawn "swaync-client" "-t" "-sw";
-      "Mod+D".action = spawn-sh "pkill tofi || tofi-drun --drun-launch=true --prompt-text=Apps: ";
+      "Mod+D".action = spawn "walker";
+      "Mod+Slash".action = spawn-sh "pkill tofi || tofi-drun --drun-launch=true --prompt-text=Apps: ";
       "Mod+Y".action = spawn "footpad" "--app-id=yazi" "--" "yazi" "~";
       "Mod+A".action = spawn "footpad" "--app-id=tmux" "--" "tmux-launch-session";
       "Mod+P".action = spawn "footpad" "--app-id=clipboard" "--title=Clipboard" "--" "cliphist-fzf-sixel";
@@ -96,7 +97,7 @@
 
       "Mod+Comma".action = consume-window-into-column;
       "Mod+Period".action = expel-window-from-column;
-      "Mod+C".action = center-visible-columns;
+      "Mod+Shift+C".action = center-visible-columns;
 
       "Mod+Tab".action = focus-workspace-previous;
       "Mod+Shift+Tab".action = focus-monitor-previous;
