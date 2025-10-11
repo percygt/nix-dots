@@ -1,3 +1,4 @@
+source $"($nu.cache-dir)/carapace.nu"
 source completer.nu
 source keybindings.nu
 source menus.nu

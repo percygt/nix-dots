@@ -179,7 +179,7 @@ in
       defaultPackage = mkOption {
         description = "Default shell package";
         type = types.package;
-        default = pkgs.fish;
+        default = pkgs.nushell;
       };
     };
     security = {
@@ -366,6 +366,8 @@ in
           [
             wirelesstools
             ntfs3g
+            exfat
+            exfatprogs
             psmisc
             lsof
             age

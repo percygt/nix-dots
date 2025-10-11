@@ -16,6 +16,7 @@ rec {
     pipe rootDir [
       listFilesRecursive
       (map toString)
+      (filter (n: !hasPrefix "." (baseNameOf (dirOf n))))
       (filter (n: !hasPrefix "." (baseNameOf n)))
       (filter (n: !hasPrefix "__" (baseNameOf n)))
       (filter (n: (hasSuffix ".hm.nix" n) || (hasSuffix ".c.nix" n) || (hasSuffix "_options.nix" n)))
@@ -26,16 +27,14 @@ rec {
     pipe rootDir [
       listFilesRecursive
       (map toString)
-      (filter (hasSuffix ".nix"))
-      (filter (n: (!hasSuffix "default.nix" n) || (!hasSuffix "flake.nix" n)))
+      (filter (n: !hasPrefix "." (baseNameOf (dirOf n))))
       (filter (n: !hasPrefix "." (baseNameOf n)))
       (filter (n: !hasPrefix "__" (baseNameOf n)))
+      (filter (hasSuffix ".nix"))
+      (filter (n: (!hasSuffix "default.nix" n) || (!hasSuffix "flake.nix" n)))
       (filter (n: !hasSuffix ".hm.nix" n))
     ];
   importNixosForEachDir = dirs: (flatten (forEach dirs importNixosModules));
   colorConvert = import ./colorCoversions.nix { nixpkgs-lib = lib; } // {
-    hex = {
-
-    };
   };
 }

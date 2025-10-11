@@ -15,7 +15,7 @@
       flatpak.enable = true;
       chromium.enable = true;
       chromium-webapps = {
-        ai.enable = true;
+        chatgpt.enable = true;
         discord.enable = true;
         element.enable = true;
         zoom.enable = true;

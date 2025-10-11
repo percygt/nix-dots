@@ -10,6 +10,8 @@
 
     programs.chromium.webapps.element = {
       enable = true;
+      name = "Element";
+      icon = "element-desktop";
       url = "https://app.element.io";
       mimeType = [ "x-scheme-handler/element" ];
       categories = [

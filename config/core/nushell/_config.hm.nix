@@ -29,7 +29,7 @@ in
 {
   programs = {
     carapace = {
-      enable = defaultShell == nushellPkg;
+      enable = true;
       enableFishIntegration = false;
       # Use custom integration
       enableNushellIntegration = false;

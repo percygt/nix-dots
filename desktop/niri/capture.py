@@ -70,7 +70,7 @@ def is_url(string: str):
 
 def get_capture_data():
     r = subprocess.run(
-        ["emacsclient", "--eval", '"(+org-capture/templates-json)"'],
+        ["emacsclient", "-e", "(+org-capture/templates-json)"],
         capture_output=True,
         text=True,
         check=True,

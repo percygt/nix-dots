@@ -5,9 +5,7 @@
 }:
 {
   config = lib.mkIf config.modules.core.wifi.enable {
-    persistSystem.directories = [
-      "/var/lib/iwd"
-    ];
+    persistSystem.directories = [ "/var/lib/iwd" ];
     networking = {
       wireless.iwd.settings.Settings.AutoConnect = true;
       networkmanager = {

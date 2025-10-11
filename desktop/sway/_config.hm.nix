@@ -11,9 +11,7 @@ let
   c = config.modules.themes.colors.withHashtag;
 in
 {
-  home.sessionVariables = {
-    XDG_CURRENT_DESKTOP = "sway";
-  };
+  home.sessionVariables.XDG_CURRENT_DESKTOP = "sway";
   wayland.windowManager.sway = {
     enable = true;
     package = cfg.finalPackage;
