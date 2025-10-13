@@ -1790,11 +1790,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759777335,
-        "narHash": "sha256-4U1/Jz5oDp8ETCFCSRj9hoAjaCfdvU7gR5hsw+dgHQE=",
+        "lastModified": 1760285116,
+        "narHash": "sha256-ZvzJQp8MSovTR5MjEObbIA8N/oIHWGzjG7CmUC49sMk=",
         "owner": "JakeStanger",
         "repo": "ironbar",
-        "rev": "bd6b5a1d207093673c5069d1b59d2fb8901c8fd5",
+        "rev": "99babdb16691b5cd8b127428436ad8aefc977656",
         "type": "github"
       },
       "original": {
@@ -2995,11 +2995,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760329577,
-        "narHash": "sha256-TPB2c1Zbz6rjugEbndLIYQ86l4xrtL4peG357FjYNyk=",
+        "lastModified": 1760331392,
+        "narHash": "sha256-GLV+VR6jSsCHHM9mCyvpQqs5QLefmiN/6ySnPUgC5gM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "22a3a2e0410edc8310bc4d35213a7044ef9b7e72",
+        "rev": "ec89bd6e19b2435098c7d6d7dbbafb396fb5c454",
         "type": "github"
       },
       "original": {
@@ -3106,11 +3106,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760244178,
-        "narHash": "sha256-y/0O99nN81uxDnAALaA45x9e2hVxn1PBNZC6/zZ6yro=",
+        "lastModified": 1760315601,
+        "narHash": "sha256-cvguRikKX0yXZ7jaK4Gt3qB1I33T5TzYZQf0Ampx8ko=",
         "ref": "refs/heads/master",
-        "rev": "ea79eaceb0375a8a2ebdd55c60bf89c4167b264d",
-        "revCount": 694,
+        "rev": "00858812f25b748d08b075a0d284093685fa3ffd",
+        "revCount": 696,
         "type": "git",
         "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
       },
