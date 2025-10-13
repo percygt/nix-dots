@@ -69,7 +69,6 @@
 
     niri.follows = "nix-sources/niri";
     walker.follows = "nix-stash/walker";
-    anyrun.follows = "nix-stash/anyrun";
 
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
