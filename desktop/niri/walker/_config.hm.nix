@@ -19,6 +19,7 @@ in
   ];
   programs.walker = {
     enable = true;
+    package = pkgs.walker;
     runAsService = true;
     config = { };
   };
@@ -34,9 +35,6 @@ in
       "elephant/menus".source = symlink "${modulewalker}/elephant/menus";
       "walker/themes/custom/main.css".source = symlink "${modulewalker}/main.css";
       "walker/themes/custom/layout.xml".source = symlink "${modulewalker}/layout.xml";
-      "walker/themes/custom/item.xml".source = symlink "${modulewalker}/item.xml";
-      "walker/themes/custom/item_desktopapplications.xml".source =
-        symlink "${modulewalker}/item_desktopapplications.xml";
       "walker/themes/custom/style.css".text =
         # css
         ''
@@ -57,7 +55,7 @@ in
             all: unset;
             font-family: '${f.name}, ${i.name}';
           }
-          @import url("file://~/.config/walker/themes/custom/main.css");
+          @import url("file://${config.xdg.configHome}/walker/themes/custom/main.css");
         '';
     };
 }
