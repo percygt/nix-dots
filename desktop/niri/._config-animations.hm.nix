@@ -1,18 +1,4 @@
 {
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
-}:
-let
-  cfg = config.modules.desktop.niri;
-  g = config._global;
-  a = config.modules.themes.assets;
-  f = config.modules.fonts.app;
-  c = config.modules.themes.colors.withHashtag;
-in
-{
   programs.niri.settings.animations = {
     horizontal-view-movement.kind.spring = {
       damping-ratio = 1.0;

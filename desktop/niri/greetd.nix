@@ -8,6 +8,7 @@
 let
   systemctl = lib.getExe' pkgs.systemd "systemctl";
   niri-session = lib.getExe' config.modules.desktop.niri.package "niri-session";
+  cfg = config.modules.desktop.niri;
 in
 {
 
@@ -15,6 +16,7 @@ in
     displayManager = {
       autoLogin.enable = true;
       autoLogin.user = username;
+      sessionPackages = [ cfg.package ];
     };
     greetd =
       let

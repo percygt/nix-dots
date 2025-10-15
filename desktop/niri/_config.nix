@@ -17,12 +17,15 @@ in
     files = [ ".local/state/tofi-drun-history" ];
   };
 
-  imports = [ inputs.niri.nixosModules.niri ];
-
-  programs.niri = {
-    enable = true;
-    inherit (cfg) package;
-  };
+  # imports = [ inputs.niri.nixosModules.niri ];
+  #
+  # programs.niri = {
+  #   enable = true;
+  #   inherit (cfg) package;
+  # };
+  hardware.graphics.enable = lib.mkDefault true;
+  programs.dconf.enable = lib.mkDefault true;
+  fonts.enableDefaultPackages = lib.mkDefault true;
 
   security = {
     pam.services.hyprlock.text = "auth include login";
@@ -32,36 +35,9 @@ in
 
   systemd.user.services.niri-flake-polkit.enable = lib.mkForce false;
 
-  xdg.portal = {
-    enable = true;
-    xdgOpenUsePortal = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gnome
-      pkgs.xdg-desktop-portal-gtk
-    ];
-    config =
-      let
-        common = {
-          default = [
-            "gnome"
-            "gtk"
-          ];
-          "org.freedesktop.impl.portal.Access" = "gtk";
-          "org.freedesktop.impl.portal.FileChooser" = "gtk";
-          "org.freedesktop.impl.portal.Notification" = "gtk";
-          "org.freedesktop.impl.portal.ScreenCast" = "gnome";
-          "org.freedesktop.impl.portal.Screenshot" = "gnome";
-          "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
-          "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
-        };
-      in
-      {
-        inherit common;
-        niri = common;
-      };
-    configPackages = [ config.modules.desktop.niri.package ];
-  };
   environment.systemPackages = with pkgs; [
+    cfg.package
+    xdg-utils
     xdg-desktop-portal
     xdg-desktop-portal-gtk
     xdg-desktop-portal-gnome
@@ -70,6 +46,7 @@ in
     wayland-utils
     libsecret
   ];
+
   services = {
     dbus = {
       enable = true;
@@ -83,7 +60,7 @@ in
       ];
     };
     gnome = {
-      # gnome-settings-daemon.enable = true;
+      gnome-settings-daemon.enable = true;
       gnome-keyring.enable = true;
     };
   };

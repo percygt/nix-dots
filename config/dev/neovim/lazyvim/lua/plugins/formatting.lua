@@ -20,6 +20,7 @@ return {
       typescriptreact = { "deno_fmt" },
       json = { "deno_fmt" },
       jsonc = { "deno_fmt" },
+      -- kdl = { "kdlfmt" },
       markdown = { "deno_fmt", "markdownlint-cli2" },
       ["markdown.mdx"] = { "deno_fmt", "markdownlint-cli2" },
       -- ["astro"] = { "prettier" },

@@ -60,9 +60,9 @@ FOCUSED_APP_ID=$(niri msg -j windows | jq ".[] | select(.is_focused == true) | .
 if [[ ${#COMMAND[@]} -gt 0 ]]; then
 	APP=$(niri msg -j windows | jq ".[] | select(.app_id==\"$APP_ID\")")
 	WINDOW_ID=$(echo "$APP" | jq ".id")
-	WINDOW_SIZE=$(echo "$APP" | jq ".layout | .window_size | .[0]")
+	WINDOW_SIZE=$(echo "$APP" | jq ".layout.window_size.[0]")
 	if [ -n "$WINDOW_ID" ]; then
-		if [ "$FOCUSED_APP_ID" == "$WINDOW_ID" ] || [ "$WINDOW_SIZE" -ne 0 ]; then
+		if [ "$FOCUSED_APP_ID" == "$WINDOW_ID" ] || [[ $WINDOW_SIZE -gt 40 ]]; then
 			niri msg action move-window-to-floating --id "$WINDOW_ID"
 			niri msg action focus-window-previous
 			niri msg action set-window-width --id "$WINDOW_ID" 0
@@ -72,7 +72,7 @@ if [[ ${#COMMAND[@]} -gt 0 ]]; then
 			niri msg action move-window-to-floating --id "$WINDOW_ID"
 			niri msg action move-window-to-workspace --window-id "$WINDOW_ID" "$WORKSPACE_ID"
 			niri msg action focus-window --id "$WINDOW_ID"
-			# niri msg action move-floating-window -x 31 -y 16
+			niri msg action move-floating-window -x 0 -y 0
 			niri msg action set-window-height --id "$WINDOW_ID" 100%
 			niri msg action set-window-width --id "$WINDOW_ID" 100%
 		fi

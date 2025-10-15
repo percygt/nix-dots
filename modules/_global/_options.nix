@@ -306,7 +306,7 @@ in
             NIXOS_OZONE_WL = "1";
             _JAVA_AWT_WM_NONREPARENTING = "1";
             QT_QPA_PLATFORM = "wayland";
-            QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+            QT_WAYLAND_DISABLE_WINDOWDECORATION = "0";
             GTK_THEME = gtkTheme.name;
             GTK_CURSOR = cursorTheme.name;
             XCURSOR_THEME = cursorTheme.name;

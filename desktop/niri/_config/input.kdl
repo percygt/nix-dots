@@ -1,0 +1,26 @@
+input {
+    keyboard {
+        xkb {
+            layout "us"
+        }
+        repeat-delay 600
+        repeat-rate 25
+        track-layout "global"
+    }
+    touchpad {
+        tap
+        dwt
+        dwtp
+        natural-scroll
+        middle-emulation
+        accel-profile "adaptive"
+        scroll-method "two-finger"
+        click-method "button-areas"
+        tap-button-map "left-right-middle"
+    }
+    mouse {
+        accel-speed 0.1
+    }
+    focus-follows-mouse max-scroll-amount="0%"
+    workspace-auto-back-and-forth
+}

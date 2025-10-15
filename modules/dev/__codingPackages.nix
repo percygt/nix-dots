@@ -103,6 +103,7 @@ pkgs: with pkgs; [
   nur.repos.shackra.gtkcsslanguageserver
 
   # Additional
+  kdlfmt
   lemminx
   libxml2
   xmlstarlet

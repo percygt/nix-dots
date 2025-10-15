@@ -22,6 +22,9 @@ in
     package = pkgs.walker;
     runAsService = true;
     config = { };
+    elephant = {
+      package = pkgs.elephant;
+    };
   };
   xdg.configFile =
     let
