@@ -6,13 +6,13 @@
 
 buildGoModule {
   pname = "tuya-ipc-terminal";
-  version = "unstable-2025-05-31";
+  version = "unstable-2025-10-15";
 
   src = fetchFromGitHub {
-    owner = "seydx";
+    owner = "percygt";
     repo = "tuya-ipc-terminal";
-    rev = "d65b3e9babb4829176290b4d53195d62636f00bf";
-    hash = "sha256-aZWfxrqD1UCpdgtxuHVIB4WagO7eXGgg17iH6u7ujuU=";
+    rev = "75b29ebe76b46e5653511e92f4ee0bb97f41afd0";
+    hash = "sha256-Ys4GD9f28vrMEaCl2IY5wA61+tkoeic6JBnmUTd4VNE=";
   };
 
   vendorHash = "sha256-O+uzwuSHVVEW/S3v7iVjYjA1d3g4bKhDSOEHEpldPl4=";

@@ -287,11 +287,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1760198077,
-        "narHash": "sha256-YOQ9jxV6hKE4nnBrKDsnu0W4qGw5mwUd2ox+tXHdbpo=",
+        "lastModified": 1760335151,
+        "narHash": "sha256-3E5SMYpFL2RcSwA1RNrD5SP+5JneTY+qIMqhptsNBcM=",
         "owner": "abenz1267",
         "repo": "elephant",
-        "rev": "37bebdb8ed304eb3e31fdbf41cb43bb3c1afea2d",
+        "rev": "4b96511af7ea02a20bc410682536a19706315b76",
         "type": "github"
       },
       "original": {
@@ -1852,11 +1852,11 @@
         "nixpkgs": "nixpkgs_11"
       },
       "locked": {
-        "lastModified": 1760102695,
-        "narHash": "sha256-DyamtLt6KW/qkNs/kMnF/E+xlf6iFBMMF3m54boTHeY=",
+        "lastModified": 1760336097,
+        "narHash": "sha256-BedBcz5+dDHhNWMY4JndabYUMSOMusKzFGLV1PxvwBQ=",
         "owner": "feel-co",
         "repo": "ndg",
-        "rev": "6319eb4afa6fd42be5c8c9ed012e95e3f32c16eb",
+        "rev": "0c898318cdb7b8288a58f6393b1d8ba0dd6b0a09",
         "type": "github"
       },
       "original": {
@@ -2263,11 +2263,11 @@
         "walker": "walker"
       },
       "locked": {
-        "lastModified": 1760243639,
-        "narHash": "sha256-VgwFbOnK5wq5TM0UM8MFRLN0Z82KFwXcnx96wxqfdfY=",
+        "lastModified": 1760337426,
+        "narHash": "sha256-eZIMjyH1e61WeztGKSf4Z6CSDFD1urHqQLheYMs7Ugo=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "df9245a8a36381096e1abce1321c2d099d2ed4d4",
+        "rev": "ac3fd55d5d066464cd8fb2fe5f9e3e1b57f35be8",
         "type": "github"
       },
       "original": {
@@ -2995,11 +2995,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760331392,
-        "narHash": "sha256-GLV+VR6jSsCHHM9mCyvpQqs5QLefmiN/6ySnPUgC5gM=",
+        "lastModified": 1760336912,
+        "narHash": "sha256-e6qZUIP/orRRXyz4Rt7y3QGyQzmZDa9ygCndy+Fpbtw=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "ec89bd6e19b2435098c7d6d7dbbafb396fb5c454",
+        "rev": "c11abcd24e04a02990d9640e9d89ec51c2d2d897",
         "type": "github"
       },
       "original": {
@@ -3011,10 +3011,10 @@
     "personal": {
       "flake": false,
       "locked": {
-        "lastModified": 1759995059,
-        "narHash": "sha256-OHnkmnOaO0pLSzAXd9nG38qgl5re3WR/sLvhDE83FHU=",
+        "lastModified": 1760405306,
+        "narHash": "sha256-IBPlzfJno/3LvCJS69b5RGDgPMDpAG4TDnhtqb/04vY=",
         "ref": "main",
-        "rev": "f7717d97bec386f0b6904b67b5a3619c06d9efd5",
+        "rev": "4e09ec38dc5c09b19faec7e0757ff5c6bd7975a4",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@gitlab.com/percygt/sikreto.git"
@@ -3963,11 +3963,11 @@
         "systems": "systems_15"
       },
       "locked": {
-        "lastModified": 1760241744,
-        "narHash": "sha256-jH1HpgmFxZUf310ChS3kJhlH0BEBq6ge6cPkd1cWlVQ=",
+        "lastModified": 1760335060,
+        "narHash": "sha256-zIIcYHIdUuqcnCxyEjiHE4f//47qIlejqzrTEgtVKfc=",
         "owner": "abenz1267",
         "repo": "walker",
-        "rev": "31200a33918f56fdde6de1c3a9867acf242fe61d",
+        "rev": "87582d56e59cafcad228c4ee6dcc868fbda3c2b6",
         "type": "github"
       },
       "original": {

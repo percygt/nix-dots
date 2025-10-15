@@ -26,7 +26,7 @@
           profile = "aizeft";
           desktop = "niri";
           extraModulesDir = [
-            (builtins.toString inputs.personal)
+            (toString inputs.personal)
           ];
         };
       };
@@ -35,7 +35,7 @@
           profile = "aizeft";
           desktop = "niri";
           extraModulesDir = [
-            (builtins.toString inputs.personal)
+            (toString inputs.personal)
           ];
         };
       };

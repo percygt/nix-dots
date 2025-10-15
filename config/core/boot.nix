@@ -10,7 +10,7 @@
       efi.canTouchEfiVariables = true;
       systemd-boot = {
         enable = true;
-        configurationLimit = 100;
+        configurationLimit = 20;
         editor = false;
       };
     };

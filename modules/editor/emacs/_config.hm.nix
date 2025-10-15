@@ -17,52 +17,52 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.niri.settings =
-      let
-        termVar = "TERM=foot";
-        termInfoVar = "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo";
-        inherit (config.modules.editor) emacs;
-      in
-      {
-        spawn-at-startup = [
-          {
-            command = [
-              termVar
-              termInfoVar
-              "${emacs.finalPackage}/bin/emacs --fg-daemon"
-            ];
-          }
-        ];
-        binds =
-          with config.lib.niri.actions;
-          let
-            editorModules = "${g.flakeDirectory}/modules/editor";
-            moduleEmacs = "${editorModules}/emacs";
-            doomconfig = pkgs.writers.writeBash "doomconfig" ''
-              emacsclient -t -a "" ${moduleEmacs}/doom/config.el
-            '';
-            emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
-              emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
-            '';
-            emacscapture = pkgs.writers.writeBash "emacscapture" ''
-              emacsclient -t -a "" --eval '(+org-capture/quick-capture)'
-            '';
-            emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
-              emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
-            '';
-          in
-          {
-            "Mod+Shift+E".action = spawn "footpad" "--term=foot-direct" "--app-id=doom" "--" "${doomconfig}";
-            "Mod+N".action = spawn "footpad" "--term=foot-direct" "--app-id=notes" "--" "${emacsnotes}";
-            # "Mod+E".action = spawn "footpad" "--term=foot-direct" "--app-id=agenda" "--" "${emacsagenda}";
-            "Mod+E".action = spawn "footpad" "--term=foot-direct" "--app-id=agenda" "--" "${emacsagenda}";
-            "Mod+Alt+C".action = spawn "footpad" "--term=foot-direct" "--app-id=capture" "--" "${emacscapture}";
-            "Mod+C".action =
-              spawn "footpad" "--term=foot-direct" "--app-id=org-capture" "--" "python" "${DOOMDIR}/capture.py"
-                "-w"
-                "org-capture";
-          };
-      };
+    # programs.niri.settings =
+    #   let
+    #     termVar = "TERM=foot";
+    #     termInfoVar = "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo";
+    #     inherit (config.modules.editor) emacs;
+    #   in
+    #   {
+    #     spawn-at-startup = [
+    #       {
+    #         command = [
+    #           termVar
+    #           termInfoVar
+    #           "${emacs.finalPackage}/bin/emacs --fg-daemon"
+    #         ];
+    #       }
+    #     ];
+    #     binds =
+    #       with config.lib.niri.actions;
+    #       let
+    #         editorModules = "${g.flakeDirectory}/modules/editor";
+    #         moduleEmacs = "${editorModules}/emacs";
+    #         doomconfig = pkgs.writers.writeBash "doomconfig" ''
+    #           emacsclient -t -a "" ${moduleEmacs}/doom/config.el
+    #         '';
+    #         emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
+    #           emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
+    #         '';
+    #         emacscapture = pkgs.writers.writeBash "emacscapture" ''
+    #           emacsclient -t -a "" --eval '(+org-capture/quick-capture)'
+    #         '';
+    #         emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
+    #           emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
+    #         '';
+    #       in
+    #       {
+    #         "Mod+Shift+E".action = spawn "footpad" "--term=foot-direct" "--app-id=doom" "--" "${doomconfig}";
+    #         "Mod+N".action = spawn "footpad" "--term=foot-direct" "--app-id=notes" "--" "${emacsnotes}";
+    #         # "Mod+E".action = spawn "footpad" "--term=foot-direct" "--app-id=agenda" "--" "${emacsagenda}";
+    #         "Mod+E".action = spawn "footpad" "--term=foot-direct" "--app-id=agenda" "--" "${emacsagenda}";
+    #         "Mod+Alt+C".action = spawn "footpad" "--term=foot-direct" "--app-id=capture" "--" "${emacscapture}";
+    #         "Mod+C".action =
+    #           spawn "footpad" "--term=foot-direct" "--app-id=org-capture" "--" "python" "${DOOMDIR}/capture.py"
+    #             "-w"
+    #             "org-capture";
+    #       };
+    #   };
     # services.emacs = {
     #   enable = true;
     #   package = cfg.finalPackage;
