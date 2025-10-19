@@ -24,7 +24,6 @@ in
       symlink = file: config.lib.file.mkOutOfStoreSymlink file;
     in
     {
-      "niri/config.kdl".source = symlink "${configNiri}/config.kdl";
       "niri/binds.kdl".source = symlink "${configNiri}/binds.kdl";
       "niri/animations.kdl".source = symlink "${configNiri}/animations.kdl";
       "niri/input.kdl".source = symlink "${configNiri}/input.kdl";
@@ -33,6 +32,20 @@ in
       "niri/rules.kdl".source = symlink "${configNiri}/rules.kdl";
       "niri/startup.kdl".source = symlink "${configNiri}/startup.kdl";
       "niri/workspaces.kdl".source = symlink "${configNiri}/workspaces.kdl";
+      "niri/config.kdl".text =
+        # kdl
+        ''
+          prefer-no-csd
+          hotkey-overlay { skip-at-startup; }
+          include "animations.kdl"
+          include "binds.kdl"
+          include "input.kdl"
+          include "layout.kdl"
+          include "rules.kdl"
+          include "startup.kdl"
+          include "workspaces.kdl"
+          include "nix.kdl"
+        '';
       "niri/nix.kdl".text =
         with inputs.niri.lib.kdl;
         serialize.nodes [
