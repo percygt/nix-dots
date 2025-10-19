@@ -10,10 +10,5 @@
       bash
       fish
     ];
-    systemPackages = with pkgs; [
-      nushell
-      bash
-      fish
-    ];
   };
 }
