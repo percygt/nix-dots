@@ -5,18 +5,12 @@
   ...
 }:
 let
-  swayCfg = config.wayland.windowManager.sway;
-  mod = swayCfg.config.modifier;
   inherit (pkgs) rnnoise-plugin;
 in
 {
   config = lib.mkIf config.modules.core.audio.enable {
-    wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-      "${mod}+v" =
-        "exec ddapp -t 'volume' -h 50 -w 50 -- 'footclient --title=VolumeControl --app-id=volume -- ncpamixer'";
-    };
     home.packages = with pkgs; [
-      ncpamixer # Terminal mixer for PulseAudio inspired by pavucontrol
+      ncpamixer
     ];
 
     services.mpris-proxy.enable = true;

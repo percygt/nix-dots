@@ -21,11 +21,9 @@ let
       pow (-5) 3
       => -125
   */
+  mod = base: int: base - (int * (builtins.div base int));
   pow =
     base: exponent:
-    let
-      inherit (nixpkgs-lib) mod;
-    in
     if exponent > 1 then
       let
         x = pow base (exponent / 2);

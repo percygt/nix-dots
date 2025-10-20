@@ -1,0 +1,4 @@
+#cpu {
+  color: darker(@blue);
+  margin: 2px;
+}

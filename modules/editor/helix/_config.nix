@@ -5,7 +5,7 @@
 }:
 {
   config = lib.mkIf config.modules.editor.helix.enable {
-    modules.fileSystem.persist.userData.directories = [
+    persistHome.directories = [
       ".local/share/helix"
     ];
   };

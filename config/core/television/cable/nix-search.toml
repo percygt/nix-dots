@@ -1,0 +1,30 @@
+[metadata]
+description = "Nix search tv"
+name = "nix-search"
+
+[preview]
+command = "nix-search-tv preview  --indexes niri '{}'"
+
+[source]
+command = "nix-search-tv print --indexes niri"
+
+[keybindings]
+ctrl-h = "actions:homepage"
+ctrl-s = "actions:source"
+ctrl-g = "actions:searchgithub"
+enter = "actions:source"
+
+[actions.homepage]
+description = "Open homepage"
+command = "nix-search-tv homepage '{}' | xargs -I {} bash -c '[[ \"{}\" != *\"https\" ]] && xdg-open \"{}\"'"
+
+[actions.source]
+description = "Open source"
+command = "nix-search-tv source '{}' | xargs xdg-open"
+
+[actions.searchgithub]
+description = "search github for snippets"
+command = "echo 'https://github.com/search?type=code&q=lang:nix+{}' | xargs xdg-open"
+
+[ui.status_bar]
+hidden = false

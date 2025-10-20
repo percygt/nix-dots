@@ -1,0 +1,30 @@
+#workspaces {
+  color: @cyan;
+  box-shadow: none;
+  text-shadow: none;
+  border-radius: 9px;
+  transition: 0.2s ease;
+  padding: 2px;
+}
+
+#workspaces button {
+  all: unset;
+  color: @text-light;
+  box-shadow: none;
+  text-shadow: none;
+  border-radius: 9px;
+  transition: 0.2s ease;
+  padding: 2px;
+}
+
+#workspaces button.active {
+  color: @text-light;
+  transition: all 0.3s ease;
+}
+
+#workspaces button:hover {
+  background: none;
+  color: @yellow;
+  animation: ws_hover 20s ease-in-out 1;
+  transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}

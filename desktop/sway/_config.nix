@@ -7,7 +7,7 @@ let
   cfg = config.modules.desktop.sway;
 in
 {
-  modules.fileSystem.persist.userData = {
+  persistHome = {
     directories = [
       ".local/share/keyrings"
       ".config/goa-1.0"
@@ -64,6 +64,7 @@ in
         dconf
         xfce.xfconf
         gcr
+        libsecret
         gnome-settings-daemon
       ];
     };

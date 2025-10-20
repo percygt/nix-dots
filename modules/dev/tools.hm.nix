@@ -8,12 +8,16 @@
   config = lib.mkIf config.modules.dev.tools.enable {
     programs.go = {
       enable = true;
-      goPath = ".local/share/go";
-      goBin = ".local/share/go/bin";
+      env = {
+        GOBIN = ".local/share/go/bin";
+        GOPATH = ".local/share/go";
+      };
     };
     home.packages =
       (with pkgs; [
-        babashka
+        gitu
+        bunster # Compile shell scripts to static binaries
+        babashka # Clojure babushka for the grey areas of Bash
         bfg-repo-cleaner # Git history cleaner
         # nur.repos.dagger.dagger
         duckdb
@@ -29,6 +33,6 @@
         just
         go-task
       ])
-      ++ config.modules.dev.tools.editorExtraPackages;
+      ++ config.modules.dev.tools.codingPackages;
   };
 }

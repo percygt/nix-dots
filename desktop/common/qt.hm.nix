@@ -1,19 +1,42 @@
 { config, ... }:
 let
-  cfg = config.modules.themes.qtTheme;
+  t = config.modules.themes;
+  f = config.modules.fonts.app;
 in
 {
   qt = {
     enable = true;
-    platformTheme.name = "qt5ct";
-    style.name = cfg.name;
+    platformTheme.name = "qtct";
+    style.name = t.qtTheme.name;
   };
 
   xdg.configFile = {
     "Kvantum" = {
       recursive = false;
-      source = "${cfg.package}/share/Kvantum";
+      source = "${t.qtTheme.package}/share/Kvantum";
     };
-    kdeglobals.source = "${cfg.package}/share/kdeglobals";
+    kdeglobals.source = "${t.qtTheme.package}/share/kdeglobals";
+    "qt6ct/qt6ct.conf".text = ''
+      [Appearance]
+      custom_palette = false
+      standard_dialogs = "xdgdesktopportal"
+      icon_theme=${t.iconTheme.name}
+      style=${t.qtTheme.name}
+
+      [Fonts]
+      fixed="${f.name},12,-1,5,700,0,0,0,0,0,0,0,0,0,0,1,Regular"
+      general="${f.name},12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular"
+    '';
+    "qt5ct/qt5ct.conf".text = ''
+      [Appearance]
+      custom_palette = false
+      standard_dialogs = "xdgdesktopportal"
+      icon_theme=${t.iconTheme.name}
+      style=${t.qtTheme.name}
+
+      [Fonts]
+      fixed="${f.name},12,-1,5,50,0,0,0,0,0,Regular"
+      general="${f.name},12,-1,5,50,0,0,0,0,0,Regular"
+    '';
   };
 }

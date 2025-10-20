@@ -89,7 +89,7 @@
         PromotionalTabsEnabled = false;
         PaymentMethodQueryEnabled = false;
         SafeBrowsingProtectionLevel = 0;
-        # ScreenCaptureAllowed = true;
+        ScreenCaptureAllowed = true;
         SearchSuggestEnabled = false;
         ShoppingListEnabled = false;
         SpellcheckEnabled = false;

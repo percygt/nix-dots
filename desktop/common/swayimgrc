@@ -16,12 +16,16 @@
 # General configuration
 ################################################################################
 [general]
-# Mode at startup (viewer/gallery)
+# Mode at startup (viewer/slideshow/gallery)
 mode = viewer
-# Window position (parent or absolute coordinates, e.g. 100,200)
-position = parent
-# Window size (fullscreen/parent/image, or absolute size, e.g. 800,600)
-size = parent
+# Window size (fullscreen/image, or absolute size)
+size = 1280,720
+# Sway/Hyprland only: Window position (auto or absolute coordinates, e.g. 10,20)
+position = auto
+# Sway/Hyprland only: create floating window above the currently focused one
+overlay = no
+# Use window decoration (yes/no)
+decoration = no
 # Action performed by SIGUSR1 signal (same format as for key bindings)
 sigusr1 = reload
 # Action performed by SIGUSR2 signal (same format as for key bindings)
@@ -95,18 +99,23 @@ all = yes
 # Font name
 name = VictorMono Nerd Font
 # Font size (pt)
-size = 12
+size = 10
 # Font color (RGBA)
 color = #ccccccff
 # Shadow color (RGBA)
-# shadow = #000000a0
+shadow = #000000d0
+# Background color (RGBA)
+background = #00000000
+
 
 ################################################################################
-# Image meta info scheme (format, size, EXIF, etc)
+# Image meta info scheme (format, size, EXIF, etc.)
 ################################################################################
 [info]
 # Show on startup (yes/no)
 show = yes
+# Text padding from window edges
+padding = 10
 # Timeout to hide info (seconds, 0 to always show)
 info_timeout = 5
 # Timeout to hide status message (seconds)
@@ -114,10 +123,10 @@ status_timeout = 3
 
 # Display scheme for viewer mode (position = content)
 [info.viewer]
-top_left = +name,+format,+filesize,+imagesize,+exif
+top_left = status
 top_right = index
 bottom_left = scale,frame
-bottom_right = status
+bottom_right = +name,+format,+filesize,+imagesize,+exif
 
 # Display scheme for gallery mode (position = content)
 [info.gallery]

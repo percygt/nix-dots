@@ -27,7 +27,7 @@
   "hide-on-action": true,
   "script-fail-notify": true,
   "control-center-layer": "overlay",
-  "cssPriority": "application",
+  "cssPriority": "user",
   "control-center-positionX": "right",
   "control-center-positionY": "top",
   "notification-inline-replies": true,

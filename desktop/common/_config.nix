@@ -4,10 +4,12 @@
   ...
 }:
 {
+  persistHome.files = [ ".config/QtProject.conf" ];
   environment = {
     sessionVariables.NAUTILUS_4_EXTENSION_DIR = "${pkgs.nautilus-python}/lib/nautilus/extensions-4";
     pathsToLink = [
       "/share/nautilus-python/extensions"
+      "share/thumbnailers"
     ];
     systemPackages = with pkgs; [
       smartmontools
@@ -16,15 +18,22 @@
       nautilus
     ];
   };
-  services.gvfs.enable = true;
+  services = {
+    gvfs.enable = true;
+    tumbler.enable = true;
+    gnome.sushi.enable = true;
+  };
   xdg = {
-    mime.defaultApplications = import ./.mimeApps.nix;
-    mime.addedAssociations = import ./.mimeApps.nix;
+    mime = {
+      defaultApplications = import ./__mimeApps.nix;
+      addedAssociations = import ./__mimeApps.nix;
+      removedAssociations = import ./__removedMime.nix;
+    };
   };
   programs = {
     nautilus-open-any-terminal = {
       enable = true;
-      terminal = config._base.terminal.defaultCmd;
+      terminal = config._global.terminal.defaultCmd;
     };
     seahorse.enable = true;
     gnome-disks.enable = true;

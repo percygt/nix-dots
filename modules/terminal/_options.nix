@@ -14,6 +14,9 @@
         default = pkgs.foot;
       };
     };
+    ghostty = {
+      enable = lib.mkEnableOption "Enable ghostty";
+    };
     tilix = {
       enable = lib.mkEnableOption "Enable tilix";
       cmd = lib.mkOption {

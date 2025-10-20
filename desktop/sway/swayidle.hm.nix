@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   cfg = config.modules.desktop.sway;
   swaymsg = "${cfg.finalPackage}/bin/swaymsg";
 in

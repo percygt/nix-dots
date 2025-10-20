@@ -1,0 +1,25 @@
+name = "powermenu"
+name_pretty = "Power Menu"
+icon = "applications-system"
+global_search = false
+keywords = [ "power" ]
+fixed_order = true
+history = false
+history_when_empty = false
+
+[[entries]]
+text = "Shutdown"
+icon = "system-shutdown-symbolic"
+action = "systemctl poweroff"
+keywords = [ "shutdown", "power", "poweroff", "off" ]
+
+[[entries]]
+text = "Reboot"
+icon = "system-reboot-symbolic"
+action = "systemctl reboot"
+keywords = [ "reboot", "restart" ]
+
+[[entries]]
+text = "Lock"
+icon = "system-lock-screen-symbolic"
+action = "niri msg action do-screen-transition && hyprlock --immediate"

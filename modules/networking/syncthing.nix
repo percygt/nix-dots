@@ -6,7 +6,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   staggeredMonth = {
     type = "staggered";
     cleanupIntervalS = 86400; # Once every day

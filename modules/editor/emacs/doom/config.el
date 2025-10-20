@@ -1,9 +1,10 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(load! "private" doom-user-dir t)
+(load! "system" doom-user-dir t)
 (load! "nix" doom-user-dir t)
 
 (add-to-list 'term-file-aliases '("foot" . "xterm"))
+
 (setq doom-theme 'doom-city-lights
       doom-font (font-spec :family "VictorMono NFP" :size 20 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Work Sans" :size 20 :weight 'light)

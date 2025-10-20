@@ -5,7 +5,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   cfg = config.modules.security.borgmatic;
 in
 {
@@ -13,7 +13,7 @@ in
     sops.secrets."backup/key" = { };
     services.udiskie = {
       enable = true;
-      tray = "auto";
+      tray = "always";
       notify = true;
       automount = true;
       settings = {
@@ -21,10 +21,6 @@ in
           file_manager = "${pkgs.xdg-utils}/bin/xdg-open";
         };
         device_config = [
-          {
-            id_uuid = "cbba3a5a-81e5-4146-8895-641602b712a5";
-            automount = false;
-          }
           {
             id_uuid = g.security.borgmatic.mountUuid;
             keyfile = config.sops.secrets."backup/key".path;

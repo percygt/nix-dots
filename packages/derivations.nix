@@ -8,10 +8,12 @@
   pomo = pkgs.callPackage ./standard/pomo.nix { };
   nerdfonts-fontconfig = pkgs.callPackage ./standard/nerdfonts-fontconfig.nix { };
   cryptofont = pkgs.callPackage ./standard/cryptofont.nix { };
+  noto-fonts-tagalog-sans = pkgs.callPackage ./standard/Noto-Sans-Tagalog.nix { };
   i3-quickterm = pkgs.python3Packages.callPackage ./python/i3-quickterm.nix { };
   # tui-network = pkgs.python3Packages.callPackage ./python/tui-network.nix { };
   # hints = pkgs.python3Packages.callPackage ./python/hints/default.nix { };
   colloid-gtk-theme-catppuccin = pkgs.callPackage ./standard/colloid-gtk-theme.nix { };
   colloid-kvantum = pkgs.callPackage ./standard/colloid-kvantum.nix { };
   straight-el = pkgs.callPackage ./standard/straight-el.nix { };
+  tuya-ipc-terminal = pkgs.callPackage ./standard/tuya-ipc-terminal.nix { };
 }

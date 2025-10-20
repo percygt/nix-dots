@@ -9,7 +9,7 @@
     flatpak.enable = lib.mkEnableOption "Enable flatpak";
     chromium.enable = lib.mkEnableOption "Enable chromium";
     chromium-webapps = {
-      ai.enable = lib.mkEnableOption "Enable ai webapp";
+      chatgpt.enable = lib.mkEnableOption "Enable ai webapp";
       discord.enable = lib.mkEnableOption "Enable discord webappp";
       element.enable = lib.mkEnableOption "Enable element webappp";
       zoom.enable = lib.mkEnableOption "Enable zoom webappp";
