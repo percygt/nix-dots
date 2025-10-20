@@ -11,6 +11,7 @@ let
 in
 rec {
   sway = import ./sway.nix { inherit lib; };
+  kdl = import ./kdl.nix { inherit lib; };
   importHomeModules =
     rootDir:
     pipe rootDir [

@@ -66,6 +66,7 @@
     nixpkgs-old.follows = "nix-sources/nixpkgs-old";
     nixpkgs-master.follows = "nix-sources/nixpkgs-master";
     nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
+    nixpkgs-unstable.follows = "nix-sources/nixpkgs-unstable";
 
     niri.follows = "nix-sources/niri";
     walker.follows = "nix-stash/walker";

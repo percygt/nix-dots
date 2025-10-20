@@ -19,7 +19,7 @@
     Service = {
       Type = "notify";
       NotifyAccess = "all";
-      ExecStart = "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
+      ExecStart = "${pkgs.xwayland-satellite-unstable-git}/bin/xwayland-satellite";
       StandardOutput = "journal";
     };
     Install.WantedBy = [ "niri.service" ];

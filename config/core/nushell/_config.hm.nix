@@ -76,7 +76,7 @@ in
       "nushell/starship.toml" = lib.mkIf starshipCfg.enable {
         source = tomlFormat.generate "nushell-starship-config" nushell-starship-settings;
       };
-      "nushell/nix-your-shell.nu".source = pkgs.nix-your-shell.generate-config "nu";
+      # "nushell/nix-your-shell.nu".source = pkgs.nix-your-shell.generate-config "nu";
       "nushell/completer.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/completer.nu";
       "nushell/keybindings.nu".source = config.lib.file.mkOutOfStoreSymlink "${configNu}/keybindings.nu";
       "nushell/color_config.nu".source =

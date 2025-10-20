@@ -43,7 +43,7 @@
     wl-clipboard
     ydotool
     ffmpeg-full
-    cctv-viewer
+    unstable.cctv-viewer
     tuya-ipc-terminal
     xdg-utils
     vlc

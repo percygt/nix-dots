@@ -8,10 +8,12 @@
   config = lib.mkIf config.modules.dev.tools.enable {
     programs.go = {
       enable = true;
-      env = {
-        GOBIN = ".local/share/go/bin";
-        GOPATH = ".local/share/go";
-      };
+      goBin = ".local/share/go/bin";
+      goPath = ".local/share/go";
+      # env = {
+      #   GOBIN = ".local/share/go/bin";
+      #   GOPATH = ".local/share/go";
+      # };
     };
     home.packages =
       (with pkgs; [

@@ -6,6 +6,9 @@
   fenix = inputs.fenix.overlays.default;
   nur = inputs.nur.overlays.default;
   nixpkgs-variants = final: _: {
+    unstable = import inputs.nixpkgs-unstable {
+      inherit (final) system config;
+    };
     stable = import inputs.nixpkgs-stable {
       inherit (final) system config;
     };

@@ -2,15 +2,12 @@
   pkgs,
   config,
   lib,
-  colorize,
   ...
 }:
 let
   g = config._global;
-  cfg = config.modules.desktop.sway;
   moduleSwaync = "${g.flakeDirectory}/desktop/niri/swaync";
   c = config.modules.themes.colors.withHashtag;
-  h = colorize.hex;
   f = config.modules.fonts.app;
   i = config.modules.fonts.icon;
   extraPackages =
@@ -21,7 +18,6 @@ let
       grim
       slurp
       swappy
-      cfg.finalPackage
     ]);
   swayncWithExtraPackages =
     pkgs.runCommand "swaync"

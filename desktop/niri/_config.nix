@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  inputs,
   config,
   ...
 }:
@@ -17,12 +16,6 @@ in
     files = [ ".local/state/tofi-drun-history" ];
   };
 
-  # imports = [ inputs.niri.nixosModules.niri ];
-  #
-  # programs.niri = {
-  #   enable = true;
-  #   inherit (cfg) package;
-  # };
   hardware.graphics.enable = lib.mkDefault true;
   programs.dconf.enable = lib.mkDefault true;
   fonts.enableDefaultPackages = lib.mkDefault true;

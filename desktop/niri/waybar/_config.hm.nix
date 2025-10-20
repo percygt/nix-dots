@@ -13,7 +13,6 @@ let
       foot
       television
       pomo
-      iwmenu
       networkmanagerapplet
     ]);
   waybarWithExtraPackages =

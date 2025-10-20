@@ -35,7 +35,6 @@ in
         inputs.sops-nix.nixosModules.sops
       ]}";
       nix-dots = "${mkOpts [ self.outputs.homeManagerModules.default ]}";
-      niri = "${mkOpts [ inputs.niri.homeModules.niri ]}";
     };
   };
 }

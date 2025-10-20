@@ -12,7 +12,7 @@ in
   imports = [ inputs.nix-index-database.homeModules.nix-index ];
   home.packages = with pkgs; [
     nixos-shell
-    devenv
+    # devenv
     nixfmt-rfc-style
     deadnix
     statix

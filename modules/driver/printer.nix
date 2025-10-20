@@ -11,12 +11,12 @@
     persistSystem.directories = [
       {
         directory = "/var/lib/cups";
-        mode = "0700";
+        mode = "0755";
       }
       {
         directory = "/var/spool/cups";
         group = "lp";
-        mode = "u=rwx,g=x,o=";
+        mode = "0710";
       }
     ];
     environment.systemPackages = config.hardware.sane.extraBackends;

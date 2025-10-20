@@ -123,8 +123,6 @@ in
         })
         ++ [
           self.outputs.homeManagerModules.default
-          # need to make home-manager work both as a standalone and a nixos module
-          inputs.niri.homeModules.niri
           (
             { pkgs, ... }:
             {

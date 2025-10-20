@@ -3,7 +3,7 @@
   colorize,
   lib,
   pkgs,
-  inputs,
+  libx,
   ...
 }:
 let
@@ -47,7 +47,7 @@ in
           include "nix.kdl"
         '';
       "niri/nix.kdl".text =
-        with inputs.niri.lib.kdl;
+        with libx.kdl;
         serialize.nodes [
           (leaf "spawn-at-startup" [
             "TERM=foot"
@@ -70,7 +70,7 @@ in
           ])
           (plain "xwayland-satellite" [
             (flag "on")
-            (leaf "path" "${lib.getExe pkgs.xwayland-satellite}")
+            (leaf "path" "${lib.getExe pkgs.xwayland-satellite-unstable-git}")
           ])
           (leaf "screenshot-path" (screenshotsDir + "/%Y-%m-%d-%H%M%S.png"))
           (plain "overview" [

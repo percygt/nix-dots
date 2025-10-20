@@ -14,6 +14,7 @@ in
     (mkIf cfg.enable {
       environment.systemPackages = with pkgs; [
         protonvpn-gui
+        wireguard-tools
       ];
     })
     (mkIf cfg.wireguard.enable {
@@ -31,7 +32,7 @@ in
               "0.0.0.0/0"
               "::/0"
             ];
-            endpoint = "${g.network.wireguard.endpointIp}:${builtins.toString g.network.wireguard.port}";
+            endpoint = "${g.network.wireguard.endpointIp}:${toString g.network.wireguard.port}";
           }
         ];
       };

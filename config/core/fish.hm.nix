@@ -62,40 +62,29 @@ in
       {
         package = fishShellPkg;
         enable = true;
-        shellInit = lib.concatStringsSep "\n" (
+        shellInit =
           # fish
-          lib.optionals (g.shell.defaultPackage == fishShellPkg) [
-            ''
-              function fish_user_key_bindings
-                  fish_default_key_bindings -M insert
-                  fish_vi_key_bindings --no-erase insert
-              end
-            ''
-          ]
-          ++ lib.optionals (g.shell.defaultPackage == fishShellPkg) [
-            ''
-              function starship_transient_prompt_func
-                 starship module character
-              end
+          ''
+            function fish_user_key_bindings
+                fish_default_key_bindings -M insert
+                fish_vi_key_bindings --no-erase insert
+            end
+            function starship_transient_prompt_func
+               starship module character
+            end
 
-              # Change previous prompts right side
-              function starship_transient_rprompt_func
-                  echo -ne '\033[0;34m'(${pkgs.coreutils}/bin/date "+%I:%M:%S") '\033[0;32m<'
-              end
+            # Change previous prompts right side
+            function starship_transient_rprompt_func
+                echo -ne '\033[0;34m'(${pkgs.coreutils}/bin/date "+%I:%M:%S") '\033[0;32m<'
+            end
 
-              # ensure starship vars are set
-              set -gx STARSHIP_CONFIG "${g.xdg.configHome}/starship.toml"
-            ''
-          ]
-          ++ [
-            ''
-              set fish_cursor_default     block      blink
-              set fish_cursor_insert      line       blink
-              set fish_cursor_replace_one underscore blink
-              set fish_cursor_visual      block
-            ''
-          ]
-        );
+            # ensure starship vars are set
+            set -gx STARSHIP_CONFIG "${g.xdg.configHome}/starship.toml"
+            set fish_cursor_default     block      blink
+            set fish_cursor_insert      line       blink
+            set fish_cursor_replace_one underscore blink
+            set fish_cursor_visual      block
+          '';
       }
     ];
   };

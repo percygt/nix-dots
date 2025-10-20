@@ -26,8 +26,8 @@ let
     + " resume '${cmdBacklightRestore}'"
     + " timeout ${toString toLock} '${cmdLock}'"
     + " timeout ${toString toScreenOff} '${cmdScreenOff}'"
-    + " resume '${cmdResumeSuspend}'"
-    + " timeout ${toString toSuspend} '${cmdSuspend}'"
+    # + " resume '${cmdResumeSuspend}'"
+    # + " timeout ${toString toSuspend} '${cmdSuspend}'"
     + " before-sleep '${cmdLock}'";
 in
 {

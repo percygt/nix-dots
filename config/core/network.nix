@@ -24,7 +24,10 @@
       "1.1.1.1#one.one.one.one"
       "1.0.0.1#one.one.one.one"
     ];
-    firewall.allowedUDPPorts = [ 5353 ];
+    firewall = {
+      allowedUDPPorts = [ 5353 ];
+      # checkReversePath = false;
+    };
     useDHCP = false;
     networkmanager = {
       enable = true;

@@ -6,23 +6,13 @@
 }:
 let
   cfg = config.modules.core.powermanagement;
-  p = pkgs.writeScriptBin "charge-upto" ''
-    echo ''${0:-100} > /sys/class/power_supply/BAT?/charge_control_end_threshold
-  '';
+  # p = pkgs.writeScriptBin "charge-upto" ''
+  #   echo ''${0:-100} > /sys/class/power_supply/BAT?/charge_control_end_threshold
+  # '';
 in
 {
   config = lib.mkIf cfg.enable {
     services = {
-      logind = {
-        settings = {
-          Login = {
-            HandleLidSwitchExternalPower = "lock";
-            HandlePowerKey = "suspend";
-            HandleLidSwitch = "suspend";
-          };
-        };
-      };
-
       power-profiles-daemon.enable = true;
       # battery info
       upower = {
@@ -98,9 +88,9 @@ in
         sleep 1
       '';
     };
-    environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [
-      p
-    ];
+    # environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [
+    #   p
+    # ];
     systemd.services.battery-charge-threshold = {
       wantedBy = [
         "local-fs.target"

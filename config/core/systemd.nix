@@ -6,11 +6,13 @@
 {
   environment.systemPackages = [ pkgs.stable.isd ];
   services = {
-    # Use power button to sleep instead of poweroff
-    logind.settings.Login = {
-      HandlePowerKey = "suspend";
-      HandlePowerKeyLongPress = "poweroff";
+    logind = {
+      lidSwitchExternalPower = "lock";
+      powerKey = "suspend";
+      powerKeyLongPress = "poweroff";
+      lidSwitch = "suspend";
     };
+
     journald = {
       extraConfig = "SystemMaxUse=50M\nSystemMaxFiles=5";
       rateLimitBurst = 500;

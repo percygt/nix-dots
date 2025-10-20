@@ -57,7 +57,7 @@ return {
     },
   },
   svelte = {},
-  dockerls = {},
+  docker_language_server = {},
   bashls = {
     filetypes = { "sh" },
   },
