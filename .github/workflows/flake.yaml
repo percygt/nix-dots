@@ -13,7 +13,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.7
+      - uses: actions/checkout@v5.0.0
       - uses: determinatesystems/nix-installer-action@main
       - uses: determinatesystems/magic-nix-cache-action@main
       - uses: determinatesystems/flake-checker-action@main
@@ -25,24 +25,10 @@ jobs:
 
       - name: Update flake inputs
         run: |
-          nix flake update nix-stash --accept-flake-config
-          nix flake update nix-sources --accept-flake-config
-          nix flake update home-manager --accept-flake-config
-          nix flake update disko --accept-flake-config
-          nix flake update xremap --accept-flake-config
-          nix flake update nixd --accept-flake-config
-          nix flake update impermanence --accept-flake-config
-          nix flake update nix-flatpak --accept-flake-config
-          nix flake update fenix --accept-flake-config
-          nix flake update sops-nix --accept-flake-config
-          nix flake update wayland-pipewire-idle-inhibit --accept-flake-config
-          nix flake update vscode-server --accept-flake-config
-          nix flake update base16 --accept-flake-config
-          nix flake update nur --accept-flake-config
-          nix flake update tt-schemes --accept-flake-config
+          nix flake update --accept-flake-config
           git commit -m "Updated flake inputs" flake.lock || true
 
       - name: Push commit with updated inputs
         run: |
-          git pull --rebase --autostash
-          git push
+          git pull --rebase --autostash origin main
+          git push origin main
