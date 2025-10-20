@@ -1,0 +1,138 @@
+:root {
+  --cc-bg: transparent;
+
+  --widget-background: darker(@background);
+
+  --padding: calc(var(--border-radius) / 2);
+  --noti-border-color: rgba(255, 255, 255, 0.2);
+  --noti-bg: @background;
+  --noti-bg-darker: darker(@background);
+  --noti-bg-hover: lighter(@background);
+  --noti-bg-focus: shade(@background, 0);
+  --noti-close-bg: @background-alt;
+  --noti-close-bg-hover: lighter(@background-alt);
+
+  --text-color: @text;
+  --text-color-disabled: @text-dark;
+
+  --bg-selected: @blue;
+
+  --notification-icon-size: 64px;
+  --notification-app-icon-size: calc(var(--notification-icon-size) / 3);
+  --notification-group-icon-size: 20px;
+
+  --border: 1px solid var(--noti-border-color);
+
+  --notification-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.7),
+    0 2px 6px 2px rgba(0, 0, 0, 0.3);
+  --font-size-body: 14px;
+  --font-size-summary: 15px;
+}
+
+.control-center {
+  border-radius: 0;
+}
+.notification-row {
+  font-weight: 400;
+  font-size: 1rem;
+  background: none;
+  outline: none;
+}
+.notification-row:focus {
+  background: var(--noti-bg-focus);
+}
+.notification-row .notification-background {
+  padding: 6px 12px;
+}
+.notification-row .notification-background .notification {
+  /* The actual notification */
+  padding: 2px;
+  border-radius: var(--border-radius);
+  border: var(--border);
+  transition: var(--hover-tranistion);
+  background: var(--noti-bg);
+}
+
+.notification-group {
+  border-radius: var(--border-radius);
+  background: none;
+  padding: 10px;
+}
+
+.notification-group-header {
+  font-weight: 400;
+  font-size: 1rem;
+}
+/* Text Elements */
+.summary {
+  font-size: 1rem;
+}
+
+.time {
+  font-size: 0.7rem;
+}
+
+.body {
+  font-size: 0.9rem;
+}
+
+.inline-reply-button {
+  background: var(--noti-bg);
+}
+.widgets > .widget {
+  background: var(--widget-background);
+  border-radius: var(--border-radius);
+  padding: calc(var(--border-radius) / 2);
+  border: var(--border);
+}
+
+.control-center-list-placeholder {
+  padding: var(--border-radius);
+}
+
+.widget-dnd {
+  min-height: 30px;
+}
+.widget-dnd > label {
+  font-size: 1rem;
+  padding-left: 10px;
+}
+.widget-dnd > switch {
+  margin-right: 10px;
+}
+.widget-title > label {
+  font-size: 1rem;
+  font-weight: bold;
+  padding-top: 3px;
+  padding-left: 10px;
+}
+.widget-title > button {
+  background: none;
+  border: none;
+  outline: none;
+  font-weight: 400;
+  font-size: 0.8rem;
+  margin-top: 3px;
+}
+.widget-title > button:hover {
+  color: @blue;
+}
+.widget-buttons-grid > flowbox,
+.widget-buttons-grid > flowbox > flowboxchild {
+  margin: 0px;
+  padding: 0px;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button {
+  padding: 10px 42px;
+  margin: 10px;
+  min-width: 10px;
+  min-height: 30px;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button label {
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}

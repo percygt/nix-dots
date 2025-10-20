@@ -5,16 +5,13 @@
 }:
 let
   cfg = config.modules.desktop.sway;
-  g = config._base;
+  g = config._global;
   a = config.modules.themes.assets;
   f = config.modules.fonts.app;
   c = config.modules.themes.colors.withHashtag;
 in
 {
-  home.sessionVariables = {
-    XDG_CURRENT_DESKTOP = "sway";
-    NIXOS_OZONE_WL = "1";
-  };
+  home.sessionVariables.XDG_CURRENT_DESKTOP = "sway";
   wayland.windowManager.sway = {
     enable = true;
     package = cfg.finalPackage;

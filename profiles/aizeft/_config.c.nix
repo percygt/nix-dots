@@ -6,11 +6,6 @@
       ephemeral.enable = true;
       persist.enable = true;
     };
-    graphics = {
-      intel.enable = true;
-      intel.gpu.driver = "xe";
-      # nvidia.prime.enable = true;
-    };
     app = {
       zen.enable = true;
       librewolf.enable = true;
@@ -20,7 +15,7 @@
       flatpak.enable = true;
       chromium.enable = true;
       chromium-webapps = {
-        ai.enable = true;
+        chatgpt.enable = true;
         discord.enable = true;
         element.enable = true;
         zoom.enable = true;
@@ -28,11 +23,10 @@
     };
     core = {
       powermanagement.enable = true;
+      wifi.enable = true;
       # autoupgrade.enable = true;
       audio.enable = true;
-      networkmanager.enable = true;
       zram.enable = true;
-      # wpasupplicant.enable = true;
     };
     drivers = {
       adb.enable = true;
@@ -62,21 +56,22 @@
     };
     networking = {
       vpn.enable = true;
-      avahi.enable = true;
+      # avahi.enable = true;
       tailscale.enable = true;
       syncthing.enable = true;
     };
-    pentesting = {
-      wireless.enable = true;
-      malware.enable = true;
-      traffic.enable = true;
-      proxies.enable = true;
-      terminals.enable = true;
-    };
+    # pentesting = {
+    #   wireless.enable = true;
+    #   malware.enable = true;
+    #   traffic.enable = true;
+    #   proxies.enable = true;
+    #   terminals.enable = true;
+    # };
     terminal = {
       foot.enable = true;
       xfce4-terminal.enable = true;
       tilix.enable = true;
+      ghostty.enable = true;
       wezterm.enable = true;
     };
     virtualisation = {

@@ -5,7 +5,7 @@
 }:
 {
   config = lib.mkIf config.modules.editor.emacs.enable {
-    modules.fileSystem.persist.userData.directories = [
+    persistHome.directories = [
       ".local/share/doom"
     ];
   };

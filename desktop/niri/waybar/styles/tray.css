@@ -1,0 +1,27 @@
+#tray {
+  color: @cyan;
+  padding: 10px;
+}
+
+#tray menu {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  background: @background;
+}
+#tray menu * {
+  font-weight: bold;
+  font-size: 15px;
+  background: @background;
+}
+#tray > .needs-attention {
+  animation-name: blink-active;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#tray menu separator {
+  min-height: 5px;
+  background: @background-alt;
+}

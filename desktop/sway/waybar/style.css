@@ -79,9 +79,9 @@ button {
 /*   margin: 0px 5px; */
 /* } */
 
-/* #cpu.critical { */
-/*   color: @red; */
-/* } */
+#cpu.critical {
+  color: @red;
+}
 
 #cpu.high {
   color: @orange;

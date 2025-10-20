@@ -4,7 +4,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
 in
 {
   config = lib.mkIf config.modules.fileSystem.btrfsAutoscrub.enable {

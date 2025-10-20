@@ -7,7 +7,7 @@ let
   t = config.modules.themes;
   c = t.colors.withHashtag;
   f = config.modules.fonts.shell;
-  g = config._base;
+  g = config._global;
   cfg = config.modules.terminal.xfce4-terminal;
   color-palette = builtins.concatStringsSep ";" [
     c.base01
@@ -44,7 +44,6 @@ in
         text-blink-mode = "TERMINAL_TEXT_BLINK_MODE_ALWAYS";
         color-cursor = "${c.base05}";
         color-foreground = "${c.base05}";
-        background-darkness = 1 - t.opacity;
         misc-menubar-default = false;
         misc-borders-default = false;
         misc-toolbar-default = false;

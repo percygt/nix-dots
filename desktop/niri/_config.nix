@@ -1,70 +1,62 @@
 {
   pkgs,
+  lib,
+  inputs,
   config,
   ...
 }:
 let
-  cfg = config.modules.desktop.sway;
+  cfg = config.modules.desktop.niri;
 in
 {
-  modules.fileSystem.persist.userData = {
+  persistHome = {
     directories = [
       ".local/share/keyrings"
-      ".config/goa-1.0"
-      ".local/cache/nix-index"
+      ".local/cache/elephant"
     ];
     files = [ ".local/state/tofi-drun-history" ];
   };
-  environment = {
-    sessionVariables = {
-      XDG_CURRENT_DESKTOP = "sway";
-      NIXOS_OZONE_WL = "1";
-    };
-  };
-  programs = {
-    sway = {
-      enable = true;
-      package = cfg.finalPackage;
-      wrapperFeatures.gtk = true;
-    };
+
+  # imports = [ inputs.niri.nixosModules.niri ];
+  #
+  # programs.niri = {
+  #   enable = true;
+  #   inherit (cfg) package;
+  # };
+  hardware.graphics.enable = lib.mkDefault true;
+  programs.dconf.enable = lib.mkDefault true;
+  fonts.enableDefaultPackages = lib.mkDefault true;
+
+  security = {
+    pam.services.hyprlock.text = "auth include login";
+    sudo.wheelNeedsPassword = false;
+    polkit.enable = true;
   };
 
-  xdg.portal = {
-    enable = true;
-    config.common.default = "*";
-    wlr = {
-      enable = true;
-      settings.screencast = {
-        output_name = "eDP-1";
-        max_fps = 30;
-        chooser_type = "simple";
-        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or -s '#99d1ce33'";
-      };
-    };
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
+  systemd.user.services.niri-flake-polkit.enable = lib.mkForce false;
 
-  environment = {
-    systemPackages = with pkgs; [
-      xdg-desktop-portal
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
-      xdg-utils
-    ];
-  };
-
-  security.polkit.enable = true;
+  environment.systemPackages = with pkgs; [
+    cfg.package
+    xdg-utils
+    xdg-desktop-portal
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-gnome
+    xdg-utils
+    wl-clipboard
+    wayland-utils
+    libsecret
+  ];
 
   services = {
     dbus = {
       enable = true;
       implementation = "broker";
-      # implementation = "dbus";
       packages = with pkgs; [
         dconf
         xfce.xfconf
         gcr
         gnome-settings-daemon
+        libsecret
       ];
     };
     gnome = {

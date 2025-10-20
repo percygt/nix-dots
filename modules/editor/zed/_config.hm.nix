@@ -4,7 +4,7 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   cfg = config.modules.editor.zed;
   moduleZed = "${g.flakeDirectory}/modules/editor/zed";
 in

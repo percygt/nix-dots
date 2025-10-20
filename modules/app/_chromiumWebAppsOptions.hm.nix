@@ -6,6 +6,7 @@
   ...
 }:
 let
+  g = config._global;
   inherit (lib) mkOption mkEnableOption;
   supportedBrowsers = [
     "chromium"
@@ -89,12 +90,18 @@ let
     browser:
     let
       inherit (builtins) stringLength substring;
-      inherit (lib.attrsets) mapAttrs filterAttrs;
+      inherit (lib.attrsets) mapAttrs;
       inherit (lib.strings) concatStringsSep toUpper;
     in
     {
       xdg.desktopEntries = mapAttrs (name: cfg: {
-        inherit (cfg) prefersNonDefaultGPU;
+        inherit (cfg)
+          prefersNonDefaultGPU
+          icon
+          genericName
+          categories
+          comment
+          ;
         name =
           if cfg.name == null then
             (toUpper (substring 0 1 name)) + (substring 1 (stringLength name) name)
@@ -140,7 +147,7 @@ in
   config =
     let
       cfg = config.programs.brave-nightly;
-      configDir = "${config.xdg.configHome}/BraveSoftware/Brave-Browser-Nightly";
+      configDir = "${g.xdg.configHome}/BraveSoftware/Brave-Browser-Nightly";
       extensionJson =
         ext:
         assert ext.crxPath != null -> ext.version != null;

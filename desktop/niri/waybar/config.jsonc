@@ -1,0 +1,59 @@
+// -*- mode: jsonc -*-
+[
+  {
+    "id": "bar-1",
+    "output": "eDP-1",
+    "position": "left",
+    "width": 45,
+    "include": [
+      "~/.config/waybar/modules/common.jsonc"
+    ],
+    "niri/window": {
+      "rotate": 90
+    },
+    "mpris": {
+      "rotate": 90
+    },
+
+    "backlight": {
+      "device": "intel_backlight",
+      "on-scroll-up": "swayosd-client --device intel_backlight --brightness +10 ",
+      "on-scroll-down": "swayosd-client --device intel_backlight --brightness -10",
+      "on-click": "swayosd-client --device intel_backlight --brightness 100",
+      "on-click-middle": "swayosd-client --device intel_backlight --brightness 50",
+      "on-click-right": "swayosd-client --device intel_backlight --brightness 1"
+    },
+    "backlight/slider": {
+      "device": "intel_backlight"
+    }
+  },
+  {
+    "output": "HDMI-A-1",
+    "position": "right",
+    "width": 45,
+    "include": [
+      "~/.config/waybar/modules/common.jsonc"
+      // "~/.config/waybar/extra.jsonc"
+    ],
+    "niri/window": {
+      "rotate": 270
+    },
+    "mpris": {
+      "rotate": 270
+    },
+    "backlight": {
+      "device": "ddcci1",
+      "on-scroll-up": "swayosd-client --device ddcci1 --brightness +10",
+      "on-scroll-down": "swayosd-client --device ddcci1 --brightness -10",
+      "on-click": "swayosd-client --device ddcci1 --brightness 100",
+      "on-click-middle": "swayosd-client --device ddcci1 --brightness 50",
+      "on-click-right": "swayosd-client --device ddcci1 --brightness 0"
+    },
+    "backlight/slider": {
+      "device": "ddcci1"
+    },
+    "battery": {
+      "on-click-right": "systemctl --user restart waybar"
+    }
+  }
+]

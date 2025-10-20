@@ -6,55 +6,67 @@
   ...
 }:
 let
-  g = config._base;
+  g = config._global;
   cfg = config.modules.editor.emacs;
-  swayCfg = config.wayland.windowManager.sway;
-  mod = swayCfg.config.modifier;
   editorModules = "${g.flakeDirectory}/modules/editor";
   moduleEmacs = "${editorModules}/emacs";
-  DOOMLOCALDIR = "${config.xdg.dataHome}/doom";
-  DOOMDIR = "${config.xdg.configHome}/doom";
-  EMACSDIR = "${config.xdg.configHome}/emacs";
-  DOOMPROFILELOADFILE = "${config.xdg.dataHome}/doom/cache/profile-load.el";
-  # capture = pkgs.writers.writePython3 "capture" { doCheck = false; } (builtins.readFile ./capture.py);
-  capture = "python $DOOMDIR/capture.py";
-  doomconfig = pkgs.writers.writeBash "doomconfig" ''
-    footclient --app-id doom-config --title Emacs -- emacsclient -t -a "" ${moduleEmacs}/doom/config.el
-  '';
-  emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
-    footclient --app-id notes --title Emacs -- emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
-  '';
-  emacscapture = pkgs.writers.writeBash "emacscapture" ''
-    footclient --app-id capture --title Emacs -- emacsclient -t -a "" --eval '(+org-capture/quick-capture)'
-  '';
-  emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
-    footclient --app-id agenda --title Emacs -- emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
-  '';
-  termVar = "TERM=foot";
-  termInfoVar = "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo";
+  DOOMLOCALDIR = "${g.xdg.dataHome}/doom";
+  DOOMDIR = "${g.xdg.configHome}/doom";
+  EMACSDIR = "${g.xdg.configHome}/emacs";
+  DOOMPROFILELOADFILE = "${g.xdg.dataHome}/doom/cache/profile-load.el";
 in
 {
   config = lib.mkIf cfg.enable {
-    wayland.windowManager.sway.config.startup = [
-      {
-        command = lib.concatStringsSep " " [
-          termVar
-          termInfoVar
-          "${cfg.finalPackage}/bin/emacs --fg-daemon"
-        ];
-        always = true;
-      }
-    ];
-    wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-      "${mod}+n" = "exec ddapp -t 'notes' -- ${emacsnotes}";
-      "${mod}+Shift+e" = "exec ddapp -t 'doom-config' -- ${doomconfig}";
-      # "${mod}+y" = "exec ddapp -t 'clipboard-capture' -h 90 -w 90 -- ${clipboardcapture}";
-      # "${mod}+Shift+y" =
-      #   "exec ddapp -t 'clipboard-capture-interest' -h 90 -w 90 -- '${clipboardcapture} i'";
-      "${mod}+e" = "exec ddapp -t 'agenda' -k true -- ${emacsagenda}";
-      "${mod}+c" = "exec ddapp -t 'org-capture' -h 90 -w 90 -- '${capture} -w org-capture'";
-      "${mod}+q" = "exec ddapp -t 'capture' -h 90 -w 90 -- ${emacscapture}";
-    };
+    # programs.niri.settings =
+    #   let
+    #     termVar = "TERM=foot";
+    #     termInfoVar = "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo";
+    #     inherit (config.modules.editor) emacs;
+    #   in
+    #   {
+    #     spawn-at-startup = [
+    #       {
+    #         command = [
+    #           termVar
+    #           termInfoVar
+    #           "${emacs.finalPackage}/bin/emacs --fg-daemon"
+    #         ];
+    #       }
+    #     ];
+    #     binds =
+    #       with config.lib.niri.actions;
+    #       let
+    #         editorModules = "${g.flakeDirectory}/modules/editor";
+    #         moduleEmacs = "${editorModules}/emacs";
+    #         doomconfig = pkgs.writers.writeBash "doomconfig" ''
+    #           emacsclient -t -a "" ${moduleEmacs}/doom/config.el
+    #         '';
+    #         emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
+    #           emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
+    #         '';
+    #         emacscapture = pkgs.writers.writeBash "emacscapture" ''
+    #           emacsclient -t -a "" --eval '(+org-capture/quick-capture)'
+    #         '';
+    #         emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
+    #           emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
+    #         '';
+    #       in
+    #       {
+    #         "Mod+Shift+E".action = spawn "footpad" "--term=foot-direct" "--app-id=doom" "--" "${doomconfig}";
+    #         "Mod+N".action = spawn "footpad" "--term=foot-direct" "--app-id=notes" "--" "${emacsnotes}";
+    #         # "Mod+E".action = spawn "footpad" "--term=foot-direct" "--app-id=agenda" "--" "${emacsagenda}";
+    #         "Mod+E".action = spawn "footpad" "--term=foot-direct" "--app-id=agenda" "--" "${emacsagenda}";
+    #         "Mod+Alt+C".action = spawn "footpad" "--term=foot-direct" "--app-id=capture" "--" "${emacscapture}";
+    #         "Mod+C".action =
+    #           spawn "footpad" "--term=foot-direct" "--app-id=org-capture" "--" "python" "${DOOMDIR}/capture.py"
+    #             "-w"
+    #             "org-capture";
+    #       };
+    #   };
+    # services.emacs = {
+    #   enable = true;
+    #   package = cfg.finalPackage;
+    # };
     home = {
       packages = [ cfg.finalPackage ];
       shellAliases.e = "emacs -nw";
@@ -80,7 +92,8 @@ in
         "doom/init.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/init.el";
         "doom/packages.el".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/packages.el";
         "doom/modules".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/modules";
-        "doom/autoload".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
+        "doom/snippets".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/snippets";
+        # "doom/autoload".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/autoload";
         "doom/configs".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/configs";
         "doom/capture.py".source = config.lib.file.mkOutOfStoreSymlink "${moduleEmacs}/doom/capture.py";
         "doom/system.el".text = g.textEditor.emacs."system.el";

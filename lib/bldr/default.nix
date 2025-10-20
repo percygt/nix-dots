@@ -9,21 +9,20 @@
 let
   inherit (self) outputs;
   lib = inputs.home-manager.lib // inputs.nixpkgs.lib;
-  libx = import "${self}/lib/libx" { inherit lib; };
+  libx = import "${self}/lib/libx" { inherit lib inputs; };
   defaultDirs =
     {
       desktop,
       profile,
-      extraModules,
+      extraModulesDir,
     }:
     (
       [
-        "${self}/core"
-        "${self}/dev"
+        "${self}/config"
+        "${self}/modules"
         "${self}/profiles/${profile}"
-        self.outputs.nixosModules.default
       ]
-      ++ extraModules
+      ++ extraModulesDir
       ++ lib.optionals (desktop != null) [
         "${self}/desktop/common"
         "${self}/desktop/${desktop}"
@@ -33,7 +32,7 @@ let
     "x86_64-linux"
     "aarch64-linux"
   ];
-
+  colorize = inputs.nix-colorizer;
 in
 {
   forAllSystems =
@@ -45,7 +44,7 @@ in
       system ? defaultSystem,
       desktop ? null,
       username ? defaultUsername,
-      extraModules ? [ ],
+      extraModulesDir ? [ ],
     }:
     let
       inherit (lib) nixosSystem;
@@ -61,6 +60,7 @@ in
           homeDirectory
           stateVersion
           desktop
+          colorize
           ;
       };
     in
@@ -68,20 +68,25 @@ in
       inherit system;
       modules =
         libx.importNixosForEachDir (defaultDirs {
-          inherit desktop profile extraModules;
+          inherit desktop profile extraModulesDir;
         })
         ++ [
+          self.outputs.nixosModules.default
           inputs.home-manager.nixosModules.home-manager
           {
             home-manager = {
               users.${username}.imports = libx.importHomeForEachDir (defaultDirs {
-                inherit desktop profile extraModules;
+                inherit desktop profile extraModulesDir;
               });
-              extraSpecialArgs = args;
+              extraSpecialArgs = args // {
+                inherit args;
+              };
             };
           }
         ];
-      specialArgs = args;
+      specialArgs = args // {
+        inherit args;
+      };
     };
 
   buildHome =
@@ -90,7 +95,7 @@ in
       system ? defaultSystem,
       desktop ? null,
       username ? defaultUsername,
-      extraModules ? [ ],
+      extraModulesDir ? [ ],
     }:
     let
       inherit (lib) homeManagerConfiguration;
@@ -106,6 +111,7 @@ in
           homeDirectory
           stateVersion
           desktop
+          colorize
           ;
       };
     in
@@ -113,9 +119,12 @@ in
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       modules =
         libx.importHomeForEachDir (defaultDirs {
-          inherit desktop profile extraModules;
+          inherit desktop profile extraModulesDir;
         })
         ++ [
+          self.outputs.homeManagerModules.default
+          # need to make home-manager work both as a standalone and a nixos module
+          inputs.niri.homeModules.niri
           (
             { pkgs, ... }:
             {
@@ -123,6 +132,8 @@ in
             }
           )
         ];
-      extraSpecialArgs = args;
+      extraSpecialArgs = args // {
+        inherit args;
+      };
     };
 }

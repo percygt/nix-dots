@@ -45,6 +45,7 @@ in
   options.modules.fonts = {
     shell = fontModule;
     interface = fontModule;
+    propo = fontModule;
     app = fontModule;
     icon = fontModule;
     extraFonts = lib.mkOption {

@@ -1,0 +1,141 @@
+window-rule {
+    match app-id="org.telegram.desktop"
+    match title="TelegramDesktop"
+}
+window-rule {
+    draw-border-with-background false
+    geometry-corner-radius 10.000000 10.000000 10.000000 10.000000
+    clip-to-geometry true
+}
+window-rule {
+    match is-focused=false
+    shadow { off; }
+}
+window-rule {
+    match is-floating=true
+    shadow { on; }
+}
+window-rule {
+    match is-window-cast-target=true
+    border { inactive-color "#7d0d2d"; }
+    focus-ring {
+        active-color "#f38ba8"
+        inactive-color "#7d0d2d"
+    }
+    shadow { color "#7d0d2d70"; }
+    tab-indicator {
+        active-color "#f38ba8"
+        inactive-color "#7d0d2d"
+    }
+}
+window-rule {
+    match app-id="org.keepassxc.KeePassXC"
+    match app-id="app.drey.PaperPlane"
+    match app-id="org.telegram.desktop"
+    block-out-from "screencast"
+}
+window-rule {
+    match app-id="tmux"
+    match app-id="yazi"
+    match app-id="swayimg"
+    match app-id="nix-search"
+    default-column-width { proportion 1.000000; }
+    default-window-height { proportion 1.000000; }
+    open-floating true
+    geometry-corner-radius 0.000000 0.000000 0.000000 0.000000
+    border { off; }
+}
+window-rule {
+    match app-id="tmux"
+    match app-id="yazi"
+    opacity 0.950000
+}
+window-rule {
+    match app-id="clipboard"
+    default-column-width { proportion 0.500000; }
+    default-window-height { proportion 1.000000; }
+    open-floating true
+    geometry-corner-radius 0.000000 0.000000 0.000000 0.000000
+    border { off; }
+    default-floating-position relative-to="bottom-right" x=0 y=0
+}
+window-rule {
+    match app-id=".scrcpy-wrapped"
+    match app-id="pavucontrol"
+    match app-id="ncpamixer"
+    match app-id="pavucontrol-qt"
+    match app-id="com.saivert.pwvucontrol"
+    match app-id="dialog"
+    match app-id="popup"
+    match app-id="task_dialog"
+    match app-id="gcr-prompter"
+    match app-id="file-roller"
+    match app-id="org.gnome.FileRoller"
+    match app-id="nm-connection-editor"
+    match app-id="blueman-manager"
+    match app-id="xdg-desktop-portal-gtk"
+    match app-id="org.kde.polkit-kde-authentication-agent-1"
+    match app-id="pinentry"
+    match app-id="bluetui"
+    match title="Progress"
+    match title="File Operations"
+    match title="Copying"
+    match title="Moving"
+    match title="Properties"
+    match title="Downloads"
+    match title="file progress"
+    match title="Confirm"
+    match title="Authentication Required"
+    match title="Notice"
+    match title="Warning"
+    match title="Error"
+    open-floating true
+}
+window-rule {
+    match app-id="org.keepassxc.KeePassXC"
+    match app-id="gnome-disks"
+    match app-id="lollypop"
+    match app-id="io.github.dvlv.boxbuddyrs"
+    match app-id="org.gnome.Firmware"
+    match app-id=".?qemu-system-x86_64(-wrapped)?"
+    match app-id="Spotify"
+    match title="^Brave$"
+    match app-id="btop"
+    match app-id="steam" title="^Friends List$"
+    default-column-width { proportion 0.800000; }
+    default-window-height { proportion 0.800000; }
+    open-floating true
+}
+window-rule {
+    match app-id="wpa_gui"
+    match app-id="org.gnome.Nautilus" title="^Properties$"
+    match app-id="nm-connection-editor"
+    match app-id="udiskie"
+    default-column-width { proportion 0.500000; }
+    default-window-height { proportion 0.500000; }
+    open-floating true
+}
+window-rule {
+    match app-id="zen"
+    match app-id="firefox"
+    match app-id="brave-browser"
+    match app-id="chromium-browser"
+    open-maximized true
+}
+window-rule {
+    match title="^Picture-in-Picture$"
+    match title="^Picture in picture$"
+    default-column-width { fixed 480; }
+    default-window-height { fixed 270; }
+    open-floating true
+    default-floating-position relative-to="bottom-right" x=32 y=32
+}
+window-rule {
+    match title="Discord Popout"
+    open-floating true
+    default-floating-position relative-to="bottom-right" x=32 y=32
+}
+layer-rule {
+    match namespace="waybar"
+    shadow { on; }
+}

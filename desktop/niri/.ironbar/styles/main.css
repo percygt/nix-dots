@@ -1,0 +1,75 @@
+@import url("./backlight.css");
+@import url("./battery.css");
+@import url("./clock.css");
+@import url("./cpu.css");
+@import url("./memory.css");
+@import url("./mpris.css");
+@import url("./temperature.css");
+@import url("./network.css");
+@import url("./pulseaudio.css");
+@import url("./tray.css");
+@import url("./niri.css");
+@import url("./power-profiles-daemon.css");
+
+@define-color border rgba(255, 255, 255, 0.1);
+
+* {
+  font-weight: bold;
+  font-family: "Iosevka Aile, Symbols Nerd Font";
+  font-size: 13px;
+}
+
+window#waybar {
+  border: none;
+  background: @background;
+}
+.modules-right,
+.modules-center {
+  margin: 8px 0 8px 1px;
+}
+.modules-left {
+  margin: 2px 0 8px 1px;
+}
+
+slider {
+  padding: 0;
+  margin: 0;
+}
+
+tooltip {
+  background: @background-alt;
+  color: @text-light;
+  font-size: 13px;
+  border: 1px solid @border;
+}
+
+/* #custom-expand { */
+/*   min-width: 25px; */
+/*   color: #a1bdce; */
+/*   font-size: 16px; */
+/* } */
+/**/
+/* #group-minimized { */
+/*   border-left: solid; */
+/*   border-left-width: 0.5; */
+/* } */
+@keyframes blink-active {
+  to {
+    background-color: @background;
+    color: @text-light;
+  }
+}
+
+@keyframes blink-red {
+  to {
+    background-color: #c64d4f;
+    color: @text-light;
+  }
+}
+
+@keyframes blink-yellow {
+  to {
+    background-color: #cf9022;
+    color: @text-light;
+  }
+}

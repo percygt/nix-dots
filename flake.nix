@@ -6,6 +6,8 @@
       defaultUsername = "percygt";
       defaultSystem = "x86_64-linux";
       stateVersion = "25.05";
+      lib = inputs.home-manager.lib // inputs.nixpkgs.lib;
+      libx = import "${self}/lib/libx" { inherit lib inputs; };
       bldr = import ./lib {
         inherit
           self
@@ -13,6 +15,8 @@
           stateVersion
           defaultSystem
           defaultUsername
+          lib
+          libx
           ;
       };
     in
@@ -20,32 +24,25 @@
       nixosConfigurations = {
         aizeft = bldr.buildSystem {
           profile = "aizeft";
-          desktop = "sway";
-          extraModules = [ (builtins.toString inputs.base) ];
-        };
-        vm = inputs.nixpkgs.lib.nixosSystem {
-          system = defaultSystem;
-          modules = [
-            inputs.home-manager.nixosModules.home-manager
-            ./vm
+          desktop = "niri";
+          extraModulesDir = [
+            (toString inputs.personal)
           ];
-          specialArgs = rec {
-            inherit inputs stateVersion;
-            username = defaultUsername;
-            profile = "vm";
-            homeDirectory = "/home/${username}";
-          };
         };
-
       };
       homeConfigurations = {
         "percygt@aizeft" = bldr.buildHome {
           profile = "aizeft";
-          desktop = "sway";
-          extraModules = [ (builtins.toString inputs.base) ];
+          desktop = "niri";
+          extraModulesDir = [
+            (toString inputs.personal)
+          ];
         };
       };
-      nixosModules.default = ./modules;
+
+      nixosModules.default.imports = libx.importNixosForEachDir [ ./modules ];
+      homeManagerModules.default.imports = libx.importHomeForEachDir [ ./modules ];
+
       packages = bldr.forAllSystems (pkgs: import ./packages { inherit pkgs; });
       formatter = bldr.forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
       overlays = import ./overlays { inherit inputs; };
@@ -70,10 +67,8 @@
     nixpkgs-master.follows = "nix-sources/nixpkgs-master";
     nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
 
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    niri.follows = "nix-sources/niri";
+    walker.follows = "nix-stash/walker";
 
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
@@ -97,49 +92,60 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    flatpaks.url = "github:in-a-dil-emma/declarative-flatpak/stable-v3";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    # flatpaks.url = "github:in-a-dil-emma/declarative-flatpak/stable-v3";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+
+    nix-snapd.url = "github:nix-community/nix-snapd";
+    nix-snapd.inputs.nixpkgs.follows = "nixpkgs";
 
     sops-nix.url = "github:mic92/sops-nix";
-    sops-nix.inputs = {
-      nixpkgs.follows = "nixpkgs";
-    };
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     wayland-pipewire-idle-inhibit.url = "github:rafaelrc7/wayland-pipewire-idle-inhibit";
     wayland-pipewire-idle-inhibit.inputs.nixpkgs.follows = "nixpkgs";
 
-    way-edges.url = "github:way-edges/way-edges";
-    way-edges.inputs.nixpkgs.follows = "nixpkgs";
+    quickshell.url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+    quickshell.inputs.nixpkgs.follows = "nixpkgs";
 
     vscode-server.url = "github:nix-community/nixos-vscode-server";
     vscode-server.inputs.nixpkgs.follows = "nixpkgs";
 
     base16.url = "github:SenchoPens/base16.nix";
+    nix-colorizer.url = "github:percygt/nix-colorizer";
 
     nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
 
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
     pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-on-droid = {
-      url = "github:t184256/nix-on-droid";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-    base.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
-    base.flake = false;
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
+
+    unf.url = "git+https://git.atagen.co/atagen/unf";
+    unf.inputs.nixpkgs.follows = "nixpkgs";
+
+    system76-scheduler-niri.url = "github:Kirottu/system76-scheduler-niri";
+    system76-scheduler-niri.inputs.nixpkgs.follows = "nixpkgs";
+
+    ironbar.url = "github:JakeStanger/ironbar";
+    ironbar.inputs.nixpkgs.follows = "nixpkgs";
+
+    personal.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
+    personal.flake = false;
   };
   nixConfig = {
     extra-substituters = [
       "https://percygtdev.cachix.org"
       "https://nix-community.cachix.org"
       "https://pre-commit-hooks.cachix.org"
-      "https://nix-on-droid.cachix.org"
     ];
     extra-trusted-public-keys = [
       "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
-      "nix-on-droid.cachix.org-1:56snoMJTXmDRC1Ei24CmKoUqvHJ9XCp+nidK7qkMQrU="
     ];
   };
 }

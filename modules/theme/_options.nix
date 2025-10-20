@@ -2,10 +2,11 @@
   lib,
   config,
   pkgs,
+  colorize,
   ...
 }:
 let
-  c = config.modules.themes.colors;
+  c = config.modules.themes.colors.withHashtag;
 in
 {
   options.modules.themes = {
@@ -21,8 +22,10 @@ in
             package
           ];
         default = pkgs.fetchurl {
-          url = "https://images.unsplash.com/photo-1520264914976-a1ddb24d2114?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=michael-aleo-FDhds8oz8bA-unsplash.jpg";
-          sha256 = "1dwy2619vmgca430m0vsq50289bwqi5nc5m0c02bri5phdmfxj6i";
+          # url = "https://images.unsplash.com/photo-1520264914976-a1ddb24d2114?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=michael-aleo-FDhds8oz8bA-unsplash.jpg";
+          # sha256 = "1dwy2619vmgca430m0vsq50289bwqi5nc5m0c02bri5phdmfxj6i";
+          url = "https://images.unsplash.com/photo-1614850523527-08bd62441994?ixlib=rb-4.1.0&q=85&fm=jpg&crop=entropy&cs=srgb&dl=codioful-formerly-gradienta-uDaW2aMISB4-unsplash.jpg";
+          sha256 = "14428s1xpfvi87bxf6acwwv5i7pjjclaanhx4z60s7g3y94kn31s";
         };
       };
       nix-logo = lib.mkOption {
@@ -35,15 +38,15 @@ in
             package
           ];
         default = pkgs.fetchurl {
-          url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/raw/branch/master/png/gruvbox-light-rainbow-square.png";
-          sha256 = "1b7n1kskxzbk1w81pi78brwyjwkavyqs4hqa579xri8k3rx2r0fw";
+          url = "https://i.imgur.com/X5zKxvp.png";
+          sha256 = "0idw7j5jz77la9asp6x87ivzxvxp5ddkyy5f7dr507r25300a790";
         };
       };
     };
     colorscheme = lib.mkOption {
       description = "Current colorscheme";
       type = with lib.types; either attrs path;
-      default = import ./.base24-syft-tokyo.nix;
+      default = ./colors.yaml;
     };
     colors = lib.mkOption {
       description = "Base24 colors";
@@ -53,7 +56,7 @@ in
     opacity = lib.mkOption {
       description = "Background opacity";
       type = lib.types.float;
-      default = 0.7;
+      default = 0.95;
     };
     cursorTheme = {
       name = lib.mkOption {
@@ -99,7 +102,7 @@ in
           border = c.base04;
           bg = c.base00;
           bg-alt = c.base01;
-          bg-accent = c.base02;
+          bg-accent = colorize.hex.lighten c.base00 0.05;
           black = c.base11;
         };
       };
@@ -118,7 +121,7 @@ in
           border = c.base04;
           bg = c.base00;
           bg-alt = c.base01;
-          bg-accent = c.base02;
+          bg-accent = colorize.hex.lighten c.base00 0.05;
           black = c.base11;
         };
       };

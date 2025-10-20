@@ -8,6 +8,17 @@
 {
   config = lib.mkIf config.modules.drivers.printer.enable {
     # hardware.printers.ensurePrinters = [ g.localPrinter ];
+    persistSystem.directories = [
+      {
+        directory = "/var/lib/cups";
+        mode = "0700";
+      }
+      {
+        directory = "/var/spool/cups";
+        group = "lp";
+        mode = "u=rwx,g=x,o=";
+      }
+    ];
     environment.systemPackages = config.hardware.sane.extraBackends;
     programs.system-config-printer.enable = true;
     services = {

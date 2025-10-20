@@ -1,0 +1,75 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ErikReider/SwayNotificationCenter/refs/heads/main/src/configSchema.json",
+  "layer": "overlay",
+  "ignore-gtk-theme": true,
+  "layer-shell": true,
+  "layer-shell-cover-screen": false,
+
+  "positionX": "right",
+  "positionY": "top",
+  "notification-2fa-action": true,
+  "notification-inline-replies": true,
+  "notification-body-image-height": 100,
+  "notification-body-image-width": 200,
+  "notification-window-width": 320,
+  "notification-grouping": true,
+
+  "control-center-positionX": "center",
+  "control-center-positionY": "top",
+  "control-center-layer": "top",
+  "control-center-margin-top": 10,
+  "control-center-margin-bottom": 10,
+  "control-center-margin-right": 0,
+  "control-center-margin-left": 0,
+  "control-center-width": 400,
+  "control-center-height": 600,
+
+  "timeout": 10,
+  "timeout-low": 5,
+  "timeout-critical": 0,
+
+  "fit-to-screen": false,
+  "relative-timestamps": true,
+  "keyboard-shortcuts": true,
+  "image-visibility": "when-available",
+  "transition-time": 200,
+  "hide-on-clear": false,
+  "hide-on-action": true,
+  "text-empty": "No Notifications",
+  "script-fail-notify": true,
+  "cssPriority": "user",
+  "widgets": [
+    "buttons-grid",
+    "title",
+    "notifications"
+  ],
+  "widget-config": {
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "",
+          "command": "niri msg action do-screen-transition && hyprlock --immediate"
+        },
+        {
+          "label": "",
+          "command": "systemctl reboot"
+        },
+        {
+          "label": "",
+          "command": "systemctl poweroff"
+        }
+      ]
+    },
+    "notifications": {
+      "vexpand": false
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+    "title": {
+      "text": "Notifications",
+      "button-text": "󰎟 Clear",
+      "clear-all-button": true
+    }
+  }
+}

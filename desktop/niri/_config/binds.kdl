@@ -1,0 +1,120 @@
+binds {
+    Mod+Shift+Slash { show-hotkey-overlay; }
+    Mod+T hotkey-overlay-title="Nix search" { spawn-sh "footpad --title='Nix Search' --app-id=nix-search -- tv nix"; }
+    Mod+D hotkey-overlay-title="App launcher" { spawn "walker"; }
+    Mod+Alt+L hotkey-overlay-title="Lock screen"  allow-when-locked=true { spawn-sh "niri msg action do-screen-transition && hyprlock --immediate"; }
+
+    Mod+A { spawn "footpad" "--app-id=tmux" "--" "tmux-launch-session"; }
+    Mod+B { spawn "footpad" "--title=Bluetooth" "--app-id=bluetui" "--" "bluetui"; }
+    Mod+M { spawn "footpad" "--title=SystemMonitor" "--app-id=btop" "--" "btop"; }
+    Mod+P { spawn "footpad" "--app-id=clipboard" "--title=Clipboard" "--" "cliphist-fzf-sixel"; }
+    Mod+Slash { spawn-sh "pkill tofi || tofi-drun --drun-launch=true --prompt-text=Apps: "; }
+    Mod+Y { spawn "footpad" "--app-id=yazi" "--" "yazi" "~"; }
+    Mod+S { spawn "swaync-client" "-t" "-sw"; }
+
+    Alt+Print hotkey-overlay-title="OCR" { spawn "ocr"; }
+    Ctrl+Print hotkey-overlay-title="Screenshot screen to clipboard" { screenshot-screen write-to-disk=false; }
+    Print hotkey-overlay-title="Screenshot screen and save" { screenshot-screen write-to-disk=true; }
+    Mod+Ctrl+Print hotkey-overlay-title="Screenshot window to clipboard" { screenshot-window write-to-disk=false; }
+    Mod+Print hotkey-overlay-title="Screenshot window and save" { screenshot-window; }
+    Mod+Shift+Print hotkey-overlay-title="Interactive screenshot to clipboard" { screenshot show-pointer=false; }
+    Alt+Tab hotkey-overlay-title="Switch to previous window" { focus-window-previous; }
+
+    XF86AudioLowerVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume=lower"; }
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume=raise"; }
+    XF86AudioMute allow-when-locked=true { spawn "swayosd-client" "--output-volume=mute-toggle"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "swayosd-client" "--input-volume=mute-toggle"; }
+
+    XF86AudioNext allow-when-locked=true { spawn "playerctl" "next"; }
+    XF86AudioPlay allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioPrev allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86AudioStop allow-when-locked=true { spawn "playerctl" "pause"; }
+
+    XF86MonBrightnessDown allow-when-locked=true { spawn "swayosd-client" "--brightness=lower"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "swayosd-client" "--brightness=raise"; }
+
+    Mod+O repeat=false { toggle-overview; }
+    Mod+Q repeat=false { close-window; }
+
+    Mod+Left { focus-column-or-monitor-left; }
+    Mod+Down { focus-window-or-workspace-down; }
+    Mod+Up { focus-window-or-workspace-up; }
+    Mod+Right { focus-column-or-monitor-right; }
+
+    Mod+H { focus-column-or-monitor-left; }
+    Mod+J { focus-window-or-workspace-down; }
+    Mod+K { focus-window-or-workspace-up; }
+    Mod+L { focus-column-or-monitor-right; }
+
+    Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
+    Mod+Shift+H { move-column-left-or-to-monitor-left; }
+    Mod+Shift+J { move-column-to-workspace-down; }
+    Mod+Shift+K { move-column-to-workspace-up; }
+    Mod+Shift+L { move-column-right-or-to-monitor-right; }
+
+    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    Mod+WheelScrollRight      { focus-column-right; }
+    Mod+WheelScrollLeft       { focus-column-left; }
+    Mod+Ctrl+WheelScrollRight { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+    Mod+Shift+WheelScrollDown      { focus-column-right; }
+    Mod+Shift+WheelScrollUp        { focus-column-left; }
+    Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+
+    Mod+0 { focus-workspace 10; }
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+
+    Mod+Shift+0 { move-column-to-workspace 10; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+
+    Mod+Comma { consume-window-into-column; }
+    Mod+Period { expel-window-from-column; }
+
+    Mod+R { switch-preset-column-width; }
+    Mod+Shift+R { switch-preset-window-height; }
+
+    Mod+F { maximize-column; }
+    Mod+Ctrl+F { toggle-windowed-fullscreen; }
+
+    Mod+Delete { clear-dynamic-cast-target; }
+    Mod+Equal { set-column-width "+10%"; }
+    Mod+Insert { set-dynamic-cast-window; }
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Shift+C { center-visible-columns; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+    Mod+Shift+F { fullscreen-window; }
+    Mod+Shift+Insert { set-dynamic-cast-monitor; }
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+P { power-off-monitors; }
+    Mod+Shift+Space { switch-focus-between-floating-and-tiling; }
+    Mod+Shift+Tab { focus-monitor-previous; }
+    Mod+Space { toggle-window-floating; }
+    Mod+Tab { focus-workspace-previous; }
+    Mod+W { toggle-column-tabbed-display; }
+}

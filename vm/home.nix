@@ -5,7 +5,7 @@
 
 {
   imports = [
-    ../modules/_base/+module.nix
+    ../modules/_global/+module.nix
     ../modules/themes/+extras
     ../modules/themes/+home.nix
     ../modules/dev/+module.nix

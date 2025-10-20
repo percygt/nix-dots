@@ -1,150 +1,90 @@
 {
   config,
+  colorize,
   lib,
+  pkgs,
+  inputs,
   ...
 }:
 let
-  cfg = config.modules.desktop.sway;
-  g = config._base;
-  a = config.modules.themes.assets;
-  f = config.modules.fonts.app;
+  g = config._global;
+  inherit (config.modules.themes)
+    cursorTheme
+    ;
   c = config.modules.themes.colors.withHashtag;
+  h = colorize.hex;
+  screenshotsDir = g.xdg.userDirs.extraConfig.XDG_SCREENSHOTS_DIR;
+  inherit (g) flakeDirectory;
+  inherit (config.modules.editor) emacs;
 in
 {
-  home.sessionVariables = {
-    XDG_CURRENT_DESKTOP = "sway";
-    NIXOS_OZONE_WL = "1";
-  };
-  wayland.windowManager.sway = {
-    enable = true;
-    package = cfg.finalPackage;
-    swaynag.enable = true;
-    systemd.xdgAutostart = true;
-    wrapperFeatures.gtk = true;
-    checkConfig = false;
-    config = rec {
-      fonts = {
-        names = [ f.name ];
-        inherit (f) style size;
-      };
-      modifier = "Mod4";
-      up = "k";
-      down = "j";
-      left = "h";
-      right = "l";
-      terminal = lib.getExe g.terminal.defaultPackage;
-      menu = "tofi-drun --drun-launch=true --prompt-text=\"Apps: \"| xargs swaymsg exec --";
-      output."*".bg = "${a.wallpaper} fill";
-      gaps.inner = 4;
-      input = {
-        "type:keyboard".xkb_layout = "us";
-        "type:pointer".accel_profile = "adaptive";
-        "type:touchpad" = {
-          tap = "enabled";
-          accel_profile = "adaptive";
-        };
-        "9011:26214:ydotoold_virtual_device".accel_profile = "flat";
-      };
-      seat.seat0 = {
-        xcursor_theme = lib.mkIf (
-          config.home.pointerCursor != null
-        ) "${config.home.pointerCursor.name} ${builtins.toString config.home.pointerCursor.size}";
-        hide_cursor = "3000";
-      };
-      colors = {
-        focused = {
-          background = c.base00;
-          border = c.base17;
-          childBorder = c.base04;
-          indicator = c.base17;
-          text = c.base05;
-        };
-        unfocused = {
-          background = c.base02;
-          border = c.base03;
-          childBorder = c.base03;
-          indicator = c.base03;
-          text = c.base04;
-        };
-        focusedInactive = {
-          background = c.base02;
-          border = c.base03;
-          childBorder = c.base03;
-          indicator = c.base03;
-          text = c.base05;
-        };
-      };
-
-      modes.resize = {
-        "${left}" = "resize shrink width 10px"; # Pressing left will shrink the window’s width.
-        "${right}" = "resize grow width 10px"; # Pressing right will grow the window’s width.
-        "${up}" = "resize shrink height 11px"; # Pressing up will shrink the window’s height.
-        "${down}" = "resize grow height 10px"; # Pressing down will grow the window’s height.
-
-        Left = "resize shrink width 10px";
-        Down = "resize grow height 10px";
-        Up = "resize shrink height 10px";
-        Right = "resize grow width 10px";
-
-        # Exit mode
-        Return = "mode default";
-        Escape = "mode default";
-        "${modifier}+r" = "mode default";
-      };
-      modes.passthrough = {
-        # Exit mode
-        "Shift+Escape" = "mode default";
-        "${modifier}+Shift+r" = "mode default";
-      };
-
-      focus.newWindow = "urgent";
-      defaultWorkspace = "0-home";
-      bars = [
-        {
-          command = lib.getExe config.programs.waybar.package;
-          mode = "dock";
-          hiddenState = "show";
-          position = "top";
-        }
-        {
-          id = "bar-1";
-          command = "true";
-          mode = "hide";
-          hiddenState = "hide";
-          position = "top";
-        }
-      ];
-      workspaceOutputAssign = [
-        {
-          workspace = "0-home";
-          output = "eDP-1";
-        }
-        {
-          workspace = "1";
-          output = "HDMI-A-1";
-        }
-        {
-          workspace = "2";
-          output = "HDMI-A-1";
-        }
-        {
-          workspace = "3";
-          output = "HDMI-A-1";
-        }
-        {
-          workspace = "4";
-          output = "HDMI-A-1";
-        }
-        {
-          workspace = "5";
-          output = "HDMI-A-1";
-        }
-      ];
+  xdg.configFile =
+    let
+      configNiri = "${flakeDirectory}/desktop/niri/_config";
+      symlink = file: config.lib.file.mkOutOfStoreSymlink file;
+    in
+    {
+      "niri/binds.kdl".source = symlink "${configNiri}/binds.kdl";
+      "niri/animations.kdl".source = symlink "${configNiri}/animations.kdl";
+      "niri/input.kdl".source = symlink "${configNiri}/input.kdl";
+      "niri/outputs.kdl".source = symlink "${configNiri}/outputs.kdl";
+      "niri/layout.kdl".source = symlink "${configNiri}/layout.kdl";
+      "niri/rules.kdl".source = symlink "${configNiri}/rules.kdl";
+      "niri/startup.kdl".source = symlink "${configNiri}/startup.kdl";
+      "niri/workspaces.kdl".source = symlink "${configNiri}/workspaces.kdl";
+      "niri/config.kdl".text =
+        # kdl
+        ''
+          prefer-no-csd
+          hotkey-overlay { skip-at-startup; }
+          include "animations.kdl"
+          include "binds.kdl"
+          include "input.kdl"
+          include "layout.kdl"
+          include "rules.kdl"
+          include "startup.kdl"
+          include "workspaces.kdl"
+          include "nix.kdl"
+        '';
+      "niri/nix.kdl".text =
+        with inputs.niri.lib.kdl;
+        serialize.nodes [
+          (leaf "spawn-at-startup" [
+            "TERM=foot"
+            "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo"
+            "${emacs.finalPackage}/bin/emacs --fg-daemon"
+          ])
+          (plain "layout" [
+            (plain "border" [
+              (flag "on")
+              (leaf "width" 2)
+              (leaf "active-color" (h.setAlpha c.magenta 0.2))
+              (leaf "inactive-color" (h.setAlpha (h.darken c.magenta 0.2) 0.2))
+            ])
+          ])
+          (plain "cursor" [
+            (flag "hide-when-typing")
+            (leaf "hide-after-inactive-ms" 1000)
+            (leaf "xcursor-theme" cursorTheme.name)
+            (leaf "xcursor-size" cursorTheme.size)
+          ])
+          (plain "xwayland-satellite" [
+            (flag "on")
+            (leaf "path" "${lib.getExe pkgs.xwayland-satellite}")
+          ])
+          (leaf "screenshot-path" (screenshotsDir + "/%Y-%m-%d-%H%M%S.png"))
+          (plain "overview" [
+            (leaf "backdrop-color" (colorize.hex.lighten c.base00 0.05))
+            (plain "workspace-shadow" [ (flag "off") ])
+          ])
+          (plain "environment" (
+            lib.mapAttrsToList leaf (
+              g.system.envVars
+              // {
+                DISPLAY = null;
+              }
+            )
+          ))
+        ];
     };
-  };
-  home.shellAliases = {
-    swaytree = "swaymsg -t get_tree | nvim -R";
-    swayinputs = "swaymsg -t get_inputs | nvim -R";
-    swayoutputs = "swaymsg -t get_outputs | nvim -R";
-  };
 }

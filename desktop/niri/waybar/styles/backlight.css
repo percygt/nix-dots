@@ -1,0 +1,21 @@
+#backlight {
+  color: @yellow;
+}
+
+#backlight-slider {
+  background-color: @background-alt;
+}
+
+#backlight-slider slider {
+  min-width: 12px;
+}
+
+#backlight-slider trough {
+  min-height: 80px;
+  border-radius: 8px;
+}
+
+#backlight-slider highlight {
+  background-color: @blue;
+  border-radius: 8px;
+}

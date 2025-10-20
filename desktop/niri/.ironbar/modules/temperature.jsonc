@@ -1,0 +1,11 @@
+{
+  "temperature": {
+    "critical-threshold": 80,
+    "interval": 1,
+    "rotate": 90,
+    "format": "<span font='16'>{icon}</span>",
+    "format-icons": ["󰝦", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"],
+    "thermal-zone": 7,
+    "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon5/temp1_input"
+  }
+}

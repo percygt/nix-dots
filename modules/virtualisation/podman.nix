@@ -11,6 +11,6 @@ in
       defaultNetwork.settings.dns_enabled = true;
     };
 
-    modules.fileSystem.persist.systemData.directories = [ "/var/lib/containers" ];
+    persistSystem.directories = [ "/var/lib/containers" ];
   };
 }

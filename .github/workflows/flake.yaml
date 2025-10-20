@@ -33,6 +33,7 @@ jobs:
           nix flake update nixd --accept-flake-config
           nix flake update impermanence --accept-flake-config
           nix flake update nix-flatpak --accept-flake-config
+          nix flake update nixos-hardware --accept-flake-config
           nix flake update fenix --accept-flake-config
           nix flake update sops-nix --accept-flake-config
           nix flake update wayland-pipewire-idle-inhibit --accept-flake-config
@@ -44,5 +45,5 @@ jobs:
 
       - name: Push commit with updated inputs
         run: |
-          git pull --rebase --autostash
-          git push
+          git pull --rebase --autostash origin main
+          git push origin main

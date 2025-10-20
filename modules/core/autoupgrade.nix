@@ -7,9 +7,9 @@
 }:
 
 let
-  g = config._base;
+  g = config._global;
   cfg = config.modules.core.autoupgrade;
-  inherit (config._base) flakeDirectory;
+  inherit (config._global) flakeDirectory;
 in
 {
   config = lib.mkIf cfg.enable {

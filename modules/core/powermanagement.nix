@@ -6,15 +6,98 @@
 }:
 let
   cfg = config.modules.core.powermanagement;
-  MHz = x: x * 1000;
   p = pkgs.writeScriptBin "charge-upto" ''
     echo ''${0:-100} > /sys/class/power_supply/BAT?/charge_control_end_threshold
   '';
 in
 {
   config = lib.mkIf cfg.enable {
-    # boot.kernelParams = [ "intel_pstate=disable" ];
-    powerManagement.cpuFreqGovernor = "powersave";
+    services = {
+      logind = {
+        settings = {
+          Login = {
+            HandleLidSwitchExternalPower = "lock";
+            HandlePowerKey = "suspend";
+            HandleLidSwitch = "suspend";
+          };
+        };
+      };
+
+      power-profiles-daemon.enable = true;
+      # battery info
+      upower = {
+        enable = true;
+        percentageLow = 20;
+        allowRiskyCriticalPowerAction = true;
+        criticalPowerAction = "Suspend";
+      };
+      thermald.enable = true;
+      system76-scheduler = {
+        enable = true;
+        useStockConfig = false; # our needs are modest
+        settings = {
+          # CFS profiles are switched between "default" and "responsive"
+          # according to power source ("default" on battery, "responsive" on
+          # wall power).  defaults are fine, except maybe this:
+          cfsProfiles.default.preempt = "voluntary";
+          # "voluntary" supposedly conserves battery but may also allow some
+          # audio skips, so consider changing to "full"
+          processScheduler = {
+            # Pipewire client priority boosting is not needed when all else is
+            # configured properly, not to mention all the implied
+            # second-guessing-the-kernel and priority inversions, so:
+            pipewireBoost.enable = false;
+            # I believe this exists solely for the placebo effect, so disable:
+            foregroundBoost.enable = false;
+          };
+        };
+        assignments = {
+          # confine builders / compilers / LSP servers etc. to the "batch"
+          # scheduling class automagically.  add matchers to taste!
+          batch = {
+            class = "batch";
+            matchers = [
+              "bazel"
+              "clangd"
+              "rust-analyzer"
+            ];
+          };
+        };
+        # do not disturb adults:
+        exceptions = [
+          "include descends=\"schedtool\""
+          "include descends=\"nice\""
+          "include descends=\"chrt\""
+          "include descends=\"taskset\""
+          "include descends=\"ionice\""
+
+          "schedtool"
+          "nice"
+          "chrt"
+          "ionice"
+
+          "dbus"
+          "dbus-broker"
+          "rtkit-daemon"
+          "taskset"
+          "systemd"
+        ];
+      };
+      # ananicy = {
+      #   enable = true;
+      #   package = pkgs.ananicy-cpp;
+      #   rulesProvider = pkgs.ananicy-rules-cachyos;
+      # };
+    };
+    powerManagement = {
+      powerDownCommands = ''
+        # Lock all sessions
+        loginctl lock-sessions
+
+        # Wait for lockscreen(s) to be up
+        sleep 1
+      '';
+    };
     environment.systemPackages = lib.mkIf cfg.enableChargeUptoScript [
       p
     ];
@@ -34,30 +117,6 @@ in
         Type = "oneshot";
         Restart = "on-failure";
         ExecStart = "${pkgs.runtimeShell} -c 'echo ${toString cfg.chargeUpto} > /sys/class/power_supply/BAT?/charge_control_end_threshold'";
-      };
-    };
-    services = {
-      thermald.enable = true;
-      system76-scheduler = {
-        enable = true;
-        useStockConfig = true;
-      };
-      auto-cpufreq = {
-        enable = true;
-        settings = {
-          charger = {
-            governor = "performance";
-            energy_performance_preference = "performance";
-            turbo = "auto";
-          };
-          battery = {
-            governor = "powersave";
-            energy_performance_preference = "power";
-            scaling_min_freq = lib.mkDefault (MHz 1200);
-            scaling_max_freq = lib.mkDefault (MHz 1800);
-            turbo = "never";
-          };
-        };
       };
     };
   };

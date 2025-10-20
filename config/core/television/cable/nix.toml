@@ -1,0 +1,17 @@
+[metadata]
+description = "Nix search tv"
+name = "nix"
+
+[source]
+command = "echo -e 'nixpkgs\nnixos\nhome-manager\nnur\nniri\nnix-dots'"
+
+[keybindings]
+enter = "actions:indexes"
+
+[actions.indexes]
+description = "nix-search-tv indexes"
+command = "tv '{}'"
+mode = "execute"
+
+[ui]
+ui_scale = 30
