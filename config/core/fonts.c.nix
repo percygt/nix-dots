@@ -9,31 +9,31 @@
         "Italic"
         "Bold Italic"
       ];
-      package = pkgs.nerd-fonts.victor-mono;
+      package = pkgs.unstable.nerd-fonts.victor-mono;
       typeface = "monospace";
       size = 11.0;
     };
     propo = {
       name = "IosevkaTerm Nerd Font Propo";
-      package = pkgs.nerd-fonts.iosevka-term;
+      package = pkgs.unstable.nerd-fonts.iosevka-term;
       typeface = "monospace";
       size = 14.0;
     };
     interface = {
       name = "Iosevka Aile";
       typeface = "sansSerif";
-      package = pkgs.iosevka-bin.override { variant = "Aile"; };
+      package = pkgs.unstable.iosevka-bin.override { variant = "Aile"; };
       size = 12.0;
     };
     app = {
       name = "Geist";
       typeface = "sansSerif";
-      package = pkgs.geist-font;
+      package = pkgs.unstable.geist-font;
       size = 12.0;
     };
     icon = {
       name = "Symbols Nerd Font";
-      package = pkgs.nerd-fonts.symbols-only;
+      package = pkgs.unstable.nerd-fonts.symbols-only;
       size = 12.0;
     };
     extraFonts =
@@ -52,7 +52,7 @@
         noto-fonts-emoji
         ubuntu_font_family
       ])
-      ++ (with pkgs.nerd-fonts; [
+      ++ (with pkgs.unstable.nerd-fonts; [
         iosevka-term
         monaspace
         geist-mono

@@ -16,6 +16,7 @@
       nautilus-python
       gnome-disk-utility
       nautilus
+      deja-dup
     ];
   };
   services = {

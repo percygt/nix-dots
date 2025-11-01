@@ -1,7 +1,0 @@
-#temperature {
-  color: darker(@green);
-  margin: 2px;
-}
-#temperature.critical {
-  color: @red;
-}

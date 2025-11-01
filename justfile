@@ -24,6 +24,7 @@ update-input input:
 
 rebuild-all update="":
   just rebuild os {{update}} && just rebuild home
+  doom sync
 
 rebuild-up:
   just rebuild-all -u

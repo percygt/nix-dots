@@ -29,6 +29,14 @@
         description = "Enable gpg pass";
       };
     };
+    restic = {
+      enable = lib.mkEnableOption "Enable restic";
+      package = lib.mkOption {
+        description = "Restic package";
+        type = lib.types.package;
+        default = pkgs.restic;
+      };
+    };
     borgmatic = {
       enable = lib.mkEnableOption "Enable borgmatic";
       package = lib.mkOption {

@@ -50,7 +50,7 @@ in
       ${completions [
         "git"
         "nix"
-        "gh"
+        # "gh"
         "npm"
         "pnpm"
         "rg"

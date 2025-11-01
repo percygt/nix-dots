@@ -11,11 +11,21 @@
       package = lib.mkOption {
         description = "Foot terminal package";
         type = lib.types.package;
-        default = pkgs.foot;
+        default = pkgs.unstable.foot;
       };
     };
     ghostty = {
       enable = lib.mkEnableOption "Enable ghostty";
+      cmd = lib.mkOption {
+        description = "Tilix terminal command";
+        type = lib.types.str;
+        default = "ghostty";
+      };
+      package = lib.mkOption {
+        description = "Tilix terminal package";
+        type = lib.types.package;
+        default = pkgs.unstable.ghostty;
+      };
     };
     tilix = {
       enable = lib.mkEnableOption "Enable tilix";
@@ -27,7 +37,7 @@
       package = lib.mkOption {
         description = "Tilix terminal package";
         type = lib.types.package;
-        default = pkgs.tilix;
+        default = pkgs.unstable.tilix;
       };
     };
     xfce4-terminal = {
@@ -40,7 +50,7 @@
       package = lib.mkOption {
         description = "Xfce4-terminal package";
         type = lib.types.package;
-        default = pkgs.xfce.xfce4-terminal;
+        default = pkgs.unstable.xfce.xfce4-terminal;
       };
     };
     wezterm = {
@@ -53,7 +63,7 @@
       package = lib.mkOption {
         description = "Wezterm terminal package";
         type = lib.types.package;
-        default = pkgs.wezterm;
+        default = pkgs.unstable.wezterm;
       };
     };
   };

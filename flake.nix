@@ -62,7 +62,7 @@
   inputs = {
     nix-sources.url = "github:percygt/nix-sources";
     nix-stash.url = "github:percygt/nix-stash";
-    nixpkgs.follows = "nix-sources/nixpkgs";
+    nixpkgs.follows = "nix-sources/nixpkgs-stable";
     nixpkgs-old.follows = "nix-sources/nixpkgs-old";
     nixpkgs-master.follows = "nix-sources/nixpkgs-master";
     nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
@@ -74,11 +74,12 @@
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
 
-    home-manager.url = "github:nix-community/home-manager/master";
+    # home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-cli.url = "github:water-sucks/nixos";
-    nixos-cli.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-cli.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
@@ -120,7 +121,6 @@
     nur.inputs.nixpkgs.follows = "nixpkgs";
 
     pre-commit-hooks.url = "github:cachix/git-hooks.nix";
-    pre-commit-hooks.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
@@ -130,9 +130,6 @@
 
     system76-scheduler-niri.url = "github:Kirottu/system76-scheduler-niri";
     system76-scheduler-niri.inputs.nixpkgs.follows = "nixpkgs";
-
-    ironbar.url = "github:JakeStanger/ironbar";
-    ironbar.inputs.nixpkgs.follows = "nixpkgs";
 
     personal.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     personal.flake = false;

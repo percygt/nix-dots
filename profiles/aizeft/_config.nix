@@ -16,6 +16,10 @@
       # enableHybridCodec = true;
     };
   };
+  hardware = {
+    graphics.package = pkgs.unstable.mesa;
+    graphics.package32 = pkgs.unstable.pkgsi686Linux.mesa;
+  };
   environment.systemPackages = with pkgs; [
     vulkan-tools
     vdpauinfo

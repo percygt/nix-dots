@@ -4,7 +4,7 @@
 }:
 {
   boot = {
-    kernelPackages = pkgs.stable.linuxPackages_6_16;
+    kernelPackages = pkgs.linuxPackages_latest;
     loader = {
       timeout = 0;
       efi.canTouchEfiVariables = true;

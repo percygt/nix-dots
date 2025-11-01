@@ -1,6 +1,6 @@
 { prev, final }:
 {
-  material-symbols = prev.material-symbols.overrideAttrs (oldAttrs: {
+  material-symbols = prev.unstable.material-symbols.overrideAttrs (oldAttrs: {
     version = "4.0.0-unstable-2025-04-11";
     src = final.fetchFromGitHub {
       owner = "google";
@@ -10,12 +10,17 @@
       sparseCheckout = [ "variablefont" ];
     };
   });
+  inherit (prev.unstable)
+    fish
+    nushell
+    carapace
+    swaynotificationcenter
+    waybar
+    ;
 
-  chromium = prev.stable.chromium;
-  libnotify = prev.stable.libnotify;
-  ripgrep = prev.ripgrep.override { withPCRE2 = true; };
-  borgmatic = prev.borgmatic.override { enableSystemd = false; };
-  btop = prev.btop.override {
+  ripgrep = prev.unstable.ripgrep.override { withPCRE2 = true; };
+  borgmatic = prev.unstable.borgmatic.override { enableSystemd = false; };
+  btop = prev.unstable.btop.override {
     cudaSupport = true;
     rocmSupport = true;
   };

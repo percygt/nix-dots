@@ -28,7 +28,7 @@ in
     nix-inspect
     nix-prefetch-scripts
     nix-prefetch-github
-    noogle-cli
+    nixos-rebuild-ng
   ];
   programs = {
     nh = {

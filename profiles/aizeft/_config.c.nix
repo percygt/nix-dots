@@ -45,6 +45,7 @@
       gpg.enable = true;
       keepass.enable = true;
       borgmatic.enable = true;
+      restic.enable = true;
       sops.enable = true;
       ssh.enable = true;
     };
@@ -76,7 +77,7 @@
     };
     virtualisation = {
       podman.enable = true;
-      # kvm.enable = true;
+      kvm.enable = true;
       # waydroid.enable = true;
       vmvariant.enable = true;
     };

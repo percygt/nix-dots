@@ -6,7 +6,7 @@
   ...
 }:
 {
-  imports = [ inputs.nix-sources.inputs.zen-browser.homeModules.twilight ];
+  imports = [ inputs.nix-stash.inputs.zen-browser.homeModules.twilight ];
   config = lib.mkIf config.modules.app.zen.enable {
     programs.zen-browser = {
       enable = true;

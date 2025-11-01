@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   g = config._global;
 in
@@ -8,6 +13,7 @@ in
     home.file."${g.xdg.configHome}/BraveSoftware/Brave-Browser/NativeMessagingHosts".enable = false;
     programs.brave = {
       enable = true;
+      package = pkgs.unstable.brave;
       commandLineArgs = [ "--password-store=basic" ];
       extensions =
         let
@@ -17,7 +23,7 @@ in
             "dbepggeogbaibhgnhhndojpepiihcmeb" # vimium
           ];
         in
-        builtins.map (id: { inherit id; }) ids;
+        map (id: { inherit id; }) ids;
     };
   };
 }

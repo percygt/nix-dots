@@ -1,8 +1,0 @@
-{
-  "cpu": {
-    "interval": 1,
-    "rotate": 90,
-    "format": "<span font='16'>{icon}</span>",
-    "format-icons": ["󰝦", "󰪞", "󰪟", "󰪠", "󰪡", "󰪢", "󰪣", "󰪤", "󰪥"]
-  }
-}
