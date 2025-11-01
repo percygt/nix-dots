@@ -13,9 +13,12 @@
   inherit (prev.unstable)
     fish
     nushell
+    nu_scripts
     carapace
     swaynotificationcenter
     waybar
+    syncthing
+    tailscale
     ;
 
   ripgrep = prev.unstable.ripgrep.override { withPCRE2 = true; };
