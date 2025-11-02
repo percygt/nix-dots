@@ -4,7 +4,6 @@
 }:
 {
   home.packages = with pkgs; [
-    qtscrcpy
     scrcpy
     go-chromecast
     yaml2json

@@ -7,16 +7,20 @@
   nur = inputs.nur.overlays.default;
   nixpkgs-variants = final: _: {
     unstable = import inputs.nixpkgs-unstable {
-      inherit (final) system config;
+      inherit (final) config;
+      inherit (final.stdenv.hostPlatform) system;
     };
     stable = import inputs.nixpkgs-stable {
-      inherit (final) system config;
+      inherit (final) config;
+      inherit (final.stdenv.hostPlatform) system;
     };
     master = import inputs.nixpkgs-master {
-      inherit (final) system config;
+      inherit (final) config;
+      inherit (final.stdenv.hostPlatform) system;
     };
     old = import inputs.nixpkgs-old {
-      inherit (final) system config;
+      inherit (final) config;
+      inherit (final.stdenv.hostPlatform) system;
     };
   };
   packageOverrides = final: prev: import ../packages/overrides.nix { inherit final prev; };
