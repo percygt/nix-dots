@@ -19,6 +19,8 @@
       qemu
       kmod
       pciutils
+      quickemu
+      quickgui
     ];
 
     programs.virt-manager.enable = true;
@@ -27,12 +29,23 @@
       "intel_iommu=on"
       "iommu=pt"
     ];
+
+    virtualisation.libvirtd = {
+      enable = true;
+      qemu.vhostUserPackages = with pkgs; [
+        virtiofsd
+      ];
+    };
     users = {
       users.${username}.extraGroups = [
+        "libvirtd"
         "qemu"
         "kvm"
       ];
-      groups.qemu = { };
+      groups = {
+        qemu = { };
+        libvirtd.members = [ username ];
+      };
     };
   };
 }

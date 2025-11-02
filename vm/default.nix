@@ -1,6 +1,6 @@
 {
   stateVersion,
-  profile,
+  host,
   username,
   pkgs,
   homeDirectory,
@@ -31,7 +31,7 @@
   home-manager.users.root.home.stateVersion = stateVersion;
   # Networking
   networking = {
-    hostName = profile;
+    hostName = host;
     networkmanager.enable = true;
   };
   swapDevices = [

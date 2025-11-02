@@ -8,6 +8,7 @@
     shells = with pkgs; [
       nushell
       bash
+      bashInteractive
       fish
     ];
   };

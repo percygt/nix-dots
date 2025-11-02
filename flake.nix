@@ -23,16 +23,20 @@
     {
       nixosConfigurations = {
         aizeft = bldr.buildSystem {
-          profile = "aizeft";
+          host = "aizeft";
           desktop = "niri";
           extraModulesDir = [
             (toString inputs.personal)
           ];
         };
+        vm = bldr.buildSystem {
+          host = "vm";
+          username = "test";
+        };
       };
       homeConfigurations = {
         "percygt@aizeft" = bldr.buildHome {
-          profile = "aizeft";
+          host = "aizeft";
           desktop = "niri";
           extraModulesDir = [
             (toString inputs.personal)

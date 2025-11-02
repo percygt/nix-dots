@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   username,
   lib,
@@ -16,7 +15,6 @@ in
       uid = 1000;
       isNormalUser = true;
       initialPassword = lib.mkIf (config.users.users.${username}.hashedPasswordFile == null) "guest";
-      packages = [ pkgs.home-manager ];
       extraGroups = [
         "audio"
         "storage"

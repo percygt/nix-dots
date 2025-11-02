@@ -17,6 +17,8 @@
     carapace
     swaynotificationcenter
     waybar
+    atuin
+    direnv
     syncthing
     tailscale
     ;

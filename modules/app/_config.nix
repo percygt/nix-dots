@@ -1,6 +1,5 @@
 {
   lib,
-  username,
   config,
   ...
 }:
@@ -9,8 +8,6 @@ let
 in
 with lib;
 {
-  services.flatpak.enable = true;
-  users.users.${username}.extraGroups = [ "flatpak" ];
   persistHome.directories = [
     (optionalString app.brave.enable ".config/BraveSoftware/Brave-Browser")
     (optionalString app.chromium.enable ".config/chromium")

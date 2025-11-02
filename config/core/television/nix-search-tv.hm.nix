@@ -31,9 +31,9 @@ in
       "nixos"
     ];
     experimental.options_file = {
-      sops-nix = "${mkOpts [
-        inputs.sops-nix.nixosModules.sops
-      ]}";
+      # sops-nix = "${mkOpts [
+      #   inputs.sops-nix.nixosModules.sops
+      # ]}";
       nix-dots = "${mkOpts [ self.outputs.homeManagerModules.default ]}";
     };
   };

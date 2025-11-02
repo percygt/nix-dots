@@ -4,7 +4,7 @@
   pkgs,
   homeDirectory,
   username,
-  profile,
+  host,
   ...
 }:
 let
@@ -136,7 +136,7 @@ in
             ''
               return {
                 username = "${username}",
-                profile = "${profile}",
+                host = "${host}",
                 homeDirectory = "${homeDirectory}",
                 flakeDirectory = "${cfg.flakeDirectory}",
               }

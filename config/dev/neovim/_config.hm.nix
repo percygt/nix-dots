@@ -2,7 +2,7 @@
   pkgs,
   lib,
   config,
-  profile,
+  host,
   username,
   desktop,
   ...
@@ -39,8 +39,8 @@ in
         lspconfig.nixd.nixd = {
           nixpkgs.expr = ''import (${flake}).inputs.nixpkgs {}'';
           options = {
-            nixos.expr = ''(${flake}).nixosConfigurations."${profile}".options'';
-            home-manager.expr = ''(${flake}).homeConfigurations."${username}@${profile}".options'';
+            nixos.expr = ''(${flake}).nixosConfigurations."${host}".options'';
+            home-manager.expr = ''(${flake}).homeConfigurations."${username}@${host}".options'';
           };
         };
       };

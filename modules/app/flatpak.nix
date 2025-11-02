@@ -9,6 +9,7 @@
   # imports = [ inputs.flatpaks.nixosModule ];
   imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
   config = lib.mkIf config.modules.app.flatpak.enable {
+    users.users.${username}.extraGroups = [ "flatpak" ];
     services.flatpak = {
       enable = true;
       packages = [

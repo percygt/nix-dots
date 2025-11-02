@@ -13,14 +13,14 @@ let
   defaultDirs =
     {
       desktop,
-      profile,
+      host,
       extraModulesDir,
     }:
     (
       [
         "${self}/config"
         "${self}/modules"
-        "${self}/profiles/${profile}"
+        "${self}/hosts/${host}"
       ]
       ++ extraModulesDir
       ++ lib.optionals (desktop != null) [
@@ -40,7 +40,7 @@ in
 
   buildSystem =
     {
-      profile,
+      host,
       system ? defaultSystem,
       desktop ? null,
       username ? defaultUsername,
@@ -54,7 +54,7 @@ in
           self
           inputs
           outputs
-          profile
+          host
           username
           libx
           homeDirectory
@@ -68,7 +68,7 @@ in
       inherit system;
       modules =
         libx.importNixosForEachDir (defaultDirs {
-          inherit desktop profile extraModulesDir;
+          inherit desktop host extraModulesDir;
         })
         ++ [
           self.outputs.nixosModules.default
@@ -76,7 +76,7 @@ in
           {
             home-manager = {
               users.${username}.imports = libx.importHomeForEachDir (defaultDirs {
-                inherit desktop profile extraModulesDir;
+                inherit desktop host extraModulesDir;
               });
               extraSpecialArgs = args // {
                 inherit args;
@@ -91,7 +91,7 @@ in
 
   buildHome =
     {
-      profile,
+      host,
       system ? defaultSystem,
       desktop ? null,
       username ? defaultUsername,
@@ -105,7 +105,7 @@ in
           self
           inputs
           outputs
-          profile
+          host
           username
           libx
           homeDirectory
@@ -119,7 +119,7 @@ in
       pkgs = inputs.nixpkgs.legacyPackages.${system};
       modules =
         libx.importHomeForEachDir (defaultDirs {
-          inherit desktop profile extraModulesDir;
+          inherit desktop host extraModulesDir;
         })
         ++ [
           self.outputs.homeManagerModules.default

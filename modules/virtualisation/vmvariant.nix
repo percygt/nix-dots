@@ -1,7 +1,4 @@
 { lib, config, ... }:
-let
-  g = config._global;
-in
 {
   config = lib.mkIf config.modules.virtualisation.vmvariant.enable {
     virtualisation.vmVariant = {
@@ -17,14 +14,17 @@ in
           "-device virtio-serial-pci"
           "-device virtserialport,chardev=ch1,id=ch1,name=com.redhat.spice.0"
         ];
-        sharedDirectories = {
-          sharedData = {
-            source = "${g.dataDirectory}/vms/shared";
-            target = "/mnt/shared";
-          };
-        };
+        forwardPorts = [
+          {
+            from = "host";
+            host.port = 2222;
+            guest.port = 22;
+          }
+        ];
+        diskSize = 20480;
         memorySize = 8192; # Use 2048MiB memory.
         cores = 4;
+        # graphics = true;
       };
     };
   };

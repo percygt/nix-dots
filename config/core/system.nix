@@ -1,5 +1,5 @@
 {
-  profile,
+  host,
   lib,
   modulesPath,
   config,
@@ -14,7 +14,7 @@ in
   home-manager.backupFileExtension = ".backup";
   environment.systemPackages = g.system.corePackages;
   environment.variables = g.system.envVars;
-  networking.hostName = profile;
+  networking.hostName = host;
   networking.useDHCP = lib.mkDefault true;
   services.fwupd.enable = true;
   hardware.enableRedistributableFirmware = true;
