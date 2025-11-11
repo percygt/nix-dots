@@ -38,6 +38,8 @@ in
       "syncthing/key.pem" = { };
       "syncthing/pw" = { };
     };
+    systemd.services.syncthing-init.after = [ "tailscaled.service" ];
+    systemd.services.syncthing.after = [ "tailscaled.service" ];
     services.syncthing = {
       inherit (g.network.syncthing) guiAddress;
       enable = true;

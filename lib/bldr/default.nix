@@ -18,7 +18,7 @@ let
     }:
     (
       [
-        "${self}/config"
+        "${self}/common"
         "${self}/modules"
         "${self}/hosts/${host}"
       ]
