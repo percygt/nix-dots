@@ -7,7 +7,7 @@
 let
   g = config._global;
   nushellPkg = pkgs.nushell;
-  configNu = "${g.flakeDirectory}/config/core/nushell";
+  configNu = "${g.flakeDirectory}/common/core/nushell";
   t = config.modules.themes;
   c = t.colors.withHashtag;
   starshipCfg = config.programs.starship;
@@ -17,7 +17,6 @@ let
     time.disabled = true;
   };
   nu_scripts = "${pkgs.nu_scripts}/share/nu_scripts";
-  defaultShell = g.shell.defaultPackage;
   completions =
     let
       completion = name: ''

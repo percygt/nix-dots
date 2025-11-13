@@ -9,7 +9,7 @@
 }:
 let
   g = config._global;
-  configNvim = "${g.flakeDirectory}/config/dev/neovim/lazyvim";
+  configNvim = "${g.flakeDirectory}/common/dev/neovim/lazyvim";
 in
 {
   home.shellAliases.v = "nvim";

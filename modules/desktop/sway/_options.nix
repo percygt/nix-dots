@@ -36,12 +36,12 @@ in
       default = pkgs.swayfx;
     };
     command = lib.mkOption {
-      description = "Sway package";
+      description = "Sway command";
       type = lib.types.str;
       default = "sway";
     };
     finalPackage = lib.mkOption {
-      description = "Sway package";
+      description = "Sway final package";
       type = lib.types.package;
       default = cfg.package.override {
         swayfx-unwrapped = pkgs.swayfx-unwrapped.overrideAttrs (old: {

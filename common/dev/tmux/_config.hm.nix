@@ -88,7 +88,7 @@ in
   };
   xdg.configFile =
     let
-      configTmux = "${flakeDirectory}/config/dev/tmux";
+      configTmux = "${flakeDirectory}/common/dev/tmux";
       symlink = file: config.lib.file.mkOutOfStoreSymlink file;
     in
     {

@@ -8,7 +8,12 @@
     package = lib.mkOption {
       description = "Niri package";
       type = lib.types.package;
-      default = pkgs.niri-unstable-git;
+      default = pkgs.niri-unstable;
+    };
+    xwaylandPackage = lib.mkOption {
+      description = "Xwayland package";
+      type = lib.types.package;
+      default = pkgs.xwayland-satellite-unstable;
     };
   };
 }

@@ -2,7 +2,7 @@ let
   imageViewers = [
     "brave-browser.desktop"
     "chromium-browser.desktop"
-    "org.gnome.Shotwell-Viewer.desktop"
+    # "org.gnome.Shotwell-Viewer.desktop"
   ];
 in
 {

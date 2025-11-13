@@ -138,16 +138,4 @@
     personal.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     personal.flake = false;
   };
-  nixConfig = {
-    extra-substituters = [
-      "https://percygtdev.cachix.org"
-      "https://nix-community.cachix.org"
-      "https://pre-commit-hooks.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "percygtdev.cachix.org-1:AGd4bI4nW7DkJgniWF4tS64EX2uSYIGqjZih2UVoxko="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
-    ];
-  };
 }

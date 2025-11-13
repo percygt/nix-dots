@@ -2,7 +2,6 @@
   config,
   colorize,
   lib,
-  pkgs,
   libx,
   ...
 }:
@@ -70,7 +69,7 @@ in
           ])
           (plain "xwayland-satellite" [
             (flag "on")
-            (leaf "path" "${lib.getExe pkgs.xwayland-satellite-unstable-git}")
+            (leaf "path" "${lib.getExe config.modules.desktop.niri.xwaylandPackage}")
           ])
           (leaf "screenshot-path" (screenshotsDir + "/%Y-%m-%d-%H%M%S.png"))
           (plain "overview" [

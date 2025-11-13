@@ -26,8 +26,6 @@ in
     polkit.enable = true;
   };
 
-  systemd.user.services.niri-flake-polkit.enable = lib.mkForce false;
-
   environment.systemPackages = with pkgs; [
     cfg.package
     xdg-utils

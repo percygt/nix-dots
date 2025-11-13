@@ -1,9 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+let
+  cfg = config.modules.desktop.niri;
+in
 {
-  home.packages = with pkgs; [
-    xwayland-satellite
-  ];
-
   # Switch from `Install.WantedBy = [ "graphical-session.target" ]` as defined
   # in the service file provided by the xwayland-satellite package. This links
   # xwayland-satellite to niri specifically, and schedules it so that there is
@@ -19,7 +18,7 @@
     Service = {
       Type = "notify";
       NotifyAccess = "all";
-      ExecStart = "${pkgs.xwayland-satellite-unstable-git}/bin/xwayland-satellite";
+      ExecStart = "${cfg.xwaylandPackage}/bin/xwayland-satellite";
       StandardOutput = "journal";
     };
     Install.WantedBy = [ "niri.service" ];
