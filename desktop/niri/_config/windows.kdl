@@ -30,8 +30,8 @@ window-rule {
 }
 window-rule {
     match app-id="org.keepassxc.KeePassXC"
-    match app-id="app.drey.PaperPlane"
-    match app-id="org.telegram.desktop"
+    open-on-workspace "scratch"
+    open-floating true
     block-out-from "screencast"
 }
 window-rule {
@@ -134,8 +134,4 @@ window-rule {
     match title="Discord Popout"
     open-floating true
     default-floating-position relative-to="bottom-right" x=32 y=32
-}
-layer-rule {
-    match namespace="waybar"
-    shadow { on; }
 }

@@ -24,6 +24,7 @@
     core = {
       powermanagement.enable = true;
       wifi.enable = true;
+      scheduler.enable = true;
       # autoupgrade.enable = true;
       audio.enable = true;
       zram.enable = true;

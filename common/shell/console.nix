@@ -18,7 +18,7 @@ in
     autologinUser = username;
     fonts = [ { inherit (f) name package; } ];
     extraConfig = ''
-      font-size=${builtins.toString f.size}
+      font-size=${toString f.size}
       xkb-layout=us
       xkb-options=compose:caps
       xkb-repeat-rate=25

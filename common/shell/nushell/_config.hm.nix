@@ -7,7 +7,7 @@
 let
   g = config._global;
   nushellPkg = pkgs.nushell;
-  configNu = "${g.flakeDirectory}/common/core/nushell";
+  configNu = "${g.flakeDirectory}/common/shell/nushell";
   t = config.modules.themes;
   c = t.colors.withHashtag;
   starshipCfg = config.programs.starship;

@@ -10,7 +10,7 @@ stdenv.mkDerivation rec {
   pname = "nerdfonts-fontconfig";
   src = fetchurl {
     url = "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/${version}/10-nerd-font-symbols.conf";
-    hash = "sha256-ZgHkMcXEPYDfzjdRR7KX3ws2u01GWUj48heMHaiaznY=";
+    hash = "sha256-g7cLf3BqztHc7V0K7Gfgtu96f+6fyzcTVxfrdoeGjNM=";
   };
   dontUnpack = true;
   dontConfigure = true;

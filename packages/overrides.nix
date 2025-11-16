@@ -11,7 +11,6 @@
     };
   });
   inherit (prev.unstable)
-    fish
     nushell
     nu_scripts
     carapace

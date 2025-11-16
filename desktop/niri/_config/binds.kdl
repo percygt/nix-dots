@@ -3,6 +3,7 @@ binds {
     Mod+T hotkey-overlay-title="Nix search" { spawn-sh "footpad --title='Nix Search' --app-id=nix-search -- tv nix"; }
     Mod+D hotkey-overlay-title="App launcher" { spawn "walker"; }
     Mod+Alt+L hotkey-overlay-title="Lock screen"  allow-when-locked=true { spawn-sh "niri msg action do-screen-transition && hyprlock --immediate"; }
+    Mod+Ctrl+A { spawn-sh "nscratch -id org.keepassxc.KeePassXC -s keepassxc"; }
 
     Mod+A { spawn "footpad" "--app-id=tmux" "--" "tmux-launch-session"; }
     Mod+B { spawn "footpad" "--title=Bluetooth" "--app-id=bluetui" "--" "bluetui"; }

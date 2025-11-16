@@ -96,6 +96,9 @@
 
     nixd.url = "github:nix-community/nixd";
 
+    niri-scratchpad-flake.url = "github:gvolpe/niri-scratchpad";
+    niri-scratchpad-flake.inputs.nixpkgs.follows = "nixpkgs";
+
     impermanence.url = "github:nix-community/impermanence";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";

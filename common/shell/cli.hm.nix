@@ -22,6 +22,7 @@
   ];
 
   programs = {
+    zoxide.enable = true;
     bat = {
       enable = true;
       config.theme = "catppuccin";

@@ -2,6 +2,7 @@
   config,
   pkgs,
   desktop,
+  lib,
   ...
 }:
 {
@@ -33,7 +34,7 @@
       enable = true;
       dns = "systemd-resolved";
       connectionConfig."connection.mdns" = 2;
-      plugins = [ pkgs.networkmanager-openvpn ];
+      # plugins = lib.mkForce [ pkgs.networkmanager-openvpn ];
     };
   };
 }

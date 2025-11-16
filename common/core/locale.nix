@@ -1,13 +1,9 @@
 { config, ... }:
 {
-  environment.variables = {
-    TZ = "${config.time.timeZone}";
-  };
+  environment.variables.TZ = "${config.time.timeZone}";
   time.timeZone = "Asia/Manila";
-
   console.keyMap = "us";
   services.xserver.xkb.layout = "us";
-
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_PH.UTF-8";

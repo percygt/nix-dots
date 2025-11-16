@@ -3,6 +3,8 @@
   colorize,
   lib,
   libx,
+  inputs,
+  pkgs,
   ...
 }:
 let
@@ -15,36 +17,18 @@ let
   screenshotsDir = g.xdg.userDirs.extraConfig.XDG_SCREENSHOTS_DIR;
   inherit (g) flakeDirectory;
   inherit (config.modules.editor) emacs;
+  inherit (inputs.niri-scratchpad-flake.packages.${pkgs.stdenv.hostPlatform.system}) niri-scratchpad;
 in
 {
+  home.packages = [ niri-scratchpad ];
   xdg.configFile =
     let
-      configNiri = "${flakeDirectory}/desktop/niri/_config";
+      configNiri = "${flakeDirectory}/desktop/niri";
       symlink = file: config.lib.file.mkOutOfStoreSymlink file;
     in
     {
-      "niri/binds.kdl".source = symlink "${configNiri}/binds.kdl";
-      "niri/animations.kdl".source = symlink "${configNiri}/animations.kdl";
-      "niri/input.kdl".source = symlink "${configNiri}/input.kdl";
-      "niri/outputs.kdl".source = symlink "${configNiri}/outputs.kdl";
-      "niri/layout.kdl".source = symlink "${configNiri}/layout.kdl";
-      "niri/rules.kdl".source = symlink "${configNiri}/rules.kdl";
-      "niri/startup.kdl".source = symlink "${configNiri}/startup.kdl";
-      "niri/workspaces.kdl".source = symlink "${configNiri}/workspaces.kdl";
-      "niri/config.kdl".text =
-        # kdl
-        ''
-          prefer-no-csd
-          hotkey-overlay { skip-at-startup; }
-          include "animations.kdl"
-          include "binds.kdl"
-          include "input.kdl"
-          include "layout.kdl"
-          include "rules.kdl"
-          include "startup.kdl"
-          include "workspaces.kdl"
-          include "nix.kdl"
-        '';
+      "niri/config".source = symlink "${configNiri}/_config";
+      "niri/config.kdl".source = symlink "${configNiri}/_config.kdl";
       "niri/nix.kdl".text =
         with libx.kdl;
         serialize.nodes [

@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   persistHome = {
     directories = [
@@ -6,5 +7,14 @@
       ".local/share/zoxide"
     ];
     files = [ ".config/nushell/history.txt" ];
+  };
+  programs.fish.enable = true;
+  environment = {
+    shells = with pkgs; [
+      nushell
+      bash
+      bashInteractive
+      fish
+    ];
   };
 }

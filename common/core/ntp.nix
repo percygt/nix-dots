@@ -1,7 +1,5 @@
 {
-  persistSystem.directories = [
-    "/var/lib/chrony"
-  ];
+  persistSystem.directories = [ "/var/lib/chrony" ];
   services.chrony.enable = true;
   networking.timeServers = [
     "time.upd.edu.ph"

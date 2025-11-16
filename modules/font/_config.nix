@@ -26,7 +26,7 @@ let
     cfg.icon.package
   ];
   defaultPkgs = with pkgs; [
-    nerdfonts-fontconfig
+    # nerdfonts-fontconfig
     inter
     roboto-mono
     gelasio

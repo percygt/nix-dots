@@ -4,13 +4,14 @@
     audio.enable = lib.mkEnableOption "Enable audio";
     zram.enable = lib.mkEnableOption "Enable zram";
     wifi.enable = lib.mkEnableOption "Enable wifi";
+    scheduler.enable = lib.mkEnableOption "Enable scheduler";
     ## battery
     powermanagement = {
       enable = lib.mkEnableOption "Enable powermanagement services";
       powermonitor.enable = lib.mkEnableOption "Enable powermonitor sevice";
       chargeUpto = lib.mkOption {
         description = "Maximum level of charge for your battery, as a percentage.";
-        default = 80;
+        default = 100;
         type = lib.types.int;
       };
       enableChargeUptoScript = lib.mkOption {
