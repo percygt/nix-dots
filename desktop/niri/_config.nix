@@ -28,6 +28,7 @@ in
 
   environment.systemPackages = with pkgs; [
     cfg.package
+    cfg.xwaylandPackage
     xdg-utils
     xdg-desktop-portal
     xdg-desktop-portal-gtk

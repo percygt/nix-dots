@@ -1455,11 +1455,11 @@
         "swayfx-git": "swayfx-git"
       },
       "locked": {
-        "lastModified": 1763328026,
-        "narHash": "sha256-/WY/yd5XwSHI0YdCpLZHwHTikgdeer50v9YC9KtZFoM=",
+        "lastModified": 1763335605,
+        "narHash": "sha256-7t3V/w2ZVnnr0TUbCX9Q5rtZJSFxXNZDFeDplpkeWak=",
         "owner": "percygt",
         "repo": "nix-sources",
-        "rev": "73d83b4e9b1d96a13718bc55b76f02586fd8ebec",
+        "rev": "364898185883208e4823766adf4a8f805e303e5a",
         "type": "github"
       },
       "original": {
@@ -1484,11 +1484,11 @@
         "swayfx-git": "swayfx-git_2"
       },
       "locked": {
-        "lastModified": 1763328026,
-        "narHash": "sha256-/WY/yd5XwSHI0YdCpLZHwHTikgdeer50v9YC9KtZFoM=",
+        "lastModified": 1763335605,
+        "narHash": "sha256-7t3V/w2ZVnnr0TUbCX9Q5rtZJSFxXNZDFeDplpkeWak=",
         "owner": "percygt",
         "repo": "nix-sources",
-        "rev": "73d83b4e9b1d96a13718bc55b76f02586fd8ebec",
+        "rev": "364898185883208e4823766adf4a8f805e303e5a",
         "type": "github"
       },
       "original": {
@@ -1532,11 +1532,11 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1763328540,
-        "narHash": "sha256-M+Oxr3utLxdWB7wgjqm566BlnDVK4LDZgDPTr+kdphI=",
+        "lastModified": 1763336821,
+        "narHash": "sha256-xRk/+SOf8Dmzu+mmUdrkw6nY8tbVD3AhZy92iQ+ae30=",
         "owner": "percygt",
         "repo": "nix-stash",
-        "rev": "f46c63cc454296847c39103b832d442af358dab0",
+        "rev": "984bfe115b695063e34ecb9ec5886423ddffce83",
         "type": "github"
       },
       "original": {
@@ -1699,11 +1699,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1763327227,
-        "narHash": "sha256-RM9hQD1hB6Q0AOOHGCaT12kHH68HNrB4Cf8T30EH5Fg=",
+        "lastModified": 1763335196,
+        "narHash": "sha256-Q5ZQ6WCpy8LYZcDy6kamHzipe3E1KZFAgNiAadITm2s=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1fa094a49234914705203fbeed139614415989db",
+        "rev": "7302c51794fffd3dc1840a68b6c0b04668d77342",
         "type": "github"
       },
       "original": {
@@ -1715,11 +1715,11 @@
     },
     "nixpkgs-master_2": {
       "locked": {
-        "lastModified": 1763327227,
-        "narHash": "sha256-RM9hQD1hB6Q0AOOHGCaT12kHH68HNrB4Cf8T30EH5Fg=",
+        "lastModified": 1763335196,
+        "narHash": "sha256-Q5ZQ6WCpy8LYZcDy6kamHzipe3E1KZFAgNiAadITm2s=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1fa094a49234914705203fbeed139614415989db",
+        "rev": "7302c51794fffd3dc1840a68b6c0b04668d77342",
         "type": "github"
       },
       "original": {
@@ -2692,11 +2692,11 @@
         "nixpkgs-mozilla": "nixpkgs-mozilla"
       },
       "locked": {
-        "lastModified": 1763324881,
-        "narHash": "sha256-0BSHnMY+u44moXozqLvaS6/kA0ICS6Fu7V6S0HoN/mY=",
+        "lastModified": 1763336153,
+        "narHash": "sha256-IZNVTcRWOXX7KXHvqaio9tctCcc0AKNc003qzEXMyEM=",
         "owner": "alexpasmantier",
         "repo": "television",
-        "rev": "0df7303306d8048f001047074f3e2c54aa483174",
+        "rev": "fa217e92f380f1978f755169b82ca57636b84800",
         "type": "github"
       },
       "original": {

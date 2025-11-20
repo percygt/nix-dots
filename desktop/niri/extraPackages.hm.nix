@@ -3,7 +3,6 @@
   home.packages = with pkgs; [
     swaybg
     chayang
-    xwayland-satellite
     (writeShellApplication {
       name = "footpad";
       runtimeInputs = [

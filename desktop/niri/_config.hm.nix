@@ -60,14 +60,7 @@ in
             (leaf "backdrop-color" (colorize.hex.lighten c.base00 0.05))
             (plain "workspace-shadow" [ (flag "off") ])
           ])
-          (plain "environment" (
-            lib.mapAttrsToList leaf (
-              g.system.envVars
-              // {
-                DISPLAY = null;
-              }
-            )
-          ))
+          (plain "environment" (lib.mapAttrsToList leaf g.system.envVars))
         ];
     };
 }

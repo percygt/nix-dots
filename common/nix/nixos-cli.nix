@@ -1,8 +1,9 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [ inputs.nixos-cli.nixosModules.nixos-cli ];
   services.nixos-cli = {
     enable = true;
+    package = pkgs.nixos-cli;
     config = {
       aliases = {
         genlist = [
