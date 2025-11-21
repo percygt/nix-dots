@@ -624,16 +624,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1758463745,
-        "narHash": "sha256-uhzsV0Q0I9j2y/rfweWeGif5AWe0MGrgZ/3TjpDYdGA=",
+        "lastModified": 1763416652,
+        "narHash": "sha256-8EBEEvtzQ11LCxpQHMNEBQAGtQiCu/pqP9zSovDSbNM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3b955f5f0a942f9f60cdc9cacb7844335d0f21c3",
+        "rev": "ea164b7c9ccdc2321379c2ff78fd4317b4c41312",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-25.05",
+        "ref": "master",
         "repo": "home-manager",
         "type": "github"
       }
@@ -2169,10 +2169,10 @@
     "personal": {
       "flake": false,
       "locked": {
-        "lastModified": 1762092761,
-        "narHash": "sha256-c0fy+N2H7/ZfOxdYE0ynfebedU17PHKRZI6LArNRDEY=",
+        "lastModified": 1763680809,
+        "narHash": "sha256-oH2PKe6iI4QiFKqdBlznykLGUkyttpPzKvPln1ye10g=",
         "ref": "main",
-        "rev": "dcded4d964b7fb2d54736fcf7522767a4ed4936b",
+        "rev": "bf0c26f157fe17cf22b9cd837e0c57b61193a9f5",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@gitlab.com/percygt/sikreto.git"
@@ -2272,7 +2272,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": [
           "nix-sources",
-          "nixpkgs-stable"
+          "nixpkgs"
         ],
         "nixpkgs-master": [
           "nix-sources",

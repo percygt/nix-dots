@@ -1,6 +1,7 @@
 {
-  programs.git.delta = {
+  programs.delta = {
     enable = true;
+    enableGitIntegration = true;
     options = {
       chameleon = {
         blame-code-style = "syntax";

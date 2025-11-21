@@ -10,7 +10,7 @@
     environment.systemPackages = with pkgs; [
       nixos-shell
       adwaita-icon-theme
-      win-virtio
+      virtio-win # win-virtio
       win-spice
       spice
       spice-gtk

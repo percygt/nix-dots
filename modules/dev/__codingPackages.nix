@@ -118,7 +118,7 @@ pkgs: with pkgs; [
   vscode-langservers-extracted
   cmake-language-server
   markdownlint-cli2
-  taplo-cli
+  taplo # taplo-cli
   codespell
   gitlint
   actionlint

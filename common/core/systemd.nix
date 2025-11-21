@@ -7,10 +7,18 @@
   environment.systemPackages = [ pkgs.stable.isd ];
   services = {
     logind = {
-      lidSwitchExternalPower = "lock";
-      powerKey = "suspend";
-      powerKeyLongPress = "poweroff";
-      lidSwitch = "suspend";
+      # lidSwitchExternalPower = "lock";
+      # powerKey = "suspend";
+      # powerKeyLongPress = "poweroff";
+      # lidSwitch = "suspend";
+      settings = {
+        Login = {
+          HandlePowerKey = "suspend";
+          HandlePowerKeyLongPress = "poweroff";
+          HandleLidSwitch = "suspend";
+          HandleLidSwitchExternalPower = "lock";
+        };
+      };
     };
 
     journald = {

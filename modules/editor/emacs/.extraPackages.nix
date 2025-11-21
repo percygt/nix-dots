@@ -2,7 +2,7 @@ pkgs: with pkgs; [
   # straight-el # NOTE not being used
   ## binaries
   # dirvish deps
-  poppler_utils
+  poppler-utils # poppler_utils
   poppler
   ffmpegthumbnailer
   mediainfo

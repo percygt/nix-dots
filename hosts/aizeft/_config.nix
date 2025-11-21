@@ -53,7 +53,7 @@
   environment.systemPackages = with pkgs; [
     vulkan-tools
     vdpauinfo
-    glxinfo
+    mesa-demos # glxinfo
     intel-gpu-tools
     libva-utils
   ];

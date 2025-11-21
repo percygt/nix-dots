@@ -45,12 +45,12 @@
         noto-fonts
         noto-fonts-cjk-sans
         corefonts
-        vistafonts
+        vista-fonts # vistafonts
         open-sans
         source-sans-pro
         source-serif
-        noto-fonts-emoji
-        ubuntu_font_family
+        noto-fonts-color-emoji # noto-fonts-emoji
+        ubuntu-classic # ubuntu_font_family
       ])
       ++ (with pkgs.nerd-fonts; [
         iosevka-term

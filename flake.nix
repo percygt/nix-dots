@@ -66,7 +66,7 @@
   inputs = {
     nix-sources.url = "github:percygt/nix-sources";
     nix-stash.url = "github:percygt/nix-stash";
-    nixpkgs.follows = "nix-sources/nixpkgs-stable";
+    nixpkgs.follows = "nix-sources/nixpkgs";
     nixpkgs-old.follows = "nix-sources/nixpkgs-old";
     nixpkgs-master.follows = "nix-sources/nixpkgs-master";
     nixpkgs-stable.follows = "nix-sources/nixpkgs-stable";
@@ -78,8 +78,8 @@
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
 
-    # home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/master";
+    # home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-cli.url = "github:water-sucks/nixos";
