@@ -9,7 +9,7 @@ in
   programs.git = {
     enable = true;
     lfs.enable = true;
-    extraConfig = {
+    settings = {
       core.editor = "nvim";
       init.defaultBranch = "main";
       safe.directory = "${g.flakeDirectory}";
