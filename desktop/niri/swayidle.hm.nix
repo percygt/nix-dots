@@ -1,6 +1,7 @@
 { pkgs, lib, ... }:
 let
   brightnessctl = lib.getExe pkgs.brightnessctl;
+  systemctl = lib.getExe' pkgs.systemd "systemctl";
   # timeouts
   toDim = 60 * 15; # 15 minutes
   toLock = 60 * 30; # 30 minutes
@@ -12,9 +13,10 @@ let
     ${brightnessctl} -d ddcci1 -s
     ${brightnessctl} -d ddcci1 set 0%
   ''}";
-  cmdBacklightRestore = "${pkgs.writers.writeBash "backlight_restore" ''
+  cmdResume = "${pkgs.writers.writeBash "backlight_restore" ''
     ${brightnessctl} -d intel_backlight -r
     ${brightnessctl} -d ddcci1 -r
+    ${systemctl} --user reset-failed waybar
   ''}";
   cmdLock = "pgrep -x hyprlock > /dev/null || hyprlock &";
   cmdScreenOff = "niri msg action power-off-monitors";
@@ -23,7 +25,7 @@ let
   swayidleCommand =
     "${lib.getExe pkgs.swayidle} -w"
     + " timeout ${toString toDim} '${cmdDim}'"
-    + " resume '${cmdBacklightRestore}'"
+    + " resume '${cmdResume}'"
     + " timeout ${toString toLock} '${cmdLock}'"
     + " timeout ${toString toScreenOff} '${cmdScreenOff}'"
     # + " resume '${cmdResumeSuspend}'"
