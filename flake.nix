@@ -78,8 +78,8 @@
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
 
-    home-manager.url = "github:nix-community/home-manager/master";
-    # home-manager.url = "github:nix-community/home-manager/release-25.11";
+    # home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-cli.url = "github:water-sucks/nixos";
