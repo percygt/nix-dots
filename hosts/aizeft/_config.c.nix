@@ -8,7 +8,7 @@
     };
     app = {
       zen.enable = true;
-      librewolf.enable = true;
+      # librewolf.enable = true;
       brave.enable = true;
       # brave-nightly.enable = true;
       quickemu.enable = true;
@@ -62,13 +62,14 @@
       tailscale.enable = true;
       syncthing.enable = true;
     };
-    # pentesting = {
-    #   wireless.enable = true;
-    #   malware.enable = true;
-    #   traffic.enable = true;
-    #   proxies.enable = true;
-    #   terminals.enable = true;
-    # };
+    pentesting = {
+      port-scanner.enable = true;
+      # wireless.enable = true;
+      # malware.enable = true;
+      # traffic.enable = true;
+      # proxies.enable = true;
+      # terminals.enable = true;
+    };
     terminal = {
       foot.enable = true;
       xfce4-terminal.enable = true;

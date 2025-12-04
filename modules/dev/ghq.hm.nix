@@ -18,7 +18,7 @@ in
 {
   config = lib.mkIf config.modules.dev.ghq.enable {
     home.packages = with pkgs; [ ghq ];
-    programs.git.extraConfig.ghq = {
+    programs.git.settings.ghq = {
       vcs = "git";
       root = "${g.dataDirectory}/git-repo";
       ${glab_ssh_repo} = codebox;

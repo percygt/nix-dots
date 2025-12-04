@@ -20,7 +20,7 @@ pkgs: with pkgs; [
 
   # Elixir
   stable.elixir
-  stable.elixir_ls
+  stable.elixir-ls
 
   #php
   # php.packages.php-cs-fixer

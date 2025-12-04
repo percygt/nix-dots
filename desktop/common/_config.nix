@@ -12,6 +12,7 @@
       "share/thumbnailers"
     ];
     systemPackages = with pkgs; [
+      file-roller
       smartmontools
       nautilus-python
       gnome-disk-utility
@@ -38,6 +39,6 @@
     };
     seahorse.enable = true;
     gnome-disks.enable = true;
-    file-roller.enable = true;
+    # file-roller.enable = true;
   };
 }

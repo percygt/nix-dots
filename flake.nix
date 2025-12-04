@@ -79,7 +79,7 @@
     doom-emacs.flake = false;
 
     home-manager.url = "github:nix-community/home-manager/master";
-    # home-manager.url = "github:nix-community/home-manager/release-25.05";
+    # home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-cli.url = "github:water-sucks/nixos";
@@ -137,6 +137,8 @@
 
     system76-scheduler-niri.url = "github:Kirottu/system76-scheduler-niri";
     system76-scheduler-niri.inputs.nixpkgs.follows = "nixpkgs";
+
+    niri-scratchpad.url = "github:argosnothing/niri-scratchpad";
 
     personal.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     personal.flake = false;
