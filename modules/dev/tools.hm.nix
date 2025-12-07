@@ -17,6 +17,7 @@
     };
     home.packages =
       (with pkgs; [
+        devenv
         gitu
         bunster # Compile shell scripts to static binaries
         babashka # Clojure babushka for the grey areas of Bash

@@ -4,7 +4,7 @@
 }:
 {
   home.packages = with pkgs; [
-    scrcpy
+    old.scrcpy
     go-chromecast
     yaml2json
     duf # Disk Usage/Free Utility

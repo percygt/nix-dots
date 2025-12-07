@@ -78,8 +78,7 @@
     doom-emacs.url = "github:doomemacs/doomemacs/master";
     doom-emacs.flake = false;
 
-    # home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-cli.url = "github:water-sucks/nixos";
@@ -95,9 +94,6 @@
     fenix.inputs.nixpkgs.follows = "nixpkgs";
 
     nixd.url = "github:nix-community/nixd";
-
-    niri-scratchpad-flake.url = "github:gvolpe/niri-scratchpad";
-    niri-scratchpad-flake.inputs.nixpkgs.follows = "nixpkgs";
 
     impermanence.url = "github:nix-community/impermanence";
 

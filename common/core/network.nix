@@ -1,8 +1,5 @@
 {
-  config,
-  pkgs,
   desktop,
-  lib,
   ...
 }:
 {
@@ -15,7 +12,7 @@
     enable = true;
     dnsovertls = "opportunistic";
     domains = [ "~." ];
-    fallbackDns = config.networking.nameservers;
+    fallbackDns = [ ];
     extraConfig = ''
       MulticastDNS=yes
     '';
@@ -34,7 +31,6 @@
       enable = true;
       dns = "systemd-resolved";
       connectionConfig."connection.mdns" = 2;
-      # plugins = lib.mkForce [ pkgs.networkmanager-openvpn ];
     };
   };
 }

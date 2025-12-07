@@ -17,10 +17,8 @@ let
   screenshotsDir = g.xdg.userDirs.extraConfig.XDG_SCREENSHOTS_DIR;
   inherit (g) flakeDirectory;
   inherit (config.modules.editor) emacs;
-  inherit (inputs.niri-scratchpad-flake.packages.${pkgs.stdenv.hostPlatform.system}) niri-scratchpad;
 in
 {
-  home.packages = [ niri-scratchpad ];
   xdg.configFile =
     let
       configNiri = "${flakeDirectory}/desktop/niri";

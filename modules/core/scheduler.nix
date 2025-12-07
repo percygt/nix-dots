@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -40,13 +39,8 @@ in
                   "footclient"
                   "foot"
                   "wezterm"
-                  "kitty"
                   "brave"
-                  "firefox"
-                  "firefox-bin"
                   "browser"
-                  "slack"
-                  "thunderbird"
                   "nvim"
                   "vim"
                 ];
@@ -103,19 +97,19 @@ in
     };
 
     # enable MGLRU.  change the min_ttl_ms value to taste
-    systemd.services."config-mglru" = {
-      enable = true;
-      after = [ "basic.target" ];
-      wantedBy = [ "sysinit.target" ];
-      script =
-        let
-          inherit (pkgs) coreutils;
-        in
-        ''
-          ${coreutils}/bin/echo Y > /sys/kernel/mm/lru_gen/enabled
-          ${coreutils}/bin/echo 1000 > /sys/kernel/mm/lru_gen/min_ttl_ms
-        '';
-    };
+    # systemd.services."config-mglru" = {
+    #   enable = true;
+    #   after = [ "basic.target" ];
+    #   wantedBy = [ "sysinit.target" ];
+    #   script =
+    #     let
+    #       inherit (pkgs) coreutils;
+    #     in
+    #     ''
+    #       ${coreutils}/bin/echo Y > /sys/kernel/mm/lru_gen/enabled
+    #       ${coreutils}/bin/echo 1000 > /sys/kernel/mm/lru_gen/min_ttl_ms
+    #     '';
+    # };
     #
     # # configure systemd-oomd properly
     # systemd.oomd = {
