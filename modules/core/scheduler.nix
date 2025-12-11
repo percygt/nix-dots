@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -18,6 +19,19 @@ in
         criticalPowerAction = "Suspend";
       };
       thermald.enable = true;
+      # system76-scheduler = {
+      #   enable = true;
+      #   assignments = {
+      #     nix-builds = {
+      #       nice = 15;
+      #       class = "batch";
+      #       ioClass = "idle";
+      #       matchers = [
+      #         "nix-daemon"
+      #       ];
+      #     };
+      #   };
+      # };
       system76-scheduler = {
         enable = true;
         useStockConfig = false; # our needs are modest
@@ -39,7 +53,12 @@ in
                   "footclient"
                   "foot"
                   "wezterm"
+                  "kitty"
                   "brave"
+                  "brave-browser"
+                  "tmux"
+                  "firefox"
+                  "firefox-bin"
                   "browser"
                   "nvim"
                   "vim"
@@ -97,48 +116,48 @@ in
     };
 
     # enable MGLRU.  change the min_ttl_ms value to taste
-    # systemd.services."config-mglru" = {
-    #   enable = true;
-    #   after = [ "basic.target" ];
-    #   wantedBy = [ "sysinit.target" ];
-    #   script =
-    #     let
-    #       inherit (pkgs) coreutils;
-    #     in
-    #     ''
-    #       ${coreutils}/bin/echo Y > /sys/kernel/mm/lru_gen/enabled
-    #       ${coreutils}/bin/echo 1000 > /sys/kernel/mm/lru_gen/min_ttl_ms
-    #     '';
-    # };
-    #
-    # # configure systemd-oomd properly
-    # systemd.oomd = {
-    #   enable = true;
-    #   # disable the provided knobs -- they are too coarse, and also swap
-    #   # monitoring seems like a bad idea, with btrfs anyway
-    #   enableRootSlice = false;
-    #   enableSystemSlice = false;
-    #   enableUserSlices = false;
-    #   # change if 4s is too fast
-    #   settings.OOM.DefaultMemoryPressureDurationSec = "4s";
-    # };
-    #
-    # # kill off stuff if absolutely needed, limit to things killing which
-    # # is unlikely to gimp system/desktop irreversibly, go only by PSI.
-    # # tweak limits to taste, but be careful not to make them too high or
-    # # you'll get the kernel OOM killer (on my machine 35% is too high, for
-    # # example)
-    # systemd.user.slices."app".sliceConfig = {
-    #   ManagedOOMMemoryPressure = "kill";
-    #   ManagedOOMMemoryPressureLimit = "16%";
-    # };
-    # systemd.slices."background".sliceConfig = {
-    #   ManagedOOMMemoryPressure = "kill";
-    #   ManagedOOMMemoryPressureLimit = "8%";
-    # };
-    # systemd.user.slices."background".sliceConfig = {
-    #   ManagedOOMMemoryPressure = "kill";
-    #   ManagedOOMMemoryPressureLimit = "8%";
-    # };
+    systemd.services."config-mglru" = {
+      enable = true;
+      after = [ "basic.target" ];
+      wantedBy = [ "sysinit.target" ];
+      script =
+        let
+          inherit (pkgs) coreutils;
+        in
+        ''
+          ${coreutils}/bin/echo Y > /sys/kernel/mm/lru_gen/enabled
+          ${coreutils}/bin/echo 1000 > /sys/kernel/mm/lru_gen/min_ttl_ms
+        '';
+    };
+
+    # configure systemd-oomd properly
+    systemd.oomd = {
+      enable = true;
+      # disable the provided knobs -- they are too coarse, and also swap
+      # monitoring seems like a bad idea, with btrfs anyway
+      enableRootSlice = false;
+      enableSystemSlice = false;
+      enableUserSlices = false;
+      # change if 4s is too fast
+      settings.OOM.DefaultMemoryPressureDurationSec = "4s";
+    };
+
+    # kill off stuff if absolutely needed, limit to things killing which
+    # is unlikely to gimp system/desktop irreversibly, go only by PSI.
+    # tweak limits to taste, but be careful not to make them too high or
+    # you'll get the kernel OOM killer (on my machine 35% is too high, for
+    # example)
+    systemd.user.slices."app".sliceConfig = {
+      ManagedOOMMemoryPressure = "kill";
+      ManagedOOMMemoryPressureLimit = "16%";
+    };
+    systemd.slices."background".sliceConfig = {
+      ManagedOOMMemoryPressure = "kill";
+      ManagedOOMMemoryPressureLimit = "8%";
+    };
+    systemd.user.slices."background".sliceConfig = {
+      ManagedOOMMemoryPressure = "kill";
+      ManagedOOMMemoryPressureLimit = "8%";
+    };
   };
 }

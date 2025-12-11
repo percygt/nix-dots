@@ -3,8 +3,6 @@
   colorize,
   lib,
   libx,
-  inputs,
-  pkgs,
   ...
 }:
 let
@@ -35,6 +33,14 @@ in
             "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo"
             "${emacs.finalPackage}/bin/emacs --fg-daemon"
           ])
+          (lib.optionalString config.modules.virtualisation.waydroid.enable (
+            leaf "spawn-at-startup" [
+              "systemctl"
+              "--user"
+              "start"
+              "waydroid-monitor.service"
+            ]
+          ))
           (plain "layout" [
             (plain "border" [
               (flag "on")

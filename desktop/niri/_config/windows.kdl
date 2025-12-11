@@ -44,11 +44,20 @@ window-rule {
     open-floating true
     geometry-corner-radius 0.000000 0.000000 0.000000 0.000000
     border { off; }
+    shadow { off; }
 }
 window-rule {
     match app-id="tmux"
     match app-id="yazi"
     opacity 0.950000
+}
+window-rule {
+    match app-id="^Waydroid$"
+    open-on-output "eDP-1"
+    geometry-corner-radius 0.0 0.0 0.0 0.0
+    open-maximized-to-edges true
+    border { off; }
+    shadow { off; }
 }
 window-rule {
     match app-id="clipboard"

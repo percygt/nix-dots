@@ -10,9 +10,27 @@
       enable = true;
       package = pkgs.waydroid-nftables;
     };
+    environment.systemPackages = with pkgs; [
+      nur.repos.ataraxiasjel.waydroid-script
+      waydroid-helper
+    ];
+    systemd = {
+      packages = [ pkgs.waydroid-helper ];
+      services.waydroid-mount.wantedBy = [ "multi-user.target" ];
+    };
     services.geoclue2.enable = true;
     programs.adb.enable = true;
-    persistSystem.directories = [ "/var/lib/waydroid" ];
-    persistHome.directories = [ ".local/share/waydroid" ];
+    persistSystem.directories = [
+      "/var/lib/waydroid"
+      # "/etc/waydroid-extra/images"
+    ];
+    persistHome.directories = [
+      "waydroid"
+      ".local/share/waydroid-helper"
+      ".local/cache/waydroid-helper"
+      ".config/waydroid-helper"
+      ".local/share/waydroid"
+      ".cache/waydroid-script"
+    ];
   };
 }
