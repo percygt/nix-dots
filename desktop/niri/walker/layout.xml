@@ -17,7 +17,7 @@
         <property name="valign">center</property>
         <property name="halign">center</property>
         <property name="width-request">600</property>
-        <property name="height-request">550</property>
+        <property name="height-request">570</property>
         <child>
           <object class="GtkBox" id="Box">
             <style>
@@ -64,6 +64,7 @@
                     <property name="label">Waiting for elephant...</property>
                     <property name="hexpand">true</property>
                     <property name="vexpand">true</property>
+                    <property name="visible">false</property>
                     <property name="valign">0.5</property>
                   </object>
                 </child>
@@ -89,7 +90,7 @@
                     <property name="vexpand">true</property>
                     <property name="max-content-width">500</property>
                     <property name="min-content-width">500</property>
-                    <property name="max-content-height">400</property>
+                    <property name="max-content-height">700</property>
                     <property name="propagate-natural-height">true</property>
                     <property name="propagate-natural-width">true</property>
                     <property name="hscrollbar-policy">automatic</property>
@@ -100,6 +101,7 @@
                           <class name="list"></class>
                         </style>
                         <property name="max_columns">1</property>
+                        <property name="min_columns">1</property>
                         <property name="can_focus">false</property>
                       </object>
                     </child>
@@ -114,32 +116,40 @@
                 </child>
               </object>
             </child>
-            <!-- <child> -->
-            <!--   <object class="GtkBox" id="KeybindsWrapper"> -->
-            <!--     <property name="hexpand">true</property> -->
-            <!--     <style> -->
-            <!--       <class name="keybinds-wrapper"></class> -->
-            <!--     </style> -->
-            <!--     <child> -->
-            <!--       <object class="GtkBox" id="Keybinds"> -->
-            <!--         <property name="hexpand">true</property> -->
-            <!--         <property name="halign">end</property> -->
-            <!--         <property name="spacing">10</property> -->
-            <!--         <property name="margin-top">10</property> -->
-            <!--         <style> -->
-            <!--           <class name="keybinds"></class> -->
-            <!--         </style> -->
-            <!--       </object> -->
-            <!--     </child> -->
-            <!--   </object> -->
-            <!-- </child> -->
+            <child>
+              <object class="GtkBox" id="Keybinds">
+                <property name="hexpand">true</property>
+                <property name="margin-top">10</property>
+                <style>
+                  <class name="keybinds"></class>
+                </style>
+                <child>
+                  <object class="GtkBox" id="GlobalKeybinds">
+                    <property name="spacing">10</property>
+                    <style>
+                      <class name="global-keybinds"></class>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox" id="ItemKeybinds">
+                    <property name="hexpand">true</property>
+                    <property name="halign">end</property>
+                    <property name="spacing">10</property>
+                    <style>
+                      <class name="item-keybinds"></class>
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
             <child>
               <object class="GtkLabel" id="Error">
                 <style>
                   <class name="error"></class>
                 </style>
                 <property name="xalign">0</property>
-               <property name="visible">false</property>
+                <property name="visible">false</property>
               </object>
             </child>
           </object>
