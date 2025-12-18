@@ -1,4 +1,4 @@
-{ config }:
+{ config, lib }:
 let
   inherit (config.modules.themes)
     cursorTheme
@@ -11,7 +11,7 @@ in
   "org/gnome/terminal/legacy".default-show-menubar = false;
   "org/cinnamon/desktop/default-applications/terminal".exec = config._global.terminal.defaultCmd;
   "org/cinnamon/desktop/default-applications/terminal".exec-arg = "";
-  "org/virt-manager/virt-manager/connections" = {
+  "org/virt-manager/virt-manager/connections" = lib.mkIf config.modules.virtualisation.kvm.enable {
     autoconnect = [ "qemu:///system" ];
     uris = [ "qemu:///system" ];
   };

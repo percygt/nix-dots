@@ -3,6 +3,7 @@
   colorize,
   lib,
   libx,
+  pkgs,
   ...
 }:
 let
@@ -21,6 +22,24 @@ in
     let
       configNiri = "${flakeDirectory}/desktop/niri";
       symlink = file: config.lib.file.mkOutOfStoreSymlink file;
+      editorModules = "${g.flakeDirectory}/modules/editor";
+      moduleEmacs = "${editorModules}/emacs";
+      DOOMLOCALDIR = "${g.xdg.dataHome}/doom";
+      DOOMDIR = "${g.xdg.configHome}/doom";
+      EMACSDIR = "${g.xdg.configHome}/emacs";
+      DOOMPROFILELOADFILE = "${g.xdg.dataHome}/doom/cache/profile-load.el";
+      doomconfig = pkgs.writers.writeBash "doomconfig" ''
+        emacsclient -t -a "" ${moduleEmacs}/doom/config.el
+      '';
+      emacsnotes = pkgs.writers.writeBash "emacsnotes" ''
+        emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
+      '';
+      emacscapture = pkgs.writers.writeBash "emacscapture" ''
+        emacsclient -t -a "" --eval '(+org-capture/quick-capture)'
+      '';
+      emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
+        emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
+      '';
     in
     {
       "niri/config".source = symlink "${configNiri}/_config";
@@ -29,7 +48,7 @@ in
         with libx.kdl;
         serialize.nodes [
           (leaf "spawn-at-startup" [
-            "TERM=foot"
+            "COLORTERM=truecolor"
             "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo"
             "${emacs.finalPackage}/bin/emacs --fg-daemon"
           ])
@@ -39,6 +58,58 @@ in
               "--user"
               "start"
               "waydroid-monitor.service"
+            ]
+          ))
+          (lib.optionalString config.modules.editor.emacs.enable (
+            plain "binds" [
+              (plain "Mod+Shift+E" [
+                (leaf "spawn" [
+                  "footpad"
+                  "--term=foot-direct"
+                  "--app-id=doom"
+                  "--"
+                  "${doomconfig}"
+                ])
+              ])
+              (plain "Mod+N" [
+                (leaf "spawn" [
+                  "footpad"
+                  "--term=foot-direct"
+                  "--app-id=notes"
+                  "--"
+                  "${emacsnotes}"
+                ])
+              ])
+              (plain "Mod+E" [
+                (leaf "spawn" [
+                  "footpad"
+                  "--term=foot-direct"
+                  "--app-id=agenda"
+                  "--"
+                  "${emacsagenda}"
+                ])
+              ])
+              (plain "Mod+Alt+C" [
+                (leaf "spawn" [
+                  "footpad"
+                  "--term=foot-direct"
+                  "--app-id=capture"
+                  "--"
+                  "${emacscapture}"
+                ])
+              ])
+              (plain "Mod+C" [
+                (leaf "spawn" [
+                  "footpad"
+                  "--term=foot-direct"
+                  "--app-id=org-capture"
+                  "--"
+                  "python"
+                  "${DOOMDIR}/capture.py"
+                  "-w"
+                  "org-capture"
+                ])
+              ])
             ]
           ))
           (plain "layout" [

@@ -1,15 +1,14 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+(add-to-list 'term-file-aliases '("foot" . "xterm"))
 (load! "system" doom-user-dir t)
 (load! "nix" doom-user-dir t)
 
-(add-to-list 'term-file-aliases '("foot" . "xterm"))
-
 (setq doom-theme 'doom-city-lights
-      doom-font (font-spec :family "VictorMono NFP" :size 20 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "Work Sans" :size 20 :weight 'light)
+      doom-font (font-spec :family "VictorMono NFP" :size 18 :weight 'medium)
+      doom-variable-pitch-font (font-spec :family "Work Sans" :size 18 :weight 'light)
       doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
-      doom-big-font (font-spec :family "VictorMono NPF" :size 24))
+      doom-big-font (font-spec :family "VictorMono NPF" :size 22))
 
 (setq evil-emacs-state-cursor   `("brightmagenta" bar)
       evil-insert-state-cursor  `("cyan" bar)
@@ -18,11 +17,21 @@
 
 (setq evil-snipe-override-evil-repeat-keys nil)
 
-(if (display-graphic-p)
-    (custom-theme-set-faces! 'doom-city-lights `(default :background "#00051a")
-      (set-frame-parameter nil 'alpha-background 80) ; For current frame
-      (add-to-list 'default-frame-alist '(alpha-background . 80)) )
-  (custom-theme-set-faces! 'doom-city-lights `(default :background nil)))
+(after! doom-themes
+  (defun my/doom-fix-client-frame (frame)
+    (when (display-graphic-p frame)
+      (with-selected-frame frame
+        (set-frame-parameter frame 'background-color "#00051a"))))
+
+  ;; emacsclient -c frames
+  (add-hook 'after-make-frame-functions #'my/doom-fix-client-frame)
+
+  ;; first GUI frame (daemon startup)
+  (when (display-graphic-p)
+    (set-frame-parameter nil 'background-color "#00051a")))
+
+(when (not (display-graphic-p))
+    (custom-theme-set-faces! 'doom-city-lights `(default :background nil)))
 
 (custom-set-faces!
   `(mode-line-inactive :background "#00051a")
@@ -45,7 +54,17 @@
 (pixel-scroll-precision-mode t)
 (plist-put +popup-defaults :quit t)
 
-(load! "configs/init.el")
+(load! "lisps/completion.el")
+(load! "lisps/dired.el")
+(load! "lisps/eglot.el")
+(load! "lisps/elfeed.el")
+(load! "lisps/extra.el")
+(load! "lisps/keymaps.el")
+(load! "lisps/minibuffer.el")
+(load! "lisps/pdf.el")
+(load! "lisps/spell.el")
+(load! "lisps/treesit-lang.el")
+(load! "lisps/treesit.el")
 
 (pushnew! vc-directory-exclusion-list
           "node_modules"

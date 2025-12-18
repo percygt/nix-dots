@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 let
   inherit (config.modules.themes)
     cursorTheme
@@ -12,7 +12,7 @@ let
   gtk4SrcTheme = "${srcTheme}/gtk-4.0";
 in
 {
-  dconf.settings = import ./__dconf.nix { inherit config; };
+  dconf.settings = import ./__dconf.nix { inherit config lib; };
   gtk = {
     enable = true;
     gtk2.configLocation = "${g.xdg.configHome}/gtk-2.0/gtkrc";

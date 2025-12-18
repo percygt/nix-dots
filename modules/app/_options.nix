@@ -4,6 +4,7 @@
     librewolf.enable = lib.mkEnableOption "Enable librewolf";
     zen.enable = lib.mkEnableOption "Enable zen";
     brave.enable = lib.mkEnableOption "Enable brave";
+    helium.enable = lib.mkEnableOption "Enable helium";
     brave-nightly.enable = lib.mkEnableOption "Enable brave-nightly";
     quickemu.enable = lib.mkEnableOption "Enable quickemu";
     flatpak.enable = lib.mkEnableOption "Enable flatpak";

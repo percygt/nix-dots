@@ -65,6 +65,11 @@ in
           default = homeDirectory + "/pictures";
           description = "The Pictures directory.";
         };
+        publicShare = mkOption {
+          type = with types; nullOr (coercedTo path toString str);
+          default = homeDirectory + "/shared";
+          description = "The Public share directory.";
+        };
         videos = mkOption {
           type = with types; nullOr (coercedTo path toString str);
           default = homeDirectory;
@@ -79,11 +84,6 @@ in
           type = with types; nullOr (coercedTo path toString str);
           default = homeDirectory;
           description = "The Documents directory.";
-        };
-        publicShare = mkOption {
-          type = with types; nullOr (coercedTo path toString str);
-          default = homeDirectory;
-          description = "The Public share directory.";
         };
         templates = mkOption {
           type = with types; nullOr (coercedTo path toString str);

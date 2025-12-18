@@ -134,7 +134,7 @@
     system76-scheduler-niri.url = "github:Kirottu/system76-scheduler-niri";
     system76-scheduler-niri.inputs.nixpkgs.follows = "nixpkgs";
 
-    niri-scratchpad.url = "github:argosnothing/niri-scratchpad";
+    niri-scratchpad.url = "github:argosnothing/niri-scratchpad-rs";
 
     personal.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
     personal.flake = false;

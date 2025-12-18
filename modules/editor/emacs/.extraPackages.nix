@@ -2,7 +2,9 @@ pkgs: with pkgs; [
   # straight-el # NOTE not being used
   ## binaries
   # dirvish deps
+  vips
   poppler-utils # poppler_utils
+  epub-thumbnailer
   poppler
   ffmpegthumbnailer
   mediainfo

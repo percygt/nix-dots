@@ -29,7 +29,6 @@
       "intel_iommu=on"
       "iommu=pt"
     ];
-
     virtualisation.libvirtd = {
       enable = true;
       qemu.vhostUserPackages = with pkgs; [
@@ -38,6 +37,7 @@
     };
     users = {
       users.${username}.extraGroups = [
+        "input"
         "libvirtd"
         "qemu"
         "kvm"

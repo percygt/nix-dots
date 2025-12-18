@@ -1254,16 +1254,16 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1764805111,
-        "narHash": "sha256-PUxIoWpgirTFGEG3tqC06N7fFzbuVLaBbwOrDWdEp7E=",
+        "lastModified": 1765408544,
+        "narHash": "sha256-7KCQ63x61Wq2MtqIsXSGd2li4cW/iX4IY98paAr1XU4=",
         "owner": "argosnothing",
-        "repo": "niri-scratchpad",
-        "rev": "37d48f139ca9b5ef12cfda3b8a0ba89c08304021",
+        "repo": "niri-scratchpad-rs",
+        "rev": "908e6d6fa3d6784bb16a5d9ad2ef269d8d975ce4",
         "type": "github"
       },
       "original": {
         "owner": "argosnothing",
-        "repo": "niri-scratchpad",
+        "repo": "niri-scratchpad-rs",
         "type": "github"
       }
     },

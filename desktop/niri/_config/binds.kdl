@@ -19,7 +19,6 @@ binds {
     Mod+Ctrl+Print hotkey-overlay-title="Screenshot window to clipboard" { screenshot-window write-to-disk=false; }
     Mod+Print hotkey-overlay-title="Screenshot window and save" { screenshot-window; }
     Mod+Shift+Print hotkey-overlay-title="Interactive screenshot to clipboard" { screenshot show-pointer=false; }
-    Alt+Tab hotkey-overlay-title="Switch to previous window" { focus-window-previous; }
 
     XF86AudioLowerVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume=lower"; }
     XF86AudioRaiseVolume allow-when-locked=true { spawn "swayosd-client" "--output-volume=raise"; }

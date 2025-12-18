@@ -12,6 +12,7 @@
       brave.enable = true;
       # brave-nightly.enable = true;
       quickemu.enable = true;
+      helium.enable = true;
       flatpak.enable = true;
       chromium.enable = true;
       chromium-webapps = {

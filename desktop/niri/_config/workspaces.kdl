@@ -1,14 +1,23 @@
+workspace "brain" {
+  open-on-output "HDMI-A-1"
+}
+workspace "dev" {
+  open-on-output "HDMI-A-1"
+}
+workspace "chill" {
+  open-on-output "HDMI-A-1"
+}
 // workspace "web" {
 //   layout {
 //     default-column-width { proportion 0.33333; }
-//
 //     focus-ring {
 //         width 5
 //         active-gradient from="#62BAF5" to="#8962F5" angle=45 relative-to="workspace-view"
 //     }
 //   }
+//   open-on-output "HDMI-A-1"
 // }
-//
+
 // workspace "nix" {
 //   layout {
 //     focus-ring {
@@ -37,7 +46,3 @@
 //     }
 //   }
 // }
-
-workspace "scratch" {
-    open-on-output "HDMI-A-1"
-}

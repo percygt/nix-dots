@@ -25,7 +25,6 @@
       # "/etc/waydroid-extra/images"
     ];
     persistHome.directories = [
-      "waydroid"
       ".local/share/waydroid-helper"
       ".local/cache/waydroid-helper"
       ".config/waydroid-helper"
