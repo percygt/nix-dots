@@ -10,6 +10,9 @@
       sparseCheckout = [ "variablefont" ];
     };
   });
+  inherit (prev.master)
+    tree-sitter
+    ;
   inherit (prev.unstable)
     nushell
     nu_scripts
