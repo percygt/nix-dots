@@ -4,7 +4,6 @@ spawn-at-startup "foot" "--server"
 spawn-at-startup "tmux" "start-server"
 
 spawn-at-startup "brave" "--profile-directory=Brain" "--window-name=Brain"
-spawn-at-startup "brave" "--profile-directory='Profile 17'" "--window-name=Dev2"
 spawn-at-startup "brave" "--profile-directory=DevCtl" "--window-name=Dev1"
 window-rule {
     match app-id="brave-browser" title="Brain"
@@ -12,9 +11,8 @@ window-rule {
 }
 spawn-at-startup "brave" "--profile-directory=Dev" "--window-name=Dev"
 window-rule {
-    match app-id="brave-browser" title="Dev"
+    match app-id="brave-browser" title="^Dev$"
     match app-id="brave-browser" title="Dev1"
-    match app-id="brave-browser" title="Dev2"
     open-on-workspace "dev"
 }
 spawn-at-startup "brave" "--profile-directory=Chill" "--window-name=Chill"

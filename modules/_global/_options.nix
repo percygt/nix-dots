@@ -300,10 +300,11 @@ in
             LANG = "en_US.UTF-8";
             LC_ALL = "en_US.UTF-8";
             LC_CTYPE = "en_US.UTF-8";
-            SDL_VIDEODRIVER = "wayland";
+            SDL_VIDEODRIVER = "wayland,x11";
             MOZ_ENABLE_WAYLAND = "1";
             NIXPKGS_ALLOW_UNFREE = "1";
-            # NIXOS_OZONE_WL = "1";
+            NIXOS_OZONE_WL = "1";
+            GTK_IM_MODULE = "simple";
             _JAVA_AWT_WM_NONREPARENTING = "1";
             QT_QPA_PLATFORM = "wayland";
             QT_WAYLAND_DISABLE_WINDOWDECORATION = "0";

@@ -7,6 +7,15 @@ workspace "dev" {
 workspace "chill" {
   open-on-output "HDMI-A-1"
 }
+workspace "Main" {
+  open-on-output "eDP-1"
+  layout {
+    gaps 0
+    border {
+      off
+    }
+  }
+}
 // workspace "web" {
 //   layout {
 //     default-column-width { proportion 0.33333; }

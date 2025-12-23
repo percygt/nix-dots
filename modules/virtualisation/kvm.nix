@@ -3,10 +3,15 @@
   lib,
   config,
   username,
+  inputs,
   ...
 }:
 {
+  imports = [
+    inputs.nixvirt.nixosModules.default
+  ];
   config = lib.mkIf config.modules.virtualisation.kvm.enable {
+    persistSystem.directories = [ "/var/lib/libvirt" ];
     environment.systemPackages = with pkgs; [
       nixos-shell
       adwaita-icon-theme
@@ -29,11 +34,14 @@
       "intel_iommu=on"
       "iommu=pt"
     ];
-    virtualisation.libvirtd = {
-      enable = true;
-      qemu.vhostUserPackages = with pkgs; [
-        virtiofsd
-      ];
+    virtualisation = {
+      spiceUSBRedirection.enable = true;
+      libvirtd = {
+        enable = true;
+        qemu.vhostUserPackages = with pkgs; [
+          virtiofsd
+        ];
+      };
     };
     users = {
       users.${username}.extraGroups = [

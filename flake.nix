@@ -134,6 +134,9 @@
     system76-scheduler-niri.url = "github:Kirottu/system76-scheduler-niri";
     system76-scheduler-niri.inputs.nixpkgs.follows = "nixpkgs";
 
+    nixvirt.url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
+    nixvirt.inputs.nixpkgs.follows = "nixpkgs";
+
     niri-scratchpad.url = "github:argosnothing/niri-scratchpad-rs";
 
     personal.url = "git+ssh://git@gitlab.com/percygt/sikreto.git?ref=main&shallow=1";
