@@ -47,17 +47,19 @@ in
       "niri/nix.kdl".text =
         with libx.kdl;
         serialize.nodes [
-          (leaf "spawn-at-startup" [
-            "COLORTERM=truecolor"
-            "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo"
-            "${emacs.finalPackage}/bin/emacs --fg-daemon"
-          ])
           (lib.optionalString config.modules.virtualisation.waydroid.enable (
             leaf "spawn-at-startup" [
               "systemctl"
               "--user"
               "start"
               "waydroid-monitor.service"
+            ]
+          ))
+          (lib.optionalString config.modules.editor.emacs.enable (
+            leaf "spawn-at-startup" [
+              "COLORTERM=truecolor"
+              "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo"
+              "${emacs.finalPackage}/bin/emacs --fg-daemon"
             ]
           ))
           (lib.optionalString config.modules.editor.emacs.enable (
