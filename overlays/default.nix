@@ -3,7 +3,6 @@
   nix-sources = inputs.nix-sources.overlays.default;
   nix-stash = inputs.nix-stash.overlays.default;
   nixd = inputs.nixd.overlays.default;
-  fenix = inputs.fenix.overlays.default;
   nur = inputs.nur.overlays.default;
   nixpkgs-variants = final: _: {
     unstable = import inputs.nixpkgs-unstable {

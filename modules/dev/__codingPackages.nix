@@ -29,8 +29,8 @@ pkgs: with pkgs; [
   phpactor
 
   # rust
-  fenix.minimal.toolchain
   rust-analyzer-nightly
+  rust-minimal-toolchain
   # cargo
   # clippy
   # rustc
