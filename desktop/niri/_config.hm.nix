@@ -46,98 +46,105 @@ in
       "niri/config.kdl".source = symlink "${configNiri}/_config.kdl";
       "niri/nix.kdl".text =
         with libx.kdl;
-        serialize.nodes [
-          (lib.optionalString config.modules.virtualisation.waydroid.enable (
-            leaf "spawn-at-startup" [
-              "systemctl"
-              "--user"
-              "start"
-              "waydroid-monitor.service"
-            ]
-          ))
-          (lib.optionalString config.modules.editor.emacs.enable (
-            leaf "spawn-at-startup" [
-              "COLORTERM=truecolor"
-              "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo"
-              "${emacs.finalPackage}/bin/emacs --fg-daemon"
-            ]
-          ))
-          (lib.optionalString config.modules.editor.emacs.enable (
-            plain "binds" [
-              (plain "Mod+Shift+E" [
-                (leaf "spawn" [
-                  "footpad"
-                  "--term=foot-direct"
-                  "--app-id=doom"
-                  "--"
-                  "${doomconfig}"
+        lib.concatStringsSep "\n" (
+          [
+            (serialize.nodes [
+              (plain "layout" [
+                (plain "border" [
+                  (flag "on")
+                  (leaf "width" 2)
+                  (leaf "active-color" (h.setAlpha c.magenta 0.2))
+                  (leaf "inactive-color" (h.setAlpha (h.darken c.magenta 0.2) 0.2))
                 ])
               ])
-              (plain "Mod+N" [
-                (leaf "spawn" [
-                  "footpad"
-                  "--term=foot-direct"
-                  "--app-id=notes"
-                  "--"
-                  "${emacsnotes}"
-                ])
+              (plain "cursor" [
+                (flag "hide-when-typing")
+                (leaf "hide-after-inactive-ms" 1000)
+                (leaf "xcursor-theme" cursorTheme.name)
+                (leaf "xcursor-size" cursorTheme.size)
               ])
-              (plain "Mod+E" [
-                (leaf "spawn" [
-                  "footpad"
-                  "--term=foot-direct"
-                  "--app-id=agenda"
-                  "--"
-                  "${emacsagenda}"
-                ])
+              (plain "xwayland-satellite" [
+                (flag "on")
+                (leaf "path" "${lib.getExe config.modules.desktop.niri.xwaylandPackage}")
               ])
-              (plain "Mod+Alt+C" [
-                (leaf "spawn" [
-                  "footpad"
-                  "--term=foot-direct"
-                  "--app-id=capture"
-                  "--"
-                  "${emacscapture}"
-                ])
+              (leaf "screenshot-path" (screenshotsDir + "/%Y-%m-%d-%H%M%S.png"))
+              (plain "overview" [
+                (leaf "backdrop-color" (colorize.hex.lighten c.base00 0.05))
+                (plain "workspace-shadow" [ (flag "off") ])
               ])
-              (plain "Mod+C" [
-                (leaf "spawn" [
-                  "footpad"
-                  "--term=foot-direct"
-                  "--app-id=org-capture"
-                  "--"
-                  "python"
-                  "${DOOMDIR}/capture.py"
-                  "-w"
-                  "org-capture"
-                ])
-              ])
-            ]
-          ))
-          (plain "layout" [
-            (plain "border" [
-              (flag "on")
-              (leaf "width" 2)
-              (leaf "active-color" (h.setAlpha c.magenta 0.2))
-              (leaf "inactive-color" (h.setAlpha (h.darken c.magenta 0.2) 0.2))
+              (plain "environment" (lib.mapAttrsToList leaf g.system.envVars))
             ])
-          ])
-          (plain "cursor" [
-            (flag "hide-when-typing")
-            (leaf "hide-after-inactive-ms" 1000)
-            (leaf "xcursor-theme" cursorTheme.name)
-            (leaf "xcursor-size" cursorTheme.size)
-          ])
-          (plain "xwayland-satellite" [
-            (flag "on")
-            (leaf "path" "${lib.getExe config.modules.desktop.niri.xwaylandPackage}")
-          ])
-          (leaf "screenshot-path" (screenshotsDir + "/%Y-%m-%d-%H%M%S.png"))
-          (plain "overview" [
-            (leaf "backdrop-color" (colorize.hex.lighten c.base00 0.05))
-            (plain "workspace-shadow" [ (flag "off") ])
-          ])
-          (plain "environment" (lib.mapAttrsToList leaf g.system.envVars))
-        ];
+          ]
+          ++ lib.optionals config.modules.virtualisation.waydroid.enable [
+            (serialize.nodes [
+              (leaf "spawn-at-startup" [
+                "systemctl"
+                "--user"
+                "start"
+                "waydroid-monitor.service"
+              ])
+            ])
+          ]
+          ++ lib.optionals config.modules.editor.emacs.enable [
+            (serialize.nodes [
+              (leaf "spawn-at-startup" [
+                "COLORTERM=truecolor"
+                "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo"
+                "${emacs.finalPackage}/bin/emacs"
+                "--fg-daemon"
+              ])
+              (plain "binds" [
+                (plain "Mod+Shift+E" [
+                  (leaf "spawn" [
+                    "footpad"
+                    "--term=foot-direct"
+                    "--app-id=doom"
+                    "--"
+                    "${doomconfig}"
+                  ])
+                ])
+                (plain "Mod+N" [
+                  (leaf "spawn" [
+                    "footpad"
+                    "--term=foot-direct"
+                    "--app-id=notes"
+                    "--"
+                    "${emacsnotes}"
+                  ])
+                ])
+                (plain "Mod+E" [
+                  (leaf "spawn" [
+                    "footpad"
+                    "--term=foot-direct"
+                    "--app-id=agenda"
+                    "--"
+                    "${emacsagenda}"
+                  ])
+                ])
+                (plain "Mod+Alt+C" [
+                  (leaf "spawn" [
+                    "footpad"
+                    "--term=foot-direct"
+                    "--app-id=capture"
+                    "--"
+                    "${emacscapture}"
+                  ])
+                ])
+                (plain "Mod+C" [
+                  (leaf "spawn" [
+                    "footpad"
+                    "--term=foot-direct"
+                    "--app-id=org-capture"
+                    "--"
+                    "python"
+                    "${DOOMDIR}/capture.py"
+                    "-w"
+                    "org-capture"
+                  ])
+                ])
+              ])
+            ])
+          ]
+        );
     };
 }
