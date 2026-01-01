@@ -17,6 +17,7 @@
           Experimental = true;
           KernelExperimental = true;
           Enable = "Source,Sink,Media,Socket";
+          FastConnectable = true;
         };
       };
     };

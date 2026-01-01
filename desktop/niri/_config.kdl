@@ -3,6 +3,7 @@ hotkey-overlay { skip-at-startup; }
 include "config/animations.kdl"
 include "config/binds.kdl"
 include "config/input.kdl"
+include "config/outputs.kdl"
 include "config/layout.kdl"
 include "config/windows.kdl"
 include "config/layers.kdl"

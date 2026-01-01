@@ -103,14 +103,14 @@ binds {
     Mod+Ctrl+F { toggle-windowed-fullscreen; }
 
     Mod+Delete { clear-dynamic-cast-target; }
-    Mod+Equal { set-column-width "+10%"; }
+    Mod+Equal { set-column-width "+1%"; }
     Mod+Insert { set-dynamic-cast-window; }
-    Mod+Minus { set-column-width "-10%"; }
+    Mod+Minus { set-column-width "-1%"; }
     Mod+Shift+C { center-visible-columns; }
-    Mod+Shift+Equal { set-window-height "+10%"; }
+    Mod+Shift+Equal { set-window-height "+1%"; }
     Mod+Shift+F { fullscreen-window; }
     Mod+Shift+Insert { set-dynamic-cast-monitor; }
-    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Minus { set-window-height "-1%"; }
     Mod+Shift+P { power-off-monitors; }
     Mod+Shift+Space { switch-focus-between-floating-and-tiling; }
     Mod+Shift+Tab { focus-monitor-previous; }

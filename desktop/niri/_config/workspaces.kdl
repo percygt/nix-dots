@@ -10,6 +10,7 @@ workspace "chill" {
 workspace "Main" {
   open-on-output "eDP-1"
   layout {
+    default-column-width { proportion 1.0; }
     gaps 0
     border {
       off

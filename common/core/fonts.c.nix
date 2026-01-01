@@ -22,7 +22,7 @@
     interface = {
       name = "Iosevka Aile";
       typeface = "sansSerif";
-      package = pkgs.iosevka-bin;
+      package = pkgs.iosevka-bin.override { variant = "Aile"; };
       size = 12.0;
     };
     app = {
@@ -40,6 +40,7 @@
       (with pkgs; [
         (iosevka-bin.override { variant = "Aile"; })
         # cryptofont
+        aporetic
         noto-fonts-tagalog-sans
         emacs-all-the-icons-fonts
         noto-fonts
@@ -49,11 +50,13 @@
         open-sans
         source-sans-pro
         source-serif
+        maple-mono.NF
         noto-fonts-color-emoji # noto-fonts-emoji
         ubuntu-classic # ubuntu_font_family
       ])
       ++ (with pkgs.nerd-fonts; [
         iosevka-term
+        zed-mono
         monaspace
         geist-mono
         jetbrains-mono

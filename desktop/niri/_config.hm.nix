@@ -87,11 +87,8 @@ in
           ]
           ++ lib.optionals config.modules.editor.emacs.enable [
             (serialize.nodes [
-              (leaf "spawn-at-startup" [
-                "COLORTERM=truecolor"
-                "TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo"
-                "${emacs.finalPackage}/bin/emacs"
-                "--fg-daemon"
+              (leaf "spawn-sh-at-startup" [
+                "COLORTERM=truecolor TERMINFO=${config.modules.terminal.foot.package.terminfo}/share/terminfo ${emacs.finalPackage}/bin/emacs --fg-daemon"
               ])
               (plain "binds" [
                 (plain "Mod+Shift+E" [

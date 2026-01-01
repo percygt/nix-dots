@@ -31,9 +31,10 @@
     (set-frame-parameter nil 'background-color "#00051a")))
 
 (when (not (display-graphic-p))
-    (custom-theme-set-faces! 'doom-city-lights `(default :background nil)))
+  (custom-theme-set-faces! 'doom-city-lights `(default :background nil)))
 
 (custom-set-faces!
+  `(default :foreground "white")
   `(mode-line-inactive :background "#00051a")
   `(fringe :background nil)
   `(vertical-border :background "#081028")

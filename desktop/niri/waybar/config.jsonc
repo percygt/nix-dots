@@ -3,7 +3,7 @@
   {
     "id": "bar-1",
     "output": "eDP-1",
-    "position": "left",
+    "position": "right",
     "width": 45,
     "include": [
       "~/.config/waybar/modules/common.jsonc"
@@ -14,7 +14,6 @@
     "mpris": {
       "rotate": 90
     },
-
     "backlight": {
       "device": "intel_backlight",
       "on-scroll-up": "swayosd-client --device intel_backlight --brightness +10 ",
@@ -29,7 +28,7 @@
   },
   {
     "output": "HDMI-A-1",
-    "position": "right",
+    "position": "left",
     "width": 45,
     "include": [
       "~/.config/waybar/modules/common.jsonc"

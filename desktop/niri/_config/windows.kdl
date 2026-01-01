@@ -47,14 +47,18 @@ window-rule {
     shadow { off; }
 }
 window-rule {
+    match app-id="Emacs"
+    match app-id="doom"
     match app-id="tmux"
     match app-id="yazi"
+    geometry-corner-radius 0.0 0.0 0.0 0.0
     opacity 0.950000
 }
 window-rule {
-    match app-id="steam_app"
+    match app-id="steam_app" title="Etheria"
     open-on-workspace "Main"
-    open-maximized true
+    open-floating true
+    // open-maximized true
     geometry-corner-radius 0.000000 0.000000 0.000000 0.000000
     border { off; }
     shadow { off; }
