@@ -24,9 +24,9 @@ pkgs: with pkgs; [
 
   #php
   # php.packages.php-cs-fixer
-  pretty-php
-  php.packages.php-codesniffer
-  phpactor
+  # pretty-php
+  # php.packages.php-codesniffer
+  # phpactor
 
   # rust
   rust-analyzer-nightly

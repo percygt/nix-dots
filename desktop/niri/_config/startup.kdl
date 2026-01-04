@@ -1,5 +1,5 @@
-spawn-at-startup "systemctl" "--user" "reset-failed" "waybar.service"
-spawn-at-startup "hyprlock"
+// spawn-at-startup "systemctl" "--user" "reset-failed" "waybar.service"
+// spawn-at-startup "hyprlock"
 spawn-at-startup "foot" "--server"
 spawn-at-startup "tmux" "start-server"
 
