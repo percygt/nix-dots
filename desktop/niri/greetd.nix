@@ -23,7 +23,6 @@ in
         session = {
           command = toString (
             pkgs.writeShellScript "niri-wrapper" ''
-              trap '${systemctl} --user stop niri.service; sleep 1' EXIT
               exec ${niri-session} >/dev/null
             ''
           );
