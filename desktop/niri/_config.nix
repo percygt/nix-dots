@@ -45,7 +45,7 @@ in
       implementation = "broker";
       packages = with pkgs; [
         dconf
-        xfce.xfconf
+        xfconf
         gcr
         gnome-settings-daemon
         libsecret

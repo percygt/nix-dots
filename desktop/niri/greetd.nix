@@ -32,6 +32,7 @@ in
       in
       {
         enable = true;
+        restart = true;
         settings = {
           terminal.vt = 1;
           default_session = session;

@@ -62,7 +62,7 @@ in
       # implementation = "dbus";
       packages = with pkgs; [
         dconf
-        xfce.xfconf
+        xfconf
         gcr
         libsecret
         gnome-settings-daemon

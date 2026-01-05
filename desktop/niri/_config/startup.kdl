@@ -3,20 +3,18 @@ spawn-at-startup "hyprlock"
 spawn-at-startup "foot" "--server"
 spawn-at-startup "tmux" "start-server"
 
-spawn-at-startup "brave" "--profile-directory=Brain" "--window-name=Brain"
-spawn-at-startup "brave" "--profile-directory=DevCtl" "--window-name=Dev1"
+spawn-at-startup "brave" "--profile-directory=Personal" "--window-name=Personal"
 window-rule {
-    match app-id="brave-browser" title="Brain"
-    open-on-workspace "brain"
+    match app-id="brave-browser" title="^Personal$"
+    open-on-workspace "personal"
 }
 spawn-at-startup "brave" "--profile-directory=Dev" "--window-name=Dev"
 window-rule {
     match app-id="brave-browser" title="^Dev$"
-    match app-id="brave-browser" title="Dev1"
     open-on-workspace "dev"
 }
 spawn-at-startup "brave" "--profile-directory=Chill" "--window-name=Chill"
 window-rule {
-    match app-id="brave-browser" title="Chill"
+    match app-id="brave-browser" title="^Chill$"
     open-on-workspace "chill"
 }

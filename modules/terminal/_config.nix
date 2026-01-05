@@ -14,9 +14,7 @@ in
     }
     (lib.mkIf (config.modules.terminal.xfce4-terminal.enable && desktop != "xfce") {
       programs.xfconf.enable = true;
-      persistHome.directories = [
-        ".config/xfce4/xfconf"
-      ];
+      persistHome.directories = [ ".config/xfce4/xfconf" ];
     })
   ];
 }

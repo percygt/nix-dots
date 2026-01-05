@@ -1,4 +1,4 @@
-workspace "brain" {
+workspace "personal" {
   open-on-output "HDMI-A-1"
 }
 workspace "dev" {
