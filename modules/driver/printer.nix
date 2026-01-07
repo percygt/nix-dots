@@ -37,7 +37,7 @@
       sane = {
         enable = true;
         extraBackends = [
-          (pkgs.epsonscan2.override {
+          (pkgs.old.epsonscan2.override {
             withNonFreePlugins = true;
           })
           pkgs.utsushi

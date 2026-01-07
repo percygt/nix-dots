@@ -95,7 +95,7 @@ pkgs: with pkgs; [
   marksman
 
   #sql
-  sqlfluff
+  # sqlfluff
 
   # tailwind
   tailwindcss-language-server

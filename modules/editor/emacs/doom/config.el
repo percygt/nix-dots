@@ -5,7 +5,7 @@
 (load! "nix" doom-user-dir t)
 
 (setq doom-theme 'doom-city-lights
-      doom-font (font-spec :family "VictorMono NFP" :size 18 :weight 'medium)
+      doom-font (font-spec :family "Aporetic Sans Mono" :size 17 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Work Sans" :size 18 :weight 'light)
       doom-symbol-font (font-spec :family "Symbols Nerd Font Mono")
       doom-big-font (font-spec :family "VictorMono NPF" :size 22))
@@ -34,7 +34,7 @@
   (custom-theme-set-faces! 'doom-city-lights `(default :background nil)))
 
 (custom-set-faces!
-  `(default :foreground "white")
+  `(default :foreground "#a9b0be")
   `(mode-line-inactive :background "#00051a")
   `(fringe :background nil)
   `(vertical-border :background "#081028")

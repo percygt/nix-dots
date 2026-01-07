@@ -57,7 +57,7 @@ window-rule {
 window-rule {
     match app-id="steam_app" title="Etheria"
     open-on-workspace "Main"
-    open-floating true
+    // open-floating true
     open-maximized-to-edges true
     geometry-corner-radius 0.000000 0.000000 0.000000 0.000000
     border { off; }
