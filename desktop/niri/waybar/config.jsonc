@@ -9,10 +9,10 @@
       "~/.config/waybar/modules/common.jsonc"
     ],
     "niri/window": {
-      "rotate": 90
+      "rotate": 270
     },
     "mpris": {
-      "rotate": 90
+      "rotate": 270
     },
     "backlight": {
       "device": "intel_backlight",
@@ -35,10 +35,10 @@
       // "~/.config/waybar/extra.jsonc"
     ],
     "niri/window": {
-      "rotate": 270
+      "rotate": 90
     },
     "mpris": {
-      "rotate": 270
+      "rotate": 90
     },
     "backlight": {
       "device": "ddcci1",

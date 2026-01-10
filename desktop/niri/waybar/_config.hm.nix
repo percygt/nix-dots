@@ -8,6 +8,7 @@ let
   g = config._global;
   extraPackages =
     g.system.envPackages
+    ++ [ config.services.swayosd.package ]
     ++ (with pkgs; [
       swaynotificationcenter
       foot
@@ -22,7 +23,7 @@ let
         meta.mainProgram = "waybar";
       }
       ''
-        makeWrapper ${pkgs.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
+        makeWrapper ${pkgs.stable.waybar}/bin/waybar $out/bin/waybar --prefix PATH : ${lib.makeBinPath extraPackages}
       '';
   moduleWaybar = "${g.flakeDirectory}/desktop/niri/waybar";
   c = config.modules.themes.colors.withHashtag;

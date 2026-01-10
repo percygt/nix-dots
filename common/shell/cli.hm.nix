@@ -15,7 +15,6 @@
     aria2
     gping # Ping, but with a graph
     xcp # An extended cp
-    dogdns # Command-line DNS client
     lm_sensors
     impala # Network
     lazyjournal # TUI for journalctl, file system logs, as well as Docker and Podman containers

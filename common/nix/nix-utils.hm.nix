@@ -23,7 +23,7 @@ in
     json2nix
     nix-output-monitor
     nvd
-    omnix
+    # omnix
     nix-search-cli
     nix-inspect
     nix-prefetch-scripts

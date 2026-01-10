@@ -26,10 +26,10 @@
       system-config-printer.enable = true;
       printing = {
         enable = true;
-        drivers = with pkgs.old; [
+        drivers = with pkgs.stable; [
           epson-201401w
-          epson_201207w
-          epson-201106w
+          # epson_201207w
+          # epson-201106w
         ];
       };
     };
@@ -37,11 +37,9 @@
       sane = {
         enable = true;
         extraBackends = [
-          (pkgs.old.epsonscan2.override {
-            withNonFreePlugins = true;
-          })
-          pkgs.utsushi
-          pkgs.simple-scan
+          pkgs.stable.epsonscan2
+          # pkgs.utsushi
+          # pkgs.simple-scan
         ];
       };
     };

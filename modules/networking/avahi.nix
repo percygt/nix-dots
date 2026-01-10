@@ -20,6 +20,6 @@
     services.resolved.extraConfig = lib.mkForce ''
       MulticastDNS=false
     '';
-    networking.networkmanager.connectionConfig."connection.mdns" = 1;
+    # networking.networkmanager.connectionConfig."connection.mdns" = 1;
   };
 }
