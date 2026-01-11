@@ -15,6 +15,7 @@
     "rewrite": {
       "(.*) - nvim": "<span font='14' color='plum'></span>  <span rise='2pt'>$1</span>",
       "(.*) - fish": "<span font='14' color='grey'></span>  <span rise='2pt'>$1</span>",
+      "(.*) - nu": "<span font='14' color='grey'></span>  <span rise='2pt'>$1</span>",
       "(.*) - bash": "<span font='14' color='cyan'></span>  <span rise='2pt'>$1</span>",
       "(.*) - just": "<span font='14' color='cyan'></span>  <span rise='2pt'>$1</span>",
       "(.*) - nix": "<span font='14' color='cyan'></span>  <span rise='2pt'>$1</span>"
