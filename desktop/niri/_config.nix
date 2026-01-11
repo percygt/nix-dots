@@ -37,6 +37,7 @@ in
     wl-clipboard
     wayland-utils
     libsecret
+    gcr
   ];
 
   services = {

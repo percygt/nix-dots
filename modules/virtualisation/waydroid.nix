@@ -13,13 +13,13 @@
     environment.systemPackages = with pkgs; [
       nur.repos.ataraxiasjel.waydroid-script
       waydroid-helper
+      android-tools
     ];
     systemd = {
       packages = [ pkgs.waydroid-helper ];
       services.waydroid-mount.wantedBy = [ "multi-user.target" ];
     };
     services.geoclue2.enable = true;
-    programs.adb.enable = true;
     persistSystem.directories = [
       "/var/lib/waydroid"
       # "/etc/waydroid-extra/images"

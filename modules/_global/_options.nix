@@ -365,6 +365,7 @@ in
         default =
           with pkgs;
           [
+            android-tools
             wirelesstools
             ntfs3g
             exfat

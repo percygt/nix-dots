@@ -10,6 +10,7 @@
       zen.enable = true;
       # librewolf.enable = true;
       brave.enable = true;
+      gaming.enable = true;
       # brave-nightly.enable = true;
       quickemu.enable = true;
       helium.enable = true;
@@ -31,7 +32,7 @@
       zram.enable = true;
     };
     drivers = {
-      adb.enable = true;
+      # adb.enable = true;
       bluetooth.enable = true;
       printer.enable = true;
     };

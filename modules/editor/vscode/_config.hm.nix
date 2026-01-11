@@ -32,7 +32,7 @@ in
 
           nil
           nixd
-          nixfmt-rfc-style
+          nixfmt
         ]
       );
       enableUpdateCheck = true;

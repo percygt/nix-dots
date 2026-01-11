@@ -7,7 +7,6 @@ let
   t = config.modules.themes;
   c = t.colors.withHashtag;
   f = config.modules.fonts.shell;
-  g = config._global;
   cfg = config.modules.terminal.xfce4-terminal;
   color-palette = builtins.concatStringsSep ";" [
     c.base01
@@ -30,15 +29,12 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-      "Alt+shift+return" = "exec ${lib.getExe cfg.package}";
-    };
     home.packages = [ cfg.package ];
     xfconf.settings = {
       xfce4-terminal = {
         inherit color-palette;
         background-mode = "TERMINAL_BACKGROUND_TRANSPARENT";
-        font-name = "${f.name} SemiBold ${builtins.toString f.size}";
+        font-name = "${f.name} SemiBold ${toString f.size}";
         font-use-system = false;
         font-allow-bold = true;
         text-blink-mode = "TERMINAL_TEXT_BLINK_MODE_ALWAYS";

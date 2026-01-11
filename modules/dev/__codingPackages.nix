@@ -14,7 +14,7 @@ pkgs: with pkgs; [
 
   # Nix
   statix
-  nixfmt-rfc-style
+  nixfmt
   nil
   nixd
 
