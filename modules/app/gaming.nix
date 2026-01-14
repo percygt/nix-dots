@@ -25,6 +25,7 @@
     ];
     persistHome.directories = [
       ".local/share/Steam"
+      ".local/share/bottles"
       ".steam"
     ];
   };
