@@ -35,10 +35,10 @@ in
         emacsclient -t -a "" ${g.orgDirectory}/Inbox.org
       '';
       emacscapture = pkgs.writers.writeBash "emacscapture" ''
-        emacsclient -t -a "" --eval '(+org-capture/quick-capture)'
+        emacsclient -t -a "" --eval "(+org-capture/quick-capture)"
       '';
       emacsagenda = pkgs.writers.writeBash "emacsagenda" ''
-        emacsclient -t -a "" --eval '(progn (org-agenda nil "m"))'
+        emacsclient -t -a "" --eval "(progn (org-agenda nil \"m\"))"
       '';
     in
     {
